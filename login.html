@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In — Student Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">Student Portal</a>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="login-section container">
+    <div class="login-card">
+      <h1>Student Log In</h1>
+      <p class="muted">Enter your username and password to see your own portal.</p>
+
+      <form id="login-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+
+        <p id="login-error" class="error-message" hidden>Incorrect username or password. Try again.</p>
+
+        <button type="submit" class="btn-primary btn-full">Log In</button>
+      </form>
+
+      <p class="hint">
+        Demo accounts — <code>alice / alice123</code>, <code>bob / bob123</code>, <code>charlie / charlie123</code>.
+        Replace these in <code>js/data.js</code> with your real students.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>Student Portal — built with plain HTML, CSS and JS.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var username = document.getElementById('username').value.trim();
+    var password = document.getElementById('password').value;
+
+    if (login(username, password)) {
+      window.location.href = 'portal.html';
+    } else {
+      document.getElementById('login-error').hidden = false;
+    }
+  });
+</script>
+</body>
+</html>
