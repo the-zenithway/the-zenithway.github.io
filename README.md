@@ -84,15 +84,13 @@ To show something other than a Notion embed, or to add more to the
 top bar, edit `renderPortal()` and the matching data in
 `js/data.js`.
 
-## The dark portal theme
+## The theme
 
-`portal.html` uses a dark background (`#191919`) matched to Notion's
-own dark mode, so the embed doesn't have a visible seam. Those
-colors live as CSS variables near the top of `css/style.css`
-(`--portal-bg`, `--portal-text`, `--portal-border`, `--portal-muted`)
-— change them there if you'd like a different look. `index.html` and
-`login.html` keep the original light theme; happy to make those dark
-too if you'd rather the whole site match.
+Every page shares one dark theme (background `#191919`, matched to
+Notion's own dark mode) so there's no visible seam where the embed
+starts. Colors and fonts all live as CSS variables at the top of
+`css/style.css` — `--bg`, `--text`, `--accent`, and so on — change
+them there and the whole site updates together.
 
 ## Test it locally
 
@@ -125,7 +123,6 @@ Pages redeploys automatically.
 
 - Replace the demo students with your real class list and their
   real Notion links.
-- Make the whole site dark, not just the portal page.
 - If real privacy ever matters — for the login or for keeping each
   student's page truly private — the usual next step is a free auth
   service like Firebase Authentication or Supabase, paired with
