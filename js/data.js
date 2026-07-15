@@ -29,7 +29,7 @@ const STUDENTS = [
     password: "alice123",
     name: "Alice Johnson",
     portal: {
-      notionUrl: "https://your-workspace.notion.site/REPLACE-WITH-ALICES-PAGE"
+      notionUrl: "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d"
     }
   },
   {
