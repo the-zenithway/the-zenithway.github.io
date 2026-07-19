@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Portal — Student Portal</title>
+<title>My Calendar — Student Portal</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -19,8 +19,8 @@
     <a href="index.html" class="logo">Student Portal</a>
     <span id="welcome-text" class="portal-welcome"></span>
     <nav class="portal-nav">
-      <a href="portal.html" class="portal-nav-link active">Portal</a>
-      <a href="calendar.html" class="portal-nav-link">Calendar</a>
+      <a href="portal.html" class="portal-nav-link">Portal</a>
+      <a href="calendar.html" class="portal-nav-link active">Calendar</a>
     </nav>
   </div>
   <div class="portal-actions">
@@ -30,7 +30,7 @@
 </header>
 
 <main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Notion portal"></iframe>
+  <iframe id="embed-frame" class="embed-frame" title="Google Calendar"></iframe>
 </main>
 
 <script src="js/data.js"></script>
@@ -38,7 +38,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, student.portal.notionUrl, "Notion");
+  renderEmbedPage(student, student.portal.calendarUrl, "Google Calendar");
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

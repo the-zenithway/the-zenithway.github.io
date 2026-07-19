@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Log In — Student Portal</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -16,6 +19,10 @@
     <a href="index.html" class="logo">Student Portal</a>
     <nav>
       <a href="index.html">Home</a>
+      <a href="philosophy.html">Philosophy</a>
+      <a href="resources.html">Resources</a>
+      <a href="faq.html">FAQ</a>
+      <a href="portal.html">Portal</a>
     </nav>
   </div>
 </header>
@@ -48,20 +55,24 @@
 
 <footer>
   <div class="container">
+    <div id="social-links" class="social-icons"></div>
     <p>Student Portal — built with plain HTML, CSS and JS.</p>
   </div>
 </footer>
 
 <script src="js/data.js"></script>
+<script src="js/social-links.js"></script>
 <script src="js/app.js"></script>
 <script>
+  renderSocialLinks();
+
   document.getElementById('login-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var username = document.getElementById('username').value.trim();
     var password = document.getElementById('password').value;
 
     if (login(username, password)) {
-      window.location.href = 'portal.html';
+      window.location.href = getLoginRedirect();
     } else {
       document.getElementById('login-error').hidden = false;
     }
