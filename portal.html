@@ -41,6 +41,10 @@
 
 <main class="portal-frame-wrap">
   <iframe id="embed-frame" class="embed-frame" title="Notion portal"></iframe>
+  <div id="embed-unavailable" class="embed-unavailable" hidden>
+    <p>This page is temporarily unavailable.</p>
+    <a id="embed-unavailable-link" href="#" target="_blank" rel="noopener" class="btn-primary">Open in Notion ↗</a>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
@@ -48,7 +52,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, student.portal.notionUrl, "Notion");
+  renderEmbedPage(student, student.portal.notionUrl, "Notion", student.portal.notionAvailable);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

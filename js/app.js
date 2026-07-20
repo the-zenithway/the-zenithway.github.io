@@ -109,14 +109,30 @@ function renderNavAuth() {
 // this page's iframe at the given URL. portal.html and calendar.html
 // each call this with their own URL and a label — that's the only
 // difference between the two pages.
-function renderEmbedPage(student, embedUrl, label) {
+//
+// Pass available=false (portal.html does this for students whose
+// notionAvailable is false in data.js) to skip the iframe and show
+// the "temporarily unavailable" fallback button instead — the page
+// needs an #embed-unavailable/#embed-unavailable-link pair in its
+// markup for that; calendar.html doesn't have one and never needs
+// to, since it always passes available=true.
+function renderEmbedPage(student, embedUrl, label, available) {
   if (!student) return;
-
-  const frame = document.getElementById("embed-frame");
-  frame.src = embedUrl;
-  frame.title = student.name + "'s " + label;
+  if (available === undefined) available = true;
 
   const link = document.getElementById("open-direct-link");
   link.href = embedUrl;
   link.textContent = "Open in " + label + " ↗";
+
+  if (!available) {
+    document.getElementById("embed-frame").hidden = true;
+    document.getElementById("embed-unavailable").hidden = false;
+    document.getElementById("embed-unavailable-link").href = embedUrl;
+    document.getElementById("embed-unavailable-link").textContent = "Open in " + label + " ↗";
+    return;
+  }
+
+  const frame = document.getElementById("embed-frame");
+  frame.src = embedUrl;
+  frame.title = student.name + "'s " + label;
 }

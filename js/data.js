@@ -11,6 +11,12 @@
     3. That gives you a snippet with <iframe src="...">. Copy just
        the URL inside the quotes and paste it below.
 
+  notionAvailable: set to false for a student whose Notion page
+  shouldn't be embedded yet (not ready, broken, still a placeholder
+  URL, etc). Their portal page will show a "temporarily unavailable"
+  message with a button linking straight to notionUrl instead of the
+  iframe. Flip it back to true once their page is ready to embed.
+
   NOT SECURE — by design: this whole file is sent to every visitor's
   browser, so usernames, passwords, and every notionUrl below are
   all technically visible to anyone who looks at the page source.
@@ -36,7 +42,8 @@ const STUDENTS = [
     password: "alice123",
     name: "Alice Inthe Wonderland",
     portal: {
-      notionUrl: "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d"
+      notionUrl: "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d",
+      notionAvailable: false
     }
   },
   {
@@ -44,7 +51,8 @@ const STUDENTS = [
     password: "password",
     name: "Bogue Kwon",
     portal: {
-      notionUrl: "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d"
+      notionUrl: "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d",
+      notionAvailable: true
     }
   },
   {
@@ -52,7 +60,8 @@ const STUDENTS = [
     password: "password",
     name: "Hamin Park",
     portal: {
-      notionUrl: "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE"
+      notionUrl: "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE",
+      notionAvailable: false
     }
   },
   {
@@ -60,7 +69,8 @@ const STUDENTS = [
     password: "password",
     name: "Seohoo Lee",
     portal: {
-      notionUrl: "https://wealthy-mapusaurus-5ee.notion.site/3a3db87002c48099b507ea08fa755507?v=59adb87002c482f0b8618874306037c3&pvs=73"
+      notionUrl: "https://wealthy-mapusaurus-5ee.notion.site/3a3db87002c48099b507ea08fa755507?v=59adb87002c482f0b8618874306037c3&pvs=73",
+      notionAvailable: false
     }
   }
 ];
