@@ -1,10 +1,3 @@
-# Student Portal — GitHub Pages Starter
-
-A small, static student site. Each student logs in and gets two
-personal pages: a Notion portal and a Google Calendar. It's plain
-HTML, CSS, and JavaScript, so there's no build step and nothing to
-install: edit the files and refresh the page.
-
 ## ⚠️ This login is NOT secure — on purpose
 
 GitHub Pages only serves static files; there's no server checking
