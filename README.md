@@ -1,5 +1,5 @@
 ## ⚠️ This login is NOT secure — on purpose
-
+lmao lemme test this 
 GitHub Pages only serves static files; there's no server checking
 passwords. The "login" is just a JavaScript check against the list
 in `js/data.js`, and that whole file is downloaded to every visitor's
