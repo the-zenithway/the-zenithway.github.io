@@ -72,5 +72,14 @@ const STUDENTS = [
       notionUrl: "https://wealthy-mapusaurus-5ee.notion.site/3a3db87002c48099b507ea08fa755507?v=59adb87002c482f0b8618874306037c3&pvs=73",
       notionAvailable: false
     }
+  },
+  {
+    username: "kyjv9981",
+    password: "password",
+    name: "Yong Joon Kim",
+    portal:{
+      notionUrl: "d",
+      notionAvailable: false
+    }
   }
 ];
