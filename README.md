@@ -110,16 +110,3 @@ Notion's own dark mode) so there's no visible seam where the embed
 starts. Colors and fonts all live as CSS variables at the top of
 `css/style.css` — `--bg`, `--text`, `--accent`, and so on — change
 them there and the whole site updates together.
-
-## Test it locally
-
-Either works:
-
-- **Simplest:** double-click `index.html` to open it in your browser.
-- **Closer to production:** from this folder, run
-  `python3 -m http.server`, then visit `http://localhost:8000`.
-
-Try logging in with `alice / alice123` (or `bob` / `charlie`, same
-pattern), then switch between the Portal and Calendar tabs. Until
-you swap in real links, both iframes will show an empty or
-"not found" state from Notion/Google — that's expected.
