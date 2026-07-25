@@ -110,3 +110,6 @@ Notion's own dark mode) so there's no visible seam where the embed
 starts. Colors and fonts all live as CSS variables at the top of
 `css/style.css` — `--bg`, `--text`, `--accent`, and so on — change
 them there and the whole site updates together.
+
+
+lmaothis finally worked.
