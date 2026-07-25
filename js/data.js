@@ -85,14 +85,5 @@ const STUDENTS = [
       "notionUrl": "d",
       "notionAvailable": false
     }
-  },
-  {
-    "username": "jsmith",
-    "password": "hunter2",
-    "name": "Jane Smith",
-    "portal": {
-      "notionUrl": "https://your-workspace.notion.site/jane-page",
-      "notionAvailable": true
-    }
   }
 ];
