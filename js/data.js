@@ -85,14 +85,5 @@ const STUDENTS = [
       "notionUrl": "d",
       "notionAvailable": false
     }
-  },
-  {
-    "username": "smoketest",
-    "password": "smoketestpw",
-    "name": "Smoke Test",
-    "portal": {
-      "notionUrl": "",
-      "notionAvailable": false
-    }
   }
 ];
