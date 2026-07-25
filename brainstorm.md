@@ -26,7 +26,8 @@ TODO:
 - [ ] automatic documentation
 gathers documentation from all around the place automatically 
 e.g. instagram bot logs, github commit logs(for all repositories), and etc. like lecture videos and sessions and session scores all that 
-
+- [ ] AP bio notion 
+- [ ] AP Chem notion 
+- [ ] AP CS notion 
 
 Done:
-- [x] AP bio notion 
