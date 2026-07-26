@@ -29,5 +29,8 @@ e.g. instagram bot logs, github commit logs(for all repositories), and etc. like
 - [ ] AP bio notion 
 - [ ] AP Chem notion 
 - [ ] AP CS notion 
+- [ ] Barrons AP Calc BC and cheat sheets etc 
 
 Done:
+- [x] AP Calc BC Self Study Track
+- [x] SAT Question bank for resource Page
