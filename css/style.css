@@ -255,18 +255,33 @@ nav > a.active { color: var(--text); }
 
 .resource-item:last-child { border-bottom: none; }
 
-.resource-item h3 {
+.resource-item h3,
+.resource-item h4 {
   font-weight: 600;
   font-size: 1rem;
   margin: 0 0 4px;
 }
 
-.resource-item:hover h3 { color: var(--accent); }
+.resource-item:hover h3,
+.resource-item:hover h4 { color: var(--accent); }
 
 .resource-item p {
   color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0;
+}
+
+.resource-subgroup { margin-top: 8px; }
+
+.resource-subgroup:last-child .resource-item:last-child { border-bottom: none; }
+
+.resource-subheading {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 24px 0 4px;
 }
 
 /* -------- FAQ page -------- */
