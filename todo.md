@@ -42,7 +42,7 @@ and do things for the greater good?
   - [ ] new entires in faq 
   - [ ] new entries in blog 
   - [ ] new entries in resources 
-  - [ ]  roadmap editing 
+  - [ ] roadmap editing 
   - [ ] database student and teacher adding and editing information 
   - [ ] editing the now page 
   - [ ] adding feedback page 
