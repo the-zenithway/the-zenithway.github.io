@@ -117,7 +117,7 @@ const STUDENTS = [
     "password": "password",
     "name": "Seohu Lee",
     "portal": {
-      "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3a3db87002c48099b507ea08fa755507?v=59adb87002c482f0b8618874306037c3&pvs=73",
+      "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48013b4cdddec5d117b8b?v=e11db87002c483669cfb08aae95fc5ab&source=copy_link",
       "notionAvailable": false
     },
     "rightNow": {

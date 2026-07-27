@@ -29,7 +29,7 @@ const ROLE_KEY = "loggedInRole"; // "student" or "teacher"
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS
 // (from data.js). On success, remembers who's logged in and which
@@ -371,4 +371,51 @@ function renderTeacherDashboard(teacher) {
   if (!teacher) return;
   document.getElementById("teacher-greeting").textContent =
     "Hey " + teacher.name.split(" ")[0] + ",";
+}
+
+// Fills in blog.html's post list from BLOG_POSTS (js/blog-data.js),
+// newest first, exactly as the array is ordered (add new posts to
+// the top by hand). Each preview links to blog-post.html?slug=....
+function renderBlogList() {
+  const list = document.getElementById("blog-list");
+  if (!list) return;
+
+  if (BLOG_POSTS.length === 0) {
+    list.innerHTML = '<p class="blog-empty">No posts yet — check back soon.</p>';
+    return;
+  }
+
+  list.innerHTML = BLOG_POSTS.map(function (post) {
+    return '<a href="blog-post.html?slug=' + encodeURIComponent(post.slug) + '" class="blog-preview">' +
+      '<span class="blog-preview-date">' + post.date + '</span>' +
+      '<h2>' + post.title + '</h2>' +
+      '<p class="blog-preview-excerpt">' + post.excerpt + '</p>' +
+      '<span class="blog-read-more">Read more →</span>' +
+    '</a>';
+  }).join("");
+}
+
+// Fills in blog-post.html from the "?slug=" in the URL, looking it
+// up in BLOG_POSTS (js/blog-data.js). Shows a friendly "not found"
+// message (with a link back to the index) for an unknown/missing
+// slug instead of a blank page.
+function renderBlogPost() {
+  const article = document.getElementById("blog-article");
+  if (!article) return;
+
+  const slug = new URLSearchParams(window.location.search).get("slug");
+  const post = BLOG_POSTS.find(function (p) { return p.slug === slug; });
+
+  if (!post) {
+    article.innerHTML = '<h1>Post not found</h1>' +
+      '<p class="blog-preview-excerpt">That post doesn\'t exist, or may have moved.</p>';
+    return;
+  }
+
+  document.title = post.title + " — Zenith";
+  article.innerHTML = '<span class="blog-article-date">' + post.date + '</span>' +
+    '<h1>' + post.title + '</h1>' +
+    '<div class="blog-article-body">' +
+      post.content.map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join("") +
+    '</div>';
 }

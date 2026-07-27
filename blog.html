@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zenith</title>
+<title>Blog — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -29,11 +29,11 @@
       <span class="sr-only">Zenith</span>
     </a>
     <nav>
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html">Home</a>
       <a href="philosophy.html">Philosophy</a>
       <a href="resources.html">Resources</a>
       <a href="faq.html">FAQ</a>
-      <a href="blog.html">Blog</a>
+      <a href="blog.html" class="active">Blog</a>
       <a href="portal.html">Portal</a>
       <a href="login.html" id="nav-login-btn" class="btn-nav">Log In</a>
       <span id="nav-user-name" class="nav-user" hidden></span>
@@ -42,30 +42,13 @@
 </header>
 
 <main>
-  <section class="hero">
-    <div class="container">
-      <h1>Welcome to Zenith</h1>
-      <p>We reject the hasty judgments that pre-determine your potential. 
-        Zenith is a dynamic, systematic learning space built to help you navigate 
-        the toughest academic challenges, master universal heuristics, and reach true zenith.</p>
-    </div>
+  <section class="page-header container">
+    <h1>Blog</h1>
+    <p>Thoughts on studying, teaching, and building Zenith — written by us, as we go.</p>
   </section>
 
   <section class="container">
-    <div class="cards">
-      <a href="philosophy.html" class="card">
-        <h3>Philosophy: The Zenith Way</h3>
-        <p>What we believe about learning, and how it shapes everything here.</p>
-      </a>
-      <a href="resources.html" class="card">
-        <h3>Resources</h3>
-        <p>Useful articles, books, and meta information about various subjects and fields required for college application.</p>
-      </a>
-      <a href="portal.html" class="card">
-        <h3>Your Portal</h3>
-        <p>Log in to access your tailored workspace—your documented study plan, individual feedback, and calendar.</p>
-      </a>
-    </div>
+    <div class="blog-list" id="blog-list"></div>
   </section>
 </main>
 
@@ -77,9 +60,11 @@
 </footer>
 
 <script src="js/data.js"></script>
+<script src="js/blog-data.js"></script>
 <script src="js/social-links.js"></script>
 <script src="js/app.js"></script>
 <script>
+  renderBlogList();
   renderSocialLinks();
   renderNavAuth();
 </script>

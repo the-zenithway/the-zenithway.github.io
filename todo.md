@@ -41,9 +41,9 @@ and do things for the greater good?
 - [ ] make like a buffer, just in case someone is done ahead of time like always do 2 "now" page entries at a time, and they can see it if theyre like done with everything. maybe the can click a button confirm(show extra stuff) and move on conditionally, and teachers remove it 
 
 ## 5. Admin
+- [ ] Update and link new pages for the resources page after not relying on notion anymore or decide to leave it there like that 
 - [ ] Create discord community 
 - [ ] Create facebook community and messenger gc 
-- [ ] Whatsapp GC
 - [ ] AP Resource Page — fill out the empty subject sections (Bio, Chem, Physics, CS A)
 - [ ] AP Bio Notion page
 - [ ] AP Chem Notion page
