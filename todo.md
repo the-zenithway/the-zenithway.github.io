@@ -60,3 +60,4 @@ and do things for the greater good?
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
 - [ ] Maybe about us page that showcases the people involved in this
 - [ ] update philosophy page 
+- [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.

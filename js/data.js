@@ -71,8 +71,8 @@ const STUDENTS = [
     "password": "password",
     "name": "Bogue Kwon",
     "portal": {
-      "notionUrl": "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d",
-      "notionAvailable": true
+      "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48017b10cd3db81e407f6?v=6e4db87002c48266bdf508f048d0fa9e&source=copy_link",
+      "notionAvailable": false 
     },
     "rightNow": {
       "state": "your-move",
