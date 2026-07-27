@@ -45,17 +45,16 @@ const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c2
 // its query string for "?embedded=true".
 const SUBMISSION_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqPBskg9HOSPRXvaLHIudlpEpuwZKDs_UEjwxx_Dp0Ujgnpg/viewform?embedded=true";
 
-// "Right Now" is each student's single current to-do, shown on the
-// Right Now page. Two shapes:
+// "Right Now" is each enrolled course's single current to-do, stored on the
+// course object and shown only in that selected subject path. Two shapes:
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
 //   state: "waiting"   -> chapter, unit, note
-// Leave it off entirely for a student to show the page's empty state.
+// Leave it off a course to show that subject's empty state.
 
-// "feedback" is each student's feedback log, shown on the Feedback
-// page — a plain array of { date, chapter, unit, content }. Add new
-// entries to the TOP of the array (newest first); the page just
-// renders the array in order, no sorting. Leave it off entirely (or
-// an empty array) for a student to show the page's empty state.
+// "feedback" and "cheatSheet" also belong on each course object. Feedback is
+// a plain array of { date, chapter, unit, content }; add new entries to the TOP
+// (newest first). Use empty arrays for a course with no entries. Student-level
+// legacy fields are not rendered and must not be copied into new enrollments.
 const STUDENTS = [
   {
     "username": "alice",
@@ -74,39 +73,40 @@ const STUDENTS = [
       "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48017b10cd3db81e407f6?v=6e4db87002c48266bdf508f048d0fa9e&source=copy_link",
       "notionAvailable": false 
     },
-    "rightNow": {
-      "state": "your-move",
-      "chapter": "Chapter 1",
-      "unit": "R",
-      "note": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
-      "instruction": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
-      "due": "Tuesday"
-    },
-    "feedback": [
-      {
-        "date": "Jul 24",
-        "chapter": "Chapter 5",
-        "unit": "C",
-        "content": "Strong work overall — your setup on the related rates problems was clean. Watch your sign when a rate is decreasing; a couple of answers flipped sign because of that. Worth a quick look back at #4 and #7."
-      },
-      {
-        "date": "Jul 18",
-        "chapter": "Chapter 4",
-        "unit": "S",
-        "content": "Good recovery after the mock — implicit differentiation is clicking now. One thing to keep an eye on: you're solving correctly but slower than you need to be on chain rule setups. Worth drilling speed here before the next T."
-      },
-      {
-        "date": "Jul 10",
-        "chapter": "Chapter 4",
-        "unit": "C",
-        "content": "A few of these were rushed — question 3 and 9 were misread rather than miscalculated. Try reading the question twice before writing anything down; the method was right both times."
-      }
-    ],
     "courses": [
       {
         "id": "ap-calculus-bc",
         "name": "AP Calculus BC",
         "icon": "calculus",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "R",
+          "note": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
+          "instruction": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
+          "due": "Tuesday"
+        },
+        "feedback": [
+          {
+            "date": "Jul 24",
+            "chapter": "Chapter 5",
+            "unit": "C",
+            "content": "Strong work overall — your setup on the related rates problems was clean. Watch your sign when a rate is decreasing; a couple of answers flipped sign because of that. Worth a quick look back at #4 and #7."
+          },
+          {
+            "date": "Jul 18",
+            "chapter": "Chapter 4",
+            "unit": "S",
+            "content": "Good recovery after the mock — implicit differentiation is clicking now. One thing to keep an eye on: you're solving correctly but slower than you need to be on chain rule setups. Worth drilling speed here before the next T."
+          },
+          {
+            "date": "Jul 10",
+            "chapter": "Chapter 4",
+            "unit": "C",
+            "content": "A few of these were rushed — question 3 and 9 were misread rather than miscalculated. Try reading the question twice before writing anything down; the method was right both times."
+          }
+        ],
+        "cheatSheet": [],
         "roadmap": [
           { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
           { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
@@ -208,26 +208,27 @@ const STUDENTS = [
       "notionUrl": "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE",
       "notionAvailable": false
     },
-    "rightNow": {
-      "state": "your-move",
-      "chapter": "Chapter 1",
-      "unit": "L1",
-      "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
-      "due": "Next session"
-    },
-    "feedback": [
-      {
-        "date": "Jul 27",
-        "chapter": "Chapter 0",
-        "unit": "Foundations",
-        "content": "Well done completing the AP Biology orientation and foundation materials. You have built a clear starting picture of the exam, the key terminology, and the resources you will use. Keep the formulas and sample notes nearby as references, but do not spend too long rereading them passively. You are ready to move on to L1 — Chemistry of Life and begin connecting those foundations to the biology itself."
-      }
-    ],
     "courses": [
       {
         "id": "ap-biology",
         "name": "AP Biology",
         "icon": "biology",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "L1",
+          "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
+          "due": "Next session"
+        },
+        "feedback": [
+          {
+            "date": "Jul 27",
+            "chapter": "Chapter 0",
+            "unit": "Foundations",
+            "content": "Well done completing the AP Biology orientation and foundation materials. You have built a clear starting picture of the exam, the key terminology, and the resources you will use. Keep the formulas and sample notes nearby as references, but do not spend too long rereading them passively. You are ready to move on to L1 — Chemistry of Life and begin connecting those foundations to the biology itself."
+          }
+        ],
+        "cheatSheet": [],
         "roadmap": [
           { "name": "AP Biology Exam Description", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Oh2hXLTf7CwYBYaR1ibpRUUgygFvGhrm/view?usp=drivesdk" },
           { "name": "Terminology", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://fiveable.me/ap-bio/key-terms" },
@@ -298,6 +299,8 @@ const STUDENTS = [
         "id": "ap-calculus-bc",
         "name": "AP Calculus BC",
         "icon": "calculus",
+        "feedback": [],
+        "cheatSheet": [],
         "roadmap": [
           { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
           { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
@@ -399,18 +402,20 @@ const STUDENTS = [
       "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48013b4cdddec5d117b8b?v=e11db87002c483669cfb08aae95fc5ab&source=copy_link",
       "notionAvailable": false
     },
-    "rightNow": {
-      "state": "your-move",
-      "chapter": "Chapter 1",
-      "unit": "B",
-      "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-      "due": "undecided"
-    },
     "courses": [
       {
         "id": "ap-calculus-bc",
         "name": "AP Calculus BC",
         "icon": "calculus",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "B",
+          "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
+          "due": "undecided"
+        },
+        "feedback": [],
+        "cheatSheet": [],
         "roadmap": [
       { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
       { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
@@ -543,6 +548,200 @@ const STUDENTS = [
         "topic": "Related Rates Setup",
         "source": "5C-6",
         "pattern": "Going well — keep setting up straight from the diagram: $\\dfrac{dV}{dt} = \\dfrac{dV}{dr} \\cdot \\dfrac{dr}{dt}$ rather than re-deriving the volume formula each time. Faster and less room for a sign slip."
+      }
+    ]
+  },
+  {
+    "username": "davidheo",
+    "password": "david123",
+    "name": "David Heo",
+    "portal": {
+      "notionUrl": "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE",
+      "notionAvailable": false
+    },
+    "courses": [
+      {
+        "id": "ap-biology",
+        "name": "AP Biology",
+        "icon": "biology",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "L1",
+          "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
+          "due": "Next session"
+        },
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": [
+          { "name": "AP Biology Exam Description", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Oh2hXLTf7CwYBYaR1ibpRUUgygFvGhrm/view?usp=drivesdk" },
+          { "name": "Terminology", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://fiveable.me/ap-bio/key-terms" },
+          { "name": "AP Biology Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1yZ2t1fBCyEpBz_n_vuPRjBiAdhdVdfdx/view?usp=drivesdk" },
+          { "name": "Advanced Biology Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "Frequently Used Formulas and Equations", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZpngkSZ29WkJTinA2KSU9lPderA5l4lT/view?usp=drivesdk" },
+          { "name": "Sample Notes", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZpngkSZ29WkJTinA2KSU9lPderA5l4lT/view?usp=drivesdk" },
+          { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
+          { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
+          { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI2NzUyODk5/details" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3ODEwMDYx/details" },
+          { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
+          { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
+          { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI1ODE2NDg3/details" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3Njc4MTI2/details" },
+          { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
+          { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
+          { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NTA5OTE0/details" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI1MzcwNDA3/details" },
+          { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
+          { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
+          { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI2ODQyNzE1/details" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3OTA3MDk0/details" },
+          { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
+          { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
+          { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI1MjQ4NTEz/details" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NTQ4ODM0/details" },
+          { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
+          { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
+          { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3MzA1MTMy/details" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTIzNjQzNzEw/details" },
+          { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
+          { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
+          { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI2MjczNjIz/details" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODU1NjE3Nzk4Mjkz/details" },
+          { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
+          { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
+          { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked", "url": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTM3NDAyMDI3/details" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NzE2MDEz/details" },
+          { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
+          { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
+          { "name": "M1-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
+          { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1p24uTEhOFXorDKZK9bF5ZxB0B0ldyO2E/view?usp=drivesdk" },
+          { "name": "M2-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1n-fsx7U4PePiS97lQgkA_67wDTE7MFab/view?usp=drivesdk" },
+          { "name": "M2S-Full Mock Test 2 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/129BabPxff37yg_H-KyIJB3QvoSY1X8eh/view?usp=drivesdk" },
+          { "name": "M3-Full Mock Test 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Unlocked", "url": "https://drive.google.com/file/d/1gL7bJ4yffCR2EZ2wNOe3TnEJo_MjiHum/view?usp=drive_link" },
+          { "name": "M5S-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HZi_LvVrumTfe3VKaQelGssmyFwfiiuC/view?usp=drive_link" },
+          { "name": "M6-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1vQeyfNHgOMp8quhft1mTcPq4XSlb52RD/view?usp=drive_link" },
+          { "name": "M6S-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/15DuEPBbg04fDeS8PUMaCRsFHfC1EzEfc/view?usp=drive_link" },
+          { "name": "M7-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_LkWfuAsZUOYvANxiVYdXIa7bULO7Yzh/view?usp=drive_link" },
+          { "name": "M7S-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1vj-VgWY-wT00RkdY4wUbHPh7XJ_MtyNk/view?usp=drive_link" },
+          { "name": "M8-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1KqvLYIis_8feMVS1zDixS6PPZjBxtXHd/view?usp=drive_link" },
+          { "name": "M8S-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eG9Ksj6Af8t6PGX7R_T3knVLgsCg8e38/view?usp=drive_link" },
+          { "name": "M9-FRQ Mock 9", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1E1rDrUFeh2311Gzg3ln3eR5Bsu1yJZeQ/view?usp=drive_link" },
+          { "name": "M9S-FRQ Mock 9 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hh-sZH8uxDsR0V8O3nhjJ_BkFvfuQ3Ap/view?usp=drive_link" },
+          { "name": "M10-FRQ Mock 10", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1AZPOd1iaPTA8JJJmlooee7Ym1D9Jq79H/view?usp=drive_link" },
+          { "name": "M10S-FRQ Mock 10 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1V36m1RowaKnVLvcEb7dxJEFWGpsp3DFJ/view?usp=drive_link" }
+        ]
+      },
+      {
+        "id": "ap-calculus-bc",
+        "name": "AP Calculus BC",
+        "icon": "calculus",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "B1",
+          "instruction": "Start B1 — Functions. Read the chapter actively, work through each example as you go, and make sure you can explain the key function ideas before moving on.",
+          "due": "Next session"
+        },
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": [
+          { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
+          { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
+          { "name": "B1-Functions", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1JKFuYfSijODTUWMusFJS70BRhqNuvUQa/view?usp=drive_link" },
+          { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
+          { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
+          { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Locked" },
+          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Locked" },
+          { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
+          { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
+          { "name": "S2-Limits and Continuity Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/17pzhOM1QGu8z-zm3YovNEe40ECpexSaF/view?usp=drive_link" },
+          { "name": "R2-Functions Review", "category": "R-Review", "chapter": "Chapter 2", "status": "Locked" },
+          { "name": "T2-Functions Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Locked" },
+          { "name": "B3-Differentiation", "category": "B-book chapter", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1Pmtx_jKUGFLyOQhlFoYmI73UaW0AVEp7/view?usp=drive_link" },
+          { "name": "C3-Differentiation Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/19NGG8CUv7LhzRoVS6q7kx_pGaBkeHQL_/view?usp=drive_link" },
+          { "name": "S3-Differentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1EolTf6Fc9d4kROvX_-h_kdgXVhQCINZD/view?usp=drive_link" },
+          { "name": "R3-Differentiation Review", "category": "R-Review", "chapter": "Chapter 3", "status": "Locked" },
+          { "name": "T3-Differentiation Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Locked" },
+          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
+          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
+          { "name": "S4-Application of Differential Calculus Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1s6gS0JXb7Qkv4bcuScdMHolZpQzwZA3o/view?usp=drive_link" },
+          { "name": "R4-Application of Differential Calculus Review", "category": "R-Review", "chapter": "Chapter 4", "status": "Locked" },
+          { "name": "T4-Application of Differential Calculus Test", "category": "T-Test", "chapter": "Chapter 4", "status": "Locked" },
+          { "name": "B5-Antidifferentiation", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link" },
+          { "name": "C5-Antidifferentiation Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link" },
+          { "name": "S5-Antidifferentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1dGO0xQYAWr9ial7bo62ATko0e1V9npbo/view?usp=drive_link" },
+          { "name": "R5-Antidifferentiation Review", "category": "R-Review", "chapter": "Chapter 5", "status": "Locked" },
+          { "name": "T5-Antidifferentiation Test", "category": "T-Test", "chapter": "Chapter 5", "status": "Locked" },
+          { "name": "B6-Definite Integrals", "category": "B-book chapter", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1zDSFHj-udXu9Qy0nrN-B8VbWRD0KmIUt/view?usp=drive_link" },
+          { "name": "C6-Definite Integrals Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1MN9WDjoFhj29pTPRd622yPdGLKQFXsld/view?usp=drive_link" },
+          { "name": "S6-Definite Integrals Solutions", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1pML1Se9S-xH4bS1TFBp3UpNSyYuqQwla/view?usp=drive_link" },
+          { "name": "R6-Definite Integrals Review", "category": "R-Review", "chapter": "Chapter 6", "status": "Locked" },
+          { "name": "T6-Definite Integrals Test", "category": "T-Test", "chapter": "Chapter 6", "status": "Locked" },
+          { "name": "B7-Application of Integration to Geometry", "category": "B-book chapter", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1qzq9nH9S1AKKy8maEp5tKug1sUXHBQyN/view?usp=drive_link" },
+          { "name": "C7-Application of Integration to Geometry Problems", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1XyXk_UTTlm4rx0PVT4fZz7VdWlNSpUcA/view?usp=drive_link" },
+          { "name": "S7-Application of Integration to Geometry Solutions", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1JDNnEy-gksUoVmF-XCG1aH3_YeYqhGU5/view?usp=drive_link" },
+          { "name": "R7-Application of Integration to Geometry Review", "category": "R-Review", "chapter": "Chapter 7", "status": "Locked" },
+          { "name": "T7-Application of Integration to Geometry Test", "category": "T-Test", "chapter": "Chapter 7", "status": "Locked" },
+          { "name": "B8-Further Applications of Integration", "category": "B-book chapter", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1AjmoXuebty9WbTfmKgKB_EYCFP58aJWO/view?usp=drive_link" },
+          { "name": "C8-Further Application of Integration Problems", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1bQrM0wkcrnj0A3uIUD5NhtM5BV1CUd7i/view?usp=drive_link" },
+          { "name": "S8-Further Application of Integration Solutions", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1OV_9DvjrlOeVzup-RpgobnQfMLXXn4TR/view?usp=drive_link" },
+          { "name": "R8-Further Application of Integration Review", "category": "R-Review", "chapter": "Chapter 8", "status": "Locked" },
+          { "name": "T8-Further Application of Integration Test", "category": "T-Test", "chapter": "Chapter 8", "status": "Locked" },
+          { "name": "B9-Differential Equations", "category": "B-book chapter", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1eW1C11UZUfhdYyEqu-yOHIh4hn_46qvA/view?usp=drive_link" },
+          { "name": "C9-Differential Equations Problems", "category": "C-coursework", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/14AVNzubvCBozVWwd_UwLKAzXVqwjz0L1/view?usp=drive_link" },
+          { "name": "S9-Differential Equations Solutions", "category": "S-solution manual", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1dyBogdVu21CpfiaCyUqViZ2fVcJn01zf/view?usp=drive_link" },
+          { "name": "R9-Differential Equations Review", "category": "R-Review", "chapter": "Chapter 9", "status": "Locked" },
+          { "name": "T9-Differential Equations Test", "category": "T-Test", "chapter": "Chapter 9", "status": "Locked" },
+          { "name": "B10-Sequences and Series", "category": "B-book chapter", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1On07-Pxn3yhw9rqqy2UzHL_HXguwHL6H/view?usp=drive_link" },
+          { "name": "C10-Sequences and Series Problems", "category": "C-coursework", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/12lbYSKyWNW1Ab100P6_wWOnWKfRVuWpm/view?usp=drive_link" },
+          { "name": "S10-Sequences and Series Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1qSZ-foEm_3_UGJDIj68J5-9wvH1Ea7ga/view?usp=drive_link" },
+          { "name": "R10-Sequences and Series Review", "category": "R-Review", "chapter": "Chapter 10", "status": "Locked" },
+          { "name": "T10-Sequences and Series Test", "category": "T-Test", "chapter": "Chapter 10", "status": "Locked" },
+          { "name": "C11-Miscellaneous Multiple Choice Questions", "category": "C-coursework", "chapter": "Chapter 11", "status": "Locked", "url": "https://drive.google.com/file/d/1LIgCn4eavP3B2Ne-gGbnKx_qr3XxT9-i/view?usp=drive_link" },
+          { "name": "S11-Miscellaneous Multiple Choice Questions Solutions", "category": "S-solution manual", "chapter": "Chapter 11", "status": "Locked", "url": "https://drive.google.com/file/d/18CRylj_a4Ocnf1Yk46PQomBaI2Co84h-/view?usp=drive_link" },
+          { "name": "R11-Miscellaneous Multiple Choice Questions Review", "category": "R-Review", "chapter": "Chapter 11", "status": "Locked" },
+          { "name": "C12-Miscellaneous Free Response Questions", "category": "C-coursework", "chapter": "Chapter 12", "status": "Locked", "url": "https://drive.google.com/file/d/1HrGReb5uEZz-1WugOYJ8PuOrbuyRso3F/view?usp=drive_link" },
+          { "name": "S12-Miscellaneous Free Response Questions Solutions", "category": "S-solution manual", "chapter": "Chapter 12", "status": "Locked", "url": "https://drive.google.com/file/d/1rBXVa-9OfhdPeUCI7d_FHJKNRn2j4nrM/view?usp=drive_link" },
+          { "name": "R12-Miscellaneous Free Response Questions Review", "category": "R-Review", "chapter": "Chapter 12", "status": "Locked" },
+          { "name": "M1-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1tAhprt5xldGpONJlyAbeRicCrrgkAZdM/view?usp=drive_link" },
+          { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1RBhkIDr8DKTJzRmGeEc9BrUTEv1UiTSy/view?usp=drive_link" },
+          { "name": "M1R-Full Mock Test 1 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M2-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U8c-vo8NzxvI_0x_Aw2LQQy3WXybmC6i/view?usp=drive_link" },
+          { "name": "M2S-Full Mock Test 2 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1S_Bb_j6w2kPY4__UpEchcJkl9vkznldS/view?usp=drive_link" },
+          { "name": "M2R-Full Mock Test 2 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M3-Full Mock Test 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1gL7bJ4yffCR2EZ2wNOe3TnEJo_MjiHum/view?usp=drive_link" },
+          { "name": "M3S-Full Mock Test 3 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1IFWIPap_A-xm6LGGtP3QqT_bV69nHk7_/view?usp=drive_link" },
+          { "name": "M3R-Full Mock Test 3 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M4-FRQ Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1IDfZvY8lVcCUwqbYCjTu32cVqdDXVaf4/view?usp=drive_link" },
+          { "name": "M4S-FRQ Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1PVw15uOPBzefCLjEZXZ5f_OqVxFOXU2W/view?usp=drive_link" },
+          { "name": "M4R-FRQ Mock 4 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M5-FRQ Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/13um9F8xTM-NGdsNghkEvv3_KrspUjLHk/view?usp=drive_link" },
+          { "name": "M5S-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HZi_LvVrumTfe3VKaQelGssmyFwfiiuC/view?usp=drive_link" },
+          { "name": "M5R-FRQ Mock 5 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M6-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1vQeyfNHgOMp8quhft1mTcPq4XSlb52RD/view?usp=drive_link" },
+          { "name": "M6S-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/15DuEPBbg04fDeS8PUMaCRsFHfC1EzEfc/view?usp=drive_link" },
+          { "name": "M6R-FRQ Mock 6 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M7-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_LkWfuAsZUOYvANxiVYdXIa7bULO7Yzh/view?usp=drive_link" },
+          { "name": "M7S-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1vj-VgWY-wT00RkdY4wUbHPh7XJ_MtyNk/view?usp=drive_link" },
+          { "name": "M8R-FRQ Mock 7 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M8-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1KqvLYIis_8feMVS1zDixS6PPZjBxtXHd/view?usp=drive_link" },
+          { "name": "M8S-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eG9Ksj6Af8t6PGX7R_T3knVLgsCg8e38/view?usp=drive_link" },
+          { "name": "M8R-FRQ Mock 8 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M9-FRQ Mock 9", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1E1rDrUFeh2311Gzg3ln3eR5Bsu1yJZeQ/view?usp=drive_link" },
+          { "name": "M9S-FRQ Mock 9 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hh-sZH8uxDsR0V8O3nhjJ_BkFvfuQ3Ap/view?usp=drive_link" },
+          { "name": "M9R-FRQ Mock 9 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M10-FRQ Mock 10", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1AZPOd1iaPTA8JJJmlooee7Ym1D9Jq79H/view?usp=drive_link" },
+          { "name": "M10S-FRQ Mock 10 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1V36m1RowaKnVLvcEb7dxJEFWGpsp3DFJ/view?usp=drive_link" },
+          { "name": "M10R-FRQ Mock 10 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" }
+        ]
       }
     ]
   }

@@ -25,6 +25,7 @@
 
 const SESSION_KEY = "loggedInUsername";
 const ROLE_KEY = "loggedInRole"; // "student" or "teacher"
+const ACTIVE_COURSE_KEY = "activeCourseId";
 
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
@@ -42,6 +43,7 @@ function login(username, password) {
   if (student) {
     localStorage.setItem(SESSION_KEY, student.username);
     localStorage.setItem(ROLE_KEY, "student");
+    localStorage.removeItem(ACTIVE_COURSE_KEY);
     return true;
   }
 
@@ -78,10 +80,13 @@ function getCurrentTeacher() {
 // send them back afterward. Call this at the very top of any
 // student-facing "protected" page.
 function requireLogin() {
-  if (!getCurrentStudent()) {
+  const student = getCurrentStudent();
+  if (!student) {
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
+    return;
   }
+  setUpCourseNavigation(student);
 }
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
@@ -108,6 +113,7 @@ function getLoginRedirect() {
 function logout() {
   localStorage.removeItem(SESSION_KEY);
   localStorage.removeItem(ROLE_KEY);
+  localStorage.removeItem(ACTIVE_COURSE_KEY);
   window.location.href = "index.html";
 }
 
@@ -187,6 +193,7 @@ function renderEmbedPage(student, embedUrl, label, available) {
 //     real contact option (see setUpContactMenu below)
 function renderRightNow(student) {
   if (!student) return;
+  const course = getSelectedCourse(student);
 
   document.getElementById("rightnow-greeting").textContent =
     "Hey " + student.name.split(" ")[0] + ",";
@@ -197,7 +204,7 @@ function renderRightNow(student) {
   const instruction = document.getElementById("rightnow-instruction");
   const due = document.getElementById("rightnow-due");
   const ctaWrap = document.getElementById("rightnow-cta-wrap");
-  const data = student.rightNow;
+  const data = course ? course.rightNow : null;
 
   if (!data) {
     card.classList.add("rightnow-empty");
@@ -270,10 +277,11 @@ function setUpContactMenu() {
 // noticed, same as feedback and rightNow).
 function renderCheatSheetBanner(student) {
   if (!student) return;
+  const course = getSelectedCourse(student);
 
   const banner = document.getElementById("cheatsheet-banner");
   const count = document.getElementById("cheatsheet-banner-count");
-  const entries = student.cheatSheet || [];
+  const entries = course ? (course.cheatSheet || []) : [];
 
   if (entries.length === 0) {
     banner.hidden = true;
@@ -291,12 +299,13 @@ function renderCheatSheetBanner(student) {
 // Shows an empty state if the field is missing or empty.
 function renderCheatSheetPage(student) {
   if (!student) return;
+  const course = getSelectedCourse(student);
 
   document.getElementById("cheatsheet-greeting").textContent =
     "Hey " + student.name.split(" ")[0] + ",";
 
   const list = document.getElementById("cheatsheet-list");
-  const entries = student.cheatSheet || [];
+  const entries = course ? (course.cheatSheet || []) : [];
 
   if (entries.length === 0) {
     list.innerHTML = '<div class="feedback-empty">' +
@@ -338,12 +347,13 @@ function renderMath(container) {
 // state if the field is missing or empty.
 function renderFeedback(student) {
   if (!student) return;
+  const course = getSelectedCourse(student);
 
   document.getElementById("feedback-greeting").textContent =
     "Hey " + student.name.split(" ")[0] + ",";
 
   const list = document.getElementById("feedback-list");
-  const entries = student.feedback || [];
+  const entries = course ? (course.feedback || []) : [];
 
   if (entries.length === 0) {
     list.innerHTML = '<div class="feedback-empty">' +
@@ -431,6 +441,67 @@ function getStudentCourse(student, courseId) {
   }) || null;
 }
 
+// Resolves the active enrolled course from ?course= and remembers it for the
+// rest of that subject path. This keeps Now and Feedback scoped correctly even
+// if a browser or stale page drops the query from a navigation link.
+function getSelectedCourse(student) {
+  const page = window.location.pathname.split("/").pop();
+  if (page === "portal.html") {
+    localStorage.removeItem(ACTIVE_COURSE_KEY);
+    return null;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.has("course")) {
+    const queriedCourse = getStudentCourse(student, params.get("course"));
+    if (queriedCourse) {
+      localStorage.setItem(ACTIVE_COURSE_KEY, queriedCourse.id);
+      return queriedCourse;
+    }
+    localStorage.removeItem(ACTIVE_COURSE_KEY);
+    return null;
+  }
+
+  const rememberedCourse = getStudentCourse(
+    student,
+    localStorage.getItem(ACTIVE_COURSE_KEY)
+  );
+  if (!rememberedCourse) localStorage.removeItem(ACTIVE_COURSE_KEY);
+  return rememberedCourse;
+}
+
+// Keeps the selected subject active across protected navigation. Courses
+// intentionally returns to the chooser without retaining a subject.
+// Requires an enrolled subject for course-owned pages. A direct visit without
+// course context returns to the chooser instead of showing unrelated data.
+function requireSelectedCourse(student) {
+  const course = getSelectedCourse(student);
+  if (!course) {
+    window.location.href = "portal.html";
+    return null;
+  }
+  return course;
+}
+
+function setUpCourseNavigation(student) {
+  const course = getSelectedCourse(student);
+  if (!course) return null;
+
+  document.querySelectorAll(".portal-nav-link").forEach(function(link) {
+    const url = new URL(link.getAttribute("href"), window.location.href);
+    if (url.pathname.split("/").pop() === "portal.html") return;
+    url.searchParams.set("course", course.id);
+    link.setAttribute("href", url.pathname.split("/").pop() + url.search);
+  });
+
+  const cheatSheetLink = document.querySelector("#cheatsheet-banner a");
+  if (cheatSheetLink) {
+    cheatSheetLink.href = "cheatsheet.html?course=" + encodeURIComponent(course.id);
+  }
+
+  return course;
+}
+
 // Subject-specific app icons used by the course folder. They are inline SVG so
 // the folder stays self-contained and does not depend on another icon service.
 function courseIconHtml(icon) {
@@ -450,6 +521,7 @@ function courseIconHtml(icon) {
 // present in this student's courses array are rendered.
 function renderCoursePortal(student) {
   if (!student) return;
+  localStorage.removeItem(ACTIVE_COURSE_KEY);
 
   const courses = student.courses || [];
   const grid = document.getElementById("course-app-grid");
@@ -478,8 +550,7 @@ function renderCoursePortal(student) {
 function renderCourseRoadmap(student) {
   if (!student) return;
 
-  const courseId = new URLSearchParams(window.location.search).get("course");
-  const course = getStudentCourse(student, courseId);
+  const course = getSelectedCourse(student);
   const heading = document.getElementById("roadmap-course-name");
 
   if (!course) {

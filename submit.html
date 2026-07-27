@@ -51,7 +51,10 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, SUBMISSION_FORM_URL, "Submission Form");
+  var course = requireSelectedCourse(student);
+  if (course) {
+    renderEmbedPage(student, course.submissionFormUrl || SUBMISSION_FORM_URL, "Submission Form");
+  }
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

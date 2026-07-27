@@ -36,30 +36,23 @@ CSS file, and global JavaScript files directly in the browser.
 
 ## Git structure
 
-- Remote: `origin`, pointing to the `the-zenithway/the-zenithway.github.io`
-  GitHub repository.
-- Primary and only observed branch: `main`.
-- `origin/HEAD` points to `origin/main`.
-- At the time of this handoff, local `main` and `origin/main` both point to
-  commit `0a8485e` (`todo upate`).
-- History is linear and contains 61 commits as of 2026-07-27.
-- Most commits are small direct changes to content, student data, or a single
-  feature. Commit messages are informal; CLI-managed student changes sometimes
-  use `zenith: add student ...` or `zenith: remove student ...`.
-- The main contributors visible in history are `kyj9981` and `Hamin Park`.
-- GitHub Pages is enabled by the repository layout; `.nojekyll` asks GitHub to
-  serve files without Jekyll processing.
-- There is currently no `.gitignore`. `.DS_Store` files are tracked in the root,
-  `css/`, and `js/`; avoid adding more generated OS files.
-
-### Existing uncommitted work
-
-At the time this file was created, `README.md` already had an uncommitted
-10-line section named `Using Codex in development`. This change predates
-`PROGRESS.md` and belongs to the user. Preserve it unless the user explicitly
-asks to change or discard it.
-
-Always re-check `git status` because this section can become outdated.
+- Remote: `origin`, pointing to `the-zenithway/the-zenithway.github.io`.
+- Primary branch: `main`; `origin/HEAD` points to `origin/main`.
+- Current pulled state verified on 2026-07-27: local `main` and `origin/main`
+  point to merge commit `398aa79` (`Merge roadmap-views into app-launcher-view:
+  courses + Table/Curve views`).
+- Relevant remote branches include `app-launcher-view`, `roadmap-views`, and
+  `integrate-courses-and-views`; their work is merged into `main`.
+- The working tree was clean immediately after the pull. This documentation edit
+  makes `PROGRESS.md` modified until committed; always run `git status` again.
+- GitHub Pages serves the committed/pushed `main`. Local edits do not appear on
+  the public website until explicitly committed and pushed. If the published
+  site shows old markup after deployment, hard-refresh and allow Pages/cache
+  propagation time.
+- GitHub Pages is served without Jekyll because `.nojekyll` is tracked.
+- There is no `.gitignore`; `.DS_Store` files are tracked in several directories.
+- Commit messages are informal and generally feature-focused. Do not commit or
+  push unless the user explicitly requests it.
 
 ## Repository layout
 
@@ -68,39 +61,40 @@ Always re-check `git status` because this section can become outdated.
 - `index.html` — home page and public introduction.
 - `philosophy.html` — teaching philosophy.
 - `resources.html` — public SAT/AP resources and external links.
-- `faq.html` — public FAQ, including several unfinished answers.
-- `blog.html` — blog index rendered from `js/blog-data.js`.
-- `blog-post.html` — individual post selected using a URL slug.
+- `faq.html` — public FAQ, including unfinished answers.
+- `blog.html` and `blog-post.html` — data-driven blog list/post pages.
 - `login.html` — shared student/teacher login form.
 
 ### Authenticated student pages
 
-- `portal.html` — the student's full roadmap; the portal navigation labels it
-  `Roadmap`.
-- `right-now.html` — renders one current priority/action for the student.
-- `feedback.html` — personalized feedback and a cheat-sheet link when available.
-- `cheatsheet.html` — personalized formulas/notes with KaTeX math rendering.
+- `portal.html` — course chooser, not a roadmap. It renders only the logged-in
+  student's enrolled courses as iPhone-folder-style subject apps.
+- `roadmap.html?course=<id>` — selected enrolled course roadmap with Table and
+  Curve views and an All Courses return link.
+- `right-now.html` — one current priority/action for the student.
+- `feedback.html` — personalized feedback and cheat-sheet banner.
+- `cheatsheet.html` — personalized patterns/formulas with KaTeX rendering.
 - `calendar.html` — shared embedded Google Calendar.
-- `submit.html` — embedded Google submission form.
+- `submit.html` — shared embedded Google submission form.
 
 ### Teacher page
 
-- `teacher.html` — protected teacher dashboard placeholder. Authentication and
-  rendering hooks exist, but the dashboard structure is still minimal.
+- `teacher.html` — protected placeholder dashboard with role-aware login.
 
 ### Shared code and data
 
-- `css/style.css` — all shared styles, theme variables, public layouts, portal
-  layouts, roadmap, feedback, blog, responsive behavior, and component styles.
-- `js/app.js` — all shared browser logic and render functions.
-- `js/data.js` — shared calendar/submission URLs plus student and teacher data.
-- `js/blog-data.js` — ordered blog-post records.
-- `js/social-links.js` — footer/contact link records.
-- `README.md` — basic project editing and architecture documentation.
-- `todo.md` — product ideas and unfinished roadmap items.
-- `.claude/launch.json` — local static server configuration using
-  `python3 -m http.server 8934`.
-- Favicons and PNG assets — browser icons plus a header design reference.
+- `css/style.css` — complete shared theme and all public, portal, course-folder,
+  Table/Curve roadmap, feedback, blog, and responsive styles.
+- `js/app.js` — authentication and every shared browser renderer.
+- `js/data.js` — shared embed URLs, student/teacher accounts, course enrollments,
+  roadmaps, Now state, feedback, and cheat sheets.
+- `js/blog-data.js` — ordered blog-post data.
+- `js/social-links.js` — footer and Right Now contact destinations.
+- `PROGRESS.md` — authoritative Codex handoff; update after meaningful work.
+- `README.md` — general documentation, some examples may lag the live schema.
+- `todo.md` — product ideas and roadmap.
+- `d2d2/` — source Notion CSV export used for Hamin's AP Biology migration.
+- `.claude/launch.json` — static server on port 8934.
 
 ## Runtime and dependency flow
 
@@ -122,7 +116,8 @@ Typical protected student page:
 
 ```text
 HTML -> js/data.js -> js/app.js
-     -> requireLogin() -> getCurrentStudent() -> page render function
+     -> requireLogin() -> getCurrentStudent() -> requireSelectedCourse()
+     -> render only the selected course data
 ```
 
 `right-now.html` also loads `js/social-links.js` because its contact menu uses
@@ -133,79 +128,139 @@ calls `renderMath()` after rendering the personalized sheet.
 
 ## JavaScript architecture
 
-`js/app.js` is organized as global functions rather than modules or classes.
-Its main responsibilities are:
+`js/app.js` uses browser globals, traditional function declarations, and no
+module/bundler system. Main responsibilities:
 
 - Authentication: `login`, `getCurrentStudent`, `getCurrentTeacher`,
-  `requireLogin`, `requireTeacherLogin`, `getLoginRedirect`, and `logout`.
-- Public UI: `renderSocialLinks` and `renderNavAuth`.
-- External embeds: `renderEmbedPage`.
-- Student features: `renderRightNow`, `setUpContactMenu`,
-  `renderCheatSheetBanner`, `renderCheatSheetPage`, `renderMath`,
-  `renderFeedback`, and `renderRoadmap`.
-- Teacher feature: `renderTeacherDashboard`.
-- Blog features: `renderBlogList` and `renderBlogPost`.
-- Roadmap presentation: category/status color maps and pill-label helpers.
+  `requireLogin`, `requireTeacherLogin`, `getLoginRedirect`, `logout`.
+- Public UI/blog: `renderSocialLinks`, `renderNavAuth`, `renderBlogList`, and
+  `renderBlogPost`.
+- Student pages: `renderRightNow`, contact menu, cheat-sheet functions,
+  `renderFeedback`, and `renderEmbedPage`.
+- Courses/enrollment: `getStudentCourse`, `getSelectedCourse`,
+  `setUpCourseNavigation`, `courseIconHtml`, `renderCoursePortal`, and
+  `renderCourseRoadmap`.
+- Roadmap table: `renderRoadmap`, category/status color maps, and pill helpers.
+- Roadmap curve: chapter grouping/status precedence, layout/path generation,
+  gems/popovers, `renderRoadmapCurve`, and `setUpRoadmapViewSwitch`.
+- Teacher placeholder: `renderTeacherDashboard`.
 
-Authentication uses these local-storage keys:
+Authentication stores `loggedInUsername`, `loggedInRole`, and the validated
+`activeCourseId` subject context in `localStorage`. It is convenience routing,
+not secure authorization. `REDIRECTABLE_PAGES` is a
+local allowlist. Protected login redirects preserve the local `?course=` query.
+When adding a protected route, update this allowlist and repeated portal nav.
+An enrolled `?course=<id>` query is the active subject context; protected nav
+propagates it to Now, Feedback, Calendar, Submit, and Cheat Sheet while Courses
+returns to the chooser.
 
-- `loggedInUsername`
-- `loggedInRole` (`student` or `teacher`)
-
-Redirect destinations are restricted by a hard-coded allowlist in `app.js`.
-When adding a protected page that can be used as a login redirect, update that
-allowlist as well as the navigation on every related page.
+`renderCourseRoadmap(student)` resolves the query only through
+`getStudentCourse(student, id)`. It returns the selected course so
+`roadmap.html` can call `setUpRoadmapViewSwitch(course)`. Do not bypass this
+account-scoped lookup by searching all students or all roadmaps globally.
 
 ## Data model
 
-`js/data.js` is executable browser JavaScript, not a private database. It
-currently defines:
+`js/data.js` is executable public browser JavaScript, not a private database.
+It defines `CALENDAR_URL`, `SUBMISSION_FORM_URL`, `STUDENTS`, and `TEACHERS`.
 
-- `CALENDAR_URL` — one shared Google Calendar embed.
-- `SUBMISSION_FORM_URL` — one shared Google Form embed.
-- `STUDENTS` — login records and personalized portal information.
-- `TEACHERS` — teacher login records.
-
-Student records have evolved beyond the older README example. The current code
-uses personalized roadmap, current-action, feedback, and cheat-sheet data in
-addition to identity/login information. Read the live schema in `js/data.js`
-and its consumers in `js/app.js` before adding or modifying records.
-
-`js/data.js` may be regenerated by `zenith-cli`. Prefer preserving its existing
-format and comments. Changes made manually can be overwritten by a later CLI
-operation.
-
-## Course enrollment model
-
-In Zenith, enrolling a student in a course means adding a course object to that
-student's `courses` array in `js/data.js`. Each course object contains:
+Student records contain identity/login data, legacy `portal` metadata, and
+`courses`. Personalized learning state belongs to course objects, never to the
+student root. Legacy root activity fields on unenrolled records are dormant and
+are not rendered. The live schema—not older README examples—is authoritative:
 
 ```js
 {
-  id: "stable-url-id",
-  name: "Visible Course Name",
-  icon: "subject-icon-key",
-  roadmap: [/* that course's roadmap rows */]
+  id: "ap-biology",
+  name: "AP Biology",
+  icon: "biology",
+  rightNow: { state, chapter, unit, instruction, due? }, // optional
+  feedback: [], // optional, course-scoped
+  cheatSheet: [], // course-scoped
+  calendarUrl: "https://...", // optional; shared calendar is the fallback
+  submissionFormUrl: "https://...", // optional; shared form is the fallback
+  roadmap: [
+    { name, category, chapter, status, url?, submissionUrl? }
+  ]
 }
 ```
 
-`portal.html` is the student's course chooser. It renders only the objects in
-the logged-in student's `courses` array as app-style subject icons.
-`roadmap.html?course=<id>` resolves the requested ID only against that same
-array, so a student cannot select a course that is not in their enrollments.
+`url` opens the learning/resource item. `submissionUrl` is a second Submit link.
+Locked roadmap rows hide both links even when URLs exist. Biology introduced
+Learning, Notes Submission, and Final Self Check categories; Calculus also uses
+Information, Book Chapter, Coursework, Solution Manual, Review, Test, and Mock.
 
-To enroll a student in an existing course, copy the complete course object (or
-its roadmap with the same course metadata) into that student's `courses` array.
-To unenroll them, remove that course object. Do not add course icons manually to
-HTML; the chooser is data-driven.
+`js/data.js` may be regenerated by `zenith-cli`; preserve formatting and verify
+that CLI operations do not erase manually migrated course/feedback data.
+
+## Course enrollment model
+
+### Definition of “enroll”
+
+To **enroll** a student means adding a complete course object to that student's
+`courses` array in `js/data.js`. The course then appears automatically as an app
+inside their `portal.html` folder and becomes resolvable at
+`roadmap.html?course=<id>`. To **unenroll**, remove that course object.
+
+Do not manually add per-student icons or links to HTML. Enrollment is data-driven.
+When enrolling someone in an existing course, copy the complete course metadata,
+roadmap, and independent activity containers. Initialize `feedback` and
+`cheatSheet` as empty arrays and omit `rightNow` until assigned; never inherit
+these fields from another subject. Course IDs must be stable and unique within a
+student's `courses` array.
+
+When creating a new account, add a complete standalone object directly inside
+`STUDENTS`. Every student must own their portal, Now, feedback, cheat-sheet, and
+course data rather than resolving or cloning another student's record at runtime.
+If initial content should match an existing student, duplicate it literally.
 
 Current enrollments:
 
-- Bogue Kwon: AP Calculus BC.
-- Hamin Park: AP Biology and AP Calculus BC. Hamin's Calculus roadmap is an exact
-  copy of Bogue's 88-row roadmap at the time of enrollment.
-- Other student records currently have no native course enrollment and see the
-  empty-course state.
+- Bogue Kwon: AP Calculus BC, 88 rows.
+- Hamin Park: AP Biology, 63 rows; AP Calculus BC, 88 rows copied exactly from
+  Bogue at enrollment time.
+- David Heo: AP Biology, 63 rows; AP Calculus BC, 88 rows, with initial data
+  matching Hamin's complete student record.
+- Seohu Lee: AP Calculus BC, 88 rows.
+- Alice Inthe Wonderland and Yong Joon Kim: no courses; they see the empty folder.
+
+Bogue is the reference Calculus enrollment. All 88 roadmap rows remain exactly
+unchanged. His existing Now and Feedback values were later moved intact from the
+student root into the Calculus course for strict subject isolation.
+
+## Shared terminology and user intent
+
+- **Portal**: `portal.html`, the intermediate course/app chooser. It must not
+  directly show a roadmap.
+- **Course app / icon**: one subject tile in the iPhone-folder-style Portal.
+  Biology uses a DNA SVG; Calculus uses an integral/graph SVG. The course name
+  appears under its icon.
+- **Course folder**: the translucent rounded container holding only the logged-in
+  student's enrolled course apps.
+- **Enrollment**: a course object in that student's `courses` array, as defined
+  above—not merely a link, icon, or old Notion URL.
+- **Roadmap**: the native Zenith row data belonging to one course. It can render
+  as Table or Curve on `roadmap.html`.
+- **Independent from Notion**: roadmap structure/status/link data lives in
+  Zenith and renders without Notion. Linked Drive, Classroom, Khan Academy, or
+  other files may remain external unless separately migrated.
+- **Now**: one immediate `rightNow` action. Hamin's current action is Chapter 1,
+  L1 Chemistry of Life, due next session.
+- **Feedback**: dated personalized entries rendered with the same shared design
+  for every student. Hamin has a Chapter 0 Foundations “well done” entry that
+  directs him to L1.
+
+The user expects future Codex sessions to act from this handoff without asking
+them to repeat established context. Preserve existing student data, especially
+Bogue's reference Calculus roadmap. When asked to migrate a Notion roadmap,
+inspect the published page or CSV, preserve ordering/statuses/resource and
+submission links, map it into a course enrollment, verify counts/parity, and
+record the result here. Explain material ambiguities, but do not re-ask what
+“enroll,” “Portal,” or “independent from Notion” means.
+
+The user generally wants implementation plus verification, not merely advice.
+However, committing/pushing/deploying remains a distinct external action and
+must be explicitly requested. A local change is not automatically public.
 
 ## Page and UI conventions
 
@@ -294,113 +349,142 @@ For every implementation task:
 - Do not commit or push unless the user explicitly requests it.
 - Update this document's Current State and Work Log.
 
-## Completed Request — Hamin's native AP Biology roadmap
+## Notion-to-native roadmap migration procedure
 
-The user provided the `d2d2` Notion CSV export for Hamin Park. It was converted
-into a
-native Zenith roadmap like Bogue Kwon's AP Calculus BC roadmap. The user should
-not need to explain this goal again.
+Hamin's `d2d2` Notion export is the completed reference migration. The directory
+contained two CSV files and no Markdown file. The ordered CSV produced 63 AP
+Biology rows across Chapters 0–8 and Chapter M, preserving 63 resource URLs and
+8 separate submission URLs.
 
-The intended result is:
+For another migration:
 
-- Store the selected student's roadmap directly in that student's `roadmap`
-  array in `js/data.js`.
-- Display it through `portal.html` and the existing
-  `renderRoadmap(student)` function in `js/app.js`.
-- Remove the active dependency on a Notion embed for that roadmap.
-- Show the roadmap only for the corresponding logged-in student under the
-  site's existing client-side account selection.
-- Leave linked external learning materials external unless the user separately
-  asks to migrate those files into this repository.
+1. Identify the target student without exposing their password.
+2. Read the published Notion database or request a CSV export if inaccessible.
+3. Inventory order, chapter, title, category, status, resource URL, and separate
+   submission URL.
+4. Normalize rows to `{ name, category, chapter, status, url?, submissionUrl? }`.
+5. Map clear category/status equivalents; preserve ambiguous data rather than
+   silently discarding it.
+6. Create or update the target course object inside the student's `courses`
+   array—never restore a top-level `student.roadmap`.
+7. Verify enrollment isolation, source/migrated row counts, order, locked-link
+   behavior, both Table and Curve views, and mobile layout.
+8. Preserve legacy Notion URLs until verification unless removal is requested.
+9. Update Current State and the newest-first Work Log without credentials.
 
-When the user supplies the Notion link, identify which existing student account
-should receive the roadmap if their message does not make that clear. Do not ask
-them to repeat the architecture or desired behavior documented here.
-
-### Bogue's roadmap as the reference implementation
-
-Bogue's native roadmap is not rendered from Notion. His student record contains
-a `roadmap` array whose items use this shape:
-
-```js
-{
-  name: "Visible resource or activity name",
-  category: "B-book chapter",
-  chapter: "Chapter 1",
-  status: "Unlocked",
-  url: "https://..." // optional
-}
-```
-
-Existing category keys are `I-information`, `B-book chapter`, `C-coursework`,
-`S-solution manual`, `R-Review`, `T-Test`, and `M-Mock`. Existing statuses are
-`Complete`, `Review`, `Unlocked`, `Optional-Reading`, and `Locked`.
-`renderRoadmap()` converts these into colored pills. Locked items never display
-an `Open` link, even if their records include URLs. Unknown values receive
-neutral fallback styling rather than breaking the table.
-
-Bogue's Calculus structure covers introductory information, Chapters 1–12, and
-a mock-exam section. Typical chapters contain book, coursework, solution,
-review, and test entries. Use this as the structural reference, but derive the
-new student's actual chapters and rows from their Notion content rather than
-copying Calculus-specific names.
-
-### Migration procedure for the future Codex session
-
-1. Confirm the target student's existing `STUDENTS` record without exposing or
-   repeating their password.
-2. Inspect the supplied Notion page/database. It must be published and readable
-   through the link. If it cannot be read, ask for a Notion CSV export rather
-   than asking the user to explain the project again.
-3. Inventory every row and relevant property: ordering, chapter/group, title,
-   category/type, status, and destination URL.
-4. Normalize the records into Zenith's `{ name, category, chapter, status,
-   url? }` schema while preserving meaningful Notion ordering.
-5. Map clear equivalent categories/statuses. If a mapping is ambiguous, ask or
-   extend the renderer deliberately; do not silently discard information.
-6. Add the `roadmap` array only to the target student's `js/data.js` record.
-7. Disable the legacy Notion dependency as appropriate, but preserve its old
-   URL until the native roadmap is verified or the user requests removal.
-8. Verify account isolation, row ordering, rendering, colored labels,
-   locked-link behavior, destination links, and narrow-screen usability.
-9. Compare the migrated row count and important links against the Notion source
-   to ensure the transfer is complete.
-10. Update Current State and the Work Log with the student, source, migrated row
-    count, mapping decisions, verification, and unresolved items. Never record
-    credentials here.
-
-### Meaning of "independent from Notion"
-
-The roadmap's structure, labels, statuses, and resource-link list will live in
-Zenith's own source data and render without loading Notion. This does not copy
-linked PDFs, videos, Google Drive files, or other resources into the repository.
-Migrating those assets is a separate task requiring the files and confirmation
+Native roadmap data removes the Notion runtime dependency, but linked external
+assets remain external until separately provided and migrated.
 
 ## Current State
 
-- Repository architecture and Git history have been inventoried.
-- Public pages, student flows, teacher placeholder, shared render functions, and
-  data ownership are documented above.
-- No application code was changed during the inventory.
-- `PROGRESS.md` was added as the persistent Codex handoff document.
-- Existing user modification in `README.md` remains untouched.
-- Hamin Park's AP Biology roadmap is now native Zenith data: 63 ordered entries
-  across Chapters 0–8 and Chapter M, with 63 resource links and 8 separate
-  submission links imported from `d2d2`.
-- Hamin's Now page assigns Chapter 1, L1 Chemistry of Life as his current move.
-- Hamin's Feedback page contains one congratulatory Chapter 0 Foundations entry
-  that gives study advice and directs him to move on to L1.
-
-- The Portal link now opens an iPhone-folder-style course chooser; roadmap
-  tables live on `roadmap.html` and are selected by enrolled course ID.
-- Hamin is enrolled in AP Biology and AP Calculus BC; Bogue is enrolled in AP
-  Calculus BC. Other students currently have no course objects.
+- Verified pulled state: `main == origin/main == 398aa79` before this document
+  update; no merge conflicts or application diffs were present.
+- Multi-course Portal, account-scoped enrollments, `roadmap.html`, and Table/Curve
+  views are merged and tracked on `main`.
+- Enrollments: Bogue—Calculus; Hamin—Biology and Calculus; Seohu—Calculus;
+  David Heo—Biology and Calculus; Alice/Yong Joon—none.
+- Bogue's 88-row roadmap and activity values are preserved inside his Calculus
+  course; no enrolled student uses root-level activity fields.
+- Hamin Biology: 63 rows, 63 resource links, 8 separate submission links from
+  `d2d2`; Now is L1 Chemistry of Life; Feedback contains the Foundations entry.
+- All enrolled students use strict course-scoped paths for Now, Feedback, Cheat
+  Sheet, Calendar, and Submit. Direct visits without a selected enrollment return
+  to Courses, preventing activity from another subject from appearing.
+- David: Biology Now is L1, Calculus Now is B1, and both Feedback arrays are empty.
+  Hamin: Biology owns L1 and his Foundations feedback; Calculus activity is empty.
+- Alice and Yong Joon have no enrollments. Yong Joon's legacy root activity data
+  remains preserved but dormant; strict course pages cannot render it until it is
+  deliberately placed into a future enrolled course.
+- Validation passes: both JavaScript files parse; all five edited protected-page
+  inline scripts parse; enrolled roadmaps match their prior data exactly; activity
+  values/counts survived migration; and `git diff --check` passes.
+- Current uncommitted files: `js/data.js`, `js/app.js`, `right-now.html`,
+  `feedback.html`, `cheatsheet.html`, `calendar.html`, `submit.html`, and
+  `PROGRESS.md`. Nothing has been committed or pushed.
 
 ## Work Log
 
 Add new entries immediately below this instruction, newest first. Each entry
 should include the date, request, files changed, verification, and any remaining
 work or important decisions.
+
+### 2026-07-27 — Saved final course-path handoff state
+
+- Request: save all completed progress for the next memoryless session.
+- Reconciled architecture, strict course ownership, active-course persistence,
+  current enrollments, migrated activity placement, dormant unenrolled data,
+  verification evidence, modified files, and commit/deployment status.
+- Files changed for this handoff step: `PROGRESS.md` only; application changes
+  from the recorded tasks remain uncommitted in the working tree.
+
+### 2026-07-27 — Enforced course-specific paths for all students
+
+- Request: make the selected enrollment determine all Roadmap, Now, Feedback,
+  Cheat Sheet, Calendar, and Submit content for every student.
+- Files changed: `js/data.js`, `js/app.js`, `right-now.html`,
+  `feedback.html`, `cheatsheet.html`, `calendar.html`, `submit.html`, and
+  `PROGRESS.md`.
+- Migrated Bogue and Seohu activity into Calculus and Hamin activity into Biology;
+  Hamin Calculus has independent empty Feedback/Cheat Sheet state. David remains
+  independently scoped to Biology L1 and Calculus B1 with empty feedback.
+- Course pages require a validated selected enrollment. Calendar and Submit accept
+  optional per-course URLs and otherwise use the shared service, never another
+  course's URL.
+- Root-level activity fields are no longer render fallbacks. Dormant data on an
+  unenrolled student remains preserved but cannot display until deliberately
+  placed in a future course.
+- Verification: syntax/data/diff checks pass; every enrolled course has isolated
+  activity containers and migrated values/counts match their prior data.
+
+### 2026-07-27 — Added course-scoped Now and Feedback paths
+
+- Request: keep David’s Biology and Calculus activity data isolated according to
+  the course app selected after login.
+- Files changed: `js/data.js`, `js/app.js`, and `PROGRESS.md`.
+- Navigation propagates only validated enrolled `?course=` IDs across protected
+  pages and remembers the selected enrollment as `activeCourseId` if a local
+  link drops its query; Courses and login/logout clear that subject context.
+- David Biology Now shows L1; Calculus Now shows B1; both Feedback arrays are
+  empty because he has no reviewed submissions.
+- Superseded: course-owned fields are now mandatory for all enrolled students;
+  root-level activity fallbacks were removed to prevent cross-subject leakage.
+- Verification: JavaScript syntax and diff checks pass; simulated local flows
+  render `Chapter 1 · L1` for Biology and `Chapter 1 · B1` for Calculus, keep
+  Feedback empty, clear context at Courses, and reject invalid course IDs.
+
+### 2026-07-27 — Added David Heo account and course enrollments
+
+- Request: create David Heo's student account and enroll him in AP Biology and
+  AP Calculus BC.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Implementation: David is a complete literal object inside `STUDENTS`, with
+  standalone copies of Hamin's portal, Now, feedback, and both course datasets.
+  No runtime lookup, cloning helper, or shared student data object remains.
+- Verification: syntax and diff checks pass; all non-identity data matches Hamin
+  exactly, including the 63-row Biology and 88-row Calculus roadmaps.
+- No credentials are reproduced in this handoff document.
+
+### 2026-07-27 — Comprehensive memoryless-session handoff audit
+
+- Reconciled this document with merged commit `398aa79`.
+- Removed stale descriptions of Portal as a roadmap, top-level student roadmaps,
+  the old commit/dirty README state, and the completed migration as pending.
+- Added live Table/Curve architecture, enrollment semantics, shared terminology,
+  user intent, deployment boundaries, migration workflow, and exact current
+  enrollments/status.
+- Files changed: `PROGRESS.md` only.
+
+### 2026-07-27 — Verified pulled multi-course integration
+
+- Repository state: clean `main` at `398aa79`, matching `origin/main`.
+- Confirmed the course chooser, `roadmap.html`, enrollment-aware rendering, and
+  the merged Table/Curve roadmap view are tracked on `main`.
+- Current enrollments: Bogue has AP Calculus BC; Hamin has AP Biology and AP
+  Calculus BC; Seohu has AP Calculus BC; Alice and Yong Joon have no courses.
+- Bogue verification: all 88 Calculus roadmap rows and every non-course Bogue
+  field exactly match the original pre-course data.
+- Validation: `js/data.js` and `js/app.js` pass `node --check`; Git status and
+  diff checks were clean immediately after the pull.
 
 ### 2026-07-27 — Added multi-course enrollment and course chooser
 
@@ -448,15 +532,15 @@ work or important decisions.
 - Only Hamin received this roadmap; Bogue's Calculus roadmap is unchanged.
 - Both JavaScript files and `git diff --check` pass.
 
-### 2026-07-27 — Recorded pending Notion roadmap migration
+### 2026-07-27 — Initial Notion migration request (superseded/completed)
 
 - Request: convert another student's existing Notion roadmap into an independent
   Zenith roadmap matching Bogue's native Calculus implementation.
 - Files changed: `PROGRESS.md` only.
 - Decision: reuse the per-student `roadmap` schema and `renderRoadmap()` instead
   of creating another Notion iframe.
-- Input still needed: the published Notion link and target student account. A
-  CSV export is the fallback if the Notion page cannot be read.
+- Superseded: the user later supplied the `d2d2` CSV and Hamin's migration
+  was completed; no input remains pending for that request.
 - Scope: the roadmap becomes independent from Notion; linked external materials
   remain external unless separately migrated.
 - Application/data changes: none yet.

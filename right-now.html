@@ -65,7 +65,8 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderRightNow(student);
+  var course = requireSelectedCourse(student);
+  if (course) renderRightNow(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

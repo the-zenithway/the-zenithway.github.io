@@ -56,8 +56,11 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderCheatSheetPage(student);
-  renderMath(document.querySelector('.feedback-col'));
+  var course = requireSelectedCourse(student);
+  if (course) {
+    renderCheatSheetPage(student);
+    renderMath(document.querySelector('.feedback-col'));
+  }
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
