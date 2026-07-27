@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roadmap — Zenith</title>
+<title>My Courses — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -29,7 +29,7 @@
       <span class="sr-only">Zenith</span>
     </a>
     <nav class="portal-nav">
-      <a href="portal.html" class="portal-nav-link active">Roadmap</a>
+      <a href="portal.html" class="portal-nav-link active">Courses</a>
       <a href="right-now.html" class="portal-nav-link">Now</a>
       <a href="feedback.html" class="portal-nav-link">Feedback</a>
       <a href="calendar.html" class="portal-nav-link">Calendar</a>
@@ -41,20 +41,16 @@
   </div>
 </header>
 
-<main class="roadmap-wrap">
-  <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once your roadmap is set up.</p>
-  <table class="roadmap-table" id="roadmap-table" hidden>
-    <thead>
-      <tr>
-        <th>Chapter</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Links</th>
-      </tr>
-    </thead>
-    <tbody id="roadmap-tbody"></tbody>
-  </table>
+<main class="course-portal-wrap">
+  <section class="course-folder" aria-labelledby="course-folder-title">
+    <div class="course-folder-heading">
+      <p class="course-folder-eyebrow">My courses</p>
+      <h1 id="course-folder-title">Choose a roadmap</h1>
+      <p id="course-folder-greeting" class="course-folder-greeting"></p>
+    </div>
+    <div id="course-app-grid" class="course-app-grid"></div>
+    <p id="course-folder-empty" class="course-folder-empty" hidden>You are not enrolled in a course yet.</p>
+  </section>
 </main>
 
 <script src="js/data.js"></script>
@@ -62,7 +58,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderRoadmap(student);
+  renderCoursePortal(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

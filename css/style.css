@@ -564,6 +564,123 @@ body.portal-body {
   margin: 0;
 }
 
+/* -------- course folder (portal page) -------- */
+.course-portal-wrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 48px 24px;
+}
+
+.course-folder {
+  width: min(100%, 680px);
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.10), transparent 32%),
+    rgba(44, 44, 44, 0.82);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(22px);
+}
+
+.course-folder-heading { margin-bottom: 28px; }
+
+.course-folder-eyebrow {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.course-folder h1 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.course-folder-greeting,
+.course-folder-empty {
+  margin: 7px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.course-folder-empty { padding: 20px 0 4px; }
+.course-folder-empty[hidden], .course-app-grid[hidden] { display: none; }
+
+.course-app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
+  gap: 28px 22px;
+  align-items: start;
+}
+
+.course-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+}
+
+.course-app-icon {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  border-radius: 21px;
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 10px 24px rgba(0, 0, 0, 0.28);
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.course-app-icon svg { width: 52px; height: 52px; }
+
+.course-app-icon--calculus {
+  background: linear-gradient(145deg, #3157D8, #7138B5 62%, #A24A9A);
+}
+
+.course-app-icon--biology {
+  background: linear-gradient(145deg, #159A72, #177C88 58%, #225CAF);
+}
+
+.course-app:hover .course-app-icon {
+  transform: translateY(-3px) scale(1.025);
+  filter: brightness(1.08);
+}
+
+.course-app-name {
+  max-width: 120px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.roadmap-course-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 18px 12px 8px;
+}
+
+.roadmap-course-heading h1 { margin: 0; font-size: 1.25rem; }
+
+.roadmap-back {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.roadmap-back:hover { color: var(--text); }
+
 /* -------- Roadmap table (portal page) -------- */
 .roadmap-wrap {
   flex: 1;

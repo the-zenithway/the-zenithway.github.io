@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Calendar — Zenith</title>
+<title>Course Roadmap — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -29,21 +29,37 @@
       <span class="sr-only">Zenith</span>
     </a>
     <nav class="portal-nav">
-      <a href="portal.html" class="portal-nav-link">Courses</a>
+      <a href="portal.html" class="portal-nav-link active">Courses</a>
       <a href="right-now.html" class="portal-nav-link">Now</a>
       <a href="feedback.html" class="portal-nav-link">Feedback</a>
-      <a href="calendar.html" class="portal-nav-link active">Calendar</a>
+      <a href="calendar.html" class="portal-nav-link">Calendar</a>
       <a href="submit.html" class="portal-nav-link">Submit</a>
     </nav>
   </div>
   <div class="portal-actions">
-    <a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>
+    <a href="portal.html" class="portal-link">All courses</a>
     <button id="logout-btn" class="portal-logout">Log out</button>
   </div>
 </header>
 
-<main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Google Calendar"></iframe>
+<main class="roadmap-wrap">
+  <div class="roadmap-course-heading">
+    <a href="portal.html" class="roadmap-back">← All courses</a>
+    <h1 id="roadmap-course-name">Course roadmap</h1>
+  </div>
+  <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
+  <table class="roadmap-table" id="roadmap-table" hidden>
+    <thead>
+      <tr>
+        <th>Chapter</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Links</th>
+      </tr>
+    </thead>
+    <tbody id="roadmap-tbody"></tbody>
+  </table>
 </main>
 
 <script src="js/data.js"></script>
@@ -51,7 +67,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, CALENDAR_URL, "Google Calendar");
+  renderCourseRoadmap(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

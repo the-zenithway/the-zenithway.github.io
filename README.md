@@ -110,3 +110,13 @@ Notion's own dark mode) so there's no visible seam where the embed
 starts. Colors and fonts all live as CSS variables at the top of
 `css/style.css` — `--bg`, `--text`, `--accent`, and so on — change
 them there and the whole site updates together.
+
+## Using Codex in development
+
+Codex is incorporated throughout the coding process for this project. Use it
+to understand the existing site, plan and implement changes, review edits,
+trace bugs, and verify that updates remain consistent with the static
+architecture and shared styles. Before making a change, provide the relevant
+files and the desired outcome; Codex can then make focused edits and explain
+what changed. Review changes before publishing, especially any updates to
+student data, external links, or portal access.

@@ -29,7 +29,7 @@ const ROLE_KEY = "loggedInRole"; // "student" or "teacher"
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS
 // (from data.js). On success, remembers who's logged in and which
@@ -79,7 +79,7 @@ function getCurrentTeacher() {
 // student-facing "protected" page.
 function requireLogin() {
   if (!getCurrentStudent()) {
-    const here = window.location.pathname.split("/").pop();
+    const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
@@ -88,7 +88,7 @@ function requireLogin() {
 // list instead of STUDENTS.
 function requireTeacherLogin() {
   if (!getCurrentTeacher()) {
-    const here = window.location.pathname.split("/").pop();
+    const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
@@ -99,7 +99,8 @@ function requireTeacherLogin() {
 // home). Call this after a successful login.
 function getLoginRedirect() {
   const requested = new URLSearchParams(window.location.search).get("redirect");
-  if (REDIRECTABLE_PAGES.includes(requested)) return requested;
+  const requestedPage = requested ? requested.split("?")[0] : "";
+  if (REDIRECTABLE_PAGES.includes(requestedPage)) return requested;
   return localStorage.getItem(ROLE_KEY) === "teacher" ? "teacher.html" : "index.html";
 }
 
@@ -420,6 +421,78 @@ function renderBlogPost() {
     '</div>';
 }
 
+// Returns one enrolled course from a student record by its stable URL id.
+// A course is an enrollment: if it is not in student.courses, it is not shown
+// in the course folder and its roadmap cannot be selected for that student.
+function getStudentCourse(student, courseId) {
+  if (!student || !courseId) return null;
+  return (student.courses || []).find(function (course) {
+    return course.id === courseId;
+  }) || null;
+}
+
+// Subject-specific app icons used by the course folder. They are inline SVG so
+// the folder stays self-contained and does not depend on another icon service.
+function courseIconHtml(icon) {
+  if (icon === "biology") {
+    return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+      '<path d="M20 10c22 10 22 34 0 44M44 10c-22 10-22 34 0 44" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M22 18h20M18 27h28M18 37h28M22 46h20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".72"/>' +
+    '</svg>';
+  }
+  return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+    '<path d="M39 9c-9 0-12 5-13 14l-3 24c-1 7-4 9-10 9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' +
+    '<path d="M18 28h20M39 20l12 25M50 20L37 45" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>' +
+  '</svg>';
+}
+
+// Builds the iPhone-folder-style course launcher on portal.html. Only courses
+// present in this student's courses array are rendered.
+function renderCoursePortal(student) {
+  if (!student) return;
+
+  const courses = student.courses || [];
+  const grid = document.getElementById("course-app-grid");
+  const empty = document.getElementById("course-folder-empty");
+  document.getElementById("course-folder-greeting").textContent =
+    "Hey " + student.name.split(" ")[0] + ", pick a subject to continue.";
+
+  if (courses.length === 0) {
+    grid.hidden = true;
+    empty.hidden = false;
+    return;
+  }
+
+  grid.hidden = false;
+  empty.hidden = true;
+  grid.innerHTML = courses.map(function (course) {
+    return '<a class="course-app" href="roadmap.html?course=' + encodeURIComponent(course.id) + '">' +
+      '<span class="course-app-icon course-app-icon--' + course.icon + '">' + courseIconHtml(course.icon) + '</span>' +
+      '<span class="course-app-name">' + course.name + '</span>' +
+    '</a>';
+  }).join("");
+}
+
+// Resolves roadmap.html's course query only against the logged-in student's
+// enrollments, then hands that course to the shared roadmap table renderer.
+function renderCourseRoadmap(student) {
+  if (!student) return;
+
+  const courseId = new URLSearchParams(window.location.search).get("course");
+  const course = getStudentCourse(student, courseId);
+  const heading = document.getElementById("roadmap-course-name");
+
+  if (!course) {
+    heading.textContent = "Course not found";
+    renderRoadmap(null);
+    return;
+  }
+
+  document.title = course.name + " Roadmap — Zenith";
+  heading.textContent = course.name;
+  renderRoadmap(course);
+}
+
 // Colors for the roadmap table's Category/Status pills on
 // portal.html — the single place to tweak the palette. Keys must
 // match the exact strings used in a student's "roadmap" array in
@@ -427,9 +500,12 @@ function renderBlogPost() {
 // pill instead of breaking.
 const ROADMAP_CATEGORY_COLORS = {
   "I-information": { text: "#94A3B8", bg: "rgba(148, 163, 184, 0.16)" },
+  "L-Learning": { text: "#60A5FA", bg: "rgba(96, 165, 250, 0.16)" },
+  "N-Notes Submission": { text: "#FBBF24", bg: "rgba(251, 191, 36, 0.16)" },
   "B-book chapter": { text: "#60A5FA", bg: "rgba(96, 165, 250, 0.16)" },
   "C-coursework": { text: "#FB923C", bg: "rgba(251, 146, 60, 0.16)" },
   "S-solution manual": { text: "#2DD4BF", bg: "rgba(45, 212, 191, 0.16)" },
+  "F-Final Self Check": { text: "#A78BFA", bg: "rgba(167, 139, 250, 0.16)" },
   "R-Review": { text: "#C4B5FD", bg: "rgba(196, 181, 253, 0.16)" },
   "T-Test": { text: "#FB7185", bg: "rgba(251, 113, 133, 0.16)" },
   "M-Mock": { text: "#F472B6", bg: "rgba(244, 114, 182, 0.16)" }
@@ -459,18 +535,14 @@ function roadmapCategoryLabel(category) {
   return rest.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
 }
 
-// Fills in the roadmap table on portal.html from the logged-in
-// student's "roadmap" array in js/data.js — this is the list-view
-// replacement for the old Notion embed. Shows an empty state if the
-// field is missing or empty (most students don't have one migrated
-// yet).
-function renderRoadmap(student) {
-  if (!student) return;
+// Fills in roadmap.html from one selected enrolled course. The caller has
+// already verified that the course belongs to the logged-in student.
+function renderRoadmap(course) {
 
   const table = document.getElementById("roadmap-table");
   const empty = document.getElementById("roadmap-empty");
   const tbody = document.getElementById("roadmap-tbody");
-  const items = student.roadmap || [];
+  const items = course ? (course.roadmap || []) : [];
 
   if (items.length === 0) {
     table.hidden = true;
@@ -482,11 +554,16 @@ function renderRoadmap(student) {
   empty.hidden = true;
 
   tbody.innerHTML = items.map(function (item) {
-    // Locked means not accessible yet — don't offer the link at all,
-    // even if a url happens to already be filled in for it.
-    const link = (item.url && item.status !== "Locked")
-      ? '<a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a>'
-      : "—";
+    // Locked means not accessible yet — don't offer resource or submission
+    // links, even if URLs are already filled in for the item.
+    const links = [];
+    if (item.status !== "Locked" && item.url) {
+      links.push('<a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a>');
+    }
+    if (item.status !== "Locked" && item.submissionUrl) {
+      links.push('<a href="' + item.submissionUrl + '" target="_blank" rel="noopener" class="roadmap-link">Submit ↗</a>');
+    }
+    const link = links.length > 0 ? links.join(' <span aria-hidden="true">·</span> ') : "—";
 
     return '<tr>' +
       '<td class="roadmap-chapter">' + item.chapter + '</td>' +
