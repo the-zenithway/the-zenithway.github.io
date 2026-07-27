@@ -419,3 +419,81 @@ function renderBlogPost() {
       post.content.map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join("") +
     '</div>';
 }
+
+// Colors for the roadmap table's Category/Status pills on
+// portal.html — the single place to tweak the palette. Keys must
+// match the exact strings used in a student's "roadmap" array in
+// js/data.js. Anything not listed here falls back to a plain grey
+// pill instead of breaking.
+const ROADMAP_CATEGORY_COLORS = {
+  "I-information": { text: "#94A3B8", bg: "rgba(148, 163, 184, 0.16)" },
+  "B-book chapter": { text: "#60A5FA", bg: "rgba(96, 165, 250, 0.16)" },
+  "C-coursework": { text: "#FB923C", bg: "rgba(251, 146, 60, 0.16)" },
+  "S-solution manual": { text: "#2DD4BF", bg: "rgba(45, 212, 191, 0.16)" },
+  "R-Review": { text: "#C4B5FD", bg: "rgba(196, 181, 253, 0.16)" },
+  "T-Test": { text: "#FB7185", bg: "rgba(251, 113, 133, 0.16)" },
+  "M-Mock": { text: "#F472B6", bg: "rgba(244, 114, 182, 0.16)" }
+};
+
+const ROADMAP_STATUS_COLORS = {
+  "Complete": { text: "#4ADE80", bg: "rgba(74, 222, 128, 0.16)" },
+  "Review": { text: "#60A5FA", bg: "rgba(96, 165, 250, 0.16)" },
+  "Unlocked": { text: "#D6A94A", bg: "rgba(214, 169, 74, 0.18)" },
+  "Optional-Reading": { text: "#C4B5FD", bg: "rgba(196, 181, 253, 0.16)" },
+  "Locked": { text: "#8F8F8F", bg: "rgba(143, 143, 143, 0.14)" }
+};
+
+const ROADMAP_FALLBACK_COLOR = { text: "var(--text-muted)", bg: "var(--bg)" };
+
+function roadmapPillHtml(rawKey, colorMap, label) {
+  const c = colorMap[rawKey] || ROADMAP_FALLBACK_COLOR;
+  return '<span class="roadmap-pill" style="color:' + c.text + '; background:' + c.bg + ';">' + label + '</span>';
+}
+
+// "B-book chapter" -> "Book Chapter", "R-Review" -> "Review", etc.
+// Purely cosmetic — item.category itself (the raw value) is still
+// what's used to look up the pill's color.
+function roadmapCategoryLabel(category) {
+  const dash = category.indexOf("-");
+  const rest = dash === -1 ? category : category.slice(dash + 1);
+  return rest.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+}
+
+// Fills in the roadmap table on portal.html from the logged-in
+// student's "roadmap" array in js/data.js — this is the list-view
+// replacement for the old Notion embed. Shows an empty state if the
+// field is missing or empty (most students don't have one migrated
+// yet).
+function renderRoadmap(student) {
+  if (!student) return;
+
+  const table = document.getElementById("roadmap-table");
+  const empty = document.getElementById("roadmap-empty");
+  const tbody = document.getElementById("roadmap-tbody");
+  const items = student.roadmap || [];
+
+  if (items.length === 0) {
+    table.hidden = true;
+    empty.hidden = false;
+    return;
+  }
+
+  table.hidden = false;
+  empty.hidden = true;
+
+  tbody.innerHTML = items.map(function (item) {
+    // Locked means not accessible yet — don't offer the link at all,
+    // even if a url happens to already be filled in for it.
+    const link = (item.url && item.status !== "Locked")
+      ? '<a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a>'
+      : "—";
+
+    return '<tr>' +
+      '<td class="roadmap-chapter">' + item.chapter + '</td>' +
+      '<td class="roadmap-name">' + item.name + '</td>' +
+      '<td>' + roadmapPillHtml(item.category, ROADMAP_CATEGORY_COLORS, roadmapCategoryLabel(item.category)) + '</td>' +
+      '<td>' + roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) + '</td>' +
+      '<td>' + link + '</td>' +
+    '</tr>';
+  }).join("");
+}

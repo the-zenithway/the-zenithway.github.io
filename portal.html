@@ -37,17 +37,24 @@
     </nav>
   </div>
   <div class="portal-actions">
-    <a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>
     <button id="logout-btn" class="portal-logout">Log out</button>
   </div>
 </header>
 
-<main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Notion portal"></iframe>
-  <div id="embed-unavailable" class="embed-unavailable" hidden>
-    <p>This page is temporarily unavailable.</p>
-    <a id="embed-unavailable-link" href="#" target="_blank" rel="noopener" class="btn-primary">Open in Notion ↗</a>
-  </div>
+<main class="roadmap-wrap">
+  <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once your roadmap is set up.</p>
+  <table class="roadmap-table" id="roadmap-table" hidden>
+    <thead>
+      <tr>
+        <th>Chapter</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Links</th>
+      </tr>
+    </thead>
+    <tbody id="roadmap-tbody"></tbody>
+  </table>
 </main>
 
 <script src="js/data.js"></script>
@@ -55,7 +62,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, student.portal.notionUrl, "Notion", student.portal.notionAvailable);
+  renderRoadmap(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
