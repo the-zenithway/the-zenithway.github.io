@@ -681,7 +681,50 @@ body.portal-body {
 
 .roadmap-back:hover { color: var(--text); }
 
-/* -------- Roadmap table (portal page) -------- */
+/* -------- Roadmap page -------- */
+.roadmap-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-toolbar {
+  flex-shrink: 0;
+  padding: 16px 24px 0;
+}
+
+.roadmap-view-switch {
+  display: inline-flex;
+  gap: 2px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+}
+
+.roadmap-view-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: calc(var(--radius) - 3px);
+  cursor: pointer;
+}
+
+.roadmap-view-btn:hover { color: var(--text); }
+
+.roadmap-view-btn.active {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.roadmap-table[hidden], .roadmap-curve-wrap[hidden] { display: none; }
+
+/* -------- Roadmap: table view -------- */
 .roadmap-wrap {
   flex: 1;
   min-height: 0;
@@ -695,6 +738,7 @@ body.portal-body {
 
 .roadmap-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
@@ -709,25 +753,37 @@ body.portal-body {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 12px;
+  padding: 12px 10px;
   border-bottom: 1px solid var(--border);
 }
 
 .roadmap-table td {
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.roadmap-table td.roadmap-name { white-space: normal; }
+.roadmap-table td.roadmap-name { white-space: normal; overflow: visible; }
 
 .roadmap-table tbody tr:hover { background: var(--bg-elevated); }
 
+/* Unlocked = the thing to work on right now — make it pop a little */
+.roadmap-table tbody tr.roadmap-row-unlocked { background: rgba(214, 169, 74, 0.07); }
+.roadmap-table tbody tr.roadmap-row-unlocked:hover { background: rgba(214, 169, 74, 0.12); }
+.roadmap-row-unlocked .roadmap-name { color: var(--text); font-weight: 600; }
+
+.roadmap-star { color: var(--accent); margin-right: 2px; }
+
+/* Locked = not relevant yet — let it recede instead of competing for attention */
+.roadmap-row-locked .roadmap-name { color: var(--text-muted); }
+
 .roadmap-chapter {
-  color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .roadmap-pill {
@@ -747,6 +803,115 @@ body.portal-body {
 
 .roadmap-link:hover { text-decoration: underline; }
 .roadmap-link + .roadmap-link { margin-left: 10px; }
+
+/* -------- Roadmap: curve view -------- */
+.roadmap-curve-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 24px;
+  overflow: auto;
+}
+
+.roadmap-curve-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.curve-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.curve-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.roadmap-curve-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+}
+
+#roadmap-curve-svg { width: 100%; height: auto; overflow: visible; }
+
+.roadmap-gem { cursor: pointer; }
+.roadmap-gem-hit { cursor: pointer; }
+.roadmap-gem-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 15px;
+  fill: var(--text);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.roadmap-curve-path {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 2.5;
+}
+
+.roadmap-tangent-line {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+}
+
+.curve-popover {
+  position: absolute;
+  z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px;
+  width: 260px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.curve-popover[hidden] { display: none; }
+
+.curve-popover-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 10px;
+}
+
+.curve-popover-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.curve-popover-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.curve-popover-item-name {
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.curve-popover-item-link { text-align: right; margin: -4px 0 2px; }
 
 /* -------- Right Now page -------- */
 .rightnow-wrap {

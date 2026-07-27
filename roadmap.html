@@ -42,24 +42,52 @@
   </div>
 </header>
 
-<main class="roadmap-wrap">
+<main class="roadmap-main">
   <div class="roadmap-course-heading">
     <a href="portal.html" class="roadmap-back">← All courses</a>
     <h1 id="roadmap-course-name">Course roadmap</h1>
   </div>
-  <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
-  <table class="roadmap-table" id="roadmap-table" hidden>
-    <thead>
-      <tr>
-        <th>Chapter</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Links</th>
-      </tr>
-    </thead>
-    <tbody id="roadmap-tbody"></tbody>
-  </table>
+
+  <div class="roadmap-toolbar">
+    <div class="roadmap-view-switch" id="roadmap-view-switch">
+      <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
+      <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
+    </div>
+  </div>
+
+  <div class="roadmap-wrap" id="roadmap-view-table">
+    <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
+    <table class="roadmap-table" id="roadmap-table" hidden>
+      <colgroup>
+        <col style="width: 92px">
+        <col>
+        <col style="width: 150px">
+        <col style="width: 155px">
+        <col style="width: 84px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Chapter</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody id="roadmap-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="roadmap-curve-wrap" id="roadmap-view-curve" hidden>
+    <div class="roadmap-curve-legend" id="roadmap-curve-legend"></div>
+    <div class="roadmap-curve-canvas" id="roadmap-curve-canvas">
+      <svg id="roadmap-curve-svg" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="curve-popover" id="curve-popover" hidden>
+        <p class="curve-popover-title" id="curve-popover-title"></p>
+        <div class="curve-popover-list" id="curve-popover-list"></div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
@@ -67,7 +95,8 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderCourseRoadmap(student);
+  var course = renderCourseRoadmap(student);
+  if (course) setUpRoadmapViewSwitch(course);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
