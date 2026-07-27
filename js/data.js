@@ -69,10 +69,12 @@ const STUDENTS = [
       "notionAvailable": true
     },
     "rightNow": {
-      "state": "waiting",
-      "chapter": "Chapter 5",
-      "unit": "S",
-      "note": "We're reviewing your submission — no action needed, we'll message you once it's ready."
+      "state": "your-move",
+      "chapter": "Chapter 1",
+      "unit": "R",
+      "note": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
+      "instruction": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
+      "due": "Tuesday"
     }
   },
   {
