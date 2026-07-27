@@ -171,3 +171,15 @@ const STUDENTS = [
     ]
   }
 ];
+
+// Teachers are a separate list from STUDENTS — same username/password
+// shape, but they log into a different dashboard (teacher.html) with
+// its own layout instead of the student portal pages. Kept minimal
+// for now; the actual dashboard content/structure is still TBD.
+const TEACHERS = [
+  {
+    "username": "teacher",
+    "password": "password",
+    "name": "Zenith Teacher"
+  }
+];

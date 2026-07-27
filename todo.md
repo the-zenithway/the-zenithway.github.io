@@ -19,6 +19,9 @@ The one big consolidated place a student (and us) can look to know exactly where
 - [ ] (future) automatic unit updates, right now updates by AI, or use insta notif, or use expectation(e.g. auto update) 
 - [ ] how does submission exactly work? I think online is way better than IRL
 - [ ] Feedback process(should be encouraging than realistic)
+- [ ] Need to work on the part where recruited teachers might have difficulty editing and updating the database accordingly. we need something to do this well. 
+- [ ] How the teacher dashboard would work, could they see what the students see? etc. etc. how does it work, how do they manipulate the thngs and yeah 
+- [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. 
 
 ## 2. Active Engagement & Motivation
 Forcing actual grind and active effort, not just handing over information — direct checking, consistent high-ROI activity, keeping it human.
@@ -28,7 +31,6 @@ Forcing actual grind and active effort, not just handing over information — di
   - [ ] Worksheet built by us (probably AI-assisted) targeting the chapter's most important questions, with numbers changed and trap questions worked in from C — not a copy of C
   - [ ] Same test date for every student regardless of individual B/C/S progress — administered IRL as a physical worksheet with a strict time limit (lean extension available if we didn't calibrate the timing well)
   - [ ] Goal: since students already did B + C + Review/feedback beforehand, they should be well-prepared going in — T should land as fun/rewarding, not scary, specifically because they did well
-  - [ ] **Core philosophy — speed matters, not just correctness.** Being able to 100% solve something isn't enough if it's too slow (e.g. a past student — Bogue — could solve almost everything correctly but never quickly). Fix: have students actively review their 발상노트 before T, specifically to drill speed, not just re-check accuracy
 - [ ] 발상노트 습관화 — reflecting on mistakes via the physical notebook *(also: System)*
 - [ ] 장기적인 몰입을 위한 많은 단기적 몰입 — 주기적으로 시험을 보고 피드백을 거치는 등, 어렵지만 ROI 높은 활동을 강제로 꾸준히 해야함 *(this is what T above is the concrete version of)*
 - [ ] Motivational articles / Zenith blog — our own regular writing and input
@@ -67,4 +69,4 @@ and do things for the greater good?
 - [ ] Improve FAQ page, resource page, and make like more helpful articles in the zenith blog 
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
 - [ ] Maybe about us page that showcases the people involved in this
-- [ ]  
+- [ ] update philosophy page 

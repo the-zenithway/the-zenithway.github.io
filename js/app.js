@@ -16,42 +16,67 @@
     - right-now.html is different — it's real content, not an embed,
       rendered by renderRightNow() below from each student's
       "rightNow" field in js/data.js.
+    - There are two roles now: students (STUDENTS in data.js) use all
+      the pages above; teachers (TEACHERS in data.js) log into
+      teacher.html instead, which is its own separate, much simpler
+      page for now — see requireTeacherLogin()/getCurrentTeacher()
+      below.
 */
 
 const SESSION_KEY = "loggedInUsername";
+const ROLE_KEY = "loggedInRole"; // "student" or "teacher"
 
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "resources.html", "philosophy.html", "faq.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html"];
 
-// Checks a username/password against STUDENTS (from data.js).
-// On success, remembers who's logged in (in this browser) and
-// returns true. Returns false on a bad username/password.
+// Checks a username/password against STUDENTS first, then TEACHERS
+// (from data.js). On success, remembers who's logged in and which
+// role they are (in this browser) and returns true. Returns false on
+// a bad username/password.
 function login(username, password) {
-  const match = STUDENTS.find(function (s) {
+  const student = STUDENTS.find(function (s) {
     return s.username === username && s.password === password;
   });
-
-  if (match) {
-    localStorage.setItem(SESSION_KEY, match.username);
+  if (student) {
+    localStorage.setItem(SESSION_KEY, student.username);
+    localStorage.setItem(ROLE_KEY, "student");
     return true;
   }
+
+  const teacher = TEACHERS.find(function (t) {
+    return t.username === username && t.password === password;
+  });
+  if (teacher) {
+    localStorage.setItem(SESSION_KEY, teacher.username);
+    localStorage.setItem(ROLE_KEY, "teacher");
+    return true;
+  }
+
   return false;
 }
 
 // Returns the currently logged-in student object, or null if
-// nobody is logged in on this browser.
+// nobody is logged in on this browser (or they're a teacher).
 function getCurrentStudent() {
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
   return STUDENTS.find(function (s) { return s.username === username; }) || null;
 }
 
+// Returns the currently logged-in teacher object, or null if nobody
+// is logged in on this browser (or they're a student).
+function getCurrentTeacher() {
+  const username = localStorage.getItem(SESSION_KEY);
+  if (!username) return null;
+  return TEACHERS.find(function (t) { return t.username === username; }) || null;
+}
+
 // Sends the visitor to the login page if nobody is logged in,
 // remembering the page they were trying to reach so login.html can
 // send them back afterward. Call this at the very top of any
-// "protected" page.
+// student-facing "protected" page.
 function requireLogin() {
   if (!getCurrentStudent()) {
     const here = window.location.pathname.split("/").pop();
@@ -59,17 +84,29 @@ function requireLogin() {
   }
 }
 
-// Reads "?redirect=" from the login page's URL and returns it only
-// if it's one of this site's own pages — otherwise sends the visitor
-// home. Call this after a successful login.
+// Same as requireLogin(), but for teacher.html — checks the TEACHERS
+// list instead of STUDENTS.
+function requireTeacherLogin() {
+  if (!getCurrentTeacher()) {
+    const here = window.location.pathname.split("/").pop();
+    window.location.href = "login.html?redirect=" + encodeURIComponent(here);
+  }
+}
+
+// Reads "?redirect=" from the login page's URL and returns it if
+// it's one of this site's own pages; otherwise falls back to a
+// role-appropriate default (teachers -> their dashboard, students ->
+// home). Call this after a successful login.
 function getLoginRedirect() {
   const requested = new URLSearchParams(window.location.search).get("redirect");
-  return REDIRECTABLE_PAGES.includes(requested) ? requested : "index.html";
+  if (REDIRECTABLE_PAGES.includes(requested)) return requested;
+  return localStorage.getItem(ROLE_KEY) === "teacher" ? "teacher.html" : "index.html";
 }
 
 // Forgets who's logged in and returns to the home page.
 function logout() {
   localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(ROLE_KEY);
   window.location.href = "index.html";
 }
 
@@ -324,4 +361,14 @@ function renderFeedback(student) {
       '<p class="feedback-content">' + entry.content + '</p>' +
     '</div>';
   }).join("");
+}
+
+// Fills in the (currently placeholder) teacher.html dashboard from
+// the logged-in teacher's name. The actual dashboard content/layout
+// is intentionally undesigned for now — this just proves the role
+// separation works end to end.
+function renderTeacherDashboard(teacher) {
+  if (!teacher) return;
+  document.getElementById("teacher-greeting").textContent =
+    "Hey " + teacher.name.split(" ")[0] + ",";
 }
