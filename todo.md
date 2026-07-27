@@ -9,6 +9,11 @@ Organized around what makes us different, plus one bucket for the operational gr
 
 Items that clearly serve two pillars are listed in both places on purpose (not a duplicate to clean up) — e.g. Instagram AI and 발상노트.
 
+
+Check past work
+Feedback process(should be encouraging than realistic)
+submission process 
+
 ## 1. System — Absolute Clarity
 The one big consolidated place a student (and us) can look to know exactly where things stand: portal, forms, records.
 
@@ -21,14 +26,20 @@ The one big consolidated place a student (and us) can look to know exactly where
 - [ ] Instagram AI *(also: Active Engagement & Motivation)*
 - [ ] 발상노트 등등 제출할거 systematically — regular, structured submission flow *(also: Active Engagement & Motivation)*
 - [ ] 발상노트를 주기적으로 제출할때마다 정리된 피드백이랑 AI 인풋이 있는 pdf 보여주기 웹사이트에 *(also: Active Engagement & Motivation; ties into AI integration below)*
+- [ ] Add a **T (Test)** section to every chapter — extends the portal structure to B/C/S/T *(also: Active Engagement & Motivation — full philosophy listed there)*
 
 ## 2. Active Engagement & Motivation
 Forcing actual grind and active effort, not just handing over information — direct checking, consistent high-ROI activity, keeping it human.
 
-- [ ] IRL or Zoom classes for direct checking (need to think through format/logistics)
+- [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests below. Not a general class/lecture slot.
+- [ ] **T (Test) section per chapter** *(also: System — part of the B/C/S/T portal structure)*
+  - [ ] Worksheet built by us (probably AI-assisted) targeting the chapter's most important questions, with numbers changed and trap questions worked in from C — not a copy of C
+  - [ ] Same test date for every student regardless of individual B/C/S progress — administered IRL as a physical worksheet with a strict time limit (lean extension available if we didn't calibrate the timing well)
+  - [ ] Goal: since students already did B + C + Review/feedback beforehand, they should be well-prepared going in — T should land as fun/rewarding, not scary, specifically because they did well
+  - [ ] **Core philosophy — speed matters, not just correctness.** Being able to 100% solve something isn't enough if it's too slow (e.g. a past student — Bogue — could solve almost everything correctly but never quickly). Fix: have students actively review their 발상노트 before T, specifically to drill speed, not just re-check accuracy
 - [ ] Instagram AI *(also: System)*
 - [ ] 발상노트 습관화 — reflecting on mistakes via the physical notebook *(also: System)*
-- [ ] 장기적인 몰입을 위한 많은 단기적 몰입 — 주기적으로 시험을 보고 피드백을 거치는 등, 어렵지만 ROI 높은 활동을 강제로 꾸준히 해야함
+- [ ] 장기적인 몰입을 위한 많은 단기적 몰입 — 주기적으로 시험을 보고 피드백을 거치는 등, 어렵지만 ROI 높은 활동을 강제로 꾸준히 해야함 *(this is what T above is the concrete version of)*
 - [ ] Motivational articles / Zenith blog — our own regular writing and input
 - [ ] Make the grind enjoyable — genuine love for learning, not just forcing
 - [ ] Brainstorm more ways to force/encourage real effort (open-ended)
@@ -36,8 +47,9 @@ Forcing actual grind and active effort, not just handing over information — di
 ## 3. Advice & Direction — Community
 Regular, direct guidance instead of one-off help — AI integration, dynamic plans, chats with us, and a community around it.
 
+- [ ] **Make HOW TO STUDY absolutely clear — top priority for this pillar (VERY IMPORTANT)**. Not just what's due, but the actual technique/method of studying well *(also: Active Engagement & Motivation)*
 - [ ] AI chat integration — students chat with a Zenith-specialized AI (site stays static on GitHub Pages; needs a small serverless function elsewhere to hold the API key and call the model — see conversation)
-- [ ] Dynamic, personalized study plans
+- [ ] Dynamic, personalized study plans — tailored pace/direction per student, dynamically scheduled rather than one fixed calendar for everyone
 - [ ] Individual/personalized feedback (human + AI)
 - [ ] Zenith community space — Discord / Instagram / Facebook
 - [ ] Direct 1:1 guidance channel (DMs)
