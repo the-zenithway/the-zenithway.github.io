@@ -34,6 +34,7 @@ Regular, direct guidance instead of one-off help — AI integration, dynamic pla
 - [ ] Ways to make the community active, engaged, and no confict and encouarge helpfulness. what would trigger them to be genuinely helpful others 
 and do things for the greater good?
 - [ ] Community events, competitions, rewards, etc.
+- [ ] idea : for each chapter, highest scorer in the T part within a given period will get like a prize
 
 ## 4. Maintenance - updating existing features
 - [ ] make like a buffer, just in case someone is done ahead of time like always do 2 "now" page entries at a time, and they can see it if theyre like done with everything. maybe the can click a button confirm(show extra stuff) and move on conditionally, and teachers remove it 
@@ -50,7 +51,6 @@ and do things for the greater good?
 ## 5. Admin
 - [ ] Update and link new pages for the resources page after not relying on notion anymore or decide to leave it there like that 
 - [ ] Create discord community 
-- [ ] Create facebook community and messenger gc 
 - [ ] AP Resource Page — fill out the empty subject sections (Bio, Chem, Physics, CS A)
 - [ ] AP Bio Notion page
 - [ ] AP Chem Notion page
@@ -70,3 +70,7 @@ and do things for the greater good?
 - [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
 - [ ] upload advertisements/모집 글 in instragram and social media 
 - [ ] insta posts and etc in social media 
+
+## 6. Get People 
+## 7. documentation
+## 8. Intra-school Relation

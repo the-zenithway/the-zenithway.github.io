@@ -459,6 +459,22 @@ function roadmapCategoryLabel(category) {
   return rest.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
 }
 
+// A small rotating palette for the Chapter column — not meant to
+// mean anything on its own, just enough so adjacent chapters look
+// different from each other and a long table doesn't read as one
+// undifferentiated wall of "Chapter 1, Chapter 1, Chapter 2...".
+// Chapter 0 (intro material) and Chapter M (mocks) get their own
+// fixed colors since they're not part of the regular 1-12 sequence.
+const ROADMAP_CHAPTER_PALETTE = ["#7DD3FC", "#FCA5A5", "#FDE68A", "#A7F3D0", "#D8B4FE", "#FDBA74"];
+
+function roadmapChapterColor(chapter) {
+  if (chapter === "Chapter 0") return "var(--text-muted)";
+  if (chapter === "Chapter M") return "var(--accent)";
+  const num = parseInt(chapter.replace("Chapter", ""), 10);
+  if (isNaN(num)) return "var(--text-muted)";
+  return ROADMAP_CHAPTER_PALETTE[(num - 1) % ROADMAP_CHAPTER_PALETTE.length];
+}
+
 // Fills in the roadmap table on portal.html from the logged-in
 // student's "roadmap" array in js/data.js — this is the list-view
 // replacement for the old Notion embed. Shows an empty state if the
@@ -488,12 +504,261 @@ function renderRoadmap(student) {
       ? '<a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a>'
       : "—";
 
-    return '<tr>' +
-      '<td class="roadmap-chapter">' + item.chapter + '</td>' +
-      '<td class="roadmap-name">' + item.name + '</td>' +
+    // Unlocked = the thing to actually work on right now; Locked =
+    // not relevant yet. Everything else (Complete/Review/Optional)
+    // stays visually neutral.
+    let rowClass = "";
+    let namePrefix = "";
+    if (item.status === "Unlocked") {
+      rowClass = "roadmap-row-unlocked";
+      namePrefix = '<span class="roadmap-star" title="Work on this now">★</span> ';
+    } else if (item.status === "Locked") {
+      rowClass = "roadmap-row-locked";
+    }
+
+    return '<tr class="' + rowClass + '">' +
+      '<td class="roadmap-chapter" style="color:' + roadmapChapterColor(item.chapter) + ';">' + item.chapter + '</td>' +
+      '<td class="roadmap-name">' + namePrefix + item.name + '</td>' +
       '<td>' + roadmapPillHtml(item.category, ROADMAP_CATEGORY_COLORS, roadmapCategoryLabel(item.category)) + '</td>' +
       '<td>' + roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) + '</td>' +
       '<td>' + link + '</td>' +
     '</tr>';
   }).join("");
+}
+
+// ---- Roadmap "Curve" view ----
+// An alternate way to look at the exact same student.roadmap data as
+// the table: one gem per chapter (skipping Chapter 0 — it's just
+// intro material, no B/C/S/R/T), plotted along a smooth curve.
+// Clicking a gem draws the tangent line through that point and opens
+// a popover with that chapter's breakdown.
+
+// Groups the flat roadmap array into one entry per chapter, in the
+// order chapters first appear (the array is already chapter-ordered).
+function roadmapGroupByChapter(items) {
+  const order = [];
+  const map = {};
+  items.forEach(function (item) {
+    if (item.chapter === "Chapter 0") return;
+    if (!map[item.chapter]) {
+      map[item.chapter] = [];
+      order.push(item.chapter);
+    }
+    map[item.chapter].push(item);
+  });
+  return order.map(function (chapter) {
+    return { chapter: chapter, label: chapter.replace("Chapter ", ""), items: map[chapter] };
+  });
+}
+
+// One status per chapter, rolled up from its B/C/S/R/T items:
+// fully Complete wins outright; otherwise Unlocked (something to do
+// now) beats Review, which beats Optional-Reading; Locked is the
+// default when nothing else applies.
+function roadmapChapterOverallStatus(items) {
+  if (items.every(function (it) { return it.status === "Complete"; })) return "Complete";
+  if (items.some(function (it) { return it.status === "Unlocked"; })) return "Unlocked";
+  if (items.some(function (it) { return it.status === "Review"; })) return "Review";
+  if (items.some(function (it) { return it.status === "Optional-Reading"; })) return "Optional-Reading";
+  return "Locked";
+}
+
+// Evenly spaces one point per chapter across the width. The y uses a
+// hand-tuned two-frequency wave purely for visual variety — real
+// peaks and troughs instead of one repeating wiggle.
+function roadmapCurveLayout(groups, width, height) {
+  const marginX = 50, marginY = 60;
+  const usableW = width - marginX * 2;
+  const usableH = height - marginY * 2;
+  const n = groups.length;
+  return groups.map(function (group, i) {
+    const x = marginX + (n === 1 ? usableW / 2 : (usableW * i) / (n - 1));
+    const wave = Math.sin(i * 0.85 + 0.4) * 0.55 + Math.sin(i * 1.6 + 1.3) * 0.3;
+    const y = marginY + usableH * (0.5 - wave * 0.42);
+    return { x: x, y: y, group: group };
+  });
+}
+
+// Smooth curve through every point via Catmull-Rom -> cubic Bezier
+// conversion, so the line passes exactly through each gem instead of
+// just floating near it.
+function roadmapCurvePath(points) {
+  if (points.length < 2) return "";
+  let d = "M " + points[0].x.toFixed(1) + " " + points[0].y.toFixed(1);
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i - 1] || points[i];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[i + 2] || p2;
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    d += " C " + cp1x.toFixed(1) + " " + cp1y.toFixed(1) + " " + cp2x.toFixed(1) + " " + cp2y.toFixed(1) + " " + p2.x.toFixed(1) + " " + p2.y.toFixed(1);
+  }
+  return d;
+}
+
+// The Catmull-Rom tangent direction at point i (unit vector) — this
+// is the same slope the curve itself uses at that knot, so the
+// tangent line drawn through a clicked gem actually matches the
+// curve's local direction there.
+function roadmapTangentAt(points, i) {
+  const prev = points[i - 1] || points[i];
+  const next = points[i + 1] || points[i];
+  const dx = next.x - prev.x;
+  const dy = next.y - prev.y;
+  const len = Math.sqrt(dx * dx + dy * dy) || 1;
+  return { x: dx / len, y: dy / len };
+}
+
+function roadmapDiamondPoints(cx, cy, r) {
+  return cx + "," + (cy - r) + " " + (cx + r) + "," + cy + " " + cx + "," + (cy + r) + " " + (cx - r) + "," + cy;
+}
+
+// Builds the curve, gems, and legend for the logged-in student and
+// wires up gem clicks. Called once up front (from
+// setUpRoadmapViewSwitch) so switching views is instant either way.
+function renderRoadmapCurve(student) {
+  const svg = document.getElementById("roadmap-curve-svg");
+  const legend = document.getElementById("roadmap-curve-legend");
+  if (!svg || !legend || !student) return;
+
+  const groups = roadmapGroupByChapter(student.roadmap || []);
+  if (groups.length === 0) {
+    svg.innerHTML = "";
+    legend.innerHTML = '<p class="roadmap-empty">Nothing here yet.</p>';
+    return;
+  }
+
+  legend.innerHTML = ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (status) {
+    const c = ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR;
+    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + status.replace(/-/g, " ") + '</span>';
+  }).join("");
+
+  const width = 1000, height = 340;
+  const points = roadmapCurveLayout(groups, width, height);
+
+  const gemsHtml = points.map(function (p, i) {
+    const status = roadmapChapterOverallStatus(p.group.items);
+    const color = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    return '<g class="roadmap-gem" data-gem-index="' + i + '">' +
+      '<circle class="roadmap-gem-hit" cx="' + p.x + '" cy="' + p.y + '" r="22" fill="transparent"></circle>' +
+      '<polygon points="' + roadmapDiamondPoints(p.x, p.y, 13) + '" fill="' + color + '" stroke="var(--bg)" stroke-width="1.5"></polygon>' +
+      '<polygon points="' + roadmapDiamondPoints(p.x, p.y - 4, 5) + '" fill="rgba(255,255,255,0.4)"></polygon>' +
+      '<text class="roadmap-gem-label" x="' + p.x + '" y="' + (p.y + 34) + '">' + p.group.label + '</text>' +
+    '</g>';
+  }).join("");
+
+  svg.innerHTML =
+    '<path class="roadmap-curve-path" d="' + roadmapCurvePath(points) + '"></path>' +
+    '<line id="roadmap-tangent-line" class="roadmap-tangent-line" x1="0" y1="0" x2="0" y2="0" hidden></line>' +
+    gemsHtml;
+
+  svg.querySelectorAll(".roadmap-gem").forEach(function (gemEl) {
+    gemEl.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const i = parseInt(gemEl.getAttribute("data-gem-index"), 10);
+      roadmapActivateGem(svg, points, i, gemEl);
+    });
+  });
+
+  document.getElementById("curve-popover").addEventListener("click", function (e) {
+    e.stopPropagation();
+  });
+
+  document.addEventListener("click", hideCurvePopover);
+}
+
+// Draws the tangent line through the clicked gem, marks it active,
+// and opens its popover.
+function roadmapActivateGem(svg, points, i, gemEl) {
+  const point = points[i];
+  const tangent = roadmapTangentAt(points, i);
+  const L = 42;
+
+  const line = document.getElementById("roadmap-tangent-line");
+  line.setAttribute("x1", point.x - tangent.x * L);
+  line.setAttribute("y1", point.y - tangent.y * L);
+  line.setAttribute("x2", point.x + tangent.x * L);
+  line.setAttribute("y2", point.y + tangent.y * L);
+  line.hidden = false;
+
+  svg.querySelectorAll(".roadmap-gem polygon:first-of-type").forEach(function (poly) {
+    poly.setAttribute("stroke-width", "1.5");
+  });
+  gemEl.querySelector("polygon").setAttribute("stroke-width", "3");
+
+  showCurvePopover(point.group, gemEl, svg);
+}
+
+// Positions the popover right next to the clicked gem using the
+// SVG's screen transform, so it lines up correctly no matter how the
+// SVG has been scaled to fit its container.
+function showCurvePopover(group, gemEl, svg) {
+  const popover = document.getElementById("curve-popover");
+  const title = document.getElementById("curve-popover-title");
+  const list = document.getElementById("curve-popover-list");
+  const canvas = document.getElementById("roadmap-curve-canvas");
+
+  title.textContent = "Chapter " + group.label;
+  list.innerHTML = group.items.map(function (item) {
+    const link = (item.url && item.status !== "Locked")
+      ? '<div class="curve-popover-item-link"><a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a></div>'
+      : "";
+    return '<div class="curve-popover-item">' +
+      '<span class="curve-popover-item-name">' + item.name + '</span>' +
+      roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) +
+    '</div>' + link;
+  }).join("");
+
+  const circle = gemEl.querySelector(".roadmap-gem-hit");
+  const pt = svg.createSVGPoint();
+  pt.x = parseFloat(circle.getAttribute("cx"));
+  pt.y = parseFloat(circle.getAttribute("cy"));
+  const screenPt = pt.matrixTransform(svg.getScreenCTM());
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popover.hidden = false;
+  const popoverWidth = popover.offsetWidth || 260;
+  let left = screenPt.x - canvasRect.left + 18;
+  if (left + popoverWidth > canvasRect.width - 8) {
+    left = screenPt.x - canvasRect.left - popoverWidth - 18;
+  }
+  let top = screenPt.y - canvasRect.top - 20;
+  top = Math.max(4, Math.min(top, canvasRect.height - popover.offsetHeight - 4));
+
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+
+function hideCurvePopover() {
+  const popover = document.getElementById("curve-popover");
+  const line = document.getElementById("roadmap-tangent-line");
+  if (popover) popover.hidden = true;
+  if (line) line.hidden = true;
+}
+
+// Wires the Table/Curve toggle buttons above the roadmap and renders
+// the curve once up front so switching between views is instant.
+function setUpRoadmapViewSwitch(student) {
+  const switchEl = document.getElementById("roadmap-view-switch");
+  if (!switchEl || !student) return;
+
+  renderRoadmapCurve(student);
+
+  const tableView = document.getElementById("roadmap-view-table");
+  const curveView = document.getElementById("roadmap-view-curve");
+
+  switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+
+      const view = btn.getAttribute("data-view");
+      tableView.hidden = view !== "table";
+      curveView.hidden = view !== "curve";
+      if (view !== "curve") hideCurvePopover();
+    });
+  });
 }
