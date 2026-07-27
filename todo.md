@@ -1,12 +1,10 @@
 # Zenith TODO
 
 ## 1. System — Absolute Clarity
-The one big consolidated place a student (and us) can look to know exactly where things stand: portal, forms, records.
 
-- [ ] Make this totally intra-site, no more dependencies on Notion
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.)
 - [ ] Instagram notifications / Instagram bot / AI
-- [ ] Roadmapp nice css design each journey view, node view, side scrollable box view
+- [ ] Roadmap nice css design each journey view, node view, side scrollable box view
 - [ ] use various colors to represent different states encode this well int he roadmap and feedback and now
 - [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. also the logic, how the teachers work and so on 
 - [ ] Systematic way to work on form submission parsing + feedback + cheat sheet(maybe AI agent)
@@ -70,3 +68,5 @@ and do things for the greater good?
 - [ ] Maybe about us page that showcases the people involved in this
 - [ ] update philosophy page 
 - [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
+- [ ] upload advertisements/모집 글 in instragram and social media 
+- [ ] insta posts and etc in social media 
