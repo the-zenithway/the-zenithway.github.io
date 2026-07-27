@@ -40,6 +40,16 @@
 // the iframe's src="..." here.
 const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c22121a1f448ff08358c807fce36f9997098326218425ba70498bba%40group.calendar.google.com&ctz=Asia%2FManila";
 
+// The shared submission form — same one for every student. To embed
+// a Google Form like this, take the normal viewform link and swap
+// its query string for "?embedded=true".
+const SUBMISSION_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqPBskg9HOSPRXvaLHIudlpEpuwZKDs_UEjwxx_Dp0Ujgnpg/viewform?embedded=true";
+
+// "Right Now" is each student's single current to-do, shown on the
+// Right Now page. Two shapes:
+//   state: "your-move" -> chapter, unit, instruction, due (optional)
+//   state: "waiting"   -> chapter, unit, note
+// Leave it off entirely for a student to show the page's empty state.
 const STUDENTS = [
   {
     "username": "alice",
@@ -57,6 +67,12 @@ const STUDENTS = [
     "portal": {
       "notionUrl": "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d",
       "notionAvailable": true
+    },
+    "rightNow": {
+      "state": "waiting",
+      "chapter": "Chapter 5",
+      "unit": "S",
+      "note": "We're reviewing your submission — no action needed, we'll message you once it's ready."
     }
   },
   {
@@ -75,6 +91,13 @@ const STUDENTS = [
     "portal": {
       "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3a3db87002c48099b507ea08fa755507?v=59adb87002c482f0b8618874306037c3&pvs=73",
       "notionAvailable": false
+    },
+    "rightNow": {
+      "state": "your-move",
+      "chapter": "Chapter 1",
+      "unit": "B",
+      "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
+      "due": "undecided"
     }
   },
   {
@@ -84,6 +107,13 @@ const STUDENTS = [
     "portal": {
       "notionUrl": "d",
       "notionAvailable": false
+    },
+    "rightNow": {
+      "state": "your-move",
+      "chapter": "Chapter 6",
+      "unit": "B",
+      "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
+      "due": "Friday"
     }
   }
 ];

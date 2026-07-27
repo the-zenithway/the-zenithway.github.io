@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Calendar — Zenith</title>
+<title>Now — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -30,27 +30,41 @@
     </a>
     <nav class="portal-nav">
       <a href="portal.html" class="portal-nav-link">Roadmap</a>
-      <a href="right-now.html" class="portal-nav-link">Now</a>
-      <a href="calendar.html" class="portal-nav-link active">Calendar</a>
+      <a href="right-now.html" class="portal-nav-link active">Now</a>
+      <a href="calendar.html" class="portal-nav-link">Calendar</a>
       <a href="submit.html" class="portal-nav-link">Submit</a>
     </nav>
   </div>
   <div class="portal-actions">
-    <a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>
     <button id="logout-btn" class="portal-logout">Log out</button>
   </div>
 </header>
 
-<main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Google Calendar"></iframe>
+<main class="rightnow-wrap">
+  <div class="rightnow-col">
+    <p class="rightnow-greeting" id="rightnow-greeting"></p>
+    <div class="rightnow-card" id="rightnow-card">
+      <p class="rightnow-tag" id="rightnow-tag"></p>
+      <h1 class="rightnow-title" id="rightnow-title"></h1>
+      <p class="rightnow-instruction" id="rightnow-instruction"></p>
+      <div class="rightnow-footer">
+        <span class="rightnow-due" id="rightnow-due" hidden></span>
+        <div class="rightnow-cta-wrap" id="rightnow-cta-wrap" hidden>
+          <button type="button" class="btn-primary" id="rightnow-cta">Message us when done →</button>
+          <div class="rightnow-contact-menu" id="rightnow-contact-menu" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
+<script src="js/social-links.js"></script>
 <script src="js/app.js"></script>
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, CALENDAR_URL, "Google Calendar");
+  renderRightNow(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

@@ -13,6 +13,9 @@ Items that clearly serve two pillars are listed in both places on purpose (not a
 Check past work
 Feedback process(should be encouraging than realistic)
 submission process 
+(future) automatic unit updates, right now updates by AI 
+or we can "expect" and plan next one as they press smth or what get inta message etc 
+cross check the tone across the website and program to be as encouraging as possible 
 
 ## 1. System — Absolute Clarity
 The one big consolidated place a student (and us) can look to know exactly where things stand: portal, forms, records.
@@ -67,3 +70,12 @@ Regular, direct guidance instead of one-off help — AI integration, dynamic pla
 - [ ] Automate notifications (general — deadlines, reminders, beyond Instagram)
 - [ ] Add new website pages / resources as needed (ongoing)
 - [ ] Update philosophy.html copy to reflect the refined framework (clarity / active engagement & motivation / advice & direction)
+
+---
+
+## Done
+- [x] Portal nav: added "Right Now" and "Submit" tabs beside Portal/Calendar
+- [x] Right Now page (right-now.html) — single-focal-card design (your-move / waiting / empty states), driven by each student's `rightNow` field in js/data.js
+- [x] Submit page (submit.html) — embeds the shared Google Form via iframe (`SUBMISSION_FORM_URL` in js/data.js). Note: the form itself currently requires signing in with a Google account before it'll load — worth checking that's intended, since it'll block students without a matching account
+- [x] Renamed portal-bar nav labels: Portal → Roadmap, Right Now → Now (Calendar/Submit unchanged); scoped to the internal 4-tab nav only, not the public site-header "Portal" links
+- [x] "Message us when done" on the Now page opens a contact menu (Instagram, Facebook, YouTube, Gmail — pulled from js/social-links.js, auto-skips any still-placeholder entry) instead of a hardcoded mailto link

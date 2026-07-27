@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Calendar — Zenith</title>
+<title>Submit — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -31,8 +31,8 @@
     <nav class="portal-nav">
       <a href="portal.html" class="portal-nav-link">Roadmap</a>
       <a href="right-now.html" class="portal-nav-link">Now</a>
-      <a href="calendar.html" class="portal-nav-link active">Calendar</a>
-      <a href="submit.html" class="portal-nav-link">Submit</a>
+      <a href="calendar.html" class="portal-nav-link">Calendar</a>
+      <a href="submit.html" class="portal-nav-link active">Submit</a>
     </nav>
   </div>
   <div class="portal-actions">
@@ -42,7 +42,7 @@
 </header>
 
 <main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Google Calendar"></iframe>
+  <iframe id="embed-frame" class="embed-frame" title="Submission Form"></iframe>
 </main>
 
 <script src="js/data.js"></script>
@@ -50,7 +50,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderEmbedPage(student, CALENDAR_URL, "Google Calendar");
+  renderEmbedPage(student, SUBMISSION_FORM_URL, "Submission Form");
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
