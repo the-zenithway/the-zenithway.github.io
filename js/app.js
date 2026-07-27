@@ -23,7 +23,7 @@ const SESSION_KEY = "loggedInUsername";
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "resources.html", "philosophy.html", "faq.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "resources.html", "philosophy.html", "faq.html"];
 
 // Checks a username/password against STUDENTS (from data.js).
 // On success, remembers who's logged in (in this browser) and
@@ -222,4 +222,106 @@ function setUpContactMenu() {
   document.addEventListener("click", function () {
     menu.hidden = true;
   });
+}
+
+// Fills in the small "Your Cheat Sheet" banner on feedback.html from
+// the logged-in student's "cheatSheet" array in js/data.js — just a
+// count and a link to cheatsheet.html, since the full thing can get
+// long. Hidden entirely if the field is missing or empty (most
+// students won't have one yet — filled in by hand as patterns get
+// noticed, same as feedback and rightNow).
+function renderCheatSheetBanner(student) {
+  if (!student) return;
+
+  const banner = document.getElementById("cheatsheet-banner");
+  const count = document.getElementById("cheatsheet-banner-count");
+  const entries = student.cheatSheet || [];
+
+  if (entries.length === 0) {
+    banner.hidden = true;
+    return;
+  }
+
+  banner.hidden = false;
+  count.textContent = entries.length + (entries.length === 1 ? " pattern" : " patterns");
+}
+
+// Fills in the full cheat sheet list on cheatsheet.html — each entry
+// is { topic, source, pattern }, where "source" is the 발상노트
+// problem reference (e.g. "5B-22") and "pattern" can contain LaTeX
+// ($...$ or $$...$$); call renderMath() after this to typeset it.
+// Shows an empty state if the field is missing or empty.
+function renderCheatSheetPage(student) {
+  if (!student) return;
+
+  document.getElementById("cheatsheet-greeting").textContent =
+    "Hey " + student.name.split(" ")[0] + ",";
+
+  const list = document.getElementById("cheatsheet-list");
+  const entries = student.cheatSheet || [];
+
+  if (entries.length === 0) {
+    list.innerHTML = '<div class="feedback-empty">' +
+      '<h1>Nothing here yet</h1>' +
+      '<p>Patterns show up here as they get noticed across your feedback.</p>' +
+      '</div>';
+    return;
+  }
+
+  list.innerHTML = entries.map(function (entry) {
+    return '<div class="feedback-item">' +
+      '<div class="feedback-meta">' +
+        '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
+        '<span class="cheatsheet-source">' + entry.source + '</span>' +
+      '</div>' +
+      '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
+    '</div>';
+  }).join("");
+}
+
+// Runs KaTeX's auto-render over a container, turning any $...$ /
+// $$...$$ LaTeX in its text into typeset math in place. Call this
+// once, after any innerHTML that might contain LaTeX has already
+// been set. Only cheatsheet.html loads KaTeX; on any other page this
+// quietly does nothing.
+function renderMath(container) {
+  if (typeof renderMathInElement === "undefined") return;
+  renderMathInElement(container, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false }
+    ]
+  });
+}
+
+// Fills in feedback.html from the logged-in student's "feedback"
+// array in js/data.js — newest first, exactly as the array is
+// ordered (add new entries to the top by hand). Shows an empty
+// state if the field is missing or empty.
+function renderFeedback(student) {
+  if (!student) return;
+
+  document.getElementById("feedback-greeting").textContent =
+    "Hey " + student.name.split(" ")[0] + ",";
+
+  const list = document.getElementById("feedback-list");
+  const entries = student.feedback || [];
+
+  if (entries.length === 0) {
+    list.innerHTML = '<div class="feedback-empty">' +
+      '<h1>Nothing here yet</h1>' +
+      '<p>Feedback shows up here once your submissions have been reviewed.</p>' +
+      '</div>';
+    return;
+  }
+
+  list.innerHTML = entries.map(function (entry) {
+    return '<div class="feedback-item">' +
+      '<div class="feedback-meta">' +
+        '<span class="feedback-date">' + entry.date + '</span>' +
+        '<span class="feedback-chapter">' + entry.chapter + ' · ' + entry.unit + '</span>' +
+      '</div>' +
+      '<p class="feedback-content">' + entry.content + '</p>' +
+    '</div>';
+  }).join("");
 }

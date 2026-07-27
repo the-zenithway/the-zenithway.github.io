@@ -50,6 +50,12 @@ const SUBMISSION_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqPBskg9H
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
 //   state: "waiting"   -> chapter, unit, note
 // Leave it off entirely for a student to show the page's empty state.
+
+// "feedback" is each student's feedback log, shown on the Feedback
+// page — a plain array of { date, chapter, unit, content }. Add new
+// entries to the TOP of the array (newest first); the page just
+// renders the array in order, no sorting. Leave it off entirely (or
+// an empty array) for a student to show the page's empty state.
 const STUDENTS = [
   {
     "username": "alice",
@@ -75,7 +81,27 @@ const STUDENTS = [
       "note": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
       "instruction": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
       "due": "Tuesday"
-    }
+    },
+    "feedback": [
+      {
+        "date": "Jul 24",
+        "chapter": "Chapter 5",
+        "unit": "C",
+        "content": "Strong work overall — your setup on the related rates problems was clean. Watch your sign when a rate is decreasing; a couple of answers flipped sign because of that. Worth a quick look back at #4 and #7."
+      },
+      {
+        "date": "Jul 18",
+        "chapter": "Chapter 4",
+        "unit": "S",
+        "content": "Good recovery after the mock — implicit differentiation is clicking now. One thing to keep an eye on: you're solving correctly but slower than you need to be on chain rule setups. Worth drilling speed here before the next T."
+      },
+      {
+        "date": "Jul 10",
+        "chapter": "Chapter 4",
+        "unit": "C",
+        "content": "A few of these were rushed — question 3 and 9 were misread rather than miscalculated. Try reading the question twice before writing anything down; the method was right both times."
+      }
+    ]
   },
   {
     "username": "hamin",
@@ -116,6 +142,32 @@ const STUDENTS = [
       "unit": "B",
       "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
       "due": "Friday"
-    }
+    },
+    "feedback": [
+      {
+        "date": "Jul 22",
+        "chapter": "Chapter 5",
+        "unit": "S",
+        "content": "Nice improvement on related rates since last time. Keep working through the 발상노트 for the two problems you missed — both were domain-restriction oversights, same pattern as Chapter 4."
+      },
+      {
+        "date": "Jul 12",
+        "chapter": "Chapter 4",
+        "unit": "C",
+        "content": "Solid effort. Most of what you missed came down to forgetting to check the domain before finalizing an answer — worth a quick habit check before submitting next time."
+      }
+    ],
+    "cheatSheet": [
+      {
+        "topic": "Domain Restrictions",
+        "source": "4C-14, 5S-9",
+        "pattern": "Shows up twice so far — the method is right both times, the answer just isn't checked against the original expression's domain afterward. Before finalizing, ask: does this value actually work back in the un-simplified expression, e.g. is $x=-2$ still valid if the original required $x > 0$?"
+      },
+      {
+        "topic": "Related Rates Setup",
+        "source": "5C-6",
+        "pattern": "Going well — keep setting up straight from the diagram: $\\dfrac{dV}{dt} = \\dfrac{dV}{dr} \\cdot \\dfrac{dr}{dt}$ rather than re-deriving the volume formula each time. Faster and less room for a sign slip."
+      }
+    ]
   }
 ];

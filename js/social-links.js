@@ -16,6 +16,6 @@ const SOCIAL_LINKS = [
   { name: "YouTube", icon: "youtube", url: "https://www.youtube.com/channel/UCmvMavW17rcbvwDhRnAC36w" },
   { name: "Discord", icon: "discord", url: "https://discord.gg/YOUR_INVITE" },
   { name: "WhatsApp", icon: "whatsapp", url: "https://wa.me/YOUR_PHONE_NUMBER" },
-  { name: "KakaoTalk", icon: "kakaotalk", url: "https://open.kakao.com/YOUR_LINK" },
+  { name: "KakaoTalk", icon: "kakaotalk", url: "https://open.kakao.com/o/gh6REYFi" },
   { name: "Gmail", icon: "gmail", url: "mailto:zenithzenith0000@gmail.com" }
 ];

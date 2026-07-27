@@ -575,6 +575,146 @@ body.portal-body {
 
 .rightnow-contact-item:hover { background: var(--bg); }
 
+/* -------- Feedback page -------- */
+.feedback-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.feedback-col {
+  width: 100%;
+  max-width: 560px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-greeting {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+  flex-shrink: 0;
+}
+
+.feedback-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 4px;
+}
+
+.feedback-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  flex-shrink: 0;
+}
+
+.feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+
+.feedback-date { color: var(--text-muted); font-size: 0.8rem; }
+
+.feedback-chapter {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.feedback-content {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cheatsheet-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.cheatsheet-banner:hover { background: var(--bg); }
+
+.cheatsheet-banner[hidden] { display: none; }
+
+.cheatsheet-banner-tag {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.cheatsheet-banner-count {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.cheatsheet-banner-arrow { color: var(--accent); font-weight: 600; }
+
+.cheatsheet-topic {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cheatsheet-source {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.cheatsheet-pattern {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+.feedback-empty {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+}
+
+.feedback-empty h1 { font-size: 1.4rem; margin: 0 0 12px; }
+
+.feedback-empty p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin: 0;
+}
+
 /* -------- footer -------- */
 footer {
   border-top: 1px solid var(--border);
