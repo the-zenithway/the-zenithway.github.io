@@ -39,6 +39,15 @@ and do things for the greater good?
 
 ## 4. Maintenance - updating existing features
 - [ ] make like a buffer, just in case someone is done ahead of time like always do 2 "now" page entries at a time, and they can see it if theyre like done with everything. maybe the can click a button confirm(show extra stuff) and move on conditionally, and teachers remove it 
+- [ ] Improve Zenith CLI - there's so much new features so this gotta follow 
+  - [ ] new entires in faq 
+  - [ ] new entries in blog 
+  - [ ] new entries in resources 
+  - [ ]  roadmap editing 
+  - [ ] database student and teacher adding and editing information 
+  - [ ] editing the now page 
+  - [ ] adding feedback page 
+  - [ ] and maybe teacher dashboard in the future 
 
 ## 5. Admin
 - [ ] Update and link new pages for the resources page after not relying on notion anymore or decide to leave it there like that 
