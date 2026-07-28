@@ -31,7 +31,7 @@ const BLOG_POSTS = [
   {
     "slug": "why-a-physical-notebook",
     "title": "Why We Still Use a Physical Notebook",
-    "date": "July 15, 2026",
+    "date": "July 29, 2026",
     "excerpt": "In a program built around a website, the most important habit we ask for happens on paper. Here's why the 발상노트 doesn't have a digital version.",
     "content": [
       "It would be easy to make the reflection notebook digital — a form, a text box, one less physical object to keep track of. We've deliberately kept it on paper.",

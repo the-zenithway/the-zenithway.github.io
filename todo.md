@@ -48,26 +48,23 @@ and do things for the greater good?
   - [ ] adding feedback page 
   - [ ] and maybe teacher dashboard in the future 
   - [ ] Improve feedback portion, the markdown and the structure all that 
+  - [ ] regular article writing in blog 
+- [ ] Add real content back to the resources page's "Getting Help" (office hours, contact us) and "Further Reading" sections — removed for now since they were just placeholder "#" links with no real content
 
 ## 5. Admin
-- [ ] Update and link new pages for the resources page after not relying on notion anymore or decide to leave it there like that 
 - [ ] Create discord community 
 - [ ] AP Resource Page — fill out the empty subject sections (Bio, Chem, Physics, CS A)
 - [ ] AP Bio Notion page
 - [ ] AP Chem Notion page
 - [ ] AP CS Notion page
-- [ ] Master formula sheet for AP Calc (we already have cheat sheets)
 - [ ] Automate/systematize the calendar scheduling process
 - [ ] Automate notifications (general — deadlines, reminders, beyond Instagram)
 - [ ] Add new website pages / resources as needed (ongoing)
-- [ ] Update philosophy.html copy to reflect the refined framework (clarity / active engagement & motivation / advice & direction)
 - [ ] Make the T chapters for all the calculus 
 - [ ] Update the calculus notion to have B-C-S-T-R(T for test, R for review)
 - [ ] Upgrade Zenith CLI for easy editing and feedback for added database element
-- [ ] Improve FAQ page, resource page, and make like more helpful articles in the zenith blog 
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
 - [ ] Maybe about us page that showcases the people involved in this
-- [ ] update philosophy page 
 - [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
 - [ ] upload advertisements/모집 글 in instragram and social media 
 - [ ] insta posts and etc in social media 

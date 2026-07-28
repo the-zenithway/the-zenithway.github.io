@@ -738,6 +738,8 @@ body.portal-body {
 
 .roadmap-table {
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   table-layout: fixed;
   border-collapse: collapse;
   font-size: 0.9rem;
@@ -775,7 +777,7 @@ body.portal-body {
 .roadmap-table tbody tr.roadmap-row-unlocked:hover { background: rgba(214, 169, 74, 0.12); }
 .roadmap-row-unlocked .roadmap-name { color: var(--text); font-weight: 600; }
 
-.roadmap-star { color: var(--accent); margin-right: 2px; }
+.roadmap-star, .resource-star { color: var(--accent); margin-right: 2px; }
 
 /* Locked = not relevant yet — let it recede instead of competing for attention */
 .roadmap-row-locked .roadmap-name { color: var(--text-muted); }
@@ -858,18 +860,48 @@ body.portal-body {
   pointer-events: none;
 }
 
+.roadmap-gem-glow {
+  opacity: 0.3;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .roadmap-gem-glow { animation: roadmap-gem-pulse 2.6s ease-in-out infinite; }
+  .roadmap-gem:nth-of-type(2n) .roadmap-gem-glow { animation-delay: -1.1s; }
+}
+@keyframes roadmap-gem-pulse {
+  0%, 100% { opacity: 0.28; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.18); }
+}
+
+.roadmap-gem.is-active .roadmap-gem-glow { opacity: 0.62; }
+.roadmap-gem.is-active .roadmap-gem-star { stroke: #ffffff; stroke-width: 1.5px; }
+
+.roadmap-curve-glow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 9;
+  opacity: 0.14;
+  filter: blur(5px);
+}
+
 .roadmap-curve-path {
   fill: none;
-  stroke: var(--border);
-  stroke-width: 2.5;
+  stroke: url(#roadmap-curve-grad);
+  stroke-width: 2.75;
+  stroke-linecap: round;
+  filter: url(#roadmap-glow-filter);
 }
 
 .roadmap-tangent-line {
-  stroke: var(--accent);
+  stroke: #ffffff;
   stroke-width: 2;
-  stroke-dasharray: 5 4;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85));
   pointer-events: none;
 }
+
+.roadmap-sparkle-dot { fill: #ffffff; pointer-events: none; }
+.roadmap-ripple { fill: none; stroke: #ffffff; stroke-width: 2; pointer-events: none; }
 
 .curve-popover {
   position: absolute;

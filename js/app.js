@@ -507,13 +507,18 @@ function setUpCourseNavigation(student) {
 function courseIconHtml(icon) {
   if (icon === "biology") {
     return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
-      '<path d="M20 10c22 10 22 34 0 44M44 10c-22 10-22 34 0 44" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' +
-      '<path d="M22 18h20M18 27h28M18 37h28M22 46h20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".72"/>' +
+      '<path d="M32 7c15 6 21 17 21 27 0 15-10 23-21 23S11 49 11 34c0-10 6-21 21-27z" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M32 57V9M32 7l-6 8M32 7l6 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>' +
+      '<circle cx="32" cy="35" r="9" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".72"/>' +
+      '<circle cx="32" cy="35" r="2.5" fill="currentColor" opacity=".85"/>' +
+      '<path d="M18 24c3-3 6-3 8 0M38 47c3 3 6 3 8 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>' +
     '</svg>';
   }
   return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
-    '<path d="M39 9c-9 0-12 5-13 14l-3 24c-1 7-4 9-10 9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' +
-    '<path d="M18 28h20M39 20l12 25M50 20L37 45" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>' +
+    '<path d="M8 32H56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".72"/>' +
+    '<path d="M32 58V8M32 8l-6 8M32 8l6 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".72"/>' +
+    '<path d="M9 55C18 38 24 32 32 32C40 32 40 50 47 50C53 50 55 28 59 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>' +
+    '<path d="M29 33V55M35 33V55" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>' +
   '</svg>';
 }
 
@@ -589,6 +594,17 @@ const ROADMAP_STATUS_COLORS = {
   "Unlocked": { text: "#D6A94A", bg: "rgba(214, 169, 74, 0.18)" },
   "Optional-Reading": { text: "#C4B5FD", bg: "rgba(196, 181, 253, 0.16)" },
   "Locked": { text: "#8F8F8F", bg: "rgba(143, 143, 143, 0.14)" }
+};
+
+// Light/dark variants of the exact status colors above, for the
+// Curve view's faceted gem fills — same status, same base hue as the
+// table's pills, just given a gradient for a jewel-like look.
+const ROADMAP_STATUS_GEM_COLORS = {
+  "Complete": { light: "#96ECB5", dark: "#2B814A" },
+  "Review": { light: "#A3CBFC", dark: "#386091" },
+  "Unlocked": { light: "#E7CD96", dark: "#7C622B" },
+  "Optional-Reading": { light: "#DDD4FE", dark: "#726993" },
+  "Locked": { light: "#BEBEBE", dark: "#535353" }
 };
 
 const ROADMAP_FALLBACK_COLOR = { text: "var(--text-muted)", bg: "var(--bg)" };
@@ -713,57 +729,138 @@ function roadmapChapterOverallStatus(items) {
   return "Locked";
 }
 
-// Evenly spaces one point per chapter across the width. The y uses a
-// hand-tuned two-frequency wave purely for visual variety — real
-// peaks and troughs instead of one repeating wiggle.
+// ---- Curve shape: a real degree-7 polynomial ----
+// Six irregularly-spaced critical x-values (asymmetric on purpose —
+// not evenly spaced or mirrored) define f'(x) as a product of linear
+// factors; f itself is f' integrated term-by-term. That gives the
+// curve genuine, varied peaks and troughs across its whole length,
+// and means the tangent line drawn through a clicked gem is an exact
+// derivative of a real function, not an approximation from
+// neighboring points.
+const ROADMAP_CURVE_ROOTS = [-4.3, -2.6, -1.0, 0.7, 2.3, 4.0];
+const ROADMAP_CURVE_K = 0.028;
+const ROADMAP_CURVE_DOMAIN = [-4.6, 4.3];
+const ROADMAP_CURVE_MARGIN_X = 50;
+const ROADMAP_CURVE_MARGIN_Y = 60;
+
+function roadmapBuildPolynomial(roots, k) {
+  let coeffs = [1]; // (x - r0)(x - r1)...(x - rn), highest power first
+  roots.forEach(function (r) {
+    const next = new Array(coeffs.length + 1).fill(0);
+    for (let i = 0; i < coeffs.length; i++) {
+      next[i] += coeffs[i];
+      next[i + 1] += coeffs[i] * -r;
+    }
+    coeffs = next;
+  });
+  const fpCoeffs = coeffs.map(function (c) { return c * k; }); // f', degree = roots.length
+  const deg = fpCoeffs.length - 1;
+  const fTerms = fpCoeffs.map(function (a, idx) { // f, integrated term-by-term
+    const power = deg - idx + 1;
+    return { power: power, coeff: a / power };
+  });
+  return {
+    f: function (x) {
+      let s = 0;
+      for (let i = 0; i < fTerms.length; i++) s += fTerms[i].coeff * Math.pow(x, fTerms[i].power);
+      return s;
+    },
+    fp: function (x) {
+      let s = 0;
+      for (let i = 0; i < fpCoeffs.length; i++) s += fpCoeffs[i] * Math.pow(x, deg - i);
+      return s;
+    }
+  };
+}
+
+const ROADMAP_CURVE_POLY = roadmapBuildPolynomial(ROADMAP_CURVE_ROOTS, ROADMAP_CURVE_K);
+
+// Sampled once up front so every course's curve normalizes against
+// the same true min/max, regardless of how many chapters it has.
+const ROADMAP_CURVE_RANGE = (function () {
+  let lo = Infinity, hi = -Infinity;
+  for (let i = 0; i <= 300; i++) {
+    const x = ROADMAP_CURVE_DOMAIN[0] + (i / 300) * (ROADMAP_CURVE_DOMAIN[1] - ROADMAP_CURVE_DOMAIN[0]);
+    const v = ROADMAP_CURVE_POLY.f(x);
+    if (v < lo) lo = v;
+    if (v > hi) hi = v;
+  }
+  return [lo, hi];
+})();
+
+// Maps a chapter's position (i of n) onto the fixed math domain above
+// — the same domain regardless of chapter count, so every course
+// samples the same curve shape, just at different points along it.
+function roadmapMathXAt(i, n) {
+  const t = n === 1 ? 0.5 : i / (n - 1);
+  return ROADMAP_CURVE_DOMAIN[0] + t * (ROADMAP_CURVE_DOMAIN[1] - ROADMAP_CURVE_DOMAIN[0]);
+}
+
+function roadmapMathXToPixel(mathX, width) {
+  const usableW = width - ROADMAP_CURVE_MARGIN_X * 2;
+  const t = (mathX - ROADMAP_CURVE_DOMAIN[0]) / (ROADMAP_CURVE_DOMAIN[1] - ROADMAP_CURVE_DOMAIN[0]);
+  return ROADMAP_CURVE_MARGIN_X + t * usableW;
+}
+
+function roadmapPixelXToMathX(px, width) {
+  const usableW = width - ROADMAP_CURVE_MARGIN_X * 2;
+  const t = (px - ROADMAP_CURVE_MARGIN_X) / usableW;
+  return ROADMAP_CURVE_DOMAIN[0] + t * (ROADMAP_CURVE_DOMAIN[1] - ROADMAP_CURVE_DOMAIN[0]);
+}
+
+// Converts an arbitrary math-y value (not necessarily on the curve —
+// a tangent line's y at some x is not f(x) except at the tangent
+// point itself) to a pixel-y within the plotting area.
+function roadmapMathYToPixel(mathY, height) {
+  const usableH = height - ROADMAP_CURVE_MARGIN_Y * 2;
+  const span = ROADMAP_CURVE_RANGE[1] - ROADMAP_CURVE_RANGE[0] || 1;
+  return ROADMAP_CURVE_MARGIN_Y + usableH * (1 - (mathY - ROADMAP_CURVE_RANGE[0]) / span);
+}
+
+function roadmapMathToPixel(mathX, width, height) {
+  return { x: roadmapMathXToPixel(mathX, width), y: roadmapMathYToPixel(ROADMAP_CURVE_POLY.f(mathX), height) };
+}
+
+// Evenly spaces one point per chapter along the curve's math domain,
+// so every chapter sits exactly on the polynomial above.
 function roadmapCurveLayout(groups, width, height) {
-  const marginX = 50, marginY = 60;
-  const usableW = width - marginX * 2;
-  const usableH = height - marginY * 2;
   const n = groups.length;
   return groups.map(function (group, i) {
-    const x = marginX + (n === 1 ? usableW / 2 : (usableW * i) / (n - 1));
-    const wave = Math.sin(i * 0.85 + 0.4) * 0.55 + Math.sin(i * 1.6 + 1.3) * 0.3;
-    const y = marginY + usableH * (0.5 - wave * 0.42);
-    return { x: x, y: y, group: group };
+    const mathX = roadmapMathXAt(i, n);
+    const p = roadmapMathToPixel(mathX, width, height);
+    return { x: p.x, y: p.y, mathX: mathX, group: group };
   });
 }
 
-// Smooth curve through every point via Catmull-Rom -> cubic Bezier
-// conversion, so the line passes exactly through each gem instead of
-// just floating near it.
-function roadmapCurvePath(points) {
-  if (points.length < 2) return "";
-  let d = "M " + points[0].x.toFixed(1) + " " + points[0].y.toFixed(1);
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i - 1] || points[i];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[i + 2] || p2;
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
-    d += " C " + cp1x.toFixed(1) + " " + cp1y.toFixed(1) + " " + cp2x.toFixed(1) + " " + cp2y.toFixed(1) + " " + p2.x.toFixed(1) + " " + p2.y.toFixed(1);
+// Draws the actual polynomial densely across its full domain — not
+// just Catmull-Rom through the (possibly few) chapter gems — so
+// every peak and trough is always fully visible no matter how many
+// chapters a course has.
+function roadmapCurveSamplePath(width, height) {
+  const steps = 160;
+  let d = "";
+  for (let i = 0; i <= steps; i++) {
+    const mathX = ROADMAP_CURVE_DOMAIN[0] + (i / steps) * (ROADMAP_CURVE_DOMAIN[1] - ROADMAP_CURVE_DOMAIN[0]);
+    const p = roadmapMathToPixel(mathX, width, height);
+    d += (i === 0 ? "M " : "L ") + p.x.toFixed(1) + " " + p.y.toFixed(1) + " ";
   }
   return d;
 }
 
-// The Catmull-Rom tangent direction at point i (unit vector) — this
-// is the same slope the curve itself uses at that knot, so the
-// tangent line drawn through a clicked gem actually matches the
-// curve's local direction there.
-function roadmapTangentAt(points, i) {
-  const prev = points[i - 1] || points[i];
-  const next = points[i + 1] || points[i];
-  const dx = next.x - prev.x;
-  const dy = next.y - prev.y;
-  const len = Math.sqrt(dx * dx + dy * dy) || 1;
-  return { x: dx / len, y: dy / len };
+// An 8-point alternating star (a diamond-cut sparkle) around (cx, cy)
+// — computed from angles rather than hand-authored per gem.
+function roadmapStarPoints(cx, cy, rOuter, rInner) {
+  const pts = [];
+  for (let i = 0; i < 8; i++) {
+    const angle = (Math.PI / 4) * i - Math.PI / 2;
+    const r = i % 2 === 0 ? rOuter : rInner;
+    pts.push((cx + r * Math.cos(angle)).toFixed(1) + "," + (cy + r * Math.sin(angle)).toFixed(1));
+  }
+  return pts.join(" ");
 }
 
-function roadmapDiamondPoints(cx, cy, r) {
-  return cx + "," + (cy - r) + " " + (cx + r) + "," + cy + " " + cx + "," + (cy + r) + " " + (cx - r) + "," + cy;
+function roadmapGemGradId(status) {
+  return "roadmap-gem-grad-" + status.toLowerCase().replace(/[^a-z]/g, "");
 }
 
 // Builds the curve, gems, and legend for one selected course and
@@ -788,28 +885,56 @@ function renderRoadmapCurve(course) {
 
   const width = 1000, height = 340;
   const points = roadmapCurveLayout(groups, width, height);
+  const curvePathD = roadmapCurveSamplePath(width, height);
+
+  const defsHtml = '<defs>' +
+      '<filter id="roadmap-glow-filter" x="-60%" y="-60%" width="220%" height="220%">' +
+        '<feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur>' +
+        '<feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>' +
+      '</filter>' +
+      '<linearGradient id="roadmap-curve-grad" x1="0" y1="0" x2="1" y2="0">' +
+        '<stop offset="0%" stop-color="#8FB4EC"></stop>' +
+        '<stop offset="30%" stop-color="var(--accent)"></stop>' +
+        '<stop offset="65%" stop-color="#F3D98B"></stop>' +
+        '<stop offset="100%" stop-color="var(--accent)"></stop>' +
+      '</linearGradient>' +
+      Object.keys(ROADMAP_STATUS_GEM_COLORS).map(function (status) {
+        const c = ROADMAP_STATUS_GEM_COLORS[status];
+        return '<radialGradient id="' + roadmapGemGradId(status) + '" cx="35%" cy="30%" r="75%">' +
+          '<stop offset="0%" stop-color="' + c.light + '"></stop>' +
+          '<stop offset="100%" stop-color="' + c.dark + '"></stop>' +
+        '</radialGradient>';
+      }).join("") +
+    '</defs>';
 
   const gemsHtml = points.map(function (p, i) {
     const status = roadmapChapterOverallStatus(p.group.items);
-    const color = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    const glowColor = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    const starPts = roadmapStarPoints(p.x, p.y, 14, 6);
     return '<g class="roadmap-gem" data-gem-index="' + i + '">' +
+      '<circle class="roadmap-gem-glow" cx="' + p.x + '" cy="' + p.y + '" r="21" fill="' + glowColor + '"></circle>' +
       '<circle class="roadmap-gem-hit" cx="' + p.x + '" cy="' + p.y + '" r="22" fill="transparent"></circle>' +
-      '<polygon points="' + roadmapDiamondPoints(p.x, p.y, 13) + '" fill="' + color + '" stroke="var(--bg)" stroke-width="1.5"></polygon>' +
-      '<polygon points="' + roadmapDiamondPoints(p.x, p.y - 4, 5) + '" fill="rgba(255,255,255,0.4)"></polygon>' +
+      '<g class="roadmap-gem-body" filter="url(#roadmap-glow-filter)">' +
+        '<polygon class="roadmap-gem-star" points="' + starPts + '" fill="url(#' + roadmapGemGradId(status) + ')"></polygon>' +
+        '<polygon points="' + starPts + '" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1"></polygon>' +
+      '</g>' +
       '<text class="roadmap-gem-label" x="' + p.x + '" y="' + (p.y + 34) + '">' + p.group.label + '</text>' +
     '</g>';
   }).join("");
 
   svg.innerHTML =
-    '<path class="roadmap-curve-path" d="' + roadmapCurvePath(points) + '"></path>' +
-    '<line id="roadmap-tangent-line" class="roadmap-tangent-line" x1="0" y1="0" x2="0" y2="0" hidden></line>' +
+    defsHtml +
+    '<path class="roadmap-curve-glow" d="' + curvePathD + '"></path>' +
+    '<path class="roadmap-curve-path" d="' + curvePathD + '"></path>' +
+    '<line id="roadmap-tangent-line" class="roadmap-tangent-line" x1="0" y1="0" x2="0" y2="0" opacity="0"></line>' +
+    '<g id="roadmap-sparkle-layer"></g>' +
     gemsHtml;
 
   svg.querySelectorAll(".roadmap-gem").forEach(function (gemEl) {
     gemEl.addEventListener("click", function (e) {
       e.stopPropagation();
       const i = parseInt(gemEl.getAttribute("data-gem-index"), 10);
-      roadmapActivateGem(svg, points, i, gemEl);
+      roadmapActivateGem(svg, points, i, gemEl, width, height);
     });
   });
 
@@ -820,26 +945,125 @@ function renderRoadmapCurve(course) {
   document.addEventListener("click", hideCurvePopover);
 }
 
-// Draws the tangent line through the clicked gem, marks it active,
-// and opens its popover.
-function roadmapActivateGem(svg, points, i, gemEl) {
+// Roadmap-scoped tangent animation state, so clicking a second gem
+// cancels whatever the previous animation was still doing instead of
+// the two clashing.
+let roadmapTangentRaf = null;
+
+function roadmapLerp(a, b, t) { return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }; }
+function roadmapEaseOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+// Draws the tangent line through the clicked gem — computed from the
+// curve polynomial's actual derivative, not an approximation — as a
+// brief flash that extends to both edges of the graph and fades,
+// marks the gem active, and opens its popover.
+function roadmapActivateGem(svg, points, i, gemEl, width, height) {
   const point = points[i];
-  const tangent = roadmapTangentAt(points, i);
-  const L = 42;
+  const slope = ROADMAP_CURVE_POLY.fp(point.mathX);
+  const y0 = ROADMAP_CURVE_POLY.f(point.mathX);
 
-  const line = document.getElementById("roadmap-tangent-line");
-  line.setAttribute("x1", point.x - tangent.x * L);
-  line.setAttribute("y1", point.y - tangent.y * L);
-  line.setAttribute("x2", point.x + tangent.x * L);
-  line.setAttribute("y2", point.y + tangent.y * L);
-  line.hidden = false;
+  const leftMathX = roadmapPixelXToMathX(0, width);
+  const rightMathX = roadmapPixelXToMathX(width, width);
+  const leftY = slope * (leftMathX - point.mathX) + y0;
+  const rightY = slope * (rightMathX - point.mathX) + y0;
+  const pLeft = { x: 0, y: roadmapMathYToPixel(leftY, height) };
+  const pRight = { x: width, y: roadmapMathYToPixel(rightY, height) };
 
-  svg.querySelectorAll(".roadmap-gem polygon:first-of-type").forEach(function (poly) {
-    poly.setAttribute("stroke-width", "1.5");
-  });
-  gemEl.querySelector("polygon").setAttribute("stroke-width", "3");
+  svg.querySelectorAll(".roadmap-gem.is-active").forEach(function (g) { g.classList.remove("is-active"); });
+  gemEl.classList.add("is-active");
 
+  roadmapFireTangent({ x: point.x, y: point.y }, pLeft, pRight);
   showCurvePopover(point.group, gemEl, svg);
+}
+
+function roadmapFireTangent(p0, pLeft, pRight) {
+  const line = document.getElementById("roadmap-tangent-line");
+  const sparkleLayer = document.getElementById("roadmap-sparkle-layer");
+  if (!line || !sparkleLayer) return;
+  if (roadmapTangentRaf) cancelAnimationFrame(roadmapTangentRaf);
+  sparkleLayer.innerHTML = "";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  roadmapSpawnSparkles(sparkleLayer, p0, reduceMotion);
+
+  if (reduceMotion) {
+    line.style.transition = "none";
+    line.setAttribute("x1", pLeft.x); line.setAttribute("y1", pLeft.y);
+    line.setAttribute("x2", pRight.x); line.setAttribute("y2", pRight.y);
+    line.style.opacity = "1";
+    setTimeout(function () {
+      line.style.transition = "opacity 1s ease";
+      line.style.opacity = "0";
+    }, 400);
+    return;
+  }
+
+  const shortLeft = roadmapLerp(p0, pLeft, 0.12);
+  const shortRight = roadmapLerp(p0, pRight, 0.12);
+  line.style.transition = "none";
+  line.setAttribute("x1", shortLeft.x); line.setAttribute("y1", shortLeft.y);
+  line.setAttribute("x2", shortRight.x); line.setAttribute("y2", shortRight.y);
+  line.style.opacity = "1";
+
+  const EXTEND = 220, HOLD = 90, FADE = 1000;
+  const start = performance.now();
+
+  function frame(now) {
+    const t = now - start;
+    if (t < EXTEND) {
+      const p = roadmapEaseOutCubic(t / EXTEND);
+      const cl = roadmapLerp(shortLeft, pLeft, p), cr = roadmapLerp(shortRight, pRight, p);
+      line.setAttribute("x1", cl.x); line.setAttribute("y1", cl.y);
+      line.setAttribute("x2", cr.x); line.setAttribute("y2", cr.y);
+      roadmapTangentRaf = requestAnimationFrame(frame);
+    } else if (t < EXTEND + HOLD) {
+      line.setAttribute("x1", pLeft.x); line.setAttribute("y1", pLeft.y);
+      line.setAttribute("x2", pRight.x); line.setAttribute("y2", pRight.y);
+      roadmapTangentRaf = requestAnimationFrame(frame);
+    } else if (t < EXTEND + HOLD + FADE) {
+      line.style.opacity = String(1 - (t - EXTEND - HOLD) / FADE);
+      roadmapTangentRaf = requestAnimationFrame(frame);
+    } else {
+      line.style.opacity = "0";
+      roadmapTangentRaf = null;
+    }
+  }
+  roadmapTangentRaf = requestAnimationFrame(frame);
+}
+
+function roadmapSpawnSparkles(layer, p0, reduceMotion) {
+  const NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs) {
+    const node = document.createElementNS(NS, tag);
+    for (const k in attrs) node.setAttribute(k, attrs[k]);
+    return node;
+  }
+  const ripple = el("circle", { class: "roadmap-ripple", cx: p0.x, cy: p0.y, r: "4", opacity: "0.9" });
+  layer.appendChild(ripple);
+
+  const count = reduceMotion ? 0 : 7;
+  const dots = [];
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+    const dot = el("circle", { class: "roadmap-sparkle-dot", cx: p0.x, cy: p0.y, r: "2.2" });
+    layer.appendChild(dot);
+    dots.push({ node: dot, angle: angle, dist: 24 + Math.random() * 18 });
+  }
+
+  const start = performance.now();
+  const DUR = reduceMotion ? 500 : 900;
+  (function step(now) {
+    const t = Math.min((now - start) / DUR, 1);
+    ripple.setAttribute("r", String(4 + t * 40));
+    ripple.setAttribute("opacity", String(0.9 * (1 - t)));
+    dots.forEach(function (s) {
+      s.node.setAttribute("cx", String(p0.x + Math.cos(s.angle) * s.dist * t));
+      s.node.setAttribute("cy", String(p0.y + Math.sin(s.angle) * s.dist * t));
+      s.node.setAttribute("opacity", String(1 - t));
+    });
+    if (t < 1) requestAnimationFrame(step);
+    else layer.innerHTML = "";
+  })(start);
 }
 
 // Positions the popover right next to the clicked gem using the
@@ -885,8 +1109,12 @@ function showCurvePopover(group, gemEl, svg) {
 function hideCurvePopover() {
   const popover = document.getElementById("curve-popover");
   const line = document.getElementById("roadmap-tangent-line");
+  const sparkleLayer = document.getElementById("roadmap-sparkle-layer");
   if (popover) popover.hidden = true;
-  if (line) line.hidden = true;
+  if (roadmapTangentRaf) { cancelAnimationFrame(roadmapTangentRaf); roadmapTangentRaf = null; }
+  if (line) { line.style.transition = "none"; line.style.opacity = "0"; }
+  if (sparkleLayer) sparkleLayer.innerHTML = "";
+  document.querySelectorAll(".roadmap-gem.is-active").forEach(function (g) { g.classList.remove("is-active"); });
 }
 
 // Wires the Table/Curve toggle buttons above the roadmap and renders
