@@ -722,7 +722,110 @@ body.portal-body {
   color: var(--accent-ink);
 }
 
-.roadmap-table[hidden], .roadmap-curve-wrap[hidden] { display: none; }
+.roadmap-table[hidden], .roadmap-curve-wrap[hidden], .roadmap-cards-wrap[hidden], .roadmap-orbit-wrap[hidden] { display: none; }
+
+/* -------- Roadmap: cards + orbit (3D) views -------- */
+.roadmap-cards-wrap, .roadmap-orbit-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  padding: 24px;
+}
+
+.roadmap-cards-track, .roadmap-orbit-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding: 8px calc(50% - 150px) 24px;
+  scrollbar-width: none;
+}
+.roadmap-cards-track::-webkit-scrollbar, .roadmap-orbit-track::-webkit-scrollbar { display: none; }
+
+.roadmap-orbit-stage { width: 100%; perspective: 1200px; }
+.roadmap-orbit-track .roadmap-card { will-change: transform, opacity; }
+
+.roadmap-card {
+  flex: 0 0 auto;
+  width: 300px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.roadmap-card.is-focused { border-color: var(--accent); }
+
+.roadmap-card-tag {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.roadmap-card-title {
+  font-family: var(--font-logo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.roadmap-card-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.roadmap-card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.roadmap-card-item-name {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.roadmap-scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+.roadmap-scroll-btn:hover { border-color: var(--accent); color: var(--accent); }
+.roadmap-scroll-prev { left: 8px; }
+.roadmap-scroll-next { right: 8px; }
 
 /* -------- Roadmap: table view -------- */
 .roadmap-wrap {

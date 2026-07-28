@@ -1117,16 +1117,125 @@ function hideCurvePopover() {
   document.querySelectorAll(".roadmap-gem.is-active").forEach(function (g) { g.classList.remove("is-active"); });
 }
 
-// Wires the Table/Curve toggle buttons above the roadmap and renders
-// the curve once up front so switching between views is instant.
+// ---- Roadmap "Cards" and "Orbit" views ----
+// Both show the same one-card-per-chapter content as Curve (reusing
+// roadmapGroupByChapter/roadmapChapterOverallStatus) — they differ
+// only in presentation: a plain horizontal scroller for Cards, a
+// coverflow-style 3D treatment for Orbit. Scrolling is native
+// (touch/trackpad/wheel all just work); the JS only adds prev/next
+// buttons, tracks which card is centered, and — for Orbit — a
+// per-frame transform based on each card's distance from center.
+
+// "B6-Definite Integrals" -> "Definite Integrals"; falls back to
+// "Chapter <label>" for chapters with no book-chapter item (e.g. M).
+function roadmapCardTopicName(group) {
+  const book = group.items.find(function (it) { return it.category === "B-book chapter"; });
+  if (book) {
+    const dash = book.name.indexOf("-");
+    if (dash !== -1) return book.name.slice(dash + 1);
+  }
+  return "Chapter " + group.label;
+}
+
+function roadmapCardHtml(group) {
+  const status = roadmapChapterOverallStatus(group.items);
+  const color = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+  const itemsHtml = group.items.map(function (item) {
+    return '<div class="roadmap-card-item">' +
+      '<span class="roadmap-card-item-name">' + item.name + '</span>' +
+      roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) +
+    '</div>';
+  }).join("");
+  return '<div class="roadmap-card">' +
+    '<p class="roadmap-card-tag" style="color:' + color + ';">' + status.replace(/-/g, " ") + '</p>' +
+    '<h3 class="roadmap-card-title">' + roadmapCardTopicName(group) + '</h3>' +
+    '<div class="roadmap-card-items">' + itemsHtml + '</div>' +
+  '</div>';
+}
+
+function renderRoadmapCards(course) {
+  const track = document.getElementById("roadmap-cards-track");
+  if (!track || !course) return;
+  const groups = roadmapGroupByChapter(course.roadmap || []);
+  track.innerHTML = groups.map(roadmapCardHtml).join("");
+}
+
+function renderRoadmapOrbit(course) {
+  const track = document.getElementById("roadmap-orbit-track");
+  if (!track || !course) return;
+  const groups = roadmapGroupByChapter(course.roadmap || []);
+  track.innerHTML = groups.map(roadmapCardHtml).join("");
+}
+
+// Marks whichever card is nearest the track's own center as focused
+// and, for Orbit, applies a coverflow transform to every card based
+// on its distance from that center (in card-widths).
+function roadmapUpdateTrackFocus(track, is3D) {
+  const trackRect = track.getBoundingClientRect();
+  const centerX = trackRect.left + trackRect.width / 2;
+  track.querySelectorAll(".roadmap-card").forEach(function (card) {
+    const cardRect = card.getBoundingClientRect();
+    const cardCenterX = cardRect.left + cardRect.width / 2;
+    const t = (cardCenterX - centerX) / (cardRect.width + 20);
+    card.classList.toggle("is-focused", Math.abs(t) < 0.5);
+    if (!is3D) return;
+    const clamped = Math.max(-2.4, Math.min(2.4, t));
+    const rotate = clamped * -32;
+    const z = -Math.abs(clamped) * 90;
+    const scale = 1 - Math.min(Math.abs(clamped) * 0.16, 0.4);
+    const opacity = 1 - Math.min(Math.abs(clamped) * 0.32, 0.75);
+    card.style.transform = "translateZ(" + z.toFixed(1) + "px) rotateY(" + rotate.toFixed(1) + "deg) scale(" + scale.toFixed(3) + ")";
+    card.style.opacity = opacity.toFixed(3);
+    card.style.zIndex = String(1000 - Math.round(Math.abs(clamped) * 10));
+  });
+}
+
+// Scrolling is native (touch/trackpad/wheel); this just adds prev/next
+// buttons and keeps focus/transform in sync with scroll position. No
+// custom mouse-drag here on purpose — an earlier pointer-capture-based
+// drag handler could get stuck mid-gesture and swallow every click on
+// the page afterward, not just inside the track.
+function roadmapSetUpScrollTrack(trackId, prevBtnId, nextBtnId, is3D) {
+  const track = document.getElementById(trackId);
+  if (!track) return;
+  const prevBtn = document.getElementById(prevBtnId);
+  const nextBtn = document.getElementById(nextBtnId);
+
+  let ticking = false;
+  track.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { roadmapUpdateTrackFocus(track, is3D); ticking = false; });
+  });
+  roadmapUpdateTrackFocus(track, is3D);
+
+  function step(dir) {
+    const card = track.querySelector(".roadmap-card");
+    const cardWidth = card ? card.getBoundingClientRect().width + 20 : 320;
+    track.scrollBy({ left: dir * cardWidth, behavior: "smooth" });
+  }
+  if (prevBtn) prevBtn.addEventListener("click", function () { step(-1); });
+  if (nextBtn) nextBtn.addEventListener("click", function () { step(1); });
+}
+
+// Wires the Table/Curve/Cards/Orbit toggle buttons above the roadmap
+// and renders every view once up front so switching is instant.
 function setUpRoadmapViewSwitch(course) {
   const switchEl = document.getElementById("roadmap-view-switch");
   if (!switchEl || !course) return;
 
   renderRoadmapCurve(course);
+  renderRoadmapCards(course);
+  renderRoadmapOrbit(course);
+  roadmapSetUpScrollTrack("roadmap-cards-track", "roadmap-cards-prev", "roadmap-cards-next", false);
+  roadmapSetUpScrollTrack("roadmap-orbit-track", "roadmap-orbit-prev", "roadmap-orbit-next", true);
 
-  const tableView = document.getElementById("roadmap-view-table");
-  const curveView = document.getElementById("roadmap-view-curve");
+  const views = {
+    table: document.getElementById("roadmap-view-table"),
+    curve: document.getElementById("roadmap-view-curve"),
+    cards: document.getElementById("roadmap-view-cards"),
+    orbit: document.getElementById("roadmap-view-orbit")
+  };
 
   switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -1134,9 +1243,15 @@ function setUpRoadmapViewSwitch(course) {
       btn.classList.add("active");
 
       const view = btn.getAttribute("data-view");
-      tableView.hidden = view !== "table";
-      curveView.hidden = view !== "curve";
+      Object.keys(views).forEach(function (key) { views[key].hidden = key !== view; });
       if (view !== "curve") hideCurvePopover();
+
+      // Cards/Orbit were rendered up front while still hidden, so any
+      // focus/transform computed then used zeroed-out (display:none)
+      // measurements. Recompute now that the view is actually visible
+      // and has real layout.
+      if (view === "cards") roadmapUpdateTrackFocus(document.getElementById("roadmap-cards-track"), false);
+      if (view === "orbit") roadmapUpdateTrackFocus(document.getElementById("roadmap-orbit-track"), true);
     });
   });
 }

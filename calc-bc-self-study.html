@@ -49,6 +49,8 @@
     <div class="roadmap-view-switch" id="roadmap-view-switch">
       <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
       <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
+      <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
+      <button type="button" class="roadmap-view-btn" data-view="orbit">Orbit</button>
     </div>
   </div>
 
@@ -79,11 +81,25 @@
     <div class="roadmap-curve-legend" id="roadmap-curve-legend"></div>
     <div class="roadmap-curve-canvas" id="roadmap-curve-canvas">
       <svg id="roadmap-curve-svg" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
-      <div class="curve-popover" id="curve-popover">
+      <div class="curve-popover" id="curve-popover" hidden>
         <p class="curve-popover-title" id="curve-popover-title"></p>
         <div class="curve-popover-list" id="curve-popover-list"></div>
       </div>
     </div>
+  </div>
+
+  <div class="roadmap-cards-wrap" id="roadmap-view-cards" hidden>
+    <div class="roadmap-cards-track" id="roadmap-cards-track" tabindex="0"></div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-cards-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-cards-next" aria-label="Scroll right">›</button>
+  </div>
+
+  <div class="roadmap-orbit-wrap" id="roadmap-view-orbit" hidden>
+    <div class="roadmap-orbit-stage">
+      <div class="roadmap-orbit-track" id="roadmap-orbit-track" tabindex="0"></div>
+    </div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-orbit-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-orbit-next" aria-label="Scroll right">›</button>
   </div>
 </main>
 
