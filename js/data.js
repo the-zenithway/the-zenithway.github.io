@@ -83,7 +83,7 @@ const STUDENTS = [
           "chapter": "Chapter 2",
           "unit": "B",
           "instruction": "Complete the book chapter. Go through each of the exercises and actively solve them and develop your instincts!",
-          "due": "TBA"
+          "due": "Saturday"
         },
         "feedback": [
           {
@@ -113,6 +113,16 @@ const STUDENTS = [
             "topic": "Period of $a\\sin(bx+c)$ / $a\\cos(bx+c)$",
             "source": "발상노트, Jul 28",
             "pattern": "Correctly recorded: period $=\\dfrac{2\\pi}{|b|}$. Remember $a$ only stretches the graph vertically (amplitude) and $c$ only shifts it left/right (phase) — neither touches the period. Only $b$, the coefficient on $x$, controls how fast the wave repeats."
+          },
+          {
+            "topic": "Reflections Across the Axes",
+            "source": "발상노트, Jul 28",
+            "pattern": "Two rules, easy to keep straight if you remember which variable flips. Reflect across the $y$-axis (left ↔ right) → flip the input: $y=f(-x)$. Reflect across the $x$-axis (up ↔ down) → flip the output: $y=-f(x)$. Bonus connection: a function that looks unchanged after a $y$-axis reflection ($f(-x)=f(x)$) is even and symmetric about the $y$-axis — the mirror-image partner to the odd/origin-symmetry case in the entry above."
+          },
+          {
+            "topic": "Basic Log Properties",
+            "source": "발상노트, Jul 28",
+            "pattern": "The full toolkit, worth having in one place: $\\log_b(xy)=\\log_b(x)+\\log_b(y)$ (product → sum); $\\log_b(x/y)=\\log_b(x)-\\log_b(y)$ (quotient → difference); $\\log_b(x^n)=n\\log_b(x)$ (power rule — the one behind your $\\log_b(3^b)=b/2$ example); $\\log_b(1)=0$ and $\\log_b(b)=1$ always. Change of base, for when your calculator has no $\\log_b$ button: $\\log_b(x)=\\dfrac{\\log(x)}{\\log(b)}$. And log/exponential undo each other: $b^{\\log_b(x)}=x$, $\\log_b(b^x)=x$."
           }
         ],
         "roadmap": [
