@@ -1,7 +1,5 @@
 # Zenith TODO
 
-**Money, decided (2026-07-29):** Zenith stays free for students — no paywalls, no premium tier, ever. As a student, paywalls on things that should just help you learn feel awful, and this is partly a local community, not a customer base. If it ever earns income, that comes from sponsorships/donations/partnerships or from the reputation it builds opening up paid opportunities elsewhere — never from charging the students using it. Don't propose pricing tiers or gated content for this reason.
-
 ## 1. System — Absolute Clarity
 
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.)
@@ -18,7 +16,6 @@
 - [ ] Sync Table and Curve views — clicking a Table row highlights/scrolls to its Curve gem and vice versa
 - [ ] Student-facing changelog / "what's new" feed so returning students notice new unlocks or feedback
 - [ ] Cross-course dashboard for multi-enrolled students (Hamin, David) — combined "your week across all courses" view
-- [ ] Session recap page — after each IRL/Zoom session, one page showing what was covered, what's now unlocked, what's due next
 - [ ] Track the Notion-independence finish line — list remaining subjects (Bio/Chem/Physics/CS A) still on Notion and set a target date
 - [ ] Locked-row tooltip explaining exactly why/when it unlocks, instead of just a grey pill
 - [ ] Parent view — read-only, course-scoped progress summary for parents
@@ -33,18 +30,12 @@ Forcing actual grind and active effort, not just handing over information — di
 - [ ] Motivational articles / Zenith blog — our own regular writing and input
 - [ ] Make the grind enjoyable — genuine love for learning, not just forcing
 - [ ] Brainstorm more ways to force/encourage real effort (open-ended)
-- [ ] daily encouragement? ask what theyre doing how theyre doing etc, checking in daily? regularly?
 - [ ] **Make HOW TO STUDY absolutely clear — top priority for this pillar (VERY IMPORTANT)**. Not just what's due, but the actual technique/method of studying well *(also: Active Engagement & Motivation)*
   - [ ] Dedicated study-technique library page/section — spaced repetition, active recall, how to use the Cheat Sheet during review
 - [ ] think seriously about what's the meaning beyond the furriculum and score - what do they want? what are they ultiamtely aiming for?
 - [ ] cross check the tone across the website and program to be as encouraging as possible 
 - [ ] make the feedback process as encouraging as possible think a lot on thise this is very important 
-- [ ] Streak tracking — consecutive weeks with a completed T-test, shown quietly on right-now.html
-- [ ] "Why this matters" micro-copy per Now task, tying the chapter to the exam
-- [ ] Effort log — let students self-report time spent / what felt hard, feeding into how feedback gets written
 - [ ] Post-T reflection prompt — "what tripped you up?" box that feeds Cheat Sheet candidates instead of writing every entry manually
-- [ ] Gentle re-engagement nudge — soft banner on login if no progress/feedback in N days
-- [ ] Celebrate chapter completions visibly in the Curve view when a chapter flips to Complete
 - [ ] Voice-of-student testimonials on right-now.html or philosophy page
 
 ## 3. Advice & Direction — Community
@@ -87,7 +78,6 @@ and do things for the greater good?
   - [ ] Feedback composer form that appends to a student's feedback array in the right shape
   - [ ] Teacher-only internal notes per student (not shown to the student)
 - [ ] Move auth off plaintext client-side JS — js/data.js currently ships real usernames/passwords to every visitor's browser; needs a backend or managed auth service
-- [ ] Basic automated checks — CI step running node --check on js/*.js plus a broken-link checker for roadmap resource URLs
 - [ ] Data validation script enforcing the course/roadmap schema so a hand-edit to data.js can't silently produce a broken roadmap
 - [ ] Extract shared header/footer markup — every page hand-copies the same header, so one navigation change means editing 15+ files
 - [ ] Explicit mobile audit — Table view's 5-column layout and the Curve SVG on small screens
@@ -96,15 +86,10 @@ and do things for the greater good?
   - [ ] Duplicated College Board Bluebook URL in resources.html
   - [ ] Unfinished FAQ answers and empty AP resource subsections (Bio/Chem/Physics/CS A)
   - [ ] Placeholder Discord/WhatsApp/KakaoTalk social URLs in js/social-links.js
-- [ ] Add .gitignore and stop tracking macOS .DS_Store files
 - [ ] Script to clone/relink a roadmap when enrolling a new student in an existing course, instead of hand-copying ~88 JSON rows each time
 
 ## 5. Admin
 - [ ] Create discord community 
-  - [ ] #wins channel for completed chapters/T scores
-  - [ ] #ask-anything channel
-  - [ ] Subject-specific channels
-  - [ ] Bot that posts when a student's Now task changes *(also: System)*
 - [ ] AP Resource Page — fill out the empty subject sections (Bio, Chem, Physics, CS A)
 - [ ] AP Bio Notion page
 - [ ] AP Chem Notion page
@@ -137,9 +122,6 @@ and do things for the greater good?
 
 - [ ] Rewrite README.md to match the current architecture (it still describes the old single-iframe portal/calendar setup) — or trim it to point at PROGRESS.md as the source of truth
 - [ ] Document the course/roadmap JSON schema somewhere stable (fields, allowed category/status values) so hand-edits to data.js don't silently drift
+- [ ] get claude or codex to view all the change logs in the commit logs, and make a documentation.md file to keep track of all the updates we made and their timelines. 
 
 ## 8. Intra-school Relation
-
-## Done
-- [x] Curriculum template doc — canonical B/L-C-S-R-T (+N, F, M) roadmap structure, category legend, status vocabulary, and step-by-step guide for building a new subject's roadmap without touching `data.js` directly. See [curriculum-template.md](curriculum-template.md).
-- [x] Teacher onboarding checklist — philosophy → System → shadowing → reviewed first contribution → sign-off, so new teachers absorb the actual pillars instead of just the mechanics. See [teacher-onboarding.md](teacher-onboarding.md).

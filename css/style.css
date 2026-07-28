@@ -664,6 +664,28 @@ body.portal-body {
   line-height: 1.25;
 }
 
+.course-app-progress {
+  display: block;
+  width: 100%;
+  max-width: 84px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.course-app-progress-bar {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.course-app-progress-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
 .roadmap-course-heading {
   display: flex;
   align-items: baseline;
@@ -672,6 +694,12 @@ body.portal-body {
 }
 
 .roadmap-course-heading h1 { margin: 0; font-size: 1.25rem; }
+
+.roadmap-course-progress {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-left: auto;
+}
 
 .roadmap-back {
   color: var(--text-muted);
@@ -765,6 +793,13 @@ body.portal-body {
 
 .roadmap-card.is-focused { border-color: var(--accent); }
 
+.roadmap-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .roadmap-card-tag {
   font-weight: 600;
   font-size: 0.8rem;
@@ -773,11 +808,34 @@ body.portal-body {
   margin: 0;
 }
 
+.roadmap-card-pct {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .roadmap-card-title {
   font-family: var(--font-logo);
   font-size: 1.35rem;
   font-weight: 700;
   margin: 0;
+}
+
+.roadmap-card-progress {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.roadmap-card-progress-bar {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
 }
 
 .roadmap-card-items {

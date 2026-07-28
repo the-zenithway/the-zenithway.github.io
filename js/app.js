@@ -543,9 +543,12 @@ function renderCoursePortal(student) {
   grid.hidden = false;
   empty.hidden = true;
   grid.innerHTML = courses.map(function (course) {
+    const pct = roadmapPercentComplete(course.roadmap || []);
     return '<a class="course-app" href="roadmap.html?course=' + encodeURIComponent(course.id) + '">' +
       '<span class="course-app-icon course-app-icon--' + course.icon + '">' + courseIconHtml(course.icon) + '</span>' +
       '<span class="course-app-name">' + course.name + '</span>' +
+      '<span class="course-app-progress"><span class="course-app-progress-bar" style="width:' + pct + '%;"></span></span>' +
+      '<span class="course-app-progress-label">' + pct + '% complete</span>' +
     '</a>';
   }).join("");
 }
@@ -639,6 +642,46 @@ function roadmapChapterColor(chapter) {
   return ROADMAP_CHAPTER_PALETTE[(num - 1) % ROADMAP_CHAPTER_PALETTE.length];
 }
 
+// How much each category counts toward "percent complete." Book
+// chapter and coursework (and their Biology equivalents, Learning and
+// Notes Submission) are the actual learning and practice, so they
+// carry the most weight. A Test — and a full Mock — is the proof
+// that the learning stuck, so it counts a little more than a Review.
+// A Review counts meaningfully but less than doing the work itself.
+// Solution manuals and pure information items are reference material,
+// not something a student "completes" in a way that reflects
+// progress, so they're weighted just above zero rather than excluded
+// outright.
+const ROADMAP_CATEGORY_WEIGHT = {
+  "B-book chapter": 3,
+  "C-coursework": 3,
+  "L-Learning": 3,
+  "N-Notes Submission": 3,
+  "T-Test": 2.5,
+  "M-Mock": 2.5,
+  "R-Review": 2,
+  "F-Final Self Check": 2,
+  "S-solution manual": 0.5,
+  "I-information": 0.5
+};
+
+function roadmapItemWeight(item) {
+  return ROADMAP_CATEGORY_WEIGHT[item.category] || 1;
+}
+
+// Weighted percent complete across a list of roadmap items — an
+// empty/unset roadmap reads as 0%, not NaN.
+function roadmapPercentComplete(items) {
+  if (!items || items.length === 0) return 0;
+  let total = 0, done = 0;
+  items.forEach(function (item) {
+    const w = roadmapItemWeight(item);
+    total += w;
+    if (item.status === "Complete") done += w;
+  });
+  return total === 0 ? 0 : Math.round((done / total) * 100);
+}
+
 // Fills in roadmap.html's table from one selected enrolled course
 // (the caller has already verified the course belongs to the
 // logged-in student). Shows an empty state if it has no roadmap yet.
@@ -648,6 +691,9 @@ function renderRoadmap(course) {
   const empty = document.getElementById("roadmap-empty");
   const tbody = document.getElementById("roadmap-tbody");
   const items = course ? (course.roadmap || []) : [];
+
+  const progressEl = document.getElementById("roadmap-course-progress");
+  if (progressEl) progressEl.textContent = items.length > 0 ? roadmapPercentComplete(items) + "% complete" : "";
 
   if (items.length === 0) {
     table.hidden = true;
@@ -1075,7 +1121,7 @@ function showCurvePopover(group, gemEl, svg) {
   const list = document.getElementById("curve-popover-list");
   const canvas = document.getElementById("roadmap-curve-canvas");
 
-  title.textContent = "Chapter " + group.label;
+  title.textContent = "Chapter " + group.label + " · " + roadmapPercentComplete(group.items) + "%";
   list.innerHTML = group.items.map(function (item) {
     const link = (item.url && item.status !== "Locked")
       ? '<div class="curve-popover-item-link"><a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a></div>'
@@ -1140,6 +1186,7 @@ function roadmapCardTopicName(group) {
 function roadmapCardHtml(group) {
   const status = roadmapChapterOverallStatus(group.items);
   const color = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+  const pct = roadmapPercentComplete(group.items);
   const itemsHtml = group.items.map(function (item) {
     return '<div class="roadmap-card-item">' +
       '<span class="roadmap-card-item-name">' + item.name + '</span>' +
@@ -1147,8 +1194,12 @@ function roadmapCardHtml(group) {
     '</div>';
   }).join("");
   return '<div class="roadmap-card">' +
-    '<p class="roadmap-card-tag" style="color:' + color + ';">' + status.replace(/-/g, " ") + '</p>' +
+    '<div class="roadmap-card-head">' +
+      '<p class="roadmap-card-tag" style="color:' + color + ';">' + status.replace(/-/g, " ") + '</p>' +
+      '<span class="roadmap-card-pct">' + pct + '%</span>' +
+    '</div>' +
     '<h3 class="roadmap-card-title">' + roadmapCardTopicName(group) + '</h3>' +
+    '<div class="roadmap-card-progress"><span class="roadmap-card-progress-bar" style="width:' + pct + '%;"></span></div>' +
     '<div class="roadmap-card-items">' + itemsHtml + '</div>' +
   '</div>';
 }
