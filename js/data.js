@@ -80,40 +80,48 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 1",
-          "unit": "R",
-          "note": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
-          "instruction": "Complete reviewing chapter 1 by writing down mistakes and reflecting actively for each problem, writing down the source and why you got wrong.",
-          "due": "Tuesday"
+          "chapter": "Chapter 2",
+          "unit": "B",
+          "instruction": "Complete the book chapter. Go through each of the exercises and actively solve them and develop your instincts!",
+          "due": "TBA"
         },
         "feedback": [
           {
-            "date": "Jul 24",
-            "chapter": "Chapter 5",
-            "unit": "C",
-            "content": "Strong work overall — your setup on the related rates problems was clean. Watch your sign when a rate is decreasing; a couple of answers flipped sign because of that. Worth a quick look back at #4 and #7."
-          },
-          {
-            "date": "Jul 18",
-            "chapter": "Chapter 4",
-            "unit": "S",
-            "content": "Good recovery after the mock — implicit differentiation is clicking now. One thing to keep an eye on: you're solving correctly but slower than you need to be on chain rule setups. Worth drilling speed here before the next T."
-          },
-          {
-            "date": "Jul 10",
-            "chapter": "Chapter 4",
-            "unit": "C",
-            "content": "A few of these were rushed — question 3 and 9 were misread rather than miscalculated. Try reading the question twice before writing anything down; the method was right both times."
+            "date": "Jul 28",
+            "chapter": "Cumulative Review",
+            "unit": "발상노트",
+            "content": "Good spread of review here — quick pass, item by item.<br><br>The motion problem: your setup for both speed (v = √((dx/dt)² + (dy/dt)²)) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the t=5 position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The y-component of your acceleration checks out on my end. The x-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and sin(t³)-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.<br><br>Symmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).<br><br>On the polynomial: the rational root theorem execution was flawless (x = 1, -4, -5 checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.<br><br>Period formula and the log power rule example are both correct."
           }
         ],
-        "cheatSheet": [],
+        "cheatSheet": [
+          {
+            "topic": "Root Existence — Use IVT, Not RRT",
+            "source": "발상노트, Jul 28",
+            "pattern": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the <em>exact</em> value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all."
+          },
+          {
+            "topic": "IVT vs. MVT vs. Rolle's — Keep Them Separate",
+            "source": "발상노트, Jul 28",
+            "pattern": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT."
+          },
+          {
+            "topic": "Origin Symmetry ↔ Odd Functions",
+            "source": "발상노트, Jul 28",
+            "pattern": "Good instinct connecting the two: a graph with $180°$ rotational symmetry about the origin is exactly what $f(-x)=-f(x)$ means algebraically — every point $(x,y)$ has a matching point $(-x,-y)$ on the graph. Worth pairing with the reflection rules right next to it in your notes: reflecting across the $y$-axis gives $y=f(-x)$, across the $x$-axis gives $y=-f(x)$ — odd symmetry is really both reflections applied at once."
+          },
+          {
+            "topic": "Period of $a\\sin(bx+c)$ / $a\\cos(bx+c)$",
+            "source": "발상노트, Jul 28",
+            "pattern": "Correctly recorded: period $=\\dfrac{2\\pi}{|b|}$. Remember $a$ only stretches the graph vertically (amplitude) and $c$ only shifts it left/right (phase) — neither touches the period. Only $b$, the coefficient on $x$, controls how fast the wave repeats."
+          }
+        ],
         "roadmap": [
           { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
           { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
-          { "name": "B1-Functions", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Review", "url": "https://drive.google.com/file/d/1JKFuYfSijODTUWMusFJS70BRhqNuvUQa/view?usp=drive_link" },
-          { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Review", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
-          { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
-          { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Review" },
+          { "name": "B1-Functions", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1JKFuYfSijODTUWMusFJS70BRhqNuvUQa/view?usp=drive_link" },
+          { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
+          { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
+          { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Complete" },
           { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Locked" },
           { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
           { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
@@ -166,9 +174,9 @@ const STUDENTS = [
           { "name": "C12-Miscellaneous Free Response Questions", "category": "C-coursework", "chapter": "Chapter 12", "status": "Locked", "url": "https://drive.google.com/file/d/1HrGReb5uEZz-1WugOYJ8PuOrbuyRso3F/view?usp=drive_link" },
           { "name": "S12-Miscellaneous Free Response Questions Solutions", "category": "S-solution manual", "chapter": "Chapter 12", "status": "Locked", "url": "https://drive.google.com/file/d/1rBXVa-9OfhdPeUCI7d_FHJKNRn2j4nrM/view?usp=drive_link" },
           { "name": "R12-Miscellaneous Free Response Questions Review", "category": "R-Review", "chapter": "Chapter 12", "status": "Locked" },
-          { "name": "M1-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1tAhprt5xldGpONJlyAbeRicCrrgkAZdM/view?usp=drive_link" },
-          { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1RBhkIDr8DKTJzRmGeEc9BrUTEv1UiTSy/view?usp=drive_link" },
-          { "name": "M1R-Full Mock Test 1 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },
+          { "name": "M1-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Unlocked", "url": "https://drive.google.com/file/d/1tAhprt5xldGpONJlyAbeRicCrrgkAZdM/view?usp=drive_link" },
+          { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Unlocked", "url": "https://drive.google.com/file/d/1RBhkIDr8DKTJzRmGeEc9BrUTEv1UiTSy/view?usp=drive_link" },
+          { "name": "M1R-Full Mock Test 1 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Review" },
           { "name": "M2-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U8c-vo8NzxvI_0x_Aw2LQQy3WXybmC6i/view?usp=drive_link" },
           { "name": "M2S-Full Mock Test 2 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1S_Bb_j6w2kPY4__UpEchcJkl9vkznldS/view?usp=drive_link" },
           { "name": "M2R-Full Mock Test 2 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" },

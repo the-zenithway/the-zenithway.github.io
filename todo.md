@@ -47,6 +47,7 @@ and do things for the greater good?
   - [ ] editing the now page 
   - [ ] adding feedback page 
   - [ ] and maybe teacher dashboard in the future 
+  - [ ] Improve feedback portion, the markdown and the structure all that 
 
 ## 5. Admin
 - [ ] Update and link new pages for the resources page after not relying on notion anymore or decide to leave it there like that 
