@@ -539,7 +539,45 @@ function setUpCourseNavigation(student) {
     cheatSheetLink.href = "cheatsheet.html?course=" + encodeURIComponent(course.id);
   }
 
+  renderRightNowBreadcrumb(course);
+
   return course;
+}
+
+// A persistent "Next up" strip under the header, visible on every
+// course-scoped page (not just right-now.html itself), so a student
+// never has to go back to Now just to remember what it said. Built
+// and inserted from here rather than hand-added to every page, since
+// this already runs on all of them via requireLogin -> here. Skipped
+// on right-now.html (the full task is already right there) and on
+// portal.html (no single course is selected yet — getSelectedCourse
+// already returns null there, so this function is never reached).
+function renderRightNowBreadcrumb(course) {
+  const existing = document.getElementById("rightnow-breadcrumb");
+  if (existing) existing.remove();
+
+  const page = window.location.pathname.split("/").pop();
+  if (page === "right-now.html") return;
+
+  const data = course.rightNow;
+  if (!data) return;
+
+  const header = document.querySelector(".portal-bar");
+  if (!header) return;
+
+  const isWaiting = data.state === "waiting";
+  const bar = document.createElement("div");
+  bar.id = "rightnow-breadcrumb";
+  bar.className = "rightnow-breadcrumb" + (isWaiting ? " rightnow-breadcrumb-waiting" : "");
+  bar.innerHTML =
+    '<a class="rightnow-breadcrumb-link" href="right-now.html?course=' + encodeURIComponent(course.id) + '">' +
+      '<span class="rightnow-breadcrumb-eyebrow">Next up</span>' +
+      '<span class="rightnow-breadcrumb-tag">' + (isWaiting ? "With us" : "Your move") + '</span>' +
+      '<span class="rightnow-breadcrumb-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</span>' +
+      '<span class="rightnow-breadcrumb-arrow" aria-hidden="true">→</span>' +
+    '</a>';
+
+  header.insertAdjacentElement("afterend", bar);
 }
 
 // Subject-specific app icons used by the course folder. They are inline SVG so

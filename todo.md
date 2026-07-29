@@ -7,7 +7,6 @@
 - [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. also the logic, how the teachers work and so on 
 - [ ] Systematic way to work on form submission parsing + feedback + cheat sheet(maybe AI agent)
 - [ ] Figure out algorithm and AI agent whatever to make the corresponding T sections for each of the chapters 
-- [ ] "Next up" breadcrumb on every portal page — persistent strip showing the current Now task, visible outside right-now.html too
 - [ ] Student-facing changelog / "what's new" feed so returning students notice new unlocks or feedback
 - [ ] Cross-course dashboard for multi-enrolled students (Hamin, David) — combined "your week across all courses" view - more important is a way to manage many subjects without getting overwhelmed(need to think)
 - [ ] Parent view — read-only, course-scoped progress summary for parents

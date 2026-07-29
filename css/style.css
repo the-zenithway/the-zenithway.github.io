@@ -492,6 +492,58 @@ body.portal-body {
   gap: 4px;
 }
 
+.rightnow-breadcrumb {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+
+.rightnow-breadcrumb-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 24px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.rightnow-breadcrumb-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.rightnow-breadcrumb-tag {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.rightnow-breadcrumb-waiting .rightnow-breadcrumb-tag { color: var(--text-muted); }
+
+.rightnow-breadcrumb-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.rightnow-breadcrumb-arrow {
+  margin-left: auto;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.rightnow-breadcrumb-link:hover .rightnow-breadcrumb-text,
+.rightnow-breadcrumb-link:hover .rightnow-breadcrumb-arrow { color: var(--text); }
+
 .portal-nav-link {
   font-size: 0.85rem;
   padding: 6px 12px;
