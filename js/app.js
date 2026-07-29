@@ -204,7 +204,12 @@ function renderRightNow(student) {
   const instruction = document.getElementById("rightnow-instruction");
   const due = document.getElementById("rightnow-due");
   const ctaWrap = document.getElementById("rightnow-cta-wrap");
+  const revealBtn = document.getElementById("rightnow-reveal-btn");
+  const bufferCard = document.getElementById("rightnow-buffer-card");
   const data = course ? course.rightNow : null;
+
+  revealBtn.hidden = true;
+  bufferCard.hidden = true;
 
   if (!data) {
     card.classList.add("rightnow-empty");
@@ -239,6 +244,41 @@ function renderRightNow(student) {
 
   ctaWrap.hidden = false;
   setUpContactMenu();
+
+  if (course) setUpRightNowBuffer(course, data);
+}
+
+// Lets a student peek at exactly one queued-up task if they finish
+// the current one before we've had a chance to update things (e.g.
+// we're offline) — capped at one task ahead, never a preview of
+// everything left in the roadmap. Foldable both ways (in case it
+// gets opened by accident) via a "See what's next" / "Hide" toggle;
+// whichever state it's left in is remembered per exact task (keyed on
+// chapter+unit, not just the course), so it resets on its own the
+// moment we move them on to something new — no separate "clear the
+// buffer" action needed anywhere.
+function setUpRightNowBuffer(course, currentData) {
+  const next = course.rightNowNext;
+  const revealBtn = document.getElementById("rightnow-reveal-btn");
+  const foldBtn = document.getElementById("rightnow-fold-btn");
+  const bufferCard = document.getElementById("rightnow-buffer-card");
+  if (!next) return;
+
+  const key = "rightNowBufferSeen:" + course.id + ":" + currentData.chapter + ":" + currentData.unit;
+
+  document.getElementById("rightnow-buffer-title").textContent = next.chapter + " · " + next.unit;
+  document.getElementById("rightnow-buffer-instruction").textContent = next.instruction;
+
+  function setExpanded(expanded) {
+    bufferCard.hidden = !expanded;
+    revealBtn.hidden = expanded;
+    if (expanded) localStorage.setItem(key, "1");
+    else localStorage.removeItem(key);
+  }
+
+  setExpanded(localStorage.getItem(key) === "1");
+  revealBtn.onclick = function () { setExpanded(true); };
+  foldBtn.onclick = function () { setExpanded(false); };
 }
 
 // Builds the "Message us when done" popover from SOCIAL_LINKS (see

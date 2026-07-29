@@ -50,6 +50,16 @@ const SUBMISSION_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqPBskg9H
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
 //   state: "waiting"   -> chapter, unit, note
 // Leave it off a course to show that subject's empty state.
+//
+// "rightNowNext" is an optional one-task buffer: { chapter, unit,
+// instruction }. Only offered while "rightNow" is "your-move" — a
+// "See what's next" link lets a student who finishes early peek at
+// it, so they're not stuck waiting on us if we haven't updated things
+// yet (e.g. we're offline). It's capped at exactly this one extra
+// task, not a preview of the whole roadmap. Once we move a student on
+// to a new rightNow, the reveal resets on its own (it's remembered
+// per exact chapter+unit) — just set the new rightNow/rightNowNext
+// pair as usual, nothing needs to be manually cleared.
 
 // "feedback" and "cheatSheet" also belong on each course object. Feedback is
 // a plain array of { date, chapter, unit, content }; add new entries to the TOP
@@ -84,6 +94,11 @@ const STUDENTS = [
           "unit": "B",
           "instruction": "Complete the book chapter. Go through each of the exercises and actively solve them and develop your instincts!",
           "due": "Saturday"
+        },
+        "rightNowNext": {
+          "chapter": "Chapter 2",
+          "unit": "C",
+          "instruction": "Work through the Limits and Continuity problem set. Show full steps, not just answers — we'll be checking your reasoning, not just the final number."
         },
         "feedback": [
           {
