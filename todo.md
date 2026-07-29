@@ -77,7 +77,6 @@ and do things for the greater good?
 
 ## 6. Get People 
 
-- [ ] Resources page as a lead magnet — one open, no-login self-study track per subject (like the new AP Calc BC one) once Bio/Chem/Physics/CS A content exists, cross-posted on social
 - [ ] Alumni/results page showing outcomes (with permission) *(also: Advice & Direction)*
 - [ ] Instagram bot weekly digest posts *(also: System, Admin)*
 
