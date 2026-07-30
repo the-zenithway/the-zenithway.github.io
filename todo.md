@@ -31,7 +31,8 @@ and do things for the greater good?
 - [ ] Async question box per chapter — lightweight "ask about Chapter 4" thread (could start as a Google Form like submit.html)
 - [ ] Peer study pairing — match two students on the same chapter for accountability check-ins
 - [ ] Monthly "state of your progress" personal note from a teacher — short direction check-in, not a full feedback entry
-- [ ] Alumni/results page showing outcomes (with permission) *(also: Get People)*
+- [ ] Maybe YPT community
+- [ ] Maybe reddit community 
 
 ## 4. Maintenance - updating existing features
 - [ ] make like a buffer, just in case someone is done ahead of time like always do 2 "now" page entries at a time, and they can see it if theyre like done with everything. maybe the can click a button confirm(show extra stuff) and move on conditionally, and teachers remove it 
@@ -48,10 +49,9 @@ and do things for the greater good?
 
 ## 5. Admin
 - [ ] Create discord community 
-- [ ] AP Resource Page — fill out the empty subject sections (Bio, Chem, Physics, CS A)
-- [ ] AP Bio Notion page
-- [ ] AP Chem Notion page
-- [ ] AP CS Notion page
+- [ ] AP Physics self study track 
+- [ ] AP Chem page
+- [ ] AP CS page
 - [ ] Automate notifications (general — deadlines, reminders, beyond Instagram) also related to teacher dashboard and all that 
 - [ ] Upgrade Zenith CLI for easy editing and feedback for added database element
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
@@ -62,7 +62,6 @@ and do things for the greater good?
 - [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
 - [ ] upload advertisements/모집 글 in instragram and social media 
 - [ ] insta posts and etc in social media 
-- [ ] SEO basics — meta descriptions + OpenGraph tags on blog and resources pages *(also: Get People)*
 
 ## 6. Get People 
 - [ ] Alumni/results page showing outcomes (with permission) *(also: Advice & Direction)*
