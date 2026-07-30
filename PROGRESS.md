@@ -377,6 +377,10 @@ assets remain external until separately provided and migrated.
 
 ## Current State
 
+- AP Biology now has a public self-study track linked under Resources; it mirrors
+  the canonical 63-row Biology roadmap and renders every item as Complete without
+  changing enrolled student progress.
+
 - Verified pulled state: `main == origin/main == 398aa79` before this document
   update; no merge conflicts or application diffs were present.
 - Multi-course Portal, account-scoped enrollments, `roadmap.html`, and Table/Curve
@@ -407,6 +411,16 @@ assets remain external until separately provided and migrated.
 Add new entries immediately below this instruction, newest first. Each entry
 should include the date, request, files changed, verification, and any remaining
 work or important decisions.
+
+### 2026-07-30 — Added AP Biology self-study track
+
+- Request: add a Zenith AP Biology self-study resource matching the Calculus
+  self-study track, using the normal Biology roadmap with all tasks complete.
+- Files changed: `resources.html`, new `bio-self-study.html`, and `PROGRESS.md`.
+- Implementation: the public resource card includes a matching description; the
+  self-study page reuses the canonical 63 Biology rows at runtime and copies each
+  status as Complete, leaving enrolled course progress untouched.
+- Verification: final syntax, roadmap parity, link, and diff checks pass.
 
 ### 2026-07-27 — Saved final course-path handoff state
 
