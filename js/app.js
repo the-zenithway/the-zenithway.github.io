@@ -87,6 +87,7 @@ function requireLogin() {
     return;
   }
   setUpCourseNavigation(student);
+  setUpWhatsNew(student);
 }
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
@@ -578,6 +579,117 @@ function renderRightNowBreadcrumb(course) {
     '</a>';
 
   header.insertAdjacentElement("afterend", bar);
+}
+
+// ---- "What's new" changelog feed ----
+// There's no backend here to log real events, so "new since your
+// last visit" is computed by diffing the student's current data
+// against a snapshot of what it looked like last time they checked —
+// stored in localStorage, updated only when they actually open the
+// panel (not on every page load), so the badge persists across
+// visits until they've actually seen it.
+
+const ZENITH_CHANGELOG_KEY_PREFIX = "zenithChangelogSnapshot:";
+
+function roadmapItemKey(course, item) {
+  return course.id + "::" + item.chapter + "::" + item.name;
+}
+
+function buildCourseSnapshot(course) {
+  const items = {};
+  (course.roadmap || []).forEach(function (item) {
+    items[roadmapItemKey(course, item)] = item.status;
+  });
+  return { items: items, feedbackCount: (course.feedback || []).length };
+}
+
+// Compares the student's current courses against their last-seen
+// snapshot. A missing snapshot means this is the very first time
+// we've looked (or localStorage was cleared) — in that case there is
+// nothing to report; we just seed the baseline silently so nothing
+// gets flagged as "new" on a first visit.
+function computeWhatsNew(student) {
+  const key = ZENITH_CHANGELOG_KEY_PREFIX + student.username;
+  const stored = localStorage.getItem(key);
+  const lastSnapshot = stored ? JSON.parse(stored) : null;
+
+  const currentSnapshot = {};
+  const changes = [];
+
+  (student.courses || []).forEach(function (course) {
+    currentSnapshot[course.id] = buildCourseSnapshot(course);
+    if (!lastSnapshot) return;
+
+    const lastCourse = lastSnapshot[course.id];
+
+    (course.roadmap || []).forEach(function (item) {
+      const itemKey = roadmapItemKey(course, item);
+      const wasStatus = (lastCourse && Object.prototype.hasOwnProperty.call(lastCourse.items, itemKey))
+        ? lastCourse.items[itemKey]
+        : "Locked";
+      if (wasStatus === "Locked" && item.status !== "Locked") {
+        changes.push({ type: "unlock", text: course.name + " — " + item.chapter + ": " + item.name });
+      }
+    });
+
+    const oldFeedbackCount = lastCourse ? lastCourse.feedbackCount : 0;
+    const feedback = course.feedback || [];
+    if (feedback.length > oldFeedbackCount) {
+      feedback.slice(0, feedback.length - oldFeedbackCount).forEach(function (entry) {
+        changes.push({ type: "feedback", text: course.name + " — new feedback on " + entry.chapter + " · " + entry.unit });
+      });
+    }
+  });
+
+  return { changes: changes, currentSnapshot: currentSnapshot, key: key, isFirstVisit: !lastSnapshot };
+}
+
+// Builds (once) and refreshes the "Updates" button + dropdown in the
+// header's action row. Injected via JS rather than hand-added to
+// every page, same as the Next Up breadcrumb.
+function setUpWhatsNew(student) {
+  if (!student) return;
+  const actions = document.querySelector(".portal-actions");
+  if (!actions) return;
+
+  let wrap = document.getElementById("whatsnew-wrap");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.className = "whatsnew-wrap";
+    wrap.id = "whatsnew-wrap";
+    wrap.innerHTML =
+      '<button type="button" class="whatsnew-btn" id="whatsnew-btn">Updates<span class="whatsnew-badge" id="whatsnew-badge" hidden></span></button>' +
+      '<div class="whatsnew-menu" id="whatsnew-menu" hidden></div>';
+    actions.insertBefore(wrap, actions.firstChild);
+  }
+
+  const btn = document.getElementById("whatsnew-btn");
+  const badge = document.getElementById("whatsnew-badge");
+  const menu = document.getElementById("whatsnew-menu");
+
+  const result = computeWhatsNew(student);
+
+  badge.hidden = result.changes.length === 0;
+  badge.textContent = String(result.changes.length);
+
+  menu.innerHTML = result.changes.length > 0
+    ? result.changes.map(function (c) { return '<div class="whatsnew-item">' + c.text + '</div>'; }).join("")
+    : '<p class="whatsnew-empty">You’re all caught up.</p>';
+
+  btn.onclick = function (e) {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    if (!menu.hidden) {
+      localStorage.setItem(result.key, JSON.stringify(result.currentSnapshot));
+      badge.hidden = true;
+    }
+  };
+  menu.onclick = function (e) { e.stopPropagation(); };
+  document.addEventListener("click", function () { menu.hidden = true; });
+
+  if (result.isFirstVisit) {
+    localStorage.setItem(result.key, JSON.stringify(result.currentSnapshot));
+  }
 }
 
 // Subject-specific app icons used by the course folder. They are inline SVG so
