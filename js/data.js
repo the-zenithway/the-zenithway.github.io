@@ -102,6 +102,12 @@ const STUDENTS = [
         },
         "feedback": [
           {
+            "date": "Jul 30",
+            "chapter": "Chapter 1",
+            "unit": "T1",
+            "content": "Marking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.<br><br>On how you write up review notes (발상노트 and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the <em>entire question</em>, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.<br><br>Domain and range: this tripped you up on T1. ln(0) isn't just 'undefined' in the vague sense — as x → 0⁺, ln(x) → -∞. That matters for range questions where 0 sits on the boundary of the domain: the function's values run off toward -∞ near that edge rather than stopping at some finite number (added to your cheat sheet).<br><br>Also on max/min questions: the maximum value of a function on an interval does <em>not</em> necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where f′(x) = 0 or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).<br><br>Inverse functions: to know if f⁻¹ exists, always check that f can be uniquely identified by its y-values — every output y must come from only one input x. If two different x values give the same y, there's no single well-defined inverse (cheat sheet entry added for this one too)."
+          },
+          {
             "date": "Jul 28",
             "chapter": "Cumulative Review",
             "unit": "발상노트",
@@ -138,6 +144,21 @@ const STUDENTS = [
             "topic": "Basic Log Properties",
             "source": "발상노트, Jul 28",
             "pattern": "The full toolkit, worth having in one place: $\\log_b(xy)=\\log_b(x)+\\log_b(y)$ (product → sum); $\\log_b(x/y)=\\log_b(x)-\\log_b(y)$ (quotient → difference); $\\log_b(x^n)=n\\log_b(x)$ (power rule — the one behind your $\\log_b(3^b)=b/2$ example); $\\log_b(1)=0$ and $\\log_b(b)=1$ always. Change of base, for when your calculator has no $\\log_b$ button: $\\log_b(x)=\\dfrac{\\log(x)}{\\log(b)}$. And log/exponential undo each other: $b^{\\log_b(x)}=x$, $\\log_b(b^x)=x$."
+          },
+          {
+            "topic": "ln(x) as x → 0⁺ — Goes to -∞, Not Just 'Undefined'",
+            "source": "T1, Jul 30",
+            "pattern": "For domain/range questions involving $\\ln(x)$: $x=0$ isn't in the domain, but don't stop there — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. So if $0$ sits on the boundary of your domain, the function's range runs off to $-\\infty$ near that edge rather than just 'stopping.' Same idea applies to any $\\ln(g(x))$ where $g(x) \\to 0^+$."
+          },
+          {
+            "topic": "Max/Min ≠ Automatically at the Edge",
+            "source": "T1, Jul 30",
+            "pattern": "On a closed interval $[a,b]$, the maximum (or minimum) value of $f$ can occur at an endpoint ($a$ or $b$) OR at a critical point in the interior where $f'(x)=0$ or $f'(x)$ is undefined. Don't assume the max is at an edge just because it's a boundary — find all critical points first, then compare $f$ at every critical point AND both endpoints. Whichever gives the largest/smallest value wins."
+          },
+          {
+            "topic": "Inverse Functions Require One-to-One (Injective)",
+            "source": "T1, Jul 30",
+            "pattern": "A function $f$ has an inverse only if it's one-to-one: every $y$-value comes from exactly one $x$-value (the horizontal line test — no horizontal line crosses the graph more than once). Check this before writing $f^{-1}$. If $f$ isn't one-to-one over its full domain, it can still have an inverse over a restricted domain — e.g. $x^2$ isn't invertible over all reals, but $x^2$ for $x\\ge 0$ is."
           }
         ],
         "roadmap": [
@@ -147,7 +168,7 @@ const STUDENTS = [
           { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
           { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
           { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Complete" },
-          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
+          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
           { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
           { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
           { "name": "S2-Limits and Continuity Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/17pzhOM1QGu8z-zm3YovNEe40ECpexSaF/view?usp=drive_link" },
