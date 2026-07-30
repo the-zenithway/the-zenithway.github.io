@@ -1,7 +1,6 @@
 # Zenith TODO
 
 ## 1. System — Absolute Clarity
-
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Instagram notifications / Instagram bot / AI
 - [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. also the logic, how the teachers work and so on 
@@ -9,12 +8,10 @@
 - [ ] Figure out algorithm and AI agent whatever to make the corresponding T sections for each of the chapters 
 - [ ] Cross-course dashboard for multi-enrolled students (Hamin, David) — combined "your week across all courses" view - more important is a way to manage many subjects without getting overwhelmed(need to think)
 - [ ] Parent view — read-only, course-scoped progress summary for parents
-- [ ] Spaced-repetition review queue — auto-resurface Cheat Sheet entries a few weeks after they're written
-- [ ] Subject-wise views, a trademark of zenith
+- [ ] Biology view 
+- [ ] Chemistry View 
 
 ## 2. Active Engagement & Motivation
-Forcing actual grind and active effort, not just handing over information — direct checking, consistent high-ROI activity, keeping it human.
-
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
 - [ ] Motivational articles / Zenith blog — our own regular writing and input
 - [ ] Make the grind enjoyable — genuine love for learning, not just forcing
@@ -27,8 +24,6 @@ Forcing actual grind and active effort, not just handing over information — di
 - [ ] Voice-of-student testimonials on right-now.html or philosophy page
 
 ## 3. Advice & Direction — Community
-Regular, direct guidance instead of one-off help — AI integration, dynamic plans, chats with us, and a community around it.
-
 - [ ] Ways to make the community active, engaged, and no confict and encouarge helpfulness. what would trigger them to be genuinely helpful others 
 and do things for the greater good?
 - [ ] Community events, competitions, rewards, etc.
@@ -60,8 +55,6 @@ and do things for the greater good?
 - [ ] AP CS Notion page
 - [ ] Automate notifications (general — deadlines, reminders, beyond Instagram) also related to teacher dashboard and all that 
 - [ ] Add new website pages / resources as needed (ongoing)
-- [ ] Make the T chapters for all the calculus 
-- [ ] Update the calculus notion to have B-C-S-T-R(T for test, R for review)
 - [ ] Upgrade Zenith CLI for easy editing and feedback for added database element
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
   - [ ] Study-technique deep dives
@@ -74,15 +67,15 @@ and do things for the greater good?
 - [ ] SEO basics — meta descriptions + OpenGraph tags on blog and resources pages *(also: Get People)*
 
 ## 6. Get People 
-
 - [ ] Alumni/results page showing outcomes (with permission) *(also: Advice & Direction)*
 - [ ] Instagram bot weekly digest posts *(also: System, Admin)*
 
 ## 7. documentation
-
 - [ ] Rewrite README.md to match the current architecture (it still describes the old single-iframe portal/calendar setup) — or trim it to point at PROGRESS.md as the source of truth
 - [ ] Document the course/roadmap JSON schema somewhere stable (fields, allowed category/status values) so hand-edits to data.js don't silently drift
 - [ ] get claude or codex to view all the change logs in the commit logs, and make a documentation.md file to keep track of all the updates we made and their timelines. 
 - [ ] create a specific timeline of the features we want to add and yeah an entire project roadmap - what we're doing, where we're going 
 
 ## 8. Intra-school Relation
+- [ ] Make presentation
+- [ ] Formal proposal document 

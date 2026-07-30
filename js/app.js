@@ -24,18 +24,18 @@
 */
 
 const SESSION_KEY = "loggedInUsername";
-const ROLE_KEY = "loggedInRole"; // "student" or "teacher"
+const ROLE_KEY = "loggedInRole"; // "student", "teacher", or "parent"
 const ACTIVE_COURSE_KEY = "activeCourseId";
 
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
 
-// Checks a username/password against STUDENTS first, then TEACHERS
-// (from data.js). On success, remembers who's logged in and which
-// role they are (in this browser) and returns true. Returns false on
-// a bad username/password.
+// Checks a username/password against STUDENTS first, then TEACHERS,
+// then PARENTS (from data.js). On success, remembers who's logged in
+// and which role they are (in this browser) and returns true. Returns
+// false on a bad username/password.
 function login(username, password) {
   const student = STUDENTS.find(function (s) {
     return s.username === username && s.password === password;
@@ -56,11 +56,20 @@ function login(username, password) {
     return true;
   }
 
+  const parent = PARENTS.find(function (p) {
+    return p.username === username && p.password === password;
+  });
+  if (parent) {
+    localStorage.setItem(SESSION_KEY, parent.username);
+    localStorage.setItem(ROLE_KEY, "parent");
+    return true;
+  }
+
   return false;
 }
 
 // Returns the currently logged-in student object, or null if
-// nobody is logged in on this browser (or they're a teacher).
+// nobody is logged in on this browser (or they're a teacher/parent).
 function getCurrentStudent() {
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
@@ -68,11 +77,19 @@ function getCurrentStudent() {
 }
 
 // Returns the currently logged-in teacher object, or null if nobody
-// is logged in on this browser (or they're a student).
+// is logged in on this browser (or they're a student/parent).
 function getCurrentTeacher() {
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
   return TEACHERS.find(function (t) { return t.username === username; }) || null;
+}
+
+// Returns the currently logged-in parent object, or null if nobody
+// is logged in on this browser (or they're a student/teacher).
+function getCurrentParent() {
+  const username = localStorage.getItem(SESSION_KEY);
+  if (!username) return null;
+  return PARENTS.find(function (p) { return p.username === username; }) || null;
 }
 
 // Sends the visitor to the login page if nobody is logged in,
@@ -99,15 +116,27 @@ function requireTeacherLogin() {
   }
 }
 
+// Same as requireLogin(), but for parent.html — checks the PARENTS
+// list instead of STUDENTS.
+function requireParentLogin() {
+  if (!getCurrentParent()) {
+    const here = window.location.pathname.split("/").pop() + window.location.search;
+    window.location.href = "login.html?redirect=" + encodeURIComponent(here);
+  }
+}
+
 // Reads "?redirect=" from the login page's URL and returns it if
 // it's one of this site's own pages; otherwise falls back to a
-// role-appropriate default (teachers -> their dashboard, students ->
-// home). Call this after a successful login.
+// role-appropriate default (teachers/parents -> their dashboard,
+// students -> home). Call this after a successful login.
 function getLoginRedirect() {
   const requested = new URLSearchParams(window.location.search).get("redirect");
   const requestedPage = requested ? requested.split("?")[0] : "";
   if (REDIRECTABLE_PAGES.includes(requestedPage)) return requested;
-  return localStorage.getItem(ROLE_KEY) === "teacher" ? "teacher.html" : "index.html";
+  const role = localStorage.getItem(ROLE_KEY);
+  if (role === "teacher") return "teacher.html";
+  if (role === "parent") return "parent.html";
+  return "index.html";
 }
 
 // Forgets who's logged in and returns to the home page.
@@ -423,6 +452,88 @@ function renderTeacherDashboard(teacher) {
   if (!teacher) return;
   document.getElementById("teacher-greeting").textContent =
     "Hey " + teacher.name.split(" ")[0] + ",";
+}
+
+// ---- Parent dashboard (parent.html) ----
+// A read-only, course-scoped progress summary — one section per
+// linked student, one card per that student's enrolled course. There
+// is deliberately nothing to click that changes any data anywhere on
+// this page: no submit form, no "message us" contact menu, no edit
+// controls. Just what's already true, reused from the same helpers
+// the student-facing pages already use (roadmapPercentComplete,
+// roadmapGroupByChapter, roadmapChapterOverallStatus, roadmapPillHtml)
+// so a parent's numbers can never drift from what the student sees.
+function renderParentDashboard(parent) {
+  if (!parent) return;
+  document.getElementById("parent-greeting").textContent = "Hey " + parent.name + ",";
+
+  const wrap = document.getElementById("parent-summary");
+  const students = (parent.linkedStudents || [])
+    .map(function (username) { return STUDENTS.find(function (s) { return s.username === username; }); })
+    .filter(Boolean);
+
+  if (students.length === 0) {
+    wrap.innerHTML = '<p class="parent-empty">No student is linked to this account yet.</p>';
+    return;
+  }
+
+  wrap.innerHTML = students.map(function (student) {
+    const courses = student.courses || [];
+    const body = courses.length === 0
+      ? '<p class="parent-empty">No courses set up yet.</p>'
+      : courses.map(parentCourseCardHtml).join("");
+    return '<section class="parent-student">' +
+      '<h2 class="parent-student-name">' + student.name + '</h2>' +
+      body +
+    '</section>';
+  }).join("");
+}
+
+function parentCourseCardHtml(course) {
+  const items = course.roadmap || [];
+  const pct = roadmapPercentComplete(items);
+  const groups = roadmapGroupByChapter(items);
+  const data = course.rightNow;
+
+  const chaptersHtml = groups.map(function (group) {
+    const status = roadmapChapterOverallStatus(group.items);
+    const chapterPct = roadmapPercentComplete(group.items);
+    return '<div class="parent-chapter-row">' +
+      '<span class="parent-chapter-label">Chapter ' + group.label + '</span>' +
+      roadmapPillHtml(status, ROADMAP_STATUS_COLORS, status.replace(/-/g, " ")) +
+      '<span class="parent-chapter-pct">' + chapterPct + '%</span>' +
+    '</div>';
+  }).join("");
+
+  let nowClass = "parent-now";
+  let nowHtml = '<p class="parent-now-empty">Nothing set right now.</p>';
+  if (data) {
+    const isWaiting = data.state === "waiting";
+    if (isWaiting) nowClass += " is-waiting";
+    nowHtml =
+      '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Your move") + '</p>' +
+      '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
+  }
+
+  const feedback = course.feedback || [];
+  const latestFeedback = feedback[0];
+  const feedbackHtml = latestFeedback
+    ? '<div class="parent-feedback">' +
+        '<p class="parent-feedback-label">Latest feedback — ' + latestFeedback.date + '</p>' +
+        '<p class="parent-feedback-content">' + latestFeedback.content + '</p>' +
+      '</div>'
+    : "";
+
+  return '<div class="parent-course-card">' +
+    '<div class="parent-course-head">' +
+      '<h3 class="parent-course-name">' + course.name + '</h3>' +
+      '<span class="parent-course-pct">' + pct + '% complete</span>' +
+    '</div>' +
+    '<div class="parent-course-progress"><span class="parent-course-progress-bar" style="width:' + pct + '%;"></span></div>' +
+    '<div class="' + nowClass + '">' + nowHtml + '</div>' +
+    '<div class="parent-chapters">' + chaptersHtml + '</div>' +
+    feedbackHtml +
+  '</div>';
 }
 
 // Fills in blog.html's post list from BLOG_POSTS (js/blog-data.js),

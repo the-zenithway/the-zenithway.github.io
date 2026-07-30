@@ -1370,6 +1370,72 @@ body.portal-body {
 
 .rightnow-contact-item:hover { background: var(--bg); }
 
+/* -------- Parent dashboard -------- */
+.parent-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 24px;
+  overflow: auto;
+}
+
+.parent-col { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 8px; }
+
+.parent-greeting { color: var(--text); font-size: 1.1rem; font-weight: 600; margin: 0; }
+
+.parent-subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 24px; }
+
+.parent-student { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+.parent-student-name {
+  font-size: 1.2rem;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.parent-course-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.parent-course-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.parent-course-name { font-family: var(--font-logo); font-size: 1.1rem; margin: 0; }
+.parent-course-pct { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); flex-shrink: 0; }
+
+.parent-course-progress { width: 100%; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.parent-course-progress-bar { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+
+.parent-now { padding: 14px; background: var(--bg); border-radius: var(--radius); }
+.parent-now-tag { font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); margin: 0 0 6px; }
+.parent-now.is-waiting .parent-now-tag { color: var(--text-muted); }
+.parent-now-text { font-size: 0.9rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+.parent-now-empty { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+
+.parent-chapters { display: flex; flex-direction: column; gap: 8px; }
+.parent-chapter-row { display: flex; align-items: center; gap: 10px; }
+.parent-chapter-label { flex: 1; font-size: 0.85rem; color: var(--text-muted); }
+.parent-chapter-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); width: 36px; text-align: right; flex-shrink: 0; }
+
+.parent-feedback { border-top: 1px solid var(--border); padding-top: 14px; }
+.parent-feedback-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.parent-feedback-content { font-size: 0.88rem; color: var(--text); line-height: 1.6; margin: 0; }
+
+.parent-empty { color: var(--text-muted); font-size: 0.9rem; }
+
 /* -------- Feedback page -------- */
 .feedback-wrap {
   flex: 1;
