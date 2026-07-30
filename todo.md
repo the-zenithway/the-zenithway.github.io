@@ -4,10 +4,9 @@
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Instagram notifications / Instagram bot / AI
 - [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. also the logic, how the teachers work and so on 
-- [ ] Systematic way to work on form submission parsing + feedback + cheat sheet(maybe AI agent)
+- [ ] Systematic way to work on form submission parsing + feedback + cheat sheet(maybe AI agent) and like unit updates everything 
 - [ ] Figure out algorithm and AI agent whatever to make the corresponding T sections for each of the chapters 
 - [ ] Cross-course dashboard for multi-enrolled students (Hamin, David) — combined "your week across all courses" view - more important is a way to manage many subjects without getting overwhelmed(need to think)
-- [ ] Parent view — read-only, course-scoped progress summary for parents
 - [ ] Biology view 
 - [ ] Chemistry View 
 
@@ -54,7 +53,6 @@ and do things for the greater good?
 - [ ] AP Chem Notion page
 - [ ] AP CS Notion page
 - [ ] Automate notifications (general — deadlines, reminders, beyond Instagram) also related to teacher dashboard and all that 
-- [ ] Add new website pages / resources as needed (ongoing)
 - [ ] Upgrade Zenith CLI for easy editing and feedback for added database element
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
   - [ ] Study-technique deep dives
@@ -79,3 +77,6 @@ and do things for the greater good?
 ## 8. Intra-school Relation
 - [ ] Make presentation
 - [ ] Formal proposal document 
+
+## Done
+- [x] Submission compiler (compile-only, no feedback/cheat sheet writing yet) — Apps Script (`automation/submissions-compiler.gs`) OCRs uploaded images via Drive and appends every Form response as a status-tracked entry to `data/submissions-log.json` on a separate `submissions-log` branch, never touching main
