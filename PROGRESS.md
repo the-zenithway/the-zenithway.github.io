@@ -1,6 +1,6 @@
 # Zenith Web — Project Progress and Codex Handoff
 
-Last updated: 2026-07-27
+Last updated: 2026-07-30
 
 This file is the persistent handoff document for this repository. A new Codex
 session should read this file, `README.md`, and `todo.md` before making changes.
@@ -38,12 +38,12 @@ CSS file, and global JavaScript files directly in the browser.
 
 - Remote: `origin`, pointing to `the-zenithway/the-zenithway.github.io`.
 - Primary branch: `main`; `origin/HEAD` points to `origin/main`.
-- Current pulled state verified on 2026-07-27: local `main` and `origin/main`
-  point to merge commit `398aa79` (`Merge roadmap-views into app-launcher-view:
-  courses + Table/Curve views`).
+- Current pulled state verified on 2026-07-30: local `main` and `origin/main`
+  point to commit `9bc7069` (`added ap bio self study track and fixed the note
+  submission url`).
 - Relevant remote branches include `app-launcher-view`, `roadmap-views`, and
   `integrate-courses-and-views`; their work is merged into `main`.
-- The working tree was clean immediately after the pull. This documentation edit
+- The working tree was clean before this handoff refresh. This documentation edit
   makes `PROGRESS.md` modified until committed; always run `git status` again.
 - GitHub Pages serves the committed/pushed `main`. Local edits do not appear on
   the public website until explicitly committed and pushed. If the published
@@ -380,9 +380,11 @@ assets remain external until separately provided and migrated.
 - AP Biology now has a public self-study track linked under Resources; it mirrors
   the canonical 63-row Biology roadmap and renders every item as Complete without
   changing enrolled student progress.
+- AP Biology N1-N8 Notes Submission rows route their Open links to the
+  course-aware Zenith Submit page instead of obsolete Google Classroom pages.
 
-- Verified pulled state: `main == origin/main == 398aa79` before this document
-  update; no merge conflicts or application diffs were present.
+- Verified pulled state: `main == origin/main == 9bc7069`; the Biology self-study
+  track and N1-N8 Submit routing are committed and pushed with no application diff.
 - Multi-course Portal, account-scoped enrollments, `roadmap.html`, and Table/Curve
   views are merged and tracked on `main`.
 - Enrollments: Bogue—Calculus; Hamin—Biology and Calculus; Seohu—Calculus;
@@ -402,15 +404,31 @@ assets remain external until separately provided and migrated.
 - Validation passes: both JavaScript files parse; all five edited protected-page
   inline scripts parse; enrolled roadmaps match their prior data exactly; activity
   values/counts survived migration; and `git diff --check` passes.
-- Current uncommitted files: `js/data.js`, `js/app.js`, `right-now.html`,
-  `feedback.html`, `cheatsheet.html`, `calendar.html`, `submit.html`, and
-  `PROGRESS.md`. Nothing has been committed or pushed.
+- Current uncommitted file: `PROGRESS.md` from this handoff refresh only. The
+  application changes are committed and pushed in `9bc7069`.
 
 ## Work Log
 
 Add new entries immediately below this instruction, newest first. Each entry
 should include the date, request, files changed, verification, and any remaining
 work or important decisions.
+
+### 2026-07-30 — Refreshed committed-state handoff
+
+- Request: update `PROGRESS.md`.
+- Reconciled the handoff with `main == origin/main == 9bc7069`, recorded the
+  committed Biology link and self-study changes, and replaced stale dirty-tree
+  information.
+- Files changed: `PROGRESS.md` only; it remains uncommitted at handoff.
+
+### 2026-07-30 — Routed AP Biology notes to Zenith Submit
+
+- Request: replace the dead Google Classroom Open destinations for AP Biology
+  N1-N8 Notes Submission rows with the Submit page beside Calendar.
+- Files changed: `js/data.js` for both independent Biology enrollments.
+- All 16 copied N-row URLs now use `submit.html?course=ap-biology`; other roadmap
+  resource and submission URLs were preserved. Syntax and diff checks passed.
+- This work is committed and pushed in `9bc7069`.
 
 ### 2026-07-30 — Added AP Biology self-study track
 
