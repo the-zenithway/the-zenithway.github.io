@@ -585,28 +585,28 @@ const STUDENTS = [
       "state": "your-move",
       "chapter": "Chapter 6",
       "unit": "B",
-      "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-      "due": "Friday"
+      "instruction": "dddddRead through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
+      "due": "Saturday"
     },
     "feedback": [
       {
         "date": "Jul 22",
         "chapter": "Chapter 5",
         "unit": "S",
-        "content": "Nice improvement on related rates since last time. Keep working through the 발상노트 for the two problems you missed — both were domain-restriction oversights, same pattern as Chapter 4."
+        "content": "dddNice improvement on related rates since last time. Keep working through the 발상노트 for the two problems you missed — both were domain-restriction oversights, same pattern as Chapter 4."
       },
       {
         "date": "Jul 12",
         "chapter": "Chapter 4",
         "unit": "C",
-        "content": "Solid effort. Most of what you missed came down to forgetting to check the domain before finalizing an answer — worth a quick habit check before submitting next time."
+        "content": "ddddSolid effort. Most of what you missed came down to forgetting to check the domain before finalizing an answer — worth a quick habit check before submitting next time."
       }
     ],
     "cheatSheet": [
       {
         "topic": "Domain Restrictions",
         "source": "4C-14, 5S-9",
-        "pattern": "Shows up twice so far — the method is right both times, the answer just isn't checked against the original expression's domain afterward. Before finalizing, ask: does this value actually work back in the un-simplified expression, e.g. is $x=-2$ still valid if the original required $x > 0$?"
+        "pattern": "ddddShows up twice so far — the method is right both times, the answer just isn't checked against the original expression's domain afterward. Before finalizing, ask: does this value actually work back in the un-simplified expression, e.g. is $x=-2$ still valid if the original required $x > 0$?"
       },
       {
         "topic": "Related Rates Setup",
