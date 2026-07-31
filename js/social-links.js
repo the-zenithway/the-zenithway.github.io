@@ -14,8 +14,7 @@ const SOCIAL_LINKS = [
   { name: "Instagram", icon: "instagram", url: "https://www.instagram.com/the.zenithway1/" },
   { name: "Facebook", icon: "facebook", url: "https://www.facebook.com/profile.php?id=61591752347365" },
   { name: "YouTube", icon: "youtube", url: "https://www.youtube.com/channel/UCmvMavW17rcbvwDhRnAC36w" },
-  { name: "Discord", icon: "discord", url: "https://discord.gg/YOUR_INVITE" },
-  { name: "WhatsApp", icon: "whatsapp", url: "https://wa.me/YOUR_PHONE_NUMBER" },
+  { name: "Discord", icon: "discord", url: "https://discord.gg/NnttaYcwjS" },
   { name: "KakaoTalk", icon: "kakaotalk", url: "https://open.kakao.com/o/gh6REYFi" },
   { name: "Gmail", icon: "gmail", url: "mailto:zenithzenith0000@gmail.com" }
 ];

@@ -3,16 +3,15 @@
 ## 1. System — Absolute Clarity
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Instagram notifications / Instagram bot / AI
-- [ ] Clear up the process for every user - what we have to exactly do, what the teachers have to exactly do, what the students have to exactly do and so on. also the logic, how the teachers work and so on 
-- [ ] Systematic way to work on form submission parsing + feedback + cheat sheet(maybe AI agent) and like unit updates everything 
 - [ ] Figure out algorithm and AI agent whatever to make the corresponding T sections for each of the chapters 
 - [ ] Cross-course dashboard for multi-enrolled students (Hamin, David) — combined "your week across all courses" view - more important is a way to manage many subjects without getting overwhelmed(need to think)
-- [ ] Biology view 
-- [ ] Chemistry View 
-- [ ] Questions database and systematic way to ask, i.e. also giving AI prompts that make them learn efficiently and like yeah per problem reviews too 
-- [ ] place where they can encode all the questions and we might be able to answer them IRL
-- [ ] teacher dashboared
-- [ ] orbit/card view doesn't show links(open page), and maybe for the open page we can just enode it directly from the names
+- [ ] teacher dashboard
+- [ ] Workflow
+  - [ ] Course Unlock + Now + Update(includes percentage, chapter status update) 
+  - [ ] Submission + submission log update + systematic grading
+  - [ ] Feedback + cheat sheet
+- [ ] Korean version of website 
+- [ ] mobile optimization
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
@@ -33,12 +32,7 @@ and do things for the greater good?
 - [ ] Monthly "state of your progress" personal note from a teacher — short direction check-in, not a full feedback entry
 
 ## 4. Maintenance - updating existing features
-- [ ] Improve Zenith CLI - there's so much new features so this gotta follow 
 - [ ] aesthetic updates throughout the website
-- [ ] Extract shared header/footer markup — every page hand-copies the same header, so one navigation change means editing 15+ files
-- [ ] Fix known placeholder issues:
-  - [ ] Unfinished FAQ answers and empty AP resource subsections (Bio/Chem/Physics/CS A)
-  - [ ] Placeholder Discord/WhatsApp/KakaoTalk social URLs in js/social-links.js
 
 ## 5. Admin
 - [ ] Create discord community 
@@ -60,6 +54,7 @@ and do things for the greater good?
 - [ ] instagram bot weekly digest posts
 - [ ] document all the plans and progress so far, insta articles resources everything in one place(one idea is to let AI see all the commit logs and changes)
 - [ ] create a timeline of features 
+- [ ] biology, chemistry view for couse 
 
 ## 6. Get People 
 

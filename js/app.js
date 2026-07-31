@@ -1489,8 +1489,11 @@ function roadmapCardHtml(group) {
   const color = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
   const pct = roadmapPercentComplete(group.items);
   const itemsHtml = group.items.map(function (item) {
+    const nameHtml = (item.url && item.status !== "Locked")
+      ? '<a class="roadmap-card-item-name roadmap-card-item-link" href="' + item.url + '" target="_blank" rel="noopener">' + item.name + '</a>'
+      : '<span class="roadmap-card-item-name">' + item.name + '</span>';
     return '<div class="roadmap-card-item">' +
-      '<span class="roadmap-card-item-name">' + item.name + '</span>' +
+      nameHtml +
       roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) +
     '</div>';
   }).join("");

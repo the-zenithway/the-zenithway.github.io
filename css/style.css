@@ -982,6 +982,17 @@ body.portal-body {
   min-width: 0;
 }
 
+.roadmap-card-item-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.roadmap-card-item-link:hover,
+.roadmap-card-item-link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .roadmap-scroll-btn {
   position: absolute;
   top: 50%;
