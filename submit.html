@@ -19,8 +19,21 @@
 <div id="header-mount"></div>
 <script>renderPortalHeader({ active: "submit", actions: ["open", "logout"] });</script>
 
-<main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Submission Form"></iframe>
+<main class="submit-wrap">
+  <div class="submit-col">
+    <p class="submit-greeting" id="submit-greeting"></p>
+
+    <div class="submit-cta-card">
+      <h2 class="submit-cta-title">Submit your work</h2>
+      <p class="submit-cta-text">Finished a chapter or unit? Open the form to submit it — you'll pick your class, chapter, and unit there, and can attach a photo of your work.</p>
+      <a id="submit-cta-link" class="btn-primary" href="#" target="_blank" rel="noopener">Open the submission form ↗</a>
+    </div>
+
+    <div>
+      <h2 class="submit-log-heading">Your submissions</h2>
+      <div class="submit-log-list" id="submit-log-list"></div>
+    </div>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
@@ -30,7 +43,11 @@
   var student = getCurrentStudent();
   var course = requireSelectedCourse(student);
   if (course) {
-    renderEmbedPage(student, course.submissionFormUrl || SUBMISSION_FORM_URL, "Submission Form");
+    var formUrl = course.submissionFormUrl || SUBMISSION_FORM_URL;
+    document.getElementById('submit-greeting').textContent = "Hey " + student.name.split(" ")[0] + ",";
+    document.getElementById('submit-cta-link').href = formUrl;
+    document.getElementById('open-direct-link').href = formUrl;
+    renderSubmissionLog(student, course);
   }
 
   document.getElementById('logout-btn').addEventListener('click', logout);

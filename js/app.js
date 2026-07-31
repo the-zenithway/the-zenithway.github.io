@@ -444,6 +444,83 @@ function renderFeedback(student) {
   }).join("");
 }
 
+// ---- Submission log (submit.html) ----
+// Reads data/submissions-log.json — the file the Apps Script
+// submission compiler (automation/submissions-compiler.gs) appends to
+// on every Form submission — and shows this student's own history for
+// the current course, newest first. Compile-only, same as the log
+// itself: this just displays what's there, it doesn't write anything.
+const SUBMISSION_STATUS_COLORS = {
+  "pending": { text: "#D6A94A", bg: "rgba(214, 169, 74, 0.18)" },
+  "reviewed": { text: "#4ADE80", bg: "rgba(74, 222, 128, 0.16)" }
+};
+
+// Every non-file answer is a string; a file-upload question's answer
+// is the only array (a list of Drive file IDs) — so scanning for the
+// first array value finds it without depending on the exact question
+// title, which can change on the Form.
+function submissionFileIds(entry) {
+  const answers = entry.answers || {};
+  const key = Object.keys(answers).find(function (k) { return Array.isArray(answers[k]); });
+  return key ? answers[key] : [];
+}
+
+function submissionDateLabel(receivedAt) {
+  const d = new Date(receivedAt);
+  if (isNaN(d.getTime())) return receivedAt;
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) +
+    " · " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+
+function submissionLogItemHtml(entry) {
+  const thumbsHtml = submissionFileIds(entry).map(function (id) {
+    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
+      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
+    '</a>';
+  }).join("");
+
+  const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+  const status = entry.status || "pending";
+
+  return '<div class="submit-log-item">' +
+    '<div class="submit-log-meta">' +
+      '<span class="submit-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      roadmapPillHtml(status, SUBMISSION_STATUS_COLORS, status) +
+    '</div>' +
+    '<p class="submit-log-chapter">' + chapterUnit + '</p>' +
+    (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : '') +
+    (entry.ocrText ? '<div class="submit-log-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : '') +
+  '</div>';
+}
+
+// Fails quietly into the empty state if the fetch doesn't work (e.g.
+// opened from file:// instead of a real server) — this is a
+// nice-to-have log, not something that should block the page.
+function renderSubmissionLog(student, course) {
+  const list = document.getElementById("submit-log-list");
+  if (!list || !student) return;
+
+  list.innerHTML = '<p class="submit-log-empty">Loading your submissions...</p>';
+
+  fetch("data/submissions-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const mine = all.filter(function (entry) {
+        return entry.username === student.username && (!course || entry.courseId === course.id);
+      }).sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+
+      if (mine.length === 0) {
+        list.innerHTML = '<p class="submit-log-empty">Nothing submitted yet -- it will show up here once you submit through the form above.</p>';
+        return;
+      }
+
+      list.innerHTML = mine.map(submissionLogItemHtml).join("");
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="submit-log-empty">Could not load your submission history right now.</p>';
+    });
+}
+
 // Fills in the (currently placeholder) teacher.html dashboard from
 // the logged-in teacher's name. The actual dashboard content/layout
 // is intentionally undesigned for now — this just proves the role
@@ -463,9 +540,59 @@ function renderTeacherDashboard(teacher) {
 // the student-facing pages already use (roadmapPercentComplete,
 // roadmapGroupByChapter, roadmapChapterOverallStatus, roadmapPillHtml)
 // so a parent's numbers can never drift from what the student sees.
-function renderParentDashboard(parent) {
+//
+// `lang` ("en"/"ko", from js/i18n.js's getLang()) only affects this
+// page's own static labels (greeting, "Chapter", pill text, etc) —
+// not student/course names or actual feedback/instruction content,
+// which is tutor-authored English and outside this toggle's scope.
+// Word order differs enough between the two languages (e.g. the
+// greeting) that these are built as whole strings per language
+// rather than word-for-word substitution.
+const PARENT_I18N = {
+  subtitle: {
+    en: "A read-only summary — nothing here can be edited or submitted from this account.",
+    ko: "읽기 전용 요약입니다 — 이 계정에서는 아무것도 수정하거나 제출할 수 없습니다."
+  },
+  noStudent: {
+    en: "No student is linked to this account yet.",
+    ko: "아직 이 계정에 연결된 학생이 없습니다."
+  },
+  noCourses: {
+    en: "No courses set up yet.",
+    ko: "아직 등록된 과목이 없습니다."
+  },
+  chapter: { en: "Chapter ", ko: "챕터 " },
+  complete: { en: "complete", ko: "완료" },
+  yourMove: { en: "Your move", ko: "지금 할 일" },
+  withUs: { en: "With us", ko: "검토 중" },
+  nothingNow: { en: "Nothing set right now.", ko: "현재 설정된 항목이 없습니다." },
+  latestFeedback: { en: "Latest feedback — ", ko: "최근 피드백 — " }
+};
+
+function pt(key, lang) {
+  const entry = PARENT_I18N[key];
+  return (entry && entry[lang]) || (entry && entry.en) || key;
+}
+
+// Korean labels for the same ROADMAP_STATUS_COLORS keys used by the
+// pills elsewhere — kept separate from that shared map since it's
+// English-only and used on student-facing pages too.
+const PARENT_STATUS_LABELS_KO = {
+  "Complete": "완료",
+  "Review": "검토",
+  "Unlocked": "잠금 해제",
+  "Optional-Reading": "선택 읽기자료",
+  "Locked": "잠김"
+};
+
+function renderParentDashboard(parent, lang) {
+  lang = lang || "en";
   if (!parent) return;
-  document.getElementById("parent-greeting").textContent = "Hey " + parent.name + ",";
+  document.getElementById("parent-greeting").textContent =
+    lang === "ko" ? parent.name + "님, 안녕하세요," : "Hey " + parent.name + ",";
+
+  const subtitle = document.querySelector(".parent-subtitle");
+  if (subtitle) subtitle.textContent = pt("subtitle", lang);
 
   const wrap = document.getElementById("parent-summary");
   const students = (parent.linkedStudents || [])
@@ -473,15 +600,15 @@ function renderParentDashboard(parent) {
     .filter(Boolean);
 
   if (students.length === 0) {
-    wrap.innerHTML = '<p class="parent-empty">No student is linked to this account yet.</p>';
+    wrap.innerHTML = '<p class="parent-empty">' + pt("noStudent", lang) + '</p>';
     return;
   }
 
   wrap.innerHTML = students.map(function (student) {
     const courses = student.courses || [];
     const body = courses.length === 0
-      ? '<p class="parent-empty">No courses set up yet.</p>'
-      : courses.map(parentCourseCardHtml).join("");
+      ? '<p class="parent-empty">' + pt("noCourses", lang) + '</p>'
+      : courses.map(function (course) { return parentCourseCardHtml(course, lang); }).join("");
     return '<section class="parent-student">' +
       '<h2 class="parent-student-name">' + student.name + '</h2>' +
       body +
@@ -489,7 +616,8 @@ function renderParentDashboard(parent) {
   }).join("");
 }
 
-function parentCourseCardHtml(course) {
+function parentCourseCardHtml(course, lang) {
+  lang = lang || "en";
   const items = course.roadmap || [];
   const pct = roadmapPercentComplete(items);
   const groups = roadmapGroupByChapter(items);
@@ -498,20 +626,21 @@ function parentCourseCardHtml(course) {
   const chaptersHtml = groups.map(function (group) {
     const status = roadmapChapterOverallStatus(group.items);
     const chapterPct = roadmapPercentComplete(group.items);
+    const statusLabel = lang === "ko" ? (PARENT_STATUS_LABELS_KO[status] || status) : status.replace(/-/g, " ");
     return '<div class="parent-chapter-row">' +
-      '<span class="parent-chapter-label">Chapter ' + group.label + '</span>' +
-      roadmapPillHtml(status, ROADMAP_STATUS_COLORS, status.replace(/-/g, " ")) +
+      '<span class="parent-chapter-label">' + pt("chapter", lang) + group.label + '</span>' +
+      roadmapPillHtml(status, ROADMAP_STATUS_COLORS, statusLabel) +
       '<span class="parent-chapter-pct">' + chapterPct + '%</span>' +
     '</div>';
   }).join("");
 
   let nowClass = "parent-now";
-  let nowHtml = '<p class="parent-now-empty">Nothing set right now.</p>';
+  let nowHtml = '<p class="parent-now-empty">' + pt("nothingNow", lang) + '</p>';
   if (data) {
     const isWaiting = data.state === "waiting";
     if (isWaiting) nowClass += " is-waiting";
     nowHtml =
-      '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Your move") + '</p>' +
+      '<p class="parent-now-tag">' + (isWaiting ? pt("withUs", lang) : pt("yourMove", lang)) + '</p>' +
       '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
   }
 
@@ -519,7 +648,7 @@ function parentCourseCardHtml(course) {
   const latestFeedback = feedback[0];
   const feedbackHtml = latestFeedback
     ? '<div class="parent-feedback">' +
-        '<p class="parent-feedback-label">Latest feedback — ' + latestFeedback.date + '</p>' +
+        '<p class="parent-feedback-label">' + pt("latestFeedback", lang) + latestFeedback.date + '</p>' +
         '<p class="parent-feedback-content">' + latestFeedback.content + '</p>' +
       '</div>'
     : "";
@@ -527,7 +656,7 @@ function parentCourseCardHtml(course) {
   return '<div class="parent-course-card">' +
     '<div class="parent-course-head">' +
       '<h3 class="parent-course-name">' + course.name + '</h3>' +
-      '<span class="parent-course-pct">' + pct + '% complete</span>' +
+      '<span class="parent-course-pct">' + pct + '% ' + pt("complete", lang) + '</span>' +
     '</div>' +
     '<div class="parent-course-progress"><span class="parent-course-progress-bar" style="width:' + pct + '%;"></span></div>' +
     '<div class="' + nowClass + '">' + nowHtml + '</div>' +
@@ -1091,11 +1220,11 @@ function renderRoadmap(course) {
     }
 
     return '<tr class="' + rowClass + '">' +
-      '<td class="roadmap-chapter" style="color:' + roadmapChapterColor(item.chapter) + ';">' + item.chapter + '</td>' +
-      '<td class="roadmap-name">' + namePrefix + item.name + '</td>' +
-      '<td>' + roadmapPillHtml(item.category, ROADMAP_CATEGORY_COLORS, roadmapCategoryLabel(item.category)) + '</td>' +
-      '<td>' + roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) + '</td>' +
-      '<td>' + link + '</td>' +
+      '<td class="roadmap-chapter" data-label="Chapter" style="color:' + roadmapChapterColor(item.chapter) + ';">' + item.chapter + '</td>' +
+      '<td class="roadmap-name" data-label="Name">' + namePrefix + item.name + '</td>' +
+      '<td data-label="Category">' + roadmapPillHtml(item.category, ROADMAP_CATEGORY_COLORS, roadmapCategoryLabel(item.category)) + '</td>' +
+      '<td data-label="Status">' + roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) + '</td>' +
+      '<td data-label="Links">' + link + '</td>' +
     '</tr>';
   }).join("");
 }

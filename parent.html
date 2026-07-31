@@ -13,11 +13,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/layout.js"></script>
+<script src="js/i18n.js"></script>
 </head>
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ nav: "label", label: "Parent Dashboard", actions: ["logout"] });</script>
+<script>renderPortalHeader({ nav: "label", label: "Parent Dashboard", actions: ["lang", "logout"] });</script>
 
 <main class="parent-wrap">
   <div class="parent-col">
@@ -32,7 +33,10 @@
 <script>
   requireParentLogin();
   var parent = getCurrentParent();
-  renderParentDashboard(parent);
+
+  renderLangToggle('lang-toggle-mount', function (lang) {
+    renderParentDashboard(parent, lang);
+  });
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

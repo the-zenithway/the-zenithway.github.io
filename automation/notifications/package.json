@@ -1,0 +1,9 @@
+{
+  "name": "zenith-notifications",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Email notifications (deadlines, feedback, weekly session reminders) triggered off changes to js/data.js.",
+  "dependencies": {
+    "nodemailer": "^9.0.3"
+  }
+}

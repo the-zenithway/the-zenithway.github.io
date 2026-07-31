@@ -65,11 +65,17 @@ const SUBMISSION_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScqPBskg9H
 // a plain array of { date, chapter, unit, content }; add new entries to the TOP
 // (newest first). Use empty arrays for a course with no entries. Student-level
 // legacy fields are not rendered and must not be copied into new enrollments.
+//
+// "email" is used only by automation/notifications (deadline/feedback emails,
+// weekly session reminders) — it is not read anywhere on the site itself.
+// Leave it as "" for a student who shouldn't get emails yet; the notifier
+// skips anyone with an empty email instead of erroring.
 const STUDENTS = [
   {
     "username": "alice",
     "password": "alice123",
     "name": "Alice Inthe Wonderland",
+    "email": "",
     "portal": {
       "notionUrl": "https://embed.embednotion.com/39edb87002c4804c855ec1c9bbb7791d",
       "notionAvailable": false
@@ -79,6 +85,7 @@ const STUDENTS = [
     "username": "bogue",
     "password": "password",
     "name": "Bogue Kwon",
+    "email": "",
     "portal": {
       "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48017b10cd3db81e407f6?v=6e4db87002c48266bdf508f048d0fa9e&source=copy_link",
       "notionAvailable": false 
@@ -258,6 +265,7 @@ const STUDENTS = [
     "username": "hamin",
     "password": "password",
     "name": "Hamin Park",
+    "email": "",
     "portal": {
       "notionUrl": "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE",
       "notionAvailable": false
@@ -452,6 +460,7 @@ const STUDENTS = [
     "username": "seohu",
     "password": "password",
     "name": "Seohu Lee",
+    "email": "",
     "portal": {
       "notionUrl": "https://wealthy-mapusaurus-5ee.notion.site/3aadb87002c48013b4cdddec5d117b8b?v=e11db87002c483669cfb08aae95fc5ab&source=copy_link",
       "notionAvailable": false
@@ -567,6 +576,7 @@ const STUDENTS = [
     "username": "kyjv9981",
     "password": "password",
     "name": "Yong Joon Kim",
+    "email": "yongjoon9981@gmail.com",
     "portal": {
       "notionUrl": "d",
       "notionAvailable": false
@@ -609,6 +619,7 @@ const STUDENTS = [
     "username": "davidheo",
     "password": "david123",
     "name": "David Heo",
+    "email": "",
     "portal": {
       "notionUrl": "https://your-workspace.notion.site/REPLACE-WITH-CHARLIES-PAGE",
       "notionAvailable": false

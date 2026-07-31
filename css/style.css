@@ -377,7 +377,7 @@ nav > a.active { color: var(--text); }
 
 .blog-empty { color: var(--text-muted); padding: 32px 0; }
 
-.blog-article-wrap { padding: 48px 0 80px; }
+.blog-article-wrap { padding-top: 48px; padding-bottom: 80px; }
 
 .blog-back {
   display: inline-block;
@@ -611,6 +611,19 @@ body.portal-body {
 }
 
 .portal-logout:hover { background: var(--bg-elevated); border-color: var(--text-muted); }
+
+.lang-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.lang-toggle-btn:hover { color: var(--text); border-color: var(--text-muted); }
 
 .whatsnew-wrap { position: relative; }
 
@@ -1600,6 +1613,129 @@ body.portal-body {
   margin: 0;
 }
 
+/* -------- Submit page (submit.html) -------- */
+.submit-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.submit-col {
+  width: 100%;
+  max-width: 560px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.submit-greeting {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.submit-cta-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+}
+
+.submit-cta-title {
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+}
+
+.submit-cta-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.submit-log-heading {
+  font-size: 1rem;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+.submit-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submit-log-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.submit-log-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+
+.submit-log-date { color: var(--text-muted); font-size: 0.8rem; }
+
+.submit-log-chapter {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.submit-log-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.submit-log-thumb {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.submit-log-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.submit-log-ocr {
+  max-height: 160px;
+  overflow-y: auto;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.submit-log-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
 .cheatsheet-banner {
   display: flex;
   align-items: center;
@@ -1740,7 +1876,55 @@ footer {
 
   .portal-actions { flex-wrap: wrap; row-gap: 8px; }
 
-  .roadmap-table { min-width: 560px; }
+  /* Roadmap table becomes a stacked label/value list instead of scrolling sideways */
+  .roadmap-table { width: 100%; min-width: 0; }
+  .roadmap-table thead { display: none; }
+
+  .roadmap-table,
+  .roadmap-table tbody,
+  .roadmap-table tr,
+  .roadmap-table td {
+    display: block;
+    width: auto;
+  }
+
+  .roadmap-table tr { padding: 14px 2px 16px; border-bottom: 1px solid var(--border); }
+
+  .roadmap-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 0;
+    border-bottom: none;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .roadmap-table td::before {
+    content: attr(data-label);
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .roadmap-table td.roadmap-name {
+    display: block;
+    padding: 2px 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .roadmap-table td.roadmap-name::before { display: block; margin-bottom: 4px; }
+
+  /* Curve view: stop vertically centering in leftover viewport height —
+     on a phone that pushes the diagram far below the legend. */
+  .roadmap-curve-canvas { flex: none; min-height: 0; align-items: flex-start; padding-top: 12px; }
 }
 
 @media (max-width: 720px) {
@@ -1757,6 +1941,9 @@ footer {
   .page-header h1 { font-size: 1.6rem; }
   .login-card { padding: 28px 22px; }
   .course-folder { padding: 22px; }
+  .blog-article-wrap { padding-top: 32px; padding-bottom: 56px; }
+  .blog-article h1 { font-size: 1.6rem; margin-bottom: 20px; }
+  .blog-article-body p { font-size: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

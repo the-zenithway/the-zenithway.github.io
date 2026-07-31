@@ -34,6 +34,7 @@ const PORTAL_ACTION_HTML = {
   open: '<a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>',
   allCourses: '<a href="portal.html" class="portal-link">All courses</a>',
   back: '<a href="resources.html" class="portal-link">← Back to Resources</a>',
+  lang: '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>',
   logout: '<button id="logout-btn" class="portal-logout">Log out</button>'
 };
 
@@ -59,7 +60,9 @@ function mount(id, html) {
   el.outerHTML = html;
 }
 
-// opts: { active: 'resources', showAuth: true }
+// opts: { active: 'resources', showAuth: true, langToggle: true }
+// langToggle adds an empty #lang-toggle-mount span to the nav — opt-in
+// since only resources.html currently calls renderLangToggle() on it.
 function renderSiteHeader(opts) {
   opts = opts || {};
   const showAuth = opts.showAuth !== false;
@@ -73,6 +76,8 @@ function renderSiteHeader(opts) {
     ? '<a href="login.html" id="nav-login-btn" class="btn-nav">Log In</a>\n      <span id="nav-user-name" class="nav-user" hidden></span>'
     : "";
 
+  const lang = opts.langToggle ? '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>' : "";
+
   const html =
     '<header class="site-header">\n' +
     '  <div class="container header-inner">\n' +
@@ -82,6 +87,7 @@ function renderSiteHeader(opts) {
     "    </button>\n" +
     '    <nav id="site-nav">\n' +
     "      " + navLinks + "\n" +
+    "      " + lang + "\n" +
     "      " + auth + "\n" +
     "    </nav>\n" +
     "  </div>\n" +

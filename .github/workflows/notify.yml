@@ -1,0 +1,67 @@
+name: Zenith notifications
+
+on:
+  push:
+    branches: [main]
+    paths: ["js/data.js"]
+  schedule:
+    # Weekly session reminder. Placeholder time (Sundays 13:00 UTC) —
+    # change to match the actual session day/time, in UTC.
+    - cron: "0 13 * * 0"
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Which job to run manually"
+        type: choice
+        options: [notify-on-push, weekly-session-reminder]
+        default: notify-on-push
+
+jobs:
+  notify-on-push:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'notify-on-push')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: automation/notifications
+
+      - name: Extract old data.js (previous commit)
+        run: git show HEAD^:js/data.js > /tmp/old-data.js || echo "const STUDENTS = [];" > /tmp/old-data.js
+
+      - name: Send notifications
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: node notify-on-push.js /tmp/old-data.js ../../js/data.js
+        working-directory: automation/notifications
+
+  weekly-session-reminder:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'weekly-session-reminder')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: automation/notifications
+
+      - name: Send session reminder
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SESSION_DAY: "Saturday"
+          SESSION_TIME: "under 90 minutes"
+        run: node notify-session-reminder.js ../../js/data.js
+        working-directory: automation/notifications

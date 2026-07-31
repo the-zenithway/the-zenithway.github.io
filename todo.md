@@ -3,13 +3,11 @@
 ## 1. System — Absolute Clarity
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] teacher dashboard
-- [ ] Workflow
+- [ ] Workflow(Basically zenith CLI)
   - [ ] Course Unlock + Now + Update(includes percentage, chapter status update) 
   - [ ] Submission + submission log update + systematic grading
   - [ ] Feedback + cheat sheet
-- [ ] Korean version of website 
-- [ ] mobile optimization
-- [ ] gmail notifications 
+- [ ] gmail notifications — code built (see Done log), still needs: real student emails filled into `js/data.js`, `GMAIL_USER`/`GMAIL_APP_PASSWORD` repo secrets, and the weekly session cron time set
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
@@ -29,12 +27,9 @@ and do things for the greater good?
 - [ ] Peer study pairing — match two students on the same chapter for accountability check-ins
 - [ ] Monthly "state of your progress" personal note from a teacher — short direction check-in, not a full feedback entry
 
-## 5. Admin
+## 4. Admin
 - [ ] Create discord community 
-- [ ] AP Physics self study track 
-- [ ] AP Chem page
-- [ ] AP CS page
-- [ ] Upgrade Zenith CLI for easy editing and feedback for added database element
+- [ ] AP Physics self study track, AP Chem self study track, AP CS A self study track
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
   - [ ] Study-technique deep dives
   - [ ] Subject-specific pitfall posts (e.g. IVT vs MVT vs Rolle's, straight from real cheat sheet entries)
@@ -42,14 +37,15 @@ and do things for the greater good?
 - [ ] Maybe about us page that showcases the people involved in this
 - [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
 - [ ] insta posts and etc in social media 
-- [ ] Rewrite README.md to match the current architecture (it still describes the old single-iframe portal/calendar setup) — or trim it to point at PROGRESS.md as the source of truth
 - [ ] alumni/results page showing outcomes 
-- [ ] document all the plans and progress so far, insta articles resources everything in one place(one idea is to let AI see all the commit logs and changes)
 - [ ] create a timeline of features 
 - [ ] biology, chemistry view for couse 
 
-## 6. Get People 
+## 5. Get People 
 
-## 8. Intra-school Relation
+## 6. Intra-school Relation
 - [ ] Make presentation
-- [ ] Formal proposal document 
+- [ ] Formal proposal document
+
+## Done
+- [x] Email notifications (deadlines, feedback, weekly session reminder) — `automation/notifications/` + `.github/workflows/notify.yml`, triggered by pushes to `js/data.js` (diff-based, per-student digest) and a weekly cron; `email` field added to STUDENTS schema. Dry-run tested locally; not yet tested against a real GitHub Actions run/real Gmail send — see `automation/notifications/README.md` for remaining setup
