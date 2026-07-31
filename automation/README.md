@@ -23,8 +23,13 @@ the weekly session reminder.
 
 - `submissions-compiler.gs` is a Google Apps Script bound to the
   intake Form. On every submission (`onFormSubmit` trigger) it:
-  1. Reads every question/answer pair generically (no question titles
-     hardcoded, so it keeps working if the form changes).
+  1. Reads every question/answer pair generically, then pulls out
+     `course`/`username`/`chapter`/`unit` by matching a question's
+     title against a case-insensitive **prefix** (`findAnswerByPrefix_`)
+     rather than an exact string — the Form's question titles have
+     drifted more than once already (see "Known gaps" below), and an
+     exact match silently produces `null` the moment a title's casing
+     changes, which happened for real on 2026-07-31.
   2. For any file-upload answer, copies the file through Google
      Drive's OCR (`Drive.Files.copy(..., {ocr: true})`) into a
      temporary Doc, reads the extracted text out, then deletes the
@@ -34,11 +39,29 @@ the weekly session reminder.
      back (retrying once or twice on a 409 if two submissions land at
      nearly the same time).
 - The log commits straight to `main`. It's just a data file — nothing
-  links to it or serves it as a page — so there's no risk to the live
-  site from it living there.
+  links to it or serves it as a page, but `submit.html` does `fetch()`
+  it directly (relative URL), and a relative fetch can only ever see
+  whatever's on `main` (that's all GitHub Pages serves) — so `main` is
+  the only branch this can ever commit to for the Submit page to work.
+  An earlier revision briefly committed to a separate `submissions-log`
+  branch for extra safety; that was reverted (2026-07-31) specifically
+  because it silently broke the Submit page, which could never see it.
 - `submissions-compiler.gs` in this repo is a **reference copy** for
   version history. The script that actually runs lives inside the
   Apps Script editor attached to the Form; paste updates in by hand.
+
+## Known gaps (found via real submissions, now fixed going forward)
+
+Four real submissions came in before the prefix-matching fix above, with
+the Form's question titles in three different stylings across them
+(`"Username"`/`"Course"`/`"Chapter"`/`"Unit(for Chapters 1~12)"`, then a
+plainer pass, then lowercase `"username"`/`"chapter"`/`"unit"`). The
+oldest of the four has no `course`/`username`-shaped question at all —
+apparently a stray response from a different, unrelated form — and is
+left with `courseId`/`username` as `null` rather than guessed. The other
+three were backfilled by hand (2026-07-31) with the same prefix-matching
+logic the script now uses, so they show up correctly on the Submit page
+retroactively.
 
 ## Log entry shape
 
@@ -61,15 +84,17 @@ the weekly session reminder.
 `"reviewed"`, `"feedback-written"`) and who/what sets them is future
 work — not decided yet, since nothing downstream reads this field.
 
-`courseId` is resolved from the Form's "Course" dropdown answer
-against the `COURSE_IDS` map inside `submissions-compiler.gs` — `null`
-if it doesn't match (e.g. the map is out of date); the entry still
-gets logged either way, just unresolved. `username` is copied directly
-from the Form's "Username" answer (students enter their own — no
-lookup table to maintain). `chapter` is normalized from the Form's
-bare-number "Chapter" answer (`"5"` → `"Chapter 5"`) to match the
-format used in `js/data.js`'s roadmap items. `unit` is the roadmap
-category letter (`B`/`C`/`T`/`R`/`S`/etc.), copied straight through.
+`courseId` is resolved from whichever answer's question title starts
+with "course" (case-insensitive), against the `COURSE_IDS` map inside
+`submissions-compiler.gs` — `null` if it doesn't match (e.g. the map is
+out of date, or the dropdown's exact text changed) or no such question
+was found at all; the entry still gets logged either way, just
+unresolved. `username` comes from whichever question title starts with
+"username". `chapter` comes from whichever starts with "chapter",
+normalized from a bare number (`"5"` → `"Chapter 5"`) to match the
+format used in `js/data.js`'s roadmap items. `unit` comes from whichever
+starts with "unit" — the roadmap category letter (`B`/`C`/`T`/`R`/`S`/
+etc.), copied straight through.
 
 ## One-time setup
 
@@ -95,8 +120,10 @@ file or anywhere in the repo.
 
 ## Status
 
-Written but **not yet tested against the real Form** — I can't execute
-Apps Script myself. The GitHub Contents API and Drive OCR calls follow
-documented patterns, but the first real test run should be watched
-closely. If `onFormSubmit` throws, the script emails whoever owns it
-with the error instead of failing silently.
+Confirmed working against the real Form as of 2026-07-31 — four real
+submissions have logged successfully, `commitNewEntry_`'s GitHub Contents
+API write and the OCR path have both run for real. The prefix-matching
+field extraction and `sendConfirmationEmail_` (the "we got it" email) are
+the newest pieces and haven't each had a dedicated real-submission test
+yet — watch their next real runs. If `onFormSubmit` throws, the script
+emails whoever owns it with the error instead of failing silently.

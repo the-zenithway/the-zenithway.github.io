@@ -450,7 +450,7 @@ const STUDENTS = [
     "username": "seohu",
     "password": "password",
     "name": "Seohu Lee",
-    "email": "",
+    "email": "xihongshihou@naver.com",
     "courses": [
       {
         "id": "ap-calculus-bc",
@@ -620,7 +620,7 @@ const STUDENTS = [
     "username": "davidheo",
     "password": "david123",
     "name": "David Heo",
-    "email": "",
+    "email": "Heodavidheo@gmail.com",
     "courses": [
       {
         "id": "ap-biology",

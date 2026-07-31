@@ -32,25 +32,32 @@
  *    Extensions -> Apps Script). Paste this whole file in, replacing
  *    whatever is in Code.gs.
  *
- *    The Form needs these questions, titled exactly (no branching
- *    required — a flat form, since students just enter their own
- *    username directly instead of picking a name off a roster):
- *      "Course"                    dropdown, e.g. "AP Calculus BC" /
- *                                   "AP Biology" — must match COURSE_IDS
- *                                   below exactly
- *      "Username"                  short answer — the student's exact
- *                                   Zenith username (a dropdown is
- *                                   safer than free text if you want to
- *                                   rule out typos, but isn't required)
- *      "Chapter"                   short answer or dropdown, e.g. "5"
- *                                   (normalized to "Chapter 5" below)
- *      "Unit(for Chapters 1~12)"   the roadmap category letter, e.g.
- *                                   "B"/"C"/"T"/"R"/"S"
- *      "Feedback & Remarks"        short/long answer, optional
- *      a file-upload question      any title — detected by type, OCR'd
- *                                   automatically
+ *    The Form needs a question for each of these, matched by a
+ *    case-insensitive prefix (see findAnswerByPrefix_ below) rather
+ *    than an exact title — this Form's question titles have drifted
+ *    at least 3 times already ("Username"/"Course"/"Chapter"/
+ *    "Unit(for Chapters 1~12)", then a simplified generic pass, then
+ *    lowercase "username"/"chapter"/"unit"), so matching loosely
+ *    (by what the title *starts with*, ignoring case) survives minor
+ *    renames without silently going blank the way an exact match did
+ *    on 2026-07-31 (a submission logged with username: null even
+ *    though the raw answer clearly had "kyjv9981" in it):
+ *      starts with "course"    dropdown, e.g. "AP Calculus BC" /
+ *                               "AP Biology" — must match COURSE_IDS
+ *                               below exactly (this is an answer
+ *                               *value*, not a title, so it's stable)
+ *      starts with "username"   short answer — the student's exact
+ *                               Zenith username
+ *      starts with "chapter"    short answer or dropdown, e.g. "5"
+ *                               (normalized to "Chapter 5" below)
+ *      starts with "unit"       the roadmap category letter, e.g.
+ *                               "B"/"C"/"T"/"R"/"S"
+ *      a file-upload question   any title — detected by type, OCR'd
+ *                               automatically
  *    "Course" is resolved to a courseId via COURSE_IDS below — update
- *    that map by hand whenever a course is added or renamed.
+ *    that map by hand whenever a course is added or renamed. If the
+ *    Form's questions are renamed again beyond a shared prefix (not
+ *    just a case change), update findAnswerByPrefix_'s callers below.
  *
  * 3. Enable the Drive Advanced Service (needed for OCR): in the Apps
  *    Script editor, click "Services" (+ icon) in the left sidebar,
@@ -118,7 +125,7 @@ function onFormSubmit(e) {
     // log the submission itself (that already succeeded above), so it gets
     // its own try/catch instead of falling into the outer one.
     try {
-      sendConfirmationEmail_(owner, repo, branch, token, entry);
+      sendConfirmationEmail_(owner, repo, token, entry);
     } catch (mailErr) {
       MailApp.sendEmail(Session.getActiveUser().getEmail(),
         "Zenith submission confirmation email failed (submission itself was logged fine)",
@@ -151,10 +158,25 @@ function normalizeChapter_(raw) {
   return /^chapter\b/i.test(raw) ? raw : "Chapter " + raw;
 }
 
+// Finds an answer by matching the Form's question title against a
+// case-insensitive prefix rather than an exact string — the Form's
+// question titles have drifted more than once (see the setup comment
+// at the top of this file), and a prefix match survives a case change
+// or an added parenthetical without going silently blank.
+function findAnswerByPrefix_(answers, prefix) {
+  var lowerPrefix = prefix.toLowerCase();
+  var key = Object.keys(answers).filter(function (k) {
+    return k.toLowerCase().indexOf(lowerPrefix) === 0;
+  })[0];
+  return key ? answers[key] : null;
+}
+
 // Reads every question/answer pair generically — nothing here is
-// hardcoded to specific question titles, so it keeps working if the
-// form's questions change. Any file-upload answer gets OCR'd via
-// Drive and its text folded in alongside the raw answers.
+// hardcoded to an exact question title, so it keeps working if the
+// form's questions are reworded (as long as the meaningful prefix —
+// "course"/"username"/"chapter"/"unit" — stays put; see
+// findAnswerByPrefix_). Any file-upload answer gets OCR'd via Drive
+// and its text folded in alongside the raw answers.
 function buildEntryFromResponse_(response) {
   var answers = {};
   var ocrText = "";
@@ -175,14 +197,19 @@ function buildEntryFromResponse_(response) {
     }
   });
 
+  var courseAnswer = findAnswerByPrefix_(answers, "course");
+  var usernameAnswer = findAnswerByPrefix_(answers, "username");
+  var chapterAnswer = findAnswerByPrefix_(answers, "chapter");
+  var unitAnswer = findAnswerByPrefix_(answers, "unit");
+
   return {
     id: "sub_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
     receivedAt: new Date().toISOString(),
     status: "pending",
-    courseId: COURSE_IDS[answers["Course"]] || null,
-    username: answers["Username"] ? String(answers["Username"]).trim() : null,
-    chapter: normalizeChapter_(answers["Chapter"]),
-    unit: answers["Unit(for Chapters 1~12)"] || null,
+    courseId: COURSE_IDS[courseAnswer] || null,
+    username: usernameAnswer ? String(usernameAnswer).trim() : null,
+    chapter: normalizeChapter_(chapterAnswer),
+    unit: unitAnswer || null,
     answers: answers,
     ocrText: ocrText || null,
     formResponseId: response.getId()
@@ -208,12 +235,14 @@ function ocrDriveFile_(fileId) {
 // single source of truth for it — this script has no roster of its own)
 // and, if one is on file, sends a short "we got it" confirmation. Relies on
 // STUDENTS entries keeping the field order username -> password -> name ->
-// email -> portal (true as of when this was written); if that ever changes,
-// update the regex below to match.
-function sendConfirmationEmail_(owner, repo, branch, token, entry) {
+// email (true as of when this was written); if that ever changes, update
+// the regex below to match. Always reads js/data.js from "main" explicitly
+// (not GITHUB_BRANCH) — that file only ever exists on main, regardless of
+// which branch the submission log itself commits to.
+function sendConfirmationEmail_(owner, repo, token, entry) {
   if (!entry.username) return;
 
-  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/js/data.js?ref=" + branch;
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/js/data.js?ref=main";
   var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
   var resp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
   if (resp.getResponseCode() !== 200) {
@@ -233,9 +262,10 @@ function sendConfirmationEmail_(owner, repo, branch, token, entry) {
 }
 
 // Fetches the current log file from GitHub, appends the new entry,
-// and commits it back to GITHUB_BRANCH (never main). Retries a couple
-// of times on a 409 — the file changed between the read and the
-// write, which can happen if two submissions land close together.
+// and commits it back to GITHUB_BRANCH (main, by default and in
+// practice — see the setup comment at the top). Retries a couple of
+// times on a 409 — the file changed between the read and the write,
+// which can happen if two submissions land close together.
 function commitNewEntry_(owner, repo, branch, path, token, entry, attempt) {
   attempt = attempt || 1;
   var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch;
