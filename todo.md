@@ -29,11 +29,8 @@
 - [ ] Ways to make the community active, engaged, and no confict and encouarge helpfulness. what would trigger them to be genuinely helpful others 
 and do things for the greater good?
 - [ ] Community events, competitions, rewards, etc.
-- [ ] idea : for each chapter, highest scorer in the T part within a given period will get like a prize
-- [ ] Scope the AI chat to the student's own roadmap + cheat sheet data (not a general chatbot) *(also: System)*
 - [ ] Peer study pairing — match two students on the same chapter for accountability check-ins
 - [ ] Monthly "state of your progress" personal note from a teacher — short direction check-in, not a full feedback entry
-- [ ] Maybe YPT community
 
 ## 4. Maintenance - updating existing features
 - [ ] Improve Zenith CLI - there's so much new features so this gotta follow 
@@ -59,19 +56,13 @@ and do things for the greater good?
 - [ ] upload advertisements/모집 글 in instragram and social media 
 - [ ] insta posts and etc in social media 
 - [ ] Rewrite README.md to match the current architecture (it still describes the old single-iframe portal/calendar setup) — or trim it to point at PROGRESS.md as the source of truth
+- [ ] alumni/results page showing outcomes 
+- [ ] instagram bot weekly digest posts
+- [ ] document all the plans and progress so far, insta articles resources everything in one place(one idea is to let AI see all the commit logs and changes)
+- [ ] create a timeline of features 
 
 ## 6. Get People 
-- [ ] Alumni/results page showing outcomes (with permission) *(also: Advice & Direction)*
-- [ ] Instagram bot weekly digest posts *(also: System, Admin)*
-
-## 7. documentation
-- [ ] Document the course/roadmap JSON schema somewhere stable (fields, allowed category/status values) so hand-edits to data.js don't silently drift
-- [ ] get claude or codex to view all the change logs in the commit logs, and make a documentation.md file to keep track of all the updates we made and their timelines. 
-- [ ] create a specific timeline of the features we want to add and yeah an entire project roadmap - what we're doing, where we're going 
 
 ## 8. Intra-school Relation
 - [ ] Make presentation
 - [ ] Formal proposal document 
-
-## Done
-- [x] Submission compiler (compile-only, no feedback/cheat sheet writing yet) — Apps Script (`automation/submissions-compiler.gs`) OCRs uploaded images via Drive and appends every Form response as a status-tracked entry to `data/submissions-log.json` on a separate `submissions-log` branch, never touching main

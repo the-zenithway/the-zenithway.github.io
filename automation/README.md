@@ -21,12 +21,13 @@ from that log is future work, not part of this.
      Drive's OCR (`Drive.Files.copy(..., {ocr: true})`) into a
      temporary Doc, reads the extracted text out, then deletes the
      temp Doc.
-  3. Reads the current `data/submissions-log.json` from the
-     `submissions-log` branch via the GitHub Contents API, appends
-     the new entry, and writes it back (retrying once or twice on a
-     409 if two submissions land at nearly the same time).
-- The log lives on a separate `submissions-log` branch, never on
-  `main` — a bug in the script can never touch the live site.
+  3. Reads the current `data/submissions-log.json` from `main` via
+     the GitHub Contents API, appends the new entry, and writes it
+     back (retrying once or twice on a 409 if two submissions land at
+     nearly the same time).
+- The log commits straight to `main`. It's just a data file — nothing
+  links to it or serves it as a page — so there's no risk to the live
+  site from it living there.
 - `submissions-compiler.gs` in this repo is a **reference copy** for
   version history. The script that actually runs lives inside the
   Apps Script editor attached to the Form; paste updates in by hand.
@@ -65,12 +66,13 @@ category letter (`B`/`C`/`T`/`R`/`S`/etc.), copied straight through.
 ## One-time setup
 
 See the header comment in [`submissions-compiler.gs`](submissions-compiler.gs)
-for the exact steps: creating the `submissions-log` branch, adding the
-Form's questions (Course, Username, Chapter, Unit, Feedback & Remarks,
-file upload — no branching needed), pasting the script into the Form's
-Apps Script editor, enabling the Drive Advanced Service, setting five
-Script Properties (`GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`,
-`GITHUB_BRANCH`, `LOG_PATH`), and adding the `onFormSubmit` trigger.
+for the exact steps: making sure `data/submissions-log.json` exists on
+`main`, adding the Form's questions (Course, Username, Chapter, Unit,
+Feedback & Remarks, file upload — no branching needed), pasting the
+script into the Form's Apps Script editor, enabling the Drive Advanced
+Service, setting five Script Properties (`GITHUB_TOKEN`, `GITHUB_OWNER`,
+`GITHUB_REPO`, `GITHUB_BRANCH`, `LOG_PATH`), and adding the
+`onFormSubmit` trigger.
 
 `COURSE_IDS` inside the script maps each course's exact "Course"
 dropdown text to a `courseId`. It's a plain object literal in the

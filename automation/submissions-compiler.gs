@@ -16,11 +16,10 @@
  * ---------------------------------------------------------------
  * ONE-TIME SETUP
  * ---------------------------------------------------------------
- * 1. On GitHub, create a branch called "submissions-log" off main
- *    (once — this script only ever commits to that branch, never to
- *    main, so a bad run can never touch the live site). Make sure
- *    data/submissions-log.json exists on that branch (this repo
- *    already has one, seeded as an empty array).
+ * 1. Make sure data/submissions-log.json exists on main (this repo
+ *    already has one). The log commits straight to main — it's just
+ *    a data file, nothing links to it or serves it as a page, so
+ *    there's no risk to the live site from it living there.
  *
  * 2. Open the Google Form -> the three-dot menu (top right) ->
  *    "Script editor" (or, from the linked response Sheet:
@@ -61,7 +60,7 @@
  *                     not a classic all-repo token.
  *      GITHUB_OWNER   the-zenithway
  *      GITHUB_REPO    the-zenithway.github.io
- *      GITHUB_BRANCH  submissions-log
+ *      GITHUB_BRANCH  main
  *      LOG_PATH       data/submissions-log.json
  *
  * 5. Triggers (clock icon, left sidebar) -> Add Trigger:
@@ -73,8 +72,8 @@
  *    permission prompt is normal).
  *
  * 6. Submit a test response to the form (attach an image if the form
- *    has a file-upload question, to test OCR too) and check the
- *    submissions-log branch on GitHub for a new entry.
+ *    has a file-upload question, to test OCR too) and check main on
+ *    GitHub for a new commit adding an entry to the log.
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -93,7 +92,7 @@ function onFormSubmit(e) {
     var token = props.getProperty("GITHUB_TOKEN");
     var owner = props.getProperty("GITHUB_OWNER");
     var repo = props.getProperty("GITHUB_REPO");
-    var branch = props.getProperty("GITHUB_BRANCH") || "submissions-log";
+    var branch = props.getProperty("GITHUB_BRANCH") || "main";
     var path = props.getProperty("LOG_PATH") || "data/submissions-log.json";
 
     if (!token || !owner || !repo) {
