@@ -16,5 +16,23 @@
     },
     "ocrText": "\nTRASH\n<FREE>\nTRAILS",
     "formResponseId": "2_ABaOnudAfLZHWHI9xOJXVyqh9IOTaIpZUbkyyVLnjQI69GWCMvQFovKHAGakj3pkdidz0hU"
+  },
+  {
+    "id": "sub_1785471093265_mrrywg",
+    "receivedAt": "2026-07-31T04:11:33.265Z",
+    "status": "pending",
+    "answers": {
+      "name": "Bogue Kwon",
+      "username": "bogue",
+      "feedback-and-remarks": "It was harder than I thought",
+      "Upload the relevant files here": [
+        "1e9PESiTV-0WPY0Rxn4ed_xdblQn9UdvS"
+      ],
+      "Course": "AP Calculus BC",
+      "chapter": "5",
+      "unit": "C"
+    },
+    "ocrText": "\nAP Calculus\nDate: Mon, May 11, 2026 8AM\nAB vs BC\nBC has more course content than AB does, and you also get an AB subscore when you receive your score for BC. We contend everyone should take BC. It's not much more difficult compared to AB(both are one of the easiest subjects in all of AP) and you even get an AB subscore.\nTest Structure\n·\nSection I: Multiple Choice\nPart A: 30 Questions, 60 Minutes (no calculator)\n• Part B: 15 Questions, 45 Minutes (need calculator)\n• Section II: Free Response\n• Part A: 2 Questions, 30 minutes (need calculator) Part B: 4 Questions, 60 minutes(no calculator)\nScoring\n(unreliable estimate, just for feeling)\n5: 60-100%\n• 4: 50-60%\n• 3:37-49%\n• 2:28%~36%\n⚫ 1: 0~27%\nNote: AP Calculus has undoubtedly the easiest score curve of all of AP subjects. We can leverage this to guarantee a 5.\nCourse Content\n⚫ 1. Functions\n⚫ 2. Limits and Continuity\n⚫ 3. Differentiation\n⚫ 4. Applications of Differential Calculus\n⚫ 5. Antidifferentiation\n6. Definite Integrals\n⚫ 7. Applications of Integration to Geometry\n⚫ 8. Further Applications of Integration\n9. Differential Equations\n10. Sequences and Series",
+    "formResponseId": "2_ABaOnufkDCotACcXfvTX2kyUS0t7Tb3D55vOYYZZZe7qH-SdmPLZkTdaCZX3Rga-LQ15GAo"
   }
 ]
