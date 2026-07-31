@@ -242,7 +242,7 @@ const STUDENTS = [
     "username": "hamin",
     "password": "password",
     "name": "Hamin Park",
-    "email": "",
+    "email": "haminpark0419@gmail.com",
     "courses": [
       {
         "id": "ap-biology",
@@ -253,7 +253,7 @@ const STUDENTS = [
           "chapter": "Chapter 1",
           "unit": "L1",
           "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
-          "due": "Next session"
+          "due": "Tuesday"
         },
         "feedback": [
           {
@@ -261,9 +261,26 @@ const STUDENTS = [
             "chapter": "Chapter 0",
             "unit": "Foundations",
             "content": "Well done completing the AP Biology orientation and foundation materials. You have built a clear starting picture of the exam, the key terminology, and the resources you will use. Keep the formulas and sample notes nearby as references, but do not spend too long rereading them passively. You are ready to move on to L1 — Chemistry of Life and begin connecting those foundations to the biology itself."
+          },
+          {
+            "date": "Jul 27",
+            "chapter": "Chapter 0",
+            "unit": "Foundations",
+            "content": "Well done completing the AP Biology orientation and foundation materials. You have built a clear starting picture of the exam, the key terminology, and the resources you will use. Keep the formulas and sample notes nearby as references, but do not spend too long rereading them passively. You are ready to move on to L1 — Chemistry of Life and begin connecting those foundations to the biology itself."
           }
         ],
-        "cheatSheet": [],
+        "cheatSheet": [
+          {
+            "topic": "Root Existence — Use IVT, Not RRT",
+            "source": "발상노트, Jul 28",
+            "pattern": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the <em>exact</em> value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all."
+          },
+          {
+            "topic": "IVT vs. MVT vs. Rolle's — Keep Them Separate",
+            "source": "발상노트, Jul 28",
+            "pattern": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT."
+          }
+        ],
         "roadmap": [
           { "name": "AP Biology Exam Description", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Oh2hXLTf7CwYBYaR1ibpRUUgygFvGhrm/view?usp=drivesdk" },
           { "name": "Terminology", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://fiveable.me/ap-bio/key-terms" },
@@ -297,7 +314,7 @@ const STUDENTS = [
           { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NTQ4ODM0/details" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
-          { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
+          { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked", "url": "submit.html?course=ap-biology" },
           { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTIzNjQzNzEw/details" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
