@@ -29,7 +29,6 @@ const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c2
 // a Google Form like this, take the normal viewform link and swap
 // its query string for "?embedded=true".
 const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
-
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
@@ -245,6 +244,631 @@ const STUDENTS = [
     "email": "haminpark0419@gmail.com",
     "courses": [
       {
+        "id": "ap-chemistry",
+        "name": "AP Chemistry",
+        "icon": "chemistry",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "L1",
+          "instruction": "Complete L1 — Atomic Structure and Properties on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
+        },
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": [
+          {
+            "name": "Advanced Chemistry Booklet",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1MZbe7joT8aRNH68s2GoTyKF2L1CcaxRt/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Exam Booklet",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Exam Description",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1IgyUxWqb9RIGjyUJBWrVqJothtbIFg9f/view?usp=drivesdk"
+          },
+          {
+            "name": "Frequently Used Formulas and Equations",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1ZpngkSZ29WkJTinA2KSU9lPderA5l4lT/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Barron's Book",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk"
+          },
+          {
+            "name": "L1-Atomic Structure and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties"
+          },
+          {
+            "name": "N1-Atomic Structure and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C1-Atomic Structure and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S1-Atomic Structure and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 1",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1TzDXjDbomuSDnD9e2hIdT4PGoiE7Q7FH/view?usp=drivesdk"
+          },
+          {
+            "name": "F1-Atomic Structure and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 1",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties"
+          },
+          {
+            "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 2",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1q2WVPJc-lHflyPnQncPd9n0mg0WFjFg2/view?usp=drivesdk"
+          },
+          {
+            "name": "F2-Molecular and Ionic Compound Structure and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 2",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L3-Intermolecular Forces and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties"
+          },
+          {
+            "name": "N3-Intermolecular Forces and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C3-Intermolecular Forces and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S3-Intermolecular Forces and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 3",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1qJkJXUIgek8HA2R1qXblVbv-c65iTsC6/view?usp=drivesdk"
+          },
+          {
+            "name": "F3-Intermolecular Forces and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 3",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L4-Chemical Reactions (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions"
+          },
+          {
+            "name": "N4-Chemical Reactions Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C4-Chemical Reactions Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S4-Chemical Reactions Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1N9Fw8l1y0YPPLcFX_EaoAbmxOsc91hbC/view?usp=drivesdk"
+          },
+          {
+            "name": "F4-Chemical Reactions Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L5-Kinetics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:kinetics"
+          },
+          {
+            "name": "N5-Kinetics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C5-Kinetics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S5-Kinetics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1F8cpDhu4F9p68OqY4N-5k1DmRWXrpb00/view?usp=drivesdk"
+          },
+          {
+            "name": "F5-Kinetics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L6-Thermodynamics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics"
+          },
+          {
+            "name": "N6-Thermodynamics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C6-Thermodynamics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S6-Thermodynamics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1EPu6Y4lOmv_Jptnj1rR15eMBuArHS0pn/view?usp=drivesdk"
+          },
+          {
+            "name": "F6-Thermodynamics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L7-Equilibrium (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:equilibrium"
+          },
+          {
+            "name": "N7-Equilibrium Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C7-Equilibrium Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S7-Equilibrium Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-DUCoETq0LSewjvZ-ZBRsqreZPwR3NdV/view?usp=drivesdk"
+          },
+          {
+            "name": "F7-Equilibrium Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L8-Acids and Bases (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:acids-and-bases"
+          },
+          {
+            "name": "N8-Acids and Bases Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C8-Acids and Bases Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S8-Acids and Bases Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1aEXU624YTymnE075_S3RjVURwhE0nBHF/view?usp=drivesdk"
+          },
+          {
+            "name": "F8-Acids and Bases Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L9-Applications of Thermodynamics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:applications-of-thermodynamics"
+          },
+          {
+            "name": "N9-Applications of Thermodynamics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C9-Applications of Thermodynamics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1g4T8CyaaA9KkiYT-tu8sSLUgWhBRX6rP/view?usp=drivesdk"
+          },
+          {
+            "name": "S9-Applications of Thermodynamics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/13n40ZJf3OfCwu9-rWGeH4DleVimCBRjL/view?usp=drivesdk"
+          },
+          {
+            "name": "F9-Applications of Thermodynamics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L10-Experiments",
+            "category": "L-Learning",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1MN5foo9bOYvATk0Y-3YkHcBaAd5Tj6PI/view?usp=drivesdk"
+          },
+          {
+            "name": "N10-Experiments Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C10-Experiments Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ixhZDvZipBDWNS-xO9IYsSwb3u9Usgmc/view?usp=drivesdk"
+          },
+          {
+            "name": "S10-Experiments Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/19q7a9HBDHm1wwPygiTZI6Ryg6b82m1LS/view?usp=drivesdk"
+          },
+          {
+            "name": "M1T-Full Mock Test 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk"
+          },
+          {
+            "name": "M1TS-Full Mock Test 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk"
+          },
+          {
+            "name": "M2T-Full Mock Test 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk"
+          },
+          {
+            "name": "M2TS-Full Mock Test 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk"
+          },
+          {
+            "name": "M3T-Full Mock Test 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk"
+          },
+          {
+            "name": "M3TS-Full Mock Test 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk"
+          },
+          {
+            "name": "M1M-Multiple-Choice Mock 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk"
+          },
+          {
+            "name": "M1MS-Multiple-Choice Mock 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk"
+          },
+          {
+            "name": "M2M-Multiple-Choice Mock 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk"
+          },
+          {
+            "name": "M2MS-Multiple-Choice Mock 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk"
+          },
+          {
+            "name": "M3M-Multiple-Choice Mock 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk"
+          },
+          {
+            "name": "M3MS-Multiple-Choice Mock 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk"
+          },
+          {
+            "name": "M4M-Multiple-Choice Mock 4",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk"
+          },
+          {
+            "name": "M4MS-Multiple-Choice Mock 4 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk"
+          },
+          {
+            "name": "M5M-Multiple-Choice Mock 5",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk"
+          },
+          {
+            "name": "M5MS-Multiple-Choice Mock 5 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk"
+          },
+          {
+            "name": "M1F-FRQ Mock 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk"
+          },
+          {
+            "name": "M1FS-FRQ Mock 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk"
+          },
+          {
+            "name": "M2F-FRQ Mock 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk"
+          },
+          {
+            "name": "M2FS-FRQ Mock 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk"
+          },
+          {
+            "name": "M3F-FRQ Mock 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk"
+          },
+          {
+            "name": "M3FS-FRQ Mock 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk"
+          },
+          {
+            "name": "M4F-FRQ Mock 4",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk"
+          },
+          {
+            "name": "M4FS-FRQ Mock 4 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk"
+          },
+          {
+            "name": "M5F-FRQ Mock 5",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk"
+          },
+          {
+            "name": "M5FS-FRQ Mock 5 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk"
+          },
+          {
+            "name": "M6F-FRQ Mock 6",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk"
+          },
+          {
+            "name": "M6FS-FRQ Mock 6 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk"
+          },
+          {
+            "name": "M7F-FRQ Mock 7",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk"
+          },
+          {
+            "name": "M7FS-FRQ Mock 7 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk"
+          },
+          {
+            "name": "M8F-FRQ Mock 8",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk"
+          },
+          {
+            "name": "M8FS-FRQ Mock 8 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk"
+          }
+        ]
+      },
+      {
         "id": "ap-biology",
         "name": "AP Biology",
         "icon": "biology",
@@ -291,42 +915,42 @@ const STUDENTS = [
           { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
           { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
           { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Unlocked", "url": "submit.html?course=ap-biology" },
-          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3ODEwMDYx/details" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
           { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
           { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3Njc4MTI2/details" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
           { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
           { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI1MzcwNDA3/details" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
           { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
           { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3OTA3MDk0/details" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
           { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
           { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NTQ4ODM0/details" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTIzNjQzNzEw/details" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
           { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
           { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODU1NjE3Nzk4Mjkz/details" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
           { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
           { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NzE2MDEz/details" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
@@ -627,6 +1251,631 @@ const STUDENTS = [
     "email": "Heodavidheo@gmail.com",
     "courses": [
       {
+        "id": "ap-chemistry",
+        "name": "AP Chemistry",
+        "icon": "chemistry",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "L1",
+          "instruction": "Complete L1 — Atomic Structure and Properties on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
+        },
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": [
+          {
+            "name": "Advanced Chemistry Booklet",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1MZbe7joT8aRNH68s2GoTyKF2L1CcaxRt/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Exam Booklet",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Exam Description",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1IgyUxWqb9RIGjyUJBWrVqJothtbIFg9f/view?usp=drivesdk"
+          },
+          {
+            "name": "Frequently Used Formulas and Equations",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1ZpngkSZ29WkJTinA2KSU9lPderA5l4lT/view?usp=drivesdk"
+          },
+          {
+            "name": "AP Chemistry Barron's Book",
+            "category": "I-information",
+            "chapter": "Chapter 0",
+            "status": "Complete",
+            "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk"
+          },
+          {
+            "name": "L1-Atomic Structure and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties"
+          },
+          {
+            "name": "N1-Atomic Structure and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C1-Atomic Structure and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 1",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S1-Atomic Structure and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 1",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1TzDXjDbomuSDnD9e2hIdT4PGoiE7Q7FH/view?usp=drivesdk"
+          },
+          {
+            "name": "F1-Atomic Structure and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 1",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties"
+          },
+          {
+            "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 2",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 2",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1q2WVPJc-lHflyPnQncPd9n0mg0WFjFg2/view?usp=drivesdk"
+          },
+          {
+            "name": "F2-Molecular and Ionic Compound Structure and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 2",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L3-Intermolecular Forces and Properties (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties"
+          },
+          {
+            "name": "N3-Intermolecular Forces and Properties Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C3-Intermolecular Forces and Properties Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 3",
+            "status": "Unlocked",
+            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S3-Intermolecular Forces and Properties Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 3",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1qJkJXUIgek8HA2R1qXblVbv-c65iTsC6/view?usp=drivesdk"
+          },
+          {
+            "name": "F3-Intermolecular Forces and Properties Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 3",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L4-Chemical Reactions (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions"
+          },
+          {
+            "name": "N4-Chemical Reactions Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C4-Chemical Reactions Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S4-Chemical Reactions Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1N9Fw8l1y0YPPLcFX_EaoAbmxOsc91hbC/view?usp=drivesdk"
+          },
+          {
+            "name": "F4-Chemical Reactions Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 4",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L5-Kinetics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:kinetics"
+          },
+          {
+            "name": "N5-Kinetics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C5-Kinetics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S5-Kinetics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1F8cpDhu4F9p68OqY4N-5k1DmRWXrpb00/view?usp=drivesdk"
+          },
+          {
+            "name": "F5-Kinetics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 5",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L6-Thermodynamics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics"
+          },
+          {
+            "name": "N6-Thermodynamics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C6-Thermodynamics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S6-Thermodynamics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1EPu6Y4lOmv_Jptnj1rR15eMBuArHS0pn/view?usp=drivesdk"
+          },
+          {
+            "name": "F6-Thermodynamics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 6",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L7-Equilibrium (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:equilibrium"
+          },
+          {
+            "name": "N7-Equilibrium Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C7-Equilibrium Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S7-Equilibrium Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-DUCoETq0LSewjvZ-ZBRsqreZPwR3NdV/view?usp=drivesdk"
+          },
+          {
+            "name": "F7-Equilibrium Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 7",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L8-Acids and Bases (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:acids-and-bases"
+          },
+          {
+            "name": "N8-Acids and Bases Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C8-Acids and Bases Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk",
+            "submissionUrl": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "S8-Acids and Bases Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1aEXU624YTymnE075_S3RjVURwhE0nBHF/view?usp=drivesdk"
+          },
+          {
+            "name": "F8-Acids and Bases Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 8",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L9-Applications of Thermodynamics (Khan Academy)",
+            "category": "L-Learning",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:applications-of-thermodynamics"
+          },
+          {
+            "name": "N9-Applications of Thermodynamics Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C9-Applications of Thermodynamics Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1g4T8CyaaA9KkiYT-tu8sSLUgWhBRX6rP/view?usp=drivesdk"
+          },
+          {
+            "name": "S9-Applications of Thermodynamics Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/13n40ZJf3OfCwu9-rWGeH4DleVimCBRjL/view?usp=drivesdk"
+          },
+          {
+            "name": "F9-Applications of Thermodynamics Final Self-Check with Booklet",
+            "category": "F-Final Self Check",
+            "chapter": "Chapter 9",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk"
+          },
+          {
+            "name": "L10-Experiments",
+            "category": "L-Learning",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1MN5foo9bOYvATk0Y-3YkHcBaAd5Tj6PI/view?usp=drivesdk"
+          },
+          {
+            "name": "N10-Experiments Notes Submission",
+            "category": "N-Notes Submission",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "submit.html?course=ap-chemistry"
+          },
+          {
+            "name": "C10-Experiments Problems",
+            "category": "C-coursework",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ixhZDvZipBDWNS-xO9IYsSwb3u9Usgmc/view?usp=drivesdk"
+          },
+          {
+            "name": "S10-Experiments Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter 10",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/19q7a9HBDHm1wwPygiTZI6Ryg6b82m1LS/view?usp=drivesdk"
+          },
+          {
+            "name": "M1T-Full Mock Test 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk"
+          },
+          {
+            "name": "M1TS-Full Mock Test 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk"
+          },
+          {
+            "name": "M2T-Full Mock Test 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk"
+          },
+          {
+            "name": "M2TS-Full Mock Test 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk"
+          },
+          {
+            "name": "M3T-Full Mock Test 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk"
+          },
+          {
+            "name": "M3TS-Full Mock Test 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk"
+          },
+          {
+            "name": "M1M-Multiple-Choice Mock 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk"
+          },
+          {
+            "name": "M1MS-Multiple-Choice Mock 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk"
+          },
+          {
+            "name": "M2M-Multiple-Choice Mock 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk"
+          },
+          {
+            "name": "M2MS-Multiple-Choice Mock 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk"
+          },
+          {
+            "name": "M3M-Multiple-Choice Mock 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk"
+          },
+          {
+            "name": "M3MS-Multiple-Choice Mock 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk"
+          },
+          {
+            "name": "M4M-Multiple-Choice Mock 4",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk"
+          },
+          {
+            "name": "M4MS-Multiple-Choice Mock 4 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk"
+          },
+          {
+            "name": "M5M-Multiple-Choice Mock 5",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk"
+          },
+          {
+            "name": "M5MS-Multiple-Choice Mock 5 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk"
+          },
+          {
+            "name": "M1F-FRQ Mock 1",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk"
+          },
+          {
+            "name": "M1FS-FRQ Mock 1 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk"
+          },
+          {
+            "name": "M2F-FRQ Mock 2",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk"
+          },
+          {
+            "name": "M2FS-FRQ Mock 2 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk"
+          },
+          {
+            "name": "M3F-FRQ Mock 3",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk"
+          },
+          {
+            "name": "M3FS-FRQ Mock 3 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk"
+          },
+          {
+            "name": "M4F-FRQ Mock 4",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk"
+          },
+          {
+            "name": "M4FS-FRQ Mock 4 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk"
+          },
+          {
+            "name": "M5F-FRQ Mock 5",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk"
+          },
+          {
+            "name": "M5FS-FRQ Mock 5 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk"
+          },
+          {
+            "name": "M6F-FRQ Mock 6",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk"
+          },
+          {
+            "name": "M6FS-FRQ Mock 6 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk"
+          },
+          {
+            "name": "M7F-FRQ Mock 7",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk"
+          },
+          {
+            "name": "M7FS-FRQ Mock 7 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk"
+          },
+          {
+            "name": "M8F-FRQ Mock 8",
+            "category": "M-Mock",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk"
+          },
+          {
+            "name": "M8FS-FRQ Mock 8 Solutions",
+            "category": "S-solution manual",
+            "chapter": "Chapter M",
+            "status": "Locked",
+            "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk"
+          }
+        ]
+      },
+      {
         "id": "ap-biology",
         "name": "AP Biology",
         "icon": "biology",
@@ -649,42 +1898,42 @@ const STUDENTS = [
           { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
           { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
           { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Unlocked", "url": "submit.html?course=ap-biology" },
-          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3ODEwMDYx/details" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
           { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
           { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3Njc4MTI2/details" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
           { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
           { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI1MzcwNDA3/details" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
           { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
           { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3OTA3MDk0/details" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
           { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
           { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NTQ4ODM0/details" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTIzNjQzNzEw/details" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
           { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
           { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODU1NjE3Nzk4Mjkz/details" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
           { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
           { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked", "url": "submit.html?course=ap-biology" },
-          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "https://classroom.google.com/c/ODcwOTI3MzY2MjIy/a/ODcwOTI3NzE2MDEz/details" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },

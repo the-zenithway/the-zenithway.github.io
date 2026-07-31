@@ -935,6 +935,9 @@ function setUpWhatsNew(student) {
 // Subject-specific app icons used by the course folder. They are inline SVG so
 // the folder stays self-contained and does not depend on another icon service.
 function courseIconHtml(icon) {
+  if (icon === "chemistry") {
+    return "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M24 8h16M28 8v17L15 48c-2 4 1 8 6 8h22c5 0 8-4 6-8L36 25V8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M20 43h24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\".75\"/><circle cx=\"28\" cy=\"48\" r=\"2\" fill=\"currentColor\"/><circle cx=\"37\" cy=\"51\" r=\"2.5\" fill=\"currentColor\" opacity=\".75\"/></svg>";
+  }
   if (icon === "biology") {
     return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
       '<path d="M32 7c15 6 21 17 21 27 0 15-10 23-21 23S11 49 11 34c0-10 6-21 21-27z" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +

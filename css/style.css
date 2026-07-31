@@ -816,6 +816,10 @@ body.portal-body {
   background: linear-gradient(145deg, #159A72, #177C88 58%, #225CAF);
 }
 
+.course-app-icon--chemistry {
+  background: linear-gradient(145deg, #7556A8, #473369);
+}
+
 .course-app:hover .course-app-icon {
   transform: translateY(-3px) scale(1.025);
   filter: brightness(1.08);

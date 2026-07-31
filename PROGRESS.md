@@ -1,6 +1,6 @@
 # Zenith Web — Project Progress and Codex Handoff
 
-Last updated: 2026-07-30
+Last updated: 2026-07-31
 
 This file is the persistent handoff document for this repository. A new Codex
 session should read this file, `README.md`, and `todo.md` before making changes.
@@ -43,8 +43,9 @@ CSS file, and global JavaScript files directly in the browser.
   submission url`).
 - Relevant remote branches include `app-launcher-view`, `roadmap-views`, and
   `integrate-courses-and-views`; their work is merged into `main`.
-- The working tree was clean before this handoff refresh. This documentation edit
-  makes `PROGRESS.md` modified until committed; always run `git status` again.
+- The working tree currently contains uncommitted AP Chemistry changes in
+  `css/style.css`, `js/app.js`, and `js/data.js`, plus this `PROGRESS.md` update;
+  always run `git status` again before editing or handing off.
 - GitHub Pages serves the committed/pushed `main`. Local edits do not appear on
   the public website until explicitly committed and pushed. If the published
   site shows old markup after deployment, hard-refresh and allow Pages/cache
@@ -387,8 +388,9 @@ assets remain external until separately provided and migrated.
   track and N1-N8 Submit routing are committed and pushed with no application diff.
 - Multi-course Portal, account-scoped enrollments, `roadmap.html`, and Table/Curve
   views are merged and tracked on `main`.
-- Enrollments: Bogue—Calculus; Hamin—Biology and Calculus; Seohu—Calculus;
-  David Heo—Biology and Calculus; Alice/Yong Joon—none.
+- Enrollments: Bogue—Calculus; Hamin—Biology, Calculus, and Chemistry;
+  Seohu—Calculus; David Heo—Biology, Calculus, and Chemistry;
+  Alice/Yong Joon—none.
 - Bogue's 88-row roadmap and activity values are preserved inside his Calculus
   course; no enrolled student uses root-level activity fields.
 - Hamin Biology: 63 rows, 63 resource links, 8 separate submission links from
@@ -398,20 +400,166 @@ assets remain external until separately provided and migrated.
   to Courses, preventing activity from another subject from appearing.
 - David: Biology Now is L1, Calculus Now is B1, and both Feedback arrays are empty.
   Hamin: Biology owns L1 and his Foundations feedback; Calculus activity is empty.
+- Hamin and David each own a fully independent literal AP Chemistry course object
+  with its own 86-item roadmap array. Chemistry Now begins at Chapter 1, L1 Atomic
+  Structure and Properties; Feedback and Cheat Sheet start empty.
 - Alice and Yong Joon have no enrollments. Yong Joon's legacy root activity data
   remains preserved but dormant; strict course pages cannot render it until it is
   deliberately placed into a future enrolled course.
 - Validation passes: both JavaScript files parse; all five edited protected-page
   inline scripts parse; enrolled roadmaps match their prior data exactly; activity
   values/counts survived migration; and `git diff --check` passes.
-- Current uncommitted file: `PROGRESS.md` from this handoff refresh only. The
-  application changes are committed and pushed in `9bc7069`.
+- Current uncommitted files: `css/style.css`, `js/app.js`, and `js/data.js` for
+  AP Chemistry, plus `PROGRESS.md`. The earlier application changes remain
+  committed and pushed in `9bc7069`; the Chemistry work is not yet deployed.
 
 ## Work Log
 
 Add new entries immediately below this instruction, newest first. Each entry
 should include the date, request, files changed, verification, and any remaining
 work or important decisions.
+
+### 2026-07-31 — Reclassified the AP Chemistry Barron's resource
+
+- Request: make the AP Chemistry Barron's Book an Information row with Complete
+  status.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Updated the row separately in Hamin's and David's literal Chemistry roadmaps,
+  changing `L-Learning` to `I-information` and `Locked` to `Complete`. Each
+  course now has 5 Complete, 9 Unlocked, and 72 Locked rows.
+
+### 2026-07-31 — Updated Hamin and David Chemistry statuses independently
+
+- Request: in each student's own AP Chemistry data, unlock `C1`–`C3` and mark
+  all Information-category rows Complete.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Updated both literal roadmaps separately: Hamin's four Information rows and
+  David's four Information rows are Complete; each student's `C1`–`C3` rows are
+  Unlocked. No shared Chemistry constant, factory, lookup, or cloned array was
+  introduced. Each course now has 4 Complete, 9 Unlocked, and 73 Locked rows.
+
+### 2026-07-31 — Replaced shared Chemistry data with student-owned literals
+
+- Request: remove the shared AP Chemistry definition and give Hamin and David fully
+  separate course data, matching the repository's literal Biology/Calculus model.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Removed `AP_CHEMISTRY_ROADMAP`, `createAPChemistryCourse()`, and both factory
+  calls. Hamin and David now each contain a complete literal AP Chemistry course
+  object with an independent 86-row roadmap, Right Now state, Feedback array, and
+  Cheat Sheet array. No Chemistry runtime lookup, helper, shared array, or cloning
+  operation remains. The two initial copies are value-identical but object- and
+  array-independent, so future edits can target either student separately.
+- This entry supersedes earlier log wording that described Chemistry as shared;
+  those entries remain as historical records of the implementation at that time.
+
+### 2026-07-31 — Locked later AP Chemistry roadmap work
+
+- Request: change AP Chemistry statuses except Information rows and `L1`–`L3`
+  and `N1`–`N3`.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Kept 10 rows Unlocked: the four `I-information` resources plus `L1`–`L3` and
+  `N1`–`N3`. Changed all other 76 shared Chemistry rows to Locked, including
+  the Barron's learning resource, coursework, solutions, final checks, later
+  chapters, and every mock. Both Chemistry enrollments inherit independent copies
+  of these statuses.
+
+### 2026-07-31 — Routed all coursework submissions through Zenith
+
+- Request: make every existing note and coursework submission destination use the
+  selected course's Submit section without replacing its Drive/resource link, and
+  renumber Chemistry Experiments from Chapter 11 to Chapter 10.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Replaced 24 Google Classroom `submissionUrl` values: 8 shared Chemistry rows
+  now use `submit.html?course=ap-chemistry`, and 16 independent Biology rows
+  across Hamin and David now use `submit.html?course=ap-biology`. All primary
+  coursework `url` values remain unchanged, preserving the separate Open and
+  Submit actions. Existing note-submission URLs were already correct.
+- Renamed Experiments to `L10`, `N10`, `C10`, and `S10`, and changed all four
+  chapter labels to Chapter 10.
+
+### 2026-07-31 — Linked AP Chemistry multiple-choice mocks 1–2
+
+- Request: attach the supplied Drive files to `M1M`, `M1MS`, `M2M`, and
+  `M2MS`, then audit the Chemistry roadmap.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Added all four URLs; the user-written `M2Ms` was mapped to the existing
+  uppercase `M2MS` solution code for consistency.
+
+### 2026-07-31 — Removed AP Chemistry Fluids rows
+
+- Request: remove all Fluids content from the AP Chemistry roadmap.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Removed the complete Chapter 10 Fluids sequence: `L10`, `N10`, `C10`, and
+  `S10`. The shared roadmap now contains 86 items; both Chemistry enrollments
+  continue to receive independent copies from that shared definition.
+
+### 2026-07-31 — Linked AP Chemistry multiple-choice mocks 3–5
+
+- Request: attach the supplied Drive files to `M3M`–`M5M` and their matching
+  `M3MS`–`M5MS` solution rows.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Added all six URLs without changing the established full mock, multiple-choice,
+  and FRQ ordering in Chapter M.
+
+### 2026-07-31 — Split answer keys by year and reordered mocks
+
+- Correction: replaced the combined answer-key PDF from the prior task with three
+  separate two-page files for 2016, 2017, and 2018, then removed the combined
+  file created by Codex. Each file contains only its year's multiple-choice
+  answer-key heading and answers.
+- Files changed in the repository: `js/data.js` and `PROGRESS.md`.
+- Reordered AP Chemistry Chapter M so all three `M#T` / `M#TS` full mock
+  pairs appear before the five alternating `M#M` / `M#MS` multiple-choice
+  pairs; the FRQ pairs remain after them.
+
+### 2026-07-31 — Added AP Chemistry multiple-choice mock rows
+
+- Request: create five alternating multiple-choice mock and solution pairs using
+  the `M#M` / `M#MS` naming pattern.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Added `M1M`–`M5M` Multiple-Choice Mock rows, each immediately followed by
+  its matching `M1MS`–`M5MS` Solutions row in Chapter M. No web URLs were
+  assigned because the generated source PDFs remain local in Downloads.
+- Separately generated a six-page local PDF containing only the 2016–2018 IPE
+  Chemistry multiple-choice answer-key pages; scoring guidelines were excluded.
+
+### 2026-07-31 — Standardized AP Chemistry roadmap names
+
+- Request: use `M#T` / `M#TS` codes for the three full mocks and clean up
+  AP Chemistry naming and capitalization while retaining Fluids as intentional
+  supplemental material added to the course.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Renamed the full mock pairs to `M1T`–`M3T` and `M1TS`–`M3TS`, made
+  solution titles plural, standardized Khan Academy learning labels, corrected
+  Applications of Thermodynamics capitalization, and corrected Barron's naming.
+
+### 2026-07-31 — Renamed and linked AP Chemistry FRQ mocks
+
+- Request: rename the eight FRQ mocks and solutions to the `M#F` / `M#FS`
+  code pattern and add the supplied Drive destinations.
+- Files changed: `js/data.js` and `PROGRESS.md`.
+- Updated all 16 rows from `M#` / `M#S` FRQ prefixes to `M#F` / `M#FS`
+  while retaining the descriptive mock titles, and replaced or added every
+  corresponding URL for FRQ mocks 1–8 and their solutions.
+
+### 2026-07-31 — Added AP Chemistry course
+
+- Request: add AP Chemistry as a complete course option and document the work.
+- Files changed: `js/data.js`, `js/app.js`, `css/style.css`, and `PROGRESS.md`.
+- Added a shared 80-item AP Chemistry roadmap and independent course instances
+  for Hamin Park and David Heo. The roadmap covers reference booklets, Barron's,
+  Chapters 1–11, notes submissions, coursework, solutions, final self-checks,
+  full mock tests, and FRQ mocks.
+- Chemistry notes rows route to Zenith Submit with
+  `submit.html?course=ap-chemistry`; available learning, Drive, Classroom, and
+  solution destinations are attached directly to their roadmap items.
+- Each enrollment starts at Chapter 1, L1 Atomic Structure and Properties with
+  course-scoped Right Now instructions, empty Feedback and Cheat Sheet data, and
+  its own cloned roadmap state so one student's progress cannot affect another's.
+- Added a flask SVG app icon and purple chemistry icon gradient for the Courses
+  folder. Verification: `git diff --check` passes. Remaining work: run final
+  JavaScript and browser-flow checks, then commit and push only if explicitly
+  requested; these changes are currently uncommitted and not live.
 
 ### 2026-07-30 — Refreshed committed-state handoff
 
