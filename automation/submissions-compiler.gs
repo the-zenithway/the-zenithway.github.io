@@ -9,6 +9,12 @@
  * through one list instead of digging through Form responses, the
  * response Sheet, and Drive uploads separately.
  *
+ * It also sends the student a short "we got it" confirmation email right
+ * after logging, if their username matches an entry in js/data.js's
+ * STUDENTS with a non-empty "email" — see sendConfirmationEmail_ below.
+ * This is separate from and doesn't touch automation/notifications/ (the
+ * GitHub Actions side, for deadline/feedback/roadmap emails on push).
+ *
  * This file is a reference copy for version history — the version
  * that actually runs lives inside the Apps Script editor (step 2
  * below), not here. Copy it in by hand; nothing auto-syncs.
@@ -84,6 +90,12 @@
  * GitHub Contents API) are all standard and documented, but if step 6
  * throws an error, send me the exact error text and I'll help fix it
  * — don't assume it's something you did wrong.
+ *
+ * sendConfirmationEmail_ (the submission-received email) is equally
+ * untested against a real form submission — the regex-based email lookup
+ * and MailApp.sendEmail call follow documented patterns, but watch the
+ * first real test run (step 6) for it too, same caution as the rest of
+ * this script.
  */
 
 function onFormSubmit(e) {
@@ -101,6 +113,17 @@ function onFormSubmit(e) {
 
     var entry = buildEntryFromResponse_(e.response);
     commitNewEntry_(owner, repo, branch, path, token, entry);
+
+    // Best-effort only — a failure here must never look like a failure to
+    // log the submission itself (that already succeeded above), so it gets
+    // its own try/catch instead of falling into the outer one.
+    try {
+      sendConfirmationEmail_(owner, repo, branch, token, entry);
+    } catch (mailErr) {
+      MailApp.sendEmail(Session.getActiveUser().getEmail(),
+        "Zenith submission confirmation email failed (submission itself was logged fine)",
+        "Submission " + entry.id + " for username \"" + entry.username + "\" was logged, but the confirmation email to the student could not be sent:\n\n" + mailErr);
+    }
   } catch (err) {
     // A silently-failed trigger is worse than a noisy one — email
     // whoever owns this script so a missed submission doesn't go
@@ -179,6 +202,34 @@ function ocrDriveFile_(fileId) {
     Drive.Files.remove(ocrDoc.id);
   }
   return text;
+}
+
+// Looks up a student's email straight out of js/data.js on GitHub (the
+// single source of truth for it — this script has no roster of its own)
+// and, if one is on file, sends a short "we got it" confirmation. Relies on
+// STUDENTS entries keeping the field order username -> password -> name ->
+// email -> portal (true as of when this was written); if that ever changes,
+// update the regex below to match.
+function sendConfirmationEmail_(owner, repo, branch, token, entry) {
+  if (!entry.username) return;
+
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/js/data.js?ref=" + branch;
+  var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
+  var resp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
+  if (resp.getResponseCode() !== 200) {
+    throw new Error("Could not read js/data.js (HTTP " + resp.getResponseCode() + "): " + resp.getContentText());
+  }
+  var file = JSON.parse(resp.getContentText());
+  var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
+
+  var escapedUsername = entry.username.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  var match = new RegExp('"username":\\s*"' + escapedUsername + '"[\\s\\S]*?"email":\\s*"([^"]*)"').exec(source);
+  var email = match ? match[1] : null;
+  if (!email) return; // no email on file for this student yet — nothing to send
+
+  MailApp.sendEmail(email,
+    "Zenith — submission received",
+    "Got your submission for " + (entry.chapter || "your course") + (entry.unit ? " (" + entry.unit + ")" : "") + ". We'll take it from here — you'll get another email once feedback is written.");
 }
 
 // Fetches the current log file from GitHub, appends the new entry,

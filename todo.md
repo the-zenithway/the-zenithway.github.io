@@ -24,8 +24,12 @@
 - [ ] Ways to make the community active, engaged, and no confict and encouarge helpfulness. what would trigger them to be genuinely helpful others 
 and do things for the greater good?
 - [ ] Community events, competitions, rewards, etc.
-- [ ] Peer study pairing — match two students on the same chapter for accountability check-ins
 - [ ] Monthly "state of your progress" personal note from a teacher — short direction check-in, not a full feedback entry
+- [ ] Teach-back slots during weekly IRL/Zoom session — student who nailed a topic runs a 5-10 min mini-explainer for others
+- [ ] Small study squads (3-4 students) per subject/chapter — more resilient than 1:1 pairing when one partner goes inactive, yeah maybe grind together 
+- [ ] Alumni-as-mentors — loop former students into Discord/AMAs once the alumni/results page exists
+- [ ] Effort/help-based leaderboard (not score-based) — rank by consistency and questions answered for others, not raw scores
+- [ ] Go to trips together, listen to their concerns and yeah having fun together 
 
 ## 4. Admin
 - [ ] Create discord community 
@@ -48,4 +52,4 @@ and do things for the greater good?
 - [ ] Formal proposal document
 
 ## Done
-- [x] Email notifications (deadlines, feedback, weekly session reminder) — `automation/notifications/` + `.github/workflows/notify.yml`, triggered by pushes to `js/data.js` (diff-based, per-student digest) and a weekly cron; `email` field added to STUDENTS schema. Dry-run tested locally; not yet tested against a real GitHub Actions run/real Gmail send — see `automation/notifications/README.md` for remaining setup
+- [x] Email notifications (deadlines, feedback, roadmap status changes, new cheat sheet entries, welcome email for new students, linked-parent CC, new blog posts, new resources.html entries, philosophy.html changes, weekly session reminder [built but not scheduled — no sessions yet], submission-received confirmation) — `automation/notifications/` + `.github/workflows/notify.yml` (push-diff, broadcast content job, cron for reminder), plus `sendConfirmationEmail_` added to `automation/submissions-compiler.gs`; `email` field added to STUDENTS and PARENTS schema; every email links to the relevant page on the live site. Dry-run tested locally end-to-end for every change type; real send confirmed for the session reminder. Not yet run through an actual GitHub Actions job or the real submission-confirmation path — see `automation/notifications/README.md` for remaining setup

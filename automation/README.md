@@ -11,6 +11,14 @@ status. It only compiles: each submission becomes one entry with
 text sits right next to the rest of the answer. Writing feedback etc.
 from that log is future work, not part of this.
 
+It does also send the student a short "we got it" confirmation email
+right after logging (looked up by username against `js/data.js`'s
+`STUDENTS`, skipped if that student has no email on file) — see
+`sendConfirmationEmail_` in `submissions-compiler.gs`. That's the only
+overlap with [`notifications/`](notifications/), which is the separate,
+GitHub-Actions-driven side handling deadline/feedback/roadmap emails and
+the weekly session reminder.
+
 ## How it works
 
 - `submissions-compiler.gs` is a Google Apps Script bound to the

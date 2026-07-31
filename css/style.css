@@ -1876,6 +1876,16 @@ footer {
 
   .portal-actions { flex-wrap: wrap; row-gap: 8px; }
 
+  /* Updates button now sits near the left edge instead of the right
+     (portal-actions wraps to its own row above), so the dropdown must
+     open from its left edge — anchoring to the right pushed it mostly
+     off-screen. */
+  .whatsnew-menu {
+    left: 0;
+    right: auto;
+    width: min(300px, calc(100vw - 48px));
+  }
+
   /* Roadmap table becomes a stacked label/value list instead of scrolling sideways */
   .roadmap-table { width: 100%; min-width: 0; }
   .roadmap-table thead { display: none; }

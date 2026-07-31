@@ -829,11 +829,15 @@ const TEACHERS = [
 // an array of student usernames (from STUDENTS above) whose progress
 // this parent account is allowed to see. Usually just one student,
 // but it's an array in case a parent has more than one child here.
+//
+// "email" is used only by automation/notifications, same as on STUDENTS —
+// leave it "" to skip emailing this parent.
 const PARENTS = [
   {
     "username": "bogueparent",
     "password": "password",
     "name": "Bogue's Parent",
+    "email": "",
     "linkedStudents": ["bogue"]
   }
 ];

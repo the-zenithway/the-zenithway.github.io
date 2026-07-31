@@ -3,17 +3,19 @@ name: Zenith notifications
 on:
   push:
     branches: [main]
-    paths: ["js/data.js"]
-  schedule:
-    # Weekly session reminder. Placeholder time (Sundays 13:00 UTC) —
-    # change to match the actual session day/time, in UTC.
-    - cron: "0 13 * * 0"
+    paths: ["js/data.js", "js/blog-data.js", "resources.html", "philosophy.html"]
+  # No `schedule:` trigger yet — there are no IRL sessions running yet, so
+  # the weekly reminder has nothing real to remind anyone of. The job below
+  # is left in place (still runnable manually via workflow_dispatch) so it's
+  # ready to switch on: once sessions start, add back a `schedule:` block
+  # here with the real cron time, and fix SESSION_DAY/SESSION_TIME below to
+  # match it.
   workflow_dispatch:
     inputs:
       job:
         description: "Which job to run manually"
         type: choice
-        options: [notify-on-push, weekly-session-reminder]
+        options: [notify-on-push, notify-content-updates, weekly-session-reminder]
         default: notify-on-push
 
 jobs:
@@ -41,6 +43,39 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: node notify-on-push.js /tmp/old-data.js ../../js/data.js
+        working-directory: automation/notifications
+
+  notify-content-updates:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'notify-content-updates')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: automation/notifications
+
+      - name: Extract previous versions of blog-data.js / resources.html / philosophy.html
+        run: |
+          git show HEAD^:js/blog-data.js > /tmp/old-blog-data.js || echo "const BLOG_POSTS = [];" > /tmp/old-blog-data.js
+          git show HEAD^:resources.html > /tmp/old-resources.html || echo "" > /tmp/old-resources.html
+          git show HEAD^:philosophy.html > /tmp/old-philosophy.html || echo "" > /tmp/old-philosophy.html
+
+      - name: Send content update notifications
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: >
+          node notify-content-updates.js ../../js/data.js
+          /tmp/old-blog-data.js ../../js/blog-data.js
+          /tmp/old-resources.html ../../resources.html
+          /tmp/old-philosophy.html ../../philosophy.html
         working-directory: automation/notifications
 
   weekly-session-reminder:
