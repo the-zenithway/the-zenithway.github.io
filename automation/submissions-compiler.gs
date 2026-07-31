@@ -105,12 +105,6 @@
  * this script.
  */
 
-// Where failure alerts go — deliberately the Zenith account, not whichever
-// personal Google account owns/runs this script (MailApp.sendEmail always
-// *sends* as the script's own authorized account; this only controls the
-// recipient of the alert, not who it's sent from).
-var ALERT_EMAIL = "zenithzenith0000@gmail.com";
-
 function onFormSubmit(e) {
   try {
     var props = PropertiesService.getScriptProperties();
@@ -133,7 +127,7 @@ function onFormSubmit(e) {
     try {
       sendConfirmationEmail_(owner, repo, token, entry);
     } catch (mailErr) {
-      MailApp.sendEmail(ALERT_EMAIL,
+      MailApp.sendEmail(Session.getActiveUser().getEmail(),
         "Zenith submission confirmation email failed (submission itself was logged fine)",
         "Submission " + entry.id + " for username \"" + entry.username + "\" was logged, but the confirmation email to the student could not be sent:\n\n" + mailErr);
     }
@@ -141,7 +135,7 @@ function onFormSubmit(e) {
     // A silently-failed trigger is worse than a noisy one — email
     // whoever owns this script so a missed submission doesn't go
     // unnoticed.
-    MailApp.sendEmail(ALERT_EMAIL,
+    MailApp.sendEmail(Session.getActiveUser().getEmail(),
       "Zenith submission compiler failed",
       "A form submission could not be logged:\n\n" + err);
   }
