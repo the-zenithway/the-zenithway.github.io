@@ -27,20 +27,25 @@
  *    Extensions -> Apps Script). Paste this whole file in, replacing
  *    whatever is in Code.gs.
  *
- *    The Form itself must have a top-level question titled exactly
- *    "Class" (dropdown: one option per course, e.g. "AP Calculus BC",
- *    "AP Biology") with "Go to section based on answer" routing each
- *    option to its own section. Each of those sections holds TWO
- *    questions, titled exactly "Name" (dropdown of just that course's
- *    students) and "Chapter" (dropdown of just that course's chapters
- *    — Chapter 1-12 for AP Calculus BC, Chapter 1-8 for AP Biology;
- *    skip "Chapter M", that's not something students submit against),
- *    then both continue to the same shared final section with the
- *    remaining content questions (remarks, file upload). This lets
- *    ROSTER below (in this script) resolve the submission to an exact
- *    username/courseId, and "Chapter" gets promoted straight to a
- *    top-level field — update ROSTER by hand whenever the class/name
- *    dropdown options or the STUDENTS roster change.
+ *    The Form needs these questions, titled exactly (no branching
+ *    required — a flat form, since students just enter their own
+ *    username directly instead of picking a name off a roster):
+ *      "Course"                    dropdown, e.g. "AP Calculus BC" /
+ *                                   "AP Biology" — must match COURSE_IDS
+ *                                   below exactly
+ *      "Username"                  short answer — the student's exact
+ *                                   Zenith username (a dropdown is
+ *                                   safer than free text if you want to
+ *                                   rule out typos, but isn't required)
+ *      "Chapter"                   short answer or dropdown, e.g. "5"
+ *                                   (normalized to "Chapter 5" below)
+ *      "Unit(for Chapters 1~12)"   the roadmap category letter, e.g.
+ *                                   "B"/"C"/"T"/"R"/"S"
+ *      "Feedback & Remarks"        short/long answer, optional
+ *      a file-upload question      any title — detected by type, OCR'd
+ *                                   automatically
+ *    "Course" is resolved to a courseId via COURSE_IDS below — update
+ *    that map by hand whenever a course is added or renamed.
  *
  * 3. Enable the Drive Advanced Service (needed for OCR): in the Apps
  *    Script editor, click "Services" (+ icon) in the left sidebar,
@@ -107,43 +112,21 @@ function onFormSubmit(e) {
   }
 }
 
-// Maps the Form's "Class" + "Name" dropdown answers to the exact
-// course id / username used in js/data.js, so the compiled entry
-// carries a resolved identity instead of leaving free text to parse
-// later. Keep this in sync by hand whenever a student is added,
-// removed, or renamed in js/data.js's STUDENTS array — there's no
-// live connection between this script and that file.
-var ROSTER = {
-  "AP Calculus BC": {
-    courseId: "ap-calculus-bc",
-    students: {
-      "Bogue Kwon": "bogue",
-      "Hamin Park": "hamin",
-      "Seohu Lee": "seohu",
-      "David Heo": "davidheo"
-    }
-  },
-  "AP Biology": {
-    courseId: "ap-biology",
-    students: {
-      "Hamin Park": "hamin",
-      "David Heo": "davidheo"
-    }
-  }
+// Maps the Form's "Course" dropdown answer to the exact course id used
+// in js/data.js. Update by hand whenever a course is added, renamed,
+// or its dropdown label changes.
+var COURSE_IDS = {
+  "AP Calculus BC": "ap-calculus-bc",
+  "AP Biology": "ap-biology"
 };
 
-// Looks up the "Class" and "Name" answers (question titles must match
-// exactly) against ROSTER above. Returns nulls if either answer isn't
-// recognized, rather than throwing — an unmatched submission should
-// still get logged (as "pending" with unresolved identity) instead of
-// silently dropped.
-function resolveRosterFields_(answers) {
-  var course = ROSTER[answers["Class"]];
-  if (!course) return { courseId: null, username: null };
-  return {
-    courseId: course.courseId,
-    username: course.students[answers["Name"]] || null
-  };
+// "Chapter" comes in as a bare number ("5") — normalize it to match
+// the "Chapter 5" format used in js/data.js's roadmap items. Leaves
+// already-prefixed or unrecognized values alone.
+function normalizeChapter_(raw) {
+  if (!raw) return null;
+  raw = String(raw).trim();
+  return /^chapter\b/i.test(raw) ? raw : "Chapter " + raw;
 }
 
 // Reads every question/answer pair generically — nothing here is
@@ -170,15 +153,14 @@ function buildEntryFromResponse_(response) {
     }
   });
 
-  var resolved = resolveRosterFields_(answers);
-
   return {
     id: "sub_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
     receivedAt: new Date().toISOString(),
     status: "pending",
-    courseId: resolved.courseId,
-    username: resolved.username,
-    chapter: answers["Chapter"] || null,
+    courseId: COURSE_IDS[answers["Course"]] || null,
+    username: answers["Username"] ? String(answers["Username"]).trim() : null,
+    chapter: normalizeChapter_(answers["Chapter"]),
+    unit: answers["Unit(for Chapters 1~12)"] || null,
     answers: answers,
     ocrText: ocrText || null,
     formResponseId: response.getId()

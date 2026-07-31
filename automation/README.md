@@ -40,8 +40,9 @@ from that log is future work, not part of this.
   "status": "pending",
   "courseId": "ap-calculus-bc",
   "username": "bogue",
-  "chapter": "Chapter 2",
-  "answers": { "Class": "AP Calculus BC", "Name": "Bogue Kwon", "Chapter": "Chapter 2", "...": "..." },
+  "chapter": "Chapter 5",
+  "unit": "B",
+  "answers": { "Course": "AP Calculus BC", "Username": "bogue", "Chapter": "5", "Unit(for Chapters 1~12)": "B", "...": "..." },
   "ocrText": "extracted text from any uploaded image, or null",
   "formResponseId": "..."
 }
@@ -51,31 +52,31 @@ from that log is future work, not part of this.
 `"reviewed"`, `"feedback-written"`) and who/what sets them is future
 work — not decided yet, since nothing downstream reads this field.
 
-`courseId`/`username` are resolved from the Form's "Class"/"Name"
-dropdown answers against the `ROSTER` map inside
-`submissions-compiler.gs` — see the setup note below. Both are `null`
-if the answers don't match anything in `ROSTER` (e.g. it's out of
-date); the entry still gets logged either way, just unresolved.
-`chapter` is copied straight from the Form's "Chapter" answer (no
-lookup needed — it's already an exact string like `"Chapter 2"`).
+`courseId` is resolved from the Form's "Course" dropdown answer
+against the `COURSE_IDS` map inside `submissions-compiler.gs` — `null`
+if it doesn't match (e.g. the map is out of date); the entry still
+gets logged either way, just unresolved. `username` is copied directly
+from the Form's "Username" answer (students enter their own — no
+lookup table to maintain). `chapter` is normalized from the Form's
+bare-number "Chapter" answer (`"5"` → `"Chapter 5"`) to match the
+format used in `js/data.js`'s roadmap items. `unit` is the roadmap
+category letter (`B`/`C`/`T`/`R`/`S`/etc.), copied straight through.
 
 ## One-time setup
 
 See the header comment in [`submissions-compiler.gs`](submissions-compiler.gs)
-for the exact steps: creating the `submissions-log` branch, structuring
-the Form's "Class" question (branches by course) and each course
-section's "Name" question (dropdown of just that course's roster),
-pasting the script into the Form's Apps Script editor, enabling the
-Drive Advanced Service, setting five Script Properties (`GITHUB_TOKEN`,
-`GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, `LOG_PATH`), and adding
-the `onFormSubmit` trigger.
+for the exact steps: creating the `submissions-log` branch, adding the
+Form's questions (Course, Username, Chapter, Unit, Feedback & Remarks,
+file upload — no branching needed), pasting the script into the Form's
+Apps Script editor, enabling the Drive Advanced Service, setting five
+Script Properties (`GITHUB_TOKEN`, `GITHUB_OWNER`, `GITHUB_REPO`,
+`GITHUB_BRANCH`, `LOG_PATH`), and adding the `onFormSubmit` trigger.
 
-`ROSTER` inside the script maps each course's exact "Class"/"Name"
-dropdown text to a `courseId`/`username`. It's a plain object literal
-in the script, not read from `js/data.js` (Apps Script can't reach
-into this repo's JS at runtime) — so it needs to be updated by hand
-whenever a student is added, removed, or renamed, or a new course is
-added to the Form.
+`COURSE_IDS` inside the script maps each course's exact "Course"
+dropdown text to a `courseId`. It's a plain object literal in the
+script, not read from `js/data.js` (Apps Script can't reach into this
+repo's JS at runtime) — so it needs a new entry by hand whenever a
+course is added or renamed on the Form.
 
 The GitHub token should be a fine-grained personal access token scoped
 to only this repo, with Contents read/write — not a classic all-repo
