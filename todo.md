@@ -7,7 +7,7 @@
   - [ ] Course Unlock + Now + Update(includes percentage, chapter status update) 
   - [ ] Submission + submission log update + systematic grading
   - [ ] Feedback + cheat sheet
-- [ ] gmail notifications — code built (see Done log), still needs: real student emails filled into `js/data.js`, `GMAIL_USER`/`GMAIL_APP_PASSWORD` repo secrets, and the weekly session cron time set
+  - [ ] way to create scheduled messaged for students especially when theres an event 
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
