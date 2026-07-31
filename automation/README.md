@@ -40,7 +40,8 @@ from that log is future work, not part of this.
   "status": "pending",
   "courseId": "ap-calculus-bc",
   "username": "bogue",
-  "answers": { "Class": "AP Calculus BC", "Name": "Bogue Kwon", "...": "..." },
+  "chapter": "Chapter 2",
+  "answers": { "Class": "AP Calculus BC", "Name": "Bogue Kwon", "Chapter": "Chapter 2", "...": "..." },
   "ocrText": "extracted text from any uploaded image, or null",
   "formResponseId": "..."
 }
@@ -55,6 +56,8 @@ dropdown answers against the `ROSTER` map inside
 `submissions-compiler.gs` — see the setup note below. Both are `null`
 if the answers don't match anything in `ROSTER` (e.g. it's out of
 date); the entry still gets logged either way, just unresolved.
+`chapter` is copied straight from the Form's "Chapter" answer (no
+lookup needed — it's already an exact string like `"Chapter 2"`).
 
 ## One-time setup
 

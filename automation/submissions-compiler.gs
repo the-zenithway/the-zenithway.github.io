@@ -30,13 +30,17 @@
  *    The Form itself must have a top-level question titled exactly
  *    "Class" (dropdown: one option per course, e.g. "AP Calculus BC",
  *    "AP Biology") with "Go to section based on answer" routing each
- *    option to its own section. Each of those sections must have a
- *    question titled exactly "Name" (dropdown of just that course's
- *    students), then continue to the shared section with the actual
- *    content questions. This lets ROSTER below (in this script)
- *    resolve the submission to an exact username/courseId instead of
- *    leaving it as free text — update ROSTER by hand whenever the
- *    class/name dropdown options or the STUDENTS roster change.
+ *    option to its own section. Each of those sections holds TWO
+ *    questions, titled exactly "Name" (dropdown of just that course's
+ *    students) and "Chapter" (dropdown of just that course's chapters
+ *    — Chapter 1-12 for AP Calculus BC, Chapter 1-8 for AP Biology;
+ *    skip "Chapter M", that's not something students submit against),
+ *    then both continue to the same shared final section with the
+ *    remaining content questions (remarks, file upload). This lets
+ *    ROSTER below (in this script) resolve the submission to an exact
+ *    username/courseId, and "Chapter" gets promoted straight to a
+ *    top-level field — update ROSTER by hand whenever the class/name
+ *    dropdown options or the STUDENTS roster change.
  *
  * 3. Enable the Drive Advanced Service (needed for OCR): in the Apps
  *    Script editor, click "Services" (+ icon) in the left sidebar,
@@ -174,6 +178,7 @@ function buildEntryFromResponse_(response) {
     status: "pending",
     courseId: resolved.courseId,
     username: resolved.username,
+    chapter: answers["Chapter"] || null,
     answers: answers,
     ocrText: ocrText || null,
     formResponseId: response.getId()
