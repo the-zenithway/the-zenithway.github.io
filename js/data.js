@@ -573,7 +573,7 @@ const STUDENTS = [
           "chapter": "Chapter 6",
           "unit": "B",
           "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-          "due": "Monday"
+          "due": "Tuesday"
         },
         "feedback": [
           {
@@ -587,6 +587,12 @@ const STUDENTS = [
             "chapter": "Chapter 4",
             "unit": "C",
             "content": "Solid effort. Most of what you missed came down to forgetting to check the domain before finalizing an answer — worth a quick habit check before submitting next time."
+          },
+          {
+            "date": "Jul 12",
+            "chapter": "Chapter 4",
+            "unit": "C",
+            "content": "Solid effort. Most of what you missed came down to forgetting to check the domain before finalizing an answer — worth a quick habit check before submitting next time."
           }
         ],
         "cheatSheet": [
@@ -594,6 +600,11 @@ const STUDENTS = [
             "topic": "Domain Restrictions",
             "source": "4C-14, 5S-9",
             "pattern": "Shows up twice so far — the method is right both times, the answer just isn't checked against the original expression's domain afterward. Before finalizing, ask: does this value actually work back in the un-simplified expression, e.g. is $x=-2$ still valid if the original required $x > 0$?"
+          },
+          {
+            "topic": "Related Rates Setup",
+            "source": "5C-6",
+            "pattern": "Going well — keep setting up straight from the diagram: $\\dfrac{dV}{dt} = \\dfrac{dV}{dr} \\cdot \\dfrac{dr}{dt}$ rather than re-deriving the volume formula each time. Faster and less room for a sign slip."
           },
           {
             "topic": "Related Rates Setup",
