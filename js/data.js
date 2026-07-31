@@ -28,7 +28,7 @@ const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c2
 // The shared submission form — same one for every student. To embed
 // a Google Form like this, take the normal viewform link and swap
 // its query string for "?embedded=true".
-const SUBMISSION_FORM_URL = "https://forms.gle/maWhNNZy5RFZJCZPA";
+const SUBMISSION_FORM_URL = "https://forms.gle/VDiid5swaa8xvp1q6";
 
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
