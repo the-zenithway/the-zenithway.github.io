@@ -38,7 +38,9 @@ from that log is future work, not part of this.
   "id": "sub_1706562345000_a1b2c3",
   "receivedAt": "2026-01-29T18:45:12.000Z",
   "status": "pending",
-  "answers": { "Student name": "...", "Which chapter?": "...", "...": "..." },
+  "courseId": "ap-calculus-bc",
+  "username": "bogue",
+  "answers": { "Class": "AP Calculus BC", "Name": "Bogue Kwon", "...": "..." },
   "ocrText": "extracted text from any uploaded image, or null",
   "formResponseId": "..."
 }
@@ -48,14 +50,29 @@ from that log is future work, not part of this.
 `"reviewed"`, `"feedback-written"`) and who/what sets them is future
 work — not decided yet, since nothing downstream reads this field.
 
+`courseId`/`username` are resolved from the Form's "Class"/"Name"
+dropdown answers against the `ROSTER` map inside
+`submissions-compiler.gs` — see the setup note below. Both are `null`
+if the answers don't match anything in `ROSTER` (e.g. it's out of
+date); the entry still gets logged either way, just unresolved.
+
 ## One-time setup
 
 See the header comment in [`submissions-compiler.gs`](submissions-compiler.gs)
-for the exact steps: creating the `submissions-log` branch, pasting
-the script into the Form's Apps Script editor, enabling the Drive
-Advanced Service, setting five Script Properties (`GITHUB_TOKEN`,
+for the exact steps: creating the `submissions-log` branch, structuring
+the Form's "Class" question (branches by course) and each course
+section's "Name" question (dropdown of just that course's roster),
+pasting the script into the Form's Apps Script editor, enabling the
+Drive Advanced Service, setting five Script Properties (`GITHUB_TOKEN`,
 `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, `LOG_PATH`), and adding
 the `onFormSubmit` trigger.
+
+`ROSTER` inside the script maps each course's exact "Class"/"Name"
+dropdown text to a `courseId`/`username`. It's a plain object literal
+in the script, not read from `js/data.js` (Apps Script can't reach
+into this repo's JS at runtime) — so it needs to be updated by hand
+whenever a student is added, removed, or renamed, or a new course is
+added to the Form.
 
 The GitHub token should be a fine-grained personal access token scoped
 to only this repo, with Contents read/write — not a classic all-repo

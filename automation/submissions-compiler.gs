@@ -27,6 +27,17 @@
  *    Extensions -> Apps Script). Paste this whole file in, replacing
  *    whatever is in Code.gs.
  *
+ *    The Form itself must have a top-level question titled exactly
+ *    "Class" (dropdown: one option per course, e.g. "AP Calculus BC",
+ *    "AP Biology") with "Go to section based on answer" routing each
+ *    option to its own section. Each of those sections must have a
+ *    question titled exactly "Name" (dropdown of just that course's
+ *    students), then continue to the shared section with the actual
+ *    content questions. This lets ROSTER below (in this script)
+ *    resolve the submission to an exact username/courseId instead of
+ *    leaving it as free text — update ROSTER by hand whenever the
+ *    class/name dropdown options or the STUDENTS roster change.
+ *
  * 3. Enable the Drive Advanced Service (needed for OCR): in the Apps
  *    Script editor, click "Services" (+ icon) in the left sidebar,
  *    find "Drive API", click Add.
@@ -92,6 +103,45 @@ function onFormSubmit(e) {
   }
 }
 
+// Maps the Form's "Class" + "Name" dropdown answers to the exact
+// course id / username used in js/data.js, so the compiled entry
+// carries a resolved identity instead of leaving free text to parse
+// later. Keep this in sync by hand whenever a student is added,
+// removed, or renamed in js/data.js's STUDENTS array — there's no
+// live connection between this script and that file.
+var ROSTER = {
+  "AP Calculus BC": {
+    courseId: "ap-calculus-bc",
+    students: {
+      "Bogue Kwon": "bogue",
+      "Hamin Park": "hamin",
+      "Seohu Lee": "seohu",
+      "David Heo": "davidheo"
+    }
+  },
+  "AP Biology": {
+    courseId: "ap-biology",
+    students: {
+      "Hamin Park": "hamin",
+      "David Heo": "davidheo"
+    }
+  }
+};
+
+// Looks up the "Class" and "Name" answers (question titles must match
+// exactly) against ROSTER above. Returns nulls if either answer isn't
+// recognized, rather than throwing — an unmatched submission should
+// still get logged (as "pending" with unresolved identity) instead of
+// silently dropped.
+function resolveRosterFields_(answers) {
+  var course = ROSTER[answers["Class"]];
+  if (!course) return { courseId: null, username: null };
+  return {
+    courseId: course.courseId,
+    username: course.students[answers["Name"]] || null
+  };
+}
+
 // Reads every question/answer pair generically — nothing here is
 // hardcoded to specific question titles, so it keeps working if the
 // form's questions change. Any file-upload answer gets OCR'd via
@@ -116,10 +166,14 @@ function buildEntryFromResponse_(response) {
     }
   });
 
+  var resolved = resolveRosterFields_(answers);
+
   return {
     id: "sub_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
     receivedAt: new Date().toISOString(),
     status: "pending",
+    courseId: resolved.courseId,
+    username: resolved.username,
     answers: answers,
     ocrText: ocrText || null,
     formResponseId: response.getId()
