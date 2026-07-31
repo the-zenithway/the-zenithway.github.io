@@ -93,7 +93,7 @@ const STUDENTS = [
           "chapter": "Chapter 2",
           "unit": "B",
           "instruction": "Complete the book chapter. Go through each of the exercises and actively solve them and develop your instincts!",
-          "due": "Saturday"
+          "due": "Tuesday"
         },
         "rightNowNext": {
           "chapter": "Chapter 2",
