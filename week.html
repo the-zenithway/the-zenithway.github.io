@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Courses — Zenith</title>
+<title>This Week — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -17,19 +17,13 @@
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ active: "courses", actions: ["logout"] });</script>
+<script>renderPortalHeader({ nav: "label", label: "This Week", actions: ["allCourses", "logout"] });</script>
 
-<main class="course-portal-wrap">
-  <section class="course-folder" aria-labelledby="course-folder-title">
-    <div class="course-folder-heading">
-      <p class="course-folder-eyebrow">My courses</p>
-      <h1 id="course-folder-title">Choose a roadmap</h1>
-      <p id="course-folder-greeting" class="course-folder-greeting"></p>
-      <p id="course-folder-week-link" class="course-folder-week-link" hidden><a href="week.html">See your week across all courses →</a></p>
-    </div>
-    <div id="course-app-grid" class="course-app-grid"></div>
-    <p id="course-folder-empty" class="course-folder-empty" hidden>You are not enrolled in a course yet.</p>
-  </section>
+<main class="week-wrap">
+  <div class="week-col">
+    <p class="week-greeting" id="week-greeting"></p>
+    <div class="week-list" id="week-list"></div>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
@@ -37,7 +31,7 @@
 <script>
   requireLogin();
   var student = getCurrentStudent();
-  renderCoursePortal(student);
+  renderWeekView(student);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

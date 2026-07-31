@@ -77,7 +77,10 @@ function renderSiteHeader(opts) {
     '<header class="site-header">\n' +
     '  <div class="container header-inner">\n' +
     "    " + renderLogo() + "\n" +
-    "    <nav>\n" +
+    '    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">\n' +
+    "      <span></span><span></span><span></span>\n" +
+    "    </button>\n" +
+    '    <nav id="site-nav">\n' +
     "      " + navLinks + "\n" +
     "      " + auth + "\n" +
     "    </nav>\n" +
@@ -85,6 +88,21 @@ function renderSiteHeader(opts) {
     "</header>";
 
   mount("header-mount", html);
+
+  const toggle = document.getElementById("nav-toggle");
+  const nav = document.getElementById("site-nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", function () {
+      const isOpen = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+    nav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 }
 
 // opts:

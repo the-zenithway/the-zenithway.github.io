@@ -145,6 +145,33 @@ nav > a.active { color: var(--text); }
   color: var(--text);
 }
 
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* -------- hero -------- */
 .hero {
   padding: 96px 0 64px;
@@ -189,7 +216,7 @@ nav > a.active { color: var(--text); }
 .btn-full { width: 100%; }
 
 /* -------- page header (Philosophy, Resources) -------- */
-.page-header { padding: 64px 0 48px; }
+.page-header { padding-top: 64px; padding-bottom: 48px; }
 
 .page-header h1 {
   font-weight: 700;
@@ -726,6 +753,11 @@ body.portal-body {
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+
+.course-folder-week-link { margin: 10px 0 0; font-size: 0.85rem; }
+.course-folder-week-link a { color: var(--accent); text-decoration: none; }
+.course-folder-week-link a:hover { text-decoration: underline; }
+.course-folder-week-link[hidden] { display: none; }
 
 .course-folder-empty { padding: 20px 0 4px; }
 .course-folder-empty[hidden], .course-app-grid[hidden] { display: none; }
@@ -1381,6 +1413,58 @@ body.portal-body {
 
 .rightnow-contact-item:hover { background: var(--bg); }
 
+/* -------- This Week (cross-course) -------- */
+.week-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  overflow: auto;
+}
+
+.week-col { width: 100%; max-width: 560px; }
+
+.week-greeting {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0 0 20px;
+}
+
+.week-list { display: flex; flex-direction: column; gap: 20px; }
+
+.week-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+.week-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.week-card-icon svg { width: 26px; height: 26px; }
+
+.week-card-course {
+  font-family: var(--font-logo);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.week-card-open {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.week-card-open:hover { text-decoration: underline; }
+
 /* -------- Parent dashboard -------- */
 .parent-wrap {
   flex: 1;
@@ -1614,15 +1698,65 @@ footer {
 .social-icon img { display: block; }
 
 /* -------- responsive -------- */
+@media (max-width: 780px) {
+  .nav-toggle { display: flex; }
+
+  .header-inner nav {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .header-inner nav.is-open { display: flex; }
+
+  .header-inner nav > a:not(.btn-nav) {
+    padding: 12px 4px;
+    border-top: 1px solid var(--border);
+  }
+
+  .header-inner .btn-nav { align-self: flex-start; margin-top: 8px; }
+}
+
 @media (max-width: 640px) {
   .portal-bar { flex-wrap: wrap; row-gap: 10px; }
-  .portal-bar-left { flex-wrap: wrap; row-gap: 8px; }
+  .portal-bar-left { flex-wrap: wrap; row-gap: 8px; min-width: 0; }
+
+  .portal-nav {
+    flex: 1 1 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .portal-nav::-webkit-scrollbar { display: none; }
+
+  .portal-nav-link { flex-shrink: 0; white-space: nowrap; }
+
+  .portal-actions { flex-wrap: wrap; row-gap: 8px; }
+
+  .roadmap-table { min-width: 560px; }
 }
 
 @media (max-width: 720px) {
   .cards { grid-template-columns: 1fr; gap: 32px; }
   .hero h1 { font-size: 2rem; }
   .hero { padding: 64px 0 48px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 1.7rem; }
+  .hero p { font-size: 1rem; }
+  .page-header { padding-top: 40px; padding-bottom: 32px; }
+  .page-header h1 { font-size: 1.6rem; }
+  .login-card { padding: 28px 22px; }
+  .course-folder { padding: 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

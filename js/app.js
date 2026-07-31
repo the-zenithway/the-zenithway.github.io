@@ -30,7 +30,7 @@ const ACTIVE_COURSE_KEY = "activeCourseId";
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS,
 // then PARENTS (from data.js). On success, remembers who's logged in
@@ -669,7 +669,7 @@ function renderRightNowBreadcrumb(course) {
   if (existing) existing.remove();
 
   const page = window.location.pathname.split("/").pop();
-  if (page === "right-now.html") return;
+  if (page === "right-now.html" || page === "week.html") return;
 
   const data = course.rightNow;
   if (!data) return;
@@ -852,6 +852,67 @@ function renderCoursePortal(student) {
       '<span class="course-app-progress-label">' + pct + '% complete</span>' +
     '</a>';
   }).join("");
+
+  const weekLink = document.getElementById("course-folder-week-link");
+  if (weekLink) weekLink.hidden = courses.length < 2;
+}
+
+// ---- This Week (week.html) ----
+// A combined, cross-course view for students enrolled in more than one
+// subject — one compact card per enrolled course, each showing exactly
+// that course's single "rightNow" item (same field renderRightNow()
+// reads), so the total list is always capped at one task per course
+// rather than a preview of every course's full roadmap. Linked from
+// portal.html only when a student has 2+ courses (see renderCoursePortal
+// above); a single-course student has no real use for it, but the page
+// itself works fine for any student count, including zero.
+function renderWeekView(student) {
+  if (!student) return;
+  localStorage.removeItem(ACTIVE_COURSE_KEY);
+
+  document.getElementById("week-greeting").textContent =
+    "Hey " + student.name.split(" ")[0] + ", here's what's next across every course.";
+
+  const courses = student.courses || [];
+  const list = document.getElementById("week-list");
+
+  if (courses.length === 0) {
+    list.innerHTML = '<p class="course-folder-empty">You are not enrolled in a course yet.</p>';
+    return;
+  }
+
+  list.innerHTML = courses.map(weekCourseCardHtml).join("");
+}
+
+function weekCourseCardHtml(course) {
+  const data = course.rightNow;
+  const isWaiting = !!data && data.state === "waiting";
+
+  let cardClass = "rightnow-card";
+  cardClass += !data ? " rightnow-empty" : isWaiting ? " rightnow-waiting" : " rightnow-active";
+
+  const tag = !data ? "" : isWaiting ? "With us" : "Your move";
+  const title = data ? data.chapter + " · " + data.unit : "Nothing set yet";
+  const body = !data
+    ? "Check back soon, or open this course for the full picture."
+    : (isWaiting ? data.note : data.instruction);
+  const due = (data && !isWaiting && data.due)
+    ? '<span class="rightnow-due">Due ' + data.due + '</span>'
+    : "";
+
+  return '<div class="' + cardClass + '">' +
+    '<div class="week-card-head">' +
+      '<span class="course-app-icon course-app-icon--' + course.icon + ' week-card-icon">' + courseIconHtml(course.icon) + '</span>' +
+      '<p class="week-card-course">' + course.name + '</p>' +
+    '</div>' +
+    (tag ? '<p class="rightnow-tag">' + tag + '</p>' : "") +
+    '<h2 class="rightnow-title">' + title + '</h2>' +
+    '<p class="rightnow-instruction">' + body + '</p>' +
+    '<div class="rightnow-footer">' +
+      due +
+      '<a class="week-card-open" href="right-now.html?course=' + encodeURIComponent(course.id) + '">Open ' + course.name + ' →</a>' +
+    '</div>' +
+  '</div>';
 }
 
 // Resolves roadmap.html's course query only against the logged-in student's
