@@ -1122,7 +1122,7 @@ const STUDENTS = [
           "chapter": "Chapter 1",
           "unit": "B",
           "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-          "due": "undecided"
+          "due": "Wednesday"
         },
         "feedback": [],
         "cheatSheet": [],
