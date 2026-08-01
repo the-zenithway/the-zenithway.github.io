@@ -2032,7 +2032,7 @@ const STUDENTS = [
     "username": "onyoo",
     "password": "password",
     "name": "Onyoo Park",
-    "email": "Onew8320@gmail.com",
+    "email": "onew8320@gmail.com",
     "courses": [
       {
         "id": "ap-chemistry",
