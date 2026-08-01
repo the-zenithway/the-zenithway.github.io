@@ -51,3 +51,6 @@ and do things for the greater good?
 ## 6. Intra-school Relation
 - [ ] Make presentation
 - [ ] Formal proposal document
+
+## Done
+- [x] Server-computed "Updates" changelog feed — GitHub Action now writes `data/changelog-events.json` (reusing the email digest's diff logic) instead of the portal button doing its own weaker localStorage diff; button reads the shared feed and links each update to the relevant page

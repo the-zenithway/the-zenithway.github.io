@@ -33,7 +33,9 @@ async function main() {
   const oldData = loadData(fs.readFileSync(oldPath, "utf8"));
   const newData = loadData(fs.readFileSync(newPath, "utf8"));
 
-  const digests = computeChanges(oldData.students, newData.students);
+  // computeChanges no longer filters by email (the portal's changelog feed
+  // needs every student's changes too) — filter to emailable students here.
+  const digests = computeChanges(oldData.students, newData.students).filter((d) => d.email);
   const newStudents = computeNewStudents(oldData.students, newData.students);
   const parentRecipients = computeParentRecipients(newData.parents, digests);
 

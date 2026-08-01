@@ -677,13 +677,16 @@ body.portal-body {
 .whatsnew-menu[hidden] { display: none; }
 
 .whatsnew-item {
+  display: block;
   padding: 10px;
   border-top: 1px solid var(--border);
   font-size: 0.85rem;
   color: var(--text);
+  text-decoration: none;
 }
 
 .whatsnew-item:first-child { border-top: none; }
+.whatsnew-item:hover { background: var(--bg-hover, var(--bg-elevated)); text-decoration: underline; }
 
 .whatsnew-empty {
   padding: 12px 10px;

@@ -48,11 +48,17 @@ function computeFeedbackChanges(oldCourse, course) {
 
 /**
  * Compares the STUDENTS array before/after a push and returns, per student,
- * the list of changes worth emailing about. A student who didn't exist in
+ * the list of changes worth surfacing to them. A student who didn't exist in
  * the old data at all is skipped here — that's a welcome email, handled
  * separately by computeNewStudents. Same idea per-course: a course that's
  * new on this student this push is skipped, only pre-existing courses are
  * diffed.
+ *
+ * Deliberately does not filter on `student.email` — this is the shared
+ * "what changed" logic for both the email digest (notify-on-push.js, which
+ * filters to emailable students itself before sending) and the portal's
+ * changelog events feed (build-changelog-events.js, which needs every
+ * student regardless of whether they have an email on file).
  */
 function computeChanges(oldStudents, newStudents) {
   const oldByUsername = new Map(oldStudents.map((s) => [s.username, s]));
@@ -61,7 +67,6 @@ function computeChanges(oldStudents, newStudents) {
   for (const student of newStudents) {
     const oldStudent = oldByUsername.get(student.username);
     if (!oldStudent) continue;
-    if (!student.email) continue;
 
     const changes = [];
     const oldCoursesById = new Map((oldStudent.courses || []).map((c) => [c.id, c]));
