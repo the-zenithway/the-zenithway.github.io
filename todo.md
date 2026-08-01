@@ -32,8 +32,9 @@ and do things for the greater good?
 - [ ] Go to trips together, listen to their concerns and yeah having fun together 
 
 ## 4. Admin
+- [ ] philosophy update
 - [ ] Create discord community 
-- [ ] AP Physics self study track, AP Chem self study track, AP CS A self study track
+- [ ] AP Physics self study track, AP CS A self study track
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
   - [ ] Study-technique deep dives
   - [ ] Subject-specific pitfall posts (e.g. IVT vs MVT vs Rolle's, straight from real cheat sheet entries)
@@ -50,8 +51,3 @@ and do things for the greater good?
 ## 6. Intra-school Relation
 - [ ] Make presentation
 - [ ] Formal proposal document
-
-## Done
-- [x] Removed dead `portal.notionUrl`/`portal.notionAvailable` from every STUDENTS entry in `js/data.js` (confirmed unused anywhere on the live site — only `calendar.html`'s `renderEmbedPage` call remained, and it never touched `student.portal`). Note: `zenith-cli`'s `list`/`add`/`set-notion` commands still reference this now-removed field and will need fixing separately (left as-is per explicit decision not to touch that repo yet)
-- [x] Fixed the submission log / Submit page disconnect — `submissions-compiler.gs` had drifted to committing to a separate `submissions-log` branch for safety, but `submit.html`'s relative `fetch("data/submissions-log.json")` can only ever see `main` (GitHub Pages only serves main), so real submissions were invisible on the Submit page. Reverted to committing straight to `main` (confirmed decision, since it's simpler and the site depends on it), merged the 3 stray historical entries back in from the old branch, and backfilled `courseId`/`username`/`chapter`/`unit` on all 4 existing log entries using a new case-insensitive prefix-matching extraction (`findAnswerByPrefix_`) that survives the Form's question titles having silently changed casing/wording at least 3 times already — verified locally that `kyjv9981`'s real submission now renders correctly on the Submit page
-- [x] Email notifications (deadlines, feedback, roadmap status changes, new cheat sheet entries, welcome email for new students, linked-parent CC, new blog posts, new resources.html entries, philosophy.html changes, weekly session reminder [built but not scheduled — no sessions yet], submission-received confirmation) — `automation/notifications/` + `.github/workflows/notify.yml` (push-diff, broadcast content job, cron for reminder), plus `sendConfirmationEmail_` added to `automation/submissions-compiler.gs`; `email` field added to STUDENTS and PARENTS schema; every email links to the relevant page on the live site. Dry-run tested locally end-to-end for every change type; real send confirmed for the session reminder. Not yet run through an actual GitHub Actions job or the real submission-confirmation path — see `automation/notifications/README.md` for remaining setup

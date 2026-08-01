@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Chemistry — Self Study Track — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "resources", actions: ["back"] });</script>
+
+<main class="roadmap-main">
+  <div class="roadmap-course-heading">
+    <a href="resources.html" class="roadmap-back">← All resources</a>
+    <h1 id="roadmap-course-name">AP Chemistry — Self Study Track</h1>
+    <span class="roadmap-course-progress" id="roadmap-course-progress"></span>
+  </div>
+
+  <div class="roadmap-toolbar">
+    <div class="roadmap-view-switch" id="roadmap-view-switch">
+      <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
+      <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
+      <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
+      <button type="button" class="roadmap-view-btn" data-view="orbit">Orbit</button>
+    </div>
+  </div>
+
+  <div class="roadmap-wrap" id="roadmap-view-table">
+    <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
+    <table class="roadmap-table" id="roadmap-table" hidden>
+      <colgroup>
+        <col style="width: 112px">
+        <col>
+        <col style="width: 150px">
+        <col style="width: 155px">
+        <col style="width: 84px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Chapter</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody id="roadmap-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="roadmap-curve-wrap" id="roadmap-view-curve" hidden>
+    <div class="roadmap-curve-legend" id="roadmap-curve-legend"></div>
+    <div class="roadmap-curve-canvas" id="roadmap-curve-canvas">
+      <svg id="roadmap-curve-svg" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="curve-popover" id="curve-popover" hidden>
+        <p class="curve-popover-title" id="curve-popover-title"></p>
+        <div class="curve-popover-list" id="curve-popover-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-cards-wrap" id="roadmap-view-cards" hidden>
+    <div class="roadmap-cards-track" id="roadmap-cards-track" tabindex="0"></div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-cards-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-cards-next" aria-label="Scroll right">›</button>
+  </div>
+
+  <div class="roadmap-orbit-wrap" id="roadmap-view-orbit" hidden>
+    <div class="roadmap-orbit-stage">
+      <div class="roadmap-orbit-track" id="roadmap-orbit-track" tabindex="0"></div>
+    </div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-orbit-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-orbit-next" aria-label="Scroll right">›</button>
+  </div>
+</main>
+
+<div id="footer-mount"></div>
+<script>renderFooter();</script>
+
+<script src="js/social-links.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Public self-study copy of the canonical AP Chemistry roadmap.
+  // Course content stays in sync, while enrolled student progress is untouched.
+  var chemistryCourse;
+  STUDENTS.some(function (student) {
+    return (student.courses || []).some(function (candidate) {
+      if (candidate.id !== "ap-chemistry") return false;
+      chemistryCourse = candidate;
+      return true;
+    });
+  });
+
+  var course = {
+    "id": "ap-chemistry-self-study",
+    "name": "AP Chemistry — Self Study Track",
+    "roadmap": chemistryCourse ? chemistryCourse.roadmap.map(function (item) {
+      return Object.assign({}, item, { "status": "Complete" });
+    }) : []
+  };
+
+  renderSocialLinks();
+  renderRoadmap(course);
+  setUpRoadmapViewSwitch(course);
+</script>
+</body>
+</html>

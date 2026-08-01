@@ -82,6 +82,7 @@ const RESOURCES_KO = {
   "ap-calc-barrons-desc": "AP Calculus BC를 독학하기에 가장 좋은 책으로 보입니다. Zenith의 핵심 커리큘럼에서도 Barron's의 연습문제를 많이 활용합니다.",
   "ap-bio-self-study-desc": "AP Biology를 위한 Zenith의 자기주도 학습 과정입니다. 로그인 없이 누구나 이용할 수 있습니다.",
   "ap-bio-barrons-desc": "AP Biology 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
+  "ap-chem-self-study-desc": "AP Chemistry를 위한 Zenith의 자기주도 학습 과정입니다. 로그인 없이 누구나 이용할 수 있습니다.",
   "ap-chem-barrons-desc": "AP Chemistry 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
   "ap-physics-barrons-desc": "AP Physics C 커리큘럼(Mechanics, Electricity & Magnetism) 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
   "ap-csa-barrons-desc": "AP Computer Science A 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",

@@ -770,9 +770,16 @@ function setUpCourseNavigation(student) {
 
   document.querySelectorAll(".portal-nav-link").forEach(function(link) {
     const url = new URL(link.getAttribute("href"), window.location.href);
-    if (url.pathname.split("/").pop() === "portal.html") return;
+    const page = url.pathname.split("/").pop();
+    if (page === "portal.html") return;
+    // AP Chemistry has no working submission flow yet -- hide the tab
+    // rather than link to a form that isn't ready.
+    if (page === "submit.html" && course.id === "ap-chemistry") {
+      link.remove();
+      return;
+    }
     url.searchParams.set("course", course.id);
-    link.setAttribute("href", url.pathname.split("/").pop() + url.search);
+    link.setAttribute("href", page + url.search);
   });
 
   const cheatSheetLink = document.querySelector("#cheatsheet-banner a");

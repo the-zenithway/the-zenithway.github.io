@@ -302,16 +302,14 @@ const STUDENTS = [
             "name": "N1-Atomic Structure and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C1-Atomic Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 1",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk"
           },
           {
             "name": "S1-Atomic Structure and Properties Solutions",
@@ -338,16 +336,14 @@ const STUDENTS = [
             "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk"
           },
           {
             "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
@@ -374,16 +370,14 @@ const STUDENTS = [
             "name": "N3-Intermolecular Forces and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C3-Intermolecular Forces and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 3",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk"
           },
           {
             "name": "S3-Intermolecular Forces and Properties Solutions",
@@ -410,16 +404,14 @@ const STUDENTS = [
             "name": "N4-Chemical Reactions Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 4",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C4-Chemical Reactions Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk"
           },
           {
             "name": "S4-Chemical Reactions Solutions",
@@ -446,16 +438,14 @@ const STUDENTS = [
             "name": "N5-Kinetics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 5",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C5-Kinetics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 5",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk"
           },
           {
             "name": "S5-Kinetics Solutions",
@@ -482,16 +472,14 @@ const STUDENTS = [
             "name": "N6-Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 6",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C6-Thermodynamics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk"
           },
           {
             "name": "S6-Thermodynamics Solutions",
@@ -518,16 +506,14 @@ const STUDENTS = [
             "name": "N7-Equilibrium Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 7",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C7-Equilibrium Problems",
             "category": "C-coursework",
             "chapter": "Chapter 7",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk"
           },
           {
             "name": "S7-Equilibrium Solutions",
@@ -554,16 +540,14 @@ const STUDENTS = [
             "name": "N8-Acids and Bases Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 8",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C8-Acids and Bases Problems",
             "category": "C-coursework",
             "chapter": "Chapter 8",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk"
           },
           {
             "name": "S8-Acids and Bases Solutions",
@@ -590,8 +574,7 @@ const STUDENTS = [
             "name": "N9-Applications of Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 9",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C9-Applications of Thermodynamics Problems",
@@ -625,8 +608,7 @@ const STUDENTS = [
             "name": "N10-Experiments Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 10",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C10-Experiments Problems",
@@ -1309,16 +1291,14 @@ const STUDENTS = [
             "name": "N1-Atomic Structure and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C1-Atomic Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 1",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk"
           },
           {
             "name": "S1-Atomic Structure and Properties Solutions",
@@ -1345,16 +1325,14 @@ const STUDENTS = [
             "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk"
           },
           {
             "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
@@ -1381,16 +1359,14 @@ const STUDENTS = [
             "name": "N3-Intermolecular Forces and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Unlocked"
           },
           {
             "name": "C3-Intermolecular Forces and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 3",
             "status": "Unlocked",
-            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk"
           },
           {
             "name": "S3-Intermolecular Forces and Properties Solutions",
@@ -1417,16 +1393,14 @@ const STUDENTS = [
             "name": "N4-Chemical Reactions Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 4",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C4-Chemical Reactions Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk"
           },
           {
             "name": "S4-Chemical Reactions Solutions",
@@ -1453,16 +1427,14 @@ const STUDENTS = [
             "name": "N5-Kinetics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 5",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C5-Kinetics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 5",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk"
           },
           {
             "name": "S5-Kinetics Solutions",
@@ -1489,16 +1461,14 @@ const STUDENTS = [
             "name": "N6-Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 6",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C6-Thermodynamics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk"
           },
           {
             "name": "S6-Thermodynamics Solutions",
@@ -1525,16 +1495,14 @@ const STUDENTS = [
             "name": "N7-Equilibrium Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 7",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C7-Equilibrium Problems",
             "category": "C-coursework",
             "chapter": "Chapter 7",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk"
           },
           {
             "name": "S7-Equilibrium Solutions",
@@ -1561,16 +1529,14 @@ const STUDENTS = [
             "name": "N8-Acids and Bases Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 8",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C8-Acids and Bases Problems",
             "category": "C-coursework",
             "chapter": "Chapter 8",
             "status": "Locked",
-            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk",
-            "submissionUrl": "submit.html?course=ap-chemistry"
+            "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk"
           },
           {
             "name": "S8-Acids and Bases Solutions",
@@ -1597,8 +1563,7 @@ const STUDENTS = [
             "name": "N9-Applications of Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 9",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C9-Applications of Thermodynamics Problems",
@@ -1632,8 +1597,7 @@ const STUDENTS = [
             "name": "N10-Experiments Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 10",
-            "status": "Locked",
-            "url": "submit.html?course=ap-chemistry"
+            "status": "Locked"
           },
           {
             "name": "C10-Experiments Problems",
