@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Computer Science A — Self Study Track — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "resources", actions: ["back"] });</script>
+
+<main class="roadmap-main">
+  <div class="roadmap-course-heading">
+    <a href="resources.html" class="roadmap-back">← All resources</a>
+    <h1 id="roadmap-course-name">AP Computer Science A — Self Study Track</h1>
+    <span class="roadmap-course-progress" id="roadmap-course-progress"></span>
+  </div>
+
+  <div class="roadmap-toolbar">
+    <div class="roadmap-view-switch" id="roadmap-view-switch">
+      <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
+      <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
+      <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
+      <button type="button" class="roadmap-view-btn" data-view="orbit">Orbit</button>
+    </div>
+  </div>
+
+  <div class="roadmap-wrap" id="roadmap-view-table">
+    <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
+    <table class="roadmap-table" id="roadmap-table" hidden>
+      <colgroup>
+        <col style="width: 112px">
+        <col>
+        <col style="width: 150px">
+        <col style="width: 155px">
+        <col style="width: 84px">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Chapter</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody id="roadmap-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="roadmap-curve-wrap" id="roadmap-view-curve" hidden>
+    <div class="roadmap-curve-legend" id="roadmap-curve-legend"></div>
+    <div class="roadmap-curve-canvas" id="roadmap-curve-canvas">
+      <svg id="roadmap-curve-svg" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="curve-popover" id="curve-popover" hidden>
+        <p class="curve-popover-title" id="curve-popover-title"></p>
+        <div class="curve-popover-list" id="curve-popover-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-cards-wrap" id="roadmap-view-cards" hidden>
+    <div class="roadmap-cards-track" id="roadmap-cards-track" tabindex="0"></div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-cards-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-cards-next" aria-label="Scroll right">›</button>
+  </div>
+
+  <div class="roadmap-orbit-wrap" id="roadmap-view-orbit" hidden>
+    <div class="roadmap-orbit-stage">
+      <div class="roadmap-orbit-track" id="roadmap-orbit-track" tabindex="0"></div>
+    </div>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-orbit-prev" aria-label="Scroll left">‹</button>
+    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-orbit-next" aria-label="Scroll right">›</button>
+  </div>
+</main>
+
+<div id="footer-mount"></div>
+<script>renderFooter();</script>
+
+<script src="js/social-links.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Open, no-login self-study version of the AP Computer Science A roadmap:
+  // same course data as the enrolled track, every item unlocked so
+  // links are open to anyone who lands here from resources.html.
+  var course = {
+    "id": "ap-computer-science-a-self-study",
+    "name": "AP Computer Science A — Self Study Track",
+    "roadmap": [
+          { "name": "A-AP CS A Terms Glossary", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Jylzhlyvr-cKGKoB0FjDCZsjBykdTdLD/view?usp=drive_link" },
+          { "name": "B-Glossary of General Computer Terms", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/13x_U5Z5jeufOl00e0wmSNSosDEAzoXvR/view?usp=drive_link" },
+          { "name": "B1-Tips for Taking the Exam", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1qWhe4ey3enwW6aKLBBmbNyvVhx5iWvMz/view?usp=drive_link" },
+          { "name": "B2-Introductory Java Language Features", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1Op3BGi84QkmFy8ANYsZbFw-gzrMXpDw-/view?usp=drive_link" },
+          { "name": "C2-Introductory Java Language Features Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1Z04y-6eQAj7ZiWYn3ik_270GYctnNrXU/view?usp=drive_link" },
+          { "name": "S2-Introductory Java Language Features Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1tGx7-REFP57T8EzGkBz1jwc8OGnC9eLr/view?usp=drive_link" },
+          { "name": "R2-Introductory Java Language Features Review", "category": "R-Review", "chapter": "Chapter 2", "status": "Complete" },
+          { "name": "B3-Classes and Objects", "category": "B-book chapter", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/13S6B00dmtwh5XwYVoFbDB6R-0vRShRbK/view?usp=drive_link" },
+          { "name": "C3-Classes and Objects Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1hjDTYpPjxBEiE33KQFV6UOtY-XbU56vX/view?usp=drive_link" },
+          { "name": "S3-Classes and Objects Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1nYLkTMXKsSf7Ie7xyJBZ6Sk9It6FmZfv/view?usp=drive_link" },
+          { "name": "R3-Classes and Objects Review", "category": "R-Review", "chapter": "Chapter 3", "status": "Complete" },
+          { "name": "B4-Some Standard Classes", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/file/d/12oTkzvDSJFRgRPRqAesJPzfW_b5RMlUn/view?usp=drive_link" },
+          { "name": "C4-Some Standard Classes Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/file/d/1mQwi6HPHJQRmls9XAyK4CFXmFZ9rN-7n/view?usp=drive_link" },
+          { "name": "S4-Some Standard Classes Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/file/d/1ZoUXRf7mUTSjISjU7rYM5_D3rQdqr_yq/view?usp=drive_link" },
+          { "name": "R4-Some Standard Classes Review", "category": "R-Review", "chapter": "Chapter 4", "status": "Complete" },
+          { "name": "B5-Program Design and Analysis", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/file/d/1gUJZl52EDsapu96_ZBkvntZrK46zy_l2/view?usp=drive_link" },
+          { "name": "C5-Program Design and Analysis Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/file/d/1wBAij3uk4j88PcUeNP4Y-j-EPOVlKaJT/view?usp=drive_link" },
+          { "name": "S5-Program Design and Analysis Solutions", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/file/d/15x2VlL5TpaitK4weWXEGIgvIhp8VqWQ2/view?usp=drive_link" },
+          { "name": "R5-Program Design and Analysis Review", "category": "R-Review", "chapter": "Chapter 5", "status": "Complete" },
+          { "name": "B6-Arrays and ArrayList Objects", "category": "B-book chapter", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/file/d/1Win12vKxo9Z9BKFrn0F4WiaE7FkciqKf/view?usp=drive_link" },
+          { "name": "C6-Arrays and ArrayList Objects Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/file/d/1bqlk9ogPyS0wrDZ8ajdUNnkcV2jIdlz1/view?usp=drive_link" },
+          { "name": "S6-Arrays and ArrayList Objects Solutions", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/file/d/1cm55jXNu89X8qLvweLh5LG8EYfOVSex8/view?usp=drive_link" },
+          { "name": "R6-Arrays and ArrayList Objects Review", "category": "R-Review", "chapter": "Chapter 6", "status": "Complete" },
+          { "name": "B7-Sorting and Searching", "category": "B-book chapter", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/17TX-11olLFbBUnWAn4DF63thGKCMkRAJ/view?usp=drive_link" },
+          { "name": "C7-Sorting and Searching Problems", "category": "C-coursework", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/1Yav7WKsxYwsgML2OcU7eSgvq2DgPWdqF/view?usp=drive_link" },
+          { "name": "S7-Sorting and Searching Solutions", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/1ALcv4xWuI1T1MNm6HRUz9XlcXrpR3DJU/view?usp=drive_link" },
+          { "name": "R7-Sorting and Searching Review", "category": "R-Review", "chapter": "Chapter 7", "status": "Complete" },
+          { "name": "B8-Recursion", "category": "B-book chapter", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/file/d/1yOIyILnkUl1LY2fiSK5htzWFJaf3nhdc/view?usp=drive_link" },
+          { "name": "C8-Recursion Problems", "category": "C-coursework", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/file/d/1hR7GDacFxq8AyQ2GrApWlTnOO8qSP1M4/view?usp=drive_link" },
+          { "name": "S8-Recursion Solutions", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/file/d/1itITf4Hw5EOzZ6p4L9Qj6e-Y9230rYVk/view?usp=drive_link" },
+          { "name": "R8-Recursion Review", "category": "R-Review", "chapter": "Chapter 8", "status": "Complete" },
+          { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/1GkHWr8KLUQUyw9T6busGMJ9Sz6G0wMnI/view?usp=drive_link" },
+          { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/16Mc0-B1fHWld4CyauREV4XN7_7KFDu0w/view?usp=drive_link" },
+          { "name": "M1R-Full Mock Test 1 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Complete" },
+          { "name": "M2T-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/1yTomGBWttZOM-gMwhQcpKZFWXOIpZsYi/view?usp=drive_link" },
+          { "name": "M2S-Full Mock Test 2 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/1RcqtkQGllTzNvwAFj97oL9jOsYuASBjt/view?usp=drive_link" },
+          { "name": "M2R-Full Mock Test 2 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Complete" }
+    ]
+  };
+
+  renderSocialLinks();
+  renderRoadmap(course);
+  setUpRoadmapViewSwitch(course);
+</script>
+</body>
+</html>

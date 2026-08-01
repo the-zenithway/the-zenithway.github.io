@@ -85,6 +85,7 @@ const RESOURCES_KO = {
   "ap-chem-self-study-desc": "AP Chemistry를 위한 Zenith의 자기주도 학습 과정입니다. 로그인 없이 누구나 이용할 수 있습니다.",
   "ap-chem-barrons-desc": "AP Chemistry 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
   "ap-physics-barrons-desc": "AP Physics C 커리큘럼(Mechanics, Electricity & Magnetism) 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
+  "ap-csa-self-study-desc": "AP Computer Science A를 위한 Zenith의 자기주도 학습 과정입니다. 로그인 없이 누구나 이용할 수 있습니다.",
   "ap-csa-barrons-desc": "AP Computer Science A 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
   "ap-econ-barrons-desc": "AP Macroeconomics와 AP Microeconomics 커리큘럼을 모두 다루는 통합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",
   "ap-englang-barrons-desc": "AP English Language and Composition 커리큘럼 전체를 다루는 종합 자기주도 학습서로, 복습 콘텐츠와 모의고사가 포함되어 있습니다.",

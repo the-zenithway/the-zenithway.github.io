@@ -954,6 +954,13 @@ function courseIconHtml(icon) {
       '<path d="M18 24c3-3 6-3 8 0M38 47c3 3 6 3 8 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>' +
     '</svg>';
   }
+  if (icon === "computer-science") {
+    return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+      '<path d="M22 20L9 32l13 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M42 20l13 12-13 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M37 14L27 50" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity=".85"/>' +
+    '</svg>';
+  }
   return '<svg viewBox="0 0 64 64" aria-hidden="true">' +
     '<path d="M8 32H56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".72"/>' +
     '<path d="M32 58V8M32 8l-6 8M32 8l6 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".72"/>' +

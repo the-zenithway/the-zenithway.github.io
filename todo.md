@@ -34,7 +34,7 @@ and do things for the greater good?
 ## 4. Admin
 - [ ] philosophy update
 - [ ] Create discord community 
-- [ ] AP Physics self study track, AP CS A self study track
+- [ ] AP Physics self study track
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
   - [ ] Study-technique deep dives
   - [ ] Subject-specific pitfall posts (e.g. IVT vs MVT vs Rolle's, straight from real cheat sheet entries)

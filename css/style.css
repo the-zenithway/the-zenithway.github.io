@@ -820,6 +820,10 @@ body.portal-body {
   background: linear-gradient(145deg, #7556A8, #473369);
 }
 
+.course-app-icon--computer-science {
+  background: linear-gradient(145deg, #F59E0B, #B45309 55%, #7C2D12);
+}
+
 .course-app:hover .course-app-icon {
   transform: translateY(-3px) scale(1.025);
   filter: brightness(1.08);
