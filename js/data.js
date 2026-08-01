@@ -289,7 +289,7 @@ const STUDENTS = [
             "category": "I-information",
             "chapter": "Chapter 0",
             "status": "Complete",
-            "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk"
+            "url": "https://drive.google.com/file/d/1MLTREWcpQamtSlzuSFc_uui6l1q7za1X/view?usp=drivesdk"
           },
           {
             "name": "L1-Atomic Structure and Properties (Khan Academy)",
@@ -1388,7 +1388,7 @@ const STUDENTS = [
           { "name": "AP Chemistry Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk" },
           { "name": "AP Chemistry Exam Description", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1IgyUxWqb9RIGjyUJBWrVqJothtbIFg9f/view?usp=drivesdk" },
           { "name": "AP Chemistry Reference Sheet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Qx0IuMXWYIp92jTrBya9RzcCM5-cYO5P/view?usp=drivesdk" },
-          { "name": "AP Chemistry Barron's Book", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
+          { "name": "AP Chemistry Barron's Book", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1MLTREWcpQamtSlzuSFc_uui6l1q7za1X/view?usp=drivesdk" },
           { "name": "L1-Atomic Structure and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties" },
           { "name": "N1-Atomic Structure and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Complete" },
           { "name": "C1-Atomic Structure and Properties Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk" },
@@ -1608,7 +1608,7 @@ const STUDENTS = [
             "category": "I-information",
             "chapter": "Chapter 0",
             "status": "Complete",
-            "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk"
+            "url": "https://drive.google.com/file/d/1MLTREWcpQamtSlzuSFc_uui6l1q7za1X/view?usp=drivesdk"
           },
           {
             "name": "L1-Atomic Structure and Properties (Khan Academy)",
@@ -2375,7 +2375,7 @@ const STUDENTS = [
           { "name": "AP Chemistry Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Locked", "url": "https://drive.google.com/file/d/16p5WTtJaiHasEEFuOHPe6C3-PT65EXrV/view?usp=drivesdk" },
           { "name": "AP Chemistry Exam Description", "category": "I-information", "chapter": "Chapter 0", "status": "Locked", "url": "https://drive.google.com/file/d/1IgyUxWqb9RIGjyUJBWrVqJothtbIFg9f/view?usp=drivesdk" },
           { "name": "AP Chemistry Reference Sheet", "category": "I-information", "chapter": "Chapter 0", "status": "Locked", "url": "https://drive.google.com/file/d/1Qx0IuMXWYIp92jTrBya9RzcCM5-cYO5P/view?usp=drivesdk" },
-          { "name": "AP Chemistry Barron's Book", "category": "I-information", "chapter": "Chapter 0", "status": "Locked", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
+          { "name": "AP Chemistry Barron's Book", "category": "I-information", "chapter": "Chapter 0", "status": "Locked", "url": "https://drive.google.com/file/d/1MLTREWcpQamtSlzuSFc_uui6l1q7za1X/view?usp=drivesdk" },
           { "name": "L1-Atomic Structure and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties" },
           { "name": "N1-Atomic Structure and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Locked" },
           { "name": "C1-Atomic Structure and Properties Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk" },
