@@ -14,11 +14,15 @@ function extractBlogPosts(sourceText) {
 
 // resources.html has no per-item ids or a data file backing it — each
 // resource is just `<a href="..." class="resource-item"><h3>Title</h3>...`
-// written by hand. Regex-extract {href, title} pairs directly out of the
-// markup rather than adding a data file just for this.
+// (top-level groups) or `<h4>Title</h4>` (items nested inside a
+// `.resource-subgroup`, e.g. "AP CS A" under "AP") written by hand. Regex-
+// extract {href, title} pairs directly out of the markup rather than adding
+// a data file just for this — match either heading level, since both are
+// used in practice (confirmed: roughly half of all resource-items site-wide
+// are <h4>, not <h3>).
 function extractResourceItems(html) {
   const items = [];
-  const re = /<a\s+href="([^"]+)"[^>]*class="resource-item"[^>]*>\s*<h3>([\s\S]*?)<\/h3>/g;
+  const re = /<a\s+href="([^"]+)"[^>]*class="resource-item"[^>]*>\s*<h[34]>([\s\S]*?)<\/h[34]>/g;
   let match;
   while ((match = re.exec(html))) {
     const title = match[2].replace(/<[^>]+>/g, "").trim();
