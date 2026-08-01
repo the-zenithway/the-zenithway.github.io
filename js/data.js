@@ -2468,12 +2468,6 @@ const STUDENTS = [
         ]
       }
     ]
-  },
-  {
-    "username": "email-test",
-    "password": "password",
-    "name": "password test",
-    "email": "kyjvariable@gmail.com"
   }
 ];
 
