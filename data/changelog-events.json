@@ -210,5 +210,261 @@
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-01T05:27:27.069Z"
     }
+  ],
+  "hamin": [
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (L1-Atomic Structure and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (N1-Atomic Structure and Properties Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (C1-Atomic Structure and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (S1-Atomic Structure and Properties Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (S2-Molecular and Ionic Compound Structure and Properties Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (N3-Intermolecular Forces and Properties Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (S3-Intermolecular Forces and Properties Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (N4-Chemical Reactions Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (S4-Chemical Reactions Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (N5-Kinetics Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (S5-Kinetics Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (N6-Thermodynamics Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (C6-Thermodynamics Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (S6-Thermodynamics Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (L7-Equilibrium (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (N7-Equilibrium Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (C7-Equilibrium Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (S7-Equilibrium Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 8 (L8-Acids and Bases (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 8 (N8-Acids and Bases Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-01T08:42:05.338Z"
+    }
+  ],
+  "davidheo": [
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (N3-Intermolecular Forces and Properties Notes Submission) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-02T12:58:19.496Z"
+    }
   ]
 }

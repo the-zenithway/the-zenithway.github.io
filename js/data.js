@@ -1700,20 +1700,20 @@ const STUDENTS = [
             "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Optional-Reading",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties"
           },
           {
             "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 2",
-            "status": "Unlocked"
+            "status": "Optional-Reading"
           },
           {
             "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Optional-Reading",
             "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk"
           },
           {
@@ -1734,20 +1734,20 @@ const STUDENTS = [
             "name": "L3-Intermolecular Forces and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Optional-Reading",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties"
           },
           {
             "name": "N3-Intermolecular Forces and Properties Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 3",
-            "status": "Unlocked"
+            "status": "Optional-Reading"
           },
           {
             "name": "C3-Intermolecular Forces and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Optional-Reading",
             "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk"
           },
           {
