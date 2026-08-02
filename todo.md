@@ -8,6 +8,8 @@
   - [ ] Submission + submission log update + systematic grading
   - [ ] Feedback + cheat sheet
   - [ ] way to create scheduled messaged for students especially when theres an event 
+- [ ] Fully automating above workflow
+- [ ] instructions for the submission process, e.g. the template 
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
