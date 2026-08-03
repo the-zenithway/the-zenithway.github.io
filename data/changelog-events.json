@@ -426,6 +426,13 @@
   "davidheo": [
     {
       "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-03T10:30:39.756Z"
+    },
+    {
+      "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked optional reading",
       "url": "roadmap.html?course=ap-chemistry",
