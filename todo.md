@@ -10,6 +10,7 @@
   - [ ] way to create scheduled messaged for students especially when theres an event 
 - [ ] Fully automating above workflow
 - [ ] instructions for the submission process, e.g. the template 
+- [ ] more ways to submit, e.g. claude can see the picture or file immediately and it could also be like pdf, word
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
