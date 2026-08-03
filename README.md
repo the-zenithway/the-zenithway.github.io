@@ -56,7 +56,10 @@ zenith-website/
 │   └── app.js          Auth, course/enrollment logic, and every page renderer
 │
 ├── data/
-│   └── submissions-log.json   Compiled log of Google Form submissions (see automation/)
+│   ├── submissions-log.json    Compiled log of Google Form submissions (see automation/)
+│   ├── calculus-t-bank.json     Calc BC T1-T10 problems + answer keys, for grading — see CLAUDE.md
+│   ├── chemistry-t-bank.json    Chem T1-T10 problems + answer keys + explanations, for grading
+│   └── calculus-c-bank.json / chemistry-c-bank.json   C-chapter banks — placeholders, not yet built
 │
 ├── automation/
 │   ├── README.md               How the submission compiler works

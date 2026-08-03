@@ -1,0 +1,3972 @@
+{
+  "1": {
+    "title": "Atomic Structure and Properties",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "Which observation provides the strongest evidence that atomic emission spectra are quantized?",
+        "choices_tex": [
+          "Each element produces discrete lines at characteristic wavelengths.",
+          "All heated solids glow continuously.",
+          "Light travels at the same speed in vacuum.",
+          "Electrons have negative charge."
+        ],
+        "correct": "A",
+        "explanation_tex": "C1 method connection (close parallel): Discrete lines correspond to fixed energy differences between allowed electronic states."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "Which electron in a neutral atom experiences the greatest effective nuclear charge?",
+        "choices_tex": [
+          "An outer electron shielded by many core shells",
+          "A 1s electron close to the nucleus",
+          "An electron in a very diffuse orbital",
+          "An electron removed during ionization"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): A 1s electron is closest to the nucleus and is shielded least."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "Why is the first ionization energy of Mg greater than that of Na?",
+        "choices_tex": [
+          "Mg has one more occupied shell.",
+          "Mg has a greater effective nuclear charge in the same principal shell.",
+          "Na has a filled valence shell.",
+          "Mg has a larger atomic radius."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Across a period, increasing nuclear charge raises effective nuclear charge and ionization energy."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "Which species has the smallest radius?",
+        "choices_tex": [
+          "$\\text{O}^{2-}$",
+          "$\\text{F}^{-}$",
+          "$\\text{Na}^{+}$",
+          "$\\text{Mg}^{2+}$"
+        ],
+        "correct": "D",
+        "explanation_tex": "C1 method connection (close parallel): The species are isoelectronic; $\\text{Mg}^{2+}$ has the greatest nuclear charge and pulls the electrons closest."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "A large jump between the second and third ionization energies most strongly indicates that the atom has",
+        "choices_tex": [
+          "one valence electron",
+          "two valence electrons",
+          "three occupied shells",
+          "a half-filled p subshell"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): After two valence electrons are removed, the third would be a core electron."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "In a photoelectron spectrum, a peak farther left at higher binding energy represents electrons that are",
+        "choices_tex": [
+          "farther from the nucleus",
+          "more strongly attracted to the nucleus",
+          "in a higher principal shell",
+          "moving with lower frequency"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Greater binding energy means stronger nuclear attraction."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Which change generally occurs from left to right across Period 3?",
+        "choices_tex": [
+          "Atomic radius increases.",
+          "Electronegativity decreases.",
+          "Effective nuclear charge increases.",
+          "The number of occupied shells increases."
+        ],
+        "correct": "C",
+        "explanation_tex": "C1 method connection (close parallel): Proton number increases while shielding changes little, so effective nuclear charge increases."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "The wavelength of a photon increases. What happens to its energy?",
+        "choices_tex": [
+          "It increases linearly.",
+          "It decreases because E = hc/$\\lambda$.",
+          "It remains constant.",
+          "It becomes zero."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Photon energy is inversely proportional to wavelength."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Which statement about an orbital is correct?",
+        "choices_tex": [
+          "It is a fixed circular path.",
+          "It describes a probability distribution for an electron.",
+          "It can contain any number of electrons.",
+          "It has no characteristic energy."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): An orbital is a wave-mechanical probability distribution and holds at most two electrons."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Why is the radius of $\\text{Na}^{+}$ smaller than the radius of Na?",
+        "choices_tex": [
+          "$\\text{Na}^{+}$ has gained a proton.",
+          "$\\text{Na}^{+}$ has lost its entire n=3 valence shell.",
+          "$\\text{Na}^{+}$ has more electron-electron repulsion.",
+          "$\\text{Na}^{+}$ has a lower effective nuclear charge."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Formation of $\\text{Na}^{+}$ removes the outer 3s electron and occupied shell."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "What is the energy of a photon with wavelength 486 nm?",
+        "choices_tex": [
+          "$0.20 \\times 10^{-18}$ J",
+          "$0.41 \\times 10^{-18}$ J",
+          "$0.82 \\times 10^{-18}$ J",
+          "$0.20 \\times 10^{-15}$ J"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): E = hc/$\\lambda$ = $0.41 \\times 10^{-18}$ J."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "An atom has mass number 35 and atomic number 17. How many neutrons does it contain?",
+        "choices_tex": [
+          "17",
+          "18",
+          "35",
+          "52"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Neutrons = mass number - atomic number = 18."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "Which ground-state configuration is correct for P?",
+        "choices_tex": [
+          "$1s^{2}\\,2s^{2}\\,2p^{6}\\,3s^{2}\\,3p^{3}$",
+          "$1s^{2}\\,2s^{2}\\,2p^{6}\\,3s^{2}\\,3p^{5}$",
+          "$1s^{2}\\,2s^{2}\\,2p^{6}\\,3s^{1}\\,3p^{4}$",
+          "$1s^{2}\\,2s^{2}\\,2p^{6}\\,3s^{2}\\,3d^{3}$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C1 method connection (close parallel): Fill orbitals in Aufbau order with the correct electron count."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "Light has frequency $6.00 \\times 10^{14}$ s$^{-1}$. What is its wavelength?",
+        "choices_tex": [
+          "$0.25 \\times 10^{-6}$ m",
+          "$0.50 \\times 10^{-6}$ m",
+          "$2.00 \\times 10^{6}$ m",
+          "$1.00 \\times 10^{-6}$ m"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Use $\\lambda$ = c/frequency."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "How many unpaired electrons are in a ground-state N atom?",
+        "choices_tex": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correct": "C",
+        "explanation_tex": "C1 method connection (close parallel): Nitrogen has $2p^{3}$: three unpaired electrons."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "What is the energy of a photon with wavelength 656 nm?",
+        "choices_tex": [
+          "$0.15 \\times 10^{-18}$ J",
+          "$0.30 \\times 10^{-18}$ J",
+          "$0.61 \\times 10^{-18}$ J",
+          "$0.20 \\times 10^{-15}$ J"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): E = hc/$\\lambda$ = $0.30 \\times 10^{-18}$ J."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "An atom has mass number 81 and atomic number 35. How many neutrons does it contain?",
+        "choices_tex": [
+          "35",
+          "46",
+          "81",
+          "116"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Neutrons = mass number - atomic number = 46."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "Which ground-state configuration is correct for Ca?",
+        "choices_tex": [
+          "$[\\text{Ar}]\\,4s^{2}$",
+          "$[\\text{Ar}]\\,3d^{2}$",
+          "$[\\text{Ne}]\\,3s^{2}$",
+          "$[\\text{Ar}]\\,4p^{2}$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C1 method connection (close parallel): Fill orbitals in Aufbau order with the correct electron count."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "Light has frequency $7.50 \\times 10^{14}$ s$^{-1}$. What is its wavelength?",
+        "choices_tex": [
+          "$0.20 \\times 10^{-6}$ m",
+          "$0.40 \\times 10^{-6}$ m",
+          "$2.50 \\times 10^{6}$ m",
+          "$0.80 \\times 10^{-6}$ m"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Use $\\lambda$ = c/frequency."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "How many unpaired electrons are in a ground-state O atom?",
+        "choices_tex": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (close parallel): Oxygen has $2p^{4}$: two unpaired electrons."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"Which observation provides the strongest evidence that atomic emission spectra are quantized?\" with \"Each element produces discrete lines at characteristic wavelengths..\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Discrete lines correspond to fixed energy differences between allowed electronic states.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C1 method connection (close parallel): Discrete lines correspond to fixed energy differences between allowed electronic states."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"Which electron in a neutral atom experiences the greatest effective nuclear charge?\" with \"A 1s electron close to the nucleus.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "A 1s electron is closest to the nucleus and is shielded least."
+        ],
+        "correct": "D",
+        "explanation_tex": "C1 method connection (reasoning twist): A 1s electron is closest to the nucleus and is shielded least."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"Why is the first ionization energy of Mg greater than that of Na?\" with \"Mg has a greater effective nuclear charge in the same principal shell..\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Across a period, increasing nuclear charge raises effective nuclear charge and ionization energy.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C1 method connection (reasoning twist): Across a period, increasing nuclear charge raises effective nuclear charge and ionization energy."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"Which species has the smallest radius?\" with \"$\\text{Mg}^{2+}$.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "The species are isoelectronic; $\\text{Mg}^{2+}$ has the greatest nuclear charge and pulls the electrons closest.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (reasoning twist): The species are isoelectronic; $\\text{Mg}^{2+}$ has the greatest nuclear charge and pulls the electrons closest."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"A large jump between the second and third ionization energies most strongly indicates that the atom has\" with \"two valence electrons.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "After two valence electrons are removed, the third would be a core electron.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C1 method connection (reasoning twist): After two valence electrons are removed, the third would be a core electron."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"In a photoelectron spectrum, a peak farther left at higher binding energy represents electrons that are\" with \"more strongly attracted to the nucleus.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Greater binding energy means stronger nuclear attraction."
+        ],
+        "correct": "D",
+        "explanation_tex": "C1 method connection (reasoning twist): Greater binding energy means stronger nuclear attraction."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Which change generally occurs from left to right across Period 3?\" with \"Effective nuclear charge increases..\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Proton number increases while shielding changes little, so effective nuclear charge increases.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C1 method connection (reasoning twist): Proton number increases while shielding changes little, so effective nuclear charge increases."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which observation provides the strongest evidence that atomic emission spectra are quantized?\" with \"Each element produces discrete lines at characteristic wavelengths..\" II. A student responds to \"Which electron in a neutral atom experiences the greatest effective nuclear charge?\" with \"A 1s electron close to the nucleus.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C1 method connection (transfer): Conclusion I: Discrete lines correspond to fixed energy differences between allowed electronic states. Conclusion II: A 1s electron is closest to the nucleus and is shielded least."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which species has the smallest radius?\" with \"$\\text{Mg}^{2+}$.\" II. A student responds to \"A large jump between the second and third ionization energies most strongly indicates that the atom has\" with \"two valence electrons.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C1 method connection (transfer): Conclusion I: The species are isoelectronic; $\\text{Mg}^{2+}$ has the greatest nuclear charge and pulls the electrons closest. Conclusion II: After two valence electrons are removed, the third would be a core electron."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"The wavelength of a photon increases. What happens to its energy?\" with \"It decreases because E = hc/$\\lambda$..\" II. A student responds to \"Which statement about an orbital is correct?\" with \"It describes a probability distribution for an electron..\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C1 method connection (transfer): Conclusion I: Photon energy is inversely proportional to wavelength. Conclusion II: An orbital is a wave-mechanical probability distribution and holds at most two electrons."
+      }
+    ],
+    "answer_key": {
+      "T1": "A",
+      "T2": "B",
+      "T3": "B",
+      "T4": "D",
+      "T5": "B",
+      "T6": "B",
+      "T7": "C",
+      "T8": "B",
+      "T9": "B",
+      "T10": "B",
+      "T11": "B",
+      "T12": "B",
+      "T13": "A",
+      "T14": "B",
+      "T15": "C",
+      "T16": "B",
+      "T17": "B",
+      "T18": "A",
+      "T19": "B",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "2": {
+    "title": "Molecular and Ionic Structure and Properties",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "Which solid is expected to conduct electricity when molten but not when solid?",
+        "choices_tex": [
+          "$\\text{Cu}$",
+          "$\\text{Na}\\text{Cl}$",
+          "$\\text{Si}\\text{O}_{2}$",
+          "solid CO2"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Molten NaCl has mobile ions; in the solid, ions are fixed in a lattice."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "Which bond is most polar?",
+        "choices_tex": [
+          "$C-H$",
+          "$N-H$",
+          "$O-H$",
+          "$F-H$"
+        ],
+        "correct": "D",
+        "explanation_tex": "C2 method connection (close parallel): The H-F electronegativity difference is the largest."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "Which molecule is nonpolar even though it contains polar bonds?",
+        "choices_tex": [
+          "$\\text{H}_{2}\\text{O}$",
+          "$\\text{N}\\text{H}_{3}$",
+          "$\\text{C}\\text{O}_{2}$",
+          "$\\text{S}\\text{O}_{2}$"
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (close parallel): Linear CO2 has equal, opposite bond dipoles that cancel."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "Which species has resonance structures with equivalent bonds?",
+        "choices_tex": [
+          "$\\text{C}\\text{H}_{4}$",
+          "$\\text{N}\\text{O}_3^{-}$",
+          "$\\text{N}\\text{H}_{3}$",
+          "$\\text{H}\\text{Cl}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Delocalization in nitrate makes the three N-O bonds equivalent."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "The molecular geometry of SF4 is",
+        "choices_tex": [
+          "tetrahedral",
+          "trigonal planar",
+          "seesaw",
+          "square planar"
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (close parallel): Five electron domains with one lone pair give a seesaw molecular geometry."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "Which substance is best described as a network covalent solid?",
+        "choices_tex": [
+          "$\\text{I}_{2}$",
+          "diamond",
+          "$\\text{K}\\text{Br}$",
+          "$\\text{Al}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Diamond consists of an extended covalent carbon network."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Compared with a single bond between the same atoms, a double bond is generally",
+        "choices_tex": [
+          "longer and weaker",
+          "shorter and stronger",
+          "longer and stronger",
+          "the same length and strength"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Greater bond order produces a shorter, stronger bond."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "Which hybridization is consistent with three electron domains?",
+        "choices_tex": [
+          "sp",
+          "sp2",
+          "sp3",
+          "sp3d"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Three electron domains correspond to trigonal-planar electron geometry and sp2 hybridization."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Which Lewis structure minimizes formal charges for CO?",
+        "choices_tex": [
+          "A triple bond with one lone pair on each atom",
+          "A single bond with three lone pairs on each atom",
+          "No bond between the atoms",
+          "A double bond with no lone pairs"
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): The triple-bond structure satisfies both octets and gives the best formal-charge arrangement."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Why does MgO have a higher melting point than NaCl?",
+        "choices_tex": [
+          "MgO is molecular.",
+          "$\\text{Mg}^{2+}$ and $\\text{O}^{2-}$ have larger charge magnitudes and stronger lattice attraction.",
+          "NaCl has covalent bonds.",
+          "MgO ions are larger."
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Coulombic attraction increases strongly with ionic charge magnitude."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "What is the molecular geometry of PCl3?",
+        "choices_tex": [
+          "trigonal pyramidal",
+          "trigonal planar",
+          "tetrahedral",
+          "linear"
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): Count bonding domains and lone pairs with VSEPR."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "What is the formal charge on the central atom in the best Lewis structure of $\\text{N}\\text{H}_4^{+}$?",
+        "choices_tex": [
+          "-1",
+          "0",
+          "+1",
+          "+2"
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (close parallel): Formal charge = valence - nonbonding - one-half bonding electrons."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "Which orbital hybridization fits the central atom in BF3?",
+        "choices_tex": [
+          "sp",
+          "sp2",
+          "sp3",
+          "sp3d"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Three domains imply sp2; four domains imply sp3."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "Using Coulomb law proportionality, compare ions with charges +1 and -1 separated by 300 pm. What is |q1q2|/r in charge$^{2}$/pm?",
+        "choices_tex": [
+          "$0.17 \\times 10^{-2}$",
+          "$0.33 \\times 10^{-2}$",
+          "0.0133",
+          "$0.67 \\times 10^{-2}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Insert charge magnitudes and separation into |q1q2|/r."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "Which species has the greatest bond angle?",
+        "choices_tex": [
+          "$\\text{C}\\text{O}_{2}$",
+          "$\\text{B}\\text{F}_{3}$",
+          "$\\text{C}\\text{H}_{4}$",
+          "$\\text{N}\\text{H}_{3}$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): A linear species has a $180^\\circ$ bond angle."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "What is the molecular geometry of ClF3?",
+        "choices_tex": [
+          "T-shaped",
+          "trigonal planar",
+          "linear",
+          "seesaw"
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): Count bonding domains and lone pairs with VSEPR."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "What is the formal charge on the central atom in the best Lewis structure of $\\text{C}\\text{O}_{3}^{2-}$?",
+        "choices_tex": [
+          "-1",
+          "0",
+          "+1",
+          "+2"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Formal charge = valence - nonbonding - one-half bonding electrons."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "Which orbital hybridization fits the central atom in CH4?",
+        "choices_tex": [
+          "sp",
+          "sp2",
+          "sp3",
+          "sp3d"
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (close parallel): Three domains imply sp2; four domains imply sp3."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "Using Coulomb law proportionality, compare ions with charges +2 and -2 separated by 400 pm. What is |q1q2|/r in charge$^{2}$/pm?",
+        "choices_tex": [
+          "$0.50 \\times 10^{-2}$",
+          "0.01",
+          "$2.00 \\times 10^{-2}$",
+          "$0.25 \\times 10^{-2}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (close parallel): Insert charge magnitudes and separation into |q1q2|/r."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "Which species has the greatest bond angle?",
+        "choices_tex": [
+          "$\\text{Be}\\text{Cl}_{2}$",
+          "$\\text{S}\\text{O}_{2}$",
+          "$\\text{H}_{2}\\text{O}$",
+          "$\\text{N}\\text{H}_{3}$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): A linear species has a $180^\\circ$ bond angle."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"Which solid is expected to conduct electricity when molten but not when solid?\" with \"NaCl.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Molten NaCl has mobile ions; in the solid, ions are fixed in a lattice.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (close parallel): Molten NaCl has mobile ions; in the solid, ions are fixed in a lattice."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"Which bond is most polar?\" with \"F-H.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "The H-F electronegativity difference is the largest."
+        ],
+        "correct": "D",
+        "explanation_tex": "C2 method connection (reasoning twist): The H-F electronegativity difference is the largest."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"Which molecule is nonpolar even though it contains polar bonds?\" with \"CO2.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Linear CO2 has equal, opposite bond dipoles that cancel.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (reasoning twist): Linear CO2 has equal, opposite bond dipoles that cancel."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"Which species has resonance structures with equivalent bonds?\" with \"$\\text{N}\\text{O}_3^{-}$.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Delocalization in nitrate makes the three N-O bonds equivalent.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (reasoning twist): Delocalization in nitrate makes the three N-O bonds equivalent."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"The molecular geometry of SF4 is\" with \"seesaw.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Five electron domains with one lone pair give a seesaw molecular geometry.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C2 method connection (reasoning twist): Five electron domains with one lone pair give a seesaw molecular geometry."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"Which substance is best described as a network covalent solid?\" with \"diamond.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Diamond consists of an extended covalent carbon network."
+        ],
+        "correct": "D",
+        "explanation_tex": "C2 method connection (reasoning twist): Diamond consists of an extended covalent carbon network."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Compared with a single bond between the same atoms, a double bond is generally\" with \"shorter and stronger.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Greater bond order produces a shorter, stronger bond.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (reasoning twist): Greater bond order produces a shorter, stronger bond."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which solid is expected to conduct electricity when molten but not when solid?\" with \"NaCl.\" II. A student responds to \"Which bond is most polar?\" with \"F-H.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C2 method connection (transfer): Conclusion I: Molten NaCl has mobile ions; in the solid, ions are fixed in a lattice. Conclusion II: The H-F electronegativity difference is the largest."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which species has resonance structures with equivalent bonds?\" with \"$\\text{N}\\text{O}_3^{-}$.\" II. A student responds to \"The molecular geometry of SF4 is\" with \"seesaw.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C2 method connection (transfer): Conclusion I: Delocalization in nitrate makes the three N-O bonds equivalent. Conclusion II: Five electron domains with one lone pair give a seesaw molecular geometry."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which hybridization is consistent with three electron domains?\" with \"sp2.\" II. A student responds to \"Which Lewis structure minimizes formal charges for CO?\" with \"A triple bond with one lone pair on each atom.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C2 method connection (transfer): Conclusion I: Three electron domains correspond to trigonal-planar electron geometry and sp2 hybridization. Conclusion II: The triple-bond structure satisfies both octets and gives the best formal-charge arrangement."
+      }
+    ],
+    "answer_key": {
+      "T1": "B",
+      "T2": "D",
+      "T3": "C",
+      "T4": "B",
+      "T5": "C",
+      "T6": "B",
+      "T7": "B",
+      "T8": "B",
+      "T9": "A",
+      "T10": "B",
+      "T11": "A",
+      "T12": "C",
+      "T13": "B",
+      "T14": "B",
+      "T15": "A",
+      "T16": "A",
+      "T17": "B",
+      "T18": "C",
+      "T19": "B",
+      "T20": "A",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "3": {
+    "title": "Intermolecular Forces and Properties",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "Which substance has hydrogen bonding between its molecules?",
+        "choices_tex": [
+          "$\\text{C}\\text{H}_{3}\\text{O}\\text{C}\\text{H}_{3}$",
+          "$\\text{C}\\text{H}_{3}\\text{O}\\text{H}$",
+          "$\\text{C}\\text{H}_{4}$",
+          "$\\text{H}_{2}\\text{S}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): CH3OH contains an O-H bond and oxygen lone pairs."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "At the same temperature, which gas has the greatest average molecular speed?",
+        "choices_tex": [
+          "$\\text{He}$",
+          "$\\text{Ne}$",
+          "$\\text{Ar}$",
+          "$\\text{Kr}$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (close parallel): At equal temperature, lighter particles have greater rms speed."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "A real gas deviates most from ideal behavior at",
+        "choices_tex": [
+          "low pressure and high temperature",
+          "high pressure and low temperature",
+          "low pressure and low temperature only",
+          "high temperature at any pressure"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): High pressure emphasizes particle volume; low temperature emphasizes attractions."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "Why does I2 have a higher boiling point than Br2?",
+        "choices_tex": [
+          "I2 is ionic.",
+          "I2 has a larger, more polarizable electron cloud.",
+          "Br2 forms hydrogen bonds.",
+          "I-I bonds are broken during boiling."
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Greater polarizability strengthens London dispersion forces."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "During vaporization at constant pressure, added energy primarily",
+        "choices_tex": [
+          "raises temperature continuously",
+          "overcomes intermolecular attractions",
+          "breaks covalent bonds",
+          "decreases potential energy"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): During a phase change, energy raises potential energy by separating particles."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "Which liquid is expected to have the lowest vapor pressure at the same temperature?",
+        "choices_tex": [
+          "the one with strongest intermolecular forces",
+          "the one with weakest intermolecular forces",
+          "the one with smallest sample volume",
+          "the one with lowest molar mass in every case"
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (close parallel): Strong attractions reduce the fraction of molecules able to escape."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Which solution is expected to be most conductive?",
+        "choices_tex": [
+          "0.10 M glucose",
+          "0.10 M CH3OH",
+          "0.10 M NaCl",
+          "pure water"
+        ],
+        "correct": "C",
+        "explanation_tex": "C3 method connection (close parallel): NaCl is a strong electrolyte and dissociates into mobile ions."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "An ideal solution most closely follows Raoult law when its components have",
+        "choices_tex": [
+          "very different intermolecular attractions",
+          "similar intermolecular attractions",
+          "an acid-base reaction",
+          "negligible vapor pressure"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Similar A-A, B-B, and A-B attractions favor ideal behavior."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Surface tension is primarily a consequence of",
+        "choices_tex": [
+          "covalent bonds breaking at the surface",
+          "net inward intermolecular attractions on surface molecules",
+          "gravity acting on individual molecules",
+          "increased vapor pressure"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Surface molecules experience a net inward cohesive force."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Which change increases the solubility of most gases in water?",
+        "choices_tex": [
+          "raising temperature",
+          "lowering gas pressure",
+          "raising gas pressure",
+          "adding a nonvolatile solute"
+        ],
+        "correct": "C",
+        "explanation_tex": "C3 method connection (close parallel): Henry law predicts greater dissolved-gas concentration at higher partial pressure."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "1.2 mol of an ideal gas occupies 12 L at 300 K. What is its pressure?",
+        "choices_tex": [
+          "1.23 atm",
+          "2.46 atm",
+          "$0.82 \\times 10^{-2}$ atm",
+          "4.92 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Use P = nRT/V."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "A gas at 1.1 atm and 3.0 L is compressed at constant temperature to 1.5 L. Find the final pressure.",
+        "choices_tex": [
+          "3.3 atm",
+          "2.2 atm",
+          "0.733 atm",
+          "0.55 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Apply Boyle law, P1V1 = P2V2."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "What volume does 0.5 mol of an ideal gas occupy at 298 K and 1.00 atm?",
+        "choices_tex": [
+          "$1.82 \\times 10^{3}$ L",
+          "12.2 L",
+          "11.2 L",
+          "$0.14 \\times 10^{-3}$ L"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Use V = nRT/P."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "Which has the higher normal boiling point, CH3CH2OH or CH3OCH3?",
+        "choices_tex": [
+          "$\\text{C}\\text{H}_{3}\\text{C}\\text{H}_{2}\\text{O}\\text{H}$",
+          "$\\text{C}\\text{H}_{3}\\text{O}\\text{C}\\text{H}_{3}$",
+          "equal",
+          "cannot tell"
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (close parallel): Ethanol hydrogen-bonds; the ether cannot donate hydrogen bonds."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "A mixture contains 0.3 mol N2 and 0.7 mol O2 at total pressure 2.0 atm. Find the partial pressure of N2.",
+        "choices_tex": [
+          "2 atm",
+          "0.6 atm",
+          "0.3 atm",
+          "1.4 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): $P_{\\text{N}_{2}}$ = mole fraction times total pressure."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "0.85 mol of an ideal gas occupies 8.5 L at 350 K. What is its pressure?",
+        "choices_tex": [
+          "1.44 atm",
+          "2.87 atm",
+          "$0.82 \\times 10^{-2}$ atm",
+          "5.74 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Use P = nRT/V."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "A gas at 0.95 atm and 4.5 L is compressed at constant temperature to 2.0 L. Find the final pressure.",
+        "choices_tex": [
+          "4.27 atm",
+          "2.14 atm",
+          "0.475 atm",
+          "0.422 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Apply Boyle law, P1V1 = P2V2."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "What volume does 0.75 mol of an ideal gas occupy at 310 K and 1.00 atm?",
+        "choices_tex": [
+          "$2.83 \\times 10^{3}$ L",
+          "19.1 L",
+          "16.8 L",
+          "$0.20 \\times 10^{-3}$ L"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): Use V = nRT/P."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "Which has the higher normal boiling point, C6H14 or C4H10?",
+        "choices_tex": [
+          "$\\text{C}_{6}\\text{H}_{14}$",
+          "$\\text{C}_{4}\\text{H}_{10}$",
+          "equal",
+          "cannot tell"
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (close parallel): Hexane has the larger, more polarizable electron cloud."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "A mixture contains 0.45 mol N2 and 0.55 mol O2 at total pressure 1.6 atm. Find the partial pressure of N2.",
+        "choices_tex": [
+          "1.6 atm",
+          "0.72 atm",
+          "0.45 atm",
+          "0.88 atm"
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (close parallel): $P_{\\text{N}_{2}}$ = mole fraction times total pressure."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"Which substance has hydrogen bonding between its molecules?\" with \"CH3OH.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "CH3OH contains an O-H bond and oxygen lone pairs.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (close parallel): CH3OH contains an O-H bond and oxygen lone pairs."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"At the same temperature, which gas has the greatest average molecular speed?\" with \"He.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "At equal temperature, lighter particles have greater rms speed."
+        ],
+        "correct": "D",
+        "explanation_tex": "C3 method connection (reasoning twist): At equal temperature, lighter particles have greater rms speed."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"A real gas deviates most from ideal behavior at\" with \"high pressure and low temperature.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "High pressure emphasizes particle volume; low temperature emphasizes attractions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C3 method connection (reasoning twist): High pressure emphasizes particle volume; low temperature emphasizes attractions."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"Why does I2 have a higher boiling point than Br2?\" with \"I2 has a larger, more polarizable electron cloud..\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Greater polarizability strengthens London dispersion forces.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (reasoning twist): Greater polarizability strengthens London dispersion forces."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"During vaporization at constant pressure, added energy primarily\" with \"overcomes intermolecular attractions.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "During a phase change, energy raises potential energy by separating particles.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C3 method connection (reasoning twist): During a phase change, energy raises potential energy by separating particles."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"Which liquid is expected to have the lowest vapor pressure at the same temperature?\" with \"the one with strongest intermolecular forces.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Strong attractions reduce the fraction of molecules able to escape."
+        ],
+        "correct": "D",
+        "explanation_tex": "C3 method connection (reasoning twist): Strong attractions reduce the fraction of molecules able to escape."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Which solution is expected to be most conductive?\" with \"0.10 M NaCl.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "NaCl is a strong electrolyte and dissociates into mobile ions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C3 method connection (reasoning twist): NaCl is a strong electrolyte and dissociates into mobile ions."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which substance has hydrogen bonding between its molecules?\" with \"CH3OH.\" II. A student responds to \"At the same temperature, which gas has the greatest average molecular speed?\" with \"He.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C3 method connection (transfer): Conclusion I: CH3OH contains an O-H bond and oxygen lone pairs. Conclusion II: At equal temperature, lighter particles have greater rms speed."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Why does I2 have a higher boiling point than Br2?\" with \"I2 has a larger, more polarizable electron cloud..\" II. A student responds to \"During vaporization at constant pressure, added energy primarily\" with \"overcomes intermolecular attractions.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C3 method connection (transfer): Conclusion I: Greater polarizability strengthens London dispersion forces. Conclusion II: During a phase change, energy raises potential energy by separating particles."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"An ideal solution most closely follows Raoult law when its components have\" with \"similar intermolecular attractions.\" II. A student responds to \"Surface tension is primarily a consequence of\" with \"net inward intermolecular attractions on surface molecules.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C3 method connection (transfer): Conclusion I: Similar A-A, B-B, and A-B attractions favor ideal behavior. Conclusion II: Surface molecules experience a net inward cohesive force."
+      }
+    ],
+    "answer_key": {
+      "T1": "B",
+      "T2": "A",
+      "T3": "B",
+      "T4": "B",
+      "T5": "B",
+      "T6": "A",
+      "T7": "C",
+      "T8": "B",
+      "T9": "B",
+      "T10": "C",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "A",
+      "T15": "B",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "A",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "4": {
+    "title": "Chemical Reactions and Stoichiometry",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "Which observation most clearly indicates formation of a precipitate?",
+        "choices_tex": [
+          "The solution warms.",
+          "A previously clear mixture becomes cloudy and a solid settles.",
+          "The volume is additive.",
+          "The color becomes lighter after dilution."
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): A persistent insoluble solid is direct evidence of precipitation."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "In the net ionic equation for strong acid-strong base neutralization, the reacting species are",
+        "choices_tex": [
+          "$\\text{Na}^{+}$ and $\\text{Cl}^{-}$",
+          "$\\text{H}^{+}$ and $\\text{O}\\text{H}^{-}$",
+          "H2 and O2",
+          "acid molecules only"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Spectator ions cancel, leaving $\\text{H}^{+} + \\text{O}\\text{H}^{-} \\rightarrow \\text{H}_{2}\\text{O}$."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "Which species is oxidized in $\\text{Zn}\\,(s) + \\text{Cu}^{2+}\\,(aq) \\rightarrow \\text{Zn}^{2+}\\,(aq) + \\text{Cu}\\,(s)$?",
+        "choices_tex": [
+          "$\\text{Zn}\\,(s)$",
+          "$\\text{Cu}^{2+}$",
+          "$\\text{Zn}^{2+}$",
+          "$\\text{Cu}\\,(s)$"
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): Zn loses electrons, so it is oxidized."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "A limiting reactant is the reactant that",
+        "choices_tex": [
+          "has the smallest coefficient",
+          "is consumed first and limits product",
+          "has the smallest molar mass",
+          "is always present in lower concentration"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Stoichiometric amount, not coefficient or concentration alone, determines the limiting reactant."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "Which process is a physical change?",
+        "choices_tex": [
+          "combustion of methane",
+          "rusting iron",
+          "dissolving NaCl in water",
+          "decomposition of H2O2"
+        ],
+        "correct": "C",
+        "explanation_tex": "C4 method connection (close parallel): Dissolving separates existing ions without changing their identities."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "A strong electrolyte is characterized by",
+        "choices_tex": [
+          "complete or nearly complete ion formation in solution",
+          "zero conductivity",
+          "only molecular solute particles",
+          "insolubility in every solvent"
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): Strong electrolytes produce high concentrations of ions."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Which equation is balanced for combustion of propane?",
+        "choices_tex": [
+          "$\\text{C}_{3}\\text{H}_{8} + 3\\,\\text{O}_{2} \\rightarrow 3\\,\\text{C}\\text{O}_{2} + 4\\,\\text{H}_{2}\\text{O}$",
+          "$\\text{C}_{3}\\text{H}_{8} + 5\\,\\text{O}_{2} \\rightarrow 3\\,\\text{C}\\text{O}_{2} + 4\\,\\text{H}_{2}\\text{O}$",
+          "$2\\,\\text{C}_{3}\\text{H}_{8} + 5\\,\\text{O}_{2} \\rightarrow 6\\,\\text{C}\\text{O}_{2} + 8\\,\\text{H}_{2}\\text{O}$",
+          "$\\text{C}_{3}\\text{H}_{8} + \\text{O}_{2} \\rightarrow \\text{C}\\text{O}_{2} + \\text{H}_{2}\\text{O}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Three carbons give 3CO2, eight hydrogens give 4H2O, requiring 5O2."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "In AgNO3(aq) + NaCl(aq), the spectator ions are",
+        "choices_tex": [
+          "$\\text{Ag}^{+}$ and $\\text{Cl}^{-}$",
+          "$\\text{Na}^{+}$ and $\\text{N}\\text{O}_3^{-}$",
+          "$\\text{Ag}^{+}$ and $\\text{N}\\text{O}_3^{-}$",
+          "$\\text{Na}^{+}$ and $\\text{Cl}^{-}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): AgCl precipitates; $\\text{Na}^{+}$ and $\\text{N}\\text{O}_3^{-}$ remain unchanged."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Disproportionation occurs when one species",
+        "choices_tex": [
+          "is both oxidized and reduced",
+          "acts only as a spectator",
+          "forms a precipitate",
+          "changes phase without changing oxidation state"
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): The same reactant element moves to both higher and lower oxidation states."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Percent yield below 100% can result from",
+        "choices_tex": [
+          "perfect product recovery",
+          "product loss during transfer",
+          "using exact stoichiometric coefficients",
+          "conservation of mass"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Mechanical loss reduces actual yield relative to theoretical yield."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "How many moles are in 12.0 g of Mg (24.3 g/mol)?",
+        "choices_tex": [
+          "2.02 mol",
+          "0.494 mol",
+          "1 mol",
+          "292 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Moles = mass / molar mass."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "What volume of 0.25 M solution contains 0.05 mol solute?",
+        "choices_tex": [
+          "5 L",
+          "0.2 L",
+          "200 L",
+          "0.0125 L"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): V = n/M."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "For $2\\,\\text{H}_{2} + \\text{O}_{2} \\rightarrow 2\\,\\text{H}_{2}\\text{O}$, how many moles H2O form from 3.0 mol H2 with excess O2?",
+        "choices_tex": [
+          "6 mol",
+          "3 mol",
+          "4.5 mol",
+          "1.5 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): The H2:H2O mole ratio is 1:1."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "What precipitate forms when aqueous BaCl2 and Na2SO4 are mixed?",
+        "choices_tex": [
+          "$\\text{Ba}\\text{S}\\text{O}_{4}$",
+          "$\\text{Na}\\text{Cl}$",
+          "$\\text{Ba}\\text{Cl}_{2}$",
+          "none"
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): Apply solubility rules to the exchanged ion pairs."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "A theoretical yield is 8.0 g and actual yield is 6.8 g. What is percent yield?",
+        "choices_tex": [
+          "15 %",
+          "85 %",
+          "68 %",
+          "118 %"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Percent yield = actual/theoretical x 100."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "How many moles are in 18.0 g of H2O (18.0 g/mol)?",
+        "choices_tex": [
+          "0.5 mol",
+          "1 mol",
+          "2 mol",
+          "324 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Moles = mass / molar mass."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "What volume of 0.4 M solution contains 0.12 mol solute?",
+        "choices_tex": [
+          "3.33 L",
+          "0.3 L",
+          "300 L",
+          "0.048 L"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): V = n/M."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "For $2\\,\\text{H}_{2} + \\text{O}_{2} \\rightarrow 2\\,\\text{H}_{2}\\text{O}$, how many moles H2O form from 5.0 mol H2 with excess O2?",
+        "choices_tex": [
+          "10 mol",
+          "5 mol",
+          "7.5 mol",
+          "2.5 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): The H2:H2O mole ratio is 1:1."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "What precipitate forms when aqueous AgNO3 and KBr are mixed?",
+        "choices_tex": [
+          "$\\text{Ag}\\text{Br}$",
+          "$\\text{K}\\text{N}\\text{O}_{3}$",
+          "$\\text{Ag}\\text{N}\\text{O}_{3}$",
+          "none"
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): Apply solubility rules to the exchanged ion pairs."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "A theoretical yield is 12.5 g and actual yield is 10.0 g. What is percent yield?",
+        "choices_tex": [
+          "20 %",
+          "80 %",
+          "100 %",
+          "125 %"
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (close parallel): Percent yield = actual/theoretical x 100."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"Which observation most clearly indicates formation of a precipitate?\" with \"A previously clear mixture becomes cloudy and a solid settles..\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "A persistent insoluble solid is direct evidence of precipitation.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (close parallel): A persistent insoluble solid is direct evidence of precipitation."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"In the net ionic equation for strong acid-strong base neutralization, the reacting species are\" with \"$\\text{H}^{+}$ and $\\text{O}\\text{H}^{-}$.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Spectator ions cancel, leaving $\\text{H}^{+} + \\text{O}\\text{H}^{-} \\rightarrow \\text{H}_{2}\\text{O}$."
+        ],
+        "correct": "D",
+        "explanation_tex": "C4 method connection (reasoning twist): Spectator ions cancel, leaving $\\text{H}^{+} + \\text{O}\\text{H}^{-} \\rightarrow \\text{H}_{2}\\text{O}$."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"Which species is oxidized in $\\text{Zn}\\,(s) + \\text{Cu}^{2+}\\,(aq) \\rightarrow \\text{Zn}^{2+}\\,(aq) +$ Cu(s)?\" with \"Zn(s).\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Zn loses electrons, so it is oxidized.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C4 method connection (reasoning twist): Zn loses electrons, so it is oxidized."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"A limiting reactant is the reactant that\" with \"is consumed first and limits product.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Stoichiometric amount, not coefficient or concentration alone, determines the limiting reactant.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (reasoning twist): Stoichiometric amount, not coefficient or concentration alone, determines the limiting reactant."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"Which process is a physical change?\" with \"dissolving NaCl in water.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Dissolving separates existing ions without changing their identities.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C4 method connection (reasoning twist): Dissolving separates existing ions without changing their identities."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"A strong electrolyte is characterized by\" with \"complete or nearly complete ion formation in solution.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Strong electrolytes produce high concentrations of ions."
+        ],
+        "correct": "D",
+        "explanation_tex": "C4 method connection (reasoning twist): Strong electrolytes produce high concentrations of ions."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Which equation is balanced for combustion of propane?\" with \"C3H8 $+ 5\\,\\text{O}_{2} \\rightarrow 3\\,\\text{C}\\text{O}_{2} +$ 4H2O.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Three carbons give 3CO2, eight hydrogens give 4H2O, requiring 5O2.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C4 method connection (reasoning twist): Three carbons give 3CO2, eight hydrogens give 4H2O, requiring 5O2."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which observation most clearly indicates formation of a precipitate?\" with \"A previously clear mixture becomes cloudy and a solid settles..\" II. A student responds to \"In the net ionic equation for strong acid-strong base neutralization, the reacting species are\" with \"$\\text{H}^{+}$ and $\\text{O}\\text{H}^{-}$.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C4 method connection (transfer): Conclusion I: A persistent insoluble solid is direct evidence of precipitation. Conclusion II: Spectator ions cancel, leaving $\\text{H}^{+} + \\text{O}\\text{H}^{-} \\rightarrow \\text{H}_{2}\\text{O}$."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"A limiting reactant is the reactant that\" with \"is consumed first and limits product.\" II. A student responds to \"Which process is a physical change?\" with \"dissolving NaCl in water.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C4 method connection (transfer): Conclusion I: Stoichiometric amount, not coefficient or concentration alone, determines the limiting reactant. Conclusion II: Dissolving separates existing ions without changing their identities."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"In AgNO3(aq) + NaCl(aq), the spectator ions are\" with \"$\\text{Na}^{+}$ and $\\text{N}\\text{O}_3^{-}$.\" II. A student responds to \"Disproportionation occurs when one species\" with \"is both oxidized and reduced.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C4 method connection (transfer): Conclusion I: AgCl precipitates; $\\text{Na}^{+}$ and $\\text{N}\\text{O}_3^{-}$ remain unchanged. Conclusion II: The same reactant element moves to both higher and lower oxidation states."
+      }
+    ],
+    "answer_key": {
+      "T1": "B",
+      "T2": "B",
+      "T3": "A",
+      "T4": "B",
+      "T5": "C",
+      "T6": "A",
+      "T7": "B",
+      "T8": "B",
+      "T9": "A",
+      "T10": "B",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "A",
+      "T15": "B",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "A",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "5": {
+    "title": "Kinetics",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "A catalyst increases reaction rate by",
+        "choices_tex": [
+          "increasing $\\Delta H$",
+          "lowering the activation energy through an alternate pathway",
+          "changing the equilibrium constant",
+          "increasing reactant concentration"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): A catalyst changes mechanism and lowers activation energy without changing thermodynamics."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "For rate = k$[A]^{2}[B]$, doubling A while holding B constant changes rate by a factor of",
+        "choices_tex": [
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Second order in A gives $2^{2}$ = 4."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "The slow step in a mechanism is important because it often",
+        "choices_tex": [
+          "determines the overall rate law",
+          "has zero activation energy",
+          "must be the last step",
+          "changes the equilibrium constant"
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (close parallel): The highest kinetic bottleneck controls the observed rate."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "At higher temperature, a reaction is faster primarily because",
+        "choices_tex": [
+          "all collisions become effective",
+          "a larger fraction of molecules exceeds Ea",
+          "Ea increases",
+          "the rate constant decreases"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): The Maxwell-Boltzmann distribution places more molecules above Ea."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "A first-order integrated rate plot is linear for",
+        "choices_tex": [
+          "$[A]$ versus time",
+          "1/$[A]$ versus time",
+          "ln$[A]$ versus time",
+          "rate versus $[A]^{2}$"
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (close parallel): For first order, ln$[A]$ = -kt + ln$[A]$0."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "The units of a second-order rate constant are",
+        "choices_tex": [
+          "s$^{-1}$",
+          "M s$^{-1}$",
+          "M$^{-1}$ s$^{-1}$",
+          "M$^{-2}$ s$^{-1}$"
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (close parallel): Rate units M/s divided by concentration squared gives M$^{-1}$ s$^{-1}$."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "An intermediate is a species that",
+        "choices_tex": [
+          "appears in the overall equation",
+          "is produced in one step and consumed in another",
+          "is present before the reaction and unchanged after",
+          "must be a catalyst"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Intermediates cancel when elementary steps are summed."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "Which change does not alter the rate constant k?",
+        "choices_tex": [
+          "changing temperature",
+          "adding a catalyst",
+          "changing reactant concentration",
+          "changing reaction pathway"
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (close parallel): At fixed temperature and mechanism, concentration changes rate but not k."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "For a zero-order reaction, the half-life",
+        "choices_tex": [
+          "is constant",
+          "depends on initial concentration",
+          "equals 0.693/k",
+          "increases exponentially"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): For zero order, t1/2 = $[A]$0/(2k)."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "A successful collision requires correct orientation and",
+        "choices_tex": [
+          "energy at least equal to Ea",
+          "zero kinetic energy",
+          "formation of equilibrium",
+          "a catalyst molecule in every collision"
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (close parallel): Collision theory requires sufficient energy and suitable orientation."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "For rate = k$[A]^{2}$, $[A]$ changes from 0.1 M to 0.2 M. By what factor does rate change?",
+        "choices_tex": [
+          "8",
+          "4",
+          "0.5",
+          "2"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Square the concentration ratio."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "A first-order reaction has k = 0.035 min$^{-1}$. Find its half-life.",
+        "choices_tex": [
+          "0.0243 min",
+          "19.8 min",
+          "39.6 min",
+          "28.6 min"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): For first order, t1/2 = 0.693/k."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "For rate = k$[A][B]$, rate is 0.012 M/s when $[A]$ = 0.2 M and $[B]$ = 0.3 M. Find k.",
+        "choices_tex": [
+          "0.024 M$^{-1}$ s$^{-1}$",
+          "0.2 M$^{-1}$ s$^{-1}$",
+          "0.06 M$^{-1}$ s$^{-1}$",
+          "$0.72 \\times 10^{-3}$ M$^{-1}$ s$^{-1}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Rearrange k = rate/($[A][B]$)."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "Which plot is linear for a second-order reaction?",
+        "choices_tex": [
+          "1/$[A]$ versus time",
+          "ln$[A]$ versus time",
+          "$[A]$ versus time",
+          "rate versus time"
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (close parallel): Use the corresponding integrated rate law."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "A reactant decreases from 0.8 M to 0.5 M in 30 s. What is its average disappearance rate?",
+        "choices_tex": [
+          "0.0433 M/s",
+          "0.01 M/s",
+          "100 M/s",
+          "0.3 M/s"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Average disappearance rate = -$\\Delta[A]$/$\\Delta$ t."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "For rate = k$[A]^{2}$, $[A]$ changes from 0.2 M to 0.6 M. By what factor does rate change?",
+        "choices_tex": [
+          "27",
+          "9",
+          "0.333",
+          "3"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Square the concentration ratio."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "A first-order reaction has k = 0.052 min$^{-1}$. Find its half-life.",
+        "choices_tex": [
+          "0.036 min",
+          "13.3 min",
+          "26.7 min",
+          "19.2 min"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): For first order, t1/2 = 0.693/k."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "For rate = k$[A][B]$, rate is 0.025 M/s when $[A]$ = 0.25 M and $[B]$ = 0.4 M. Find k.",
+        "choices_tex": [
+          "0.0385 M$^{-1}$ s$^{-1}$",
+          "0.25 M$^{-1}$ s$^{-1}$",
+          "0.1 M$^{-1}$ s$^{-1}$",
+          "$0.25 \\times 10^{-2}$ M$^{-1}$ s$^{-1}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Rearrange k = rate/($[A][B]$)."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "Which plot is linear for a zero-order reaction?",
+        "choices_tex": [
+          "$[A]$ versus time",
+          "ln$[A]$ versus time",
+          "1/$[A]$ versus time",
+          "ln k versus time"
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (close parallel): Use the corresponding integrated rate law."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "A reactant decreases from 0.6 M to 0.24 M in 45 s. What is its average disappearance rate?",
+        "choices_tex": [
+          "0.0187 M/s",
+          "$0.80 \\times 10^{-2}$ M/s",
+          "125 M/s",
+          "0.36 M/s"
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (close parallel): Average disappearance rate = -$\\Delta[A]$/$\\Delta$ t."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"A catalyst increases reaction rate by\" with \"lowering the activation energy through an alternate pathway.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "A catalyst changes mechanism and lowers activation energy without changing thermodynamics.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (close parallel): A catalyst changes mechanism and lowers activation energy without changing thermodynamics."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"For rate = k$[A]^{2}[B]$, doubling A while holding B constant changes rate by a factor of\" with \"4.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Second order in A gives $2^{2}$ = 4."
+        ],
+        "correct": "D",
+        "explanation_tex": "C5 method connection (reasoning twist): Second order in A gives $2^{2}$ = 4."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"The slow step in a mechanism is important because it often\" with \"determines the overall rate law.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "The highest kinetic bottleneck controls the observed rate.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (reasoning twist): The highest kinetic bottleneck controls the observed rate."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"At higher temperature, a reaction is faster primarily because\" with \"a larger fraction of molecules exceeds Ea.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "The Maxwell-Boltzmann distribution places more molecules above Ea.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (reasoning twist): The Maxwell-Boltzmann distribution places more molecules above Ea."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"A first-order integrated rate plot is linear for\" with \"ln$[A]$ versus time.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "For first order, ln$[A]$ = -kt + ln$[A]$0.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C5 method connection (reasoning twist): For first order, ln$[A]$ = -kt + ln$[A]$0."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"The units of a second-order rate constant are\" with \"M$^{-1}$ s$^{-1}$.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Rate units M/s divided by concentration squared gives M$^{-1}$ s$^{-1}$."
+        ],
+        "correct": "D",
+        "explanation_tex": "C5 method connection (reasoning twist): Rate units M/s divided by concentration squared gives M$^{-1}$ s$^{-1}$."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"An intermediate is a species that\" with \"is produced in one step and consumed in another.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Intermediates cancel when elementary steps are summed.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (reasoning twist): Intermediates cancel when elementary steps are summed."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"A catalyst increases reaction rate by\" with \"lowering the activation energy through an alternate pathway.\" II. A student responds to \"For rate = k$[A]^{2}[B]$, doubling A while holding B constant changes rate by a factor of\" with \"4.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C5 method connection (transfer): Conclusion I: A catalyst changes mechanism and lowers activation energy without changing thermodynamics. Conclusion II: Second order in A gives $2^{2}$ = 4."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"At higher temperature, a reaction is faster primarily because\" with \"a larger fraction of molecules exceeds Ea.\" II. A student responds to \"A first-order integrated rate plot is linear for\" with \"ln$[A]$ versus time.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C5 method connection (transfer): Conclusion I: The Maxwell-Boltzmann distribution places more molecules above Ea. Conclusion II: For first order, ln$[A]$ = -kt + ln$[A]$0."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which change does not alter the rate constant k?\" with \"changing reactant concentration.\" II. A student responds to \"For a zero-order reaction, the half-life\" with \"depends on initial concentration.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C5 method connection (transfer): Conclusion I: At fixed temperature and mechanism, concentration changes rate but not k. Conclusion II: For zero order, t1/2 = $[A]$0/(2k)."
+      }
+    ],
+    "answer_key": {
+      "T1": "B",
+      "T2": "B",
+      "T3": "A",
+      "T4": "B",
+      "T5": "C",
+      "T6": "C",
+      "T7": "B",
+      "T8": "C",
+      "T9": "B",
+      "T10": "A",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "A",
+      "T15": "B",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "A",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "6": {
+    "title": "Thermodynamics",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "A process is thermodynamically favored under given conditions when",
+        "choices_tex": [
+          "$\\Delta G$ < 0",
+          "$\\Delta H$ < 0 always",
+          "$\\Delta S$ > 0 always",
+          "Ea = 0"
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): Negative Gibbs free-energy change is the criterion for thermodynamic favorability."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "For an exothermic reaction, the sign of $\\Delta H$ is",
+        "choices_tex": [
+          "positive",
+          "negative",
+          "zero",
+          "temperature-dependent by definition"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): Exothermic systems release heat, so products have lower enthalpy."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "Which process most clearly increases entropy?",
+        "choices_tex": [
+          "freezing water",
+          "condensing steam",
+          "subliming dry ice",
+          "compressing a gas"
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (close parallel): Gas formation from a solid greatly increases dispersal of matter."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "At equilibrium under standard conditions, $\\Delta G$ is related to K by",
+        "choices_tex": [
+          "$\\Delta G^\\circ$ = -RT ln K",
+          "$\\Delta G^\\circ$ = RT/K",
+          "$\\Delta G^\\circ$ = K/RT",
+          "$\\Delta G^\\circ$ = -K ln RT"
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): This equation connects standard free energy and equilibrium constant."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "Hess law works because enthalpy is",
+        "choices_tex": [
+          "a path function",
+          "a state function",
+          "always positive",
+          "equal to activation energy"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): State functions depend only on initial and final states."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "Breaking a chemical bond is generally",
+        "choices_tex": [
+          "exothermic",
+          "endothermic",
+          "entropy-neutral and energy-free",
+          "always spontaneous"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): Energy must be supplied to overcome bonding attraction."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "A reaction with $\\Delta H$ < 0 and $\\Delta S$ > 0 is favored",
+        "choices_tex": [
+          "only at low T",
+          "only at high T",
+          "at all temperatures",
+          "at no temperature"
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (close parallel): Both terms make $\\Delta G$ = $\\Delta H$ - T $\\Delta S$ negative."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "Standard molar entropy is generally greatest for",
+        "choices_tex": [
+          "a solid",
+          "a liquid",
+          "a gas",
+          "an aqueous ion in every case"
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (close parallel): Gases have far more accessible microstates."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Calorimetry at constant pressure directly measures",
+        "choices_tex": [
+          "$\\Delta H$",
+          "$\\Delta S$",
+          "activation energy",
+          "equilibrium constant"
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): At constant pressure, heat transferred equals enthalpy change."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "If K is much greater than 1, $\\Delta G^\\circ$ is",
+        "choices_tex": [
+          "large and positive",
+          "negative",
+          "zero in every case",
+          "unrelated to K"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): ln K is positive, so -RT ln K is negative."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "How much heat is absorbed by 100 g water warming by 12 C? Use c = 4.184 J g$^{-1}$ C$^{-1}$.",
+        "choices_tex": [
+          "50.2 J",
+          "$5.02 \\times 10^{3}$ J",
+          "$-5.02 \\times 10^{3}$ J",
+          "418 J"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): q = mcDeltaT."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "For a process, $\\Delta H$ = -45 kJ/mol and $\\Delta S$ = -0.08 kJ/(mol K) at 298 K. Find $\\Delta G$.",
+        "choices_tex": [
+          "-23.8 kJ/mol",
+          "-21.2 kJ/mol",
+          "-45 kJ/mol",
+          "-68.8 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): $\\Delta G$ = $\\Delta H$ - T $\\Delta S$."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "A reaction releases 25 kJ when 0.5 mol reacts. What is $\\Delta H$ per mole?",
+        "choices_tex": [
+          "-12.5 kJ/mol",
+          "-50 kJ/mol",
+          "-25 kJ/mol",
+          "50 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): Divide released heat by moles and use a negative sign."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "For $\\Delta H$ = + and $\\Delta S$ = +, when is the process favored?",
+        "choices_tex": [
+          "at high temperature",
+          "at low temperature",
+          "at all temperatures",
+          "at no temperature"
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): Analyze $\\Delta G$ = $\\Delta H$ - TDeltaS."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "Using bond energies, estimate $\\Delta H$ for $\\text{H}_{2} + \\text{Cl}_{2} \\rightarrow 2\\,\\text{H}\\text{Cl}$ with H-H=436, Cl-Cl=243, H-Cl=431 kJ/mol.",
+        "choices_tex": [
+          "679 kJ/mol",
+          "-183 kJ/mol",
+          "-862 kJ/mol",
+          "183 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): $\\Delta H$ = bonds broken - bonds formed."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "How much heat is absorbed by 150 g water warming by 8 C? Use c = 4.184 J g$^{-1}$ C$^{-1}$.",
+        "choices_tex": [
+          "33.5 J",
+          "$5.02 \\times 10^{3}$ J",
+          "$-5.02 \\times 10^{3}$ J",
+          "628 J"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): q = mcDeltaT."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "For a process, $\\Delta H$ = 30 kJ/mol and $\\Delta S$ = 0.12 kJ/(mol K) at 350 K. Find $\\Delta G$.",
+        "choices_tex": [
+          "42 kJ/mol",
+          "-12 kJ/mol",
+          "30 kJ/mol",
+          "72 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): $\\Delta G$ = $\\Delta H$ - T $\\Delta S$."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "A reaction releases 40 kJ when 0.8 mol reacts. What is $\\Delta H$ per mole?",
+        "choices_tex": [
+          "-32 kJ/mol",
+          "-50 kJ/mol",
+          "-40 kJ/mol",
+          "50 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): Divide released heat by moles and use a negative sign."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "For $\\Delta H$ = - and $\\Delta S$ = -, when is the process favored?",
+        "choices_tex": [
+          "at low temperature",
+          "at high temperature",
+          "at all temperatures",
+          "at no temperature"
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): Analyze $\\Delta G$ = $\\Delta H$ - TDeltaS."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "Using bond energies, estimate $\\Delta H$ for $\\text{H}_{2} + \\text{Cl}_{2} \\rightarrow 2\\,\\text{H}\\text{Cl}$ with H-H=432, Cl-Cl=240, H-Cl=428 kJ/mol.",
+        "choices_tex": [
+          "672 kJ/mol",
+          "-184 kJ/mol",
+          "-856 kJ/mol",
+          "184 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (close parallel): $\\Delta H$ = bonds broken - bonds formed."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"A process is thermodynamically favored under given conditions when\" with \"$\\Delta G$ < 0.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Negative Gibbs free-energy change is the criterion for thermodynamic favorability.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (close parallel): Negative Gibbs free-energy change is the criterion for thermodynamic favorability."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"For an exothermic reaction, the sign of $\\Delta H$ is\" with \"negative.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Exothermic systems release heat, so products have lower enthalpy."
+        ],
+        "correct": "D",
+        "explanation_tex": "C6 method connection (reasoning twist): Exothermic systems release heat, so products have lower enthalpy."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"Which process most clearly increases entropy?\" with \"subliming dry ice.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Gas formation from a solid greatly increases dispersal of matter.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (reasoning twist): Gas formation from a solid greatly increases dispersal of matter."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"At equilibrium under standard conditions, $\\Delta G$ is related to K by\" with \"$\\Delta G^\\circ$ = -RT ln K.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This equation connects standard free energy and equilibrium constant.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (reasoning twist): This equation connects standard free energy and equilibrium constant."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"Hess law works because enthalpy is\" with \"a state function.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "State functions depend only on initial and final states.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C6 method connection (reasoning twist): State functions depend only on initial and final states."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"Breaking a chemical bond is generally\" with \"endothermic.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Energy must be supplied to overcome bonding attraction."
+        ],
+        "correct": "D",
+        "explanation_tex": "C6 method connection (reasoning twist): Energy must be supplied to overcome bonding attraction."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"A reaction with $\\Delta H$ < 0 and $\\Delta S$ > 0 is favored\" with \"at all temperatures.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Both terms make $\\Delta G$ = $\\Delta H$ - T $\\Delta S$ negative.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (reasoning twist): Both terms make $\\Delta G$ = $\\Delta H$ - T $\\Delta S$ negative."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"A process is thermodynamically favored under given conditions when\" with \"$\\Delta G$ < 0.\" II. A student responds to \"For an exothermic reaction, the sign of $\\Delta H$ is\" with \"negative.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C6 method connection (transfer): Conclusion I: Negative Gibbs free-energy change is the criterion for thermodynamic favorability. Conclusion II: Exothermic systems release heat, so products have lower enthalpy."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"At equilibrium under standard conditions, $\\Delta G$ is related to K by\" with \"$\\Delta G^\\circ$ = -RT ln K.\" II. A student responds to \"Hess law works because enthalpy is\" with \"a state function.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C6 method connection (transfer): Conclusion I: This equation connects standard free energy and equilibrium constant. Conclusion II: State functions depend only on initial and final states."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Standard molar entropy is generally greatest for\" with \"a gas.\" II. A student responds to \"Calorimetry at constant pressure directly measures\" with \"$\\Delta H$.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C6 method connection (transfer): Conclusion I: Gases have far more accessible microstates. Conclusion II: At constant pressure, heat transferred equals enthalpy change."
+      }
+    ],
+    "answer_key": {
+      "T1": "A",
+      "T2": "B",
+      "T3": "C",
+      "T4": "A",
+      "T5": "B",
+      "T6": "B",
+      "T7": "C",
+      "T8": "C",
+      "T9": "A",
+      "T10": "B",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "A",
+      "T15": "B",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "A",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "7": {
+    "title": "Equilibrium",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "If Q < K, a reaction mixture will",
+        "choices_tex": [
+          "shift toward products",
+          "shift toward reactants",
+          "remain unchanged",
+          "lose its catalyst"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): More products must form until Q reaches K."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "Adding a catalyst to an equilibrium system",
+        "choices_tex": [
+          "increases K",
+          "decreases K",
+          "speeds both directions without changing K",
+          "shifts toward products"
+        ],
+        "correct": "C",
+        "explanation_tex": "C7 method connection (close parallel): A catalyst changes the time to equilibrium, not its position."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "For an exothermic equilibrium, increasing temperature shifts the system",
+        "choices_tex": [
+          "toward products",
+          "toward reactants",
+          "nowhere",
+          "toward the side with more moles regardless of heat"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Heat behaves as a product, so added heat favors the reverse direction."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "Which species are omitted from a heterogeneous equilibrium expression?",
+        "choices_tex": [
+          "gases",
+          "aqueous solutes",
+          "pure solids and pure liquids",
+          "all products"
+        ],
+        "correct": "C",
+        "explanation_tex": "C7 method connection (close parallel): Their activities are effectively constant and included in K."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "Decreasing volume shifts a gas equilibrium toward the side with",
+        "choices_tex": [
+          "more gas particles",
+          "fewer gas particles",
+          "more solids",
+          "the larger coefficient sum including solids"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Higher pressure favors fewer moles of gas."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "At equilibrium, forward and reverse reactions have",
+        "choices_tex": [
+          "stopped",
+          "equal rates",
+          "equal concentrations",
+          "zero activation energies"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Dynamic equilibrium means equal opposing rates."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "A very small K indicates that equilibrium contains mostly",
+        "choices_tex": [
+          "products",
+          "reactants",
+          "equal amounts",
+          "catalyst"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Small K means the product-to-reactant activity ratio is small."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "Common-ion addition usually does what to the solubility of a sparingly soluble salt?",
+        "choices_tex": [
+          "increases it",
+          "decreases it",
+          "has no effect",
+          "makes Ksp larger"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): The equilibrium shifts toward solid while Ksp stays constant."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "Kp equals Kc when",
+        "choices_tex": [
+          "temperature is zero",
+          "the change in moles of gas is zero",
+          "all coefficients are one",
+          "a catalyst is present"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Kp = Kc$(RT)^{\\Delta n}$, so equality holds when $\\Delta n = 0$."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Removing a product from an equilibrium mixture generally",
+        "choices_tex": [
+          "drives formation of more product",
+          "drives formation of reactants",
+          "changes K",
+          "stops both reactions"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): The system shifts forward to replace removed product."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "For $\\text{A} \\rightleftharpoons \\text{B}$, Kc = 4.0. If $[A]eq$ = 0.2 M, find $[B]eq$.",
+        "choices_tex": [
+          "4.2 M",
+          "0.8 M",
+          "0.2 M",
+          "0.05 M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Kc = $[B]$/$[A]$."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "For $\\text{N}_{2}\\text{O}_{4} \\rightleftharpoons 2\\,\\text{N}\\text{O}_{2}$, $[NO2]$ = 0.3 M and $[N2O4]$ = 0.5 M. Find Kc.",
+        "choices_tex": [
+          "5.56",
+          "0.18",
+          "1.2",
+          "0.6"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Kc = $[NO2]^{2}$/$[N2O4]$."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "For $\\text{N}_{2} + 3\\,\\text{H}_{2} \\rightleftharpoons 2\\,\\text{N}\\text{H}_{3}$, decreasing volume shifts equilibrium",
+        "choices_tex": [
+          "right",
+          "left",
+          "not at all",
+          "cannot be predicted"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): The product side has fewer moles of gas."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "If K = 9 for $\\text{A} \\rightleftharpoons \\text{B}$, what is K for $2\\,\\text{B} \\rightleftharpoons 2\\,\\text{A}$?",
+        "choices_tex": [
+          "81",
+          "0.0123",
+          "3",
+          "0.111"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Reverse K, then square it."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "A saturated solution has Qsp greater than Ksp. What happens?",
+        "choices_tex": [
+          "a precipitate forms",
+          "more solid dissolves",
+          "nothing can happen",
+          "Ksp increases"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): Compare Qsp with Ksp to predict direction."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "For $\\text{A} \\rightleftharpoons \\text{B}$, Kc = 0.25. If $[A]eq$ = 0.4 M, find $[B]eq$.",
+        "choices_tex": [
+          "0.65 M",
+          "0.1 M",
+          "0.4 M",
+          "1.6 M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Kc = $[B]$/$[A]$."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "For $\\text{N}_{2}\\text{O}_{4} \\rightleftharpoons 2\\,\\text{N}\\text{O}_{2}$, $[NO2]$ = 0.2 M and $[N2O4]$ = 0.8 M. Find Kc.",
+        "choices_tex": [
+          "20",
+          "0.05",
+          "0.5",
+          "0.25"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Kc = $[NO2]^{2}$/$[N2O4]$."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "For $2\\,\\text{S}\\text{O}_{2} + \\text{O}_{2} \\rightleftharpoons 2\\,\\text{S}\\text{O}_{3}$, decreasing volume shifts equilibrium",
+        "choices_tex": [
+          "right",
+          "left",
+          "not at all",
+          "cannot be predicted"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): The product side has fewer moles of gas."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "If K = 16 for $\\text{A} \\rightleftharpoons \\text{B}$, what is K for $2\\,\\text{B} \\rightleftharpoons 2\\,\\text{A}$?",
+        "choices_tex": [
+          "256",
+          "$0.39 \\times 10^{-2}$",
+          "4",
+          "0.0625"
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (close parallel): Reverse K, then square it."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "A saturated solution has Qsp less than Ksp. What happens?",
+        "choices_tex": [
+          "more solid can dissolve",
+          "a precipitate forms",
+          "Ksp decreases",
+          "the solvent evaporates"
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): Compare Qsp with Ksp to predict direction."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"If Q < K, a reaction mixture will\" with \"shift toward products.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "More products must form until Q reaches K.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (close parallel): More products must form until Q reaches K."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"Adding a catalyst to an equilibrium system\" with \"speeds both directions without changing K.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "A catalyst changes the time to equilibrium, not its position."
+        ],
+        "correct": "D",
+        "explanation_tex": "C7 method connection (reasoning twist): A catalyst changes the time to equilibrium, not its position."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"For an exothermic equilibrium, increasing temperature shifts the system\" with \"toward reactants.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Heat behaves as a product, so added heat favors the reverse direction.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C7 method connection (reasoning twist): Heat behaves as a product, so added heat favors the reverse direction."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"Which species are omitted from a heterogeneous equilibrium expression?\" with \"pure solids and pure liquids.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Their activities are effectively constant and included in K.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (reasoning twist): Their activities are effectively constant and included in K."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"Decreasing volume shifts a gas equilibrium toward the side with\" with \"fewer gas particles.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Higher pressure favors fewer moles of gas.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C7 method connection (reasoning twist): Higher pressure favors fewer moles of gas."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"At equilibrium, forward and reverse reactions have\" with \"equal rates.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Dynamic equilibrium means equal opposing rates."
+        ],
+        "correct": "D",
+        "explanation_tex": "C7 method connection (reasoning twist): Dynamic equilibrium means equal opposing rates."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"A very small K indicates that equilibrium contains mostly\" with \"reactants.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Small K means the product-to-reactant activity ratio is small.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C7 method connection (reasoning twist): Small K means the product-to-reactant activity ratio is small."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"If Q < K, a reaction mixture will\" with \"shift toward products.\" II. A student responds to \"Adding a catalyst to an equilibrium system\" with \"speeds both directions without changing K.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C7 method connection (transfer): Conclusion I: More products must form until Q reaches K. Conclusion II: A catalyst changes the time to equilibrium, not its position."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which species are omitted from a heterogeneous equilibrium expression?\" with \"pure solids and pure liquids.\" II. A student responds to \"Decreasing volume shifts a gas equilibrium toward the side with\" with \"fewer gas particles.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C7 method connection (transfer): Conclusion I: Their activities are effectively constant and included in K. Conclusion II: Higher pressure favors fewer moles of gas."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Common-ion addition usually does what to the solubility of a sparingly soluble salt?\" with \"decreases it.\" II. A student responds to \"Kp equals Kc when\" with \"the change in moles of gas is zero.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C7 method connection (transfer): Conclusion I: The equilibrium shifts toward solid while Ksp stays constant. Conclusion II: Kp = Kc$(RT)^{\\Delta n}$, so equality holds when $\\Delta n = 0$."
+      }
+    ],
+    "answer_key": {
+      "T1": "A",
+      "T2": "C",
+      "T3": "B",
+      "T4": "C",
+      "T5": "B",
+      "T6": "B",
+      "T7": "B",
+      "T8": "B",
+      "T9": "B",
+      "T10": "A",
+      "T11": "B",
+      "T12": "B",
+      "T13": "A",
+      "T14": "B",
+      "T15": "A",
+      "T16": "B",
+      "T17": "B",
+      "T18": "A",
+      "T19": "B",
+      "T20": "A",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "8": {
+    "title": "Acids and Bases",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "A Brønsted-Lowry acid is a",
+        "choices_tex": [
+          "proton donor",
+          "proton acceptor",
+          "electron-pair donor only",
+          "salt that must contain oxygen"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Brønsted-Lowry acids donate $\\text{H}^{+}$."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "The conjugate base of $\\text{H}_2\\text{PO}_4^{-}$ is",
+        "choices_tex": [
+          "$\\text{H}_{3}\\text{P}\\text{O}_{4}$",
+          "$\\text{H}\\text{P}\\text{O}_{4}^{2-}$",
+          "$\\text{P}\\text{O}_{4}^{3-}$",
+          "$\\text{O}\\text{H}^{-}$"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): Removing one proton gives $\\text{H}\\text{P}\\text{O}_{4}^{2-}$."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "A buffer contains significant amounts of",
+        "choices_tex": [
+          "a strong acid and strong base",
+          "a weak acid and its conjugate base",
+          "only pure water",
+          "two unrelated salts"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): The conjugate pair consumes added acid or base."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "At the half-equivalence point of a weak-acid titration",
+        "choices_tex": [
+          "pH = pKa",
+          "pH = 7 always",
+          "$[acid]$ = 0",
+          "pOH = pKa"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Equal weak acid and conjugate base concentrations make pH = pKa."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "Which acid is strongest?",
+        "choices_tex": [
+          "the one with largest Ka",
+          "the one with smallest Ka",
+          "the one with largest pKa",
+          "the most dilute one"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Larger Ka means more extensive proton transfer."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "At 25 C, a solution with pH 3 has [$\\text{H}^{+}$] equal to",
+        "choices_tex": [
+          "$10^{-3}$ M",
+          "3 M",
+          "$10^{-11}$ M",
+          "0.30 M"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): [$\\text{H}^{+}$] = $10^{-pH}$."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Adding a small amount of strong acid to a buffer converts primarily",
+        "choices_tex": [
+          "conjugate base to weak acid",
+          "weak acid to conjugate base",
+          "water to a precipitate",
+          "all solute to gas"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): The buffer base consumes added $\\text{H}^{+}$."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "The equivalence-point pH for titration of a weak acid with strong base is generally",
+        "choices_tex": [
+          "less than 7",
+          "equal to 7",
+          "greater than 7",
+          "always 14"
+        ],
+        "correct": "C",
+        "explanation_tex": "C8 method connection (close parallel): The conjugate base hydrolyzes to produce $\\text{O}\\text{H}^{-}$."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "A Lewis acid is an",
+        "choices_tex": [
+          "electron-pair acceptor",
+          "electron-pair donor",
+          "$\\text{H}^{+}$ donor only",
+          "$\\text{O}\\text{H}^{-}$ source only"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Lewis acids accept an electron pair."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Which change increases percent ionization of a weak acid?",
+        "choices_tex": [
+          "dilution",
+          "adding its conjugate base",
+          "increasing initial concentration",
+          "adding a strong acid"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Dilution shifts ionization toward more particles."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "What is the pH of a strong acid with [$\\text{H}^{+}$] = 0.01 M?",
+        "choices_tex": [
+          "0.01",
+          "2",
+          "0.977",
+          "12"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): pH = -log[$\\text{H}^{+}$]."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "What is [$\\text{H}^{+}$] for pH 3.5?",
+        "choices_tex": [
+          "$0.32 \\times 10^{-4}$ M",
+          "$0.32 \\times 10^{-3}$ M",
+          "3.5 M",
+          "$0.32 \\times 10^{-2}$ M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): [$\\text{H}^{+}$] = $10^{-pH}$."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "A buffer has 0.2 M weak acid and 0.1 M conjugate base; pKa = 4.76. Find pH.",
+        "choices_tex": [
+          "4.76",
+          "4.46",
+          "9.24",
+          "5.06"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): Use Henderson-Hasselbalch: pH = pKa + log(base/acid)."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "How many moles $\\text{O}\\text{H}^{-}$ are needed to neutralize 0.025 mol H2SO4?",
+        "choices_tex": [
+          "0.075 mol",
+          "0.05 mol",
+          "0.0125 mol",
+          "0.025 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): Multiply acid moles by the number of ionizable protons for complete neutralization."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "Which pair can form a buffer?",
+        "choices_tex": [
+          "HF and NaF",
+          "HCl and NaCl",
+          "NaOH and KOH",
+          "HNO3 and HCl"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): A weak species and its conjugate partner form a buffer."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "What is the pH of a strong acid with [$\\text{H}^{+}$] = 0.002 M?",
+        "choices_tex": [
+          "$0.20 \\times 10^{-2}$",
+          "2.7",
+          "0.995",
+          "11.3"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): pH = -log[$\\text{H}^{+}$]."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "What is [$\\text{H}^{+}$] for pH 5.2?",
+        "choices_tex": [
+          "$0.63 \\times 10^{-6}$ M",
+          "$0.63 \\times 10^{-5}$ M",
+          "5.2 M",
+          "$0.63 \\times 10^{-4}$ M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): [$\\text{H}^{+}$] = $10^{-pH}$."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "A buffer has 0.3 M weak acid and 0.6 M conjugate base; pKa = 6.2. Find pH.",
+        "choices_tex": [
+          "6.2",
+          "6.5",
+          "7.8",
+          "5.9"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): Use Henderson-Hasselbalch: pH = pKa + log(base/acid)."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "How many moles $\\text{O}\\text{H}^{-}$ are needed to neutralize 0.04 mol H3PO4 completely?",
+        "choices_tex": [
+          "0.08 mol",
+          "0.12 mol",
+          "0.0133 mol",
+          "0.04 mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (close parallel): Multiply acid moles by the number of ionizable protons for complete neutralization."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "Which pair can form a buffer?",
+        "choices_tex": [
+          "NH3 and NH4Cl",
+          "NaCl and KCl",
+          "HCl and NaOH at equivalence",
+          "HNO3 and KNO3"
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): A weak species and its conjugate partner form a buffer."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"A Brønsted-Lowry acid is a\" with \"proton donor.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Brønsted-Lowry acids donate $\\text{H}^{+}$.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (close parallel): Brønsted-Lowry acids donate $\\text{H}^{+}$."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"The conjugate base of $\\text{H}_2\\text{PO}_4^{-}$ is\" with \"$\\text{H}\\text{P}\\text{O}_{4}^{2-}$.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Removing one proton gives $\\text{H}\\text{P}\\text{O}_{4}^{2-}$."
+        ],
+        "correct": "D",
+        "explanation_tex": "C8 method connection (reasoning twist): Removing one proton gives $\\text{H}\\text{P}\\text{O}_{4}^{2-}$."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"A buffer contains significant amounts of\" with \"a weak acid and its conjugate base.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "The conjugate pair consumes added acid or base.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C8 method connection (reasoning twist): The conjugate pair consumes added acid or base."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"At the half-equivalence point of a weak-acid titration\" with \"pH = pKa.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Equal weak acid and conjugate base concentrations make pH = pKa.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (reasoning twist): Equal weak acid and conjugate base concentrations make pH = pKa."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"Which acid is strongest?\" with \"the one with largest Ka.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Larger Ka means more extensive proton transfer.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C8 method connection (reasoning twist): Larger Ka means more extensive proton transfer."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"At 25 C, a solution with pH 3 has [$\\text{H}^{+}$] equal to\" with \"$10^{-3}$ M.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "[$\\text{H}^{+}$] = $10^{-pH}$."
+        ],
+        "correct": "D",
+        "explanation_tex": "C8 method connection (reasoning twist): [$\\text{H}^{+}$] = $10^{-pH}$."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Adding a small amount of strong acid to a buffer converts primarily\" with \"conjugate base to weak acid.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "The buffer base consumes added $\\text{H}^{+}$.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C8 method connection (reasoning twist): The buffer base consumes added $\\text{H}^{+}$."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"A Brønsted-Lowry acid is a\" with \"proton donor.\" II. A student responds to \"The conjugate base of $\\text{H}_2\\text{PO}_4^{-}$ is\" with \"$\\text{H}\\text{P}\\text{O}_{4}^{2-}$.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C8 method connection (transfer): Conclusion I: Brønsted-Lowry acids donate $\\text{H}^{+}$. Conclusion II: Removing one proton gives $\\text{H}\\text{P}\\text{O}_{4}^{2-}$."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"At the half-equivalence point of a weak-acid titration\" with \"pH = pKa.\" II. A student responds to \"Which acid is strongest?\" with \"the one with largest Ka.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C8 method connection (transfer): Conclusion I: Equal weak acid and conjugate base concentrations make pH = pKa. Conclusion II: Larger Ka means more extensive proton transfer."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"The equivalence-point pH for titration of a weak acid with strong base is generally\" with \"greater than 7.\" II. A student responds to \"A Lewis acid is an\" with \"electron-pair acceptor.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C8 method connection (transfer): Conclusion I: The conjugate base hydrolyzes to produce $\\text{O}\\text{H}^{-}$. Conclusion II: Lewis acids accept an electron pair."
+      }
+    ],
+    "answer_key": {
+      "T1": "A",
+      "T2": "B",
+      "T3": "B",
+      "T4": "A",
+      "T5": "A",
+      "T6": "A",
+      "T7": "A",
+      "T8": "C",
+      "T9": "A",
+      "T10": "A",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "B",
+      "T15": "A",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "B",
+      "T20": "A",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "9": {
+    "title": "Applications of Thermodynamics",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "In a galvanic cell, oxidation occurs at the",
+        "choices_tex": [
+          "anode",
+          "cathode",
+          "salt bridge",
+          "voltmeter"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): Oxidation is always at the anode."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "Electrons in an operating galvanic cell flow",
+        "choices_tex": [
+          "from cathode to anode through solution",
+          "from anode to cathode through the wire",
+          "through the salt bridge only",
+          "from salt bridge to both electrodes"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Electrons leave the oxidation electrode and travel to the cathode."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "A positive standard cell potential indicates that the cell reaction is",
+        "choices_tex": [
+          "thermodynamically favored under standard conditions",
+          "at equilibrium",
+          "necessarily fast",
+          "electrolytic"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): $\\Delta G^\\circ$ = -$nFE^\\circ$, so positive E gives negative $\\Delta G$."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "The salt bridge primarily",
+        "choices_tex": [
+          "supplies electrons",
+          "maintains electrical neutrality by ion migration",
+          "changes electrode identity",
+          "raises activation energy"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Ion movement prevents charge buildup in the half-cells."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "During electrolysis, electrical energy is used to drive a reaction that is",
+        "choices_tex": [
+          "thermodynamically unfavored",
+          "always exothermic",
+          "already at equilibrium",
+          "free of redox changes"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): An external potential drives a nonspontaneous redox process."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "Increasing reactant activity in the Nernst equation generally changes cell potential according to",
+        "choices_tex": [
+          "the reaction quotient Q",
+          "molar mass only",
+          "activation energy",
+          "rate law order"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): E = $E^\\circ$ - (RT/nF) ln Q."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "At equilibrium, the cell potential is",
+        "choices_tex": [
+          "positive",
+          "negative",
+          "zero",
+          "equal to activation energy"
+        ],
+        "correct": "C",
+        "explanation_tex": "C9 method connection (close parallel): No net driving force remains when $\\Delta G$ = 0."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "In metal plating, the object being plated is usually the",
+        "choices_tex": [
+          "cathode",
+          "anode",
+          "salt bridge",
+          "oxidizing agent in solution"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): Metal cations gain electrons and deposit at the cathode."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "A reducing agent",
+        "choices_tex": [
+          "is reduced",
+          "causes reduction and is oxidized",
+          "accepts electrons",
+          "must be oxygen"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): It donates electrons and is itself oxidized."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "Multiplying a balanced redox equation by two changes $E^\\circ$ by a factor of",
+        "choices_tex": [
+          "2",
+          "1/2",
+          "0",
+          "1"
+        ],
+        "correct": "D",
+        "explanation_tex": "C9 method connection (close parallel): Cell potential is intensive and is not multiplied with stoichiometry."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "For a cell transferring n=2 electrons with $E^\\circ$ = 1.1 V, find $\\Delta G^\\circ$. Use F=96485 C/mol.",
+        "choices_tex": [
+          "-106 kJ/mol",
+          "-212 kJ/mol",
+          "-2.2 kJ/mol",
+          "212 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): $\\Delta G^\\circ$ = -$nFE^\\circ$."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "A current of 2.0 A flows for 965 s. How many moles of electrons pass?",
+        "choices_tex": [
+          "50 mol e-",
+          "0.02 mol e-",
+          "$0.21 \\times 10^{-4}$ mol e-",
+          "$1.93 \\times 10^{3}$ mol e-"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Charge q=It; moles electrons=q/F."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "Given $E^\\circ$(cathode)=0.8 V and $E^\\circ$(anode as reduction)=-0.76 V, find $E^\\circ$ cell.",
+        "choices_tex": [
+          "-1.56 V",
+          "1.56 V",
+          "0.8 V",
+          "0.04 V"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Ecell = Ecathode - Eanode(reduction)."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "In the cell Zn|$\\text{Zn}^{2+}$||$\\text{Cu}^{2+}$|Cu, which electrode loses mass?",
+        "choices_tex": [
+          "$\\text{Zn}$",
+          "$\\text{Cu}$",
+          "both",
+          "neither"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): The anode metal is oxidized into solution."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "How long must 1.0 A run to deposit 0.01 mol Ag from $\\text{Ag}^{+}$?",
+        "choices_tex": [
+          "$9.65 \\times 10^{6}$ s",
+          "965 s",
+          "$1.93 \\times 10^{3}$ s",
+          "$0.10 \\times 10^{-6}$ s"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): One mole electron deposits one mole Ag; t=nF/I."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "For a cell transferring n=1 electrons with $E^\\circ$ = 0.8 V, find $\\Delta G^\\circ$. Use F=96485 C/mol.",
+        "choices_tex": [
+          "-96.5 kJ/mol",
+          "-77.2 kJ/mol",
+          "-0.8 kJ/mol",
+          "77.2 kJ/mol"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): $\\Delta G^\\circ$ = -$nFE^\\circ$."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "A current of 1.5 A flows for 1287 s. How many moles of electrons pass?",
+        "choices_tex": [
+          "50 mol e-",
+          "0.02 mol e-",
+          "$0.16 \\times 10^{-4}$ mol e-",
+          "$1.93 \\times 10^{3}$ mol e-"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Charge q=It; moles electrons=q/F."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "Given $E^\\circ$(cathode)=0.34 V and $E^\\circ$(anode as reduction)=-0.44 V, find $E^\\circ$ cell.",
+        "choices_tex": [
+          "-0.78 V",
+          "0.78 V",
+          "-0.44 V",
+          "-0.1 V"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): Ecell = Ecathode - Eanode(reduction)."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "In the cell Fe|$\\text{Fe}^{2+}$||$\\text{Ag}^{+}$|Ag, which electrode loses mass?",
+        "choices_tex": [
+          "$\\text{Fe}$",
+          "$\\text{Ag}$",
+          "both",
+          "neither"
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): The anode metal is oxidized into solution."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "How long must 2.0 A run to deposit 0.02 mol Ag from $\\text{Ag}^{+}$?",
+        "choices_tex": [
+          "$4.82 \\times 10^{6}$ s",
+          "965 s",
+          "$1.93 \\times 10^{3}$ s",
+          "$0.10 \\times 10^{-6}$ s"
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (close parallel): One mole electron deposits one mole Ag; t=nF/I."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"In a galvanic cell, oxidation occurs at the\" with \"anode.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Oxidation is always at the anode.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (close parallel): Oxidation is always at the anode."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"Electrons in an operating galvanic cell flow\" with \"from anode to cathode through the wire.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Electrons leave the oxidation electrode and travel to the cathode."
+        ],
+        "correct": "D",
+        "explanation_tex": "C9 method connection (reasoning twist): Electrons leave the oxidation electrode and travel to the cathode."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"A positive standard cell potential indicates that the cell reaction is\" with \"thermodynamically favored under standard conditions.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "$\\Delta G^\\circ$ = -$nFE^\\circ$, so positive E gives negative $\\Delta G$.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C9 method connection (reasoning twist): $\\Delta G^\\circ$ = -$nFE^\\circ$, so positive E gives negative $\\Delta G$."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"The salt bridge primarily\" with \"maintains electrical neutrality by ion migration.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Ion movement prevents charge buildup in the half-cells.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (reasoning twist): Ion movement prevents charge buildup in the half-cells."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"During electrolysis, electrical energy is used to drive a reaction that is\" with \"thermodynamically unfavored.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "An external potential drives a nonspontaneous redox process.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C9 method connection (reasoning twist): An external potential drives a nonspontaneous redox process."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"Increasing reactant activity in the Nernst equation generally changes cell potential according to\" with \"the reaction quotient Q.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "E = $E^\\circ$ - (RT/nF) ln Q."
+        ],
+        "correct": "D",
+        "explanation_tex": "C9 method connection (reasoning twist): E = $E^\\circ$ - (RT/nF) ln Q."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"At equilibrium, the cell potential is\" with \"zero.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "No net driving force remains when $\\Delta G$ = 0.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C9 method connection (reasoning twist): No net driving force remains when $\\Delta G$ = 0."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"In a galvanic cell, oxidation occurs at the\" with \"anode.\" II. A student responds to \"Electrons in an operating galvanic cell flow\" with \"from anode to cathode through the wire.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C9 method connection (transfer): Conclusion I: Oxidation is always at the anode. Conclusion II: Electrons leave the oxidation electrode and travel to the cathode."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"The salt bridge primarily\" with \"maintains electrical neutrality by ion migration.\" II. A student responds to \"During electrolysis, electrical energy is used to drive a reaction that is\" with \"thermodynamically unfavored.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C9 method connection (transfer): Conclusion I: Ion movement prevents charge buildup in the half-cells. Conclusion II: An external potential drives a nonspontaneous redox process."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"In metal plating, the object being plated is usually the\" with \"cathode.\" II. A student responds to \"A reducing agent\" with \"causes reduction and is oxidized.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C9 method connection (transfer): Conclusion I: Metal cations gain electrons and deposit at the cathode. Conclusion II: It donates electrons and is itself oxidized."
+      }
+    ],
+    "answer_key": {
+      "T1": "A",
+      "T2": "B",
+      "T3": "A",
+      "T4": "B",
+      "T5": "A",
+      "T6": "A",
+      "T7": "C",
+      "T8": "A",
+      "T9": "B",
+      "T10": "D",
+      "T11": "B",
+      "T12": "B",
+      "T13": "B",
+      "T14": "A",
+      "T15": "B",
+      "T16": "B",
+      "T17": "B",
+      "T18": "B",
+      "T19": "A",
+      "T20": "B",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  },
+  "10": {
+    "title": "Experiments and Laboratory Analysis",
+    "problems": [
+      {
+        "id": "T1",
+        "stem_tex": "Which glassware is best for preparing a solution to one precise final volume?",
+        "choices_tex": [
+          "beaker",
+          "graduated cylinder",
+          "volumetric flask",
+          "Erlenmeyer flask"
+        ],
+        "correct": "C",
+        "explanation_tex": "C10 method connection (close parallel): A volumetric flask is calibrated to contain one precise volume."
+      },
+      {
+        "id": "T2",
+        "stem_tex": "A buret should be read",
+        "choices_tex": [
+          "from the top of the meniscus at eye level",
+          "from the bottom of the meniscus at eye level",
+          "while held horizontally",
+          "before removing air bubbles only"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): For a clear aqueous solution, read the bottom of the meniscus at eye level."
+      },
+      {
+        "id": "T3",
+        "stem_tex": "If a wet precipitate is weighed, the calculated mass percent is likely",
+        "choices_tex": [
+          "too high",
+          "too low",
+          "unchanged",
+          "exactly zero"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Retained water adds to the measured mass."
+      },
+      {
+        "id": "T4",
+        "stem_tex": "Which practice improves precision?",
+        "choices_tex": [
+          "taking repeated independent measurements",
+          "rounding all raw data to one digit",
+          "using uncalibrated glassware",
+          "discarding inconvenient trials without cause"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Replicate measurements reveal scatter and reduce random uncertainty in the mean."
+      },
+      {
+        "id": "T5",
+        "stem_tex": "A calibration curve should place concentration on the",
+        "choices_tex": [
+          "x-axis as the independent variable",
+          "y-axis only",
+          "title only",
+          "axis with no units"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Known concentration is controlled; instrument response is measured."
+      },
+      {
+        "id": "T6",
+        "stem_tex": "Rinsing a buret with the titrant before use prevents",
+        "choices_tex": [
+          "dilution of titrant by residual water",
+          "evaporation of solvent",
+          "endpoint color change",
+          "formation of all air bubbles"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Conditioning replaces water film with solution of known concentration."
+      },
+      {
+        "id": "T7",
+        "stem_tex": "Which error is random rather than systematic?",
+        "choices_tex": [
+          "a balance zero offset",
+          "consistent parallax in one direction",
+          "last-digit fluctuation among repeated readings",
+          "using the wrong molar mass every trial"
+        ],
+        "correct": "C",
+        "explanation_tex": "C10 method connection (close parallel): Unpredictable scatter in the final digit is random error."
+      },
+      {
+        "id": "T8",
+        "stem_tex": "Why is a wash bottle used when transferring a precipitate?",
+        "choices_tex": [
+          "to dissolve the filter paper",
+          "to move adhering particles quantitatively",
+          "to change stoichiometry",
+          "to heat the sample"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Rinsing ensures quantitative transfer of solid."
+      },
+      {
+        "id": "T9",
+        "stem_tex": "In spectrophotometry, absorbance outside the linear range should be corrected by",
+        "choices_tex": [
+          "diluting accurately and accounting for dilution",
+          "changing the recorded concentration only",
+          "using a dirty cuvette",
+          "ignoring the reading"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Accurate dilution returns absorbance to the calibrated range."
+      },
+      {
+        "id": "T10",
+        "stem_tex": "A control experiment is used primarily to",
+        "choices_tex": [
+          "provide a baseline for comparison",
+          "guarantee the hypothesis",
+          "eliminate all uncertainty",
+          "increase sample molar mass"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): The control isolates the effect of the tested variable."
+      },
+      {
+        "id": "T11",
+        "stem_tex": "A balance gives masses 12.436, 12.441, and 12.438 g. What is the mean?",
+        "choices_tex": [
+          "12.436 g",
+          "12.438 g",
+          "12.441 g",
+          "37.315 g"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Add the three trials and divide by three."
+      },
+      {
+        "id": "T12",
+        "stem_tex": "A 10.0 mL aliquot is diluted to 100.0 mL. What is the dilution factor?",
+        "choices_tex": [
+          "100",
+          "10",
+          "90",
+          "0.1"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Dilution factor = final volume / aliquot volume."
+      },
+      {
+        "id": "T13",
+        "stem_tex": "Which instrument should measure 25.00 mL aliquot?",
+        "choices_tex": [
+          "volumetric pipet",
+          "beaker",
+          "test tube",
+          "wash bottle"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Choose calibrated equipment matched to the required precision."
+      },
+      {
+        "id": "T14",
+        "stem_tex": "A calibration line is A = 0.25c + 0.005. If A = 0.13, find c.",
+        "choices_tex": [
+          "0.0325 M",
+          "0.5 M",
+          "0.125 M",
+          "0.52 M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Rearrange c=(A-intercept)/slope."
+      },
+      {
+        "id": "T15",
+        "stem_tex": "Which change would make a titrated analyte concentration appear too high?",
+        "choices_tex": [
+          "An air bubble leaves the buret tip during titration.",
+          "The flask is rinsed with distilled water before titration.",
+          "A clean pipet is used.",
+          "The endpoint is approached dropwise."
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Extra apparent titrant volume is recorded, inflating calculated analyte moles."
+      },
+      {
+        "id": "T16",
+        "stem_tex": "A balance gives masses 18.205, 18.198, and 18.202 g. What is the mean?",
+        "choices_tex": [
+          "18.205 g",
+          "18.202 g",
+          "18.198 g",
+          "54.605 g"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Add the three trials and divide by three."
+      },
+      {
+        "id": "T17",
+        "stem_tex": "A 25.0 mL aliquot is diluted to 250.0 mL. What is the dilution factor?",
+        "choices_tex": [
+          "250",
+          "10",
+          "225",
+          "0.1"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Dilution factor = final volume / aliquot volume."
+      },
+      {
+        "id": "T18",
+        "stem_tex": "Which instrument should measure mass to 0.001 g?",
+        "choices_tex": [
+          "analytical balance",
+          "graduated cylinder",
+          "buret",
+          "thermometer"
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Choose calibrated equipment matched to the required precision."
+      },
+      {
+        "id": "T19",
+        "stem_tex": "A calibration line is A = 0.4c + 0.01. If A = 0.21, find c.",
+        "choices_tex": [
+          "0.084 M",
+          "0.5 M",
+          "0.2 M",
+          "0.525 M"
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (close parallel): Rearrange c=(A-intercept)/slope."
+      },
+      {
+        "id": "T20",
+        "stem_tex": "Which change would make a titrated analyte concentration appear too low?",
+        "choices_tex": [
+          "The analyte pipet contains residual water.",
+          "The buret is conditioned with titrant.",
+          "The analyte is mixed thoroughly.",
+          "The meniscus is read at eye level."
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): Residual water dilutes the aliquot delivered, lowering moles and calculated concentration."
+      },
+      {
+        "id": "T21",
+        "stem_tex": "A student responds to the prompt \"Which glassware is best for preparing a solution to one precise final volume?\" with \"volumetric flask.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "A volumetric flask is calibrated to contain one precise volume.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (close parallel): A volumetric flask is calibrated to contain one precise volume."
+      },
+      {
+        "id": "T22",
+        "stem_tex": "A student responds to the prompt \"A buret should be read\" with \"from the bottom of the meniscus at eye level.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "For a clear aqueous solution, read the bottom of the meniscus at eye level."
+        ],
+        "correct": "D",
+        "explanation_tex": "C10 method connection (reasoning twist): For a clear aqueous solution, read the bottom of the meniscus at eye level."
+      },
+      {
+        "id": "T23",
+        "stem_tex": "A student responds to the prompt \"If a wet precipitate is weighed, the calculated mass percent is likely\" with \"too high.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Retained water adds to the measured mass.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C10 method connection (reasoning twist): Retained water adds to the measured mass."
+      },
+      {
+        "id": "T24",
+        "stem_tex": "A student responds to the prompt \"Which practice improves precision?\" with \"taking repeated independent measurements.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "Replicate measurements reveal scatter and reduce random uncertainty in the mean.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model."
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (reasoning twist): Replicate measurements reveal scatter and reduce random uncertainty in the mean."
+      },
+      {
+        "id": "T25",
+        "stem_tex": "A student responds to the prompt \"A calibration curve should place concentration on the\" with \"x-axis as the independent variable.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "Known concentration is controlled; instrument response is measured.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "A",
+        "explanation_tex": "C10 method connection (reasoning twist): Known concentration is controlled; instrument response is measured."
+      },
+      {
+        "id": "T26",
+        "stem_tex": "A student responds to the prompt \"Rinsing a buret with the titrant before use prevents\" with \"dilution of titrant by residual water.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This assumes molar mass alone controls the result and ignores charge, bonding, or reaction conditions.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position.",
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "Conditioning replaces water film with solution of known concentration."
+        ],
+        "correct": "D",
+        "explanation_tex": "C10 method connection (reasoning twist): Conditioning replaces water film with solution of known concentration."
+      },
+      {
+        "id": "T27",
+        "stem_tex": "A student responds to the prompt \"Which error is random rather than systematic?\" with \"last-digit fluctuation among repeated readings.\" Which reasoning best supports that response?",
+        "choices_tex": [
+          "This uses a coefficient or subscript without applying the governing chemical relationship.",
+          "This treats a correlation as the cause and does not apply the relevant particle-level model.",
+          "Unpredictable scatter in the final digit is random error.",
+          "This confuses reaction rate with thermodynamic favorability or equilibrium position."
+        ],
+        "correct": "C",
+        "explanation_tex": "C10 method connection (reasoning twist): Unpredictable scatter in the final digit is random error."
+      },
+      {
+        "id": "T28",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which glassware is best for preparing a solution to one precise final volume?\" with \"volumetric flask.\" II. A student responds to \"A buret should be read\" with \"from the bottom of the meniscus at eye level.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified."
+        ],
+        "correct": "D",
+        "explanation_tex": "C10 method connection (transfer): Conclusion I: A volumetric flask is calibrated to contain one precise volume. Conclusion II: For a clear aqueous solution, read the bottom of the meniscus at eye level."
+      },
+      {
+        "id": "T29",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Which practice improves precision?\" with \"taking repeated independent measurements.\" II. A student responds to \"A calibration curve should place concentration on the\" with \"x-axis as the independent variable.\" Which assessment is correct?",
+        "choices_tex": [
+          "Only conclusion II is justified.",
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified."
+        ],
+        "correct": "C",
+        "explanation_tex": "C10 method connection (transfer): Conclusion I: Replicate measurements reveal scatter and reduce random uncertainty in the mean. Conclusion II: Known concentration is controlled; instrument response is measured."
+      },
+      {
+        "id": "T30",
+        "stem_tex": "Consider two related cases. I. A student responds to \"Why is a wash bottle used when transferring a precipitate?\" with \"to move adhering particles quantitatively.\" II. A student responds to \"In spectrophotometry, absorbance outside the linear range should be corrected by\" with \"diluting accurately and accounting for dilution.\" Which assessment is correct?",
+        "choices_tex": [
+          "Neither conclusion is justified.",
+          "Both conclusions are chemically justified.",
+          "Only conclusion I is justified.",
+          "Only conclusion II is justified."
+        ],
+        "correct": "B",
+        "explanation_tex": "C10 method connection (transfer): Conclusion I: Rinsing ensures quantitative transfer of solid. Conclusion II: Accurate dilution returns absorbance to the calibrated range."
+      }
+    ],
+    "answer_key": {
+      "T1": "C",
+      "T2": "B",
+      "T3": "A",
+      "T4": "A",
+      "T5": "A",
+      "T6": "A",
+      "T7": "C",
+      "T8": "B",
+      "T9": "A",
+      "T10": "A",
+      "T11": "B",
+      "T12": "B",
+      "T13": "A",
+      "T14": "B",
+      "T15": "A",
+      "T16": "B",
+      "T17": "B",
+      "T18": "A",
+      "T19": "B",
+      "T20": "A",
+      "T21": "A",
+      "T22": "D",
+      "T23": "C",
+      "T24": "B",
+      "T25": "A",
+      "T26": "D",
+      "T27": "C",
+      "T28": "D",
+      "T29": "C",
+      "T30": "B"
+    }
+  }
+}
