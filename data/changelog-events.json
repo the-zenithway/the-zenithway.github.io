@@ -213,6 +213,104 @@
   ],
   "hamin": [
     {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Thermodynamics Sign Conventions\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"System and Surroundings Have Opposite Energy Changes\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Exothermic vs. Endothermic at Constant Pressure\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 6 C6",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:07:43.861Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new task: Chapter 6 T6",
+      "url": "right-now.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (N6-Thermodynamics Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (C6-Thermodynamics Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (S6-Thermodynamics Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (T6-Thermodynamics Test) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-biology",
+      "text": "AP Biology — new task: Chapter M M1T",
+      "url": "right-now.html?course=ap-biology",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-biology",
+      "text": "AP Biology — Chapter M (M1T-Full Mock Test 1) unlocked",
+      "url": "roadmap.html?course=ap-biology",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 8 B8",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 8 (B8-Further Applications of Integration) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T06:00:54.907Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) unlocked",
@@ -321,104 +419,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 8 (C8-Acids and Bases Problems) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (S8-Acids and Bases Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (T8-Acids and Bases Test) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (L9-Applications of Thermodynamics (Khan Academy)) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (N9-Applications of Thermodynamics Notes Submission) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (C9-Applications of Thermodynamics Problems) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (S9-Applications of Thermodynamics Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (T9-Applications of Thermodynamics Test) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (L10-Experiments) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (N10-Experiments Notes Submission) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (C10-Experiments Problems) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (S10-Experiments Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (T10-Experiments Test) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter M (M1T-Full Mock Test 1) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter M (M1TS-Full Mock Test 1 Solutions) locked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-04T05:10:19.299Z"
     }
