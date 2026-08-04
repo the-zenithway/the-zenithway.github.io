@@ -772,12 +772,6 @@ function setUpCourseNavigation(student) {
     const url = new URL(link.getAttribute("href"), window.location.href);
     const page = url.pathname.split("/").pop();
     if (page === "portal.html") return;
-    // AP Chemistry has no working submission flow yet -- hide the tab
-    // rather than link to a form that isn't ready.
-    if (page === "submit.html" && course.id === "ap-chemistry") {
-      link.remove();
-      return;
-    }
     url.searchParams.set("course", course.id);
     link.setAttribute("href", page + url.search);
   });
