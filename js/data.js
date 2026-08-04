@@ -88,13 +88,13 @@ const STUDENTS = [
             "date": "Jul 30",
             "chapter": "Chapter 1",
             "unit": "T1",
-            "content": "Marking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.<br><br>On how you write up review notes (발상노트 and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the <em>entire question</em>, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.<br><br>Domain and range: this tripped you up on T1. ln(0) isn't just 'undefined' in the vague sense — as x → 0⁺, ln(x) → -∞. That matters for range questions where 0 sits on the boundary of the domain: the function's values run off toward -∞ near that edge rather than stopping at some finite number (added to your cheat sheet).<br><br>Also on max/min questions: the maximum value of a function on an interval does <em>not</em> necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where f′(x) = 0 or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).<br><br>Inverse functions: to know if f⁻¹ exists, always check that f can be uniquely identified by its y-values — every output y must come from only one input x. If two different x values give the same y, there's no single well-defined inverse (cheat sheet entry added for this one too)."
+            "content": "Marking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.<br><br>On how you write up review notes (발상노트 and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the <em>entire question</em>, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.<br><br>Domain and range: this tripped you up on T1. $\\ln(0)$ isn't just 'undefined' in the vague sense — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. That matters for range questions where $0$ sits on the boundary of the domain: the function's values run off toward $-\\infty$ near that edge rather than stopping at some finite number (added to your cheat sheet).<br><br>Also on max/min questions: the maximum value of a function on an interval does <em>not</em> necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where $f'(x) = 0$ or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).<br><br>Inverse functions: to know if $f^{-1}$ exists, always check that $f$ can be uniquely identified by its $y$-values — every output $y$ must come from only one input $x$. If two different $x$ values give the same $y$, there's no single well-defined inverse (cheat sheet entry added for this one too)."
           },
           {
             "date": "Jul 28",
             "chapter": "Cumulative Review",
             "unit": "발상노트",
-            "content": "Good spread of review here — quick pass, item by item.<br><br>The motion problem: your setup for both speed (v = √((dx/dt)² + (dy/dt)²)) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the t=5 position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The y-component of your acceleration checks out on my end. The x-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and sin(t³)-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.<br><br>Symmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).<br><br>On the polynomial: the rational root theorem execution was flawless (x = 1, -4, -5 checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.<br><br>Period formula and the log power rule example are both correct."
+            "content": "Good spread of review here — quick pass, item by item.<br><br>The motion problem: your setup for both speed ($v = \\sqrt{(dx/dt)^2 + (dy/dt)^2}$) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the $t=5$ position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The $y$-component of your acceleration checks out on my end. The $x$-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and $\\sin(t^3)$-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.<br><br>Symmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).<br><br>On the polynomial: the rational root theorem execution was flawless ($x = 1, -4, -5$ checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.<br><br>Period formula and the log power rule example are both correct."
           }
         ],
         "cheatSheet": [
@@ -633,7 +633,7 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk"
           },
           {
-            "name": "M1TS-Full Mock Test 1 Solutions",
+            "name": "M1S-Full Mock Test 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
@@ -647,7 +647,7 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk"
           },
           {
-            "name": "M2TS-Full Mock Test 2 Solutions",
+            "name": "M2S-Full Mock Test 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
@@ -661,189 +661,189 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk"
           },
           {
-            "name": "M3TS-Full Mock Test 3 Solutions",
+            "name": "M3S-Full Mock Test 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk"
           },
           {
-            "name": "M1M-Multiple-Choice Mock 1",
+            "name": "M4T-Multiple-Choice Mock 1",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk"
           },
           {
-            "name": "M1MS-Multiple-Choice Mock 1 Solutions",
+            "name": "M4S-Multiple-Choice Mock 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk"
           },
           {
-            "name": "M2M-Multiple-Choice Mock 2",
+            "name": "M5T-Multiple-Choice Mock 2",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk"
           },
           {
-            "name": "M2MS-Multiple-Choice Mock 2 Solutions",
+            "name": "M5S-Multiple-Choice Mock 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk"
           },
           {
-            "name": "M3M-Multiple-Choice Mock 3",
+            "name": "M6T-Multiple-Choice Mock 3",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk"
           },
           {
-            "name": "M3MS-Multiple-Choice Mock 3 Solutions",
+            "name": "M6S-Multiple-Choice Mock 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk"
           },
           {
-            "name": "M4M-Multiple-Choice Mock 4",
+            "name": "M7T-Multiple-Choice Mock 4",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk"
           },
           {
-            "name": "M4MS-Multiple-Choice Mock 4 Solutions",
+            "name": "M7S-Multiple-Choice Mock 4 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk"
           },
           {
-            "name": "M5M-Multiple-Choice Mock 5",
+            "name": "M8T-Multiple-Choice Mock 5",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk"
           },
           {
-            "name": "M5MS-Multiple-Choice Mock 5 Solutions",
+            "name": "M8S-Multiple-Choice Mock 5 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk"
           },
           {
-            "name": "M1F-FRQ Mock 1",
+            "name": "M9T-FRQ Mock 1",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk"
           },
           {
-            "name": "M1FS-FRQ Mock 1 Solutions",
+            "name": "M9S-FRQ Mock 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk"
           },
           {
-            "name": "M2F-FRQ Mock 2",
+            "name": "M10T-FRQ Mock 2",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk"
           },
           {
-            "name": "M2FS-FRQ Mock 2 Solutions",
+            "name": "M10S-FRQ Mock 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk"
           },
           {
-            "name": "M3F-FRQ Mock 3",
+            "name": "M11T-FRQ Mock 3",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk"
           },
           {
-            "name": "M3FS-FRQ Mock 3 Solutions",
+            "name": "M11S-FRQ Mock 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk"
           },
           {
-            "name": "M4F-FRQ Mock 4",
+            "name": "M12T-FRQ Mock 4",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk"
           },
           {
-            "name": "M4FS-FRQ Mock 4 Solutions",
+            "name": "M12S-FRQ Mock 4 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk"
           },
           {
-            "name": "M5F-FRQ Mock 5",
+            "name": "M13T-FRQ Mock 5",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk"
           },
           {
-            "name": "M5FS-FRQ Mock 5 Solutions",
+            "name": "M13S-FRQ Mock 5 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk"
           },
           {
-            "name": "M6F-FRQ Mock 6",
+            "name": "M14T-FRQ Mock 6",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk"
           },
           {
-            "name": "M6FS-FRQ Mock 6 Solutions",
+            "name": "M14S-FRQ Mock 6 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk"
           },
           {
-            "name": "M7F-FRQ Mock 7",
+            "name": "M15T-FRQ Mock 7",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk"
           },
           {
-            "name": "M7FS-FRQ Mock 7 Solutions",
+            "name": "M15S-FRQ Mock 7 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk"
           },
           {
-            "name": "M8F-FRQ Mock 8",
+            "name": "M16T-FRQ Mock 8",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Complete",
             "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk"
           },
           {
-            "name": "M8FS-FRQ Mock 8 Solutions",
+            "name": "M16S-FRQ Mock 8 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Complete",
@@ -1238,6 +1238,12 @@ const STUDENTS = [
         },
         "feedback": [
           {
+            "date": "Aug 3",
+            "chapter": "Chapter 1",
+            "unit": "T",
+            "content": "T1 graded — 7/40 correct (17.5%). Feedback below covers T1-T15 (12 of 15 missed); flagging now so review can start before the rest is looked at.<br><br><strong>T1</strong> (chose A, correct B): $f(-2) = (-2)^3 - 3(-2) - 1 = -8 + 6 - 1 = -3$. Likely a sign slip on the $-3x$ term when $x$ is negative — double-check each term separately rather than combining signs in your head.<br><br><strong>T2</strong> (chose B, correct D): the denominator is $x^2+4$, not $x^2-4$ — a sum of a square and a positive constant is never zero, so there's no domain restriction at all; domain is all reals. Watch for this exact swap (sum vs. difference) before setting a denominator to zero.<br><br><strong>T5</strong> (chose A, correct C): you got T4 right (recognizing $g(f(x))=5$ needs no computation since $g$ is constant), but then picked $5x^3-10x^2-15x+20$ here — that's $5 \\cdot f(x)$, a multiplication, not $f(g(x))=f(5)$. $f(g(x))$ means literally evaluate $f$ at the number $5$: $f(5)=125-50-15+4=64$. Same underlying idea as T4, opposite direction — worth locking in as one rule (see cheat sheet).<br><br><strong>T6</strong> (chose A, correct B): from $f(1)=6$ and $f(-1)=-2$: $A+B=3$ and $A-B=-3$, so $A=0$, $B=3$, $2A+B=3$. If you got 12, check the sign on the $Ax^2$ term at $x=-1$ — $(-1)^2=+1$, it does NOT flip sign like the $x^3$ term does.<br><br><strong>T7</strong> (chose A, correct C): $y=(x+1)/x = 1+1/x$ has a bare $+1$, so $f(-x)\\neq -f(x)$ — not odd. $y=x^3+3x$ is the one with no stray constant, so it's actually odd. See T11 below — same trap twice.<br><br><strong>T8</strong> (chose A, correct C): a linear function with $m\\neq 0$ IS always one-to-one, so it DOES guarantee an inverse — that rules out A. Being an odd function does NOT guarantee one-to-one (e.g. $x^3-x$ is odd but fails the horizontal line test), so C is the one that's \"not sufficient.\"<br><br><strong>T9</strong> (chose A, correct B): at $x=0$, $\\arctan(0)=0$ and $\\cos(0)=1$ — so $y=1$ IS attained, not just approached. Range is $(0,1]$, closed at the top. When finding a range, always check whether the boundary value is actually hit by some real input before marking it open.<br><br><strong>T10</strong> (chose A, correct D): $g(x)=|\\sin x - 1|$ is maximized when $\\sin x$ is most <em>negative</em> (at $\\sin x=-1$, i.e. $x=3\\pi/2$), giving $|-1-1|=2$ — not at $x=0$ where $g(0)=1$. Don't default to an endpoint of the interval; actually locate where the inner expression is extremal.<br><br><strong>T11</strong> (chose A, correct C): $\\sin 3x$ IS odd (no stray constant). $x^3-2$ is NOT odd — same issue as T7, a lone additive constant breaks origin symmetry. This pattern cost you two problems; see cheat sheet.<br><br><strong>T13</strong> (chose D, correct B): $f(x)=x^3-6x^2+9x = x(x-3)^2$, zeros at $x=0$ and $x=3$, so $\\{0,3\\}$ — check your factoring signs, $(x-3)^2$ not $(x+3)^2$.<br><br><strong>T14</strong> (chose C, correct D): substituting $y=x+3$ into $y^2=4x$ gives $x^2+2x+9=0$, discriminant $= 4-36 = -32 < 0$ — no real solution, so \"no intersection.\" Worth checking the discriminant before assuming a curve pair intersects.<br><br><strong>T15</strong> (chose D, correct A): a reflection in the $y$-axis means replace $x$ with $-x$: $g(x)=f(-x)=2-5^{-x}$. $\\log_5(2-x)$ is an inverse-style answer (swap $x,y$ and solve), which is a different transformation entirely — see cheat sheet."
+          },
+          {
             "date": "Jul 22",
             "chapter": "Chapter 5",
             "unit": "S",
@@ -1257,6 +1263,21 @@ const STUDENTS = [
           }
         ],
         "cheatSheet": [
+          {
+            "topic": "Odd Function Check — Watch for Stray Constants",
+            "source": "1T-7, 1T-11",
+            "pattern": "Missed twice in the same test. To check if $f$ is odd, verify $f(-x)=-f(x)$ algebraically — a bare additive constant (not multiplied by $x$) breaks the symmetry every time. $x^3+3x$ is odd; $x^3-2$ and $1+\\dfrac1x$ are not, because of the $-2$ and $+1$. Scan for a lone constant term first before doing the full check."
+          },
+          {
+            "topic": "Constant Inner/Outer Function — Substitute, Don't Multiply",
+            "source": "1T-4, 1T-5",
+            "pattern": "Got T4 right, then fell into the mirror-image trap on T5. If $g(x)=c$ (a constant), $g(f(x))=c$ always — no computation needed. But $f(g(x))=f(c)$ means literally plug the number $c$ into $f$ and evaluate — it is NOT $c\\cdot f(x)$. Keep straight which function is \"outside\": that's the one being multiplied vs. evaluated."
+          },
+          {
+            "topic": "y-axis Reflection vs. Inverse Function",
+            "source": "1T-15",
+            "pattern": "These are different transformations and easy to mix up under pressure. Reflection in the $y$-axis: replace $x$ with $-x$, i.e. $g(x)=f(-x)$. Inverse (reflection in $y=x$): swap $x$ and $y$, then solve for $y$. A $\\log$ showing up in an answer choice for a \"reflect in the $y$-axis\" question is a signal you've drifted toward the inverse instead."
+          },
           {
             "topic": "Domain Restrictions",
             "source": "4C-14, 5S-9",
@@ -1491,37 +1512,37 @@ const STUDENTS = [
           { "name": "S10-Experiments Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/19q7a9HBDHm1wwPygiTZI6Ryg6b82m1LS/view?usp=drivesdk" },
           { "name": "T10-Experiments Test", "category": "T-Test", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1uUIyPA2DX6Xb4n5wNYsQT7gpPVPBvMgH/view?usp=drive_link" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk" },
-          { "name": "M1TS-Full Mock Test 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk" },
+          { "name": "M1S-Full Mock Test 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk" },
           { "name": "M2T-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk" },
-          { "name": "M2TS-Full Mock Test 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk" },
+          { "name": "M2S-Full Mock Test 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk" },
           { "name": "M3T-Full Mock Test 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk" },
-          { "name": "M3TS-Full Mock Test 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk" },
-          { "name": "M1M-Multiple-Choice Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk" },
-          { "name": "M1MS-Multiple-Choice Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk" },
-          { "name": "M2M-Multiple-Choice Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk" },
-          { "name": "M2MS-Multiple-Choice Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk" },
-          { "name": "M3M-Multiple-Choice Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk" },
-          { "name": "M3MS-Multiple-Choice Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk" },
-          { "name": "M4M-Multiple-Choice Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk" },
-          { "name": "M4MS-Multiple-Choice Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk" },
-          { "name": "M5M-Multiple-Choice Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk" },
-          { "name": "M5MS-Multiple-Choice Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk" },
-          { "name": "M1F-FRQ Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk" },
-          { "name": "M1FS-FRQ Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk" },
-          { "name": "M2F-FRQ Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk" },
-          { "name": "M2FS-FRQ Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk" },
-          { "name": "M3F-FRQ Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk" },
-          { "name": "M3FS-FRQ Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk" },
-          { "name": "M4F-FRQ Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk" },
-          { "name": "M4FS-FRQ Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk" },
-          { "name": "M5F-FRQ Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk" },
-          { "name": "M5FS-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk" },
-          { "name": "M6F-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk" },
-          { "name": "M6FS-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk" },
-          { "name": "M7F-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk" },
-          { "name": "M7FS-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk" },
-          { "name": "M8F-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk" },
-          { "name": "M8FS-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk" }
+          { "name": "M3S-Full Mock Test 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk" },
+          { "name": "M4T-Multiple-Choice Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk" },
+          { "name": "M4S-Multiple-Choice Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk" },
+          { "name": "M5T-Multiple-Choice Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk" },
+          { "name": "M5S-Multiple-Choice Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk" },
+          { "name": "M6T-Multiple-Choice Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk" },
+          { "name": "M6S-Multiple-Choice Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk" },
+          { "name": "M7T-Multiple-Choice Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk" },
+          { "name": "M7S-Multiple-Choice Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk" },
+          { "name": "M8T-Multiple-Choice Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk" },
+          { "name": "M8S-Multiple-Choice Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk" },
+          { "name": "M9T-FRQ Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk" },
+          { "name": "M9S-FRQ Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk" },
+          { "name": "M10T-FRQ Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk" },
+          { "name": "M10S-FRQ Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk" },
+          { "name": "M11T-FRQ Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk" },
+          { "name": "M11S-FRQ Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk" },
+          { "name": "M12T-FRQ Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk" },
+          { "name": "M12S-FRQ Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk" },
+          { "name": "M13T-FRQ Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk" },
+          { "name": "M13S-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk" },
+          { "name": "M14T-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk" },
+          { "name": "M14S-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk" },
+          { "name": "M15T-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk" },
+          { "name": "M15S-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk" },
+          { "name": "M16T-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk" },
+          { "name": "M16S-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk" }
         ]
       },
       {
@@ -2010,7 +2031,7 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk"
           },
           {
-            "name": "M1TS-Full Mock Test 1 Solutions",
+            "name": "M1S-Full Mock Test 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
@@ -2024,7 +2045,7 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk"
           },
           {
-            "name": "M2TS-Full Mock Test 2 Solutions",
+            "name": "M2S-Full Mock Test 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
@@ -2038,189 +2059,189 @@ const STUDENTS = [
             "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk"
           },
           {
-            "name": "M3TS-Full Mock Test 3 Solutions",
+            "name": "M3S-Full Mock Test 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk"
           },
           {
-            "name": "M1M-Multiple-Choice Mock 1",
+            "name": "M4T-Multiple-Choice Mock 1",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk"
           },
           {
-            "name": "M1MS-Multiple-Choice Mock 1 Solutions",
+            "name": "M4S-Multiple-Choice Mock 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk"
           },
           {
-            "name": "M2M-Multiple-Choice Mock 2",
+            "name": "M5T-Multiple-Choice Mock 2",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk"
           },
           {
-            "name": "M2MS-Multiple-Choice Mock 2 Solutions",
+            "name": "M5S-Multiple-Choice Mock 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk"
           },
           {
-            "name": "M3M-Multiple-Choice Mock 3",
+            "name": "M6T-Multiple-Choice Mock 3",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk"
           },
           {
-            "name": "M3MS-Multiple-Choice Mock 3 Solutions",
+            "name": "M6S-Multiple-Choice Mock 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk"
           },
           {
-            "name": "M4M-Multiple-Choice Mock 4",
+            "name": "M7T-Multiple-Choice Mock 4",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk"
           },
           {
-            "name": "M4MS-Multiple-Choice Mock 4 Solutions",
+            "name": "M7S-Multiple-Choice Mock 4 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk"
           },
           {
-            "name": "M5M-Multiple-Choice Mock 5",
+            "name": "M8T-Multiple-Choice Mock 5",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk"
           },
           {
-            "name": "M5MS-Multiple-Choice Mock 5 Solutions",
+            "name": "M8S-Multiple-Choice Mock 5 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk"
           },
           {
-            "name": "M1F-FRQ Mock 1",
+            "name": "M9T-FRQ Mock 1",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk"
           },
           {
-            "name": "M1FS-FRQ Mock 1 Solutions",
+            "name": "M9S-FRQ Mock 1 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk"
           },
           {
-            "name": "M2F-FRQ Mock 2",
+            "name": "M10T-FRQ Mock 2",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk"
           },
           {
-            "name": "M2FS-FRQ Mock 2 Solutions",
+            "name": "M10S-FRQ Mock 2 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk"
           },
           {
-            "name": "M3F-FRQ Mock 3",
+            "name": "M11T-FRQ Mock 3",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk"
           },
           {
-            "name": "M3FS-FRQ Mock 3 Solutions",
+            "name": "M11S-FRQ Mock 3 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk"
           },
           {
-            "name": "M4F-FRQ Mock 4",
+            "name": "M12T-FRQ Mock 4",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk"
           },
           {
-            "name": "M4FS-FRQ Mock 4 Solutions",
+            "name": "M12S-FRQ Mock 4 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk"
           },
           {
-            "name": "M5F-FRQ Mock 5",
+            "name": "M13T-FRQ Mock 5",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk"
           },
           {
-            "name": "M5FS-FRQ Mock 5 Solutions",
+            "name": "M13S-FRQ Mock 5 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk"
           },
           {
-            "name": "M6F-FRQ Mock 6",
+            "name": "M14T-FRQ Mock 6",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk"
           },
           {
-            "name": "M6FS-FRQ Mock 6 Solutions",
+            "name": "M14S-FRQ Mock 6 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk"
           },
           {
-            "name": "M7F-FRQ Mock 7",
+            "name": "M15T-FRQ Mock 7",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk"
           },
           {
-            "name": "M7FS-FRQ Mock 7 Solutions",
+            "name": "M15S-FRQ Mock 7 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk"
           },
           {
-            "name": "M8F-FRQ Mock 8",
+            "name": "M16T-FRQ Mock 8",
             "category": "M-Mock",
             "chapter": "Chapter M",
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk"
           },
           {
-            "name": "M8FS-FRQ Mock 8 Solutions",
+            "name": "M16S-FRQ Mock 8 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
             "status": "Locked",
@@ -2322,8 +2343,21 @@ const STUDENTS = [
           "instruction": "Complete C1 — Functions Problems. Work through the problems carefully, show each step, and use B1 as a reference whenever you need to revisit a function concept.",
           "due": "Next session"
         },
-        "feedback": [],
-        "cheatSheet": [],
+        "feedback": [
+          {
+            "date": "Aug 3",
+            "chapter": "Chapter 1",
+            "unit": "T",
+            "content": "T1 graded — 38/40 correct (95%). Excellent work — only two misses, and they share the exact same slip.<br><br><strong>T25</strong> (chose B, correct C): $\\sin(x/4)$ hits its max of 1 when the inside angle $x/4 = \\pi/2$ — solving that gives $x = 4\\cdot(\\pi/2) = 2\\pi$, not $\\pi$. Landing on $\\pi$ looks like the coefficient 4 got used as a 2 in that last step ($\\pi/2 \\times 2 = \\pi$).<br><br><strong>T33</strong> (chose D, correct C): the rose $r = 3\\cos(4\\theta)$ passes through the origin when $\\cos(4\\theta) = 0$, i.e. $4\\theta = \\pi/2$, so $\\theta = \\pi/8$ — not $\\pi/4$. Same slip as T25, just in reverse ($\\pi/2 \\div 2 = \\pi/4$ instead of $\\pi/2 \\div 4 = \\pi/8$).<br><br>Both misses come down to one thing: after setting up the equation correctly, the coefficient inside the trig argument (the $4$ in $\\sin(x/4)$ or $\\cos(4\\theta)$) got treated as a 2 when solving for the outer variable. Added a cheat sheet entry for this — worth a deliberate double-check on that specific step next time."
+          }
+        ],
+        "cheatSheet": [
+          {
+            "topic": "Unwinding the Coefficient in a Trig Argument",
+            "source": "1T-25, 1T-33",
+            "pattern": "Missed twice with the same numeric slip. When solving sin(x/k) or cos(k·θ) type equations: first solve for the *inside* angle as usual (e.g. inside = π/2 for a max, or = π/2 + nπ for a zero), then correctly multiply/divide by k to isolate the variable — e.g. x/4 = π/2 → x = 4·(π/2) = 2π (multiply by 4, not 2); 4θ = π/2 → θ = π/8 (divide by 4, not 2). Both misses used 2 instead of 4 in that last step — worth a deliberate re-check of which coefficient you're actually unwinding."
+          }
+        ],
         "roadmap": [
           { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
           { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
@@ -2486,37 +2520,37 @@ const STUDENTS = [
           { "name": "S10-Experiments Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/19q7a9HBDHm1wwPygiTZI6Ryg6b82m1LS/view?usp=drivesdk" },
           { "name": "T10-Experiments Test", "category": "T-Test", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1uUIyPA2DX6Xb4n5wNYsQT7gpPVPBvMgH/view?usp=drive_link" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk" },
-          { "name": "M1TS-Full Mock Test 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk" },
+          { "name": "M1S-Full Mock Test 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1evsWQPyy2MiQfUAefgRQK3EwEf0h5FwP/view?usp=drivesdk" },
           { "name": "M2T-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Pc-j08nsaveScdL4g8k9HZKmg5nFEeMH/view?usp=drivesdk" },
-          { "name": "M2TS-Full Mock Test 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk" },
+          { "name": "M2S-Full Mock Test 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GbmFJ0u2OLWinbDVEz4apGpHyPWAbmhk/view?usp=drivesdk" },
           { "name": "M3T-Full Mock Test 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1t0_uU9Jb372YXW7qVqCSecf_vTXs-37a/view?usp=drivesdk" },
-          { "name": "M3TS-Full Mock Test 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk" },
-          { "name": "M1M-Multiple-Choice Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk" },
-          { "name": "M1MS-Multiple-Choice Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk" },
-          { "name": "M2M-Multiple-Choice Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk" },
-          { "name": "M2MS-Multiple-Choice Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk" },
-          { "name": "M3M-Multiple-Choice Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk" },
-          { "name": "M3MS-Multiple-Choice Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk" },
-          { "name": "M4M-Multiple-Choice Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk" },
-          { "name": "M4MS-Multiple-Choice Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk" },
-          { "name": "M5M-Multiple-Choice Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk" },
-          { "name": "M5MS-Multiple-Choice Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk" },
-          { "name": "M1F-FRQ Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk" },
-          { "name": "M1FS-FRQ Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk" },
-          { "name": "M2F-FRQ Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk" },
-          { "name": "M2FS-FRQ Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk" },
-          { "name": "M3F-FRQ Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk" },
-          { "name": "M3FS-FRQ Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk" },
-          { "name": "M4F-FRQ Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk" },
-          { "name": "M4FS-FRQ Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk" },
-          { "name": "M5F-FRQ Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk" },
-          { "name": "M5FS-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk" },
-          { "name": "M6F-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk" },
-          { "name": "M6FS-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk" },
-          { "name": "M7F-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk" },
-          { "name": "M7FS-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk" },
-          { "name": "M8F-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk" },
-          { "name": "M8FS-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk" }
+          { "name": "M3S-Full Mock Test 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HtftpVFXZK8ViAL6oQdFh_hpHtkdPq_0/view?usp=drivesdk" },
+          { "name": "M4T-Multiple-Choice Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1v5AOi7H3ONEe9IOfwXGe_dTCrt4LVZxQ/view?usp=drivesdk" },
+          { "name": "M4S-Multiple-Choice Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1eImSaJZd0NdupB7YajQCNB_mbLIXFTHC/view?usp=drivesdk" },
+          { "name": "M5T-Multiple-Choice Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1HpipAhpBETGB8yWCS3LWKkNmUppHNahW/view?usp=drivesdk" },
+          { "name": "M5S-Multiple-Choice Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1_VrlXgihGapSZf2qclBijwAOH2f7o0cD/view?usp=drivesdk" },
+          { "name": "M6T-Multiple-Choice Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1NhwYkrh7RoplqELW--QiSj6wDrG6kYwm/view?usp=drivesdk" },
+          { "name": "M6S-Multiple-Choice Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1FnhoS5sFtZFQa4J45IfJsztNVDSNbRZ4/view?usp=drivesdk" },
+          { "name": "M7T-Multiple-Choice Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Z4-i24kpBaecxJMVZ2gYI2K-WCUCgZ0I/view?usp=drivesdk" },
+          { "name": "M7S-Multiple-Choice Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/166Cog9FSEs_RSmLUBi78aonAP_T4dex5/view?usp=drivesdk" },
+          { "name": "M8T-Multiple-Choice Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Cu54YOGro1VSzuI07rI6MSEXbjieq1SW/view?usp=drivesdk" },
+          { "name": "M8S-Multiple-Choice Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/11w9_QaKMkzP7TW1w9Wa_l6Z-YPh9bx6c/view?usp=drivesdk" },
+          { "name": "M9T-FRQ Mock 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1U693n4J4vgjx-EZfrqjJyPS37f05T_XF/view?usp=drivesdk" },
+          { "name": "M9S-FRQ Mock 1 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/18iluZB1QSpwUKNtuP3KIkRLCVZ4x3wEM/view?usp=drivesdk" },
+          { "name": "M10T-FRQ Mock 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1B4ELDV1tF8CvbG5iQl8VASHsTPkGyfDu/view?usp=drivesdk" },
+          { "name": "M10S-FRQ Mock 2 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ombG58eCN6jgO59xWMSKuK-6wrmFGD-y/view?usp=drivesdk" },
+          { "name": "M11T-FRQ Mock 3", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-Oy4USO-P3N8gA3I0LUdnkCD11X1cABI/view?usp=drivesdk" },
+          { "name": "M11S-FRQ Mock 3 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1rS7vjs0syqUWHv2jY-7pUEgq-f3zWZx9/view?usp=drivesdk" },
+          { "name": "M12T-FRQ Mock 4", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1-rN3du3b9WvD8bByQEw3BH5LSQ45O4X4/view?usp=drivesdk" },
+          { "name": "M12S-FRQ Mock 4 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1XpfAttSNKjaNvyqNiiiIU9KNtudz8BTq/view?usp=drivesdk" },
+          { "name": "M13T-FRQ Mock 5", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1Ukh-J1MzKuQamVPlSHkYPWFj9IsMbe3j/view?usp=drivesdk" },
+          { "name": "M13S-FRQ Mock 5 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1PDwQ1NSi8Wr22QRCM5r1xaIy5JLl95x4/view?usp=drivesdk" },
+          { "name": "M14T-FRQ Mock 6", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1hKxhRhBxcuEmW873sl2kdD3ps3_FdRur/view?usp=drivesdk" },
+          { "name": "M14S-FRQ Mock 6 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1lsGPfNox4uPgx7tbvnFp15Pcwrf_7-hg/view?usp=drivesdk" },
+          { "name": "M15T-FRQ Mock 7", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1GTIIgGmQsWXKzwWzpeDAVr7JIQqs4dg3/view?usp=drivesdk" },
+          { "name": "M15S-FRQ Mock 7 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1T0jceWgFbWeYREFq7L1kJKm9DU4YB2Ho/view?usp=drivesdk" },
+          { "name": "M16T-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk" },
+          { "name": "M16S-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk" }
         ]
       },
       {

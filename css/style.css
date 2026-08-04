@@ -1646,10 +1646,10 @@ body.portal-body {
 }
 
 .feedback-content {
-  color: var(--text);
-  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
   line-height: 1.6;
-  margin: 0;
+  margin: 8px 0 0;
 }
 
 /* -------- Submit page (submit.html) -------- */
