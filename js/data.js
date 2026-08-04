@@ -247,6 +247,17 @@ const STUDENTS = [
         "id": "ap-chemistry",
         "name": "AP Chemistry",
         "icon": "chemistry",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 6",
+          "unit": "T6",
+          "instruction": "Take the Thermodynamics test under focused, timed conditions. Show your reasoning clearly, check sign conventions carefully, and message us when you finish."
+        },
+        "rightNowNext": {
+          "chapter": "Chapter 7",
+          "unit": "L7",
+          "instruction": "Begin Equilibrium on Khan Academy and take concise notes on equilibrium constants, reaction quotients, and Le Châtelier’s principle."
+        },
         "feedback": [],
         "cheatSheet": [],
         "roadmap": [
@@ -459,34 +470,34 @@ const STUDENTS = [
             "name": "L6-Thermodynamics (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 6",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics"
           },
           {
             "name": "N6-Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 6",
-            "status": "Unlocked"
+            "status": "Complete"
           },
           {
             "name": "C6-Thermodynamics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk"
           },
           {
             "name": "S6-Thermodynamics Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1EPu6Y4lOmv_Jptnj1rR15eMBuArHS0pn/view?usp=drivesdk"
           },
           {
             "name": "T6-Thermodynamics Test",
             "category": "T-Test",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1vo4hgzd0sfq38cPcDxZ7Hq5JcwSckKNk/view?usp=drive_link"
           },
           {
@@ -855,6 +866,17 @@ const STUDENTS = [
         "id": "ap-biology",
         "name": "AP Biology",
         "icon": "biology",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter M",
+          "unit": "M1T",
+          "instruction": "Take Full Mock Test 1 under timed conditions. Complete it in one sitting, mark any questions you are unsure about, and message us when you finish."
+        },
+        "rightNowNext": {
+          "chapter": "Chapter M",
+          "unit": "M1S",
+          "instruction": "Check Full Mock Test 1 with the solution manual and make a short review list of every missed or uncertain question."
+        },
         "feedback": [
           {
             "date": "Jul 27",
@@ -929,7 +951,7 @@ const STUDENTS = [
           { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
-          { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
+          { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Unlocked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
           { "name": "M1S-Full Mock Test 1 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1p24uTEhOFXorDKZK9bF5ZxB0B0ldyO2E/view?usp=drivesdk" },
           { "name": "M2T-Full Mock Test 2", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1n-fsx7U4PePiS97lQgkA_67wDTE7MFab/view?usp=drivesdk" },
           { "name": "M2S-Full Mock Test 2 Solution", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/129BabPxff37yg_H-KyIJB3QvoSY1X8eh/view?usp=drivesdk" },
@@ -955,6 +977,17 @@ const STUDENTS = [
         "id": "ap-calculus-bc",
         "name": "AP Calculus BC",
         "icon": "calculus",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 8",
+          "unit": "B8",
+          "instruction": "Read B8 — Further Applications of Integration. Work through the examples carefully and focus on choosing the correct setup before calculating."
+        },
+        "rightNowNext": {
+          "chapter": "Chapter 8",
+          "unit": "C8",
+          "instruction": "Complete the Further Applications of Integration problem set. Show the integral setup and reasoning for every problem, not only the final answer."
+        },
         "feedback": [],
         "cheatSheet": [],
         "roadmap": [
@@ -995,7 +1028,7 @@ const STUDENTS = [
           { "name": "S7-Application of Integration to Geometry Solutions", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/1JDNnEy-gksUoVmF-XCG1aH3_YeYqhGU5/view?usp=drive_link" },
           { "name": "R7-Application of Integration to Geometry Review", "category": "R-Review", "chapter": "Chapter 7", "status": "Complete" },
           { "name": "T7-Application of Integration to Geometry Test", "category": "T-Test", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/1F_sKSqa4Zyy4J3kuUM48hSj5CWxm-FLr/view?usp=drive_link" },
-          { "name": "B8-Further Applications of Integration", "category": "B-book chapter", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1AjmoXuebty9WbTfmKgKB_EYCFP58aJWO/view?usp=drive_link" },
+          { "name": "B8-Further Applications of Integration", "category": "B-book chapter", "chapter": "Chapter 8", "status": "Unlocked", "url": "https://drive.google.com/file/d/1AjmoXuebty9WbTfmKgKB_EYCFP58aJWO/view?usp=drive_link" },
           { "name": "C8-Further Application of Integration Problems", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1bQrM0wkcrnj0A3uIUD5NhtM5BV1CUd7i/view?usp=drive_link" },
           { "name": "S8-Further Application of Integration Solutions", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1OV_9DvjrlOeVzup-RpgobnQfMLXXn4TR/view?usp=drive_link" },
           { "name": "R8-Further Application of Integration Review", "category": "R-Review", "chapter": "Chapter 8", "status": "Locked" },
