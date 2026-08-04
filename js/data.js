@@ -459,20 +459,20 @@ const STUDENTS = [
             "name": "L6-Thermodynamics (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics"
           },
           {
             "name": "N6-Thermodynamics Notes Submission",
             "category": "N-Notes Submission",
             "chapter": "Chapter 6",
-            "status": "Locked"
+            "status": "Unlocked"
           },
           {
             "name": "C6-Thermodynamics Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk"
           },
           {
