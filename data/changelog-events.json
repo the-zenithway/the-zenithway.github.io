@@ -213,6 +213,27 @@
   ],
   "hamin": [
     {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Thermodynamics Sign Conventions\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"System and Surroundings Have Opposite Energy Changes\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Exothermic vs. Endothermic at Constant Pressure\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:24:05.646Z"
+    },
+    {
       "type": "feedback",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — new feedback on Chapter 6 C6",
@@ -398,27 +419,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 8 (C8-Acids and Bases Problems) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (S8-Acids and Bases Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (T8-Acids and Bases Test) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (L9-Applications of Thermodynamics (Khan Academy)) locked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-04T05:10:19.299Z"
     }
