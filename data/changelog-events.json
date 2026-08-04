@@ -213,6 +213,13 @@
   ],
   "hamin": [
     {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 6 C6",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T06:07:43.861Z"
+    },
+    {
       "type": "deadline",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — new task: Chapter 6 T6",
@@ -412,13 +419,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 9 (L9-Applications of Thermodynamics (Khan Academy)) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (N9-Applications of Thermodynamics Notes Submission) locked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-04T05:10:19.299Z"
     }
