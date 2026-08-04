@@ -215,6 +215,27 @@
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T05:26:58.267Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (N6-Thermodynamics Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T05:26:58.267Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (C6-Thermodynamics Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T05:26:58.267Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) locked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-04T05:10:19.299Z"
@@ -398,27 +419,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter M (M1TS-Full Mock Test 1 Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter M (M2T-Full Mock Test 2) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter M (M2TS-Full Mock Test 2 Solutions) locked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T05:10:19.299Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter M (M3T-Full Mock Test 3) locked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-04T05:10:19.299Z"
     }
