@@ -266,7 +266,23 @@ const STUDENTS = [
             "content": "Strong work on the Thermodynamics problem set — you got all but two questions correct. Before moving into T6, redo those two problems without looking at the solutions and write one sentence for each explaining what caused the miss. Pay especially close attention to sign conventions and whether the question is asking about the system or the surroundings. Once those corrections are clear, you are ready for the test."
           }
         ],
-        "cheatSheet": [],
+        "cheatSheet": [
+          {
+            "topic": "Thermodynamics Sign Conventions",
+            "source": "C6, Aug 4",
+            "pattern": "Before calculating, define the <em>system</em> and track every energy transfer from its point of view. Heat absorbed by the system is positive ($q>0$); heat released by the system is negative ($q<0$). Work done <em>on</em> the system is positive ($w>0$); work done <em>by</em> the system on the surroundings is negative ($w<0$). Then use the first law, $\\Delta E=q+w$. Writing the direction in words before assigning a sign is the safest way to avoid flipping it."
+          },
+          {
+            "topic": "System and Surroundings Have Opposite Energy Changes",
+            "source": "C6, Aug 4",
+            "pattern": "Energy transferred between a system and its surroundings is conserved, so their changes have equal magnitudes and opposite signs: $q_{\\text{sys}}=-q_{\\text{surr}}$. If the surroundings warm up, they gained heat and $q_{\\text{surr}}>0$, which means the system released that heat and $q_{\\text{sys}}<0$. Always check whose energy change the question asks for before choosing the sign."
+          },
+          {
+            "topic": "Exothermic vs. Endothermic at Constant Pressure",
+            "source": "C6, Aug 4",
+            "pattern": "At constant pressure, the heat of the process equals the enthalpy change: $q_p=\\Delta H$. Exothermic means the system releases heat, so $\\Delta H<0$; endothermic means the system absorbs heat, so $\\Delta H>0$. A temperature increase in the surroundings usually points to an exothermic system, while a temperature decrease in the surroundings points to an endothermic system."
+          }
+        ],
         "roadmap": [
           {
             "name": "Advanced Chemistry Booklet",
