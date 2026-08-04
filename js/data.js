@@ -258,7 +258,14 @@ const STUDENTS = [
           "unit": "L7",
           "instruction": "Begin Equilibrium on Khan Academy and take concise notes on equilibrium constants, reaction quotients, and Le Châtelier’s principle."
         },
-        "feedback": [],
+        "feedback": [
+          {
+            "date": "Aug 4",
+            "chapter": "Chapter 6",
+            "unit": "C6",
+            "content": "Strong work on the Thermodynamics problem set — you got all but two questions correct. Before moving into T6, redo those two problems without looking at the solutions and write one sentence for each explaining what caused the miss. Pay especially close attention to sign conventions and whether the question is asking about the system or the surroundings. Once those corrections are clear, you are ready for the test."
+          }
+        ],
         "cheatSheet": [],
         "roadmap": [
           {
