@@ -30,32 +30,20 @@ const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c2
 // its query string for "?embedded=true".
 const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
 
-// The "Mark complete" button on teacher.html's grading queue POSTs
-// here to flip one submission's status in data/submissions-log.json —
-// see automation/submission-status-updater.gs for the Apps Script Web
-// App this needs to point at (not deployed yet; the button shows an
-// error until this is filled in). Same "NOT SECURE" caveat as the
-// rest of this file applies: this URL, and the endpoint it points to,
-// are visible to anyone who views page source, same as the teacher
-// login above. The endpoint is deliberately narrow (it can only ever
-// set an existing entry's status to "Complete", nothing else) so the
-// worst case of that exposure is someone marking a real submission
-// complete early — not data loss or arbitrary writes.
-const SUBMISSION_STATUS_UPDATE_URL = "";
-
-// Every write control on teacher-student.html (unlock a roadmap item,
-// add feedback, add a cheat sheet entry, update Right Now, log a
-// metrics data point) POSTs here — see
-// automation/zenith-data-writer.gs for the Apps Script Web App this
-// needs to point at (not deployed yet; each control shows an error
-// until this is filled in). This is the first write path into
-// js/data.js itself — same "NOT SECURE but narrow" tradeoff as
-// SUBMISSION_STATUS_UPDATE_URL above: this URL is visible to anyone
-// who views page source, but every action behind it is one specific,
-// whitelisted mutation (flip a roadmap status, append one feedback/
-// cheat-sheet/metrics entry, replace one course's rightNow) — never
-// an arbitrary field write, never touching logins or TEACHERS/PARENTS.
-const TEACHER_DATA_WRITE_URL = "";
+// Every write control on the teacher dashboard POSTs here — "Mark
+// complete" on teacher.html's grading queue, and everything on
+// teacher-student.html (unlock a roadmap item, add feedback, add a
+// cheat sheet entry, update Right Now, log a metrics data point). One
+// URL for all of it: see automation/zenith-data-writer.gs for the
+// single Apps Script Web App this needs to point at (not deployed
+// yet; each control shows an error until this is filled in). Same
+// "NOT SECURE but narrow" tradeoff as the teacher login above: this
+// URL is visible to anyone who views page source, but every action
+// behind it is one specific, whitelisted mutation (flip a roadmap
+// status, mark one submission Complete, append one feedback/cheat-
+// sheet/metrics entry, replace one course's rightNow) — never an
+// arbitrary field write, never touching logins or TEACHERS/PARENTS.
+const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbxBll3lRMEbpfsy3R0N-dCdPi9yFyBDpD7GBgvgbZSZr6YsPMEvGhYqL2Y9fEhDLF6XEw/exec";
 
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
@@ -510,42 +498,42 @@ const STUDENTS = [
           { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
           { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
           { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Complete" },
-          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B" },
           { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
           { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
           { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Complete" },
-          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j" },
           { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
           { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
           { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Complete" },
-          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo" },
           { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
           { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
           { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Complete" },
-          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8" },
           { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
           { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
           { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Complete" },
-          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Complete" },
-          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
           { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
           { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Complete" },
-          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC" },
           { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
           { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
           { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Complete" },
-          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Complete", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Unlocked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
@@ -1197,42 +1185,42 @@ const STUDENTS = [
           { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
           { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Complete", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
           { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Complete" },
-          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B" },
           { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
           { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
           { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Unlocked" },
-          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j" },
           { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
           { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
           { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Locked" },
-          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo" },
           { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
           { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
           { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked" },
-          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8" },
           { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
           { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
           { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked" },
-          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked" },
-          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
           { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
           { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked" },
-          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC" },
           { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
           { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
           { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked" },
-          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },
@@ -1390,42 +1378,42 @@ const STUDENTS = [
           { "name": "AP Biology Barrons Book", "category": "L-Learning", "chapter": "Chapter 0", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1s6aNFpszdgzt152Hk8wsKPCsgiSg0E7v/view?usp=drivesdk" },
           { "name": "L1-Chemistry of Life (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-biology/chemistry-of-life" },
           { "name": "N1-Chemistry of Life Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 1", "status": "Unlocked" },
-          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C1-Chemistry of Life Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/drive/folders/1gLnIX_rxrBQC71_lpIZEGkSGfodRr25B" },
           { "name": "S1-Chemistry of Life Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1jEDTskERb3TYvmKP-dRhamW-2XqfC5Lf/view?usp=drivesdk" },
           { "name": "F1-Chemistry of Life Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 1", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L2-Cell Structure and Function (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-structure-and-function" },
           { "name": "N2-Cell Structure and Function Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Locked" },
-          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C2-Cell Structure and Function Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1h3uvSu3kJFYPLsGvKSdBN0W66BK9zk8j" },
           { "name": "S2-Cell Structure and Function Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/drive/folders/1B1PBEplrHkuDzaqH2ny9EDVXgHzSHDgL" },
           { "name": "F2-Cell Structure and Function Final Self-Check with Booklet", "category": "F-Final Self Check", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L3-Cellular Energetics", "category": "L-Learning", "chapter": "Chapter 3", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cellular-energetics" },
           { "name": "N3-Cellular Energetics", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Locked" },
-          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C3-Cellular Energetics", "category": "C-coursework", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/10tciN9_IYK47gys4QNSx5qigyQAOUZGo" },
           { "name": "S3-Cellular Energetics", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/drive/folders/1xdnFU92XCC2JrsFbvP8Q3QjgxKnASfby" },
           { "name": "F3-Cellular Energetics", "category": "F-Final Self Check", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L4-Cell Communication and Cell Cycle", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle" },
           { "name": "N4-Cell Communication and Cell Cycle", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked" },
-          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C4-Cell Communication and Cell Cycle", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1EHgwa-IskmttIchU1XyPaWSvwdUaFCd8" },
           { "name": "S4-Cell Communication and Cell Cycle", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/drive/folders/1LfOGc93kgNjJS_4VGxbCruPj0GgAXMeJ" },
           { "name": "F4-Cell Communication and Cell Cycle", "category": "F-Final Self Check", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L5-Heredity", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/heredity" },
           { "name": "N5-Heredity", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked" },
-          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C5-Heredity", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1rwY2i1MxmyEzL8X1PWNpyn4EfB-O0L-G" },
           { "name": "S5-Heredity", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/drive/folders/1k7AZueQ1tue7TJWyfFBcHo2JE37B9WCF" },
           { "name": "F5-Heredity", "category": "F-Final Self Check", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L6-Gene Expression and Regulation", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/gene-expression-and-regulation" },
           { "name": "N6-Gene Expression and Regulation", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked" },
-          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C6-Gene Expression and Regulation", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1zV7-bsGaymB-zamDyF6H5uGIg_ynr7qg" },
           { "name": "S6-Gene Expression and Regulation", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/drive/folders/1J9XplbB--nPg7WEVZQ8fk1qhNkPfnb7K" },
           { "name": "F6-Gene Expression and Regulation", "category": "F-Final Self Check", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L7-Natural Selection", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/natural-selection" },
           { "name": "N7-Natural Selection", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked" },
-          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C7-Natural Selection", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/15VzEcDaaXW4guy8sQWew9CQkR8-cPDBC" },
           { "name": "S7-Natural Selection", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/drive/folders/1cEhFI3JqptuO4xOzUS8KUlH_ykOIX49w" },
           { "name": "F7-Natural Selection", "category": "F-Final Self Check", "chapter": "Chapter 7", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "L8-Ecology", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-biology/ecology-ap" },
           { "name": "N8-Ecology", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked" },
-          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil", "submissionUrl": "submit.html?course=ap-biology" },
+          { "name": "C8-Ecology", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/1lrEGMiZfSguDu_sOez2XQ6y4FaVDGQil" },
           { "name": "S8-Ecology", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/drive/folders/16xL23mheSbTE-aZ8pkXcftclIPoPeui8" },
           { "name": "F8-Ecology", "category": "F-Final Self Check", "chapter": "Chapter 8", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1JJAF2UrevbY6J_1v_7BoRN_JSvfS9BGX/view?usp=drivesdk" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/17BVYGivjTfjSwpreDEeuvcPk0ru7Urhi/view?usp=drivesdk" },

@@ -1,20 +1,22 @@
 # Submission compiler
 
-> **Related:** [`submission-status-updater.gs`](submission-status-updater.gs) is a
-> separate, standalone Web App that lets teacher.html's "Mark complete"
-> button flip one entry's `status` to `"Complete"` without hand-editing
-> the log — see the header comment in that file for setup. It shares
-> this doc's log-entry shape and GitHub-commit pattern but is its own
-> deployment, not part of the Form-bound script below.
->
-> **Also related:** [`zenith-data-writer.gs`](zenith-data-writer.gs) is
-> a third, separate standalone Web App — it backs every write control
-> on teacher-student.html (unlock a roadmap item, add feedback, add a
-> cheat sheet entry, update Right Now, log a metrics data point). It's
-> the first thing in this repo that writes to `js/data.js` itself
-> rather than `data/submissions-log.json`; see that file's header
-> comment for how it handles `js/data.js` not being valid JSON, and for
-> setup steps.
+> **Related:** [`zenith-data-writer.gs`](zenith-data-writer.gs) is a
+> separate, standalone Web App that backs every write control on the
+> teacher dashboard — marking a submission Complete (teacher.html) and
+> unlocking a roadmap item / adding feedback / adding a cheat sheet
+> entry / updating Right Now / logging a metrics data point
+> (teacher-student.html). It writes to this doc's `data/submissions-
+> log.json` for the first of those, and to `js/data.js` for the rest —
+> see that file's header comment for setup and for how it handles
+> `js/data.js` not being valid JSON. It used to be two separate
+> standalone scripts (one just for "mark complete") until they were
+> merged on 2026-08-05 — Google doesn't require standalone Web Apps to
+> be split up the way a Form-bound trigger script does, so there was no
+> reason to keep deploying two. As of the same day it also supports
+> batching: teacher-student.html can stage several changes and apply
+> them as one `applyBatch` request, which lands as a single commit
+> (unless the batch mixes a `js/data.js` change with `markSubmissionComplete`,
+> which still needs two commits — one per file).
 
 Compiles every Google Form submission (the intake form students use to
 turn in work) into one status-tracked log, `data/submissions-log.json`,
@@ -101,11 +103,21 @@ retroactively.
 work — not decided yet, since nothing downstream reads this field.
 
 `courseId` is resolved from whichever answer's question title starts
-with "course" (case-insensitive), against the `COURSE_IDS` map inside
-`submissions-compiler.gs` — `null` if it doesn't match (e.g. the map is
-out of date, or the dropdown's exact text changed) or no such question
-was found at all; the entry still gets logged either way, just
-unresolved. `username` comes from whichever question title starts with
+with "course" (case-insensitive), copied straight through as the
+`courseId` — the Form's "Course" dropdown option **values** are the
+course's exact slug id (e.g. `"ap-calculus-bc"`), matching
+`STUDENTS[].courses[].id` in `js/data.js`, so no separate lookup table
+is needed. (Earlier versions of this script mapped a display-name
+answer like `"AP Calculus BC"` through a hand-maintained `COURSE_IDS`
+table — that table went stale at least once, silently producing
+`courseId: null` for a whole course. Switching the dropdown's values
+to slugs removed the table and that failure mode entirely; see
+[`js/app.js`](../js/app.js)'s `submissionCourseId()` for the
+client-side counterpart, which resolves a submission's course from
+`answers.course` directly rather than trusting the log's `courseId`
+field at all.) `courseId` is `null` only if no "course"-prefixed
+question was found at all — the entry still gets logged either way,
+just unresolved. `username` comes from whichever question title starts with
 "username". `chapter` comes from whichever starts with "chapter",
 normalized from a bare number (`"5"` → `"Chapter 5"`) to match the
 format used in `js/data.js`'s roadmap items. `unit` comes from whichever
@@ -123,11 +135,13 @@ Service, setting five Script Properties (`GITHUB_TOKEN`, `GITHUB_OWNER`,
 `GITHUB_REPO`, `GITHUB_BRANCH`, `LOG_PATH`), and adding the
 `onFormSubmit` trigger.
 
-`COURSE_IDS` inside the script maps each course's exact "Course"
-dropdown text to a `courseId`. It's a plain object literal in the
-script, not read from `js/data.js` (Apps Script can't reach into this
-repo's JS at runtime) — so it needs a new entry by hand whenever a
-course is added or renamed on the Form.
+The Form's "Course" dropdown must use each course's exact slug id
+(from `js/data.js`'s `STUDENTS[].courses[].id`, e.g. `ap-calculus-bc`,
+`ap-chemistry`, `ap-biology`, `ap-computer-science-a`) as each
+option's **value** — the option's visible label can still read
+however you want ("AP Calculus BC"), only the underlying value has to
+be the slug. Adding a new course means adding a new dropdown option
+with that course's id as its value; no script change needed.
 
 The GitHub token should be a fine-grained personal access token scoped
 to only this repo, with Contents read/write — not a classic all-repo

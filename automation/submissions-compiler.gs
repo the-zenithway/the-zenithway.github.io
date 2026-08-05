@@ -42,10 +42,23 @@
  *    renames without silently going blank the way an exact match did
  *    on 2026-07-31 (a submission logged with username: null even
  *    though the raw answer clearly had "kyjv9981" in it):
- *      starts with "course"    dropdown, e.g. "AP Calculus BC" /
- *                               "AP Biology" — must match COURSE_IDS
- *                               below exactly (this is an answer
- *                               *value*, not a title, so it's stable)
+ *      starts with "course"    dropdown, whose OPTION VALUES are now
+ *                               the course's exact slug id — e.g.
+ *                               "ap-calculus-bc", "ap-chemistry" —
+ *                               matching STUDENTS[].courses[].id in
+ *                               js/data.js exactly. As of 2026-08,
+ *                               this is copied straight through as
+ *                               courseId with no lookup table (see
+ *                               buildEntryFromResponse_ below) — a
+ *                               display-name dropdown ("AP Calculus
+ *                               BC") used to need a separate COURSE_IDS
+ *                               map here, which went stale at least
+ *                               once (a missing "AP Chemistry" entry
+ *                               silently logged courseId: null on four
+ *                               real submissions in early August); a
+ *                               slug-valued dropdown removes that
+ *                               failure mode entirely, since there's
+ *                               nothing left to keep in sync.
  *      starts with "username"   short answer — the student's exact
  *                               Zenith username
  *      starts with "chapter"    short answer or dropdown, e.g. "5"
@@ -54,10 +67,11 @@
  *                               "B"/"C"/"T"/"R"/"S"
  *      a file-upload question   any title — detected by type, OCR'd
  *                               automatically
- *    "Course" is resolved to a courseId via COURSE_IDS below — update
- *    that map by hand whenever a course is added or renamed. If the
- *    Form's questions are renamed again beyond a shared prefix (not
- *    just a case change), update findAnswerByPrefix_'s callers below.
+ *    If the Form's questions are renamed again beyond a shared prefix
+ *    (not just a case change), update findAnswerByPrefix_'s callers
+ *    below. If a new course's dropdown option is added, no code here
+ *    needs to change — just make sure its value is that course's
+ *    exact id from js/data.js.
  *
  * 3. Enable the Drive Advanced Service (needed for OCR): in the Apps
  *    Script editor, click "Services" (+ icon) in the left sidebar,
@@ -87,6 +101,14 @@
  * 6. Submit a test response to the form (attach an image if the form
  *    has a file-upload question, to test OCR too) and check main on
  *    GitHub for a new commit adding an entry to the log.
+ *
+ * 7. (One-time, optional) Every new photo upload is automatically
+ *    made public-viewable by makeFilePublic_ (added 2026-08-05) so
+ *    its thumbnail actually loads on the site instead of showing a
+ *    broken image. Photos uploaded BEFORE that fix existed are still
+ *    private — run backfillFileSharing_ once (pick it from the
+ *    function dropdown in the Apps Script editor, click Run) to fix
+ *    sharing on everything already in data/submissions-log.json.
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -141,16 +163,6 @@ function onFormSubmit(e) {
   }
 }
 
-// Maps the Form's "Course" dropdown answer to the exact course id used
-// in js/data.js. Update by hand whenever a course is added, renamed,
-// or its dropdown label changes.
-var COURSE_IDS = {
-  "AP Calculus BC": "ap-calculus-bc",
-  "AP Biology": "ap-biology",
-  "AP Chemistry": "ap-chemistry",
-  "AP Computer Science A": "ap-computer-science-a"
-};
-
 // "Chapter" comes in as a bare number ("5") — normalize it to match
 // the "Chapter 5" format used in js/data.js's roadmap items. Leaves
 // already-prefixed or unrecognized values alone.
@@ -191,6 +203,7 @@ function buildEntryFromResponse_(response) {
       var fileIds = itemResponse.getResponse(); // array of Drive file IDs
       answers[title] = fileIds;
       fileIds.forEach(function (fileId) {
+        makeFilePublic_(fileId);
         var text = ocrDriveFile_(fileId);
         if (text) ocrText += (ocrText ? "\n\n---\n\n" : "") + text;
       });
@@ -208,7 +221,15 @@ function buildEntryFromResponse_(response) {
     id: "sub_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
     receivedAt: new Date().toISOString(),
     status: "pending",
-    courseId: COURSE_IDS[courseAnswer] || null,
+    // Copied straight through — the Form's "Course" dropdown option
+    // VALUES are the course's exact slug id (e.g. "ap-calculus-bc"),
+    // so no lookup table is needed here anymore. If the Form ever
+    // reverts to display-name values ("AP Calculus BC"), this would
+    // need a name->id lookup again — see js/app.js's submissionCourseId()
+    // client-side, which already tries an id match first and falls
+    // back to a name match, so a wrong-shaped courseId here wouldn't
+    // break the site either way; it just wouldn't be as clean.
+    courseId: courseAnswer ? String(courseAnswer).trim() : null,
     username: usernameAnswer ? String(usernameAnswer).trim() : null,
     chapter: normalizeChapter_(chapterAnswer),
     unit: unitAnswer || null,
@@ -216,6 +237,72 @@ function buildEntryFromResponse_(response) {
     ocrText: ocrText || null,
     formResponseId: response.getId()
   };
+}
+
+// Makes an uploaded photo viewable via its public thumbnail URL
+// (https://drive.google.com/thumbnail?id=...), which is how
+// submit.html/teacher.html/teacher-student.html render it. Without
+// this, the thumbnail only loads for someone signed into a Google
+// account that already has access to the file — almost never true
+// for whoever's actually viewing the site — so it renders as a broken
+// image. Safe to do: the file's id is already public the instant it
+// lands in data/submissions-log.json (a plain JSON file the public
+// site serves with no auth), so this doesn't expose anything that
+// wasn't already discoverable, it just makes the already-discoverable
+// link actually work. Uses the basic DriveApp service (built into
+// every Apps Script project, no extra service to enable — unlike the
+// Drive Advanced Service ocrDriveFile_ below needs). Non-fatal on
+// failure (e.g. a Google Workspace admin policy blocking external
+// sharing, if this Form's account is a school/org account rather than
+// a personal one) — logs a warning but doesn't stop the submission
+// from being recorded.
+function makeFilePublic_(fileId) {
+  try {
+    DriveApp.getFileById(fileId).setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  } catch (err) {
+    console.warn("Could not make file " + fileId + " public (sharing policy may block this): " + err);
+  }
+}
+
+// One-off manual backfill for photos uploaded BEFORE makeFilePublic_
+// existed — onFormSubmit only calls it for new uploads going forward,
+// so anything already in data/submissions-log.json needs this run
+// once by hand: in the Apps Script editor, pick backfillFileSharing_
+// from the function dropdown (top toolbar) and click Run.
+function backfillFileSharing_() {
+  var props = PropertiesService.getScriptProperties();
+  var token = props.getProperty("GITHUB_TOKEN");
+  var owner = props.getProperty("GITHUB_OWNER");
+  var repo = props.getProperty("GITHUB_REPO");
+  var branch = props.getProperty("GITHUB_BRANCH") || "main";
+  var path = props.getProperty("LOG_PATH") || "data/submissions-log.json";
+
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch;
+  var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
+  var resp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
+  if (resp.getResponseCode() !== 200) {
+    throw new Error("Could not read " + path + " (HTTP " + resp.getResponseCode() + "): " + resp.getContentText());
+  }
+  var file = JSON.parse(resp.getContentText());
+  var log = JSON.parse(Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString());
+
+  var fixed = 0, failed = 0;
+  log.forEach(function (entry) {
+    var answers = entry.answers || {};
+    Object.keys(answers).forEach(function (key) {
+      if (!Array.isArray(answers[key])) return;
+      answers[key].forEach(function (fileId) {
+        try {
+          DriveApp.getFileById(fileId).setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+          fixed++;
+        } catch (err) {
+          failed++;
+          console.warn("Could not fix sharing for " + fileId + ": " + err);
+        }
+      });
+    });
+  });
+  Logger.log("Backfill done: " + fixed + " fixed, " + failed + " failed.");
 }
 
 // Converts an uploaded image to a temporary Google Doc using Drive's

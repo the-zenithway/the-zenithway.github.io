@@ -465,6 +465,65 @@ function submissionFileIds(entry) {
   return key ? answers[key] : [];
 }
 
+// A submission's actual work can arrive as an uploaded photo (OCR'd
+// separately — see ocrText) OR as typed text in a non-file Form
+// question (e.g. "Upload the relevant answers here" used as a plain
+// text box for typed multiple-choice letters, like "AABCDB..."). Only
+// the photo/OCR path was ever surfaced in the log display — a
+// text-only submission with no photo and no OCR text showed as
+// content-free ("No photos or OCR text on this submission") even
+// though the student's actual answer was sitting right there in
+// `answers`. This finds that typed answer the same way
+// submissionFileIds finds a file array: scan for the one answer that
+// isn't one of the known metadata fields already shown elsewhere.
+const SUBMISSION_METADATA_ANSWER_KEYS_ = ["name", "username", "course", "chapter", "unit", "feedback-and-remarks"];
+function submissionTextAnswer(entry) {
+  const answers = entry.answers || {};
+  const key = Object.keys(answers).find(function (k) {
+    const v = answers[k];
+    return typeof v === "string" && v.trim() !== "" && SUBMISSION_METADATA_ANSWER_KEYS_.indexOf(k.toLowerCase()) === -1;
+  });
+  return key ? answers[key].trim() : null;
+}
+
+// One foldable <details> block for one piece of a submission card
+// (its photos, OCR text, typed answer, or the student's own remark).
+// Shared by every page that renders a submission card — submit.html,
+// teacher.html's grading queue, and teacher-student.html's
+// submissions list — so a long OCR dump or a photo grid doesn't force
+// scrolling past a submission's other pieces just to see them. Native
+// <details>/<summary>, no JS wiring needed. Returns "" (renders
+// nothing) when there's no content for that piece.
+function submissionFoldHtml(label, innerHtml) {
+  if (!innerHtml) return "";
+  return '<details class="submit-log-fold">' +
+    '<summary class="submit-log-fold-summary">' + label + '</summary>' +
+    '<div class="submit-log-fold-body">' + innerHtml + '</div>' +
+  '</details>';
+}
+
+// The four optional foldable pieces every submission card can have —
+// photos, OCR text (from a photo), a typed answer (see
+// submissionTextAnswer above), and the student's own remark
+// ("feedback-and-remarks" on the Form) — each independently foldable
+// rather than one all-or-nothing toggle for the whole card.
+function submissionFoldSectionsHtml(entry) {
+  const thumbsHtml = submissionFileIds(entry).map(function (id) {
+    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
+      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
+    '</a>';
+  }).join("");
+  const textAnswer = submissionTextAnswer(entry);
+  const remark = (entry.answers && entry.answers["feedback-and-remarks"]) || "";
+
+  return (
+    submissionFoldHtml("Photos", thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : "") +
+    submissionFoldHtml("OCR text", entry.ocrText ? '<div class="submit-log-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : "") +
+    submissionFoldHtml("Submitted answer", textAnswer ? '<div class="submit-log-ocr">' + textAnswer.replace(/\n/g, '<br>') + '</div>' : "") +
+    submissionFoldHtml("Remark", remark ? '<p class="submit-log-remark">' + remark + '</p>' : "")
+  );
+}
+
 // Resolves a submission's course from the raw "course" Form answer
 // (e.g. "AP Chemistry" or, if the Form's dropdown is ever switched to
 // emit slugs directly, "ap-chemistry") matched against real courses in
@@ -503,12 +562,6 @@ function submissionDateLabel(receivedAt) {
 }
 
 function submissionLogItemHtml(entry) {
-  const thumbsHtml = submissionFileIds(entry).map(function (id) {
-    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
-      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
-    '</a>';
-  }).join("");
-
   const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
   const status = entry.status || "pending";
 
@@ -518,8 +571,7 @@ function submissionLogItemHtml(entry) {
       roadmapPillHtml(status, SUBMISSION_STATUS_COLORS, status) +
     '</div>' +
     '<p class="submit-log-chapter">' + chapterUnit + '</p>' +
-    (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : '') +
-    (entry.ocrText ? '<div class="submit-log-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : '') +
+    submissionFoldSectionsHtml(entry) +
   '</div>';
 }
 
@@ -534,17 +586,16 @@ function submissionLogItemHtml(entry) {
 // link to.
 function teacherSubmissionCardHtml(entry) {
   const thumbIds = submissionFileIds(entry);
-  const thumbsHtml = thumbIds.map(function (id) {
-    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
-      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
-    '</a>';
-  }).join("");
+  const textAnswer = submissionTextAnswer(entry);
+  const remark = (entry.answers && entry.answers["feedback-and-remarks"]) || "";
 
   const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
   const status = entry.status || "pending";
   const hints = [];
   if (thumbIds.length > 0) hints.push(thumbIds.length + (thumbIds.length === 1 ? " photo" : " photos"));
   if (entry.ocrText) hints.push("OCR text");
+  if (textAnswer) hints.push("typed answer");
+  if (remark) hints.push("remark");
 
   return '<details class="teacher-submission-item">' +
     '<summary class="teacher-submission-summary">' +
@@ -554,9 +605,7 @@ function teacherSubmissionCardHtml(entry) {
       (hints.length > 0 ? '<span class="teacher-submission-hint">' + hints.join(" · ") + '</span>' : '') +
     '</summary>' +
     '<div class="teacher-submission-detail">' +
-      (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : '') +
-      (entry.ocrText ? '<div class="submit-log-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : '') +
-      (thumbsHtml === '' && !entry.ocrText ? '<p class="submit-log-empty">No photos or OCR text on this submission.</p>' : '') +
+      (hints.length === 0 ? '<p class="submit-log-empty">No photos, OCR text, typed answer, or remark on this submission.</p>' : submissionFoldSectionsHtml(entry)) +
     '</div>' +
   '</details>';
 }
@@ -661,40 +710,21 @@ function renderTeacherCourseFilter() {
   });
 }
 
-// Posts a status change to SUBMISSION_STATUS_UPDATE_URL (js/data.js —
-// left blank until that endpoint is deployed; see
-// automation/submission-status-updater.gs). Sent as text/plain rather
-// than application/json purely to dodge a CORS preflight, which Apps
-// Script web apps don't handle — the endpoint still parses the body
-// as JSON on its side. On success, updates the cached entry in place
-// and re-renders both sections so the item disappears from the queue
-// immediately instead of waiting for a full reload.
+// Posts the "markSubmissionComplete" action to TEACHER_DATA_WRITE_URL
+// via postTeacherAction_ (defined further down, but function
+// declarations are hoisted so the forward reference is fine) — same
+// endpoint every other teacher-dashboard write control uses now that
+// the old dedicated submission-status-updater.gs was merged into
+// zenith-data-writer.gs. On success, updates the cached entry in
+// place and re-renders the queue so the item disappears immediately
+// instead of waiting for a full reload.
 function markSubmissionComplete_(id, buttonEl) {
-  if (!SUBMISSION_STATUS_UPDATE_URL) {
-    alert("No status-update endpoint configured yet — see automation/submission-status-updater.gs for setup, then fill in SUBMISSION_STATUS_UPDATE_URL in js/data.js.");
-    return;
-  }
-
-  buttonEl.disabled = true;
-  buttonEl.textContent = "Marking complete...";
-
-  fetch(SUBMISSION_STATUS_UPDATE_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({ id: id })
-  })
-    .then(function (res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const entry = (teacherSubmissionsCache || []).find(function (e) { return e.id === id; });
-      if (entry) entry.status = "Complete";
-      const select = document.getElementById("teacher-course-filter");
-      renderTeacherQueue(select ? select.value : "", teacherSubmissionsCache);
-    })
-    .catch(function () {
-      buttonEl.disabled = false;
-      buttonEl.textContent = "Mark complete";
-      alert("Could not mark this submission complete — the status-update endpoint may be down. Try again, or mark it by hand in data/submissions-log.json.");
-    });
+  postTeacherAction_("markSubmissionComplete", { id: id }, buttonEl, function () {
+    const entry = (teacherSubmissionsCache || []).find(function (e) { return e.id === id; });
+    if (entry) entry.status = "Complete";
+    const select = document.getElementById("teacher-course-filter");
+    renderTeacherQueue(select ? select.value : "", teacherSubmissionsCache);
+  });
 }
 
 function teacherQueueItemHtml(entry) {
@@ -702,12 +732,6 @@ function teacherQueueItemHtml(entry) {
   const resolvedCourseId = submissionCourseId(entry);
   const course = student ? getStudentCourse(student, resolvedCourseId) : null;
   const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
-  const remark = (entry.answers && entry.answers["feedback-and-remarks"]) || "";
-  const thumbsHtml = submissionFileIds(entry).map(function (id) {
-    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
-      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
-    '</a>';
-  }).join("");
   // Only link through to teacher-student.html when the course
   // actually resolved (see submissionCourseId above) — an
   // unresolved course would otherwise send the teacher to a dead
@@ -726,9 +750,7 @@ function teacherQueueItemHtml(entry) {
       '<span class="teacher-queue-waiting">' + teacherDaysAgoLabel(entry.receivedAt) + '</span>' +
     '</div>' +
     '<p class="teacher-queue-chapter">' + chapterUnit + '</p>' +
-    (remark ? '<p class="teacher-queue-remark">"' + remark + '"</p>' : "") +
-    (entry.ocrText ? '<div class="teacher-queue-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : "") +
-    (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : "") +
+    submissionFoldSectionsHtml(entry) +
     '<button type="button" class="teacher-mark-complete-btn" data-mark-complete="' + entry.id + '">Mark complete</button>' +
   '</div>';
 }
@@ -1122,6 +1144,111 @@ function postTeacherAction_(action, payload, buttonEl, onSuccess) {
     });
 }
 
+// ---- Pending-changes queue ----
+// Lets several write actions be staged (a roadmap unlock, a feedback
+// entry, a Right Now update, ...) and sent together as one
+// `applyBatch` request — one commit instead of one per change. Every
+// control below queues instead of posting immediately; nothing is
+// actually saved until "Apply" is clicked.
+let teacherPendingChanges = []; // [{ key, action, payload, label, applyLocally }]
+let teacherPendingKeyCounter_ = 0;
+// Set once by renderTeacherStudentPage() so the pending panel can
+// refresh the roadmap table's per-row "Queued" indicators after any
+// queue change (add/remove/apply/discard) — the panel itself doesn't
+// otherwise know which student/course it's staging changes for.
+let teacherPendingContext_ = null;
+
+// A fresh, collision-free key for an "append" style change (feedback/
+// cheat-sheet/metrics entries) — these never replace each other the
+// way an "updateRoadmapStatus"/"updateRightNow" key does, so each one
+// just needs to be unique.
+function uniqueTeacherKey_(prefix) {
+  return prefix + ":" + (++teacherPendingKeyCounter_);
+}
+
+// Adds a staged change, or — if `key` matches one already queued —
+// replaces it (used for "set" actions like updateRoadmapStatus/
+// updateRightNow, where re-editing the same thing before Apply should
+// update the pending change, not stack a second one). `applyLocally`
+// is the same kind of in-memory-update closure every control already
+// builds for postTeacherAction_'s onSuccess elsewhere in this file —
+// here it's just deferred until the batch actually saves instead of
+// run immediately.
+function queueTeacherChange_(key, action, payload, label, applyLocally) {
+  const existingIndex = teacherPendingChanges.findIndex(function (c) { return c.key === key; });
+  const entry = { key: key, action: action, payload: payload, label: label, applyLocally: applyLocally };
+  if (existingIndex === -1) teacherPendingChanges.push(entry);
+  else teacherPendingChanges[existingIndex] = entry;
+  renderTeacherPendingPanel_();
+}
+
+function dequeueTeacherChange_(key) {
+  teacherPendingChanges = teacherPendingChanges.filter(function (c) { return c.key !== key; });
+  renderTeacherPendingPanel_();
+}
+
+function renderTeacherPendingPanel_() {
+  const wrap = document.getElementById("teacher-pending-panel");
+  // Historically, a missing #teacher-pending-panel (e.g. a stale
+  // cached copy of teacher-student.html loaded without it) made this
+  // function silently do nothing for the panel while still refreshing
+  // the roadmap row indicators below — "Queued" would show correctly
+  // per row with no visible pending-changes panel anywhere, and no
+  // error. Warn loudly instead so that split failure is diagnosable
+  // from the console instead of looking like a real logic bug.
+  if (!wrap) {
+    console.warn('renderTeacherPendingPanel_: #teacher-pending-panel not found in the DOM — teacher-student.html may be stale/cached. The "Queued" row indicators will still update, but no pending-changes panel can be shown.');
+  }
+  if (wrap) {
+    if (teacherPendingChanges.length === 0) {
+      wrap.innerHTML = "";
+      wrap.hidden = true;
+    } else {
+      wrap.hidden = false;
+      const n = teacherPendingChanges.length;
+      wrap.innerHTML =
+        '<div class="teacher-pending-panel">' +
+          '<p class="teacher-pending-title">' + n + ' pending change' + (n === 1 ? "" : "s") + ' — nothing is saved until you apply</p>' +
+          '<ul class="teacher-pending-list">' +
+            teacherPendingChanges.map(function (c) {
+              return '<li class="teacher-pending-item">' +
+                '<span>' + c.label + '</span>' +
+                '<button type="button" class="teacher-pending-remove" data-remove-key="' + c.key.replace(/"/g, "&quot;") + '" aria-label="Remove">×</button>' +
+              '</li>';
+            }).join("") +
+          '</ul>' +
+          '<div class="teacher-pending-actions">' +
+            '<button type="button" class="teacher-add-btn" id="teacher-pending-apply">Apply ' + n + ' change' + (n === 1 ? "" : "s") + '</button>' +
+            '<button type="button" class="teacher-pending-discard" id="teacher-pending-discard">Discard all</button>' +
+          '</div>' +
+        '</div>';
+
+      wrap.querySelectorAll("[data-remove-key]").forEach(function (btn) {
+        btn.addEventListener("click", function () { dequeueTeacherChange_(btn.getAttribute("data-remove-key")); });
+      });
+
+      document.getElementById("teacher-pending-discard").addEventListener("click", function () {
+        teacherPendingChanges = [];
+        renderTeacherPendingPanel_();
+      });
+
+      document.getElementById("teacher-pending-apply").addEventListener("click", function () {
+        const applyBtn = document.getElementById("teacher-pending-apply");
+        const operations = teacherPendingChanges.map(function (c) { return { action: c.action, payload: c.payload }; });
+        postTeacherAction_("applyBatch", { operations: operations }, applyBtn, function () {
+          teacherPendingChanges.forEach(function (c) { c.applyLocally(); });
+          teacherPendingChanges = [];
+          renderTeacherPendingPanel_();
+        });
+      });
+    }
+  }
+
+  if (teacherPendingContext_) {
+    renderTeacherRoadmapActions_(teacherPendingContext_.student, teacherPendingContext_.course);
+  }
+}
+
 // Factored out of renderTeacherStudentPage so both the initial render
 // and a post-save refresh can call it without duplicating markup.
 function renderTeacherStudentNow_(course) {
@@ -1177,6 +1304,10 @@ function renderTeacherStudentCheatSheetList_(course) {
 // stays exactly what the student-facing roadmap.html also uses.
 // Relies on tbody rows being in the same order as course.roadmap,
 // which renderRoadmap() guarantees (it maps 1:1, no filtering/sorting).
+// Idempotent — safe to call repeatedly without a fresh renderRoadmap()
+// rebuild in between (removes any action cell it previously added to
+// a row before appending a new one), since renderTeacherPendingPanel_
+// calls this after every queue change to refresh "Queued" indicators.
 function renderTeacherRoadmapActions_(student, course) {
   const tbody = document.getElementById("roadmap-tbody");
   if (!tbody) return;
@@ -1187,11 +1318,18 @@ function renderTeacherRoadmapActions_(student, course) {
     const item = items[i];
     if (!item) return;
 
+    const existing = row.querySelector(".teacher-roadmap-action-cell");
+    if (existing) existing.remove();
+
+    const pendingKey = "updateRoadmapStatus:" + item.chapter + ":" + item.name;
+    const isPending = teacherPendingChanges.some(function (c) { return c.key === pendingKey; });
+
     const cell = document.createElement("td");
     cell.className = "teacher-roadmap-action-cell";
 
     const select = document.createElement("select");
     select.className = "teacher-roadmap-status-select";
+    select.disabled = isPending;
     statuses.forEach(function (status) {
       const opt = document.createElement("option");
       opt.value = status;
@@ -1203,14 +1341,17 @@ function renderTeacherRoadmapActions_(student, course) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "teacher-roadmap-action-btn";
-    btn.textContent = "Set";
+    btn.textContent = isPending ? "Queued" : "Set";
+    btn.disabled = isPending;
     btn.addEventListener("click", function () {
-      postTeacherAction_(
+      const status = select.value;
+      queueTeacherChange_(
+        pendingKey,
         "updateRoadmapStatus",
-        { username: student.username, courseId: course.id, chapter: item.chapter, name: item.name, status: select.value },
-        btn,
+        { username: student.username, courseId: course.id, chapter: item.chapter, name: item.name, status: status },
+        "Roadmap: " + item.chapter + " · " + item.name + " → " + status.replace(/-/g, " "),
         function () {
-          item.status = select.value;
+          item.status = status;
           renderRoadmap(course);
           renderTeacherRoadmapActions_(student, course);
         }
@@ -1246,18 +1387,19 @@ function renderTeacherFeedbackForm_(student, course) {
     if (!chapter || !unit || !content) { alert("Chapter, unit, and content are all required."); return; }
 
     const date = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
-    postTeacherAction_(
+    queueTeacherChange_(
+      uniqueTeacherKey_("addFeedback"),
       "addFeedback",
       { username: student.username, courseId: course.id, date: date, chapter: chapter, unit: unit, content: content },
-      btn,
+      "Feedback: " + chapter + " · " + unit,
       function () {
         course.feedback = course.feedback || [];
         course.feedback.unshift({ date: date, chapter: chapter, unit: unit, content: content });
         renderTeacherStudentFeedbackList_(course);
         renderMath(document.getElementById("teacher-student-content"));
-        renderTeacherFeedbackForm_(student, course);
       }
     );
+    renderTeacherFeedbackForm_(student, course); // reset the fields — queued, not yet saved
   });
 }
 
@@ -1283,18 +1425,19 @@ function renderTeacherCheatSheetForm_(student, course) {
     const pattern = document.getElementById("teacher-cheat-pattern").value.trim();
     if (!topic || !source || !pattern) { alert("Topic, source, and pattern are all required."); return; }
 
-    postTeacherAction_(
+    queueTeacherChange_(
+      uniqueTeacherKey_("addCheatSheetEntry"),
       "addCheatSheetEntry",
       { username: student.username, courseId: course.id, topic: topic, source: source, pattern: pattern },
-      btn,
+      "Cheat sheet: " + topic,
       function () {
         course.cheatSheet = course.cheatSheet || [];
         course.cheatSheet.push({ topic: topic, source: source, pattern: pattern });
         renderTeacherStudentCheatSheetList_(course);
         renderMath(document.getElementById("teacher-student-content"));
-        renderTeacherCheatSheetForm_(student, course);
       }
     );
+    renderTeacherCheatSheetForm_(student, course); // reset the fields — queued, not yet saved
   });
 }
 
@@ -1333,10 +1476,11 @@ function renderTeacherRightNowForm_(student, course) {
       : { state: "your-move", chapter: chapter, unit: unit, instruction: text };
     if (state === "your-move" && due) rightNow.due = due;
 
-    postTeacherAction_(
+    queueTeacherChange_(
+      "updateRightNow", // only one Right Now per course — re-editing before Apply replaces the pending change, not stacks a second
       "updateRightNow",
       { username: student.username, courseId: course.id, rightNow: rightNow },
-      btn,
+      "Right Now: " + rightNow.chapter + " · " + rightNow.unit,
       function () {
         course.rightNow = rightNow;
         delete course.rightNowNext;
@@ -1446,7 +1590,8 @@ function renderTeacherMetricsForm_(student, course) {
       payload = { username: student.username, courseId: course.id, metricType: type, entry: entry };
     }
 
-    postTeacherAction_(action, payload, btn, function () {
+    const label = "Metrics: " + TEACHER_METRIC_TYPE_LABELS_[type];
+    queueTeacherChange_(uniqueTeacherKey_(action), action, payload, label, function () {
       course.metrics = course.metrics || {};
       if (action === "setApScore") {
         course.metrics[payload.field] = payload.value;
@@ -1455,8 +1600,8 @@ function renderTeacherMetricsForm_(student, course) {
         course.metrics[payload.metricType].push(payload.entry);
       }
       renderTeacherMetrics(course.metrics);
-      draw(type);
     });
+    draw(type); // reset the fields — queued, not yet saved
   }
 
   draw();
@@ -1484,6 +1629,10 @@ function renderTeacherStudentPage() {
   document.getElementById("teacher-student-name").textContent = student.name;
   document.getElementById("teacher-student-course").textContent = course.name;
   document.title = student.name + " · " + course.name + " — Zenith";
+
+  teacherPendingChanges = [];
+  teacherPendingContext_ = { student: student, course: course };
+  renderTeacherPendingPanel_();
 
   renderTeacherStudentNow_(course);
   renderTeacherRightNowForm_(student, course);

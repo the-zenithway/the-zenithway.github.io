@@ -1120,6 +1120,15 @@ body.portal-body {
   font-size: 0.9rem;
 }
 
+/* teacher-student.html's roadmap table has a 6th (Actions) column the
+   student-facing roadmap.html doesn't — table-layout:fixed means
+   shrinking the other columns doesn't shrink the table itself (the
+   Name column just absorbs the slack up to max-width), so this needs
+   its own smaller cap rather than reusing 900px, or it stays exactly
+   as wide as the 5-column version and needs more horizontal scroll
+   room than it should. */
+.teacher-roadmap-table { max-width: 780px; }
+
 .roadmap-table thead th {
   position: sticky;
   top: 0;
@@ -1641,17 +1650,6 @@ a.teacher-queue-student:hover { text-decoration: underline; }
   color: var(--accent);
 }
 .teacher-queue-chapter { font-size: 0.88rem; color: var(--text); margin: 0 0 6px; }
-.teacher-queue-remark { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin: 0 0 6px; }
-.teacher-queue-ocr {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  background: var(--bg);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  margin: 0 0 6px;
-  line-height: 1.5;
-}
-
 .teacher-unlocked { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
 .teacher-unlocked-empty { font-size: 0.85rem; color: var(--text-muted); margin: 12px 0; }
 .teacher-latest-feedback {
@@ -1788,29 +1786,86 @@ a.teacher-queue-student:hover { text-decoration: underline; }
 .teacher-add-btn:hover { opacity: 0.9; }
 .teacher-add-btn:disabled { opacity: 0.6; cursor: default; }
 
-.teacher-roadmap-action-cell { display: flex; gap: 6px; align-items: center; }
+/* Stacked (not side-by-side) so the Actions column can stay narrow —
+   a 100px column comfortably fits either element full-width but not
+   both side by side, which is what was pushing the whole table past
+   ~900px and off the right edge of the viewport on anything narrower
+   than roughly a 1080px-wide window. */
+.teacher-roadmap-action-cell { display: flex; flex-direction: column; gap: 4px; align-items: stretch; }
 .teacher-roadmap-status-select {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--text);
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 5px 6px;
+  padding: 4px;
+  width: 100%;
 }
 .teacher-roadmap-action-btn {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--accent-ink);
   background: var(--accent);
   border: none;
   border-radius: var(--radius);
-  padding: 5px 10px;
+  padding: 4px 6px;
   cursor: pointer;
+  width: 100%;
 }
 .teacher-roadmap-action-btn:hover { opacity: 0.9; }
 .teacher-roadmap-action-btn:disabled { opacity: 0.6; cursor: default; }
+
+.teacher-pending-panel {
+  position: sticky;
+  top: 16px;
+  z-index: 5;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teacher-pending-title { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+.teacher-pending-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.teacher-pending-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+}
+.teacher-pending-remove {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.teacher-pending-remove:hover { color: var(--error); }
+.teacher-pending-actions { display: flex; gap: 10px; }
+.teacher-pending-discard {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.teacher-pending-discard:hover { color: var(--text); border-color: var(--text-muted); }
 
 /* -------- Feedback page -------- */
 .feedback-wrap {
@@ -2003,6 +2058,36 @@ a.teacher-queue-student:hover { text-decoration: underline; }
   font-size: 0.9rem;
   margin: 0;
 }
+
+/* One independently-foldable piece of a submission card (photos, OCR
+   text, typed answer, remark) — used on submit.html, teacher.html's
+   grading queue, and teacher-student.html's submissions list.
+   Smaller/lighter than .teacher-submission-item since these nest
+   inside a card rather than being the whole card themselves. */
+.submit-log-fold { margin: 0 0 8px; }
+.submit-log-fold:last-child { margin-bottom: 0; }
+.submit-log-fold-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  padding: 4px 0;
+}
+.submit-log-fold-summary::-webkit-details-marker { display: none; }
+.submit-log-fold-summary::before {
+  content: "▸";
+  font-size: 0.72rem;
+  transition: transform 0.15s ease;
+}
+.submit-log-fold[open] > .submit-log-fold-summary::before { transform: rotate(90deg); }
+.submit-log-fold-summary:hover { color: var(--text); }
+.submit-log-fold-body { padding: 6px 0 0; }
+
+.submit-log-remark { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin: 0; }
 
 /* Collapsed submission cards on teacher-student.html — box only until
    clicked open. Native <details>/<summary>, so no JS wiring needed. */
