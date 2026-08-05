@@ -11,6 +11,7 @@
 - [ ] Fully automating above workflow
 - [ ] instructions for the submission process, e.g. the template 
 - [ ] now page update
+- [ ] Question database and like searching, asking questions, hints, etc.
 
 ## 2. Active Engagement & Motivation
 - [ ] Weekly IRL (or Zoom, if circumstances don't allow) session — roughly once a week, under 90 minutes, purely for running the T tests. Not a general class/lecture slot.
@@ -20,8 +21,8 @@
 - [ ] **Make HOW TO STUDY absolutely clear — top priority for this pillar (VERY IMPORTANT)**. Not just what's due, but the actual technique/method of studying well *(also: Active Engagement & Motivation)*
   - [ ] Dedicated study-technique library page/section — spaced repetition, active recall, how to use the Cheat Sheet during review
 - [ ] think seriously about what's the meaning beyond the furriculum and score - what do they want? what are they ultiamtely aiming for?
-- [ ] cross check the tone across the website and program to be as encouraging as possible 
 - [ ] make the feedback process as encouraging as possible think a lot on thise this is very important 
+- [ ] IRL -> 발상노트 점검 + go through one whoel chapter and check understanding + test/mock
 
 ## 3. Advice & Direction — Community
 - [ ] Ways to make the community active, engaged, and no confict and encouarge helpfulness. what would trigger them to be genuinely helpful others 
@@ -35,7 +36,6 @@ and do things for the greater good?
 - [ ] Go to trips together, listen to their concerns and yeah having fun together 
 
 ## 4. Admin
-- [ ] philosophy update
 - [ ] Create discord community 
 - [ ] AP Physics self study track
 - [ ] Make zenith blog - articles that showcase our thoughts and etc.
@@ -43,7 +43,7 @@ and do things for the greater good?
   - [ ] Subject-specific pitfall posts (e.g. IVT vs MVT vs Rolle's, straight from real cheat sheet entries)
   - [ ] Student spotlight / progress stories
 - [ ] Maybe about us page that showcases the people involved in this
-- [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc.
+- [ ] For the first timers, we need a comprehensive introduction - maybe a video, article, etc. i.e. a manual
 - [ ] insta posts and etc in social media 
 - [ ] alumni/results page showing outcomes 
 - [ ] create a timeline of features 

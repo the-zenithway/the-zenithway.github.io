@@ -2517,6 +2517,12 @@ const STUDENTS = [
         "id": "ap-chemistry",
         "name": "AP Chemistry",
         "icon": "chemistry",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "L1",
+          "instruction": "Complete L1 — Atomic Structure and Properties on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith — C1's problem set is already unlocked too, so once you're comfortable with the material, move straight into it."
+        },
         "feedback": [],
         "cheatSheet": [],
         "roadmap": [
@@ -2613,6 +2619,12 @@ const STUDENTS = [
         "id": "ap-calculus-bc",
         "name": "AP Calculus BC",
         "icon": "calculus",
+        "rightNow": {
+          "state": "your-move",
+          "chapter": "Chapter 1",
+          "unit": "B1",
+          "instruction": "Read B1 — Functions. Work through the examples carefully and actively solve them as you go — C1's problem set is already unlocked too, so once you're comfortable with the chapter, move straight into it. Message us once you're done with both."
+        },
         "feedback": [],
         "cheatSheet": [],
         "roadmap": [
