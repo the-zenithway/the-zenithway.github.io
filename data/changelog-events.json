@@ -426,52 +426,213 @@
   "davidheo": [
     {
       "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (N3-Intermolecular Forces and Properties Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (N4-Chemical Reactions Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (N5-Kinetics Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (N6-Thermodynamics Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 6 (C6-Thermodynamics Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (L7-Equilibrium (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (N7-Equilibrium Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 7 (C7-Equilibrium Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 8 (L8-Acids and Bases (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 8 (N8-Acids and Bases Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 8 (C8-Acids and Bases Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 9 (L9-Applications of Thermodynamics (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 9 (N9-Applications of Thermodynamics Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 9 (C9-Applications of Thermodynamics Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 10 (L10-Experiments) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 10 (N10-Experiments Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 10 (C10-Experiments Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-05T09:59:24.806Z"
+    },
+    {
+      "type": "roadmap",
       "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) unlocked",
+      "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) marked complete",
       "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-03T10:30:39.756Z"
+      "timestamp": "2026-08-05T09:59:24.806Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (B3-Differentiation) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-05T09:59:24.806Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 3 (N3-Intermolecular Forces and Properties Notes Submission) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) marked optional reading",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-02T12:58:19.496Z"
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (C3-Differentiation Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-05T09:59:24.806Z"
     }
   ],
   "onyoo": [
