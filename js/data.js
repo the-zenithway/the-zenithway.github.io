@@ -5470,35 +5470,35 @@ const STUDENTS = [
             "name": "M5S-FRQ Mock 5 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
-            "status": "Locked",
+            "status": "Review",
             "url": "https://drive.google.com/file/d/1HZi_LvVrumTfe3VKaQelGssmyFwfiiuC/view?usp=drive_link"
           },
           {
             "name": "M6T-FRQ Mock 6",
             "category": "M-Mock",
             "chapter": "Chapter M",
-            "status": "Locked",
+            "status": "Review",
             "url": "https://drive.google.com/file/d/1vQeyfNHgOMp8quhft1mTcPq4XSlb52RD/view?usp=drive_link"
           },
           {
             "name": "M6S-FRQ Mock 6 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
-            "status": "Locked",
+            "status": "Review",
             "url": "https://drive.google.com/file/d/15DuEPBbg04fDeS8PUMaCRsFHfC1EzEfc/view?usp=drive_link"
           },
           {
             "name": "M7T-FRQ Mock 7",
             "category": "M-Mock",
             "chapter": "Chapter M",
-            "status": "Locked",
+            "status": "Review",
             "url": "https://drive.google.com/file/d/1_LkWfuAsZUOYvANxiVYdXIa7bULO7Yzh/view?usp=drive_link"
           },
           {
             "name": "M7S-FRQ Mock 7 Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter M",
-            "status": "Locked",
+            "status": "Review",
             "url": "https://drive.google.com/file/d/1vj-VgWY-wT00RkdY4wUbHPh7XJ_MtyNk/view?usp=drive_link"
           },
           {
