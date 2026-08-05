@@ -8,6 +8,7 @@
   - [ ] Submission + submission log update + systematic grading
   - [ ] Feedback + cheat sheet
   - [ ] way to create scheduled messaged for students especially when theres an event 
+- [ ] AI autopilot 
 - [ ] Fully automating above workflow
 - [ ] instructions for the submission process, e.g. the template 
 - [ ] now page update
@@ -48,9 +49,11 @@ and do things for the greater good?
 - [ ] alumni/results page showing outcomes 
 - [ ] create a timeline of features 
 - [ ] biology, chemistry view for couse 
+- [ ] video making 
 
 ## 5. Get People 
 
 ## 6. Intra-school Relation
 - [ ] Make presentation
 - [ ] Formal proposal document
+- [ ] Zenith Local 
