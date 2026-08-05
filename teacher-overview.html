@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Students — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "teacher", active: "overview", actions: ["logout"] });</script>
+
+<main class="parent-wrap">
+  <div class="parent-col parent-col-wide">
+    <p class="parent-greeting">All students</p>
+    <p class="parent-subtitle">Every enrolled course in one table, including the teacher-only metrics from each student's detail page. Click a row to open that student's full page.</p>
+
+    <div class="teacher-filter-row">
+      <label for="teacher-overview-filter" class="teacher-filter-label">Subject</label>
+      <select id="teacher-overview-filter" class="teacher-filter-select"></select>
+    </div>
+
+    <div class="roadmap-wrap">
+      <p class="roadmap-empty" id="teacher-overview-empty" hidden>No students match this filter.</p>
+      <table class="roadmap-table teacher-overview-table" id="teacher-overview-table">
+        <colgroup>
+          <col style="width: 160px">
+          <col style="width: 160px">
+          <col style="width: 90px">
+          <col style="width: 80px">
+          <col style="width: 74px">
+          <col style="width: 74px">
+          <col style="width: 90px">
+          <col style="width: 90px">
+          <col style="width: 100px">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Progress</th>
+            <th>Mastery</th>
+            <th>C-score</th>
+            <th>T-score</th>
+            <th>Motivation</th>
+            <th>Mock avg</th>
+            <th>Avg pace</th>
+            <th>AP final</th>
+          </tr>
+        </thead>
+        <tbody id="teacher-overview-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  requireTeacherLogin();
+  renderTeacherOverviewPage();
+
+  document.getElementById('logout-btn').addEventListener('click', logout);
+</script>
+</body>
+</html>

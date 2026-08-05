@@ -1,5 +1,12 @@
 # Submission compiler
 
+> **Related:** [`submission-status-updater.gs`](submission-status-updater.gs) is a
+> separate, standalone Web App that lets teacher.html's "Mark complete"
+> button flip one entry's `status` to `"Complete"` without hand-editing
+> the log — see the header comment in that file for setup. It shares
+> this doc's log-entry shape and GitHub-commit pattern but is its own
+> deployment, not part of the Form-bound script below.
+
 Compiles every Google Form submission (the intake form students use to
 turn in work) into one status-tracked log, `data/submissions-log.json`,
 so it can be worked through as a list instead of checking the Form's

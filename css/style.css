@@ -1145,6 +1145,13 @@ body.portal-body {
 
 .roadmap-table td.roadmap-name { white-space: normal; overflow: visible; }
 
+/* All-students overview table — wider and denser than the roadmap
+   table it borrows from, so every column fits without side-scrolling
+   on a normal laptop-width screen instead of only 5 fixed columns. */
+.teacher-overview-table { max-width: none; width: 100%; font-size: 0.8rem; }
+.teacher-overview-table thead th { padding: 10px 6px; font-size: 0.68rem; }
+.teacher-overview-table td { padding: 8px 6px; }
+
 .roadmap-table tbody tr:hover { background: var(--bg-elevated); }
 
 /* Unlocked = the thing to work on right now — make it pop a little */
@@ -1528,6 +1535,7 @@ body.portal-body {
 }
 
 .parent-col { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 8px; }
+.parent-col-wide { max-width: 1080px; }
 
 .parent-greeting { color: var(--text); font-size: 1.1rem; font-weight: 600; margin: 0; }
 
@@ -1582,6 +1590,155 @@ body.portal-body {
 .parent-feedback-content { font-size: 0.88rem; color: var(--text); line-height: 1.6; margin: 0; }
 
 .parent-empty { color: var(--text-muted); font-size: 0.9rem; }
+
+/* -------- Teacher dashboard -------- */
+.teacher-section-title {
+  font-family: var(--font-logo);
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 32px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.teacher-section-count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  background: rgba(214, 169, 74, 0.16);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.teacher-filter-row { display: flex; align-items: center; gap: 10px; margin-top: 24px; }
+.teacher-filter-label { font-size: 0.85rem; color: var(--text-muted); }
+.teacher-filter-select {
+  font-family: var(--font-sans, inherit);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+}
+
+.teacher-queue { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+.teacher-queue-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.teacher-queue-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+.teacher-queue-student { font-weight: 600; font-size: 0.92rem; color: var(--text); text-decoration: none; }
+a.teacher-queue-student:hover { text-decoration: underline; }
+.teacher-queue-course { font-size: 0.8rem; color: var(--text-muted); }
+.teacher-queue-course-unresolved { color: var(--error); font-style: italic; }
+.teacher-queue-waiting {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+.teacher-queue-chapter { font-size: 0.88rem; color: var(--text); margin: 0 0 6px; }
+.teacher-queue-remark { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin: 0 0 6px; }
+.teacher-queue-ocr {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+
+.teacher-unlocked { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.teacher-unlocked-empty { font-size: 0.85rem; color: var(--text-muted); margin: 12px 0; }
+.teacher-latest-feedback {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin: 0;
+}
+.teacher-latest-feedback-empty { font-style: italic; }
+
+.teacher-empty { color: var(--text-muted); font-size: 0.9rem; }
+
+.teacher-mark-complete-btn {
+  margin-top: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.teacher-mark-complete-btn:hover { opacity: 0.9; }
+.teacher-mark-complete-btn:disabled { opacity: 0.6; cursor: default; }
+
+.teacher-student-link { text-decoration: none; }
+.teacher-student-link:hover { text-decoration: underline; }
+
+.teacher-student-not-found { color: var(--text-muted); font-size: 0.9rem; margin-top: 24px; }
+
+.teacher-overview-row { cursor: pointer; }
+.teacher-overview-empty { color: var(--text-muted); }
+
+.teacher-metrics-private {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.teacher-metrics { display: flex; flex-direction: column; gap: 20px; }
+.teacher-metric-block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.teacher-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+}
+
+.teacher-metric-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+.teacher-metric-name { flex: 1; font-size: 0.85rem; color: var(--text); }
+.teacher-metric-bar { flex: 1; max-width: 160px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.teacher-metric-bar-fill { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.teacher-metric-pct { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); min-width: 32px; text-align: right; flex-shrink: 0; white-space: nowrap; }
+
+.teacher-metric-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.teacher-metric-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 0 8px 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.teacher-metric-table td { padding: 7px 8px 7px 0; color: var(--text); border-bottom: 1px solid var(--border); }
+.teacher-metric-table tr:last-child td { border-bottom: none; }
+
+.teacher-mock-item { padding: 6px 0; }
+.teacher-mock-item + .teacher-mock-item { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
+.teacher-mock-name { font-size: 0.85rem; font-weight: 600; color: var(--text); margin: 0 0 4px; }
 
 /* -------- Feedback page -------- */
 .feedback-wrap {
@@ -1774,6 +1931,40 @@ body.portal-body {
   font-size: 0.9rem;
   margin: 0;
 }
+
+/* Collapsed submission cards on teacher-student.html — box only until
+   clicked open. Native <details>/<summary>, so no JS wiring needed. */
+.teacher-submission-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+}
+
+.teacher-submission-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 24px;
+}
+.teacher-submission-summary::-webkit-details-marker { display: none; }
+.teacher-submission-summary::before {
+  content: "▸";
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  transition: transform 0.15s ease;
+}
+.teacher-submission-item[open] .teacher-submission-summary::before { transform: rotate(90deg); }
+.teacher-submission-summary:hover { background: var(--bg); border-radius: var(--radius); }
+
+.teacher-submission-chapter { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+.teacher-submission-hint { margin-left: auto; font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+.teacher-submission-detail { padding: 0 24px 20px; }
 
 .cheatsheet-banner {
   display: flex;

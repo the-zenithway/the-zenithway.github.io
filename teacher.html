@@ -17,16 +17,23 @@
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ nav: "label", label: "Teacher Dashboard", actions: ["logout"] });</script>
+<script>renderPortalHeader({ nav: "teacher", active: "dashboard", actions: ["logout"] });</script>
 
-<main class="rightnow-wrap">
-  <div class="rightnow-col">
-    <p class="rightnow-greeting" id="teacher-greeting"></p>
-    <div class="rightnow-card">
-      <p class="rightnow-tag">Teacher Dashboard</p>
-      <h1 class="rightnow-title">Structure coming soon</h1>
-      <p class="rightnow-instruction">This is where you'll see what needs your attention across all students — feedback to write, submissions to review, sessions to prep. The layout and structure here are still to be figured out.</p>
+<main class="parent-wrap">
+  <div class="parent-col">
+    <p class="parent-greeting" id="teacher-greeting"></p>
+    <p class="parent-subtitle">Grading can be marked complete below; feedback, cheat sheets, and unlocks are still done by hand in the data.</p>
+
+    <div class="teacher-filter-row">
+      <label for="teacher-course-filter" class="teacher-filter-label">Subject</label>
+      <select id="teacher-course-filter" class="teacher-filter-select"></select>
     </div>
+
+    <h2 class="teacher-section-title">Needs grading <span class="teacher-section-count" id="teacher-queue-count"></span></h2>
+    <div id="teacher-queue-list" class="teacher-queue"></div>
+
+    <h2 class="teacher-section-title">Students</h2>
+    <div id="teacher-roster"></div>
   </div>
 </main>
 

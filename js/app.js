@@ -30,7 +30,7 @@ const ACTIVE_COURSE_KEY = "activeCourseId";
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS,
 // then PARENTS (from data.js). On success, remembers who's logged in
@@ -465,6 +465,30 @@ function submissionFileIds(entry) {
   return key ? answers[key] : [];
 }
 
+// Resolves a submission's course from the raw "course" Form answer
+// (e.g. "AP Chemistry") matched against real course names in
+// STUDENTS, rather than trusting the log entry's own `courseId`
+// field. `courseId` is only as good as
+// automation/submissions-compiler.gs's COURSE_IDS map staying
+// manually in sync — it already went stale once (missing "AP
+// Chemistry" entirely, producing courseId: null on four real
+// submissions in early August). Matching live against STUDENTS here
+// means a course COURSE_IDS forgot still resolves correctly on every
+// page without a second manual fix — the raw answer text is the
+// source of truth, everywhere on the site.
+function submissionCourseId(entry) {
+  const raw = entry.answers && (entry.answers.course || entry.answers.Course);
+  if (!raw) return entry.courseId || null;
+  const lower = String(raw).trim().toLowerCase();
+  let found = null;
+  STUDENTS.forEach(function (s) {
+    (s.courses || []).forEach(function (c) {
+      if (!found && c.name.toLowerCase() === lower) found = c.id;
+    });
+  });
+  return found || entry.courseId || null;
+}
+
 function submissionDateLabel(receivedAt) {
   const d = new Date(receivedAt);
   if (isNaN(d.getTime())) return receivedAt;
@@ -493,6 +517,44 @@ function submissionLogItemHtml(entry) {
   '</div>';
 }
 
+// Same submission data as submissionLogItemHtml above, but collapsed —
+// used only on teacher-student.html, where a teacher is scanning
+// *all* of one student's submission history at once and the full OCR
+// text/thumbnails for every entry at once is just noise. Mirrors the
+// "summary box, click through for the rest" pattern the student roster
+// cards on teacher.html already use, except this expands in place
+// (a plain <details>/<summary> — no JS needed) rather than linking to
+// another page, since there's no dedicated single-submission page to
+// link to.
+function teacherSubmissionCardHtml(entry) {
+  const thumbIds = submissionFileIds(entry);
+  const thumbsHtml = thumbIds.map(function (id) {
+    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
+      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
+    '</a>';
+  }).join("");
+
+  const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+  const status = entry.status || "pending";
+  const hints = [];
+  if (thumbIds.length > 0) hints.push(thumbIds.length + (thumbIds.length === 1 ? " photo" : " photos"));
+  if (entry.ocrText) hints.push("OCR text");
+
+  return '<details class="teacher-submission-item">' +
+    '<summary class="teacher-submission-summary">' +
+      '<span class="submit-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="teacher-submission-chapter">' + chapterUnit + '</span>' +
+      roadmapPillHtml(status, SUBMISSION_STATUS_COLORS, status) +
+      (hints.length > 0 ? '<span class="teacher-submission-hint">' + hints.join(" · ") + '</span>' : '') +
+    '</summary>' +
+    '<div class="teacher-submission-detail">' +
+      (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : '') +
+      (entry.ocrText ? '<div class="submit-log-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : '') +
+      (thumbsHtml === '' && !entry.ocrText ? '<p class="submit-log-empty">No photos or OCR text on this submission.</p>' : '') +
+    '</div>' +
+  '</details>';
+}
+
 // Fails quietly into the empty state if the fetch doesn't work (e.g.
 // opened from file:// instead of a real server) — this is a
 // nice-to-have log, not something that should block the page.
@@ -506,7 +568,7 @@ function renderSubmissionLog(student, course) {
     .then(function (res) { return res.json(); })
     .then(function (all) {
       const mine = all.filter(function (entry) {
-        return entry.username === student.username && (!course || entry.courseId === course.id);
+        return entry.username === student.username && (!course || submissionCourseId(entry) === course.id);
       }).sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
 
       if (mine.length === 0) {
@@ -521,14 +583,559 @@ function renderSubmissionLog(student, course) {
     });
 }
 
-// Fills in the (currently placeholder) teacher.html dashboard from
-// the logged-in teacher's name. The actual dashboard content/layout
-// is intentionally undesigned for now — this just proves the role
-// separation works end to end.
+// ---- Teacher dashboard (teacher.html) ----
+// A triage view over the same data the student/parent pages already
+// read — data/submissions-log.json and each student's course records
+// in js/data.js. Almost entirely read-only by design (see CLAUDE.md /
+// todo.md): there is no general backend write path, so feedback,
+// cheat sheets, and roadmap unlocks still happen by hand-editing
+// js/data.js. The one exception is marking a submission Complete
+// (see "Mark complete" below) — everything else here just makes
+// "what needs my attention" scannable instead of requiring a teacher
+// to reconstruct it from memory.
+//
+// Two sections, both filterable by subject via #teacher-course-filter:
+//   1. Queue — every submission whose log entry isn't marked
+//      "Complete" yet, oldest first. `status` is the one field in the
+//      log a teacher already hand-edits after grading (see
+//      automation/README.md), so it's the only reliable "needs
+//      grading" signal — deliberately not trying to infer this from
+//      feedback dates, since course.feedback[].date is a free-text
+//      string like "Jul 30" with no year, not a comparable timestamp.
+//   2. Roster — one card per enrolled student/course, surfacing the
+//      raw signals a teacher needs to decide what's next (current
+//      Now-page task, unlocked roadmap items, latest feedback) without
+//      guessing at "stale" or "ready to unlock" on their behalf. Each
+//      course name links to teacher-student.html for that student's
+//      full detail view (roadmap, feedback, cheat sheet, submissions).
+
+// Cache of the fetched log so switching the subject filter doesn't
+// refetch — populated once by renderTeacherQueue(), read by anything
+// that needs the raw list (currently just markSubmissionComplete_).
+let teacherSubmissionsCache = null;
+
+function teacherDaysAgoLabel(receivedAt) {
+  const d = new Date(receivedAt);
+  if (isNaN(d.getTime())) return "";
+  const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days <= 0) return "today";
+  if (days === 1) return "1 day ago";
+  return days + " days ago";
+}
+
+// One entry per distinct enrolled course across all students, in
+// first-seen order — feeds the subject filter dropdown without
+// needing a separate hardcoded course list to keep in sync.
+function teacherAllCourses() {
+  const seen = {};
+  const list = [];
+  STUDENTS.forEach(function (s) {
+    (s.courses || []).forEach(function (c) {
+      if (!seen[c.id]) {
+        seen[c.id] = true;
+        list.push({ id: c.id, name: c.name });
+      }
+    });
+  });
+  return list;
+}
+
+function renderTeacherCourseFilter() {
+  const select = document.getElementById("teacher-course-filter");
+  if (!select) return;
+
+  select.innerHTML = '<option value="">All subjects</option>' +
+    teacherAllCourses().map(function (c) {
+      return '<option value="' + c.id + '">' + c.name + '</option>';
+    }).join("");
+
+  select.addEventListener("change", function () {
+    renderTeacherQueue(select.value);
+    renderTeacherRoster(select.value);
+  });
+}
+
+// Posts a status change to SUBMISSION_STATUS_UPDATE_URL (js/data.js —
+// left blank until that endpoint is deployed; see
+// automation/submission-status-updater.gs). Sent as text/plain rather
+// than application/json purely to dodge a CORS preflight, which Apps
+// Script web apps don't handle — the endpoint still parses the body
+// as JSON on its side. On success, updates the cached entry in place
+// and re-renders both sections so the item disappears from the queue
+// immediately instead of waiting for a full reload.
+function markSubmissionComplete_(id, buttonEl) {
+  if (!SUBMISSION_STATUS_UPDATE_URL) {
+    alert("No status-update endpoint configured yet — see automation/submission-status-updater.gs for setup, then fill in SUBMISSION_STATUS_UPDATE_URL in js/data.js.");
+    return;
+  }
+
+  buttonEl.disabled = true;
+  buttonEl.textContent = "Marking complete...";
+
+  fetch(SUBMISSION_STATUS_UPDATE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ id: id })
+  })
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const entry = (teacherSubmissionsCache || []).find(function (e) { return e.id === id; });
+      if (entry) entry.status = "Complete";
+      const select = document.getElementById("teacher-course-filter");
+      renderTeacherQueue(select ? select.value : "", teacherSubmissionsCache);
+    })
+    .catch(function () {
+      buttonEl.disabled = false;
+      buttonEl.textContent = "Mark complete";
+      alert("Could not mark this submission complete — the status-update endpoint may be down. Try again, or mark it by hand in data/submissions-log.json.");
+    });
+}
+
+function teacherQueueItemHtml(entry) {
+  const student = STUDENTS.find(function (s) { return s.username === entry.username; });
+  const resolvedCourseId = submissionCourseId(entry);
+  const course = student ? getStudentCourse(student, resolvedCourseId) : null;
+  const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+  const remark = (entry.answers && entry.answers["feedback-and-remarks"]) || "";
+  const thumbsHtml = submissionFileIds(entry).map(function (id) {
+    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
+      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
+    '</a>';
+  }).join("");
+  // Only link through to teacher-student.html when the course
+  // actually resolved (see submissionCourseId above) — an
+  // unresolved course would otherwise send the teacher to a dead
+  // "couldn't find that student/course" page, which reads as "this
+  // student has no submissions" even though the entry is sitting
+  // right here in the queue.
+  const studentLink = (student && course)
+    ? '<a class="teacher-queue-student" href="teacher-student.html?username=' + encodeURIComponent(student.username) + '&course=' + encodeURIComponent(resolvedCourseId) + '">' + student.name + '</a>'
+    : '<span class="teacher-queue-student">' + (student ? student.name : entry.username) + '</span>';
+  const courseLabel = course ? course.name : '<span class="teacher-queue-course-unresolved">Course not recorded</span>';
+
+  return '<div class="teacher-queue-item" data-submission-id="' + entry.id + '">' +
+    '<div class="teacher-queue-head">' +
+      studentLink +
+      '<span class="teacher-queue-course">' + courseLabel + '</span>' +
+      '<span class="teacher-queue-waiting">' + teacherDaysAgoLabel(entry.receivedAt) + '</span>' +
+    '</div>' +
+    '<p class="teacher-queue-chapter">' + chapterUnit + '</p>' +
+    (remark ? '<p class="teacher-queue-remark">"' + remark + '"</p>' : "") +
+    (entry.ocrText ? '<div class="teacher-queue-ocr">' + entry.ocrText.replace(/\n/g, '<br>') + '</div>' : "") +
+    (thumbsHtml ? '<div class="submit-log-thumbs">' + thumbsHtml + '</div>' : "") +
+    '<button type="button" class="teacher-mark-complete-btn" data-mark-complete="' + entry.id + '">Mark complete</button>' +
+  '</div>';
+}
+
+// `cached`, if given, skips the fetch (used by markSubmissionComplete_
+// to re-render instantly off the already-fetched list after a status
+// change instead of hitting the network again).
+function renderTeacherQueue(courseFilter, cached) {
+  const list = document.getElementById("teacher-queue-list");
+  if (!list) return;
+
+  const render = function (all) {
+    teacherSubmissionsCache = all;
+    const pending = all
+      .filter(function (entry) { return entry.status !== "Complete"; })
+      .filter(function (entry) { return !courseFilter || submissionCourseId(entry) === courseFilter; })
+      .sort(function (a, b) { return new Date(a.receivedAt) - new Date(b.receivedAt); });
+
+    const countEl = document.getElementById("teacher-queue-count");
+    if (countEl) countEl.textContent = pending.length > 0 ? String(pending.length) : "";
+
+    if (pending.length === 0) {
+      list.innerHTML = '<p class="teacher-empty">Nothing waiting on you here — every matching submission is marked Complete.</p>';
+      return;
+    }
+
+    list.innerHTML = pending.map(teacherQueueItemHtml).join("");
+    list.querySelectorAll("[data-mark-complete]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        markSubmissionComplete_(btn.getAttribute("data-mark-complete"), btn);
+      });
+    });
+  };
+
+  if (cached) { render(cached); return; }
+
+  list.innerHTML = '<p class="teacher-empty">Loading submissions...</p>';
+  fetch("data/submissions-log.json")
+    .then(function (res) { return res.json(); })
+    .then(render)
+    .catch(function () {
+      list.innerHTML = '<p class="teacher-empty">Could not load the submission log right now.</p>';
+    });
+}
+
+function teacherStudentCardHtml(student, course) {
+  const items = course.roadmap || [];
+  const pct = roadmapPercentComplete(items);
+  const data = course.rightNow;
+  const unlocked = items.filter(function (it) { return it.status === "Unlocked"; });
+  const latestFeedback = (course.feedback || [])[0];
+  const detailHref = "teacher-student.html?username=" + encodeURIComponent(student.username) + "&course=" + encodeURIComponent(course.id);
+
+  let nowClass = "parent-now";
+  let nowHtml = '<p class="parent-now-empty">Nothing set right now.</p>';
+  if (data) {
+    const isWaiting = data.state === "waiting";
+    if (isWaiting) nowClass += " is-waiting";
+    nowHtml =
+      '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Their move") + '</p>' +
+      '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
+  }
+
+  const unlockedHtml = unlocked.length > 0
+    ? '<div class="teacher-unlocked">' + unlocked.map(function (it) {
+        return roadmapPillHtml("Unlocked", ROADMAP_STATUS_COLORS, it.chapter + " · " + it.name);
+      }).join("") + '</div>'
+    : '<p class="teacher-unlocked-empty">Nothing currently unlocked.</p>';
+
+  const feedbackHtml = latestFeedback
+    ? '<p class="teacher-latest-feedback">Latest feedback — ' + latestFeedback.date + ', ' + latestFeedback.chapter + ' · ' + latestFeedback.unit + '</p>'
+    : '<p class="teacher-latest-feedback teacher-latest-feedback-empty">No feedback written yet.</p>';
+
+  return '<div class="parent-course-card">' +
+    '<div class="parent-course-head">' +
+      '<h3 class="parent-course-name"><a class="teacher-student-link" href="' + detailHref + '">' + course.name + ' →</a></h3>' +
+      '<span class="parent-course-pct">' + pct + '% complete</span>' +
+    '</div>' +
+    '<div class="parent-course-progress"><span class="parent-course-progress-bar" style="width:' + pct + '%;"></span></div>' +
+    '<div class="' + nowClass + '">' + nowHtml + '</div>' +
+    unlockedHtml +
+    feedbackHtml +
+  '</div>';
+}
+
+function renderTeacherRoster(courseFilter) {
+  const wrap = document.getElementById("teacher-roster");
+  if (!wrap) return;
+
+  const withCourses = STUDENTS
+    .map(function (s) {
+      const courses = (s.courses || []).filter(function (c) { return !courseFilter || c.id === courseFilter; });
+      return { student: s, courses: courses };
+    })
+    .filter(function (entry) { return entry.courses.length > 0; });
+
+  if (withCourses.length === 0) {
+    wrap.innerHTML = '<p class="teacher-empty">No students match this filter.</p>';
+    return;
+  }
+
+  wrap.innerHTML = withCourses.map(function (entry) {
+    const body = entry.courses.map(function (course) { return teacherStudentCardHtml(entry.student, course); }).join("");
+    return '<section class="parent-student">' +
+      '<h2 class="parent-student-name">' + entry.student.name + '</h2>' +
+      body +
+    '</section>';
+  }).join("");
+}
+
 function renderTeacherDashboard(teacher) {
   if (!teacher) return;
   document.getElementById("teacher-greeting").textContent =
     "Hey " + teacher.name.split(" ")[0] + ",";
+  renderTeacherCourseFilter();
+  renderTeacherQueue("");
+  renderTeacherRoster("");
+}
+
+// ---- Teacher overview (teacher-overview.html) ----
+// One row per enrolled course across every student, compiling the same
+// course.metrics fields renderTeacherMetrics() shows on
+// teacher-student.html into a single scannable table. Averages are
+// rounded to the nearest whole number; any missing/empty field renders
+// as "—" rather than 0, so an ungraded chapter doesn't look identical
+// to an actual zero score.
+function teacherAvg_(arr, key) {
+  if (!arr || arr.length === 0) return null;
+  const values = arr.map(function (item) { return item[key]; }).filter(function (v) { return v !== null && v !== undefined; });
+  if (values.length === 0) return null;
+  const sum = values.reduce(function (a, b) { return a + b; }, 0);
+  return Math.round(sum / values.length);
+}
+
+function teacherOverviewRowHtml(student, course) {
+  const metrics = course.metrics || {};
+  const progress = roadmapPercentComplete(course.roadmap || []);
+  const mastery = teacherAvg_(metrics.topicMastery, "score");
+  const cScore = teacherAvg_(metrics.chapterScores, "cScore");
+  const tScore = teacherAvg_(metrics.chapterScores, "tScore");
+  const motivationList = metrics.motivation || [];
+  const latestMotivation = motivationList.length > 0 ? motivationList[motivationList.length - 1].score : null;
+  const mockList = metrics.mockScores || [];
+  const mockPct = mockList.length === 0 ? null : Math.round(
+    mockList.reduce(function (sum, m) {
+      const score = m.mcq.score + m.frq.score;
+      const maxScore = m.mcq.maxScore + m.frq.maxScore;
+      return sum + (score / maxScore) * 100;
+    }, 0) / mockList.length
+  );
+  const avgDays = teacherAvg_(metrics.timeToCompletion, "days");
+  const ap = metrics.apFinalScore;
+  const detailHref = "teacher-student.html?username=" + encodeURIComponent(student.username) + "&course=" + encodeURIComponent(course.id);
+  const dash = '<span class="teacher-overview-empty">—</span>';
+
+  return '<tr class="teacher-overview-row" data-href="' + detailHref + '">' +
+    '<td data-label="Student"><a class="teacher-student-link" href="' + detailHref + '">' + student.name + '</a></td>' +
+    '<td data-label="Course">' + course.name + '</td>' +
+    '<td data-label="Progress">' + progress + '%</td>' +
+    '<td data-label="Mastery">' + (mastery === null ? dash : mastery) + '</td>' +
+    '<td data-label="C-score">' + (cScore === null ? dash : cScore) + '</td>' +
+    '<td data-label="T-score">' + (tScore === null ? dash : tScore) + '</td>' +
+    '<td data-label="Motivation">' + (latestMotivation === null ? dash : latestMotivation) + '</td>' +
+    '<td data-label="Mock avg">' + (mockPct === null ? dash : mockPct + '%') + '</td>' +
+    '<td data-label="Avg pace">' + (avgDays === null ? dash : avgDays + 'd/chapter') + '</td>' +
+    '<td data-label="AP final">' + (ap ? ap.score + '/' + ap.maxScore : dash) + '</td>' +
+  '</tr>';
+}
+
+function renderTeacherOverviewTable_(courseFilter) {
+  const tbody = document.getElementById("teacher-overview-tbody");
+  const table = document.getElementById("teacher-overview-table");
+  const empty = document.getElementById("teacher-overview-empty");
+  if (!tbody) return;
+
+  const rows = [];
+  STUDENTS.forEach(function (student) {
+    (student.courses || []).forEach(function (course) {
+      if (courseFilter && course.id !== courseFilter) return;
+      rows.push(teacherOverviewRowHtml(student, course));
+    });
+  });
+
+  if (rows.length === 0) {
+    table.hidden = true;
+    empty.hidden = false;
+    return;
+  }
+
+  table.hidden = false;
+  empty.hidden = true;
+  tbody.innerHTML = rows.join("");
+
+  tbody.querySelectorAll(".teacher-overview-row").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") return;
+      window.location.href = row.getAttribute("data-href");
+    });
+  });
+}
+
+function renderTeacherOverviewPage() {
+  const select = document.getElementById("teacher-overview-filter");
+  select.innerHTML = '<option value="">All subjects</option>' +
+    teacherAllCourses().map(function (c) {
+      return '<option value="' + c.id + '">' + c.name + '</option>';
+    }).join("");
+
+  select.addEventListener("change", function () { renderTeacherOverviewTable_(select.value); });
+
+  renderTeacherOverviewTable_("");
+}
+
+// ---- Teacher student detail (teacher-student.html) ----
+// The "click a student, see their full picture" page — one course's
+// full roadmap/rightNow/feedback/cheat sheet/submissions for one
+// student, read straight from js/data.js by ?username=&course= in the
+// URL. Deliberately its own page rather than reusing renderRightNow /
+// renderFeedback / renderCheatSheetPage directly: those all read the
+// *logged-in* student via getSelectedCourse()/localStorage, and
+// repurposing them for "a teacher looking at someone else" would mean
+// temporarily overwriting the session's active student/course, which
+// risks corrupting the teacher's own logged-in state if anything
+// throws mid-render. renderRoadmap(course) is the one exception reused
+// as-is — it already takes an explicit course argument and touches no
+// session state.
+// Renders course.metrics (see the shape comment in js/data.js) into the
+// "Metrics" section of teacher-student.html. Every sub-section is
+// independently optional — course.metrics itself, and each array/field
+// inside it, may be missing, so each block below guards for that rather
+// than assuming a fully-populated shape.
+function renderTeacherMetrics(metrics) {
+  const wrap = document.getElementById("teacher-student-metrics");
+  if (!metrics) {
+    wrap.innerHTML = '<p class="feedback-empty">No metrics recorded yet.</p>';
+    return;
+  }
+
+  const mastery = metrics.topicMastery || [];
+  const masteryHtml = mastery.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Topic mastery</p>' +
+      mastery.map(function (m) {
+        return '<div class="teacher-metric-row">' +
+          '<span class="teacher-metric-name">' + m.chapter + ' — ' + m.topic + '</span>' +
+          '<span class="teacher-metric-bar"><span class="teacher-metric-bar-fill" style="width:' + m.score + '%"></span></span>' +
+          '<span class="teacher-metric-pct">' + m.score + '</span>' +
+        '</div>';
+      }).join("") +
+    '</div>';
+
+  const chapterScores = metrics.chapterScores || [];
+  const chapterScoresHtml = chapterScores.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">C / T scores by chapter</p>' +
+      '<table class="teacher-metric-table">' +
+        '<thead><tr><th>Chapter</th><th>C-score</th><th>T-score</th></tr></thead>' +
+        '<tbody>' +
+          chapterScores.map(function (c) {
+            return '<tr><td>' + c.chapter + '</td>' +
+              '<td>' + (c.cScore === null || c.cScore === undefined ? '—' : c.cScore) + '</td>' +
+              '<td>' + (c.tScore === null || c.tScore === undefined ? '—' : c.tScore) + '</td></tr>';
+          }).join("") +
+        '</tbody>' +
+      '</table>' +
+    '</div>';
+
+  const motivation = metrics.motivation || [];
+  const motivationHtml = motivation.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Motivation over time</p>' +
+      motivation.map(function (m) {
+        return '<div class="teacher-metric-row">' +
+          '<span class="teacher-metric-name">' + m.date + '</span>' +
+          '<span class="teacher-metric-bar"><span class="teacher-metric-bar-fill" style="width:' + m.score + '%"></span></span>' +
+          '<span class="teacher-metric-pct">' + m.score + '</span>' +
+        '</div>';
+      }).join("") +
+    '</div>';
+
+  const mockScores = metrics.mockScores || [];
+  const mockScoresHtml = mockScores.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Mock scores</p>' +
+      mockScores.map(function (m) {
+        return '<div class="teacher-mock-item">' +
+          '<p class="teacher-mock-name">' + m.name + ' (' + m.date + ')</p>' +
+          '<div class="teacher-metric-row">' +
+            '<span class="teacher-metric-name">MCQ</span>' +
+            '<span class="teacher-metric-pct">' + m.mcq.score + ' / ' + m.mcq.maxScore + '</span>' +
+          '</div>' +
+          '<div class="teacher-metric-row">' +
+            '<span class="teacher-metric-name">FRQ</span>' +
+            '<span class="teacher-metric-pct">' + m.frq.score + ' / ' + m.frq.maxScore + '</span>' +
+          '</div>' +
+        '</div>';
+      }).join("") +
+    '</div>';
+
+  const timeToCompletion = metrics.timeToCompletion || [];
+  const timeToCompletionHtml = timeToCompletion.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Time to completion</p>' +
+      '<table class="teacher-metric-table">' +
+        '<thead><tr><th>Chapter</th><th>Days unlock → complete</th></tr></thead>' +
+        '<tbody>' +
+          timeToCompletion.map(function (t) {
+            return '<tr><td>' + t.chapter + '</td><td>' + t.days + '</td></tr>';
+          }).join("") +
+        '</tbody>' +
+      '</table>' +
+    '</div>';
+
+  const ap = metrics.apFinalScore;
+  const apHtml = !ap ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">AP final score</p>' +
+      '<div class="teacher-metric-row">' +
+        '<span class="teacher-metric-name">' + ap.examDate + '</span>' +
+        '<span class="teacher-metric-pct">' + ap.score + ' / ' + ap.maxScore + '</span>' +
+      '</div>' +
+    '</div>';
+
+  const blocks = [masteryHtml, chapterScoresHtml, motivationHtml, mockScoresHtml, timeToCompletionHtml, apHtml].filter(function (h) { return h !== ""; });
+  wrap.innerHTML = blocks.length === 0
+    ? '<p class="feedback-empty">No metrics recorded yet.</p>'
+    : blocks.join("");
+}
+
+function renderTeacherStudentPage() {
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get("username");
+  const courseId = params.get("course");
+  const student = STUDENTS.find(function (s) { return s.username === username; });
+  const course = student ? getStudentCourse(student, courseId) : null;
+
+  const notFound = document.getElementById("teacher-student-not-found");
+  const content = document.getElementById("teacher-student-content");
+
+  if (!student || !course) {
+    notFound.hidden = false;
+    content.hidden = true;
+    return;
+  }
+
+  notFound.hidden = true;
+  content.hidden = false;
+
+  document.getElementById("teacher-student-name").textContent = student.name;
+  document.getElementById("teacher-student-course").textContent = course.name;
+  document.title = student.name + " · " + course.name + " — Zenith";
+
+  const data = course.rightNow;
+  const nowWrap = document.getElementById("teacher-student-now");
+  if (!data) {
+    nowWrap.innerHTML = '<p class="parent-now-empty">Nothing set right now.</p>';
+  } else {
+    const isWaiting = data.state === "waiting";
+    nowWrap.className = "parent-now" + (isWaiting ? " is-waiting" : "");
+    nowWrap.innerHTML =
+      '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Their move") + '</p>' +
+      '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
+  }
+
+  renderTeacherMetrics(course.metrics);
+
+  renderRoadmap(course);
+
+  const feedbackList = document.getElementById("teacher-student-feedback");
+  const feedback = course.feedback || [];
+  feedbackList.innerHTML = feedback.length === 0
+    ? '<p class="feedback-empty">No feedback written yet.</p>'
+    : feedback.map(function (entry) {
+        return '<div class="feedback-item">' +
+          '<div class="feedback-meta">' +
+            '<span class="feedback-date">' + entry.date + '</span>' +
+            '<span class="feedback-chapter">' + entry.chapter + ' · ' + entry.unit + '</span>' +
+          '</div>' +
+          '<p class="feedback-content">' + entry.content + '</p>' +
+        '</div>';
+      }).join("");
+
+  const cheatList = document.getElementById("teacher-student-cheatsheet");
+  const cheatSheet = course.cheatSheet || [];
+  cheatList.innerHTML = cheatSheet.length === 0
+    ? '<p class="feedback-empty">No cheat sheet entries yet.</p>'
+    : cheatSheet.map(function (entry) {
+        return '<div class="feedback-item">' +
+          '<div class="feedback-meta">' +
+            '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
+            '<span class="cheatsheet-source">' + entry.source + '</span>' +
+          '</div>' +
+          '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
+        '</div>';
+      }).join("");
+
+  renderMath(document.getElementById("teacher-student-content"));
+
+  const subList = document.getElementById("teacher-student-submissions");
+  subList.innerHTML = '<p class="submit-log-empty">Loading submissions...</p>';
+  fetch("data/submissions-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const mine = all
+        .filter(function (entry) { return entry.username === student.username && submissionCourseId(entry) === course.id; })
+        .sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+      subList.innerHTML = mine.length === 0
+        ? '<p class="submit-log-empty">Nothing submitted yet for this course.</p>'
+        : mine.map(teacherSubmissionCardHtml).join("");
+    })
+    .catch(function () {
+      subList.innerHTML = '<p class="submit-log-empty">Could not load submissions right now.</p>';
+    });
 }
 
 // ---- Parent dashboard (parent.html) ----

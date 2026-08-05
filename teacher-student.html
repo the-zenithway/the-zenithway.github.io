@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "label", label: "Teacher Dashboard", actions: ["logout"] });</script>
+
+<main class="parent-wrap">
+  <div class="parent-col">
+    <a href="teacher.html" class="roadmap-back">← Teacher Dashboard</a>
+
+    <p class="teacher-student-not-found" id="teacher-student-not-found" hidden>
+      Couldn't find that student/course — go back to the <a href="teacher.html">dashboard</a> and click through from there.
+    </p>
+
+    <div id="teacher-student-content" hidden>
+      <p class="parent-greeting" id="teacher-student-name"></p>
+      <p class="parent-subtitle" id="teacher-student-course"></p>
+
+      <h2 class="teacher-section-title">Right now</h2>
+      <div class="parent-now" id="teacher-student-now"></div>
+
+      <h2 class="teacher-section-title">Metrics <span class="teacher-metrics-private">Teacher-only</span></h2>
+      <div class="teacher-metrics" id="teacher-student-metrics"></div>
+
+      <h2 class="teacher-section-title">Roadmap</h2>
+      <div class="roadmap-wrap">
+        <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
+        <table class="roadmap-table" id="roadmap-table" hidden>
+          <colgroup>
+            <col style="width: 112px">
+            <col>
+            <col style="width: 150px">
+            <col style="width: 155px">
+            <col style="width: 84px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Chapter</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody id="roadmap-tbody"></tbody>
+        </table>
+      </div>
+
+      <h2 class="teacher-section-title">Feedback</h2>
+      <div class="feedback-list" id="teacher-student-feedback"></div>
+
+      <h2 class="teacher-section-title">Cheat sheet</h2>
+      <div class="feedback-list" id="teacher-student-cheatsheet"></div>
+
+      <h2 class="teacher-section-title">Submissions</h2>
+      <div id="teacher-student-submissions"></div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  requireTeacherLogin();
+  renderTeacherStudentPage();
+
+  document.getElementById('logout-btn').addEventListener('click', logout);
+</script>
+</body>
+</html>

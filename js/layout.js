@@ -30,6 +30,11 @@ const PORTAL_NAV_LINKS = [
   { key: "submit", href: "submit.html", label: "Submit" }
 ];
 
+const TEACHER_NAV_LINKS = [
+  { key: "dashboard", href: "teacher.html", label: "Teacher Dashboard" },
+  { key: "overview", href: "teacher-overview.html", label: "All Students" }
+];
+
 const PORTAL_ACTION_HTML = {
   open: '<a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>',
   allCourses: '<a href="portal.html" class="portal-link">All courses</a>',
@@ -114,6 +119,7 @@ function renderSiteHeader(opts) {
 // opts:
 //   nav: 'full' (default) — Courses/Now/Feedback/Calendar/Submit, needs `active`
 //   nav: 'resources' — Home/Resources/Student Portal self-study subnav
+//   nav: 'teacher' — Teacher Dashboard/All Students tabs, needs `active` ('dashboard'/'overview')
 //   nav: 'label' — single non-link label, needs `label`
 //   actions: array of 'open' | 'allCourses' | 'logout' (default ['logout'])
 function renderPortalHeader(opts) {
@@ -129,6 +135,11 @@ function renderPortalHeader(opts) {
       '<a href="index.html" class="portal-nav-link">Home</a>\n' +
       '      <a href="resources.html" class="portal-nav-link active">Resources</a>\n' +
       '      <a href="portal.html" class="portal-nav-link">Student Portal</a>';
+  } else if (navType === "teacher") {
+    nav = TEACHER_NAV_LINKS.map(function (link) {
+      const activeClass = link.key === opts.active ? " active" : "";
+      return '<a href="' + link.href + '" class="portal-nav-link' + activeClass + '">' + link.label + "</a>";
+    }).join("\n      ");
   } else {
     nav = PORTAL_NAV_LINKS.map(function (link) {
       const activeClass = link.key === opts.active ? " active" : "";

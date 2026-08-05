@@ -29,6 +29,19 @@ const CALENDAR_URL = "https://calendar.google.com/calendar/embed?src=f378c5925c2
 // a Google Form like this, take the normal viewform link and swap
 // its query string for "?embedded=true".
 const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
+
+// The "Mark complete" button on teacher.html's grading queue POSTs
+// here to flip one submission's status in data/submissions-log.json —
+// see automation/submission-status-updater.gs for the Apps Script Web
+// App this needs to point at (not deployed yet; the button shows an
+// error until this is filled in). Same "NOT SECURE" caveat as the
+// rest of this file applies: this URL, and the endpoint it points to,
+// are visible to anyone who views page source, same as the teacher
+// login above. The endpoint is deliberately narrow (it can only ever
+// set an existing entry's status to "Complete", nothing else) so the
+// worst case of that exposure is someone marking a real submission
+// complete early — not data loss or arbitrary writes.
+const SUBMISSION_STATUS_UPDATE_URL = "";
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
@@ -54,6 +67,22 @@ const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
 // weekly session reminders) — it is not read anywhere on the site itself.
 // Leave it as "" for a student who shouldn't get emails yet; the notifier
 // skips anyone with an empty email instead of erroring.
+
+// "metrics" is an optional, teacher-only field on each course object —
+// nothing on the student/parent-facing pages reads it, only
+// teacher-student.html. DRAFT SHAPE, not yet populated for real students
+// (the one example below on Bogue's ap-calculus-bc course is placeholder
+// numbers to check the UI, not a real assessment). All scores are 0-100
+// unless noted. Shape:
+//   metrics: {
+//     topicMastery: [{ chapter, topic, score }],       // understanding of that chapter's material
+//     chapterScores: [{ chapter, cScore, tScore }],     // coursework (C) vs test (T) percentage per chapter
+//     motivation: [{ date, score }],                    // one entry per check-in date, newest last
+//     mockScores: [{ name, date, mcq: { score, maxScore }, frq: { score, maxScore } }], // full mock tests, split by section, raw points not percentage
+//     timeToCompletion: [{ chapter, days }],            // calendar days from that chapter unlocking to it being marked Complete; roadmap items carry no dates, so this is tracked here by hand, not derived
+//     apFinalScore: { score, maxScore, examDate } | null // actual AP exam result, once sat
+//   }
+// Leave "metrics" off a course entirely until there's real data to put there.
 const STUDENTS = [
   {
     "username": "alice",
@@ -233,7 +262,30 @@ const STUDENTS = [
           { "name": "M10T-FRQ Mock 10", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1AZPOd1iaPTA8JJJmlooee7Ym1D9Jq79H/view?usp=drive_link" },
           { "name": "M10S-FRQ Mock 10 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1V36m1RowaKnVLvcEb7dxJEFWGpsp3DFJ/view?usp=drive_link" },
           { "name": "M10R-FRQ Mock 10 Review", "category": "R-Review", "chapter": "Chapter M", "status": "Locked" }
-        ]
+        ],
+        "metrics": {
+          "topicMastery": [
+            { "chapter": "Chapter 1", "topic": "Functions", "score": 88 },
+            { "chapter": "Chapter 2", "topic": "Limits and Continuity", "score": 71 }
+          ],
+          "chapterScores": [
+            { "chapter": "Chapter 1", "cScore": 94, "tScore": 82 },
+            { "chapter": "Chapter 2", "cScore": 76, "tScore": null }
+          ],
+          "motivation": [
+            { "date": "Jul 21", "score": 85 },
+            { "date": "Jul 24", "score": 70 },
+            { "date": "Jul 28", "score": 90 },
+            { "date": "Jul 30", "score": 78 }
+          ],
+          "mockScores": [
+            { "name": "Mock Test 1", "date": "Jul 20", "mcq": { "score": 38, "maxScore": 45 }, "frq": { "score": 20, "maxScore": 21 } }
+          ],
+          "timeToCompletion": [
+            { "chapter": "Chapter 1", "days": 9 }
+          ],
+          "apFinalScore": null
+        }
       }
     ]
   },
@@ -1202,49 +1254,49 @@ const STUDENTS = [
           { "name": "C1-Atomic Structure and Properties Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk" },
           { "name": "S1-Atomic Structure and Properties Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1TzDXjDbomuSDnD9e2hIdT4PGoiE7Q7FH/view?usp=drivesdk" },
           { "name": "T1-Atomic Structure and Properties Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/18vw9LZt1t5f4xZVDP5c4qmwTtk8DHgKq/view?usp=drive_link" },
-          { "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties" },
-          { "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Optional-Reading" },
-          { "name": "C2-Molecular and Ionic Compound Structure and Properties Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk" },
+          { "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties" },
+          { "name": "N2-Molecular and Ionic Compound Structure and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 2", "status": "Unlocked" },
+          { "name": "C2-Molecular and Ionic Compound Structure and Properties Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk" },
           { "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1q2WVPJc-lHflyPnQncPd9n0mg0WFjFg2/view?usp=drivesdk" },
           { "name": "T2-Molecular and Ionic Compound Structure and Properties Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1ni5RP5AkM3vpObBBamWGA9Bs5QAkFaT2/view?usp=drive_link" },
-          { "name": "L3-Intermolecular Forces and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties" },
-          { "name": "N3-Intermolecular Forces and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Optional-Reading" },
-          { "name": "C3-Intermolecular Forces and Properties Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk" },
+          { "name": "L3-Intermolecular Forces and Properties (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 3", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties" },
+          { "name": "N3-Intermolecular Forces and Properties Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 3", "status": "Unlocked" },
+          { "name": "C3-Intermolecular Forces and Properties Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Unlocked", "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk" },
           { "name": "S3-Intermolecular Forces and Properties Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1qJkJXUIgek8HA2R1qXblVbv-c65iTsC6/view?usp=drivesdk" },
           { "name": "T3-Intermolecular Forces and Properties Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/18ACcWU8XylW6G_lxDb_WPZPjNMf2uh29/view?usp=drive_link" },
-          { "name": "L4-Chemical Reactions (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 4", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions" },
-          { "name": "N4-Chemical Reactions Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Locked" },
-          { "name": "C4-Chemical Reactions Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk" },
+          { "name": "L4-Chemical Reactions (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions" },
+          { "name": "N4-Chemical Reactions Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 4", "status": "Unlocked" },
+          { "name": "C4-Chemical Reactions Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk" },
           { "name": "S4-Chemical Reactions Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1N9Fw8l1y0YPPLcFX_EaoAbmxOsc91hbC/view?usp=drivesdk" },
           { "name": "T4-Chemical Reactions Test", "category": "T-Test", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/17NSKoviTs6bX7b7UkQcICkqJ8UZ4gQdp/view?usp=drive_link" },
-          { "name": "L5-Kinetics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 5", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:kinetics" },
-          { "name": "N5-Kinetics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Locked" },
-          { "name": "C5-Kinetics Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk" },
+          { "name": "L5-Kinetics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 5", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:kinetics" },
+          { "name": "N5-Kinetics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 5", "status": "Unlocked" },
+          { "name": "C5-Kinetics Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Unlocked", "url": "https://drive.google.com/file/d/1_VxKDFGQV-ulqlakShQqBkpqoD7wXRkj/view?usp=drivesdk" },
           { "name": "S5-Kinetics Solutions", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1F8cpDhu4F9p68OqY4N-5k1DmRWXrpb00/view?usp=drivesdk" },
           { "name": "T5-Kinetics Test", "category": "T-Test", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/14Rr0gR2lcMv1WdanvnjAkYvGWSjGzkw8/view?usp=drive_link" },
-          { "name": "L6-Thermodynamics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 6", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics" },
-          { "name": "N6-Thermodynamics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Locked" },
-          { "name": "C6-Thermodynamics Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk" },
+          { "name": "L6-Thermodynamics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 6", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:thermodynamics" },
+          { "name": "N6-Thermodynamics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 6", "status": "Unlocked" },
+          { "name": "C6-Thermodynamics Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Unlocked", "url": "https://drive.google.com/file/d/1mc_rvX0Up_ZsiYisa8LBMwf4PBv9HdwT/view?usp=drivesdk" },
           { "name": "S6-Thermodynamics Solutions", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1EPu6Y4lOmv_Jptnj1rR15eMBuArHS0pn/view?usp=drivesdk" },
           { "name": "T6-Thermodynamics Test", "category": "T-Test", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1vo4hgzd0sfq38cPcDxZ7Hq5JcwSckKNk/view?usp=drive_link" },
-          { "name": "L7-Equilibrium (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 7", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:equilibrium" },
-          { "name": "N7-Equilibrium Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Locked" },
-          { "name": "C7-Equilibrium Problems", "category": "C-coursework", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk" },
+          { "name": "L7-Equilibrium (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 7", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:equilibrium" },
+          { "name": "N7-Equilibrium Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 7", "status": "Unlocked" },
+          { "name": "C7-Equilibrium Problems", "category": "C-coursework", "chapter": "Chapter 7", "status": "Unlocked", "url": "https://drive.google.com/file/d/1rcAq_RPeUbTDRK86xi5_CawogrJXo6Sm/view?usp=drivesdk" },
           { "name": "S7-Equilibrium Solutions", "category": "S-solution manual", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1-DUCoETq0LSewjvZ-ZBRsqreZPwR3NdV/view?usp=drivesdk" },
           { "name": "T7-Equilibrium Test", "category": "T-Test", "chapter": "Chapter 7", "status": "Locked", "url": "https://drive.google.com/file/d/1-K15MLRudjREBi-3Q0ZA7PBQsfceIBDf/view?usp=drive_link" },
-          { "name": "L8-Acids and Bases (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 8", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:acids-and-bases" },
-          { "name": "N8-Acids and Bases Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Locked" },
-          { "name": "C8-Acids and Bases Problems", "category": "C-coursework", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk" },
+          { "name": "L8-Acids and Bases (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 8", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:acids-and-bases" },
+          { "name": "N8-Acids and Bases Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 8", "status": "Unlocked" },
+          { "name": "C8-Acids and Bases Problems", "category": "C-coursework", "chapter": "Chapter 8", "status": "Unlocked", "url": "https://drive.google.com/file/d/1W_gltfCioaGFarWRxC97GMIIYTKSbHes/view?usp=drivesdk" },
           { "name": "S8-Acids and Bases Solutions", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1aEXU624YTymnE075_S3RjVURwhE0nBHF/view?usp=drivesdk" },
           { "name": "T8-Acids and Bases Test", "category": "T-Test", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1EtbmyS2OylQNKXbF2FYOiawlFGAl85oc/view?usp=drive_link" },
-          { "name": "L9-Applications of Thermodynamics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 9", "status": "Locked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:applications-of-thermodynamics" },
-          { "name": "N9-Applications of Thermodynamics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 9", "status": "Locked" },
-          { "name": "C9-Applications of Thermodynamics Problems", "category": "C-coursework", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1g4T8CyaaA9KkiYT-tu8sSLUgWhBRX6rP/view?usp=drivesdk" },
+          { "name": "L9-Applications of Thermodynamics (Khan Academy)", "category": "L-Learning", "chapter": "Chapter 9", "status": "Unlocked", "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:applications-of-thermodynamics" },
+          { "name": "N9-Applications of Thermodynamics Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 9", "status": "Unlocked" },
+          { "name": "C9-Applications of Thermodynamics Problems", "category": "C-coursework", "chapter": "Chapter 9", "status": "Unlocked", "url": "https://drive.google.com/file/d/1g4T8CyaaA9KkiYT-tu8sSLUgWhBRX6rP/view?usp=drivesdk" },
           { "name": "S9-Applications of Thermodynamics Solutions", "category": "S-solution manual", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/13n40ZJf3OfCwu9-rWGeH4DleVimCBRjL/view?usp=drivesdk" },
           { "name": "T9-Applications of Thermodynamics Test", "category": "T-Test", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1HSPVNQik1m0P1Lxu_i6FUB_hKFwA7U4r/view?usp=drive_link" },
-          { "name": "L10-Experiments", "category": "L-Learning", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1MN5foo9bOYvATk0Y-3YkHcBaAd5Tj6PI/view?usp=drivesdk" },
-          { "name": "N10-Experiments Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 10", "status": "Locked" },
-          { "name": "C10-Experiments Problems", "category": "C-coursework", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1ixhZDvZipBDWNS-xO9IYsSwb3u9Usgmc/view?usp=drivesdk" },
+          { "name": "L10-Experiments", "category": "L-Learning", "chapter": "Chapter 10", "status": "Unlocked", "url": "https://drive.google.com/file/d/1MN5foo9bOYvATk0Y-3YkHcBaAd5Tj6PI/view?usp=drivesdk" },
+          { "name": "N10-Experiments Notes Submission", "category": "N-Notes Submission", "chapter": "Chapter 10", "status": "Unlocked" },
+          { "name": "C10-Experiments Problems", "category": "C-coursework", "chapter": "Chapter 10", "status": "Unlocked", "url": "https://drive.google.com/file/d/1ixhZDvZipBDWNS-xO9IYsSwb3u9Usgmc/view?usp=drivesdk" },
           { "name": "S10-Experiments Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/19q7a9HBDHm1wwPygiTZI6Ryg6b82m1LS/view?usp=drivesdk" },
           { "name": "T10-Experiments Test", "category": "T-Test", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1uUIyPA2DX6Xb4n5wNYsQT7gpPVPBvMgH/view?usp=drive_link" },
           { "name": "M1T-Full Mock Test 1", "category": "M-Mock", "chapter": "Chapter M", "status": "Locked", "url": "https://drive.google.com/file/d/1tePomG_0SkXNUxv1JOrK5oe0aZhks8pq/view?usp=drivesdk" },
@@ -1397,24 +1449,24 @@ const STUDENTS = [
           { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
           { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
           { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Unlocked" },
-          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
+          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
           { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
           { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
           { "name": "S2-Limits and Continuity Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/17pzhOM1QGu8z-zm3YovNEe40ECpexSaF/view?usp=drive_link" },
           { "name": "R2-Functions Review", "category": "R-Review", "chapter": "Chapter 2", "status": "Locked" },
           { "name": "T2-Functions Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link" },
-          { "name": "B3-Differentiation", "category": "B-book chapter", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1Pmtx_jKUGFLyOQhlFoYmI73UaW0AVEp7/view?usp=drive_link" },
-          { "name": "C3-Differentiation Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/19NGG8CUv7LhzRoVS6q7kx_pGaBkeHQL_/view?usp=drive_link" },
+          { "name": "B3-Differentiation", "category": "B-book chapter", "chapter": "Chapter 3", "status": "Unlocked", "url": "https://drive.google.com/file/d/1Pmtx_jKUGFLyOQhlFoYmI73UaW0AVEp7/view?usp=drive_link" },
+          { "name": "C3-Differentiation Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Unlocked", "url": "https://drive.google.com/file/d/19NGG8CUv7LhzRoVS6q7kx_pGaBkeHQL_/view?usp=drive_link" },
           { "name": "S3-Differentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1EolTf6Fc9d4kROvX_-h_kdgXVhQCINZD/view?usp=drive_link" },
           { "name": "R3-Differentiation Review", "category": "R-Review", "chapter": "Chapter 3", "status": "Locked" },
           { "name": "T3-Differentiation Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link" },
-          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
-          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
+          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
+          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
           { "name": "S4-Application of Differential Calculus Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1s6gS0JXb7Qkv4bcuScdMHolZpQzwZA3o/view?usp=drive_link" },
           { "name": "R4-Application of Differential Calculus Review", "category": "R-Review", "chapter": "Chapter 4", "status": "Locked" },
           { "name": "T4-Application of Differential Calculus Test", "category": "T-Test", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1vEDN8SnqdVuYLOvJ8RJg0lEMYuvmsUPc/view?usp=drive_link" },
-          { "name": "B5-Antidifferentiation", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link" },
-          { "name": "C5-Antidifferentiation Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link" },
+          { "name": "B5-Antidifferentiation", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Unlocked", "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link" },
+          { "name": "C5-Antidifferentiation Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Unlocked", "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link" },
           { "name": "S5-Antidifferentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1dGO0xQYAWr9ial7bo62ATko0e1V9npbo/view?usp=drive_link" },
           { "name": "R5-Antidifferentiation Review", "category": "R-Review", "chapter": "Chapter 5", "status": "Locked" },
           { "name": "T5-Antidifferentiation Test", "category": "T-Test", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1qesZmf7OpPNdpXTkN98ZQt6S8PwaNICa/view?usp=drive_link" },

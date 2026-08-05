@@ -146,7 +146,9 @@ function onFormSubmit(e) {
 // or its dropdown label changes.
 var COURSE_IDS = {
   "AP Calculus BC": "ap-calculus-bc",
-  "AP Biology": "ap-biology"
+  "AP Biology": "ap-biology",
+  "AP Chemistry": "ap-chemistry",
+  "AP Computer Science A": "ap-computer-science-a"
 };
 
 // "Chapter" comes in as a bare number ("5") — normalize it to match
