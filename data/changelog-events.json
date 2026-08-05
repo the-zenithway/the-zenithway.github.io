@@ -473,5 +473,126 @@
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-02T12:58:19.496Z"
     }
+  ],
+  "onyoo": [
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 0 (Advanced Chemistry Booklet) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Booklet) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Description) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Reference Sheet) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Barron's Book) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (L1-Atomic Structure and Properties (Khan Academy)) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (N1-Atomic Structure and Properties Notes Submission) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (C1-Atomic Structure and Properties Problems) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked optional reading",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 0 (AP Calculus BC Exam Booklet) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 0 (AP Calculus Exam Meta Information) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (B1-Functions) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (C1-Functions Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) marked optional reading",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (C2-Limits and Continuity Problems) marked optional reading",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-04T10:46:39.262Z"
+    }
   ]
 }
