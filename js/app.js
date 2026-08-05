@@ -466,27 +466,33 @@ function submissionFileIds(entry) {
 }
 
 // Resolves a submission's course from the raw "course" Form answer
-// (e.g. "AP Chemistry") matched against real course names in
-// STUDENTS, rather than trusting the log entry's own `courseId`
-// field. `courseId` is only as good as
-// automation/submissions-compiler.gs's COURSE_IDS map staying
-// manually in sync — it already went stale once (missing "AP
-// Chemistry" entirely, producing courseId: null on four real
-// submissions in early August). Matching live against STUDENTS here
-// means a course COURSE_IDS forgot still resolves correctly on every
-// page without a second manual fix — the raw answer text is the
-// source of truth, everywhere on the site.
+// (e.g. "AP Chemistry" or, if the Form's dropdown is ever switched to
+// emit slugs directly, "ap-chemistry") matched against real courses in
+// STUDENTS, rather than trusting the log entry's own `courseId` field.
+// `courseId` is only as good as automation/submissions-compiler.gs's
+// COURSE_IDS map staying manually in sync — it already went stale once
+// (missing "AP Chemistry" entirely, producing courseId: null on four
+// real submissions in early August). Matching live against STUDENTS
+// here means a course COURSE_IDS forgot still resolves correctly on
+// every page without a second manual fix — the raw answer text is the
+// source of truth, everywhere on the site. Tries an exact id match
+// first (cheap, and correct by construction if the Form ever emits
+// slugs), then falls back to a case-insensitive name match for the
+// current display-text dropdown.
 function submissionCourseId(entry) {
   const raw = entry.answers && (entry.answers.course || entry.answers.Course);
   if (!raw) return entry.courseId || null;
-  const lower = String(raw).trim().toLowerCase();
-  let found = null;
+  const rawTrimmed = String(raw).trim();
+  const lower = rawTrimmed.toLowerCase();
+  let foundById = null;
+  let foundByName = null;
   STUDENTS.forEach(function (s) {
     (s.courses || []).forEach(function (c) {
-      if (!found && c.name.toLowerCase() === lower) found = c.id;
+      if (!foundById && c.id === rawTrimmed) foundById = c.id;
+      if (!foundByName && c.name.toLowerCase() === lower) foundByName = c.id;
     });
   });
-  return found || entry.courseId || null;
+  return foundById || foundByName || entry.courseId || null;
 }
 
 function submissionDateLabel(receivedAt) {
@@ -874,6 +880,7 @@ function teacherOverviewRowHtml(student, course) {
     }, 0) / mockList.length
   );
   const avgDays = teacherAvg_(metrics.timeToCompletion, "days");
+  const predicted = metrics.apPredictedScore;
   const ap = metrics.apFinalScore;
   const detailHref = "teacher-student.html?username=" + encodeURIComponent(student.username) + "&course=" + encodeURIComponent(course.id);
   const dash = '<span class="teacher-overview-empty">—</span>';
@@ -888,6 +895,7 @@ function teacherOverviewRowHtml(student, course) {
     '<td data-label="Motivation">' + (latestMotivation === null ? dash : latestMotivation) + '</td>' +
     '<td data-label="Mock avg">' + (mockPct === null ? dash : mockPct + '%') + '</td>' +
     '<td data-label="Avg pace">' + (avgDays === null ? dash : avgDays + 'd/chapter') + '</td>' +
+    '<td data-label="AP predicted">' + (predicted ? predicted.score + '/' + predicted.maxScore : dash) + '</td>' +
     '<td data-label="AP final">' + (ap ? ap.score + '/' + ap.maxScore : dash) + '</td>' +
   '</tr>';
 }
@@ -1036,6 +1044,16 @@ function renderTeacherMetrics(metrics) {
       '</table>' +
     '</div>';
 
+  const predicted = metrics.apPredictedScore;
+  const predictedHtml = !predicted ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">AP predicted score</p>' +
+      '<div class="teacher-metric-row">' +
+        '<span class="teacher-metric-name">As of ' + predicted.asOf + '</span>' +
+        '<span class="teacher-metric-pct">' + predicted.score + ' / ' + predicted.maxScore + '</span>' +
+      '</div>' +
+    '</div>';
+
   const ap = metrics.apFinalScore;
   const apHtml = !ap ? "" :
     '<div class="teacher-metric-block">' +
@@ -1046,10 +1064,402 @@ function renderTeacherMetrics(metrics) {
       '</div>' +
     '</div>';
 
-  const blocks = [masteryHtml, chapterScoresHtml, motivationHtml, mockScoresHtml, timeToCompletionHtml, apHtml].filter(function (h) { return h !== ""; });
+  const blocks = [masteryHtml, chapterScoresHtml, motivationHtml, mockScoresHtml, timeToCompletionHtml, predictedHtml, apHtml].filter(function (h) { return h !== ""; });
   wrap.innerHTML = blocks.length === 0
     ? '<p class="feedback-empty">No metrics recorded yet.</p>'
     : blocks.join("");
+}
+
+// ---- Teacher-student write controls ----
+// Everything below backs the "regular workflow" write actions on
+// teacher-student.html (unlock a roadmap item, add feedback, add a
+// cheat sheet entry, update Right Now, log a metrics data point) —
+// see automation/zenith-data-writer.gs for the endpoint these POST to
+// and js/data.js's TEACHER_DATA_WRITE_URL comment for the security
+// tradeoff. Every one of these is additive UI layered on top of
+// renderTeacherStudentPage() below; none of it touches the
+// student-facing pages or the shared renderRoadmap()/renderMath()
+// helpers those pages also use.
+
+// Posts one write action to TEACHER_DATA_WRITE_URL. Same text/plain
+// body-JSON trick as markSubmissionComplete_ to dodge Apps Script's
+// lack of CORS-preflight support. Disables `buttonEl` while in
+// flight, restores it either way, and only calls `onSuccess()` on a
+// real {ok:true} response — a 200 with {ok:false,error} (e.g. bad
+// payload) is still treated as a failure.
+function postTeacherAction_(action, payload, buttonEl, onSuccess) {
+  if (!TEACHER_DATA_WRITE_URL) {
+    alert("No data-write endpoint configured yet — see automation/zenith-data-writer.gs for setup, then fill in TEACHER_DATA_WRITE_URL in js/data.js.");
+    return;
+  }
+
+  const originalText = buttonEl.textContent;
+  buttonEl.disabled = true;
+  buttonEl.textContent = "Saving...";
+
+  fetch(TEACHER_DATA_WRITE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ action: action, payload: payload })
+  })
+    .then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (body) {
+        return { httpOk: res.ok, body: body };
+      });
+    })
+    .then(function (result) {
+      if (!result.httpOk || !result.body.ok) {
+        throw new Error((result.body && result.body.error) || "The write endpoint returned an error.");
+      }
+      buttonEl.disabled = false;
+      buttonEl.textContent = originalText;
+      onSuccess();
+    })
+    .catch(function (err) {
+      buttonEl.disabled = false;
+      buttonEl.textContent = originalText;
+      alert("Could not save — " + err.message + "\n\nTry again, or edit js/data.js by hand.");
+    });
+}
+
+// Factored out of renderTeacherStudentPage so both the initial render
+// and a post-save refresh can call it without duplicating markup.
+function renderTeacherStudentNow_(course) {
+  const data = course.rightNow;
+  const nowWrap = document.getElementById("teacher-student-now");
+  if (!data) {
+    nowWrap.className = "parent-now";
+    nowWrap.innerHTML = '<p class="parent-now-empty">Nothing set right now.</p>';
+    return;
+  }
+  const isWaiting = data.state === "waiting";
+  nowWrap.className = "parent-now" + (isWaiting ? " is-waiting" : "");
+  nowWrap.innerHTML =
+    '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Their move") + '</p>' +
+    '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
+}
+
+function renderTeacherStudentFeedbackList_(course) {
+  const feedbackList = document.getElementById("teacher-student-feedback");
+  const feedback = course.feedback || [];
+  feedbackList.innerHTML = feedback.length === 0
+    ? '<p class="feedback-empty">No feedback written yet.</p>'
+    : feedback.map(function (entry) {
+        return '<div class="feedback-item">' +
+          '<div class="feedback-meta">' +
+            '<span class="feedback-date">' + entry.date + '</span>' +
+            '<span class="feedback-chapter">' + entry.chapter + ' · ' + entry.unit + '</span>' +
+          '</div>' +
+          '<p class="feedback-content">' + entry.content + '</p>' +
+        '</div>';
+      }).join("");
+}
+
+function renderTeacherStudentCheatSheetList_(course) {
+  const cheatList = document.getElementById("teacher-student-cheatsheet");
+  const cheatSheet = course.cheatSheet || [];
+  cheatList.innerHTML = cheatSheet.length === 0
+    ? '<p class="feedback-empty">No cheat sheet entries yet.</p>'
+    : cheatSheet.map(function (entry) {
+        return '<div class="feedback-item">' +
+          '<div class="feedback-meta">' +
+            '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
+            '<span class="cheatsheet-source">' + entry.source + '</span>' +
+          '</div>' +
+          '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
+        '</div>';
+      }).join("");
+}
+
+// Injects a status control into each row of teacher-student.html's
+// roadmap table, after the shared renderRoadmap(course) call — added
+// here rather than inside renderRoadmap() itself so that function
+// stays exactly what the student-facing roadmap.html also uses.
+// Relies on tbody rows being in the same order as course.roadmap,
+// which renderRoadmap() guarantees (it maps 1:1, no filtering/sorting).
+function renderTeacherRoadmapActions_(student, course) {
+  const tbody = document.getElementById("roadmap-tbody");
+  if (!tbody) return;
+  const items = course.roadmap || [];
+  const statuses = Object.keys(ROADMAP_STATUS_COLORS);
+
+  Array.prototype.forEach.call(tbody.children, function (row, i) {
+    const item = items[i];
+    if (!item) return;
+
+    const cell = document.createElement("td");
+    cell.className = "teacher-roadmap-action-cell";
+
+    const select = document.createElement("select");
+    select.className = "teacher-roadmap-status-select";
+    statuses.forEach(function (status) {
+      const opt = document.createElement("option");
+      opt.value = status;
+      opt.textContent = status.replace(/-/g, " ");
+      if (status === item.status) opt.selected = true;
+      select.appendChild(opt);
+    });
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "teacher-roadmap-action-btn";
+    btn.textContent = "Set";
+    btn.addEventListener("click", function () {
+      postTeacherAction_(
+        "updateRoadmapStatus",
+        { username: student.username, courseId: course.id, chapter: item.chapter, name: item.name, status: select.value },
+        btn,
+        function () {
+          item.status = select.value;
+          renderRoadmap(course);
+          renderTeacherRoadmapActions_(student, course);
+        }
+      );
+    });
+
+    cell.appendChild(select);
+    cell.appendChild(btn);
+    row.appendChild(cell);
+  });
+}
+
+function renderTeacherFeedbackForm_(student, course) {
+  const wrap = document.getElementById("teacher-student-feedback-form");
+  if (!wrap) return;
+
+  wrap.innerHTML =
+    '<div class="teacher-add-form">' +
+      '<p class="teacher-add-form-title">Add feedback</p>' +
+      '<div class="teacher-add-form-row">' +
+        '<input type="text" class="teacher-add-input" id="teacher-feedback-chapter" placeholder="Chapter (e.g. Chapter 1)">' +
+        '<input type="text" class="teacher-add-input" id="teacher-feedback-unit" placeholder="Unit (e.g. T1)">' +
+      '</div>' +
+      '<textarea class="teacher-add-textarea" id="teacher-feedback-content" placeholder="Feedback content — HTML/LaTeX allowed, same as elsewhere"></textarea>' +
+      '<button type="button" class="teacher-add-btn" id="teacher-feedback-submit">Add feedback</button>' +
+    '</div>';
+
+  document.getElementById("teacher-feedback-submit").addEventListener("click", function () {
+    const btn = this;
+    const chapter = document.getElementById("teacher-feedback-chapter").value.trim();
+    const unit = document.getElementById("teacher-feedback-unit").value.trim();
+    const content = document.getElementById("teacher-feedback-content").value.trim();
+    if (!chapter || !unit || !content) { alert("Chapter, unit, and content are all required."); return; }
+
+    const date = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    postTeacherAction_(
+      "addFeedback",
+      { username: student.username, courseId: course.id, date: date, chapter: chapter, unit: unit, content: content },
+      btn,
+      function () {
+        course.feedback = course.feedback || [];
+        course.feedback.unshift({ date: date, chapter: chapter, unit: unit, content: content });
+        renderTeacherStudentFeedbackList_(course);
+        renderMath(document.getElementById("teacher-student-content"));
+        renderTeacherFeedbackForm_(student, course);
+      }
+    );
+  });
+}
+
+function renderTeacherCheatSheetForm_(student, course) {
+  const wrap = document.getElementById("teacher-student-cheatsheet-form");
+  if (!wrap) return;
+
+  wrap.innerHTML =
+    '<div class="teacher-add-form">' +
+      '<p class="teacher-add-form-title">Add cheat sheet entry</p>' +
+      '<div class="teacher-add-form-row">' +
+        '<input type="text" class="teacher-add-input" id="teacher-cheat-topic" placeholder="Topic">' +
+        '<input type="text" class="teacher-add-input" id="teacher-cheat-source" placeholder="Source (e.g. 발상노트, Jul 28)">' +
+      '</div>' +
+      '<textarea class="teacher-add-textarea" id="teacher-cheat-pattern" placeholder="Pattern — HTML/LaTeX allowed"></textarea>' +
+      '<button type="button" class="teacher-add-btn" id="teacher-cheat-submit">Add cheat sheet entry</button>' +
+    '</div>';
+
+  document.getElementById("teacher-cheat-submit").addEventListener("click", function () {
+    const btn = this;
+    const topic = document.getElementById("teacher-cheat-topic").value.trim();
+    const source = document.getElementById("teacher-cheat-source").value.trim();
+    const pattern = document.getElementById("teacher-cheat-pattern").value.trim();
+    if (!topic || !source || !pattern) { alert("Topic, source, and pattern are all required."); return; }
+
+    postTeacherAction_(
+      "addCheatSheetEntry",
+      { username: student.username, courseId: course.id, topic: topic, source: source, pattern: pattern },
+      btn,
+      function () {
+        course.cheatSheet = course.cheatSheet || [];
+        course.cheatSheet.push({ topic: topic, source: source, pattern: pattern });
+        renderTeacherStudentCheatSheetList_(course);
+        renderMath(document.getElementById("teacher-student-content"));
+        renderTeacherCheatSheetForm_(student, course);
+      }
+    );
+  });
+}
+
+function renderTeacherRightNowForm_(student, course) {
+  const wrap = document.getElementById("teacher-student-now-form");
+  if (!wrap) return;
+  const data = course.rightNow || {};
+
+  wrap.innerHTML =
+    '<div class="teacher-add-form">' +
+      '<p class="teacher-add-form-title">Update Right Now</p>' +
+      '<div class="teacher-add-form-row">' +
+        '<select class="teacher-add-input" id="teacher-now-state">' +
+          '<option value="your-move"' + (data.state !== "waiting" ? " selected" : "") + '>Your move</option>' +
+          '<option value="waiting"' + (data.state === "waiting" ? " selected" : "") + '>Waiting (with us)</option>' +
+        '</select>' +
+        '<input type="text" class="teacher-add-input" id="teacher-now-chapter" placeholder="Chapter" value="' + (data.chapter || "") + '">' +
+        '<input type="text" class="teacher-add-input" id="teacher-now-unit" placeholder="Unit" value="' + (data.unit || "") + '">' +
+      '</div>' +
+      '<textarea class="teacher-add-textarea" id="teacher-now-text" placeholder="Instruction (your move) or note (waiting)">' + (data.instruction || data.note || "") + '</textarea>' +
+      '<input type="text" class="teacher-add-input" id="teacher-now-due" placeholder="Due (optional, your-move only)" value="' + (data.due || "") + '">' +
+      '<button type="button" class="teacher-add-btn" id="teacher-now-submit">Update Right Now</button>' +
+    '</div>';
+
+  document.getElementById("teacher-now-submit").addEventListener("click", function () {
+    const btn = this;
+    const state = document.getElementById("teacher-now-state").value;
+    const chapter = document.getElementById("teacher-now-chapter").value.trim();
+    const unit = document.getElementById("teacher-now-unit").value.trim();
+    const text = document.getElementById("teacher-now-text").value.trim();
+    const due = document.getElementById("teacher-now-due").value.trim();
+    if (!chapter || !unit || !text) { alert("Chapter, unit, and instruction/note are all required."); return; }
+
+    const rightNow = state === "waiting"
+      ? { state: "waiting", chapter: chapter, unit: unit, note: text }
+      : { state: "your-move", chapter: chapter, unit: unit, instruction: text };
+    if (state === "your-move" && due) rightNow.due = due;
+
+    postTeacherAction_(
+      "updateRightNow",
+      { username: student.username, courseId: course.id, rightNow: rightNow },
+      btn,
+      function () {
+        course.rightNow = rightNow;
+        delete course.rightNowNext;
+        renderTeacherStudentNow_(course);
+        renderTeacherRightNowForm_(student, course);
+      }
+    );
+  });
+}
+
+// One compact form covering all 7 metrics sub-shapes via a type
+// selector, rather than 7 separate static forms — each submit still
+// posts exactly one action/payload (addMetricEntry or setApScore),
+// same narrow-write philosophy as everything else here.
+const TEACHER_METRIC_TYPE_LABELS_ = {
+  topicMastery: "Topic mastery",
+  chapterScores: "Chapter scores (C/T)",
+  motivation: "Motivation check-in",
+  mockScores: "Mock score",
+  timeToCompletion: "Time to completion",
+  apPredictedScore: "AP predicted score",
+  apFinalScore: "AP final score"
+};
+
+function teacherMetricFieldsHtml_(type) {
+  const num = ' type="number"';
+  const txt = ' type="text"';
+  switch (type) {
+    case "topicMastery":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Topic">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="Score (0-100)">';
+    case "chapterScores":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="C-score (0-100)">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="T-score (0-100)">';
+    case "motivation":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Date (e.g. Aug 5)">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Score (0-100)">';
+    case "mockScores":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Name">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Date">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="MCQ score">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f4" placeholder="MCQ max">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f5" placeholder="FRQ score">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f6" placeholder="FRQ max">';
+    case "timeToCompletion":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
+             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Days">';
+    case "apPredictedScore":
+      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (1-5)">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="As of (date)">';
+    case "apFinalScore":
+      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (1-5)">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Exam date">';
+    default:
+      return "";
+  }
+}
+
+function renderTeacherMetricsForm_(student, course) {
+  const wrap = document.getElementById("teacher-student-metrics-form");
+  if (!wrap) return;
+
+  function draw(selectedType) {
+    const type = selectedType || "motivation";
+    wrap.innerHTML =
+      '<div class="teacher-add-form">' +
+        '<p class="teacher-add-form-title">Add metric entry</p>' +
+        '<select class="teacher-add-input" id="teacher-metric-type">' +
+          Object.keys(TEACHER_METRIC_TYPE_LABELS_).map(function (t) {
+            return '<option value="' + t + '"' + (t === type ? " selected" : "") + '>' + TEACHER_METRIC_TYPE_LABELS_[t] + '</option>';
+          }).join("") +
+        '</select>' +
+        '<div class="teacher-add-form-row" id="teacher-metric-fields">' + teacherMetricFieldsHtml_(type) + '</div>' +
+        '<button type="button" class="teacher-add-btn" id="teacher-metric-submit">Add</button>' +
+      '</div>';
+
+    document.getElementById("teacher-metric-type").addEventListener("change", function () { draw(this.value); });
+    document.getElementById("teacher-metric-submit").addEventListener("click", function () { submit_(type, this); });
+  }
+
+  function val_(id) { const el = document.getElementById(id); return el ? el.value.trim() : ""; }
+  function num_(id) { const v = val_(id); return v === "" ? null : Number(v); }
+
+  function submit_(type, btn) {
+    let action, payload;
+
+    if (type === "apPredictedScore" || type === "apFinalScore") {
+      const score = num_("teacher-metric-f1");
+      const dateVal = val_("teacher-metric-f2");
+      if (score === null || !dateVal) { alert("Score and date are both required."); return; }
+      const value = type === "apPredictedScore"
+        ? { score: score, maxScore: 5, asOf: dateVal }
+        : { score: score, maxScore: 5, examDate: dateVal };
+      action = "setApScore";
+      payload = { username: student.username, courseId: course.id, field: type, value: value };
+    } else {
+      let entry = null;
+      if (type === "topicMastery") entry = { chapter: val_("teacher-metric-f1"), topic: val_("teacher-metric-f2"), score: num_("teacher-metric-f3") };
+      else if (type === "chapterScores") entry = { chapter: val_("teacher-metric-f1"), cScore: num_("teacher-metric-f2"), tScore: num_("teacher-metric-f3") };
+      else if (type === "motivation") entry = { date: val_("teacher-metric-f1"), score: num_("teacher-metric-f2") };
+      else if (type === "mockScores") entry = { name: val_("teacher-metric-f1"), date: val_("teacher-metric-f2"), mcq: { score: num_("teacher-metric-f3"), maxScore: num_("teacher-metric-f4") }, frq: { score: num_("teacher-metric-f5"), maxScore: num_("teacher-metric-f6") } };
+      else if (type === "timeToCompletion") entry = { chapter: val_("teacher-metric-f1"), days: num_("teacher-metric-f2") };
+
+      action = "addMetricEntry";
+      payload = { username: student.username, courseId: course.id, metricType: type, entry: entry };
+    }
+
+    postTeacherAction_(action, payload, btn, function () {
+      course.metrics = course.metrics || {};
+      if (action === "setApScore") {
+        course.metrics[payload.field] = payload.value;
+      } else {
+        course.metrics[payload.metricType] = course.metrics[payload.metricType] || [];
+        course.metrics[payload.metricType].push(payload.entry);
+      }
+      renderTeacherMetrics(course.metrics);
+      draw(type);
+    });
+  }
+
+  draw();
 }
 
 function renderTeacherStudentPage() {
@@ -1075,49 +1485,20 @@ function renderTeacherStudentPage() {
   document.getElementById("teacher-student-course").textContent = course.name;
   document.title = student.name + " · " + course.name + " — Zenith";
 
-  const data = course.rightNow;
-  const nowWrap = document.getElementById("teacher-student-now");
-  if (!data) {
-    nowWrap.innerHTML = '<p class="parent-now-empty">Nothing set right now.</p>';
-  } else {
-    const isWaiting = data.state === "waiting";
-    nowWrap.className = "parent-now" + (isWaiting ? " is-waiting" : "");
-    nowWrap.innerHTML =
-      '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Their move") + '</p>' +
-      '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
-  }
+  renderTeacherStudentNow_(course);
+  renderTeacherRightNowForm_(student, course);
 
   renderTeacherMetrics(course.metrics);
+  renderTeacherMetricsForm_(student, course);
 
   renderRoadmap(course);
+  renderTeacherRoadmapActions_(student, course);
 
-  const feedbackList = document.getElementById("teacher-student-feedback");
-  const feedback = course.feedback || [];
-  feedbackList.innerHTML = feedback.length === 0
-    ? '<p class="feedback-empty">No feedback written yet.</p>'
-    : feedback.map(function (entry) {
-        return '<div class="feedback-item">' +
-          '<div class="feedback-meta">' +
-            '<span class="feedback-date">' + entry.date + '</span>' +
-            '<span class="feedback-chapter">' + entry.chapter + ' · ' + entry.unit + '</span>' +
-          '</div>' +
-          '<p class="feedback-content">' + entry.content + '</p>' +
-        '</div>';
-      }).join("");
+  renderTeacherStudentFeedbackList_(course);
+  renderTeacherFeedbackForm_(student, course);
 
-  const cheatList = document.getElementById("teacher-student-cheatsheet");
-  const cheatSheet = course.cheatSheet || [];
-  cheatList.innerHTML = cheatSheet.length === 0
-    ? '<p class="feedback-empty">No cheat sheet entries yet.</p>'
-    : cheatSheet.map(function (entry) {
-        return '<div class="feedback-item">' +
-          '<div class="feedback-meta">' +
-            '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
-            '<span class="cheatsheet-source">' + entry.source + '</span>' +
-          '</div>' +
-          '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
-        '</div>';
-      }).join("");
+  renderTeacherStudentCheatSheetList_(course);
+  renderTeacherCheatSheetForm_(student, course);
 
   renderMath(document.getElementById("teacher-student-content"));
 

@@ -6,6 +6,15 @@
 > the log — see the header comment in that file for setup. It shares
 > this doc's log-entry shape and GitHub-commit pattern but is its own
 > deployment, not part of the Form-bound script below.
+>
+> **Also related:** [`zenith-data-writer.gs`](zenith-data-writer.gs) is
+> a third, separate standalone Web App — it backs every write control
+> on teacher-student.html (unlock a roadmap item, add feedback, add a
+> cheat sheet entry, update Right Now, log a metrics data point). It's
+> the first thing in this repo that writes to `js/data.js` itself
+> rather than `data/submissions-log.json`; see that file's header
+> comment for how it handles `js/data.js` not being valid JSON, and for
+> setup steps.
 
 Compiles every Google Form submission (the intake form students use to
 turn in work) into one status-tracked log, `data/submissions-log.json`,

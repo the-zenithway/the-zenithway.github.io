@@ -2,7 +2,7 @@
 
 ## 1. Absolute Clarity
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
-- [ ] Live-editable teacher dashboard — write path (unlock units, post feedback/cheat sheet, mark submissions Complete) straight from teacher.html instead of hand-editing js/data.js; needs a serverless write endpoint (e.g. GitHub Actions workflow-dispatch or Apps Script committing to main, same pattern as the submission compiler)
+- [ ] Onboarding from the dashboard — add a new student account, or enroll an existing student in a new course, without hand-editing js/data.js. Needs the COURSE_TEMPLATES concept sketched in js/data.js's comments (not built yet) so a new enrollment can clone a clean roadmap instead of copying + stripping another student's progress by hand. New-course/new-subject scaffolding (a brand new template key) is the same next step, content-authoring aside.
 - [ ] Workflow(Basically zenith CLI)
   - [ ] Course Unlock + Now + Update(includes percentage, chapter status update) 
   - [ ] Submission + submission log update + systematic grading
@@ -11,9 +11,9 @@
 - [ ] AI autopilot 
 - [ ] Fully automating above workflow
 - [ ] instructions for the submission process, e.g. the template 
-- [ ] now page update
 - [ ] Question database and like searching, asking questions, hints, etc.
 - [ ] Metric and stats for students, viewable to teachers 
+- [ ] mobile optimization for the new features 
 
 ## 2. Inner Excellence 
 - [ ] Brainstorm more ways to force/encourage real effort (open-ended)
@@ -46,7 +46,10 @@
 - [ ] alumni/results page showing outcomes 
 - [ ] create a timeline of features 
 - [ ] biology, chemistry view for couse  and other subjects too 
-- [ ] video making 
+- [ ] video making
+- [ ] fix biology and chemistry course 
+- [ ] updated script for the forms 
+- [ ] maybe make it such that everytime the email is sent to students, it's also all sent to my own account 
 
 ## 5. Get People 
 
@@ -56,9 +59,6 @@
 - [ ] Zenith Local
 
 ## Done
-- [x] Teacher-only per-student metrics section on teacher-student.html (topic mastery, C/T chapter scores, motivation-over-time, mock scores, AP final score) — new `course.metrics` draft shape in js/data.js, placeholder data on one course only, nothing wired into the real teacher database yet
-- [x] teacher-overview.html — new portal page, comprehensive table of every student × enrolled course in one place (progress, mastery, C/T score, motivation, mock avg, AP final, latest feedback), subject filter, click-through to teacher-student.html; linked from teacher.html
-- [x] Teacher/All Students tabs in the portal header nav (js/layout.js `nav: "teacher"`) — replaces the old single "Teacher Dashboard" label
-- [x] Time-to-completion-per-chapter stat added to course.metrics (days from chapter unlock to Complete) — shown on teacher-student.html and as an "Avg pace" column on teacher-overview.html
-- [x] teacher-overview.html table widened/tightened so all columns fit without side-scrolling on a normal desktop width; dropped the "Latest feedback" column (not useful)
-- [x] Submissions on teacher-student.html collapsed to a click-to-expand box (native details/summary) instead of showing OCR text/thumbnails inline for every entry — student's own submit.html view unchanged
+- [x] AP Biology roadmap — removed stray submit.html links from N-Notes Submission rows (data-only, matches Chemistry/Calculus pattern)
+- [x] Teacher dashboard regular-workflow write actions — automation/zenith-data-writer.gs (new Apps Script Web App, not deployed yet) plus teacher-student.html controls to unlock/change a roadmap item's status, add feedback, add a cheat sheet entry, update Right Now, and log a metrics data point (or set AP predicted/final score) — all backed by TEACHER_DATA_WRITE_URL in js/data.js
+- [x] submissionCourseId() exact-id-first match — tries entry.answers.course against a real course.id before falling back to name-matching, so switching the intake Form's "Course" dropdown to emit slugs (e.g. "ap-chemistry") will resolve correctly with no further code changes

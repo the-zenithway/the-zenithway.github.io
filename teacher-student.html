@@ -21,7 +21,7 @@
 <script>renderPortalHeader({ nav: "label", label: "Teacher Dashboard", actions: ["logout"] });</script>
 
 <main class="parent-wrap">
-  <div class="parent-col">
+  <div class="parent-col parent-col-wide">
     <a href="teacher.html" class="roadmap-back">← Teacher Dashboard</a>
 
     <p class="teacher-student-not-found" id="teacher-student-not-found" hidden>
@@ -34,9 +34,11 @@
 
       <h2 class="teacher-section-title">Right now</h2>
       <div class="parent-now" id="teacher-student-now"></div>
+      <div id="teacher-student-now-form"></div>
 
       <h2 class="teacher-section-title">Metrics <span class="teacher-metrics-private">Teacher-only</span></h2>
       <div class="teacher-metrics" id="teacher-student-metrics"></div>
+      <div id="teacher-student-metrics-form"></div>
 
       <h2 class="teacher-section-title">Roadmap</h2>
       <div class="roadmap-wrap">
@@ -48,6 +50,7 @@
             <col style="width: 150px">
             <col style="width: 155px">
             <col style="width: 84px">
+            <col style="width: 170px">
           </colgroup>
           <thead>
             <tr>
@@ -56,6 +59,7 @@
               <th>Category</th>
               <th>Status</th>
               <th>Links</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="roadmap-tbody"></tbody>
@@ -64,9 +68,11 @@
 
       <h2 class="teacher-section-title">Feedback</h2>
       <div class="feedback-list" id="teacher-student-feedback"></div>
+      <div id="teacher-student-feedback-form"></div>
 
       <h2 class="teacher-section-title">Cheat sheet</h2>
       <div class="feedback-list" id="teacher-student-cheatsheet"></div>
+      <div id="teacher-student-cheatsheet-form"></div>
 
       <h2 class="teacher-section-title">Submissions</h2>
       <div id="teacher-student-submissions"></div>
