@@ -771,5 +771,105 @@
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-06T06:15:54.521Z"
     }
+  ],
+  "bogue": [
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (B4-Application of Differential Calculus) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (C4-Application of Differential Calculus Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 5 (B5-Antidifferentiation) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 5 (C5-Antidifferentiation Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (B6-Definite Integrals) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (C6-Definite Integrals Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 7 (B7-Application of Integration to Geometry) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 7 (C7-Application of Integration to Geometry Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 8 (B8-Further Applications of Integration) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 8 (C8-Further Application of Integration Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (B9-Differential Equations) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (C9-Differential Equations Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (B10-Sequences and Series) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (C10-Sequences and Series Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    }
   ]
 }
