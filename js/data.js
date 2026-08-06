@@ -2970,14 +2970,14 @@ const STUDENTS = [
             "name": "B2-Limits and Continuity",
             "category": "B-book chapter",
             "chapter": "Chapter 2",
-            "status": "Optional-Reading",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link"
           },
           {
             "name": "C2-Limits and Continuity Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
-            "status": "Optional-Reading",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link"
           },
           {
@@ -3512,7 +3512,15 @@ const STUDENTS = [
             "chapter": "Chapter M",
             "status": "Locked"
           }
-        ]
+        ],
+        "metrics": {
+          "motivation": [
+            {
+              "date": "Aug 1",
+              "score": 70
+            }
+          ]
+        }
       }
     ]
   },
