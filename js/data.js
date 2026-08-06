@@ -5527,11 +5527,17 @@ const STUDENTS = [
         "icon": "chemistry",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 5",
-          "unit": "L5",
-          "instruction": "Complete L5 — Kinetics on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
+          "chapter": "Chapter 1-4",
+          "unit": "N1-4",
+          "instruction": "Complete N1-4: Write notes thoroughly on the following chapters and submit."
         },
         "feedback": [
+          {
+            "date": "8월 6일",
+            "chapter": "Chapter 1-4",
+            "unit": "C1,C2,C3,C4",
+            "content": "Well done on the courseworks! Only 1 mistakes throughout all the courses.\nC3-#22 was the only error. Check our cheat sheet for explanation and tips.\nPlease complete N1-4 by writing notes on the concepts of Chapter 1-4 and review with the Advanced Booklet by making sure you have all the concepts memorized until chapter 4.\nMemorize the VSPER structures too.\nC3-#12 was an error in the answer sheet making your answer, D, correct."
+          },
           {
             "date": "8월 6일",
             "chapter": "Chapter 1-4",
@@ -5542,6 +5548,11 @@ const STUDENTS = [
         "cheatSheet": [
           {
             "topic": "Extra care on what the question asks for.",
+            "source": "C3-#22",
+            "pattern": "You correctly found the total number of moles using the ideal gas law. However, the question asks for the number of moles of O₂, so you needed one additional step: use the given mole ratio to convert the total moles to the moles of oxygen."
+          },
+          {
+            "topic": "Make sure to double check what the question asked for.",
             "source": "C3-#22",
             "pattern": "You correctly found the total number of moles using the ideal gas law. However, the question asks for the number of moles of O₂, so you needed one additional step: use the given mole ratio to convert the total moles to the moles of oxygen."
           }
