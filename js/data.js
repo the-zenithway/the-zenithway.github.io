@@ -795,24 +795,22 @@ const STUDENTS = [
             {
               "chapter": "Chapter 1",
               "topic": "Functions",
-              "score": 92 
+              "score": 92
             }
           ],
           "chapterScores": [
             {
               "chapter": "Chapter 1",
               "cScore": 75,
-              "tScore": 93 
+              "tScore": 93
             }
           ],
-          "motivation": [
-          ],
-          "mockScores": [
-          ],
+          "motivation": [],
+          "mockScores": [],
           "timeToCompletion": [
             {
               "chapter": "Chapter 1",
-              "days": 5 
+              "days": 5
             }
           ],
           "apPredictedScore": {
@@ -5529,9 +5527,9 @@ const STUDENTS = [
         "icon": "chemistry",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 1",
-          "unit": "L1",
-          "instruction": "Complete L1 — Atomic Structure and Properties on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
+          "chapter": "Chapter 5",
+          "unit": "L5",
+          "instruction": "Complete L5 — Kinetics on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
         },
         "feedback": [],
         "cheatSheet": [],
@@ -5575,7 +5573,7 @@ const STUDENTS = [
             "name": "L1-Atomic Structure and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties"
           },
           {
@@ -5588,28 +5586,28 @@ const STUDENTS = [
             "name": "C1-Atomic Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk"
           },
           {
             "name": "S1-Atomic Structure and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 1",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1TzDXjDbomuSDnD9e2hIdT4PGoiE7Q7FH/view?usp=drivesdk"
           },
           {
             "name": "T1-Atomic Structure and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 1",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/18vw9LZt1t5f4xZVDP5c4qmwTtk8DHgKq/view?usp=drive_link"
           },
           {
             "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties"
           },
           {
@@ -5622,28 +5620,28 @@ const STUDENTS = [
             "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk"
           },
           {
             "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1q2WVPJc-lHflyPnQncPd9n0mg0WFjFg2/view?usp=drivesdk"
           },
           {
             "name": "T2-Molecular and Ionic Compound Structure and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1ni5RP5AkM3vpObBBamWGA9Bs5QAkFaT2/view?usp=drive_link"
           },
           {
             "name": "L3-Intermolecular Forces and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties"
           },
           {
@@ -5656,28 +5654,28 @@ const STUDENTS = [
             "name": "C3-Intermolecular Forces and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk"
           },
           {
             "name": "S3-Intermolecular Forces and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1qJkJXUIgek8HA2R1qXblVbv-c65iTsC6/view?usp=drivesdk"
           },
           {
             "name": "T3-Intermolecular Forces and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/18ACcWU8XylW6G_lxDb_WPZPjNMf2uh29/view?usp=drive_link"
           },
           {
             "name": "L4-Chemical Reactions (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 4",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions"
           },
           {
@@ -5690,21 +5688,21 @@ const STUDENTS = [
             "name": "C4-Chemical Reactions Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk"
           },
           {
             "name": "S4-Chemical Reactions Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1N9Fw8l1y0YPPLcFX_EaoAbmxOsc91hbC/view?usp=drivesdk"
           },
           {
             "name": "T4-Chemical Reactions Test",
             "category": "T-Test",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/17NSKoviTs6bX7b7UkQcICkqJ8UZ4gQdp/view?usp=drive_link"
           },
           {
@@ -6135,7 +6133,15 @@ const STUDENTS = [
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk"
           }
-        ]
+        ],
+        "metrics": {
+          "motivation": [
+            {
+              "date": "Aug 6",
+              "score": 95
+            }
+          ]
+        }
       },
       {
         "id": "ap-biology",
