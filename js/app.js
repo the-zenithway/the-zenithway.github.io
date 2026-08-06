@@ -96,9 +96,21 @@ function getCurrentParent() {
 // remembering the page they were trying to reach so login.html can
 // send them back afterward. Call this at the very top of any
 // student-facing "protected" page.
+//
+// A logged-in teacher/parent clicking into a student-only page (e.g.
+// the public site's "Portal" nav link) used to hit this same "not
+// logged in" path — getCurrentStudent() is naturally null for them,
+// since they're not in STUDENTS — and get bounced to the login
+// screen, which reads as "I got logged out" even though their session
+// in localStorage was never touched (logout() is the only thing that
+// clears it). Checking ROLE_KEY first sends them to their own
+// dashboard instead of a login screen that would just fail again.
 function requireLogin() {
   const student = getCurrentStudent();
   if (!student) {
+    const role = localStorage.getItem(ROLE_KEY);
+    if (role === "teacher") { window.location.href = "teacher.html"; return; }
+    if (role === "parent") { window.location.href = "parent.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
     return;
@@ -108,18 +120,26 @@ function requireLogin() {
 }
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
-// list instead of STUDENTS.
+// list instead of STUDENTS. Same cross-role redirect as requireLogin()
+// above, in the other direction (a logged-in student/parent landing
+// here goes to their own dashboard, not a login screen).
 function requireTeacherLogin() {
   if (!getCurrentTeacher()) {
+    const role = localStorage.getItem(ROLE_KEY);
+    if (role === "student") { window.location.href = "portal.html"; return; }
+    if (role === "parent") { window.location.href = "parent.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
 
 // Same as requireLogin(), but for parent.html — checks the PARENTS
-// list instead of STUDENTS.
+// list instead of STUDENTS. Same cross-role redirect as the two above.
 function requireParentLogin() {
   if (!getCurrentParent()) {
+    const role = localStorage.getItem(ROLE_KEY);
+    if (role === "student") { window.location.href = "portal.html"; return; }
+    if (role === "teacher") { window.location.href = "teacher.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
@@ -162,20 +182,28 @@ function renderSocialLinks() {
   }).join("");
 }
 
-// Swaps the nav's "Log In" button for the logged-in student's name.
-// Call this near the bottom of any public page that has the
-// site-header nav (index.html, philosophy.html, resources.html,
-// faq.html).
+// Swaps the nav's "Log In" button for the logged-in user's name —
+// student, teacher, or parent. Call this near the bottom of any
+// public page that has the site-header nav (index.html,
+// philosophy.html, resources.html, faq.html). Used to check only
+// getCurrentStudent(), so a logged-in teacher/parent browsing these
+// pages saw the generic "Log In" button instead of their own name —
+// looked exactly like they'd been logged out, even though their
+// session was untouched.
 function renderNavAuth() {
   const loginBtn = document.getElementById("nav-login-btn");
   const userName = document.getElementById("nav-user-name");
   if (!loginBtn || !userName) return;
 
   const student = getCurrentStudent();
-  if (student) {
+  const teacher = !student ? getCurrentTeacher() : null;
+  const parent = (!student && !teacher) ? getCurrentParent() : null;
+  const loggedInName = student ? student.name : teacher ? teacher.name : parent ? parent.name : null;
+
+  if (loggedInName) {
     loginBtn.hidden = true;
     userName.hidden = false;
-    userName.textContent = student.name;
+    userName.textContent = loggedInName;
   } else {
     loginBtn.hidden = false;
     userName.hidden = true;
