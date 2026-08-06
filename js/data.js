@@ -806,57 +806,24 @@ const STUDENTS = [
           "chapterScores": [
             {
               "chapter": "Chapter 1",
-              "cScore": 94,
-              "tScore": 82
-            },
-            {
-              "chapter": "Chapter 2",
-              "cScore": 76,
-              "tScore": null
+              "cScore": 75,
+              "tScore": 93 
             }
           ],
           "motivation": [
-            {
-              "date": "Jul 21",
-              "score": 85
-            },
-            {
-              "date": "Jul 24",
-              "score": 70
-            },
-            {
-              "date": "Jul 28",
-              "score": 90
-            },
-            {
-              "date": "Jul 30",
-              "score": 78
-            }
           ],
           "mockScores": [
-            {
-              "name": "Mock Test 1",
-              "date": "Jul 20",
-              "mcq": {
-                "score": 38,
-                "maxScore": 45
-              },
-              "frq": {
-                "score": 20,
-                "maxScore": 21
-              }
-            }
           ],
           "timeToCompletion": [
             {
               "chapter": "Chapter 1",
-              "days": 9
+              "days": 5 
             }
           ],
           "apPredictedScore": {
             "score": 4,
             "maxScore": 5,
-            "asOf": "Jul 30"
+            "asOf": "Aug 6"
           },
           "apFinalScore": null
         }

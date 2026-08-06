@@ -80,6 +80,18 @@
  * comments. Same tradeoff js/data.js's own header comment already
  * describes for zenith-cli.
  *
+ * FORMATTING: stringifyStudents_/stringifyValue_ below produce the
+ * same output as JSON.stringify(value, null, 2) for everything
+ * EXCEPT roadmap items, which print compactly (one line each, via
+ * compactObjectString_) to match how they were originally hand-
+ * authored — a single status change should read as a one-line diff,
+ * not a 5-line reformat of the whole item. Added 2026-08-05; the
+ * FIRST write after this fix still reformats every roadmap item in
+ * one big diff (the whole file was already in expanded multi-line
+ * form from writes before this existed) — that's a one-time cost,
+ * not a bug. Every write after that stays compact and only touches
+ * whatever actually changed.
+ *
  * ---------------------------------------------------------------
  * ONE-TIME SETUP
  * ---------------------------------------------------------------
@@ -370,13 +382,61 @@ function readConstArray_(source, constName) {
   return eval("(" + literalText + ")");
 }
 
-// Replaces `const <constName> = [...]`'s array literal with
-// JSON.stringify(newValue) — everything else in the file (comments,
-// other consts) is left untouched.
+// Replaces `const <constName> = [...]`'s array literal with a
+// pretty-printed version of newValue — everything else in the file
+// (comments, other consts) is left untouched.
 function spliceConstArray_(source, constName, newValue) {
   var span = findConstArraySpan_(source, constName);
-  var newLiteral = JSON.stringify(newValue, null, 2);
+  var newLiteral = stringifyStudents_(newValue);
   return source.slice(0, span.literalStart) + newLiteral + source.slice(span.literalEnd);
+}
+
+// Same output as JSON.stringify(value, null, 2) EXCEPT roadmap items
+// (an array under a "roadmap" key) print as one compact line each,
+// matching how they were originally hand-authored/zenith-cli-
+// formatted, instead of one line per field. Plain JSON.stringify(...,
+// null, 2) — used here before 2026-08-05 — expands every object the
+// same way, so a single roadmap status change reformatted that item
+// across 5 lines and made the diff look like the whole item was
+// replaced rather than one field flipped. Every other array/object in
+// STUDENTS (courses, feedback, cheatSheet, metrics, ...) is untouched
+// by this — only the "roadmap" key gets the compact treatment.
+function stringifyStudents_(value) {
+  return stringifyValue_(value, "", null);
+}
+
+function stringifyValue_(value, indent, keyName) {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+
+  var childIndent = indent + "  ";
+
+  if (Array.isArray(value)) {
+    if (value.length === 0) return "[]";
+    var items;
+    if (keyName === "roadmap") {
+      items = value.map(function (item) { return childIndent + compactObjectString_(item); });
+    } else {
+      items = value.map(function (item) { return childIndent + stringifyValue_(item, childIndent, null); });
+    }
+    return "[\n" + items.join(",\n") + "\n" + indent + "]";
+  }
+
+  var keys = Object.keys(value);
+  if (keys.length === 0) return "{}";
+  var props = keys.map(function (k) {
+    return childIndent + JSON.stringify(k) + ": " + stringifyValue_(value[k], childIndent, k);
+  });
+  return "{\n" + props.join(",\n") + "\n" + indent + "}";
+}
+
+// One roadmap item as `{ "name": "...", "category": "...", ... }` —
+// spaced like a hand-written object literal (space after "{", after
+// every ":" and ",", before "}"), matching the original convention,
+// rather than JSON.stringify's compact-but-cramped `{"name":"..."}}`.
+function compactObjectString_(obj) {
+  var keys = Object.keys(obj);
+  var parts = keys.map(function (k) { return JSON.stringify(k) + ": " + JSON.stringify(obj[k]); });
+  return "{ " + parts.join(", ") + " }";
 }
 
 // ---------------------------------------------------------------

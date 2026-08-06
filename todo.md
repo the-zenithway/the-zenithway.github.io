@@ -4,7 +4,7 @@
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Onboarding from the dashboard — add a new student account, or enroll an existing student in a new course, without hand-editing js/data.js. Needs the COURSE_TEMPLATES concept sketched in js/data.js's comments (not built yet) so a new enrollment can clone a clean roadmap instead of copying + stripping another student's progress by hand. New-course/new-subject scaffolding (a brand new template key) is the same next step, content-authoring aside.
 - [ ] Workflow(Basically zenith CLI)
-  - [ ] Course Unlock + Now + Update(includes percentage, chapter status update) 
+  - [ ] Course Unlock + Now + Update
   - [ ] Submission + submission log update + systematic grading
   - [ ] Feedback + cheat sheet
   - [ ] way to create scheduled messaged for students especially when theres an event 
@@ -21,6 +21,8 @@
 - [ ] autochecking 
 - [ ] notification checking for teachers as well, and thinking of teacher student workflow completely
 - [ ] the entire cycle would start from submit -> then teachers also notified, see the remarks, and update and repeat 
+- [ ] two bugs for teacher database, if u click portal first it doesnt work + automatically logs out unlike student
+- [ ] fix issue where the new database is too long 
 
 ## 2. Inner Excellence 
 - [ ] Brainstorm more ways to force/encourage real effort (open-ended)
@@ -75,3 +77,4 @@
 - [x] Fixed invisible typed-answer submissions — submissionLogItemHtml (submit.html) and teacherSubmissionCardHtml (teacher-student.html) only ever showed an uploaded photo or its OCR text; a submission with neither (typed multiple-choice letters into the Form's text-answer question instead of uploading a photo) displayed nothing, and the teacher view even said "No photos or OCR text on this submission" despite a real answer being on file. New submissionTextAnswer() finds that typed text (any non-metadata string answer) and both views now render it. Fixes this retroactively for existing log entries too, not just new ones.
 - [x] Made every submission card's pieces (photos, OCR text, submitted answer, remark) independently foldable, on all three pages that render one — submit.html, teacher.html's grading queue, and teacher-student.html's submissions list. New shared submissionFoldHtml()/submissionFoldSectionsHtml() in js/app.js, reused by submissionLogItemHtml/teacherQueueItemHtml/teacherSubmissionCardHtml so all three stay in sync instead of duplicating the logic three times; teacher-student.html now nests these folds inside its existing per-submission <details> card. Removed now-dead .teacher-queue-remark/.teacher-queue-ocr CSS.
 - [x] Uploaded photos now made public-viewable automatically — automation/submissions-compiler.gs's makeFilePublic_ sets "anyone with the link can view" on every new file upload (the file's id is already public via data/submissions-log.json, so this doesn't add exposure, it just makes the already-public link's thumbnail actually load instead of showing broken). Added backfillFileSharing_ as a one-time manual run (Apps Script editor, pick from function dropdown) to fix sharing on photos uploaded before this existed.
+- [x] zenith-data-writer.gs now writes roadmap items compactly (one line each, e.g. `{ "name": ..., "status": ... }`) instead of JSON.stringify's default one-field-per-line — a single status change used to reformat that whole item across 5 lines and read like the item was replaced rather than one field flipped. New stringifyStudents_/compactObjectString_ match plain JSON.stringify(...,null,2) everywhere except roadmap arrays. Verified against real js/data.js: round-trips losslessly, and a steady-state write now diffs exactly one line for one field change. First write after deploying this still reformats every roadmap item once (one-time cost, file was already fully expanded from earlier writes) — every write after that stays compact.
