@@ -425,6 +425,27 @@
   ],
   "davidheo": [
     {
+      "type": "deadline",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new task: Chapter 1-4 N1-4",
+      "url": "right-now.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 1-4 C1,C2,C3,C4",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Make sure to double check what the question asked for.\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
       "type": "feedback",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — new feedback on Chapter 1-4 C3",
@@ -610,27 +631,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 4 (N4-Chemical Reactions Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) unlocked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-05T09:59:24.806Z"
     }
