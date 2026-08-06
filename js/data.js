@@ -795,12 +795,7 @@ const STUDENTS = [
             {
               "chapter": "Chapter 1",
               "topic": "Functions",
-              "score": 88
-            },
-            {
-              "chapter": "Chapter 2",
-              "topic": "Limits and Continuity",
-              "score": 71
+              "score": 92 
             }
           ],
           "chapterScores": [
