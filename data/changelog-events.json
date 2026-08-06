@@ -425,6 +425,20 @@
   ],
   "davidheo": [
     {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 1-4 C3",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:07:25.989Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Extra care on what the question asks for.\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:07:25.989Z"
+    },
+    {
       "type": "deadline",
       "courseId": "ap-biology",
       "text": "AP Biology — new task: Chapter 1 N1 (due Next session)",
@@ -617,20 +631,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (N5-Kinetics Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) unlocked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-05T09:59:24.806Z"
     }
