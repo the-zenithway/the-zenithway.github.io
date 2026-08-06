@@ -6150,8 +6150,8 @@ const STUDENTS = [
         "rightNow": {
           "state": "your-move",
           "chapter": "Chapter 1",
-          "unit": "L1",
-          "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
+          "unit": "N1",
+          "instruction": "Watch the Khan videos again and write notes again including all the concepts in the videos. Recommended way is: after every packet of videos, write notes of all the concepts mentioned in the packet of videos before moving on to the other. After writiing the notes, I recommend to solve exercises given by khan in that packet.",
           "due": "Next session"
         },
         "feedback": [],
