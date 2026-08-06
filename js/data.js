@@ -6164,7 +6164,12 @@ const STUDENTS = [
               "date": "Aug 6",
               "score": 95
             }
-          ]
+          ],
+          "apPredictedScore": {
+            "score": 3,
+            "maxScore": 5,
+            "asOf": "Aug 6"
+          }
         }
       },
       {
