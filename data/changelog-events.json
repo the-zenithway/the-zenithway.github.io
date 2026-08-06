@@ -426,6 +426,13 @@
   "davidheo": [
     {
       "type": "deadline",
+      "courseId": "ap-biology",
+      "text": "AP Biology — new task: Chapter 1 N1 (due Next session)",
+      "url": "right-now.html?course=ap-biology",
+      "timestamp": "2026-08-06T08:38:44.198Z"
+    },
+    {
+      "type": "deadline",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — new task: Chapter 5 L5",
       "url": "right-now.html?course=ap-chemistry",
@@ -624,13 +631,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) unlocked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-05T09:59:24.806Z"
     }
