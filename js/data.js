@@ -315,14 +315,14 @@ const STUDENTS = [
             "name": "B4-Application of Differential Calculus",
             "category": "B-book chapter",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link"
           },
           {
             "name": "C4-Application of Differential Calculus Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link"
           },
           {
@@ -349,14 +349,14 @@ const STUDENTS = [
             "name": "B5-Antidifferentiation",
             "category": "B-book chapter",
             "chapter": "Chapter 5",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link"
           },
           {
             "name": "C5-Antidifferentiation Problems",
             "category": "C-coursework",
             "chapter": "Chapter 5",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link"
           },
           {
@@ -383,14 +383,14 @@ const STUDENTS = [
             "name": "B6-Definite Integrals",
             "category": "B-book chapter",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1zDSFHj-udXu9Qy0nrN-B8VbWRD0KmIUt/view?usp=drive_link"
           },
           {
             "name": "C6-Definite Integrals Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1MN9WDjoFhj29pTPRd622yPdGLKQFXsld/view?usp=drive_link"
           },
           {
@@ -417,14 +417,14 @@ const STUDENTS = [
             "name": "B7-Application of Integration to Geometry",
             "category": "B-book chapter",
             "chapter": "Chapter 7",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1qzq9nH9S1AKKy8maEp5tKug1sUXHBQyN/view?usp=drive_link"
           },
           {
             "name": "C7-Application of Integration to Geometry Problems",
             "category": "C-coursework",
             "chapter": "Chapter 7",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1XyXk_UTTlm4rx0PVT4fZz7VdWlNSpUcA/view?usp=drive_link"
           },
           {
@@ -451,14 +451,14 @@ const STUDENTS = [
             "name": "B8-Further Applications of Integration",
             "category": "B-book chapter",
             "chapter": "Chapter 8",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1AjmoXuebty9WbTfmKgKB_EYCFP58aJWO/view?usp=drive_link"
           },
           {
             "name": "C8-Further Application of Integration Problems",
             "category": "C-coursework",
             "chapter": "Chapter 8",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1bQrM0wkcrnj0A3uIUD5NhtM5BV1CUd7i/view?usp=drive_link"
           },
           {
@@ -485,14 +485,14 @@ const STUDENTS = [
             "name": "B9-Differential Equations",
             "category": "B-book chapter",
             "chapter": "Chapter 9",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1eW1C11UZUfhdYyEqu-yOHIh4hn_46qvA/view?usp=drive_link"
           },
           {
             "name": "C9-Differential Equations Problems",
             "category": "C-coursework",
             "chapter": "Chapter 9",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/14AVNzubvCBozVWwd_UwLKAzXVqwjz0L1/view?usp=drive_link"
           },
           {
@@ -519,14 +519,14 @@ const STUDENTS = [
             "name": "B10-Sequences and Series",
             "category": "B-book chapter",
             "chapter": "Chapter 10",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1On07-Pxn3yhw9rqqy2UzHL_HXguwHL6H/view?usp=drive_link"
           },
           {
             "name": "C10-Sequences and Series Problems",
             "category": "C-coursework",
             "chapter": "Chapter 10",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/12lbYSKyWNW1Ab100P6_wWOnWKfRVuWpm/view?usp=drive_link"
           },
           {
