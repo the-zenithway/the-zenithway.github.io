@@ -5531,8 +5531,21 @@ const STUDENTS = [
           "unit": "L5",
           "instruction": "Complete L5 — Kinetics on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
         },
-        "feedback": [],
-        "cheatSheet": [],
+        "feedback": [
+          {
+            "date": "8월 6일",
+            "chapter": "Chapter 1-4",
+            "unit": "C3",
+            "content": "Well done on the courseworks 1-4! You only got 1 wrong. C3-#12 was an error in the answer sheet which makes your answer, D, correct. Your only mistake was in C3-#22. Please check out the Cheat Sheet and remember the things it says. Please write notes on concpets of chapter 1-4 and review using the Advanced Booklet until our next scheduled session where we will be taking our T-tests."
+          }
+        ],
+        "cheatSheet": [
+          {
+            "topic": "Extra care on what the question asks for.",
+            "source": "C3-#22",
+            "pattern": "You correctly found the total number of moles using the ideal gas law. However, the question asks for the number of moles of O₂, so you needed one additional step: use the given mole ratio to convert the total moles to the moles of oxygen."
+          }
+        ],
         "roadmap": [
           {
             "name": "Advanced Chemistry Booklet",
