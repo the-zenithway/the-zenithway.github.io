@@ -206,8 +206,8 @@ function jsonResponse_(obj) {
 // ---------------------------------------------------------------
 
 var ROADMAP_STATUSES_ = ["Locked", "Unlocked", "Complete", "Review", "Optional-Reading"];
-var METRIC_ARRAY_TYPES_ = ["topicMastery", "chapterScores", "motivation", "mockScores", "timeToCompletion"];
-var AP_SCORE_FIELDS_ = ["apPredictedScore", "apFinalScore"];
+var METRIC_ARRAY_TYPES_ = ["topicMastery", "chapterScores", "motivation", "mockScores", "timeToCompletion", "personality"];
+var AP_SCORE_FIELDS_ = ["apPredictedScore", "apFinalScore", "responsiveness"];
 
 function findCourse_(students, username, courseId) {
   var student = students.find(function (s) { return s.username === username; });
@@ -313,6 +313,9 @@ var ACTIONS = {
     }
   },
 
+  // Name is legacy (started as ap-only) but the handler is generic —
+  // any single-value (not array) metrics field in AP_SCORE_FIELDS_
+  // goes through here, "responsiveness" included.
   setApScore: {
     target: "students",
     handler: function (students, payload) {

@@ -533,43 +533,43 @@
     "problems": [
       {
         "id": "A1",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 2} \\dfrac{x^2-4}{x^2+4}$ is",
         "choices": [
           "1",
           "0",
-          "",
-          "∞"
+          "$-\\dfrac{1}{2}$",
+          "$\\infty$"
         ],
         "correct": "B",
-        "explanation": "The limit as x → 2 is 0 ÷ 8."
+        "explanation": "As $x \\to 2$, the numerator $x^2-4 \\to 0$ and the denominator $x^2+4 \\to 8$, so the limit is $0 \\div 8 = 0$."
       },
       {
         "id": "A2",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} \\dfrac{4-x^2}{x^2-1}$ is",
         "choices": [
           "1",
           "0",
           "-1",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "C",
-        "explanation": "Use the Rational Function Theorem (page 84). The degrees of P(x) and Q(x) are the same."
+        "explanation": "Use the Rational Function Theorem: the degrees of the numerator and denominator are the same (both 2), so the limit is the ratio of leading coefficients, $\\dfrac{-1}{1} = -1$."
       },
       {
         "id": "A3",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 3} \\dfrac{x-3}{x^2-2x-3}$ is",
         "choices": [
           "0",
           "1",
-          "",
-          "∞"
+          "$\\dfrac{1}{4}$",
+          "$\\infty$"
         ],
         "correct": "C",
-        "explanation": "Remove the common factor x - 3 from the numerator and denominator."
+        "explanation": "Factor the denominator: $x^2-2x-3=(x-3)(x+1)$. Cancel the common factor $x-3$, leaving $\\dfrac{1}{x+1}$, which $\\to \\dfrac{1}{4}$ as $x \\to 3$."
       },
       {
         "id": "A4",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 0} \\dfrac{x}{x}$ is",
         "choices": [
           "1",
           "0",
@@ -577,165 +577,167 @@
           "nonexistent"
         ],
         "correct": "A",
-        "explanation": "The fraction equals 1 for all nonzero x."
+        "explanation": "The fraction $\\dfrac{x}{x}$ equals 1 for all nonzero $x$, so the limit is 1."
       },
       {
         "id": "A5",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 2} \\dfrac{x^3-8}{x^2-4}$ is",
         "choices": [
           "1",
           "3",
           "6",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "B",
-        "explanation": "Note that ."
+        "explanation": "Note that $\\dfrac{x^3-8}{x^2-4}=\\dfrac{(x-2)(x^2+2x+4)}{(x-2)(x+2)}$. Canceling $x-2$ and substituting $x=2$ gives $\\dfrac{4+4+4}{2+2}=\\dfrac{12}{4}=3$."
       },
       {
         "id": "A6",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} \\dfrac{4-x^2}{4x^2-x-2}$ is",
         "choices": [
           "-2",
-          "",
+          "$-\\dfrac{1}{4}$",
           "1",
           "2"
         ],
         "correct": "B",
-        "explanation": "Use the Rational Function Theorem. The degree of the numerator and the degree of the denominator are equal."
+        "explanation": "Use the Rational Function Theorem. The degree of the numerator and the degree of the denominator are equal (both 2), so the limit is the ratio of leading coefficients, $\\dfrac{-1}{4}$."
       },
       {
         "id": "A7",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to -\\infty} \\dfrac{5x^3+27}{20x^2+10x+9}$ is",
         "choices": [
-          "-∞",
+          "$-\\infty$",
           "-1",
           "3",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "A",
-        "explanation": "Use the Rational Function Theorem. The degree of the numerator is greater than the degree of the denominator."
+        "explanation": "Use the Rational Function Theorem. The degree of the numerator (3) is greater than the degree of the denominator (2), and the ratio of leading coefficients $\\dfrac{5}{20}>0$, so as $x \\to -\\infty$ the quotient behaves like $\\dfrac{x}{4} \\to -\\infty$."
       },
       {
         "id": "A8",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} \\dfrac{3x^2+27}{x^3-27}$ is",
         "choices": [
           "0",
           "1",
           "3",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "A",
-        "explanation": "Use the Rational Function Theorem. The degree of the numerator is less than the degree of the denominator."
+        "explanation": "Use the Rational Function Theorem. The degree of the numerator (2) is less than the degree of the denominator (3), so the limit is 0."
       },
       {
         "id": "A9",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} \\dfrac{2^{-x}}{2^{x}}$ is",
         "choices": [
           "-1",
           "1",
           "0",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "C",
-        "explanation": "The fraction is equivalent to ; the denominator approaches ∞."
+        "explanation": "The fraction is equivalent to $\\dfrac{1}{2^{2x}}$; as $x \\to \\infty$ the denominator $\\to \\infty$, so the limit is 0."
       },
       {
         "id": "A10",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to -\\infty} \\dfrac{2^{-x}}{2^{x}}$ is",
         "choices": [
           "-1",
           "1",
           "0",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "D",
-        "explanation": "Since , therefore, as x → -∞, the fraction → +∞."
+        "explanation": "Since $\\dfrac{2^{-x}}{2^x}=2^{-2x}$, as $x \\to -\\infty$, $-2x \\to \\infty$, so the fraction $\\to +\\infty$."
       },
       {
         "id": "A11",
-        "stem": "",
+        "stem": "$\\lim_{x \\to 0} \\dfrac{\\sin 5x}{x}$",
         "choices": [
-          "",
-          "= 1",
-          "= 5",
+          "$=\\dfrac{1}{5}$",
+          "$=1$",
+          "$=5$",
           "does not exist"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$\\lim_{x \\to 0}\\dfrac{\\sin 5x}{x} = \\lim_{x \\to 0}\\dfrac{\\sin 5x}{x}\\cdot\\dfrac{5}{5} = 5\\lim_{x \\to 0}\\dfrac{\\sin 5x}{5x} = 5(1) = 5$."
       },
       {
         "id": "A12",
-        "stem": "",
+        "stem": "$\\lim_{x \\to 0} \\dfrac{\\sin 2x}{3x}$",
         "choices": [
-          "",
-          "= 1",
-          "",
+          "$=\\dfrac{2}{3}$",
+          "$=1$",
+          "$=\\dfrac{3}{2}$",
           "does not exist"
         ],
-        "correct": "A"
+        "correct": "A",
+        "explanation": "$\\lim_{x \\to 0}\\dfrac{\\sin 2x}{3x} = \\dfrac{1}{3}\\lim_{x \\to 0}\\dfrac{\\sin 2x}{x}\\cdot\\dfrac{2}{2} = \\dfrac{2}{3}\\lim_{x \\to 0}\\dfrac{\\sin 2x}{2x} = \\dfrac{2}{3}(1) = \\dfrac{2}{3}$."
       },
       {
         "id": "A13",
-        "stem": "The graph of y = arctan x has",
+        "stem": "The graph of $y = \\arctan x$ has",
         "choices": [
-          "vertical asymptotes at x = 0 and x = π",
-          "horizontal asymptotes at",
-          "horizontal asymptotes at y = 0 and y = π",
-          "vertical asymptotes at"
+          "vertical asymptotes at $x = 0$ and $x = \\pi$",
+          "horizontal asymptotes at $y = \\pm\\dfrac{\\pi}{2}$",
+          "horizontal asymptotes at $y = 0$ and $y = \\pi$",
+          "vertical asymptotes at $x = \\pm\\dfrac{\\pi}{2}$"
         ],
         "correct": "B",
-        "explanation": "Because the graph of y = tan x has vertical asymptotes at , the graph of the inverse function y = arctan x has horizontal asymptotes at ."
+        "explanation": "Because the graph of $y=\\tan x$ has vertical asymptotes at $x=\\pm\\dfrac{\\pi}{2}$, the graph of the inverse function $y=\\arctan x$ has horizontal asymptotes at $y=\\pm\\dfrac{\\pi}{2}$."
       },
       {
         "id": "A14",
-        "stem": "The graph of has",
+        "stem": "The graph of $y = \\dfrac{x^2-9}{3x-9}$ has",
         "choices": [
-          "a vertical asymptote at x = 3",
-          "a horizontal asymptote at",
-          "a removable discontinuity at x = 3",
-          "an infinite discontinuity at x = 3"
+          "a vertical asymptote at $x = 3$",
+          "a horizontal asymptote at $y = \\dfrac{1}{3}$",
+          "a removable discontinuity at $x = 3$",
+          "an infinite discontinuity at $x = 3$"
         ],
         "correct": "C",
-        "explanation": "Since (provided x != 3), y can be defined to be equal to 2 at x = 3, removing the discontinuity at that point."
+        "explanation": "Since $\\dfrac{x^2-9}{3x-9}=\\dfrac{(x-3)(x+3)}{3(x-3)}=\\dfrac{x+3}{3}$ (provided $x\\neq3$), $y$ can be defined to equal 2 at $x=3$, removing the discontinuity there."
       },
       {
         "id": "A15",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 0} \\dfrac{\\sin x}{x^2+3x}$ is",
         "choices": [
           "1",
-          "",
+          "$\\dfrac{1}{3}$",
           "3",
-          "∞"
+          "$\\infty$"
         ],
         "correct": "B",
-        "explanation": "Note that ."
+        "explanation": "Note that $\\dfrac{\\sin x}{x^2+3x}=\\dfrac{\\sin x}{x(x+3)}=\\dfrac{\\sin x}{x}\\cdot\\dfrac{1}{x+3} \\to 1\\cdot\\dfrac{1}{3}=\\dfrac{1}{3}$."
       },
       {
         "id": "A16",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 0} \\sin\\dfrac{1}{x}$ is",
         "choices": [
-          "∞",
+          "$\\infty$",
           "1",
           "-1",
           "nonexistent"
         ],
         "correct": "D",
-        "explanation": "As x → 0, takes on varying finite values as it increases. Since the sine function repeats, oscillates, taking on, infinitely many times, each value between -1 and 1. The calculator graph of Y1 = sin (1/X) exhibits this oscillating discontinuity at x = 0."
+        "explanation": "As $x \\to 0$, $\\dfrac{1}{x}$ takes on ever larger finite values. Since the sine function repeats, $\\sin\\dfrac{1}{x}$ oscillates, taking on every value between $-1$ and $1$ infinitely many times, so the limit does not exist (verify with the calculator graph of $Y_1=\\sin(1/X)$)."
       },
       {
         "id": "A17",
-        "stem": "Which statement is true about the curve ?",
+        "stem": "Which statement is true about the curve $y = \\dfrac{2x^2+4}{2+7x-4x^2}$?",
         "choices": [
-          "The line is a vertical asymptote.",
-          "The line x = 1 is a vertical asymptote.",
-          "The line is a horizontal asymptote.",
-          "The line y = 2 is a horizontal asymptote."
+          "The line $x=-\\dfrac{1}{4}$ is a vertical asymptote.",
+          "The line $x = 1$ is a vertical asymptote.",
+          "The line $y=-\\dfrac{1}{4}$ is a horizontal asymptote.",
+          "The line $y = 2$ is a horizontal asymptote."
         ],
         "correct": "A",
-        "explanation": "Note that, since , both x = 2 and are vertical asymptotes. Also, is a horizontal asymptote."
+        "explanation": "Since $2+7x-4x^2 = (2-x)(1+4x)$, both $x=2$ and $x=-\\dfrac{1}{4}$ are vertical asymptotes. Also, since the numerator and denominator have equal degree with leading coefficients $2$ and $-4$, $y=-\\dfrac{1}{2}$ is a horizontal asymptote."
       },
       {
         "id": "A18",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} \\dfrac{2x^2+1}{(2-x)(2+x)}$ is",
         "choices": [
           "-2",
           "1",
@@ -743,11 +745,11 @@
           "nonexistent"
         ],
         "correct": "A",
-        "explanation": ". Use the Rational Function Theorem (page 84)."
+        "explanation": "$\\dfrac{2x^2+1}{(2-x)(2+x)}=\\dfrac{2x^2+1}{4-x^2}$. Use the Rational Function Theorem: the degrees are equal, so the limit is the ratio of leading coefficients, $\\dfrac{2}{-1}=-2$."
       },
       {
         "id": "A19",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to 0} \\dfrac{|x|}{x}$ is",
         "choices": [
           "0",
           "1",
@@ -755,11 +757,11 @@
           "nonexistent"
         ],
         "correct": "D",
-        "explanation": "Since |x| = x if x > 0 but equals -x if while ."
+        "explanation": "Since $|x|=x$ if $x>0$ but $|x|=-x$ if $x<0$: $\\lim_{x \\to 0^+}\\dfrac{|x|}{x}=\\lim_{x \\to 0^+}\\dfrac{x}{x}=1$ while $\\lim_{x \\to 0^-}\\dfrac{|x|}{x}=\\lim_{x \\to 0^-}\\dfrac{-x}{x}=-1$. Since the one-sided limits differ, the limit does not exist."
       },
       {
         "id": "A20",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\infty} x\\sin\\dfrac{1}{x}$ is",
         "choices": [
           "0",
           "-1",
@@ -767,23 +769,23 @@
           "nonexistent"
         ],
         "correct": "C",
-        "explanation": "Note that can be rewritten as and that, as ."
+        "explanation": "$x\\sin\\dfrac{1}{x}$ can be rewritten as $\\dfrac{\\sin(1/x)}{1/x}$. As $x \\to \\infty$, $\\dfrac{1}{x}\\to 0$, so this ratio $\\to 1$ (the standard limit $\\lim_{u \\to 0}\\frac{\\sin u}{u}=1$)."
       },
       {
         "id": "A21",
-        "stem": "is",
+        "stem": "$\\lim_{x \\to \\pi} \\dfrac{\\sin(\\pi-x)}{\\pi-x}$ is",
         "choices": [
           "1",
           "0",
-          "π",
+          "$\\pi$",
           "nonexistent"
         ],
         "correct": "A",
-        "explanation": "As x → π, (π - x) → 0."
+        "explanation": "As $x \\to \\pi$, $(\\pi-x)\\to 0$, so letting $u=\\pi-x$, the limit becomes $\\lim_{u \\to 0}\\dfrac{\\sin u}{u}=1$."
       },
       {
         "id": "A22",
-        "stem": "Let Which of the following statements is (are) true? I. exists II. f(1) exists III. f is continuous at x = 1",
+        "stem": "Let $$f(x)=\\begin{cases}\\dfrac{x^2-1}{x-1} & \\text{if } x\\neq 1 \\\\[4pt] 4 & \\text{if } x=1\\end{cases}$$ Which of the following statements is (are) true? I. $\\lim_{x \\to 1} f(x)$ exists. II. $f(1)$ exists. III. $f$ is continuous at $x = 1$.",
         "choices": [
           "I only",
           "II only",
@@ -791,83 +793,83 @@
           "I, II, and III"
         ],
         "correct": "C",
-        "explanation": "Since f(x) = x + 1 if exists (and is equal to 2)."
+        "explanation": "Since $f(x)=x+1$ if $x\\neq 1$, $\\lim_{x \\to 1} f(x)$ exists and equals 2. So I is true. $f(1)=4$ is defined, so II is true. But $2 \\neq 4$, so $f$ is not continuous at $x=1$; III is false."
       },
       {
         "id": "A23",
-        "stem": "If for x != 0 and if f is continuous at x = 0, then k =",
+        "stem": "If $$f(x)=\\begin{cases}\\dfrac{x^2-x}{2x} & \\text{for } x\\neq 0 \\\\[4pt] k & \\text{for } x=0\\end{cases}$$ and if $f$ is continuous at $x = 0$, then $k =$",
         "choices": [
           "-1",
-          "",
-          "",
+          "$-\\dfrac{1}{2}$",
+          "$\\dfrac{1}{2}$",
           "1"
         ],
         "correct": "B",
-        "explanation": ", for all x != 0. For f to be continuous at x = 0, must equal f(0). ."
+        "explanation": "$f(x)=\\dfrac{x(x-1)}{2x}=\\dfrac{x-1}{2}$ for all $x \\neq 0$. For $f$ to be continuous at $x=0$, $\\lim_{x \\to 0} f(x)$ must equal $f(0)=k$. $\\lim_{x \\to 0} f(x) = \\dfrac{0-1}{2}=-\\dfrac{1}{2}$, so $k=-\\dfrac{1}{2}$."
       },
       {
         "id": "A24",
-        "stem": "Suppose for x != 1, 2 Then f(x) is continuous",
+        "stem": "Suppose $$f(x)=\\dfrac{3x(x-1)}{x^2-3x+2} \\text{ for } x \\neq 1, 2, \\qquad f(1) = -3, \\qquad f(2) = 4.$$ Then $f(x)$ is continuous",
         "choices": [
-          "except at x = 1",
-          "except at x = 2",
-          "except at x = 1 or 2",
+          "except at $x = 1$",
+          "except at $x = 2$",
+          "except at $x = 1$ or $2$",
           "at each real number"
         ],
         "correct": "B",
-        "explanation": "Only x = 1 and x = 2 need be checked. Since for x != 1, 2, and , f is continuous at x = 1. Since does not exist, f is not continuous at x = 2."
+        "explanation": "Since $x^2-3x+2=(x-1)(x-2)$, $f(x)=\\dfrac{3x}{x-2}$ for $x \\neq 1, 2$. $\\lim_{x \\to 1} f(x) = \\dfrac{3(1)}{1-2}=-3=f(1)$, so $f$ is continuous at $x=1$. But $\\lim_{x \\to 2} f(x)$ does not exist (the denominator $\\to 0$ while the numerator $\\to 6$), so $f$ is not continuous at $x=2$, regardless of the value assigned to $f(2)$."
       },
       {
         "id": "A25",
-        "stem": "The graph of has",
+        "stem": "The graph of $f(x) = \\dfrac{4}{x^2-1}$ has",
         "choices": [
-          "one vertical asymptote, at x = 1",
-          "the y-axis as its vertical asymptote",
-          "the x-axis as its horizontal asymptote and x = ±1 as its vertical asymptotes",
-          "two vertical asymptotes, at x = ±1, but no horizontal asymptote"
+          "one vertical asymptote, at $x = 1$",
+          "the $y$-axis as its vertical asymptote",
+          "the $x$-axis as its horizontal asymptote and $x = \\pm 1$ as its vertical asymptotes",
+          "two vertical asymptotes, at $x = \\pm 1$, but no horizontal asymptote"
         ],
         "correct": "C",
-        "explanation": "As x → ±∞, y = f(x) → 0, so the x-axis is a horizontal asymptote. Also, as x → ±1, y → ∞, so x = ±1 are vertical asymptotes."
+        "explanation": "As $x \\to \\pm\\infty$, $y=f(x)\\to 0$, so the $x$-axis is a horizontal asymptote. Also, as $x \\to \\pm 1$, $y \\to \\infty$, so $x=\\pm 1$ are vertical asymptotes."
       },
       {
         "id": "A26",
-        "stem": "The graph of has",
+        "stem": "The graph of $y = \\dfrac{2x^2+2x+3}{4x^2-4x}$ has",
         "choices": [
-          "a horizontal asymptote at but no vertical asymptote",
-          "no horizontal asymptote but two vertical asymptotes, at x = 0 and x = 1",
-          "a horizontal asymptote at and two vertical asymptotes, at x = 0 and x =1",
-          "a horizontal asymptote at and two vertical asymptotes, at x = ±1"
+          "a horizontal asymptote at $y=\\dfrac{1}{2}$ but no vertical asymptote",
+          "no horizontal asymptote but two vertical asymptotes, at $x = 0$ and $x = 1$",
+          "a horizontal asymptote at $y=\\dfrac{1}{2}$ and two vertical asymptotes, at $x = 0$ and $x = 1$",
+          "a horizontal asymptote at $y=\\dfrac{1}{2}$ and two vertical asymptotes, at $x = \\pm 1$"
         ],
         "correct": "C",
-        "explanation": "As x → ∞, ; the denominator (but not the numerator) of y equals 0 at x = 0 and at x = 1."
+        "explanation": "As $x \\to \\infty$, $y \\to \\dfrac{1}{2}$ (ratio of leading coefficients); the denominator $4x^2-4x=4x(x-1)$ (but not the numerator) equals 0 at $x=0$ and at $x=1$."
       },
       {
         "id": "A27",
-        "stem": "Let Which of the following statements is (are) true? I. f(0) exists II. exists III. f is continuous at x = 0",
+        "stem": "Let $$f(x)=\\begin{cases}\\dfrac{x^2}{x} & (x \\neq 0) \\\\[4pt] 0 & (x = 0)\\end{cases}$$ Which of the following statements is (are) true? I. $f(0)$ exists. II. $\\lim_{x \\to 0} f(x)$ exists. III. $f$ is continuous at $x = 0$.",
         "choices": [
           "I only",
           "II only",
           "I and II only",
-          "I, II, and III PART B. CALCULATOR ACTIVE-DIRECTIONS: Some of the following questions require the use of a graphing calculator."
+          "I, II, and III"
         ],
         "correct": "D",
-        "explanation": "The function is defined at 0 to be 1, which is also ."
+        "explanation": "$f$ is defined at $0$ to be $0$ (I true), and $\\lim_{x \\to 0}\\dfrac{x^2}{x}=\\lim_{x \\to 0} x = 0$ (II true), which equals $f(0)$, so $f$ is continuous at $x=0$ (III true)."
       },
       {
         "id": "B1",
-        "stem": "If [x] denotes the greatest integer not greater than x, then is",
+        "stem": "If $\\lfloor x \\rfloor$ denotes the greatest integer not greater than $x$, then $\\lim_{x \\to 1/2} \\lfloor x \\rfloor$ is",
         "choices": [
-          "",
+          "$\\dfrac{1}{2}$",
           "1",
           "0",
           "nonexistent"
         ],
         "correct": "C",
-        "explanation": "See Figure 2.1 on page 76."
+        "explanation": "For $x$ near $\\dfrac{1}{2}$ (both slightly less than and slightly greater than $\\dfrac{1}{2}$), $\\lfloor x \\rfloor = 0$, since $0 \\le x < 1$ throughout a neighborhood of $\\dfrac12$. So the limit is 0."
       },
       {
         "id": "B2",
-        "stem": "If [x] denotes the greatest integer not greater than x, then is",
+        "stem": "If $\\lfloor x \\rfloor$ denotes the greatest integer not greater than $x$, then $\\lim_{x \\to -2} \\lfloor x \\rfloor$ is",
         "choices": [
           "-3",
           "-2",
@@ -875,35 +877,35 @@
           "nonexistent"
         ],
         "correct": "D",
-        "explanation": "Note, from Figure 2.1, that but ."
+        "explanation": "$\\lim_{x \\to -2^-} \\lfloor x \\rfloor = -3$ (since for $-3 \\le x < -2$, $\\lfloor x \\rfloor = -3$), but $\\lim_{x \\to -2^+} \\lfloor x \\rfloor = -2$ (since for $-2 \\le x < -1$, $\\lfloor x \\rfloor = -2$). Because the one-sided limits differ, the limit does not exist."
       },
       {
         "id": "B3",
-        "stem": "",
+        "stem": "$\\lim_{x \\to \\infty} \\sin x$",
         "choices": [
-          "is -1",
+          "is $-1$",
           "is infinity",
           "is zero",
           "does not exist"
         ],
         "correct": "D",
-        "explanation": "As x → ∞, the function sin x oscillates between -1 and 1; hence the limit does not exist."
+        "explanation": "As $x \\to \\infty$, $\\sin x$ oscillates repeatedly between $-1$ and $1$ without approaching a single value, so the limit does not exist."
       },
       {
         "id": "B4",
-        "stem": "The function",
+        "stem": "The function $$f(x)=\\begin{cases}\\dfrac{x^2}{x} & (x \\neq 0) \\\\[4pt] 0 & (x = 0)\\end{cases}$$",
         "choices": [
           "is continuous everywhere",
-          "is continuous except at x = 0",
-          "has a removable discontinuity at x = 0",
-          "has an infinite discontinuity at x = 0 Questions B5-B9 are based on the function f shown in the graph and defined below:"
+          "is continuous except at $x = 0$",
+          "has a removable discontinuity at $x = 0$",
+          "has an infinite discontinuity at $x = 0$"
         ],
         "correct": "A",
-        "explanation": "Note that if x != 0 and that ."
+        "explanation": "Note that $\\dfrac{x^2}{x}=x$ if $x \\neq 0$, and that $\\lim_{x \\to 0} f(x) = 0 = f(0)$, so $f$ is continuous everywhere, including at $x=0$."
       },
       {
         "id": "B5",
-        "stem": "",
+        "stem": "Questions B5\\textendash B9 refer to the function $f$ defined on $[-1,3]$ by $$f(x)=\\begin{cases}1-x & -1 \\le x < 0 \\\\[2pt]2x^2-2 & 0 \\le x \\le 1 \\\\[2pt]-x+2 & 1 < x < 2 \\\\[2pt]1 & x = 2 \\\\[2pt]2x-4 & 2 < x \\le 3\\end{cases}$$ $\\lim_{x \\to 2} f(x)$",
         "choices": [
           "equals 0",
           "equals 1",
@@ -911,119 +913,119 @@
           "does not exist"
         ],
         "correct": "A",
-        "explanation": "."
+        "explanation": "$\\lim_{x \\to 2^-} f(x) = \\lim_{x \\to 2^-}(-x+2) = 0$ and $\\lim_{x \\to 2^+} f(x) = \\lim_{x \\to 2^+}(2x-4) = 0$. Since both one-sided limits equal 0, $\\lim_{x \\to 2} f(x) = 0$ (even though $f(2)=1$)."
       },
       {
         "id": "B6",
-        "stem": "The function f is defined on [-1,3]",
+        "stem": "Questions B5\\textendash B9 refer to the function $f$ defined on $[-1,3]$ by $$f(x)=\\begin{cases}1-x & -1 \\le x < 0 \\\\[2pt]2x^2-2 & 0 \\le x \\le 1 \\\\[2pt]-x+2 & 1 < x < 2 \\\\[2pt]1 & x = 2 \\\\[2pt]2x-4 & 2 < x \\le 3\\end{cases}$$ The function $f$ is defined on $[-1,3]$",
         "choices": [
-          "if x != 0",
-          "if x != 1",
-          "if x != 2",
-          "at each x in [-1,3]"
+          "if $x \neq 0$",
+          "if $x \neq 1$",
+          "if $x \neq 2$",
+          "at each $x$ in $[-1,3]$"
         ],
         "correct": "D",
-        "explanation": "Verify that f is defined at x = 0, 1, 2, and 3 (as well as at all other points in [- 1,3])."
+        "explanation": "Every piece of the definition covers its stated sub-interval with no gaps, so $f$ is defined at every $x$ in $[-1,3]$, including $x=0,1,2,3$."
       },
       {
         "id": "B7",
-        "stem": "The function f has a removable discontinuity at",
+        "stem": "Questions B5\\textendash B9 refer to the function $f$ defined on $[-1,3]$ by $$f(x)=\\begin{cases}1-x & -1 \\le x < 0 \\\\[2pt]2x^2-2 & 0 \\le x \\le 1 \\\\[2pt]-x+2 & 1 < x < 2 \\\\[2pt]1 & x = 2 \\\\[2pt]2x-4 & 2 < x \\le 3\\end{cases}$$ The function $f$ has a removable discontinuity at",
         "choices": [
-          "x = 0",
-          "x = 1",
-          "x = 2",
-          "x = 3"
+          "$x = 0$",
+          "$x = 1$",
+          "$x = 2$",
+          "$x = 3$"
         ],
         "correct": "C",
-        "explanation": "Note that . However, f(2) = 1. Redefining f(2) as 0 removes the discontinuity."
+        "explanation": "$\\lim_{x \\to 2^-} f(x) = \\lim_{x \\to 2^+} f(x) = 0$, so $\\lim_{x \\to 2} f(x) = 0$. However, $f(2) = 1 \\neq 0$. Redefining $f(2)$ as $0$ would remove the discontinuity, so it is removable."
       },
       {
         "id": "B8",
-        "stem": "On which of the following intervals is f continuous?",
+        "stem": "Questions B5\\textendash B9 refer to the function $f$ defined on $[-1,3]$ by $$f(x)=\\begin{cases}1-x & -1 \\le x < 0 \\\\[2pt]2x^2-2 & 0 \\le x \\le 1 \\\\[2pt]-x+2 & 1 < x < 2 \\\\[2pt]1 & x = 2 \\\\[2pt]2x-4 & 2 < x \\le 3\\end{cases}$$ On which of the following intervals is $f$ continuous?",
         "choices": [
-          "-1 <= x <= 0",
-          "0<x<1",
-          "1<=x<=2",
-          "2<=x<=3"
+          "$-1 \\le x \\le 0$",
+          "$0 < x < 1$",
+          "$1 \\le x \\le 2$",
+          "$2 \\le x \\le 3$"
         ],
         "correct": "B",
-        "explanation": "The function is not continuous at x = 0, 1, or 2."
+        "explanation": "$f$ is not continuous at $x=0$ (left limit 1 vs. $f(0)=-2$), $x=1$ (left value 0 vs. right limit 1), or $x=2$ (limit 0 vs. $f(2)=1$). On the open interval $0<x<1$, $f(x)=2x^2-2$ is a single continuous polynomial piece, so $f$ is continuous there."
       },
       {
         "id": "B9",
-        "stem": "The function f has a jump discontinuity at",
+        "stem": "Questions B5\\textendash B9 refer to the function $f$ defined on $[-1,3]$ by $$f(x)=\\begin{cases}1-x & -1 \\le x < 0 \\\\[2pt]2x^2-2 & 0 \\le x \\le 1 \\\\[2pt]-x+2 & 1 < x < 2 \\\\[2pt]1 & x = 2 \\\\[2pt]2x-4 & 2 < x \\le 3\\end{cases}$$ The function $f$ has a jump discontinuity at",
         "choices": [
-          "x = -1",
-          "x=1",
-          "x=2",
-          "x=3 Challenge"
+          "$x = -1$",
+          "$x=1$",
+          "$x=2$",
+          "$x=3$"
         ],
         "correct": "B",
-        "explanation": "."
+        "explanation": "$\\lim_{x \\to 1^-} f(x) = \\lim_{x \\to 1^-}(2x^2-2) = 0$ while $\\lim_{x \\to 1^+} f(x) = \\lim_{x \\to 1^+}(-x+2) = 1$. Since these are two different finite values, $f$ has a jump discontinuity at $x=1$."
       },
       {
         "id": "B10",
-        "stem": "",
+        "stem": "$\\lim_{x \\to 0} \\sqrt{3+\\arctan\\dfrac{1}{x}}$",
         "choices": [
-          "",
-          "",
-          "= ∞",
+          "$=\\sqrt{3-\\dfrac{\\pi}{2}}$",
+          "$=\\sqrt{3+\\dfrac{\\pi}{2}}$",
+          "$=\\infty$",
           "does not exist"
         ],
         "correct": "D",
-        "explanation": "As x → 0-, arctan , so . As x → 0+, . The graph has a jump discontinuity at x = 0. (Verify with a calculator.)"
+        "explanation": "As $x \\to 0^-$, $\\dfrac{1}{x}\\to -\\infty$, so $\\arctan\\dfrac{1}{x}\\to -\\dfrac{\\pi}{2}$, giving $y \\to \\sqrt{3-\\dfrac{\\pi}{2}}$. As $x \\to 0^+$, $\\dfrac{1}{x}\\to \\infty$, so $\\arctan\\dfrac{1}{x}\\to \\dfrac{\\pi}{2}$, giving $y \\to \\sqrt{3+\\dfrac{\\pi}{2}}$. Since the one-sided limits are different, the limit does not exist. (Verify with a calculator.)"
       },
       {
         "id": "B11",
-        "stem": "Suppose , and f(-3) is not defined. Which of the following statements is (are) true? I. II. f is continuous everywhere except at x = -3 III. f has a removable discontinuity at x = -3",
+        "stem": "Suppose $\\lim_{x \\to -3^-} f(x) = -1$, $\\lim_{x \\to -3^+} f(x) = -1$, and $f(-3)$ is not defined. Which of the following statements is (are) true? I. $\\lim_{x \\to -3} f(x) = -1$. II. $f$ is continuous everywhere except at $x = -3$. III. $f$ has a removable discontinuity at $x = -3$.",
         "choices": [
           "I only",
           "III only",
           "I and III only",
-          "I, II, and III Challenge"
+          "I, II, and III"
         ],
         "correct": "C",
-        "explanation": "No information is given about the domain of f except in the neighborhood of x = -3."
+        "explanation": "Since the two one-sided limits at $x=-3$ agree, $\\lim_{x \\to -3} f(x) = -1$ exists (I true). Because $f(-3)$ is undefined while the limit exists, $f$ has a removable discontinuity at $x=-3$ (III true). But no information is given about the domain or behavior of $f$ anywhere except near $x=-3$, so II cannot be concluded."
       },
       {
         "id": "B12",
-        "stem": "If , then",
+        "stem": "If $y = \\dfrac{1}{2+10^{1/x}}$, then $\\lim_{x \\to 0} y$",
         "choices": [
-          "= 0",
-          "",
-          "",
-          "does not exist Questions B13-B15 are based on the function f shown in the graph."
+          "$=0$",
+          "$=\\dfrac{1}{12}$",
+          "$=\\dfrac{1}{2}$",
+          "does not exist"
         ],
         "correct": "D",
-        "explanation": "As x → 0+, 101/x → ∞ and therefore y → 0. As x → 0-, , so 101/x → 0 and therefore . Because the two one-sided limits are not equal, the limit does not exist. (Verify with a calculator.)"
+        "explanation": "As $x \\to 0^+$, $\\dfrac{1}{x}\\to \\infty$, so $10^{1/x}\\to \\infty$ and therefore $y \\to 0$. As $x \\to 0^-$, $\\dfrac{1}{x}\\to -\\infty$, so $10^{1/x}\\to 0$ and therefore $y \\to \\dfrac{1}{2}$. Because the two one-sided limits are not equal, the limit does not exist. (Verify with a calculator.)"
       },
       {
         "id": "B13",
-        "stem": "For what value(s) of a is it true that exists and f(a) exists, but ? It is possible that a =",
+        "stem": "Questions B13\\textendash B15 refer to the graph of a function $f$ on $-3 \\le x \\le 3$, described as follows. On $-3 \\le x < -1$, the graph consists of two arch-shaped (upside-down U) curves joined at a low point near $x=-2$, with open circles at their outer ends at $(-3, 1)$ and $(-1, 1)$, so $f(x) \\to 1$ as $x \\to -1^-$. There is an isolated solid point at $(-1, 2)$, separate from the curve, so $f(-1) = 2$ even though $\\lim_{x \\to -1} f(x) = 1$. From $x=-1$ to $x=1$, the graph is a straight line segment from the open circle at $(-1,1)$ down through the origin to a solid point at $(1,-1)$, so $\\lim_{x \\to 1^-} f(x) = -1$ and $f(1) = -1$. From $x=1$ to $x=3$, the graph is an arch-shaped curve with an open circle at $(1,1)$, so $\\lim_{x \\to 1^+} f(x) = 1$; it rises to an open circle at its peak near $(2,2)$ (so $f(2)$ is undefined, but $\\lim_{x \\to 2} f(x) = 2$), then descends to a solid point at $(3,1)$. For what value(s) of $a$ is it true that $\\lim_{x \\to a} f(x)$ exists and $f(a)$ exists, but $\\lim_{x \\to a} f(x) \\neq f(a)$? It is possible that $a =$",
         "choices": [
-          "-1 only",
-          "2 only",
-          "-1 or 1 only",
-          "-1 or 2 only"
+          "$-1$ only",
+          "$2$ only",
+          "$-1$ or $1$ only",
+          "$-1$ or $2$ only"
         ],
         "correct": "A",
-        "explanation": ", but f(-1) = 2. The limit does not exist at a = 1 and f(2) does not exist."
+        "explanation": "At $a=-1$: $\\lim_{x \\to -1} f(x) = 1$, but $f(-1) = 2$, so the limit exists, $f(-1)$ exists, but they are unequal. At $a=1$, the limit does not exist (one-sided limits are $-1$ and $1$). At $a=2$, $f(2)$ does not exist. So only $a=-1$ satisfies all the conditions."
       },
       {
         "id": "B14",
-        "stem": "does not exist for a =",
+        "stem": "Questions B13\\textendash B15 refer to the graph of a function $f$ on $-3 \\le x \\le 3$, described as follows. On $-3 \\le x < -1$, the graph consists of two arch-shaped (upside-down U) curves joined at a low point near $x=-2$, with open circles at their outer ends at $(-3, 1)$ and $(-1, 1)$, so $f(x) \\to 1$ as $x \\to -1^-$. There is an isolated solid point at $(-1, 2)$, separate from the curve, so $f(-1) = 2$ even though $\\lim_{x \\to -1} f(x) = 1$. From $x=-1$ to $x=1$, the graph is a straight line segment from the open circle at $(-1,1)$ down through the origin to a solid point at $(1,-1)$, so $\\lim_{x \\to 1^-} f(x) = -1$ and $f(1) = -1$. From $x=1$ to $x=3$, the graph is an arch-shaped curve with an open circle at $(1,1)$, so $\\lim_{x \\to 1^+} f(x) = 1$; it rises to an open circle at its peak near $(2,2)$ (so $f(2)$ is undefined, but $\\lim_{x \\to 2} f(x) = 2$), then descends to a solid point at $(3,1)$. $\\lim_{x \\to a} f(x)$ does not exist for $a =$",
         "choices": [
-          "-1 only",
-          "1 only",
-          "2 only",
-          "1 and 2 only"
+          "$-1$ only",
+          "$1$ only",
+          "$2$ only",
+          "$1$ and $2$ only"
         ],
         "correct": "B",
-        "explanation": "and ."
+        "explanation": "$\\lim_{x \\to -1} f(x) = 1$ (both one-sided limits agree) and $\\lim_{x \\to 2} f(x) = 2$ (both one-sided limits agree), so the limit exists at both $a=-1$ and $a=2$. At $a=1$, the one-sided limits ($-1$ from the left, $1$ from the right) disagree, so the limit fails to exist only at $a=1$."
       },
       {
         "id": "B15",
-        "stem": "Which of the following statements about limits at x = 1 is (are) true? I. II. III.",
+        "stem": "Questions B13\\textendash B15 refer to the graph of a function $f$ on $-3 \\le x \\le 3$, described as follows. On $-3 \\le x < -1$, the graph consists of two arch-shaped (upside-down U) curves joined at a low point near $x=-2$, with open circles at their outer ends at $(-3, 1)$ and $(-1, 1)$, so $f(x) \\to 1$ as $x \\to -1^-$. There is an isolated solid point at $(-1, 2)$, separate from the curve, so $f(-1) = 2$ even though $\\lim_{x \\to -1} f(x) = 1$. From $x=-1$ to $x=1$, the graph is a straight line segment from the open circle at $(-1,1)$ down through the origin to a solid point at $(1,-1)$, so $\\lim_{x \\to 1^-} f(x) = -1$ and $f(1) = -1$. From $x=1$ to $x=3$, the graph is an arch-shaped curve with an open circle at $(1,1)$, so $\\lim_{x \\to 1^+} f(x) = 1$; it rises to an open circle at its peak near $(2,2)$ (so $f(2)$ is undefined, but $\\lim_{x \\to 2} f(x) = 2$), then descends to a solid point at $(3,1)$. Which of the following statements about limits at $x = 1$ is (are) true? I. $\\lim_{x \\to 1^-} f(x)$ exists. II. $\\lim_{x \\to 1^+} f(x)$ exists. III. $\\lim_{x \\to 1} f(x)$ exists.",
         "choices": [
           "I only",
           "II only",
@@ -1031,7 +1033,7 @@
           "I, II, and III"
         ],
         "correct": "C",
-        "explanation": "and , but since these two limits are not the same, does not exist."
+        "explanation": "$\\lim_{x \\to 1^-} f(x) = -1$ and $\\lim_{x \\to 1^+} f(x) = 1$, so both one-sided limits exist (I and II true). But since these two limits are not the same, $\\lim_{x \\to 1} f(x)$ does not exist (III false)."
       }
     ],
     "answer_key": {
@@ -1085,453 +1087,463 @@
     "problems": [
       {
         "id": "A1",
-        "stem": "y = x5 tan x",
+        "stem": "$y = x^5 \\tan x$",
         "choices": [
-          "5x4 tan x",
-          "5x4 sec2 x",
-          "5x4 + sec2 x",
-          "5x4 tan x + x5 sec2 x"
+          "$5x^4 \\tan x$",
+          "$5x^4 \\sec^2 x$",
+          "$5x^4 + \\sec^2 x$",
+          "$5x^4 \\tan x + x^5 \\sec^2 x$"
         ],
         "correct": "D",
-        "explanation": "By the Product Rule, (5),"
+        "explanation": "By the Product Rule, $y' = 5x^4\\tan x + x^5\\sec^2 x$."
       },
       {
         "id": "A2",
-        "stem": "",
+        "stem": "$y = \\dfrac{2-x}{3x+1}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac{7}{(3x+1)^2}$",
+          "$\\dfrac{5-6x}{(3x+1)^2}$",
+          "$-\\dfrac{9}{(3x+1)^2}$",
+          "$\\dfrac{7}{(3x+1)^2}$"
         ],
         "correct": "A",
-        "explanation": "By the Quotient Rule, (6),"
+        "explanation": "By the Quotient Rule, $y' = \\dfrac{(3x+1)(-1)-(2-x)(3)}{(3x+1)^2} = -\\dfrac{7}{(3x+1)^2}$."
       },
       {
         "id": "A3",
-        "stem": "",
+        "stem": "$y = \\sqrt{3-2x}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\dfrac{1}{2\\sqrt{3-2x}}$",
+          "$-\\dfrac{1}{\\sqrt{3-2x}}$",
+          "$-\\dfrac{4}{3}(3-2x)^{3/2}$",
+          "$\\dfrac{2}{3}(3-2x)^{3/2}$"
         ],
         "correct": "B",
-        "explanation": "Since y = (3 - 2x)1/2, by the Power Rule, (3),"
+        "explanation": "Since $y=(3-2x)^{1/2}$, by the Power Rule, $y' = \\tfrac12(3-2x)^{-1/2}(-2) = -\\dfrac{1}{\\sqrt{3-2x}}$."
       },
       {
         "id": "A4",
-        "stem": "",
+        "stem": "$y = \\dfrac{2}{(5x+1)^3}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac{30}{(5x+1)^2}$",
+          "$-\\dfrac{30}{(5x+1)^4}$",
+          "$-\\dfrac{6}{(5x+1)^4}$",
+          "$\\dfrac{6}{(5x+1)^2}$"
         ],
         "correct": "B",
-        "explanation": "Since y = 2(5x + 1)-3, y′ = -6(5x + 1)-4, (5)."
+        "explanation": "Since $y=2(5x+1)^{-3}$, $y' = -30(5x+1)^{-4} = -\\dfrac{30}{(5x+1)^4}$."
       },
       {
         "id": "A5",
-        "stem": "y = 3x2/3 - 4x1/2 - 2",
+        "stem": "$y = 3x^{2/3} - 4x^{1/2} - 2$",
         "choices": [
-          "2x1/3 - 2x-1/2",
-          "3x-1/3 - 2x-1/2",
-          "",
-          "2x-1/3 - 2x-1/2"
+          "$2x^{1/3} - 2x^{-1/2}$",
+          "$3x^{-1/3} - 2x^{-1/2}$",
+          "$\\dfrac{9}{5}x^{5/3} - \\dfrac{8}{3}x^{3/2}$",
+          "$2x^{-1/3} - 2x^{-1/2}$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "$y' = 3\\left(\\tfrac23\\right)x^{-1/3} - 4\\left(\\tfrac12\\right)x^{-1/2} = 2x^{-1/3}-2x^{-1/2}$."
       },
       {
         "id": "A6",
-        "stem": "",
+        "stem": "$y = 2\\sqrt{x} - \\dfrac{1}{2\\sqrt{x}}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$x + \\dfrac{1}{x\\sqrt{x}}$",
+          "$\\dfrac{4x-1}{4x\\sqrt{x}}$",
+          "$\\dfrac{1}{\\sqrt{x}} + \\dfrac{1}{4x\\sqrt{x}}$",
+          "$\\dfrac{4}{\\sqrt{x}} + \\dfrac{1}{x\\sqrt{x}}$"
         ],
         "correct": "C",
-        "explanation": "Rewrite: ; so"
+        "explanation": "Rewrite $y = 2x^{1/2} - \\tfrac12 x^{-1/2}$; so $y' = x^{-1/2} + \\tfrac14 x^{-3/2} = \\dfrac{1}{\\sqrt{x}} + \\dfrac{1}{4x\\sqrt{x}}$."
       },
       {
         "id": "A7",
-        "stem": "",
+        "stem": "$y = \\sqrt{x^2+2x-1}$",
         "choices": [
-          "",
-          "4y(x + 1)",
-          "",
-          ""
+          "$\\dfrac{x+1}{y}$",
+          "$4y(x+1)$",
+          "$\\dfrac{1}{2\\sqrt{x^2+2x-1}}$",
+          "$-\\dfrac{x+1}{(x^2+2x-1)^{3/2}}$"
         ],
         "correct": "A",
-        "explanation": "Rewrite: y = (x2 + 2x - 1)1/2; then"
+        "explanation": "Rewrite $y=(x^2+2x-1)^{1/2}$; then $y' = \\tfrac12(x^2+2x-1)^{-1/2}(2x+2) = \\dfrac{x+1}{\\sqrt{x^2+2x-1}} = \\dfrac{x+1}{y}$."
       },
       {
         "id": "A8",
-        "stem": "",
+        "stem": "$y = \\dfrac{x^2}{\\cos x}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac{2x}{\\sin x}$",
+          "$\\dfrac{2x\\cos x - x^2\\sin x}{\\cos^2 x}$",
+          "$\\dfrac{2x\\cos x + x^2\\sin x}{\\cos^2 x}$",
+          "$\\dfrac{2x\\cos x - x^2\\sin x}{\\sin^2 x}$"
         ],
         "correct": "C",
-        "explanation": "Use the Quotient Rule:"
+        "explanation": "Use the Quotient Rule: $y' = \\dfrac{2x\\cos x - x^2(-\\sin x)}{\\cos^2 x} = \\dfrac{2x\\cos x + x^2\\sin x}{\\cos^2 x}$."
       },
       {
         "id": "A9",
-        "stem": "",
+        "stem": "$y = \\ln\\left(\\dfrac{e^x}{e^x-1}\\right)$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$x - \\dfrac{e^x}{e^x-1}$",
+          "$\\dfrac{1}{e^x-1}$",
+          "$-\\dfrac{1}{e^x-1}$",
+          "$\\dfrac{e^x-2}{e^x-1}$"
         ],
         "correct": "C",
-        "explanation": "Since then,"
+        "explanation": "Since $y=\\ln e^x - \\ln(e^x-1) = x - \\ln(e^x-1)$, $y' = 1 - \\dfrac{e^x}{e^x-1} = \\dfrac{e^x-1-e^x}{e^x-1} = -\\dfrac{1}{e^x-1}$."
       },
       {
         "id": "A10",
-        "stem": "",
+        "stem": "$y = \\tan^{-1}\\dfrac{x}{2}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\dfrac{4}{4+x^2}$",
+          "$\\dfrac{1}{2\\sqrt{4-x^2}}$",
+          "$\\dfrac{2}{\\sqrt{4-x^2}}$",
+          "$\\dfrac{2}{x^2+4}$"
         ],
         "correct": "D",
-        "explanation": "Use formula (18):"
+        "explanation": "$y' = \\dfrac{1/2}{1+x^2/4} = \\dfrac{2}{x^2+4}$."
       },
       {
         "id": "A11",
-        "stem": "y = ln (sec x + tan x)",
+        "stem": "$y = \\ln(\\sec x + \\tan x)$",
         "choices": [
-          "sec x",
-          "",
-          "",
-          ""
+          "$\\sec x$",
+          "$\\dfrac{1}{\\sec x}$",
+          "$\\dfrac{1}{\\sec x + \\tan x}$",
+          "$-\\dfrac{1}{\\sec x + \\tan x}$"
         ],
         "correct": "A",
-        "explanation": "Use formulas (13), (11), and (9):"
+        "explanation": "$y' = \\dfrac{\\sec x\\tan x + \\sec^2 x}{\\sec x+\\tan x} = \\dfrac{\\sec x(\\tan x+\\sec x)}{\\sec x+\\tan x} = \\sec x$."
       },
       {
         "id": "A12",
-        "stem": "",
+        "stem": "$y = \\dfrac{e^x - e^{-x}}{e^x + e^{-x}}$",
         "choices": [
-          "0",
-          "1",
-          "",
-          ""
+          "$0$",
+          "$1$",
+          "$\\dfrac{4}{(e^x+e^{-x})^2}$",
+          "$\\dfrac{1}{e^{2x}+e^{-2x}}$"
         ],
         "correct": "C",
-        "explanation": "By the Quotient Rule,"
+        "explanation": "By the Quotient Rule, $y' = \\dfrac{(e^x+e^{-x})^2 - (e^x-e^{-x})^2}{(e^x+e^{-x})^2} = \\dfrac{4}{(e^x+e^{-x})^2}$."
       },
       {
         "id": "A13",
-        "stem": "",
+        "stem": "$y = \\ln\\left(\\sqrt{x^2+1}\\right)$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\dfrac{1}{\\sqrt{x^2+1}}$",
+          "$\\dfrac{2x}{\\sqrt{x^2+1}}$",
+          "$\\dfrac{1}{2(x^2+1)}$",
+          "$\\dfrac{x}{x^2+1}$"
         ],
         "correct": "D",
-        "explanation": "Since ,"
+        "explanation": "Since $y=\\tfrac12\\ln(x^2+1)$, $y' = \\tfrac12\\cdot\\dfrac{2x}{x^2+1} = \\dfrac{x}{x^2+1}$."
       },
       {
         "id": "A14",
-        "stem": "",
+        "stem": "$y = \\sin\\left(\\dfrac{1}{x}\\right)$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\cos\\left(\\dfrac{1}{x}\\right)$",
+          "$\\cos\\left(-\\dfrac{1}{x^2}\\right)$",
+          "$-\\dfrac{1}{x^2}\\cos\\left(\\dfrac{1}{x}\\right)$",
+          "$-\\dfrac{1}{x^2}\\sin\\left(\\dfrac{1}{x}\\right) + \\dfrac{1}{x}\\cos\\left(\\dfrac{1}{x}\\right)$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$y' = \\cos\\left(\\dfrac1x\\right)\\cdot\\left(-\\dfrac{1}{x^2}\\right) = -\\dfrac{1}{x^2}\\cos\\left(\\dfrac1x\\right)$."
       },
       {
         "id": "A15",
-        "stem": "",
+        "stem": "$y = \\dfrac{1}{2\\sin 2x}$",
         "choices": [
-          "-csc 2x cot 2x",
-          "",
-          "-4 csc 2x cot 2x",
-          "-csc2 2x"
+          "$-\\csc 2x \\cot 2x$",
+          "$\\dfrac{1}{4\\cos 2x}$",
+          "$-4\\csc 2x\\cot 2x$",
+          "$-\\csc^2 2x$"
         ],
         "correct": "A",
-        "explanation": "Since ."
+        "explanation": "Since $y=\\tfrac12\\csc 2x$, $y' = \\tfrac12(-\\csc 2x\\cot 2x\\cdot 2) = -\\csc 2x\\cot 2x$."
       },
       {
         "id": "A16",
-        "stem": "y = e-x cos 2x",
+        "stem": "$y = e^{-x}\\cos 2x$",
         "choices": [
-          "-e-x(cos 2x + 2 sin 2x)",
-          "e-x(sin 2x - cos 2x)",
-          "2e-x sin 2x",
-          "-e-x(cos 2x + sin 2x)"
+          "$-e^{-x}(\\cos 2x + 2\\sin 2x)$",
+          "$e^{-x}(\\sin 2x - \\cos 2x)$",
+          "$2e^{-x}\\sin 2x$",
+          "$-e^{-x}(\\cos 2x + \\sin 2x)$"
         ],
         "correct": "A",
-        "explanation": "y′ = e-x(-2sin 2x) + cos 2x(-e-x)"
+        "explanation": "$y' = e^{-x}(-2\\sin 2x) + \\cos 2x(-e^{-x}) = -e^{-x}(\\cos 2x + 2\\sin 2x)$."
       },
       {
         "id": "A17",
-        "stem": "y = sec2(x)",
+        "stem": "$y = \\sec^2(x)$",
         "choices": [
-          "2 sec x",
-          "2 sec x tan x",
-          "2 sec2 x tan x",
-          "tan x"
+          "$2\\sec x$",
+          "$2\\sec x\\tan x$",
+          "$2\\sec^2 x\\tan x$",
+          "$\\tan x$"
         ],
         "correct": "C",
-        "explanation": "y′ = (2 sec x)(sec x tan x)"
+        "explanation": "$y' = (2\\sec x)(\\sec x\\tan x) = 2\\sec^2 x\\tan x$."
       },
       {
         "id": "A18",
-        "stem": "y = x (ln x)3",
+        "stem": "$y = x(\\ln x)^3$",
         "choices": [
-          "",
-          "3(ln x)2",
-          "-3x(ln x)2 + (ln x)3",
-          "(ln x)3 + 3(ln x)2"
+          "$\\dfrac{3(\\ln x)^2}{x}$",
+          "$3(\\ln x)^2$",
+          "$-3x(\\ln x)^2 + (\\ln x)^3$",
+          "$(\\ln x)^3 + 3(\\ln x)^2$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "$y' = (\\ln x)^3 + x\\cdot 3(\\ln x)^2\\cdot\\dfrac1x = (\\ln x)^3 + 3(\\ln x)^2$."
       },
       {
         "id": "A19",
-        "stem": "",
+        "stem": "$y = \\dfrac{1+x^2}{1-x^2}$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac{4x}{(1-x^2)^2}$",
+          "$\\dfrac{4x}{(1-x^2)^2}$",
+          "$-\\dfrac{4x^3}{(1-x^2)^2}$",
+          "$\\dfrac{2x}{1-x^2}$"
         ],
-        "correct": "B"
+        "correct": "B",
+        "explanation": "$y' = \\dfrac{(1-x^2)(2x) - (1+x^2)(-2x)}{(1-x^2)^2} = \\dfrac{4x}{(1-x^2)^2}$."
       },
       {
         "id": "A20",
-        "stem": "",
+        "stem": "$y = \\sin^{-1}x - \\sqrt{1-x^2}$",
         "choices": [
-          "",
-          "",
-          "",
-          "In each of Questions A21-A24, y is a differentiable function of x. Choose the alternative that is the derivative ."
+          "$\\dfrac{1}{2\\sqrt{1-x^2}}$",
+          "$\\dfrac{2}{\\sqrt{1-x^2}}$",
+          "$\\dfrac{1+x}{\\sqrt{1-x^2}}$",
+          "$\\dfrac{x^2}{\\sqrt{1-x^2}}$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$y' = \\dfrac{1}{\\sqrt{1-x^2}} - \\dfrac{1\\cdot(-2x)}{2\\sqrt{1-x^2}} = \\dfrac{1}{\\sqrt{1-x^2}} + \\dfrac{x}{\\sqrt{1-x^2}} = \\dfrac{1+x}{\\sqrt{1-x^2}}$."
       },
       {
         "id": "A21",
-        "stem": "x3 - y3 = 1",
+        "stem": "$x^3 - y^3 = 1$. ($y$ is a differentiable function of $x$; find $\\dfrac{dy}{dx}$.)",
         "choices": [
-          "x",
-          "3x2",
-          "",
-          ""
+          "$x$",
+          "$3x^2$",
+          "$\\dfrac{x^2}{y^2}$",
+          "$\\dfrac{3x^2-1}{y^2}$"
         ],
         "correct": "C",
-        "explanation": "Let y′ be ; then 3x2 - 3y2y ′ = 0;"
+        "explanation": "Let $y'$ be $\\dfrac{dy}{dx}$; then $3x^2 - 3y^2y' = 0$, so $y' = \\dfrac{x^2}{y^2}$."
       },
       {
         "id": "A22",
-        "stem": "x + cos(x + y) = 0",
+        "stem": "$x + \\cos(x+y) = 0$. ($y$ is a differentiable function of $x$; find $\\dfrac{dy}{dx}$.)",
         "choices": [
-          "csc(x + y) - 1",
-          "csc(x + y)",
-          "",
-          ""
+          "$\\csc(x+y) - 1$",
+          "$\\csc(x+y)$",
+          "$\\dfrac{x}{\\sin(x+y)}$",
+          "$\\dfrac{1-\\sin x}{\\sin y}$"
         ],
-        "correct": "A"
+        "correct": "A",
+        "explanation": "$1 - \\sin(x+y)(1+y') = 0 \\Rightarrow y' = \\dfrac{1-\\sin(x+y)}{\\sin(x+y)} = \\csc(x+y) - 1$."
       },
       {
         "id": "A23",
-        "stem": "sin x - cos y - 2 = 0",
+        "stem": "$\\sin x - \\cos y - 2 = 0$. ($y$ is a differentiable function of $x$; find $\\dfrac{dy}{dx}$.)",
         "choices": [
-          "-cot x",
-          "",
-          "-csc y cos x",
-          ""
+          "$-\\cot x$",
+          "$\\dfrac{\\cos x}{\\sin y}$",
+          "$-\\csc y\\cos x$",
+          "$\\dfrac{2-\\cos x}{\\sin y}$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$\\cos x + \\sin y\\cdot y' = 0 \\Rightarrow y' = -\\dfrac{\\cos x}{\\sin y} = -\\csc y\\cos x$."
       },
       {
         "id": "A24",
-        "stem": "3x2 - 2xy + 5y2 = 1",
+        "stem": "$3x^2 - 2xy + 5y^2 = 1$. ($y$ is a differentiable function of $x$; find $\\dfrac{dy}{dx}$.)",
         "choices": [
-          "",
-          "",
-          "3x + 5y",
-          "BC Only"
+          "$\\dfrac{3x+y}{x-5y}$",
+          "$\\dfrac{y-3x}{5y-x}$",
+          "$3x+5y$",
+          "$\\dfrac{3x+4y}{x}$"
         ],
         "correct": "B",
-        "explanation": "6x - 2(xy′ + y) + 10yy′ = 0; y′(10y - 2x) = 2y - 6x"
+        "explanation": "$6x - 2(xy'+y) + 10yy' = 0 \\Rightarrow y'(10y-2x) = 2y-6x \\Rightarrow y' = \\dfrac{y-3x}{5y-x}$."
       },
       {
         "id": "A25",
-        "stem": "If x = t2 + 1 and y = 2t3, then",
+        "stem": "BC Only. If $x = t^2+1$ and $y = 2t^3$, then $\\dfrac{dy}{dx} = $",
         "choices": [
-          "3t",
-          "6t2",
-          "",
-          ""
+          "$3t$",
+          "$6t^2$",
+          "$\\dfrac{6t^2}{(t^2+1)^2}$",
+          "$\\dfrac{2t^4+6t^2}{(t^2+1)^2}$"
         ],
-        "correct": "A"
+        "correct": "A",
+        "explanation": "$\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt} = \\dfrac{6t^2}{2t} = 3t$."
       },
       {
         "id": "A26",
-        "stem": "If f(x) = x4 - 4x3 + 4x2 - 1, then the set of values of x for which the derivative equals zero is",
+        "stem": "If $f(x) = x^4 - 4x^3 + 4x^2 - 1$, then the set of values of $x$ for which the derivative equals zero is",
         "choices": [
-          "{1,2}",
-          "{0,-1,-2}",
-          "{-1,2}",
-          "{0,1,2}"
+          "$\\{1,2\\}$",
+          "$\\{0,-1,-2\\}$",
+          "$\\{-1,2\\}$",
+          "$\\{0,1,2\\}$"
         ],
         "correct": "D",
-        "explanation": "f′(x) = 4x3 - 12x2 + 8x = 4x(x - 1)(x - 2)"
+        "explanation": "$f'(x) = 4x^3-12x^2+8x = 4x(x-1)(x-2) = 0$ gives $x=0,1,2$."
       },
       {
         "id": "A27",
-        "stem": "If , then f′′(4) is equal to",
+        "stem": "If $f(x) = 16\\sqrt{x}$, then $f''(4)$ is equal to",
         "choices": [
-          "-16",
-          "-4",
-          "-2",
-          ""
+          "$-16$",
+          "$-4$",
+          "$-2$",
+          "$-\\dfrac12$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "$f'(x) = 8x^{-1/2}$; $f''(x) = -4x^{-3/2} = -\\dfrac{4}{x^{3/2}}$; $f''(4) = -\\dfrac{4}{8} = -\\dfrac12$."
       },
       {
         "id": "A28",
-        "stem": "If f(x) = ln (x3), then f′′(3) is",
+        "stem": "If $f(x) = \\ln(x^3)$, then $f''(3)$ is",
         "choices": [
-          "",
-          "-1",
-          "-3",
-          "1"
+          "$-\\dfrac13$",
+          "$-1$",
+          "$-3$",
+          "$1$"
         ],
         "correct": "A",
-        "explanation": ". Replace x by 3."
+        "explanation": "$f(x) = 3\\ln x$; $f'(x) = \\dfrac3x$; $f''(x) = -\\dfrac{3}{x^2}$. Replace $x$ by 3 to get $-\\dfrac13$."
       },
       {
         "id": "A29",
-        "stem": "If a point moves on the curve x2 + y2 = 25, then, at is",
+        "stem": "If a point moves on the curve $x^2+y^2=25$, then, at $(0,5)$, $\\dfrac{d^2y}{dx^2}$ is",
         "choices": [
-          "0",
-          "",
-          "-5",
-          "BC Only"
+          "$0$",
+          "$\\dfrac15$",
+          "$-5$",
+          "$-\\dfrac15$"
         ],
         "correct": "D",
-        "explanation": ". At"
+        "explanation": "$2x+2yy'=0 \\Rightarrow y'=-\\dfrac{x}{y}$; $y'' = -\\dfrac{y-xy'}{y^2}$. At $(0,5)$, $y''=\\dfrac{5-0}{25} \\cdot(-1)= -\\dfrac{1}{5}$."
       },
       {
         "id": "A30",
-        "stem": "If x = t2 - 1 and y = t4 - 2t3, then, when is",
+        "stem": "BC Only. If $x = t^2-1$ and $y = t^4-2t^3$, then, when $t=1$, $\\dfrac{d^2y}{dx^2}$ is",
         "choices": [
-          "1",
-          "-1",
-          "3",
-          ""
+          "$1$",
+          "$-1$",
+          "$3$",
+          "$\\dfrac12$"
         ],
         "correct": "D",
-        "explanation": ". Replace t by 1."
+        "explanation": "$\\dfrac{dy}{dx} = \\dfrac{4t^3-6t^2}{2t} = 2t^2-3t$ ($t\\neq0$); $\\dfrac{d^2y}{dx^2} = \\dfrac{4t-3}{2t}$. Replace $t$ by 1 to get $\\dfrac{1}{2}$."
       },
       {
         "id": "A31",
-        "stem": "If f(x) = 5x and 51.002 ≈ 5.016, which is closest to f′(1)?",
+        "stem": "If $f(x) = 5^x$ and $5^{1.002} \\approx 5.016$, which is closest to $f'(1)$?",
         "choices": [
-          "0.016",
-          "5.0",
-          "8.0",
-          "32.0"
+          "$0.016$",
+          "$5.0$",
+          "$8.0$",
+          "$32.0$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$f'(1) \\approx \\dfrac{5^{1.002}-5^1}{0.002} = \\dfrac{5.016-5}{0.002} = 8.0$."
       },
       {
         "id": "A32",
-        "stem": "If y = ex(x - 1), then y′′(0) equals",
+        "stem": "If $y = e^x(x-1)$, then $y''(0)$ equals",
         "choices": [
-          "-2",
-          "-1",
-          "1",
-          "e BC Only"
+          "$-2$",
+          "$-1$",
+          "$1$",
+          "$e$"
         ],
         "correct": "C",
-        "explanation": "y′ = ex · 1 + ex (x - 1) = xex y′′ = xex + ex and y′′ (0) = 0 · 1 + 1 = 1"
+        "explanation": "$y' = e^x\\cdot 1 + e^x(x-1) = xe^x$; $y'' = xe^x+e^x$; $y''(0) = 0\\cdot1+1 = 1$."
       },
       {
         "id": "A33",
-        "stem": "If x = eθ cos θ and y = eθ sin θ, then, when is",
+        "stem": "BC Only. If $x = e^{\\theta}\\cos\\theta$ and $y = e^{\\theta}\\sin\\theta$, then, when $\\theta=\\dfrac{\\pi}{2}$, $\\dfrac{dy}{dx}$ is",
         "choices": [
-          "1",
-          "0",
-          "eπ/2",
-          "-1 BC Only Challenge"
+          "$1$",
+          "$0$",
+          "$e^{\\pi/2}$",
+          "$-1$"
         ],
         "correct": "D",
-        "explanation": "When simplified, ."
+        "explanation": "When simplified, $\\dfrac{dy}{dx} = \\dfrac{\\cos\\theta+\\sin\\theta}{\\cos\\theta-\\sin\\theta}$. At $\\theta=\\pi/2$: $\\dfrac{0+1}{0-1} = -1$."
       },
       {
         "id": "A34",
-        "stem": "Given x = cos t and y = cos 2t, if sin(t) != 0, then is",
+        "stem": "BC Only, Challenge. Given $x = \\cos t$ and $y = \\cos 2t$, if $\\sin(t) \\neq 0$, then $\\dfrac{d^2y}{dx^2}$ is",
         "choices": [
-          "4 cos t",
-          "4",
-          "-4",
-          "-4 cot t"
+          "$4\\cos t$",
+          "$4$",
+          "$-4$",
+          "$-4\\cot t$"
         ],
         "correct": "B",
-        "explanation": "Since (if sin (t) != 0) then cos t. Thus: NOTE: Since each of the limits in Questions A35-A39 yields an indeterminate form of the type , we can apply L’Hospital’s Rule in each case, getting identical answers."
+        "explanation": "$\\dfrac{dy}{dt} = -2\\sin 2t = -4\\sin t\\cos t$ and $\\dfrac{dx}{dt} = -\\sin t$, so $\\dfrac{dy}{dx} = 4\\cos t$. Then $\\dfrac{d}{dt}(4\\cos t) = -4\\sin t$, and dividing by $dx/dt=-\\sin t$ gives $\\dfrac{d^2y}{dx^2} = 4$ (constant)."
       },
       {
         "id": "A35",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{h\\to 0}\\dfrac{(1+h)^6-1}{h}$ is",
         "choices": [
-          "0",
-          "1",
-          "6",
+          "$0$",
+          "$1$",
+          "$6$",
           "nonexistent"
         ],
         "correct": "C",
-        "explanation": "The given limit is the derivative of f(x) = x6 at x = 1."
+        "explanation": "This limit is the derivative of $f(x)=x^6$ at $x=1$: $f'(1) = 6(1)^5 = 6$."
       },
       {
         "id": "A36",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{h\\to 0}\\dfrac{\\sqrt[3]{8+h}-2}{h}$ is",
         "choices": [
-          "0",
-          "",
-          "1",
-          "192"
+          "$0$",
+          "$\\dfrac{1}{12}$",
+          "$1$",
+          "$192$"
         ],
         "correct": "B",
-        "explanation": "The given limit is the definition for f′(8), where"
+        "explanation": "This limit is $f'(8)$ where $f(x)=\\sqrt[3]{x}$; $f'(x) = \\dfrac{1}{3x^{2/3}}$, so $f'(8)=\\dfrac{1}{12}$."
       },
       {
         "id": "A37",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{h\\to 0}\\dfrac{\\ln(e+h)-1}{h}$ is",
         "choices": [
-          "0",
-          "",
-          "1",
-          "e"
+          "$0$",
+          "$\\dfrac1e$",
+          "$1$",
+          "$e$"
         ],
         "correct": "B",
-        "explanation": "The given limit is f′(e), where f(x) = ln x."
+        "explanation": "This limit is $f'(e)$ where $f(x)=\\ln x$; $f'(x)=1/x$, so $f'(e) = 1/e$."
       },
       {
         "id": "A38",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{\\cos x - 1}{x}$ is",
         "choices": [
-          "-1",
-          "0",
-          "1",
-          "∞"
+          "$-1$",
+          "$0$",
+          "$1$",
+          "$\\infty$"
         ],
         "correct": "B",
-        "explanation": "The given limit is the derivative of f(x) = cos x at x = 0; f′(x) = -sin x."
+        "explanation": "This limit is the derivative of $f(x)=\\cos x$ at $x=0$; $f'(x)=-\\sin x$, so $f'(0) = 0$."
       },
       {
         "id": "A39",
-        "stem": "If , which of the following statements is(are) true? I. exists II. f is continuous at x = 1 III. f is differentiable at x = 1",
+        "stem": "If $f(x) = \\begin{cases} \\dfrac{4x^2-4}{x-1}, & x\\neq 1 \\\\ 4, & x=1 \\end{cases}$, which of the following statements is(are) true? I. $\\displaystyle\\lim_{x\\to1}f(x)$ exists  II. $f$ is continuous at $x=1$  III. $f$ is differentiable at $x=1$",
         "choices": [
           "none",
           "I only",
@@ -1539,11 +1551,11 @@
           "I, II, and III"
         ],
         "correct": "B",
-        "explanation": ", but f(1) = 4. Thus f is discontinuous at x = 1, so it cannot be differentiable."
+        "explanation": "$\\displaystyle\\lim_{x\\to1}\\dfrac{4x^2-4}{x-1} = \\lim_{x\\to1}\\dfrac{4(x+1)(x-1)}{x-1} = \\lim_{x\\to1}4(x+1) = 8$, but $f(1)=4$. Thus $f$ is discontinuous at $x=1$, so only I is true (it cannot be differentiable if it isn't continuous)."
       },
       {
         "id": "A40",
-        "stem": "If , which of the following statements is (are) true? I. exists II. g is continuous at x = 3 III. g is differentiable at x = 3",
+        "stem": "If $g(x) = \\begin{cases} x^2, & x\\leq 3 \\\\ 6x-9, & x>3 \\end{cases}$, which of the following statements is (are) true? I. $\\displaystyle\\lim_{x\\to3}g(x)$ exists  II. $g$ is continuous at $x=3$  III. $g$ is differentiable at $x=3$",
         "choices": [
           "I only",
           "II only",
@@ -1551,131 +1563,131 @@
           "I, II, and III"
         ],
         "correct": "D",
-        "explanation": ", so the limit exists. Because g(3) = 9, g is continuous at x = 3. Since , so g′(3) = 6."
+        "explanation": "$\\displaystyle\\lim_{x\\to3^-}x^2 = \\lim_{x\\to3^+}(6x-9) = 9$, so the limit exists; since $g(3)=9$, $g$ is continuous at $x=3$. Since $g'(x) = \\begin{cases}2x, & x<3\\\\ 6, & x>3\\end{cases}$, both one-sided derivatives at $x=3$ equal 6, so $g'(3)=6$ exists."
       },
       {
         "id": "A41",
-        "stem": "The function f(x) = x2/3 on [-8,8] does not satisfy the conditions of the Mean Value Theorem because",
+        "stem": "The function $f(x) = x^{2/3}$ on $[-8,8]$ does not satisfy the conditions of the Mean Value Theorem because",
         "choices": [
-          "f(0) is not defined",
-          "f(x) is not continuous on [-8,8]",
-          "f(x) is not defined for x < 0",
-          "f′(0) does not exist"
+          "$f(0)$ is not defined",
+          "$f(x)$ is not continuous on $[-8,8]$",
+          "$f(x)$ is not defined for $x<0$",
+          "$f'(0)$ does not exist"
         ],
         "correct": "D",
-        "explanation": "Since , f′(0) is not defined; f′(x) must be defined on (-8,8)."
+        "explanation": "$f'(x) = \\dfrac{2}{3x^{1/3}}$, which is not defined at $x=0$; $f'(x)$ must be defined on the whole open interval $(-8,8)$ for MVT to apply."
       },
       {
         "id": "A42",
-        "stem": "If f(x) = 2x3 - 6x, at what point on the interval , if any, is the tangent to the curve parallel to the secant line on that interval?",
+        "stem": "If $f(x) = 2x^3 - 6x$, at what point on the interval $0 \\le x \\le \\sqrt3$, if any, is the tangent to the curve parallel to the secant line on that interval?",
         "choices": [
-          "1",
-          "",
-          "0",
+          "$1$",
+          "$\\sqrt2$",
+          "$0$",
           "nowhere"
         ],
         "correct": "A",
-        "explanation": "Note that and that f′(x) exists on the given interval. By the MVT, there is a number, c, in the interval such that f′(c) = 0. If c = 1, then 6c2 - 6 = 0. (-1 is not in the interval.)"
+        "explanation": "Note that $f(0)=f(\\sqrt3)=0$ and $f'(x)$ exists on the interval. By the MVT there is $c$ with $f'(c)=0$. Solving $6c^2-6=0$ gives $c=1$ (in the interval; $c=-1$ is not)."
       },
       {
         "id": "A43",
-        "stem": "If h is the inverse function of f and if , then h′(3) =",
+        "stem": "If $h$ is the inverse function of $f$ and if $f(x) = \\dfrac{1}{x}$, then $h'(3) = $",
         "choices": [
-          "-9",
-          "",
-          "",
-          "9"
+          "$-9$",
+          "$-\\dfrac19$",
+          "$\\dfrac19$",
+          "$9$"
         ],
         "correct": "B",
-        "explanation": "Since the inverse, h, of is , then . Replace x by 3."
+        "explanation": "Since the inverse of $f(x)=1/x$ is $h(x)=1/x$, $h'(x) = -1/x^2$. Replace $x$ by 3: $h'(3) = -1/9$."
       },
       {
         "id": "A44",
-        "stem": "equals",
+        "stem": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{e^x}{x^{50}}$ equals",
         "choices": [
-          "0",
-          "1",
-          "",
-          "∞"
+          "$0$",
+          "$1$",
+          "$\\dfrac{1}{50!}$",
+          "$\\infty$"
         ],
         "correct": "D",
-        "explanation": "After 50(!) applications of L’Hospital’s Rule, we get , which “equals” ∞. A perfunctory examination of the limit, however, shows immediately that the answer is ∞. In fact, for any positive integer n, no matter how large, is ∞."
+        "explanation": "$e^x$ grows faster than any power $x^n$ as $x\\to\\infty$, so the limit is $\\infty$."
       },
       {
         "id": "A45",
-        "stem": "If sin(xy) = x, then",
+        "stem": "If $\\sin(xy) = x$, then $\\dfrac{dy}{dx} = $",
         "choices": [
-          "",
-          "",
-          "",
-          "sec(xy) - 1"
+          "$\\dfrac{\\sec(xy)}{x}$",
+          "$\\dfrac{\\sec(xy)-y}{x}$",
+          "$\\dfrac{1+\\sec(xy)}{x}$",
+          "$\\sec(xy)-1$"
         ],
         "correct": "B",
-        "explanation": "cos(xy)(xy′ + y) = 1; x cos(xy) y′ = 1 - y cos(xy) NOTE: In Questions A46-A50, the limits are all indeterminate forms of the type . We have therefore applied L’Hospital’s Rule in each one. The indeterminacy can also be resolved by introducing , which approaches 1 as a approaches 0. The latter technique is presented in square brackets."
+        "explanation": "$\\cos(xy)(xy'+y)=1 \\Rightarrow x\\cos(xy)y' = 1-y\\cos(xy) \\Rightarrow y' = \\dfrac{1-y\\cos(xy)}{x\\cos(xy)} = \\dfrac{\\sec(xy)-y}{x}$."
       },
       {
         "id": "A46",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\sin 2x}{x}$ is",
         "choices": [
-          "1",
-          "2",
-          "",
-          "0"
+          "$1$",
+          "$2$",
+          "$\\dfrac12$",
+          "$0$"
         ],
         "correct": "B",
-        "explanation": "[Using sin 2x = 2 sin x cos x yields ]"
+        "explanation": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\sin 2x}{x} = \\lim_{x\\to0}\\dfrac{2\\cos 2x}{1} = 2$ (L'Hopital), or using $\\sin 2x=2\\sin x\\cos x$: $2\\cdot1\\cdot1=2$."
       },
       {
         "id": "A47",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\sin 3x}{\\sin 4x}$ is",
         "choices": [
-          "1",
-          "",
-          "",
-          "0"
+          "$1$",
+          "$\\dfrac43$",
+          "$\\dfrac34$",
+          "$0$"
         ],
         "correct": "C",
-        "explanation": "[We rewrite as . As x → 0, so do 3x and 4x; the fraction approaches .]"
+        "explanation": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\sin 3x}{\\sin 4x} = \\lim_{x\\to0}\\dfrac{3\\cos 3x}{4\\cos 4x} = \\dfrac{3}{4}$."
       },
       {
         "id": "A48",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{x\\to0}\\dfrac{1-\\cos x}{x}$ is",
         "choices": [
-          "0",
-          "1",
-          "2",
-          "∞"
+          "$0$",
+          "$1$",
+          "$2$",
+          "$\\infty$"
         ],
         "correct": "A",
-        "explanation": "[We can replace 1 - cos x by , getting"
+        "explanation": "$\\displaystyle\\lim_{x\\to0}\\dfrac{1-\\cos x}{x} = \\lim_{x\\to0}\\dfrac{\\sin x}{1} = 0$."
       },
       {
         "id": "A49",
-        "stem": "is",
+        "stem": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\tan \\pi x}{x}$ is",
         "choices": [
-          "0",
-          "1",
-          "π",
-          "∞ Challenge"
+          "$0$",
+          "$1$",
+          "$\\pi$",
+          "$\\infty$"
         ],
         "correct": "C",
-        "explanation": "[ ; as x (or πx) approaches 0, the original fraction approaches ]"
+        "explanation": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\tan\\pi x}{x} = \\lim_{x\\to0}\\dfrac{(\\sec^2\\pi x)\\cdot\\pi}{1} = \\pi$."
       },
       {
         "id": "A50",
-        "stem": "",
+        "stem": "Challenge. $\\displaystyle\\lim_{x\\to\\infty}x^2\\sin\\dfrac1x$",
         "choices": [
-          "is 1",
-          "is 0",
-          "is ∞",
-          "oscillates between -1 and 1 BC Only"
+          "is $1$",
+          "is $0$",
+          "is $\\infty$",
+          "oscillates between $-1$ and $1$"
         ],
         "correct": "C",
-        "explanation": "The limit is easiest to obtain here if we rewrite:"
+        "explanation": "$\\displaystyle\\lim_{x\\to\\infty}x^2\\sin\\dfrac1x = \\lim_{x\\to\\infty}x\\cdot\\dfrac{\\sin(1/x)}{1/x} = \\infty\\cdot1 = \\infty$."
       },
       {
         "id": "A51",
-        "stem": "The graph in the xy-plane represented by x = 3 + 2 sin t and y = 2 cos t - 1, for -π <= t <= π, is",
+        "stem": "BC Only. The graph in the $xy$-plane represented by $x = 3+2\\sin t$ and $y = 2\\cos t - 1$, for $-\\pi \\le t \\le \\pi$, is",
         "choices": [
           "a semicircle",
           "a circle",
@@ -1683,233 +1695,239 @@
           "half of an ellipse"
         ],
         "correct": "B",
-        "explanation": "Since x - 3 = 2 sin t and y + 1 = 2 cos t This is the equation of a circle with center at (3,-1) and radius 2. In the domain given, -π <= t <= π, the entire circle is traced by a particle moving counterclockwise, starting from and returning to (3,-3)."
+        "explanation": "Since $x-3=2\\sin t$ and $y+1=2\\cos t$, $(x-3)^2+(y+1)^2=4$, the equation of a circle with center $(3,-1)$, radius 2. On $-\\pi\\le t\\le\\pi$, the entire circle is traced."
       },
       {
         "id": "A52",
-        "stem": "",
+        "stem": "$\\displaystyle\\lim_{x\\to0}\\dfrac{\\sec x - \\cos x}{x^2}$",
         "choices": [
-          "= 0",
-          "",
-          "= 1",
-          "= 2 BC Only In each of Questions A53-A56, a pair of equations that represent a curve parametrically is given. Choose the alternative that is the derivative ."
+          "$=0$",
+          "$=\\dfrac12$",
+          "$=1$",
+          "$=2$"
         ],
         "correct": "C",
-        "explanation": "Use L’Hospital’s Rule; then This can be done without using L’Hospital’s Rule as follows:"
+        "explanation": "Using L'Hopital's Rule (or algebra: $\\sec x-\\cos x = \\dfrac{1-\\cos^2x}{\\cos x}=\\dfrac{\\sin^2 x}{\\cos x}$), the limit equals $1$."
       },
       {
         "id": "A53",
-        "stem": "x = t - sin t and y = 1 - cos t",
+        "stem": "BC Only. In each of Questions A53–A56, a pair of equations that represent a curve parametrically is given. Find $\\dfrac{dy}{dx}$. $x = t - \\sin t$ and $y = 1 - \\cos t$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\dfrac{\\sin t}{1-\\cos t}$",
+          "$\\dfrac{1-\\cos t}{\\sin t}$",
+          "$\\dfrac{\\sin t}{\\cos t - 1}$",
+          "$\\dfrac{1-x}{y}$"
         ],
-        "correct": "A"
+        "correct": "A",
+        "explanation": "$\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt} = \\dfrac{\\sin t}{1-\\cos t}$."
       },
       {
         "id": "A54",
-        "stem": "x = cos3 θ and y = sin3 θ",
+        "stem": "BC Only. $x = \\cos^3\\theta$ and $y = \\sin^3\\theta$",
         "choices": [
-          "-cot θ",
-          "cot θ",
-          "-tan θ",
-          "-tan2 θ"
+          "$-\\cot\\theta$",
+          "$\\cot\\theta$",
+          "$-\\tan\\theta$",
+          "$-\\tan^2\\theta$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$\\dfrac{dy}{dx} = \\dfrac{3\\sin^2\\theta\\cos\\theta}{-3\\cos^2\\theta\\sin\\theta} = -\\tan\\theta$."
       },
       {
         "id": "A55",
-        "stem": "x = 1 - e-t and y = t + e-t",
+        "stem": "BC Only. $x = 1-e^{-t}$ and $y = t+e^{-t}$",
         "choices": [
-          "",
-          "et + 1",
-          "et - e-2t",
-          "et - 1"
+          "$\\dfrac{e^{-1}}{1-e^{-t}}$",
+          "$e^t+1$",
+          "$e^t-e^{-2t}$",
+          "$e^t-1$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "$\\dfrac{dy}{dx} = \\dfrac{1-e^{-t}}{e^{-t}} = e^t-1$."
       },
       {
         "id": "A56",
-        "stem": "and y = 1 - ln(1 - t) (t < 1)",
+        "stem": "BC Only. $x = \\dfrac{1}{1-t}$ and $y = 1-\\ln(1-t)$ ($t<1$)",
         "choices": [
-          "",
-          "t - 1",
-          "",
-          ""
+          "$\\dfrac{1}{1-t}$",
+          "$t-1$",
+          "$\\dfrac1x$",
+          "$\\dfrac{(1-t)^2}{t}$"
         ],
         "correct": "C",
-        "explanation": "Since"
+        "explanation": "$\\dfrac{dy}{dt}=\\dfrac{1}{1-t}$ and $\\dfrac{dx}{dt}=\\dfrac{1}{(1-t)^2}$, so $\\dfrac{dy}{dx} = 1-t = \\dfrac1x$."
       },
       {
         "id": "A57",
-        "stem": "The “left half” of the parabola defined by y = x2 - 8x + 10 for x <= 4 is a one-to- one function; therefore, its inverse is also a function. Call that inverse g. Find g′(3).",
+        "stem": "The “left half” of the parabola defined by $y = x^2 - 8x + 10$ for $x \\le 4$ is a one-to-one function; therefore, its inverse is also a function. Call that inverse $g$. Find $g'(3)$.",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac12$",
+          "$-\\dfrac16$",
+          "$\\dfrac16$",
+          "$\\dfrac12$"
         ],
         "correct": "B",
-        "explanation": "When x = 3 on g-1, y = 3 on the original half-parabola. 3 = x2 - 8x + 10 at x = 1 (and at x = 7, but that value is not in the given domain). ."
+        "explanation": "When $x=3$ on $g$, $y=3$ on the original half-parabola: $3=x^2-8x+10$ gives $x=1$ or $x=7$; only $x=1$ is in the domain $x\\le4$. $g'(3) = \\dfrac{1}{y'(1)} = \\dfrac{1}{2x-8}\\Big|_{x=1} = \\dfrac{1}{-6} = -\\dfrac16$."
       },
       {
         "id": "A58",
-        "stem": "If f(u) = sin u and u = g (x) = x2 - 9, then (f ∘ g)′(3) equals",
+        "stem": "If $f(u) = \\sin u$ and $u = g(x) = x^2-9$, then $(f\\circ g)'(3)$ equals",
         "choices": [
-          "0",
-          "1",
-          "3",
-          "6"
+          "$0$",
+          "$1$",
+          "$3$",
+          "$6$"
         ],
         "correct": "D",
-        "explanation": "(f ∘ g)′ at x = 3 equals f′(g(3))· g′(3) equals cos u (at u = 0) times 2x (at x = 3) = 1 · 6 = 6."
+        "explanation": "$(f\\circ g)'(3) = f'(g(3))\\cdot g'(3) = \\cos(0)\\cdot 6 = 1\\cdot6 = 6$."
       },
       {
         "id": "A59",
-        "stem": "If , then the set of x’s for which f′(x) exists is",
+        "stem": "If $f(x) = \\dfrac{x}{(x-1)^2}$, then the set of $x$'s for which $f'(x)$ exists is",
         "choices": [
           "all reals",
-          "all reals except x = 1 and x = -1",
-          "all reals except x = -1",
-          "all reals except x = 1"
+          "all reals except $x=1$ and $x=-1$",
+          "all reals except $x=-1$",
+          "all reals except $x=1$"
         ],
         "correct": "D",
-        "explanation": "Here f′(x) equals ."
+        "explanation": "$f'(x) = \\dfrac{-x-1}{(x-1)^3}$, which is undefined only at $x=1$."
       },
       {
         "id": "A60",
-        "stem": "If and , then the derivative of f(g(x)) is",
+        "stem": "If $f(x) = \\dfrac{1}{x^2+1}$ and $g(x) = \\sqrt{x}$, then the derivative of $f(g(x))$ is",
         "choices": [
-          "-(x + 1)-2",
-          "",
-          "",
-          ""
+          "$-(x+1)^{-2}$",
+          "$-\\dfrac{2x}{(x^2+1)^2}$",
+          "$\\dfrac{1}{(x+1)^2}$",
+          "$\\dfrac{1}{2\\sqrt{x}(x+1)}$"
         ],
         "correct": "A",
-        "explanation": "Note that ."
+        "explanation": "Note $f(g(x)) = \\dfrac{1}{(\\sqrt x)^2+1} = \\dfrac{1}{x+1}$, so the derivative is $-(x+1)^{-2}$."
       },
       {
         "id": "A61",
-        "stem": "Suppose y = f(x) = 2x3 - 3x. If h(x) is the inverse function of f, then h′(-1) =",
+        "stem": "Suppose $y = f(x) = 2x^3-3x$. If $h(x)$ is the inverse function of $f$, then $h'(-1) = $",
         "choices": [
-          "-1",
-          "",
-          "1",
-          "3"
+          "$-1$",
+          "$\\dfrac13$",
+          "$1$",
+          "$3$"
         ],
         "correct": "B",
-        "explanation": "Since ; also, f(x), or 2x3 - 3x, equals -1, by observation, for x = 1. So (when x = 1) equals ."
+        "explanation": "$f'(x)=6x^2-3$; also $f(x)=-1$ at $x=1$. So $h'(-1) = \\dfrac{1}{f'(1)} = \\dfrac{1}{6-3} = \\dfrac13$."
       },
       {
         "id": "A62",
-        "stem": "If f(x) = x3 - 3x2 + 8x + 5 and g(x) = f-1(x), then g′(5) =",
+        "stem": "If $f(x) = x^3-3x^2+8x+5$ and $g(x) = f^{-1}(x)$, then $g'(5) = $",
         "choices": [
-          "8",
-          "",
-          "",
-          "53 PART B. CALCULATOR ACTIVE-DIRECTIONS: Some of the following questions require the use of a graphing calculator. In Questions B1-B8, differentiable functions f and g have the values shown in the table."
+          "$8$",
+          "$\\dfrac18$",
+          "$\\dfrac{1}{53}$",
+          "$53$"
         ],
         "correct": "B",
-        "explanation": "Since ."
+        "explanation": "Since $f(0)=5$, $g'(5) = \\dfrac{1}{f'(0)} = \\dfrac{1}{3x^2-6x+8}\\Big|_{x=0} = \\dfrac18$."
       },
       {
         "id": "B1",
-        "stem": "If A(x) = f(x) + 2g(x), then A′(3) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $A(x) = f(x) + 2g(x)$, then $A'(3) = $",
         "choices": [
-          "-2",
-          "2",
-          "7",
-          "8"
+          "$-2$",
+          "$2$",
+          "$7$",
+          "$8$"
         ],
         "correct": "B",
-        "explanation": "(f + 2g)′(3) = f′(3) + 2g′(3) = 4 + 2(-1)"
+        "explanation": "$A'(3) = f'(3)+2g'(3) = 4+2(-1) = 2$."
       },
       {
         "id": "B2",
-        "stem": "If B(x) = f(x) · g(x), then B′(2) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $B(x) = f(x)\\cdot g(x)$, then $B'(2) = $",
         "choices": [
-          "-20",
-          "-7",
-          "-6",
-          "13"
+          "$-20$",
+          "$-7$",
+          "$-6$",
+          "$13$"
         ],
         "correct": "B",
-        "explanation": "(f * g)′(2) = f(2) * g′(2) + g(2) * f′(2) = 5(-2) + 1(3)"
+        "explanation": "$B'(2) = f(2)g'(2) + g(2)f'(2) = 5(-2) + 1(3) = -10+3 = -7$."
       },
       {
         "id": "B3",
-        "stem": "If , then D′(1) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $D(x) = \\dfrac{1}{g(x)}$, then $D'(1) = $",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac13$",
+          "$-\\dfrac19$",
+          "$\\dfrac19$",
+          "$\\dfrac13$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "$D'(x) = -\\dfrac{g'(x)}{[g(x)]^2}$, so $D'(1) = -\\dfrac{-3}{3^2} = \\dfrac39 = \\dfrac13$."
       },
       {
         "id": "B4",
-        "stem": "If , then H′(3) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $H(x) = \\sqrt{f(x)}$, then $H'(3) = $",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$\\dfrac14$",
+          "$\\dfrac{1}{2\\sqrt{10}}$",
+          "$\\dfrac{2}{\\sqrt{10}}$",
+          "$4\\sqrt{10}$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$H'(x) = \\dfrac{f'(x)}{2\\sqrt{f(x)}}$, so $H'(3) = \\dfrac{4}{2\\sqrt{10}} = \\dfrac{2}{\\sqrt{10}}$."
       },
       {
         "id": "B5",
-        "stem": "If , then K′(0) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $K(x) = \\dfrac{f(x)}{g(x)}$, then $K'(0) = $",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "$-\\dfrac{13}{25}$",
+          "$-\\dfrac{3}{25}$",
+          "$\\dfrac{13}{25}$",
+          "$\\dfrac{13}{16}$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$K'(0) = \\dfrac{g(0)f'(0)-f(0)g'(0)}{[g(0)]^2} = \\dfrac{5(1)-2(-4)}{5^2} = \\dfrac{5+8}{25} = \\dfrac{13}{25}$."
       },
       {
         "id": "B6",
-        "stem": "If M(x) = f(g(x)), then M′(1) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $M(x) = f(g(x))$, then $M'(1) = $",
         "choices": [
-          "-12",
-          "-6",
-          "6",
-          "12"
+          "$-12$",
+          "$-6$",
+          "$6$",
+          "$12$"
         ],
         "correct": "A",
-        "explanation": "M′(1) = f′(g(1)) * g′(1) = f′(3)g′(1) = 4(-3)"
+        "explanation": "$M'(1) = f'(g(1))\\cdot g'(1) = f'(3)\\cdot g'(1) = 4(-3) = -12$."
       },
       {
         "id": "B7",
-        "stem": "If P(x) = f(x3), then P′(1) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $P(x) = f(x^3)$, then $P'(1) = $",
         "choices": [
-          "2",
-          "6",
-          "8",
-          "12"
+          "$2$",
+          "$6$",
+          "$8$",
+          "$12$"
         ],
         "correct": "B",
-        "explanation": "[f(x3)]′ = f′(x3) * 3x2, so P′(1) = f′(13) * 3 * 12 = 2 * 3"
+        "explanation": "$[f(x^3)]' = f'(x^3)\\cdot 3x^2$, so $P'(1) = f'(1^3)\\cdot3\\cdot1^2 = 2\\cdot3 = 6$."
       },
       {
         "id": "B8",
-        "stem": "If S(x) = f-1(x), then S′(3) =",
+        "stem": "Differentiable functions $f$ and $g$ have the values shown in the table below.\n$$\\begin{array}{c|cccc} x & 0 & 1 & 2 & 3 \\\\ \\hline f(x) & 2 & 3 & 5 & 10 \\\\ f'(x) & 1 & 2 & 3 & 4 \\\\ g(x) & 5 & 3 & 1 & 0 \\\\ g'(x) & -4 & -3 & -2 & -1 \\end{array}$$\nIf $S(x) = f^{-1}(x)$, then $S'(3) = $",
         "choices": [
-          "-2",
-          "",
-          "",
-          "2"
+          "$-2$",
+          "$\\dfrac14$",
+          "$\\dfrac12$",
+          "$2$"
         ],
         "correct": "C",
-        "explanation": "f(S(x)) = x implies that f′(S(x)) · S′(x) = 1, so"
+        "explanation": "Since $f(1)=3$, $S'(3) = \\dfrac{1}{f'(S(3))} = \\dfrac{1}{f'(1)} = \\dfrac12$."
       },
       {
         "id": "B9",
-        "stem": "The graph of g′ is shown here. Which of the following statements is (are) true of g? I. g is continuous at x = a II. g is differentiable at x = a III. g is increasing in an interval containing x = a",
+        "stem": "The graph of $g'$ (the derivative of $g$) is a piecewise-linear curve: it rises with a constant positive slope from the lower left, reaches a peak (marked with a solid dot, so this value is attained) at $x=a$ where $g'(a)>0$, and then decreases with a constant (more negative) slope, crossing the $x$-axis to the right of $a$ and continuing downward. In particular, $g'$ is defined and continuous at $x=a$, with $g'(a)>0$. Which of the following statements is (are) true of $g$? I. $g$ is continuous at $x=a$  II. $g$ is differentiable at $x=a$  III. $g$ is increasing in an interval containing $x=a$",
         "choices": [
           "I only",
           "III only",
@@ -1917,296 +1935,299 @@
           "I, II, and III"
         ],
         "correct": "D",
-        "explanation": "Since g′(a) exists, g is differentiable and thus continuous; g′(a) > 0."
+        "explanation": "Since $g'(a)$ exists (the graph of $g'$ has a well-defined, finite value at $x=a$), $g$ is differentiable at $x=a$ and thus continuous there; since $g'(a)>0$, $g$ is increasing near $x=a$. All three statements are true."
       },
       {
         "id": "B10",
-        "stem": "A function f has the derivative shown. Which of the following statements must be false?",
+        "stem": "A function $f$ has derivative $f'$ whose graph is described as follows: for $x<a$, $f'(x)$ equals a constant positive value (a horizontal segment) up to, but not including, $x=a$ (open circle there); at $x=a$ and for $x$ slightly greater, $f'$ jumps down to a negative value (open circle just below the $x$-axis directly under $x=a$) and then increases linearly with positive slope through and beyond $x=a$. That is, $f'$ has a finite (bounded) jump discontinuity at $x=a$, but does not blow up. Which of the following statements must be false?",
         "choices": [
-          "f is continuous at x = a",
-          "f has a vertical asymptote at x = a",
-          "f has a jump discontinuity at x = a",
-          "f has a removable discontinuity at x = a"
+          "$f$ is continuous at $x=a$",
+          "$f$ has a vertical asymptote at $x=a$",
+          "$f$ has a jump discontinuity at $x=a$",
+          "$f$ has a removable discontinuity at $x=a$"
         ],
         "correct": "B",
-        "explanation": "Near a vertical asymptote the slopes must approach ±∞."
+        "explanation": "Near a vertical asymptote of $f$, the slopes $f'(x)$ must become unbounded ($\\pm\\infty$). Since the graph shows $f'$ remaining bounded (a finite jump) near $x=a$, $f$ cannot have a vertical asymptote there."
       },
       {
         "id": "B11",
-        "stem": "The function f whose graph is shown has f′ = 0 at x =",
+        "stem": "The graph of $f$ on $0\\le x\\le7$ is a smooth curve that rises from $x=0$ to a rounded local maximum (horizontal tangent) at $x=2$, then decreases smoothly (with no horizontal tangent) through $x=4$, continuing down to a sharp corner (a V-shaped local minimum where $f$ is continuous but not differentiable) at $x=5$, after which $f$ rises in a straight line from $x=5$ to $x=7$. The function $f$ whose graph is shown has $f'=0$ at $x=$",
         "choices": [
-          "2 only",
-          "2 and 5",
-          "4 and 7",
-          "2, 4, and 7"
+          "$2$ only",
+          "$2$ and $5$",
+          "$4$ and $7$",
+          "$2$, $4$, and $7$"
         ],
         "correct": "A",
-        "explanation": "There is only one horizontal tangent."
+        "explanation": "The curve has a horizontal tangent only at the smooth peak $x=2$. At $x=5$ there is a corner (non-differentiable point), so $f'(5)$ does not exist there (it is not $0$); $x=4$ and $x=7$ are not critical points at all."
       },
       {
         "id": "B12",
-        "stem": "A differentiable function f has the values shown. Estimate f′(1.5).",
+        "stem": "A differentiable function $f$ has the values shown.\n$$\\begin{array}{c|cccc} x & 1.0 & 1.3 & 1.4 & 1.6 \\\\ \\hline f(x) & 8 & 10 & 14 & 22 \\end{array}$$\nEstimate $f'(1.5)$.",
         "choices": [
-          "8",
-          "18",
-          "40",
-          "80"
+          "$8$",
+          "$18$",
+          "$40$",
+          "$80$"
         ],
         "correct": "C",
-        "explanation": "Use the symmetric difference quotient; then"
+        "explanation": "Use the symmetric difference quotient around $x=1.5$: $f'(1.5) \\approx \\dfrac{f(1.6)-f(1.4)}{1.6-1.4} = \\dfrac{22-14}{0.2} = \\dfrac{8}{0.2} = 40$."
       },
       {
         "id": "B13",
-        "stem": "Water is poured into a conical reservoir at a constant rate. If h(t) is the rate of change of the depth of the water, then h is",
+        "stem": "Water is poured into a conical reservoir (vertex/apex pointing straight down, opening upward) at a constant rate. If $h(t)$ is the rate of change of the depth of the water, then $h$ is",
         "choices": [
           "linear and increasing",
           "linear and decreasing",
           "nonlinear and increasing",
-          "nonlinear and decreasing Use the figure to answer Questions B14-B16. The graph of f consists of two line segments and a semicircle of radius 2."
+          "nonlinear and decreasing"
         ],
         "correct": "D",
-        "explanation": "Since the water level rises more slowly as the cone fills, the rate of depth change is decreasing, as in (B) and (D). However, at every instant the portion of the cone containing water is similar to the entire cone; the volume is proportional to the cube of the depth of the water. The rate of change of depth (the derivative) is therefore not linear, as in (B)."
+        "explanation": "Since the water level rises more slowly as the cone fills, the rate of depth change is decreasing. Because the volume of water is proportional to the cube of the depth (the water always forms a cone similar to the whole), the rate of change of depth is not linear, so $h$ is nonlinear and decreasing."
       },
       {
         "id": "B14",
-        "stem": "f′(x) = 0 for x =",
+        "stem": "The graph of $f$ consists of: a line segment rising from $(0,0)$ to a peak at $x=1$, then a line segment falling from that peak down to $(2,0)$ (so $f$ has a triangular “tent” shape on $[0,2]$ with corners at $x=1$ and $x=2$); followed, for $2\\le x\\le 6$, by the lower half of a semicircle of radius 2 centered at $(4,0)$, i.e. $f(x) = -\\sqrt{4-(x-4)^2}$. $f'(x) = 0$ for $x = $",
         "choices": [
-          "1 only",
-          "2 only",
-          "4 only",
-          "1 and 4"
+          "$1$ only",
+          "$2$ only",
+          "$4$ only",
+          "$1$ and $4$"
         ],
         "correct": "C",
-        "explanation": "The only horizontal tangent is at x = 4. Note that f′(1) does not exist."
+        "explanation": "The only horizontal tangent occurs at the bottom of the semicircle, $x=4$; the triangle's peak at $x=1$ and the transition at $x=2$ are corners where $f'$ does not exist (not zero)."
       },
       {
         "id": "B15",
-        "stem": "For 0 < x < 6, f′(x) does not exist for x =",
+        "stem": "The graph of $f$ consists of: a line segment rising from $(0,0)$ to a peak at $x=1$, then a line segment falling from that peak down to $(2,0)$ (so $f$ has a triangular “tent” shape on $[0,2]$ with corners at $x=1$ and $x=2$); followed, for $2\\le x\\le 6$, by the lower half of a semicircle of radius 2 centered at $(4,0)$, i.e. $f(x) = -\\sqrt{4-(x-4)^2}$. For $0 < x < 6$, $f'(x)$ does not exist for $x = $",
         "choices": [
-          "1 only",
-          "2 only",
-          "1 and 2",
-          "2 and 6"
+          "$1$ only",
+          "$2$ only",
+          "$1$ and $2$",
+          "$2$ and $6$"
         ],
         "correct": "C",
-        "explanation": "The graph has corners at x = 1 and x = 2."
+        "explanation": "The graph has corners (non-smooth transitions) at $x=1$ (peak of the tent) and $x=2$ (junction between the line segment and the semicircle), so $f'$ fails to exist at those two points."
       },
       {
         "id": "B16",
-        "stem": "f′(5) =",
+        "stem": "The graph of $f$ consists of: a line segment rising from $(0,0)$ to a peak at $x=1$, then a line segment falling from that peak down to $(2,0)$ (so $f$ has a triangular “tent” shape on $[0,2]$ with corners at $x=1$ and $x=2$); followed, for $2\\le x\\le 6$, by the lower half of a semicircle of radius 2 centered at $(4,0)$, i.e. $f(x) = -\\sqrt{4-(x-4)^2}$. $f'(5) = $",
         "choices": [
-          "",
-          "",
-          "2",
-          ""
+          "$\\dfrac12$",
+          "$\\dfrac{1}{\\sqrt3}$",
+          "$2$",
+          "$\\sqrt3$"
         ],
         "correct": "B",
-        "explanation": "Consider triangle ABC: AB = 1; radius AC = 2; thus, and AC has . The tangent line is perpendicular to the radius."
+        "explanation": "On the semicircle, $(x-4)^2+y^2=4$, so $2(x-4)+2yy'=0 \\Rightarrow y' = -\\dfrac{x-4}{y}$. At $x=5$, $y=-\\sqrt{4-1}=-\\sqrt3$, so $f'(5) = -\\dfrac{1}{-\\sqrt3} = \\dfrac{1}{\\sqrt3}$. (Equivalently, using triangle $ABC$ with $AB=1$, radius $AC=2$, $BC=\\sqrt3$, the tangent is perpendicular to the radius, giving slope $1/\\sqrt3$.)"
       },
       {
         "id": "B17",
-        "stem": "At how many points on the interval [-5,5] is a tangent to y = x + cos x parallel to the secant line on [-5,5]?",
+        "stem": "At how many points on the interval $[-5,5]$ is a tangent to $y = x + \\cos x$ parallel to the secant line on $[-5,5]$?",
         "choices": [
           "none",
-          "1",
-          "2",
-          "3"
+          "$1$",
+          "$2$",
+          "$3$"
         ],
         "correct": "D",
-        "explanation": "The graph of y = x + cos x is shown in window [-5,5] × [-6,6]. The average rate of change is represented by the slope of secant segment . There appear to be 3 points at which tangent lines are parallel to ."
+        "explanation": "The average rate of change over $[-5,5]$ is the slope of the secant line through the endpoints. Graphing $y=x+\\cos x$ on $[-5,5]$ (e.g. with a calculator) shows there are 3 points at which the tangent line is parallel to that secant."
       },
       {
         "id": "B18",
-        "stem": "From the values of f shown, estimate f′(2).",
+        "stem": "From the values of $f$ shown, estimate $f'(2)$.\n$$\\begin{array}{c|ccccc} x & 1.92 & 1.93 & 1.95 & 1.98 & 2.00 \\\\ \\hline f(x) & 6.00 & 5.00 & 4.40 & 4.10 & 4.00 \\end{array}$$",
         "choices": [
-          "-0.10",
-          "-0.20",
-          "-5",
-          "-10"
+          "$-0.10$",
+          "$-0.20$",
+          "$-5$",
+          "$-10$"
         ],
-        "correct": "C"
+        "correct": "C",
+        "explanation": "$f'(2) \\approx \\dfrac{f(2)-f(1.98)}{2-1.98} = \\dfrac{4.00-4.10}{0.02} = -5$."
       },
       {
         "id": "B19",
-        "stem": "Using the values shown in the table for Question B18, estimate (f-1)′(4).",
+        "stem": "Using the values shown in the table below for $f$, estimate $(f^{-1})'(4)$.\n$$\\begin{array}{c|ccccc} x & 1.92 & 1.93 & 1.95 & 1.98 & 2.00 \\\\ \\hline f(x) & 6.00 & 5.00 & 4.40 & 4.10 & 4.00 \\end{array}$$",
         "choices": [
-          "-0.2",
-          "-0.1",
-          "-5",
-          "-10"
+          "$-0.2$",
+          "$-0.1$",
+          "$-5$",
+          "$-10$"
         ],
         "correct": "A",
-        "explanation": "Since an estimate of the answer for Question B18 is f′(2) ≈ -5, then"
+        "explanation": "Since an estimate for $f'(2)$ is $\\approx -5$ (see previous problem, and $f(2)=4$), $(f^{-1})'(4) = \\dfrac{1}{f'(2)} \\approx \\dfrac{1}{-5} = -0.2$."
       },
       {
         "id": "B20",
-        "stem": "The table below shows some points on a function f that is both continuous and differentiable on the closed interval [2,10]. Which must be true?",
+        "stem": "The table below shows some points on a function $f$ that is both continuous and differentiable on the closed interval $[2,10]$.\n$$\\begin{array}{c|ccccc} x & 2 & 4 & 6 & 8 & 10 \\\\ \\hline f(x) & 30 & 25 & 20 & 25 & 30 \\end{array}$$\nWhich must be true?",
         "choices": [
-          "f′(6) = 0",
-          "f′(8) > 0",
-          "The maximum value of f on the interval [2,10] is 30.",
-          "For some value of x on the interval [2,10] f′(x) = 0."
+          "$f'(6)=0$",
+          "$f'(8)>0$",
+          "The maximum value of $f$ on the interval $[2,10]$ is $30$.",
+          "For some value of $x$ on the interval $[2,10]$, $f'(x)=0$."
         ],
         "correct": "D",
-        "explanation": "f satisfies Rolle’s Theorem on [2,10]."
+        "explanation": "Since $f(2)=f(10)=30$ and $f$ is continuous on $[2,10]$ and differentiable on $(2,10)$, Rolle's Theorem guarantees some $c$ in $(2,10)$ with $f'(c)=0$. (The specific location isn't pinned down by the table, so (A) need not be true; (B) and (C) aren't guaranteed either.)"
       },
       {
         "id": "B21",
-        "stem": "If f is differentiable and difference quotients overestimate the slope of f at x = a for all h > 0, which must be true?",
+        "stem": "If $f$ is differentiable and difference quotients overestimate the slope of $f$ at $x=a$ for all $h>0$, which must be true?",
         "choices": [
-          "f′(x) >= 0 on [a,h]",
-          "f′(x) <= 0 on [a,h]",
-          "f′′(x) >= 0 on [a,h]",
-          "f′′(x) <= 0 on [a,h]"
+          "$f'(x) \\ge 0$ on $[a,h]$",
+          "$f'(x) \\le 0$ on $[a,h]$",
+          "$f''(x) \\ge 0$ on $[a,h]$",
+          "$f''(x) \\le 0$ on $[a,h]$"
         ],
         "correct": "C",
-        "explanation": "The diagrams show secant lines (whose slope is the difference quotient) with greater slopes than the tangent line. In both cases, f is concave upward."
+        "explanation": "Secant lines with slope greater than the tangent slope at $a$ occur when $f$ is concave upward, i.e., $f''(x)\\ge0$ on the interval."
       },
       {
         "id": "B22",
-        "stem": "If f(a) = f(b) = 0 and f(x) is continuous on [a,b], then",
+        "stem": "If $f(a) = f(b) = 0$ and $f(x)$ is continuous (but not necessarily differentiable) on $[a,b]$, then",
         "choices": [
-          "f(x) must be identically zero",
-          "f(x) may be different from zero for all x on [a,b]",
-          "there exists at least one number c, a < c < b, such that f′(c) = 0",
-          "f(x) must exist for every x on (a,b)"
+          "$f(x)$ must be identically zero",
+          "$f(x)$ may be different from zero for all $x$ on $[a,b]$",
+          "there exists at least one number $c$, $a<c<b$, such that $f'(c)=0$",
+          "$f(x)$ must exist for every $x$ on $(a,b)$"
         ],
         "correct": "D",
-        "explanation": "Sketch the graph of f(x) = 1 - |x|; note that f(-1) = f(1) = 0 and that f is continuous on [-1,1]. Only (D) holds."
+        "explanation": "Consider $f(x)=1-|x|$ on $[-1,1]$: $f(-1)=f(1)=0$ and $f$ is continuous, but $f'(x)=\\mp1$ everywhere except at $x=0$ (where $f'$ doesn't exist), so no $c$ gives $f'(c)=0$; this rules out (A), (C). Only (D) must hold, since $f$ is continuous (hence defined) on $[a,b]$."
       },
       {
         "id": "B23",
-        "stem": "Suppose f′(1) = 2, f′(1) = 3, and f′(2) = 4. Then (f-1)′(2)",
+        "stem": "Suppose $f(1) = 2$, $f'(1) = 3$, and $f'(2) = 4$. Then $(f^{-1})'(2)$",
         "choices": [
-          "",
-          "",
-          "",
-          ""
+          "equals $-\\dfrac13$",
+          "equals $-\\dfrac14$",
+          "equals $\\dfrac14$",
+          "equals $\\dfrac13$"
         ],
-        "correct": "D"
+        "correct": "D",
+        "explanation": "Since $f(1)=2$, $f^{-1}(2)=1$, so $(f^{-1})'(2) = \\dfrac{1}{f'(f^{-1}(2))} = \\dfrac{1}{f'(1)} = \\dfrac13$."
       },
       {
         "id": "B24",
-        "stem": "Suppose . It follows necessarily that",
+        "stem": "Suppose $\\displaystyle\\lim_{x\\to0}\\dfrac{g(x)-g(0)}{x} = 1$. It follows necessarily that",
         "choices": [
-          "g is not defined at x = 0",
-          "g is not continuous at x = 0",
-          "the limit of g(x) as x approaches 0 equals 1",
-          "g′(0) = 1 Use this graph of y = f(x) for Questions B25 and B26."
+          "$g$ is not defined at $x=0$",
+          "$g$ is not continuous at $x=0$",
+          "the limit of $g(x)$ as $x$ approaches $0$ equals $1$",
+          "$g'(0) = 1$"
         ],
         "correct": "D",
-        "explanation": "The given limit is the derivative of g(x) at x = 0."
+        "explanation": "The given limit is, by definition, $g'(0)$. So $g'(0)=1$."
       },
       {
         "id": "B25",
-        "stem": "f′(3) is most closely approximated by",
+        "stem": "The graph of $y=f(x)$ is a curve with a local maximum near $(-1, 3.3)$, decreasing through an inflection point near $(0.7, 0.5)$ (where the curve is steepest, i.e. most negative slope), continuing to decrease to a local minimum near $(2.7,-2.3)$, and then increasing steeply for $x>3$. A straight reference line, used to estimate the tangent slope at $x=3$, is drawn approximately through the points $(0,-4.8)$ and $(3,-2.4)$. $f'(3)$ is most closely approximated by",
         "choices": [
-          "0.3",
-          "0.8",
-          "1.5",
-          "1.8"
+          "$0.3$",
+          "$0.8$",
+          "$1.5$",
+          "$1.8$"
         ],
         "correct": "B",
-        "explanation": "The tangent line appears to contain the points (0,-4.8) and (3,-2.4). Its slope is approximately"
+        "explanation": "The tangent-line reference passes approximately through $(0,-4.8)$ and $(3,-2.4)$. Its slope is $\\dfrac{-2.4-(-4.8)}{3-0} = \\dfrac{2.4}{3} = 0.8$."
       },
       {
         "id": "B26",
-        "stem": "The rate of change of f(x) is least at x ≈",
+        "stem": "The graph of $y=f(x)$ is a curve with a local maximum near $(-1, 3.3)$, decreasing through an inflection point near $(0.7, 0.5)$ (where the curve is steepest, i.e. most negative slope), continuing to decrease to a local minimum near $(2.7,-2.3)$, and then increasing steeply for $x>3$. A straight reference line, used to estimate the tangent slope at $x=3$, is drawn approximately through the points $(0,-4.8)$ and $(3,-2.4)$. The rate of change of $f(x)$ is least at $x\\approx$",
         "choices": [
-          "-3",
-          "-1.3",
-          "0.7",
-          "2.7 Use the following definition of the symmetric difference quotient as an approximation for f′(x0) for Questions B27-B29. For small values of h,"
+          "$-3$",
+          "$-1.3$",
+          "$0.7$",
+          "$2.7$"
         ],
         "correct": "C",
-        "explanation": "f′(x) is least at the point of inflection of the curve, at about 0.7."
+        "explanation": "$f'(x)$ is least (most negative, since the curve is falling most steeply) at the point of inflection of the curve, at about $x=0.7$."
       },
       {
         "id": "B27",
-        "stem": "For f(x) = 5x, what is the estimate of f′(2) obtained by using the symmetric difference quotient with h = 0.03?",
+        "stem": "(Symmetric difference quotient: for small $h$, $f'(x_0) \\approx \\dfrac{f(x_0+h)-f(x_0-h)}{2h}$.) For $f(x) = 5^x$, what is the estimate of $f'(2)$ obtained by using the symmetric difference quotient with $h=0.03$?",
         "choices": [
-          "40.25",
-          "40.252",
-          "41.818",
-          "80.503"
+          "$40.25$",
+          "$40.252$",
+          "$41.818$",
+          "$80.503$"
         ],
-        "correct": "B"
+        "correct": "B",
+        "explanation": "$\\dfrac{5^{2.03}-5^{1.97}}{2(0.03)} = \\dfrac{5^{2.03}-5^{1.97}}{0.06} \\approx 40.25158$, which rounds to $40.252$."
       },
       {
         "id": "B28",
-        "stem": "To how many places is the symmetric difference quotient accurate when it is used to approximate f′(0) for f(x) = 4x and h = 0.08?",
+        "stem": "(Symmetric difference quotient: for small $h$, $f'(x_0) \\approx \\dfrac{f(x_0+h)-f(x_0-h)}{2h}$.) To how many places is the symmetric difference quotient accurate when it is used to approximate $f'(0)$ for $f(x) = 4^x$ and $h=0.08$?",
         "choices": [
-          "1",
-          "2",
-          "3",
-          "more than 3"
+          "$1$",
+          "$2$",
+          "$3$",
+          "more than $3$"
         ],
         "correct": "B",
-        "explanation": "By calculator, f′0) = 1.386294805 and"
+        "explanation": "By calculator, the exact value is $f'(0)=\\ln4 \\approx 1.386294805$, while $\\dfrac{4^{0.08}-4^{-0.08}}{0.16} \\approx 1.3891\\ldots$, which agrees with the exact value to 2 decimal places."
       },
       {
         "id": "B29",
-        "stem": "To how many places is f′(x0) accurate when it is used to approximate f′(0) for f(x) = 4x and h = 0.001?",
+        "stem": "(Symmetric difference quotient: for small $h$, $f'(x_0) \\approx \\dfrac{f(x_0+h)-f(x_0-h)}{2h}$.) To how many places is the symmetric difference quotient accurate when it is used to approximate $f'(0)$ for $f(x) = 4^x$ and $h=0.001$?",
         "choices": [
-          "1",
-          "2",
-          "3",
-          "more than 3"
+          "$1$",
+          "$2$",
+          "$3$",
+          "more than $3$"
         ],
         "correct": "D",
-        "explanation": "Now ."
+        "explanation": "$\\dfrac{4^{0.001}-4^{-0.001}}{0.002} \\approx 1.386294805$, matching the exact value $\\ln4 \\approx 1.386294805$ to more than 3 places."
       },
       {
         "id": "B30",
-        "stem": "The value of f′(0) obtained using the symmetric difference quotient with f(x) = |x| and h = 0.001 is",
+        "stem": "(Symmetric difference quotient: for small $h$, $f'(x_0) \\approx \\dfrac{f(x_0+h)-f(x_0-h)}{2h}$.) The value of $f'(0)$ obtained using the symmetric difference quotient with $f(x) = |x|$ and $h=0.001$ is",
         "choices": [
-          "-1",
-          "0",
-          "1",
+          "$-1$",
+          "$0$",
+          "$1$",
           "indeterminate"
         ],
         "correct": "B",
-        "explanation": "Note that any line determined by two points equidistant from the origin will necessarily be horizontal. Therefore, the symmetric difference quotient yields:"
+        "explanation": "$\\dfrac{f(0.001)-f(-0.001)}{2(0.001)} = \\dfrac{0.001-0.001}{0.002} = 0$. (Any two points of $|x|$ equidistant from the origin have equal $y$-values, so the secant is horizontal.)"
       },
       {
         "id": "B31",
-        "stem": "If and h(x) = sin x, then equals",
+        "stem": "If $\\dfrac{d}{dx}f(x) = g(x)$ and $h(x) = \\sin x$, then $\\dfrac{d}{dx}f(h(x))$ equals",
         "choices": [
-          "g(sin x)",
-          "cos x · g(x)",
-          "cos x · g (sin x)",
-          "sin x · g(sin x)"
+          "$g(\\sin x)$",
+          "$\\cos x \\cdot g(x)$",
+          "$\\cos x \\cdot g(\\sin x)$",
+          "$\\sin x \\cdot g(\\sin x)$"
         ],
         "correct": "C",
-        "explanation": "Note that ."
+        "explanation": "By the Chain Rule, $\\dfrac{d}{dx}f(h(x)) = f'(h(x))\\cdot h'(x) = g(h(x))\\cdot h'(x) = g(\\sin x)\\cdot\\cos x$."
       },
       {
         "id": "B32",
-        "stem": "Let f(x) = 3x - x3. The tangent to the curve is parallel to the secant through (0,1) and (3,0) for x =",
+        "stem": "Let $f(x) = 3^x - x^3$. The tangent to the curve is parallel to the secant through $(0,1)$ and $(3,0)$ for $x = $",
         "choices": [
-          "1.244 only",
-          "2.727 only",
-          "1.244 and 2.727 only",
-          "no such value of x exists Questions B33-B37 are based on the following graph of f(x), sketched on -6 <= x <= 7. Assume the horizontal and vertical grid lines are equally spaced at unit intervals."
+          "$1.244$ only",
+          "$2.727$ only",
+          "$1.244$ and $2.727$ only",
+          "no such value of $x$ exists"
         ],
         "correct": "C",
-        "explanation": "Since f(x) = 3x - x3, then f′(x) = 3x ln 3 - 3x2. Furthermore, f is continuous on [0,3] and f′ is differentiable on (0,3), so the MVT applies. We therefore seek c such that . Solving with a calculator, we find that c may be either 1.244 or 2.727. These values are the x- coordinates of points on the graph of f(x) at which the tangents are parallel to the secant through points (0,1) and (3,0) on the curve."
+        "explanation": "$f'(x) = 3^x\\ln3 - 3x^2$. Since $f$ is continuous on $[0,3]$ and differentiable on $(0,3)$, the MVT applies: seek $c$ with $f'(c) = \\dfrac{f(3)-f(0)}{3} = -\\dfrac13$. Solving $3^x\\ln3-3x^2=-\\dfrac13$ numerically gives $c \\approx 1.244$ or $2.727$."
       },
       {
         "id": "B33",
-        "stem": "On the interval 1 < x < 2, f(x) equals",
+        "stem": "The graph of $f$, sketched on $-6\\le x\\le7$, consists of six line segments with corners at $x=-3,-1,1,2,5$, given by:\n$$f(x) = \\begin{cases} \\dfrac32(x+5), & -6 \\le x \\le -3 \\\\ 3, & -3 \\le x \\le -1 \\\\ -3x, & -1 \\le x \\le 1 \\\\ -x-2, & 1 \\le x \\le 2 \\\\ -4, & 2 \\le x \\le 5 \\\\ 2x-14, & 5 \\le x \\le 7 \\end{cases}$$ On the interval $1 < x < 2$, $f(x)$ equals",
         "choices": [
-          "-x - 2",
-          "-x - 3",
-          "-x - 4",
-          "-x + 2"
+          "$-x-2$",
+          "$-x-3$",
+          "$-x-4$",
+          "$-x+2$"
         ],
         "correct": "A",
-        "explanation": "The line segment passes through (1,-3) and (2,-4). Use the graph of f′(x), shown below, for Questions B34-B37."
+        "explanation": "On $[1,2]$, the segment passes through $(1,-3)$ and $(2,-4)$, giving slope $-1$ and $f(x) = -x-2$."
       },
       {
         "id": "B34",
-        "stem": "Over which of the following intervals does f′(x) equal zero? I. (-6,-3) II. (-3,-1) III. (2,5)",
+        "stem": "The graph of $f$, sketched on $-6\\le x\\le7$, consists of six line segments with corners at $x=-3,-1,1,2,5$, given by:\n$$f(x) = \\begin{cases} \\dfrac32(x+5), & -6 \\le x \\le -3 \\\\ 3, & -3 \\le x \\le -1 \\\\ -3x, & -1 \\le x \\le 1 \\\\ -x-2, & 1 \\le x \\le 2 \\\\ -4, & 2 \\le x \\le 5 \\\\ 2x-14, & 5 \\le x \\le 7 \\end{cases}$$ Over which of the following intervals does $f'(x)$ equal zero? I. $(-6,-3)$  II. $(-3,-1)$  III. $(2,5)$",
         "choices": [
           "II only",
           "I and II only",
@@ -2214,67 +2235,67 @@
           "II and III only"
         ],
         "correct": "D",
-        "explanation": "f′(x) = 0 when the slope of f(x) is 0-that is, when the graph of f is a horizontal segment."
+        "explanation": "$f'(x)=0$ on the horizontal segments $(-3,-1)$ [where $f(x)=3$] and $(2,5)$ [where $f(x)=-4$]; on $(-6,-3)$, $f'(x)=3/2\\neq0$."
       },
       {
         "id": "B35",
-        "stem": "How many points of discontinuity does f′(x) have on the interval -6 < x < 7?",
+        "stem": "The graph of $f$, sketched on $-6\\le x\\le7$, consists of six line segments with corners at $x=-3,-1,1,2,5$, given by:\n$$f(x) = \\begin{cases} \\dfrac32(x+5), & -6 \\le x \\le -3 \\\\ 3, & -3 \\le x \\le -1 \\\\ -3x, & -1 \\le x \\le 1 \\\\ -x-2, & 1 \\le x \\le 2 \\\\ -4, & 2 \\le x \\le 5 \\\\ 2x-14, & 5 \\le x \\le 7 \\end{cases}$$ How many points of discontinuity does $f'(x)$ have on the interval $-6 < x < 7$?",
         "choices": [
-          "2",
-          "3",
-          "4",
-          "5"
+          "$2$",
+          "$3$",
+          "$4$",
+          "$5$"
         ],
         "correct": "D",
-        "explanation": "The graph of f′(x) jumps at each corner of the graph of f(x), namely, at x equal to -3, -1, 1, 2, and 5."
+        "explanation": "$f'(x)$ jumps at each corner of $f(x)$: $x=-3,-1,1,2,5$ — five points."
       },
       {
         "id": "B36",
-        "stem": "For -6 < x < -3, f′(x) equals",
+        "stem": "The graph of $f$, sketched on $-6\\le x\\le7$, consists of six line segments with corners at $x=-3,-1,1,2,5$, given by:\n$$f(x) = \\begin{cases} \\dfrac32(x+5), & -6 \\le x \\le -3 \\\\ 3, & -3 \\le x \\le -1 \\\\ -3x, & -1 \\le x \\le 1 \\\\ -x-2, & 1 \\le x \\le 2 \\\\ -4, & 2 \\le x \\le 5 \\\\ 2x-14, & 5 \\le x \\le 7 \\end{cases}$$ For $-6 < x < -3$, $f'(x)$ equals",
         "choices": [
-          "",
-          "-1",
-          "1",
-          ""
+          "$-\\dfrac32$",
+          "$-1$",
+          "$1$",
+          "$\\dfrac32$"
         ],
         "correct": "D",
-        "explanation": "On the interval ."
+        "explanation": "On $(-6,-3)$, $f(x) = \\dfrac32(x+5)$, so $f'(x) = \\dfrac32$."
       },
       {
         "id": "B37",
-        "stem": "Which of the following statements about the graph of f′(x) is false?",
+        "stem": "The graph of $f$, sketched on $-6\\le x\\le7$, consists of six line segments with corners at $x=-3,-1,1,2,5$, given by:\n$$f(x) = \\begin{cases} \\dfrac32(x+5), & -6 \\le x \\le -3 \\\\ 3, & -3 \\le x \\le -1 \\\\ -3x, & -1 \\le x \\le 1 \\\\ -x-2, & 1 \\le x \\le 2 \\\\ -4, & 2 \\le x \\le 5 \\\\ 2x-14, & 5 \\le x \\le 7 \\end{cases}$$ Which of the following statements about the graph of $f'(x)$ is false?",
         "choices": [
-          "f′(x) consists of six horizontal segments",
-          "f′(x) has four jump discontinuities",
-          "f′(x) is discontinuous at each x in the set {-3,-1,1,2,5}",
-          "On the interval -1 < x < 1, f′(x) = -3"
+          "$f'(x)$ consists of six horizontal segments",
+          "$f'(x)$ has four jump discontinuities",
+          "$f'(x)$ is discontinuous at each $x$ in the set $\\{-3,-1,1,2,5\\}$",
+          "On the interval $-1<x<1$, $f'(x)=-3$"
         ],
         "correct": "B",
-        "explanation": "Verify that all choices but (B) are true. The graph of f′(x) has five (not four) jump discontinuities."
+        "explanation": "All statements are true except (B): $f'(x)$ actually has five jump discontinuities (at $-3,-1,1,2,5$), not four."
       },
       {
         "id": "B38",
-        "stem": "The table gives the values of a function f that is differentiable on the interval [0,1]: According to this table, the best approximation of f′(0.10) is",
+        "stem": "The table gives the values of a function $f$ that is differentiable on the interval $[0,1]$:\n$$\\begin{array}{c|cccccc} x & 0.10 & 0.20 & 0.26 & 0.40 & 0.52 & 0.60 \\\\ \\hline f(x) & 0.171 & 0.288 & 0.357 & 0.384 & 0.375 & 0.336 \\end{array}$$\nAccording to this table, the best approximation of $f'(0.10)$ is",
         "choices": [
-          "0.12",
-          "1.08",
-          "1.17",
-          "1.77"
+          "$0.12$",
+          "$1.08$",
+          "$1.17$",
+          "$1.77$"
         ],
         "correct": "C",
-        "explanation": "The best approximation to f′(0.10) is ."
+        "explanation": "Since $x=0.10$ is the left endpoint of the given data, use the forward difference to the nearest available point: $f'(0.10) \\approx \\dfrac{f(0.20)-f(0.10)}{0.20-0.10} = \\dfrac{0.288-0.171}{0.10} = 1.17$."
       },
       {
         "id": "B39",
-        "stem": "At how many points on the interval [a,b] does the function graphed satisfy the Mean Value Theorem?",
+        "stem": "The graph of a function $f$ on $[a,b]$ is a curve that dips down and touches the origin (tangent to the $x$-axis there) coming from the lower left, then rises through a marked point $(a,f(a))$, continues rising with a gentle S-shaped shoulder (a brief flattening then steepening again) to a rounded local maximum somewhat above and to the left of $b$, and then decreases slightly to a marked point $(b,f(b))$ that sits at roughly the same height as $(a,f(a))$, after which the curve continues to fall past $b$. At how many points on the interval $[a,b]$ does the function graphed satisfy the Mean Value Theorem (i.e., how many points have tangent lines parallel to the secant line $\\overline{AB}$ through $(a,f(a))$ and $(b,f(b))$)?",
         "choices": [
           "none",
-          "1",
-          "2",
-          "3"
+          "$1$",
+          "$2$",
+          "$3$"
         ],
         "correct": "D",
-        "explanation": "The average rate of change is represented by the slope of secant segment . There appear to be 3 points at which the tangent lines are parallel to . *The limit can be finite or infinite (+∞ or -∞)."
+        "explanation": "The average rate of change on $[a,b]$ is the slope of secant segment $\\overline{AB}$. Because of the S-shaped shoulder and the local maximum, the tangent line is parallel to $\\overline{AB}$ at 3 points on $(a,b)$."
       }
     ],
     "answer_key": {

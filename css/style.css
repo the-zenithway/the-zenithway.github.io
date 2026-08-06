@@ -1736,6 +1736,41 @@ a.teacher-queue-student:hover { text-decoration: underline; }
 
 .teacher-mock-item { padding: 6px 0; }
 .teacher-mock-item + .teacher-mock-item { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 10px; }
+
+.teacher-metric-note { font-size: 0.82rem; color: var(--text-muted); margin: 8px 0 0; font-style: italic; }
+
+/* Fun/entertaining stats — vibe check, personality tags, when/which-day
+   submission patterns. Same card language as the rest of Metrics, just
+   with a little more color since these are meant to be enjoyed, not
+   graded. */
+.teacher-metric-fun-tag {
+  font-family: var(--font-sans, inherit);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(214, 169, 74, 0.14);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-left: 6px;
+}
+
+.teacher-vibe-block { background: linear-gradient(135deg, rgba(214, 169, 74, 0.1), var(--bg-elevated)); }
+.teacher-vibe-card { display: flex; align-items: center; gap: 14px; }
+.teacher-vibe-emoji { font-size: 2.2rem; line-height: 1; }
+.teacher-vibe-label { font-size: 1rem; font-weight: 700; color: var(--text); margin: 0 0 2px; }
+.teacher-vibe-desc { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+.teacher-personality-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.teacher-personality-tag {
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
 .teacher-mock-name { font-size: 0.85rem; font-weight: 600; color: var(--text); margin: 0 0 4px; }
 
 /* -------- Teacher-student write controls -------- */

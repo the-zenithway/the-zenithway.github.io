@@ -610,6 +610,59 @@ function teacherSubmissionCardHtml(entry) {
   '</details>';
 }
 
+// "When they submit" / "which day" — fun-but-real stats computed
+// straight from this student's actual submissions-log.json entries
+// (receivedAt), not stored anywhere. Time-of-day buckets are local to
+// whatever timezone the browser rendering this page is in — fine for
+// a single-team internal dashboard, not meant to be precise across
+// timezones.
+const TEACHER_TIME_PERIODS_ = [
+  { label: "Late night (12–5am)", test: function (h) { return h >= 0 && h < 5; } },
+  { label: "Morning (5am–12pm)", test: function (h) { return h >= 5 && h < 12; } },
+  { label: "Afternoon (12–6pm)", test: function (h) { return h >= 12 && h < 18; } },
+  { label: "Evening (6pm–12am)", test: function (h) { return h >= 18 && h < 24; } }
+];
+const TEACHER_DAY_LABELS_ = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const TEACHER_DAY_FLAVOR_ = { "Monday": " 😩", "Friday": " 🎉" };
+
+function teacherMetricBarRowsHtml_(rows) {
+  const max = Math.max.apply(null, rows.map(function (r) { return r.count; }));
+  return rows.map(function (r) {
+    return '<div class="teacher-metric-row">' +
+      '<span class="teacher-metric-name">' + r.label + '</span>' +
+      '<span class="teacher-metric-bar"><span class="teacher-metric-bar-fill" style="width:' + (max ? Math.round(r.count / max * 100) : 0) + '%"></span></span>' +
+      '<span class="teacher-metric-pct">' + r.count + '</span>' +
+    '</div>';
+  }).join("");
+}
+
+function teacherSubmissionPatternsHtml_(entries) {
+  const dates = (entries || []).map(function (e) { return new Date(e.receivedAt); }).filter(function (d) { return !isNaN(d.getTime()); });
+  if (dates.length === 0) return "";
+
+  const periodRows = TEACHER_TIME_PERIODS_.map(function (p) { return { label: p.label, count: 0, test: p.test }; });
+  const dayRows = TEACHER_DAY_LABELS_.map(function (label) { return { label: label, count: 0 }; });
+
+  dates.forEach(function (d) {
+    const hour = d.getHours();
+    const period = periodRows.find(function (p) { return p.test(hour); });
+    if (period) period.count++;
+    dayRows[d.getDay()].count++;
+  });
+
+  const topPeriod = periodRows.slice().sort(function (a, b) { return b.count - a.count; })[0];
+  const topDay = dayRows.slice().sort(function (a, b) { return b.count - a.count; })[0];
+
+  return '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">When they submit <span class="teacher-metric-fun-tag">' + topPeriod.label + '</span></p>' +
+      teacherMetricBarRowsHtml_(periodRows) +
+    '</div>' +
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Which day <span class="teacher-metric-fun-tag">' + topDay.label + (TEACHER_DAY_FLAVOR_[topDay.label] || "") + '</span></p>' +
+      teacherMetricBarRowsHtml_(dayRows) +
+    '</div>';
+}
+
 // Fails quietly into the empty state if the fetch doesn't work (e.g.
 // opened from file:// instead of a real server) — this is a
 // nice-to-have log, not something that should block the page.
@@ -904,6 +957,7 @@ function teacherOverviewRowHtml(student, course) {
   const avgDays = teacherAvg_(metrics.timeToCompletion, "days");
   const predicted = metrics.apPredictedScore;
   const ap = metrics.apFinalScore;
+  const vibe = teacherVibeType_(metrics);
   const detailHref = "teacher-student.html?username=" + encodeURIComponent(student.username) + "&course=" + encodeURIComponent(course.id);
   const dash = '<span class="teacher-overview-empty">—</span>';
 
@@ -919,6 +973,7 @@ function teacherOverviewRowHtml(student, course) {
     '<td data-label="Avg pace">' + (avgDays === null ? dash : avgDays + 'd/chapter') + '</td>' +
     '<td data-label="AP predicted">' + (predicted ? predicted.score + '/' + predicted.maxScore : dash) + '</td>' +
     '<td data-label="AP final">' + (ap ? ap.score + '/' + ap.maxScore : dash) + '</td>' +
+    '<td data-label="Vibe">' + (vibe ? '<span title="' + vibe.label + '">' + vibe.emoji + ' ' + vibe.label + '</span>' : dash) + '</td>' +
   '</tr>';
 }
 
@@ -1086,10 +1141,74 @@ function renderTeacherMetrics(metrics) {
       '</div>' +
     '</div>';
 
-  const blocks = [masteryHtml, chapterScoresHtml, motivationHtml, mockScoresHtml, timeToCompletionHtml, predictedHtml, apHtml].filter(function (h) { return h !== ""; });
+  const responsiveness = metrics.responsiveness;
+  const responsivenessHtml = !responsiveness ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Responsiveness</p>' +
+      '<div class="teacher-metric-row">' +
+        '<span class="teacher-metric-name">As of ' + (responsiveness.asOf || "—") + '</span>' +
+        '<span class="teacher-metric-bar"><span class="teacher-metric-bar-fill" style="width:' + responsiveness.score + '%"></span></span>' +
+        '<span class="teacher-metric-pct">' + responsiveness.score + '</span>' +
+      '</div>' +
+      (responsiveness.note ? '<p class="teacher-metric-note">' + responsiveness.note + '</p>' : '') +
+    '</div>';
+
+  const personality = metrics.personality || [];
+  const personalityHtml = personality.length === 0 ? "" :
+    '<div class="teacher-metric-block">' +
+      '<p class="teacher-metric-label">Personality</p>' +
+      '<div class="teacher-personality-tags">' +
+        personality.map(function (tag) { return '<span class="teacher-personality-tag">' + tag + '</span>'; }).join("") +
+      '</div>' +
+    '</div>';
+
+  const vibe = teacherVibeType_(metrics);
+  const vibeHtml = !vibe ? "" :
+    '<div class="teacher-metric-block teacher-vibe-block">' +
+      '<p class="teacher-metric-label">Vibe check</p>' +
+      '<div class="teacher-vibe-card">' +
+        '<span class="teacher-vibe-emoji">' + vibe.emoji + '</span>' +
+        '<div>' +
+          '<p class="teacher-vibe-label">' + vibe.label + '</p>' +
+          '<p class="teacher-vibe-desc">' + vibe.desc + '</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  const blocks = [vibeHtml, masteryHtml, chapterScoresHtml, motivationHtml, mockScoresHtml, timeToCompletionHtml, predictedHtml, apHtml, responsivenessHtml, personalityHtml].filter(function (h) { return h !== ""; });
   wrap.innerHTML = blocks.length === 0
     ? '<p class="feedback-empty">No metrics recorded yet.</p>'
     : blocks.join("");
+}
+
+// Purely computed "zodiac-style" read on a student's current vibe —
+// nothing stored, just topicMastery average + latest motivation score
+// run through a small rule table. Playful, teacher-only, and never
+// shown if there isn't at least one of the two signals to go on.
+function teacherVibeType_(metrics) {
+  const mastery = teacherAvg_(metrics.topicMastery, "score");
+  const motivationList = metrics.motivation || [];
+  const motivation = motivationList.length > 0 ? motivationList[motivationList.length - 1].score : null;
+
+  if (mastery === null && motivation === null) return null;
+
+  if (mastery !== null && motivation !== null) {
+    if (mastery >= 75 && motivation >= 70) return { emoji: "🔥", label: "The Machine", desc: "Crushing it, and clearly here for it." };
+    if (mastery >= 75 && motivation < 70) return { emoji: "😴", label: "The Natural", desc: "Nails it without looking like it costs much effort." };
+    if (mastery < 60 && motivation >= 70) return { emoji: "🌱", label: "The Grinder", desc: "Effort's all there — results are catching up." };
+    if (mastery < 60 && motivation < 50) return { emoji: "🌊", label: "Needs a Nudge", desc: "Could use a check-in soon." };
+    return { emoji: "⚖️", label: "The Steady One", desc: "Solid and consistent, no drama." };
+  }
+
+  if (mastery !== null) {
+    if (mastery >= 75) return { emoji: "🎯", label: "Sharp Shooter", desc: "Based on mastery alone — no motivation check-in logged yet." };
+    if (mastery >= 50) return { emoji: "🧭", label: "Still Finding It", desc: "Based on mastery alone — no motivation check-in logged yet." };
+    return { emoji: "🌤️", label: "Early Days", desc: "Based on mastery alone — no motivation check-in logged yet." };
+  }
+
+  if (motivation >= 70) return { emoji: "⚡", label: "High Voltage", desc: "Based on motivation alone — no mastery data logged yet." };
+  if (motivation >= 50) return { emoji: "🙂", label: "Ticking Along", desc: "Based on motivation alone — no mastery data logged yet." };
+  return { emoji: "🔋", label: "Running Low", desc: "Based on motivation alone — no mastery data logged yet." };
 }
 
 // ---- Teacher-student write controls ----
@@ -1491,8 +1610,8 @@ function renderTeacherRightNowForm_(student, course) {
   });
 }
 
-// One compact form covering all 7 metrics sub-shapes via a type
-// selector, rather than 7 separate static forms — each submit still
+// One compact form covering all metrics sub-shapes via a type
+// selector, rather than one static form per type — each submit still
 // posts exactly one action/payload (addMetricEntry or setApScore),
 // same narrow-write philosophy as everything else here.
 const TEACHER_METRIC_TYPE_LABELS_ = {
@@ -1502,7 +1621,9 @@ const TEACHER_METRIC_TYPE_LABELS_ = {
   mockScores: "Mock score",
   timeToCompletion: "Time to completion",
   apPredictedScore: "AP predicted score",
-  apFinalScore: "AP final score"
+  apFinalScore: "AP final score",
+  responsiveness: "Responsiveness",
+  personality: "Personality tag"
 };
 
 function teacherMetricFieldsHtml_(type) {
@@ -1536,6 +1657,12 @@ function teacherMetricFieldsHtml_(type) {
     case "apFinalScore":
       return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (1-5)">' +
              '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Exam date">';
+    case "responsiveness":
+      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (0-100)">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Note (optional)">' +
+             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="As of (date)">';
+    case "personality":
+      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Tag (e.g. Night owl, Meticulous, Comeback kid)">';
     default:
       return "";
   }
@@ -1578,6 +1705,12 @@ function renderTeacherMetricsForm_(student, course) {
         : { score: score, maxScore: 5, examDate: dateVal };
       action = "setApScore";
       payload = { username: student.username, courseId: course.id, field: type, value: value };
+    } else if (type === "responsiveness") {
+      const score = num_("teacher-metric-f1");
+      if (score === null) { alert("Score is required."); return; }
+      const value = { score: score, note: val_("teacher-metric-f2"), asOf: val_("teacher-metric-f3") };
+      action = "setApScore"; // generic single-value handler, see automation/zenith-data-writer.gs
+      payload = { username: student.username, courseId: course.id, field: type, value: value };
     } else {
       let entry = null;
       if (type === "topicMastery") entry = { chapter: val_("teacher-metric-f1"), topic: val_("teacher-metric-f2"), score: num_("teacher-metric-f3") };
@@ -1585,6 +1718,9 @@ function renderTeacherMetricsForm_(student, course) {
       else if (type === "motivation") entry = { date: val_("teacher-metric-f1"), score: num_("teacher-metric-f2") };
       else if (type === "mockScores") entry = { name: val_("teacher-metric-f1"), date: val_("teacher-metric-f2"), mcq: { score: num_("teacher-metric-f3"), maxScore: num_("teacher-metric-f4") }, frq: { score: num_("teacher-metric-f5"), maxScore: num_("teacher-metric-f6") } };
       else if (type === "timeToCompletion") entry = { chapter: val_("teacher-metric-f1"), days: num_("teacher-metric-f2") };
+      else if (type === "personality") entry = val_("teacher-metric-f1");
+
+      if (type === "personality" && !entry) { alert("Tag can't be empty."); return; }
 
       action = "addMetricEntry";
       payload = { username: student.username, courseId: course.id, metricType: type, entry: entry };
@@ -1652,6 +1788,7 @@ function renderTeacherStudentPage() {
   renderMath(document.getElementById("teacher-student-content"));
 
   const subList = document.getElementById("teacher-student-submissions");
+  const subPatterns = document.getElementById("teacher-student-submission-patterns");
   subList.innerHTML = '<p class="submit-log-empty">Loading submissions...</p>';
   fetch("data/submissions-log.json")
     .then(function (res) { return res.json(); })
@@ -1662,9 +1799,15 @@ function renderTeacherStudentPage() {
       subList.innerHTML = mine.length === 0
         ? '<p class="submit-log-empty">Nothing submitted yet for this course.</p>'
         : mine.map(teacherSubmissionCardHtml).join("");
+      if (subPatterns) {
+        const patternsHtml = teacherSubmissionPatternsHtml_(mine);
+        subPatterns.innerHTML = patternsHtml;
+        subPatterns.hidden = patternsHtml === "";
+      }
     })
     .catch(function () {
       subList.innerHTML = '<p class="submit-log-empty">Could not load submissions right now.</p>';
+      if (subPatterns) subPatterns.hidden = true;
     });
 }
 

@@ -85,7 +85,15 @@ const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbxBll3lR
 //     timeToCompletion: [{ chapter, days }],            // calendar days from that chapter unlocking to it being marked Complete; roadmap items carry no dates, so this is tracked here by hand, not derived
 //     apPredictedScore: { score, maxScore, asOf } | null // teacher's current 1-5 prediction, updated as the year goes; maxScore is always 5, kept explicit for the same "score / maxScore" rendering as apFinalScore
 //     apFinalScore: { score, maxScore, examDate } | null // actual AP exam result, once sat — leave apPredictedScore alone when this fills in, they answer different questions (estimate vs. reality)
+//     responsiveness: { score, note, asOf } | null       // how quickly/well they respond when we reach out (message replies, showing up to sessions) — 0-100, teacher's read, not derived from any real chat log (there isn't one)
+//     personality: [string]                              // free-text tags a teacher writes, on our own basis and meant lightly — "Night owl", "Meticulous", "Comeback kid" — never a judgment call, just flavor for the dashboard
 //   }
+// "Vibe type" (a zodiac-style label like "🔥 The Machine") and submission
+// time-of-day/day-of-week are NOT stored here — both are computed at
+// render time (teacherVibeType_ / teacherSubmissionPatternsHtml_ in
+// js/app.js) straight from the metrics above and from
+// data/submissions-log.json's real receivedAt timestamps, so there's
+// nothing to hand-enter for either.
 // Leave "metrics" off a course entirely until there's real data to put there.
 
 // NOT YET IMPLEMENTED — direction only, so the next phase (onboarding
@@ -820,7 +828,13 @@ const STUDENTS = [
             "maxScore": 5,
             "asOf": "Aug 6"
           },
-          "apFinalScore": null
+          "apFinalScore": null,
+          "responsiveness": {
+            "score": 85,
+            "note": "Replies same day, shows up to sessions on time",
+            "asOf": "Aug 6"
+          },
+          "personality": ["Night owl", "Meticulous notetaker"]
         }
       }
     ]
