@@ -44,7 +44,7 @@
   {
     "id": "sub_1785821224677_ttwlon",
     "receivedAt": "2026-08-04T05:27:04.677Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-biology",
     "username": "davidheo",
     "chapter": "Chapter 1",
@@ -94,7 +94,7 @@
   {
     "id": "sub_1785897896982_aid1qn",
     "receivedAt": "2026-08-05T02:44:56.984Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-chemistry",
     "username": "davidheo",
     "chapter": "Chapter 1",
@@ -114,7 +114,7 @@
   {
     "id": "sub_1785898246043_yb7bo7",
     "receivedAt": "2026-08-05T02:50:46.043Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-chemistry",
     "username": "davidheo",
     "chapter": "Chapter 2",
@@ -134,7 +134,7 @@
   {
     "id": "sub_1785898586316_saxifp",
     "receivedAt": "2026-08-05T02:56:26.316Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-chemistry",
     "username": "davidheo",
     "chapter": "Chapter 3",
@@ -237,7 +237,7 @@
   {
     "id": "sub_1785985123590_7w5y6g",
     "receivedAt": "2026-08-06T02:58:43.590Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-chemistry",
     "username": "davidheo",
     "chapter": "Chapter 4",

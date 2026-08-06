@@ -323,14 +323,14 @@ const STUDENTS = [
             "name": "B4-Application of Differential Calculus",
             "category": "B-book chapter",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link"
           },
           {
             "name": "C4-Application of Differential Calculus Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link"
           },
           {
@@ -357,14 +357,14 @@ const STUDENTS = [
             "name": "B5-Antidifferentiation",
             "category": "B-book chapter",
             "chapter": "Chapter 5",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link"
           },
           {
             "name": "C5-Antidifferentiation Problems",
             "category": "C-coursework",
             "chapter": "Chapter 5",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link"
           },
           {
@@ -391,14 +391,14 @@ const STUDENTS = [
             "name": "B6-Definite Integrals",
             "category": "B-book chapter",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1zDSFHj-udXu9Qy0nrN-B8VbWRD0KmIUt/view?usp=drive_link"
           },
           {
             "name": "C6-Definite Integrals Problems",
             "category": "C-coursework",
             "chapter": "Chapter 6",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1MN9WDjoFhj29pTPRd622yPdGLKQFXsld/view?usp=drive_link"
           },
           {
@@ -425,14 +425,14 @@ const STUDENTS = [
             "name": "B7-Application of Integration to Geometry",
             "category": "B-book chapter",
             "chapter": "Chapter 7",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1qzq9nH9S1AKKy8maEp5tKug1sUXHBQyN/view?usp=drive_link"
           },
           {
             "name": "C7-Application of Integration to Geometry Problems",
             "category": "C-coursework",
             "chapter": "Chapter 7",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1XyXk_UTTlm4rx0PVT4fZz7VdWlNSpUcA/view?usp=drive_link"
           },
           {
@@ -459,14 +459,14 @@ const STUDENTS = [
             "name": "B8-Further Applications of Integration",
             "category": "B-book chapter",
             "chapter": "Chapter 8",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1AjmoXuebty9WbTfmKgKB_EYCFP58aJWO/view?usp=drive_link"
           },
           {
             "name": "C8-Further Application of Integration Problems",
             "category": "C-coursework",
             "chapter": "Chapter 8",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1bQrM0wkcrnj0A3uIUD5NhtM5BV1CUd7i/view?usp=drive_link"
           },
           {
@@ -493,14 +493,14 @@ const STUDENTS = [
             "name": "B9-Differential Equations",
             "category": "B-book chapter",
             "chapter": "Chapter 9",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1eW1C11UZUfhdYyEqu-yOHIh4hn_46qvA/view?usp=drive_link"
           },
           {
             "name": "C9-Differential Equations Problems",
             "category": "C-coursework",
             "chapter": "Chapter 9",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/14AVNzubvCBozVWwd_UwLKAzXVqwjz0L1/view?usp=drive_link"
           },
           {
@@ -527,14 +527,14 @@ const STUDENTS = [
             "name": "B10-Sequences and Series",
             "category": "B-book chapter",
             "chapter": "Chapter 10",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1On07-Pxn3yhw9rqqy2UzHL_HXguwHL6H/view?usp=drive_link"
           },
           {
             "name": "C10-Sequences and Series Problems",
             "category": "C-coursework",
             "chapter": "Chapter 10",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/12lbYSKyWNW1Ab100P6_wWOnWKfRVuWpm/view?usp=drive_link"
           },
           {
@@ -803,24 +803,22 @@ const STUDENTS = [
             {
               "chapter": "Chapter 1",
               "topic": "Functions",
-              "score": 92 
+              "score": 92
             }
           ],
           "chapterScores": [
             {
               "chapter": "Chapter 1",
               "cScore": 75,
-              "tScore": 93 
+              "tScore": 93
             }
           ],
-          "motivation": [
-          ],
-          "mockScores": [
-          ],
+          "motivation": [],
+          "mockScores": [],
           "timeToCompletion": [
             {
               "chapter": "Chapter 1",
-              "days": 5 
+              "days": 5
             }
           ],
           "apPredictedScore": {
@@ -5543,12 +5541,36 @@ const STUDENTS = [
         "icon": "chemistry",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 1",
-          "unit": "L1",
-          "instruction": "Complete L1 — Atomic Structure and Properties on Khan Academy. Take concise notes, then use the Notes Submission task to submit them through Zenith."
+          "chapter": "Chapter 1-4",
+          "unit": "N1-4",
+          "instruction": "Complete N1-4: Write notes thoroughly on the following chapters and submit."
         },
-        "feedback": [],
-        "cheatSheet": [],
+        "feedback": [
+          {
+            "date": "8월 6일",
+            "chapter": "Chapter 1-4",
+            "unit": "C1,C2,C3,C4",
+            "content": "Well done on the courseworks! Only 1 mistakes throughout all the courses.\nC3-#22 was the only error. Check our cheat sheet for explanation and tips.\nPlease complete N1-4 by writing notes on the concepts of Chapter 1-4 and review with the Advanced Booklet by making sure you have all the concepts memorized until chapter 4.\nMemorize the VSPER structures too.\nC3-#12 was an error in the answer sheet making your answer, D, correct."
+          },
+          {
+            "date": "8월 6일",
+            "chapter": "Chapter 1-4",
+            "unit": "C3",
+            "content": "Well done on the courseworks 1-4! You only got 1 wrong. C3-#12 was an error in the answer sheet which makes your answer, D, correct. Your only mistake was in C3-#22. Please check out the Cheat Sheet and remember the things it says. Please write notes on concpets of chapter 1-4 and review using the Advanced Booklet until our next scheduled session where we will be taking our T-tests."
+          }
+        ],
+        "cheatSheet": [
+          {
+            "topic": "Extra care on what the question asks for.",
+            "source": "C3-#22",
+            "pattern": "You correctly found the total number of moles using the ideal gas law. However, the question asks for the number of moles of O₂, so you needed one additional step: use the given mole ratio to convert the total moles to the moles of oxygen."
+          },
+          {
+            "topic": "Make sure to double check what the question asked for.",
+            "source": "C3-#22",
+            "pattern": "You correctly found the total number of moles using the ideal gas law. However, the question asks for the number of moles of O₂, so you needed one additional step: use the given mole ratio to convert the total moles to the moles of oxygen."
+          }
+        ],
         "roadmap": [
           {
             "name": "Advanced Chemistry Booklet",
@@ -5589,7 +5611,7 @@ const STUDENTS = [
             "name": "L1-Atomic Structure and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:atomic-structure-and-properties"
           },
           {
@@ -5602,28 +5624,28 @@ const STUDENTS = [
             "name": "C1-Atomic Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 1",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1VzUc-wcqPpr1Nof4LoR13Nul5JJn4Qm_/view?usp=drivesdk"
           },
           {
             "name": "S1-Atomic Structure and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 1",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1TzDXjDbomuSDnD9e2hIdT4PGoiE7Q7FH/view?usp=drivesdk"
           },
           {
             "name": "T1-Atomic Structure and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 1",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/18vw9LZt1t5f4xZVDP5c4qmwTtk8DHgKq/view?usp=drive_link"
           },
           {
             "name": "L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:molecular-and-ionic-compound-structure-and-properties"
           },
           {
@@ -5636,28 +5658,28 @@ const STUDENTS = [
             "name": "C2-Molecular and Ionic Compound Structure and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 2",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1gZYepyd3rJcDirnME6bCW6bpWHpKB1Dv/view?usp=drivesdk"
           },
           {
             "name": "S2-Molecular and Ionic Compound Structure and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1q2WVPJc-lHflyPnQncPd9n0mg0WFjFg2/view?usp=drivesdk"
           },
           {
             "name": "T2-Molecular and Ionic Compound Structure and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1ni5RP5AkM3vpObBBamWGA9Bs5QAkFaT2/view?usp=drive_link"
           },
           {
             "name": "L3-Intermolecular Forces and Properties (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:intermolecular-forces-and-properties"
           },
           {
@@ -5670,28 +5692,28 @@ const STUDENTS = [
             "name": "C3-Intermolecular Forces and Properties Problems",
             "category": "C-coursework",
             "chapter": "Chapter 3",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1Byp3XY1DjQ2cgvIOUq7DW7ewHHA1zFwt/view?usp=drivesdk"
           },
           {
             "name": "S3-Intermolecular Forces and Properties Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1qJkJXUIgek8HA2R1qXblVbv-c65iTsC6/view?usp=drivesdk"
           },
           {
             "name": "T3-Intermolecular Forces and Properties Test",
             "category": "T-Test",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/18ACcWU8XylW6G_lxDb_WPZPjNMf2uh29/view?usp=drive_link"
           },
           {
             "name": "L4-Chemical Reactions (Khan Academy)",
             "category": "L-Learning",
             "chapter": "Chapter 4",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://www.khanacademy.org/science/ap-chemistry-beta/x2eef969c74e0d802:chemical-reactions"
           },
           {
@@ -5704,21 +5726,21 @@ const STUDENTS = [
             "name": "C4-Chemical Reactions Problems",
             "category": "C-coursework",
             "chapter": "Chapter 4",
-            "status": "Unlocked",
+            "status": "Complete",
             "url": "https://drive.google.com/file/d/1GUpns4YsayvQCEa4OJcHQlkrG9LTLvET/view?usp=drivesdk"
           },
           {
             "name": "S4-Chemical Reactions Solutions",
             "category": "S-solution manual",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1N9Fw8l1y0YPPLcFX_EaoAbmxOsc91hbC/view?usp=drivesdk"
           },
           {
             "name": "T4-Chemical Reactions Test",
             "category": "T-Test",
             "chapter": "Chapter 4",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/17NSKoviTs6bX7b7UkQcICkqJ8UZ4gQdp/view?usp=drive_link"
           },
           {
@@ -6149,7 +6171,20 @@ const STUDENTS = [
             "status": "Locked",
             "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk"
           }
-        ]
+        ],
+        "metrics": {
+          "motivation": [
+            {
+              "date": "Aug 6",
+              "score": 95
+            }
+          ],
+          "apPredictedScore": {
+            "score": 3,
+            "maxScore": 5,
+            "asOf": "Aug 6"
+          }
+        }
       },
       {
         "id": "ap-biology",
@@ -6158,8 +6193,8 @@ const STUDENTS = [
         "rightNow": {
           "state": "your-move",
           "chapter": "Chapter 1",
-          "unit": "L1",
-          "instruction": "Complete L1 — Chemistry of Life on Khan Academy. Take concise notes on water, macromolecules, and the chemical principles that support living systems, then check that you can explain each idea in your own words before moving on.",
+          "unit": "N1",
+          "instruction": "Watch the Khan videos again and write notes again including all the concepts in the videos. Recommended way is: after every packet of videos, write notes of all the concepts mentioned in the packet of videos before moving on to the other. After writiing the notes, I recommend to solve exercises given by khan in that packet.",
           "due": "Next session"
         },
         "feedback": [],

@@ -425,6 +425,167 @@
   ],
   "davidheo": [
     {
+      "type": "deadline",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new task: Chapter 1-4 N1-4",
+      "url": "right-now.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 1-4 C1,C2,C3,C4",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Make sure to double check what the question asked for.\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:29:37.325Z"
+    },
+    {
+      "type": "feedback",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new feedback on Chapter 1-4 C3",
+      "url": "feedback.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:07:25.989Z"
+    },
+    {
+      "type": "cheatSheet",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new cheat sheet entry: \"Extra care on what the question asks for.\"",
+      "url": "cheatsheet.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T09:07:25.989Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-biology",
+      "text": "AP Biology — new task: Chapter 1 N1 (due Next session)",
+      "url": "right-now.html?course=ap-biology",
+      "timestamp": "2026-08-06T08:38:44.198Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — new task: Chapter 5 L5",
+      "url": "right-now.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (L1-Atomic Structure and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (C1-Atomic Structure and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (S1-Atomic Structure and Properties Solutions) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 1 (T1-Atomic Structure and Properties Test) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (S2-Molecular and Ionic Compound Structure and Properties Solutions) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (T2-Molecular and Ionic Compound Structure and Properties Test) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (S3-Intermolecular Forces and Properties Solutions) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (T3-Intermolecular Forces and Properties Test) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (S4-Chemical Reactions Solutions) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (T4-Chemical Reactions Test) unlocked",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-08-06T08:33:18.850Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) unlocked",
@@ -471,167 +632,6 @@
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) unlocked",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 4 (N4-Chemical Reactions Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (N5-Kinetics Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 6 (L6-Thermodynamics (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 6 (N6-Thermodynamics Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 6 (C6-Thermodynamics Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 7 (L7-Equilibrium (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 7 (N7-Equilibrium Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 7 (C7-Equilibrium Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (L8-Acids and Bases (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (N8-Acids and Bases Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 8 (C8-Acids and Bases Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (L9-Applications of Thermodynamics (Khan Academy)) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (N9-Applications of Thermodynamics Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 9 (C9-Applications of Thermodynamics Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (L10-Experiments) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (N10-Experiments Notes Submission) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 10 (C10-Experiments Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) marked complete",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 3 (B3-Differentiation) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 3 (C3-Differentiation Problems) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-05T09:59:24.806Z"
     }
   ],
@@ -770,6 +770,106 @@
       "text": "AP Calculus BC — Chapter 2 (C2-Limits and Continuity Problems) unlocked",
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-06T06:15:54.521Z"
+    }
+  ],
+  "bogue": [
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (B4-Application of Differential Calculus) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (C4-Application of Differential Calculus Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 5 (B5-Antidifferentiation) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 5 (C5-Antidifferentiation Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (B6-Definite Integrals) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (C6-Definite Integrals Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 7 (B7-Application of Integration to Geometry) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 7 (C7-Application of Integration to Geometry Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 8 (B8-Further Applications of Integration) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 8 (C8-Further Application of Integration Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (B9-Differential Equations) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (C9-Differential Equations Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (B10-Sequences and Series) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (C10-Sequences and Series Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-06T10:40:51.701Z"
     }
   ]
 }
