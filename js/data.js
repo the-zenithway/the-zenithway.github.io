@@ -282,7 +282,7 @@ const STUDENTS = [
             "name": "T2-Functions Test",
             "category": "T-Test",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link"
           },
           {
@@ -316,7 +316,7 @@ const STUDENTS = [
             "name": "T3-Differentiation Test",
             "category": "T-Test",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link"
           },
           {
@@ -832,7 +832,10 @@ const STUDENTS = [
             "note": "Replies same day, shows up to sessions on time",
             "asOf": "Aug 6"
           },
-          "personality": ["Night owl", "Meticulous notetaker"]
+          "personality": [
+            "Night owl",
+            "Meticulous notetaker"
+          ]
         }
       }
     ]
