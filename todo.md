@@ -49,3 +49,6 @@ We're truly serious about this. Not top-down teacher-student, but a guide/compan
 - [ ] Make presentation
 - [ ] Formal proposal document
 - [ ] Zenith Local
+
+## Done
+- [x] New-submission teacher email notification — automation/submissions-compiler.gs's notifyTeachers_ emails every TEACHERS entry (js/data.js) with an email on file right after logging a submission, alongside the existing student "we got it" email. Optional per-teacher `courses` array (e.g. ["ap-calculus-bc"]) scopes notifications to specific subjects — unset means "notify about everything," the default for the current single-teacher setup. Reuses the same bracket-depth array-reading approach as zenith-data-writer.gs (copied in, since this is a separate Apps Script project). No new Script Properties needed. Still needs: (1) a real email filled into TEACHERS[0].email in js/data.js, (2) the updated submissions-compiler.gs pasted into the live Form-bound Apps Script editor.

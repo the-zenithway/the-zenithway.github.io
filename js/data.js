@@ -8519,14 +8519,32 @@ const STUDENTS = [
 
 // Teachers are a separate list from STUDENTS — same username/password
 // shape, but they log into a different dashboard (teacher.html) with
-// its own layout instead of the student portal pages. Kept minimal
-// for now; the actual dashboard content/structure is still TBD.
+// its own layout instead of the student portal pages.
+//
+// "email" is used by automation/submissions-compiler.gs's
+// notifyTeachers_ — every new Form submission emails whichever
+// teachers below have an email on file, right alongside the existing
+// "we got it" confirmation email to the student.
+//
+// "courses" (optional) scopes which submissions a teacher gets
+// notified about — e.g. ["ap-calculus-bc", "ap-chemistry"]. Leave it
+// off entirely (as below) to be notified about every submission
+// regardless of subject — the default while there's only one teacher.
+// Once there's more than one, give each teacher a "courses" list and
+// notifyTeachers_ only emails the ones whose list includes that
+// submission's courseId.
 const TEACHERS = [
   {
     "username": "teacher",
     "password": "password",
     "name": "Zenith Teacher",
-    "email": ""
+    "email": "yongjoon9981@gmail.com"
+  },
+  {
+    "username": "haminpark",
+    "password": "password",
+    "name": "Hamin Park",
+    "email": "haminpark0419@gmail.com"
   }
 ];
 

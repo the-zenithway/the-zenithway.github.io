@@ -32,10 +32,15 @@ from that log is future work, not part of this.
 It does also send the student a short "we got it" confirmation email
 right after logging (looked up by username against `js/data.js`'s
 `STUDENTS`, skipped if that student has no email on file) — see
-`sendConfirmationEmail_` in `submissions-compiler.gs`. That's the only
-overlap with [`notifications/`](notifications/), which is the separate,
-GitHub-Actions-driven side handling deadline/feedback/roadmap emails and
-the weekly session reminder.
+`sendConfirmationEmail_` in `submissions-compiler.gs`. That's one of
+two overlaps with [`notifications/`](notifications/), which is the
+separate, GitHub-Actions-driven side handling deadline/feedback/
+roadmap emails and the weekly session reminder — the other is
+`notifyTeachers_`, added 2026-08-05, which emails every `TEACHERS`
+entry in `js/data.js` that has an email on file (optionally scoped to
+specific courses via that entry's `courses` list) right after logging
+a submission, so a teacher doesn't have to keep checking the dashboard
+to notice new work waiting.
 
 ## How it works
 
@@ -134,6 +139,13 @@ script into the Form's Apps Script editor, enabling the Drive Advanced
 Service, setting five Script Properties (`GITHUB_TOKEN`, `GITHUB_OWNER`,
 `GITHUB_REPO`, `GITHUB_BRANCH`, `LOG_PATH`), and adding the
 `onFormSubmit` trigger.
+
+Teacher notification (`notifyTeachers_`) needs no new Script
+Properties — it reuses `GITHUB_TOKEN`/`GITHUB_OWNER`/`GITHUB_REPO`
+already set up above. It only needs an email on file: fill in
+`TEACHERS[].email` in `js/data.js` and commit — no redeploy needed on
+the Apps Script side beyond having pasted the current version of the
+file in already.
 
 The Form's "Course" dropdown must use each course's exact slug id
 (from `js/data.js`'s `STUDENTS[].courses[].id`, e.g. `ap-calculus-bc`,

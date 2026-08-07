@@ -15,6 +15,12 @@
  * This is separate from and doesn't touch automation/notifications/ (the
  * GitHub Actions side, for deadline/feedback/roadmap emails on push).
  *
+ * As of 2026-08-05, it ALSO emails the teacher(s) — see notifyTeachers_
+ * below. Every TEACHERS entry in js/data.js with a non-empty "email"
+ * gets notified on every submission, unless that entry has an optional
+ * "courses" list, in which case only submissions for one of those
+ * course ids notify them. See the TEACHERS comment in js/data.js.
+ *
  * This file is a reference copy for version history — the version
  * that actually runs lives inside the Apps Script editor (step 2
  * below), not here. Copy it in by hand; nothing auto-syncs.
@@ -152,6 +158,15 @@ function onFormSubmit(e) {
       MailApp.sendEmail(Session.getActiveUser().getEmail(),
         "Zenith submission confirmation email failed (submission itself was logged fine)",
         "Submission " + entry.id + " for username \"" + entry.username + "\" was logged, but the confirmation email to the student could not be sent:\n\n" + mailErr);
+    }
+
+    // Same best-effort isolation as the student confirmation email above.
+    try {
+      notifyTeachers_(owner, repo, token, entry);
+    } catch (notifyErr) {
+      MailApp.sendEmail(Session.getActiveUser().getEmail(),
+        "Zenith teacher-notification email failed (submission itself was logged fine)",
+        "Submission " + entry.id + " for username \"" + entry.username + "\" was logged, but notifying the teacher(s) failed:\n\n" + notifyErr);
     }
   } catch (err) {
     // A silently-failed trigger is worse than a noisy one — email
@@ -348,6 +363,94 @@ function sendConfirmationEmail_(owner, repo, token, entry) {
   MailApp.sendEmail(email,
     "Zenith — submission received",
     "Got your submission for " + (entry.chapter || "your course") + (entry.unit ? " (" + entry.unit + ")" : "") + ". We'll take it from here — you'll get another email once feedback is written.");
+}
+
+// Notifies every teacher who should hear about this submission — each
+// TEACHERS entry in js/data.js can optionally have a `courses` array
+// (e.g. ["ap-calculus-bc", "ap-chemistry"]); a teacher with no
+// `courses` field at all gets notified about every submission (the
+// default for a single-teacher setup), while a teacher with a
+// `courses` list only gets notified when entry.courseId is in it.
+// Unlike sendConfirmationEmail_ above (a regex scrape, fine for one
+// flat "username"/"email" pair), this needs to read each teacher's
+// optional `courses` array, so it properly evaluates the TEACHERS
+// array via the same bracket-depth scan zenith-data-writer.gs uses
+// for STUDENTS — copied here rather than shared, since this is a
+// separate Apps Script project with no shared-library setup.
+function notifyTeachers_(owner, repo, token, entry) {
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/js/data.js?ref=main";
+  var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
+  var resp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
+  if (resp.getResponseCode() !== 200) {
+    throw new Error("Could not read js/data.js (HTTP " + resp.getResponseCode() + "): " + resp.getContentText());
+  }
+  var file = JSON.parse(resp.getContentText());
+  var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
+
+  var teachers = readConstArray_(source, "TEACHERS");
+  var toNotify = teachers.filter(function (t) {
+    if (!t.email) return false;
+    if (!t.courses || t.courses.length === 0) return true; // no filter set = notify about everything
+    return !!entry.courseId && t.courses.indexOf(entry.courseId) !== -1;
+  });
+  if (toNotify.length === 0) return;
+
+  var chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "chapter/unit not recorded";
+  var subject = "Zenith — new submission (" + (entry.username || "unknown student") + ", " + chapterUnit + ")";
+  var body =
+    (entry.username || "A student") + " just submitted " + chapterUnit +
+    (entry.courseId ? " for " + entry.courseId : "") + ".\n\n" +
+    "Review it on the Teacher Dashboard's grading queue.";
+
+  toNotify.forEach(function (t) { MailApp.sendEmail(t.email, subject, body); });
+}
+
+// Finds `const <constName> = [ ... ]` in raw source text and returns
+// the exact character span of the array literal (including its own
+// brackets) — same bracket-depth scanner as
+// automation/zenith-data-writer.gs's findConstArraySpan_, copied here
+// for the same "separate Apps Script project" reason as
+// notifyTeachers_ above.
+function findConstArraySpan_(source, constName) {
+  var marker = "const " + constName + " = [";
+  var markerStart = source.indexOf(marker);
+  if (markerStart === -1) throw new Error("Could not find \"" + marker + "\" in the file");
+
+  var literalStart = markerStart + marker.length - 1;
+  var depth = 0;
+  var inString = false;
+  var stringChar = "";
+  var i = literalStart;
+
+  for (; i < source.length; i++) {
+    var ch = source.charAt(i);
+    var prevCh = i > 0 ? source.charAt(i - 1) : "";
+
+    if (inString) {
+      if (ch === stringChar && prevCh !== "\\") inString = false;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") {
+      inString = true;
+      stringChar = ch;
+      continue;
+    }
+    if (ch === "[" || ch === "{") {
+      depth++;
+    } else if (ch === "]" || ch === "}") {
+      depth--;
+      if (depth === 0) { i++; break; }
+    }
+  }
+
+  if (depth !== 0) throw new Error("Could not find the matching closing bracket for " + constName);
+  return { literalStart: literalStart, literalEnd: i };
+}
+
+function readConstArray_(source, constName) {
+  var span = findConstArraySpan_(source, constName);
+  var literalText = source.slice(span.literalStart, span.literalEnd);
+  return eval("(" + literalText + ")");
 }
 
 // Fetches the current log file from GitHub, appends the new entry,
