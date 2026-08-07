@@ -131,15 +131,10 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 2",
+          "chapter": "Master Concepts in Chapter 2 and 3",
           "unit": "B",
-          "instruction": "Complete the book chapter. Go through each of the exercises and actively solve them and develop your instincts!",
+          "instruction": "Master every single concept in chapters 2 and 3 — review and master every concept, and especially, memorize all the formulas.",
           "due": "Tuesday"
-        },
-        "rightNowNext": {
-          "chapter": "Chapter 2",
-          "unit": "C",
-          "instruction": "Work through the Limits and Continuity problem set. Show full steps, not just answers — we'll be checking your reasoning, not just the final number."
         },
         "feedback": [
           {
@@ -282,7 +277,7 @@ const STUDENTS = [
             "name": "T2-Functions Test",
             "category": "T-Test",
             "chapter": "Chapter 2",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link"
           },
           {
@@ -316,7 +311,7 @@ const STUDENTS = [
             "name": "T3-Differentiation Test",
             "category": "T-Test",
             "chapter": "Chapter 3",
-            "status": "Locked",
+            "status": "Unlocked",
             "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link"
           },
           {
@@ -804,6 +799,16 @@ const STUDENTS = [
               "chapter": "Chapter 1",
               "topic": "Functions",
               "score": 92
+            },
+            {
+              "chapter": "Chapter 3",
+              "topic": "Differentiation",
+              "score": 90
+            },
+            {
+              "chapter": "Chapter 2",
+              "topic": "Limits and Continuity",
+              "score": 95
             }
           ],
           "chapterScores": [
@@ -811,6 +816,11 @@ const STUDENTS = [
               "chapter": "Chapter 1",
               "cScore": 75,
               "tScore": 93
+            },
+            {
+              "chapter": "Chapter 2",
+              "cScore": 100,
+              "tScore": null
             }
           ],
           "motivation": [],
@@ -832,7 +842,10 @@ const STUDENTS = [
             "note": "Replies same day, shows up to sessions on time",
             "asOf": "Aug 6"
           },
-          "personality": ["Night owl", "Meticulous notetaker"]
+          "personality": [
+            "Night owl",
+            "Meticulous notetaker"
+          ]
         }
       }
     ]
