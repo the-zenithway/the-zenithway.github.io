@@ -774,6 +774,13 @@
   ],
   "bogue": [
     {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Master Concepts in Chapter 2 and 3 B (due Tuesday)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-07T07:15:22.680Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 2 (T2-Functions Test) unlocked",
