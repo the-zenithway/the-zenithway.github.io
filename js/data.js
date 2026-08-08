@@ -2898,11 +2898,18 @@ const STUDENTS = [
         "rightNow": {
           "state": "your-move",
           "chapter": "Chapter 1",
-          "unit": "B",
-          "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-          "due": "Wednesday"
+          "unit": "C",
+          "instruction": "Try to solve every problem in the given set!",
+          "due": "TBD"
         },
-        "feedback": [],
+        "feedback": [
+          {
+            "date": "Aug 8",
+            "chapter": "Chapter 1",
+            "unit": "B",
+            "content": "Great! Now head on to your C unit :)"
+          }
+        ],
         "cheatSheet": [],
         "roadmap": [
           {
