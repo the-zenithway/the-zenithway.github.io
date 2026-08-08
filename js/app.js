@@ -26,6 +26,22 @@
 const SESSION_KEY = "loggedInUsername";
 const ROLE_KEY = "loggedInRole"; // "student", "teacher", or "parent"
 const ACTIVE_COURSE_KEY = "activeCourseId";
+const ROADMAP_VIEW_KEY_PREFIX = "roadmapView:"; // + course.id -> last view picked for that course
+// Curve is Calculus BC's signature view, Periodic is Chemistry's,
+// Cell is Biology's — each opens by default on its own course (both
+// the enrolled course id and the public self-study page's id); every
+// other course still defaults to Table until the student picks
+// something else (which is then remembered per-course, same idea).
+const ROADMAP_DEFAULT_VIEWS = {
+  "ap-calculus-bc": "curve",
+  "ap-calculus-bc-self-study": "curve",
+  "ap-chemistry": "periodic",
+  "ap-chemistry-self-study": "periodic",
+  "ap-biology": "cell",
+  "ap-biology-self-study": "cell",
+  "ap-computer-science-a": "code",
+  "ap-computer-science-a-self-study": "code"
+};
 
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
@@ -2944,6 +2960,905 @@ function hideCurvePopover() {
   document.querySelectorAll(".roadmap-gem.is-active").forEach(function (g) { g.classList.remove("is-active"); });
 }
 
+// Shared by Periodic/Cell (and could replace Curve's own inline copy,
+// left alone to avoid touching a view that's already dialed in) —
+// the item-by-item breakdown shown inside a chapter's popover.
+function roadmapChapterPopoverListHtml(group) {
+  return group.items.map(function (item) {
+    const link = (item.url && item.status !== "Locked")
+      ? '<div class="curve-popover-item-link"><a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a></div>'
+      : "";
+    return '<div class="curve-popover-item">' +
+      '<span class="curve-popover-item-name">' + item.name + '</span>' +
+      roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) +
+    '</div>' + link;
+  }).join("");
+}
+
+// ---- Roadmap "Periodic" view ----
+// Chemistry's signature view: the FULL periodic table is always
+// drawn (every element gets a tile, so the table's real shape —
+// including the lanthanide/actinide footnote rows — is always
+// intact), but only as many elements as the course has chapters are
+// "lit up": colored by category, tagged with their chapter, clickable.
+// Everything else renders as quiet gray filler so the real table
+// stays legible without competing for attention with the small set
+// that actually maps to a chapter.
+//
+// This order below is the assignment order, not the whole table —
+// chapter 1 lights up its first entry, chapter 2 its second, and so
+// on. It's deliberately NOT in atomic-number order: consecutive
+// chapters jump between wildly different groups/periods so the lit
+// tiles land scattered across the whole table instead of clumping
+// into one corner. Fixed, not re-randomized on every load, so a
+// chapter sits in the same spot each time you visit.
+const ROADMAP_PERIODIC_HIGHLIGHT_ORDER = [
+  { symbol: "Fe", name: "Iron",       group: 8,  period: 4, cat: "transition" },
+  { symbol: "Xe", name: "Xenon",      group: 18, period: 5, cat: "noble" },
+  { symbol: "Li", name: "Lithium",    group: 1,  period: 2, cat: "alkali" },
+  { symbol: "Au", name: "Gold",       group: 11, period: 6, cat: "transition" },
+  { symbol: "Cl", name: "Chlorine",   group: 17, period: 3, cat: "halogen" },
+  { symbol: "Ca", name: "Calcium",    group: 2,  period: 4, cat: "alkaline" },
+  { symbol: "Br", name: "Bromine",    group: 17, period: 4, cat: "halogen" },
+  { symbol: "Zr", name: "Zirconium",  group: 4,  period: 5, cat: "transition" },
+  { symbol: "Ne", name: "Neon",       group: 18, period: 2, cat: "noble" },
+  { symbol: "Sn", name: "Tin",        group: 14, period: 5, cat: "post" },
+  { symbol: "K",  name: "Potassium",  group: 1,  period: 4, cat: "alkali" },
+  { symbol: "Pt", name: "Platinum",   group: 10, period: 6, cat: "transition" },
+  { symbol: "Si", name: "Silicon",    group: 14, period: 3, cat: "metalloid" },
+  { symbol: "Ba", name: "Barium",     group: 2,  period: 6, cat: "alkaline" },
+  { symbol: "As", name: "Arsenic",    group: 15, period: 4, cat: "metalloid" },
+  { symbol: "Cu", name: "Copper",     group: 11, period: 4, cat: "transition" },
+  { symbol: "F",  name: "Fluorine",   group: 17, period: 2, cat: "halogen" },
+  { symbol: "Rb", name: "Rubidium",   group: 1,  period: 5, cat: "alkali" },
+  { symbol: "Ge", name: "Germanium",  group: 14, period: 4, cat: "metalloid" },
+  { symbol: "Hg", name: "Mercury",    group: 12, period: 6, cat: "transition" },
+  { symbol: "P",  name: "Phosphorus", group: 15, period: 3, cat: "nonmetal" },
+  { symbol: "Sr", name: "Strontium",  group: 2,  period: 5, cat: "alkaline" },
+  { symbol: "He", name: "Helium",     group: 18, period: 1, cat: "noble" },
+  { symbol: "W",  name: "Tungsten",   group: 6,  period: 6, cat: "transition" },
+  { symbol: "Al", name: "Aluminum",   group: 13, period: 3, cat: "post" },
+  { symbol: "I",  name: "Iodine",     group: 17, period: 5, cat: "halogen" },
+  { symbol: "Na", name: "Sodium",     group: 1,  period: 3, cat: "alkali" },
+  { symbol: "Cd", name: "Cadmium",    group: 12, period: 5, cat: "transition" },
+  { symbol: "O",  name: "Oxygen",     group: 16, period: 2, cat: "nonmetal" },
+  { symbol: "Ti", name: "Titanium",   group: 4,  period: 4, cat: "transition" },
+  { symbol: "Ar", name: "Argon",      group: 18, period: 3, cat: "noble" },
+  { symbol: "Ag", name: "Silver",     group: 11, period: 5, cat: "transition" },
+  { symbol: "C",  name: "Carbon",     group: 14, period: 2, cat: "nonmetal" },
+  { symbol: "Mo", name: "Molybdenum", group: 6,  period: 5, cat: "transition" },
+  { symbol: "Ga", name: "Gallium",    group: 13, period: 4, cat: "post" },
+  { symbol: "Kr", name: "Krypton",    group: 18, period: 4, cat: "noble" },
+  { symbol: "H",  name: "Hydrogen",   group: 1,  period: 1, cat: "nonmetal" },
+  { symbol: "Cr", name: "Chromium",   group: 6,  period: 4, cat: "transition" },
+  { symbol: "Sb", name: "Antimony",   group: 15, period: 5, cat: "metalloid" },
+  { symbol: "Ni", name: "Nickel",     group: 10, period: 4, cat: "transition" },
+  { symbol: "Pb", name: "Lead",       group: 14, period: 6, cat: "post" },
+  { symbol: "Zn", name: "Zinc",       group: 12, period: 4, cat: "transition" },
+  { symbol: "In", name: "Indium",     group: 13, period: 5, cat: "post" },
+  { symbol: "Rn", name: "Radon",      group: 18, period: 6, cat: "noble" },
+  { symbol: "Cs", name: "Cesium",     group: 1,  period: 6, cat: "alkali" },
+  { symbol: "Fr", name: "Francium",   group: 1,  period: 7, cat: "alkali" },
+  { symbol: "Ra", name: "Radium",     group: 2,  period: 7, cat: "alkaline" }
+];
+
+// The complete 118-element table, real group/period placement
+// throughout (lanthanides/actinides pulled into their own two
+// footnote rows below the main grid, same as any printed periodic
+// table — periods 9/10 here, with a gap left at period 8 for visual
+// separation). Every element gets a tile; ROADMAP_PERIODIC_HIGHLIGHT_ORDER
+// above just decides which ones get lit up for a given course.
+const ROADMAP_PERIODIC_ALL_ELEMENTS = [
+  { number: 1,   symbol: "H",  name: "Hydrogen",      group: 1,  period: 1, cat: "nonmetal" },
+  { number: 2,   symbol: "He", name: "Helium",        group: 18, period: 1, cat: "noble" },
+  { number: 3,   symbol: "Li", name: "Lithium",       group: 1,  period: 2, cat: "alkali" },
+  { number: 4,   symbol: "Be", name: "Beryllium",     group: 2,  period: 2, cat: "alkaline" },
+  { number: 5,   symbol: "B",  name: "Boron",         group: 13, period: 2, cat: "metalloid" },
+  { number: 6,   symbol: "C",  name: "Carbon",        group: 14, period: 2, cat: "nonmetal" },
+  { number: 7,   symbol: "N",  name: "Nitrogen",      group: 15, period: 2, cat: "nonmetal" },
+  { number: 8,   symbol: "O",  name: "Oxygen",        group: 16, period: 2, cat: "nonmetal" },
+  { number: 9,   symbol: "F",  name: "Fluorine",      group: 17, period: 2, cat: "halogen" },
+  { number: 10,  symbol: "Ne", name: "Neon",          group: 18, period: 2, cat: "noble" },
+  { number: 11,  symbol: "Na", name: "Sodium",        group: 1,  period: 3, cat: "alkali" },
+  { number: 12,  symbol: "Mg", name: "Magnesium",     group: 2,  period: 3, cat: "alkaline" },
+  { number: 13,  symbol: "Al", name: "Aluminum",      group: 13, period: 3, cat: "post" },
+  { number: 14,  symbol: "Si", name: "Silicon",       group: 14, period: 3, cat: "metalloid" },
+  { number: 15,  symbol: "P",  name: "Phosphorus",    group: 15, period: 3, cat: "nonmetal" },
+  { number: 16,  symbol: "S",  name: "Sulfur",        group: 16, period: 3, cat: "nonmetal" },
+  { number: 17,  symbol: "Cl", name: "Chlorine",      group: 17, period: 3, cat: "halogen" },
+  { number: 18,  symbol: "Ar", name: "Argon",         group: 18, period: 3, cat: "noble" },
+  { number: 19,  symbol: "K",  name: "Potassium",     group: 1,  period: 4, cat: "alkali" },
+  { number: 20,  symbol: "Ca", name: "Calcium",       group: 2,  period: 4, cat: "alkaline" },
+  { number: 21,  symbol: "Sc", name: "Scandium",      group: 3,  period: 4, cat: "transition" },
+  { number: 22,  symbol: "Ti", name: "Titanium",      group: 4,  period: 4, cat: "transition" },
+  { number: 23,  symbol: "V",  name: "Vanadium",      group: 5,  period: 4, cat: "transition" },
+  { number: 24,  symbol: "Cr", name: "Chromium",      group: 6,  period: 4, cat: "transition" },
+  { number: 25,  symbol: "Mn", name: "Manganese",     group: 7,  period: 4, cat: "transition" },
+  { number: 26,  symbol: "Fe", name: "Iron",          group: 8,  period: 4, cat: "transition" },
+  { number: 27,  symbol: "Co", name: "Cobalt",        group: 9,  period: 4, cat: "transition" },
+  { number: 28,  symbol: "Ni", name: "Nickel",        group: 10, period: 4, cat: "transition" },
+  { number: 29,  symbol: "Cu", name: "Copper",        group: 11, period: 4, cat: "transition" },
+  { number: 30,  symbol: "Zn", name: "Zinc",          group: 12, period: 4, cat: "transition" },
+  { number: 31,  symbol: "Ga", name: "Gallium",       group: 13, period: 4, cat: "post" },
+  { number: 32,  symbol: "Ge", name: "Germanium",     group: 14, period: 4, cat: "metalloid" },
+  { number: 33,  symbol: "As", name: "Arsenic",       group: 15, period: 4, cat: "metalloid" },
+  { number: 34,  symbol: "Se", name: "Selenium",      group: 16, period: 4, cat: "nonmetal" },
+  { number: 35,  symbol: "Br", name: "Bromine",       group: 17, period: 4, cat: "halogen" },
+  { number: 36,  symbol: "Kr", name: "Krypton",       group: 18, period: 4, cat: "noble" },
+  { number: 37,  symbol: "Rb", name: "Rubidium",      group: 1,  period: 5, cat: "alkali" },
+  { number: 38,  symbol: "Sr", name: "Strontium",     group: 2,  period: 5, cat: "alkaline" },
+  { number: 39,  symbol: "Y",  name: "Yttrium",       group: 3,  period: 5, cat: "transition" },
+  { number: 40,  symbol: "Zr", name: "Zirconium",     group: 4,  period: 5, cat: "transition" },
+  { number: 41,  symbol: "Nb", name: "Niobium",       group: 5,  period: 5, cat: "transition" },
+  { number: 42,  symbol: "Mo", name: "Molybdenum",    group: 6,  period: 5, cat: "transition" },
+  { number: 43,  symbol: "Tc", name: "Technetium",    group: 7,  period: 5, cat: "transition" },
+  { number: 44,  symbol: "Ru", name: "Ruthenium",     group: 8,  period: 5, cat: "transition" },
+  { number: 45,  symbol: "Rh", name: "Rhodium",       group: 9,  period: 5, cat: "transition" },
+  { number: 46,  symbol: "Pd", name: "Palladium",     group: 10, period: 5, cat: "transition" },
+  { number: 47,  symbol: "Ag", name: "Silver",        group: 11, period: 5, cat: "transition" },
+  { number: 48,  symbol: "Cd", name: "Cadmium",       group: 12, period: 5, cat: "transition" },
+  { number: 49,  symbol: "In", name: "Indium",        group: 13, period: 5, cat: "post" },
+  { number: 50,  symbol: "Sn", name: "Tin",           group: 14, period: 5, cat: "post" },
+  { number: 51,  symbol: "Sb", name: "Antimony",      group: 15, period: 5, cat: "metalloid" },
+  { number: 52,  symbol: "Te", name: "Tellurium",     group: 16, period: 5, cat: "metalloid" },
+  { number: 53,  symbol: "I",  name: "Iodine",        group: 17, period: 5, cat: "halogen" },
+  { number: 54,  symbol: "Xe", name: "Xenon",         group: 18, period: 5, cat: "noble" },
+  { number: 55,  symbol: "Cs", name: "Cesium",        group: 1,  period: 6, cat: "alkali" },
+  { number: 56,  symbol: "Ba", name: "Barium",        group: 2,  period: 6, cat: "alkaline" },
+  { number: 57,  symbol: "La", name: "Lanthanum",     group: 3,  period: 6, cat: "lanthanide" },
+  { number: 72,  symbol: "Hf", name: "Hafnium",       group: 4,  period: 6, cat: "transition" },
+  { number: 73,  symbol: "Ta", name: "Tantalum",      group: 5,  period: 6, cat: "transition" },
+  { number: 74,  symbol: "W",  name: "Tungsten",      group: 6,  period: 6, cat: "transition" },
+  { number: 75,  symbol: "Re", name: "Rhenium",       group: 7,  period: 6, cat: "transition" },
+  { number: 76,  symbol: "Os", name: "Osmium",        group: 8,  period: 6, cat: "transition" },
+  { number: 77,  symbol: "Ir", name: "Iridium",       group: 9,  period: 6, cat: "transition" },
+  { number: 78,  symbol: "Pt", name: "Platinum",      group: 10, period: 6, cat: "transition" },
+  { number: 79,  symbol: "Au", name: "Gold",          group: 11, period: 6, cat: "transition" },
+  { number: 80,  symbol: "Hg", name: "Mercury",       group: 12, period: 6, cat: "transition" },
+  { number: 81,  symbol: "Tl", name: "Thallium",      group: 13, period: 6, cat: "post" },
+  { number: 82,  symbol: "Pb", name: "Lead",          group: 14, period: 6, cat: "post" },
+  { number: 83,  symbol: "Bi", name: "Bismuth",       group: 15, period: 6, cat: "post" },
+  { number: 84,  symbol: "Po", name: "Polonium",      group: 16, period: 6, cat: "metalloid" },
+  { number: 85,  symbol: "At", name: "Astatine",      group: 17, period: 6, cat: "halogen" },
+  { number: 86,  symbol: "Rn", name: "Radon",         group: 18, period: 6, cat: "noble" },
+  { number: 87,  symbol: "Fr", name: "Francium",      group: 1,  period: 7, cat: "alkali" },
+  { number: 88,  symbol: "Ra", name: "Radium",        group: 2,  period: 7, cat: "alkaline" },
+  { number: 89,  symbol: "Ac", name: "Actinium",      group: 3,  period: 7, cat: "actinide" },
+  { number: 104, symbol: "Rf", name: "Rutherfordium", group: 4,  period: 7, cat: "transition" },
+  { number: 105, symbol: "Db", name: "Dubnium",       group: 5,  period: 7, cat: "transition" },
+  { number: 106, symbol: "Sg", name: "Seaborgium",    group: 6,  period: 7, cat: "transition" },
+  { number: 107, symbol: "Bh", name: "Bohrium",       group: 7,  period: 7, cat: "transition" },
+  { number: 108, symbol: "Hs", name: "Hassium",       group: 8,  period: 7, cat: "transition" },
+  { number: 109, symbol: "Mt", name: "Meitnerium",    group: 9,  period: 7, cat: "transition" },
+  { number: 110, symbol: "Ds", name: "Darmstadtium",  group: 10, period: 7, cat: "transition" },
+  { number: 111, symbol: "Rg", name: "Roentgenium",   group: 11, period: 7, cat: "transition" },
+  { number: 112, symbol: "Cn", name: "Copernicium",   group: 12, period: 7, cat: "transition" },
+  { number: 113, symbol: "Nh", name: "Nihonium",      group: 13, period: 7, cat: "post" },
+  { number: 114, symbol: "Fl", name: "Flerovium",     group: 14, period: 7, cat: "post" },
+  { number: 115, symbol: "Mc", name: "Moscovium",     group: 15, period: 7, cat: "post" },
+  { number: 116, symbol: "Lv", name: "Livermorium",   group: 16, period: 7, cat: "post" },
+  { number: 117, symbol: "Ts", name: "Tennessine",    group: 17, period: 7, cat: "halogen" },
+  { number: 118, symbol: "Og", name: "Oganesson",     group: 18, period: 7, cat: "noble" },
+  { number: 58,  symbol: "Ce", name: "Cerium",        group: 4,  period: 9, cat: "lanthanide" },
+  { number: 59,  symbol: "Pr", name: "Praseodymium",  group: 5,  period: 9, cat: "lanthanide" },
+  { number: 60,  symbol: "Nd", name: "Neodymium",     group: 6,  period: 9, cat: "lanthanide" },
+  { number: 61,  symbol: "Pm", name: "Promethium",    group: 7,  period: 9, cat: "lanthanide" },
+  { number: 62,  symbol: "Sm", name: "Samarium",      group: 8,  period: 9, cat: "lanthanide" },
+  { number: 63,  symbol: "Eu", name: "Europium",      group: 9,  period: 9, cat: "lanthanide" },
+  { number: 64,  symbol: "Gd", name: "Gadolinium",    group: 10, period: 9, cat: "lanthanide" },
+  { number: 65,  symbol: "Tb", name: "Terbium",       group: 11, period: 9, cat: "lanthanide" },
+  { number: 66,  symbol: "Dy", name: "Dysprosium",    group: 12, period: 9, cat: "lanthanide" },
+  { number: 67,  symbol: "Ho", name: "Holmium",       group: 13, period: 9, cat: "lanthanide" },
+  { number: 68,  symbol: "Er", name: "Erbium",        group: 14, period: 9, cat: "lanthanide" },
+  { number: 69,  symbol: "Tm", name: "Thulium",       group: 15, period: 9, cat: "lanthanide" },
+  { number: 70,  symbol: "Yb", name: "Ytterbium",     group: 16, period: 9, cat: "lanthanide" },
+  { number: 71,  symbol: "Lu", name: "Lutetium",      group: 17, period: 9, cat: "lanthanide" },
+  { number: 90,  symbol: "Th", name: "Thorium",       group: 4,  period: 10, cat: "actinide" },
+  { number: 91,  symbol: "Pa", name: "Protactinium",  group: 5,  period: 10, cat: "actinide" },
+  { number: 92,  symbol: "U",  name: "Uranium",       group: 6,  period: 10, cat: "actinide" },
+  { number: 93,  symbol: "Np", name: "Neptunium",     group: 7,  period: 10, cat: "actinide" },
+  { number: 94,  symbol: "Pu", name: "Plutonium",     group: 8,  period: 10, cat: "actinide" },
+  { number: 95,  symbol: "Am", name: "Americium",     group: 9,  period: 10, cat: "actinide" },
+  { number: 96,  symbol: "Cm", name: "Curium",        group: 10, period: 10, cat: "actinide" },
+  { number: 97,  symbol: "Bk", name: "Berkelium",     group: 11, period: 10, cat: "actinide" },
+  { number: 98,  symbol: "Cf", name: "Californium",   group: 12, period: 10, cat: "actinide" },
+  { number: 99,  symbol: "Es", name: "Einsteinium",   group: 13, period: 10, cat: "actinide" },
+  { number: 100, symbol: "Fm", name: "Fermium",       group: 14, period: 10, cat: "actinide" },
+  { number: 101, symbol: "Md", name: "Mendelevium",   group: 15, period: 10, cat: "actinide" },
+  { number: 102, symbol: "No", name: "Nobelium",      group: 16, period: 10, cat: "actinide" },
+  { number: 103, symbol: "Lr", name: "Lawrencium",    group: 17, period: 10, cat: "actinide" }
+];
+
+const ROADMAP_PERIODIC_CAT_COLORS = {
+  alkali:     { text: "#F97066", bg: "rgba(249, 112, 102, 0.20)" },
+  alkaline:   { text: "#FB923C", bg: "rgba(251, 146, 60, 0.20)" },
+  transition: { text: "#FBBF24", bg: "rgba(251, 191, 36, 0.20)" },
+  post:       { text: "#5EEAD4", bg: "rgba(94, 234, 212, 0.20)" },
+  metalloid:  { text: "#86EFAC", bg: "rgba(134, 239, 172, 0.20)" },
+  nonmetal:   { text: "#7DD3FC", bg: "rgba(125, 211, 252, 0.20)" },
+  halogen:    { text: "#C4B5FD", bg: "rgba(196, 181, 253, 0.20)" },
+  noble:      { text: "#F0ABFC", bg: "rgba(240, 171, 252, 0.20)" },
+  lanthanide: { text: "#2DD4BF", bg: "rgba(45, 212, 191, 0.20)" },
+  actinide:   { text: "#FDA4AF", bg: "rgba(253, 164, 175, 0.20)" }
+};
+
+// Builds every tile up front and wires clicks (called once from
+// setUpRoadmapViewSwitch, same as the other views).
+function renderRoadmapPeriodic(course) {
+  const grid = document.getElementById("roadmap-periodic-grid");
+  const legend = document.getElementById("roadmap-periodic-legend");
+  if (!grid || !legend || !course) return;
+
+  const groups = roadmapGroupByChapter(course.roadmap || []);
+  if (groups.length === 0) {
+    grid.innerHTML = "";
+    legend.innerHTML = '<p class="roadmap-empty">Nothing here yet.</p>';
+    return;
+  }
+
+  legend.innerHTML = ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (status) {
+    const c = ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR;
+    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + status.replace(/-/g, " ") + '</span>';
+  }).join("");
+
+  // Which real elements get lit up for this course, keyed by symbol —
+  // everything else in ROADMAP_PERIODIC_ALL_ELEMENTS renders as quiet
+  // gray filler so the full table shape is always there.
+  const assigned = {};
+  groups.forEach(function (group, i) {
+    const hi = ROADMAP_PERIODIC_HIGHLIGHT_ORDER[i % ROADMAP_PERIODIC_HIGHLIGHT_ORDER.length];
+    assigned[hi.symbol] = { group: group, hi: hi };
+  });
+
+  grid.innerHTML = ROADMAP_PERIODIC_ALL_ELEMENTS.map(function (el) {
+    // A visual gap above the lanthanide footnote row (period 9),
+    // matching the blank row every printed periodic table leaves
+    // between the main table and the pulled-out f-block rows.
+    const rowStyle = "grid-column:" + el.group + "; grid-row:" + el.period + ";" + (el.period === 9 ? " margin-top:8px;" : "");
+    const hit = assigned[el.symbol];
+
+    if (!hit) {
+      return '<div class="periodic-tile periodic-tile-muted" data-col="' + el.group + '" data-row="' + el.period + '" ' +
+        'style="' + rowStyle + '" title="' + el.name + '">' +
+        '<span class="periodic-num">' + el.number + '</span>' +
+        '<span class="periodic-symbol">' + el.symbol + '</span>' +
+      '</div>';
+    }
+
+    const status = roadmapChapterOverallStatus(hit.group.items);
+    const statusColor = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    const catColor = ROADMAP_PERIODIC_CAT_COLORS[el.cat] || { text: "#94A3B8", bg: "rgba(148,163,184,0.18)" };
+    return '<button type="button" class="periodic-tile" data-symbol="' + el.symbol + '" data-col="' + el.group + '" data-row="' + el.period + '" ' +
+      'style="' + rowStyle + ' --cat-color:' + catColor.text + '; --cat-bg:' + catColor.bg + '; --status-color:' + statusColor + ';" ' +
+      'title="' + el.name + ' — Chapter ' + hit.group.label + '">' +
+      '<span class="periodic-num">' + el.number + '</span>' +
+      '<span class="periodic-symbol">' + el.symbol + '</span>' +
+      '<span class="periodic-chapter">Ch. ' + hit.group.label + '</span>' +
+    '</button>';
+  }).join("");
+
+  grid.querySelectorAll(".periodic-tile:not(.periodic-tile-muted)").forEach(function (tile) {
+    tile.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const symbol = tile.getAttribute("data-symbol");
+      roadmapPeriodicRipple(grid, tile);
+      showPeriodicPopover(assigned[symbol].group, tile);
+    });
+  });
+
+  const popover = document.getElementById("periodic-popover");
+  if (popover) popover.addEventListener("click", function (e) { e.stopPropagation(); });
+  document.addEventListener("click", hidePeriodicPopover);
+}
+
+// The "spreads like RGB" click effect: every tile gets a rainbow
+// pulse whose delay and hue are both driven by its grid (group,
+// period) distance from the clicked tile, so the color visibly
+// radiates outward across the table rather than flashing all at once.
+function roadmapPeriodicRipple(grid, originTile) {
+  const originCol = parseInt(originTile.getAttribute("data-col"), 10);
+  const originRow = parseInt(originTile.getAttribute("data-row"), 10);
+
+  grid.querySelectorAll(".periodic-tile").forEach(function (tile) {
+    tile.classList.remove("is-active");
+  });
+  originTile.classList.add("is-active");
+
+  grid.querySelectorAll(".periodic-tile").forEach(function (tile) {
+    const col = parseInt(tile.getAttribute("data-col"), 10);
+    const row = parseInt(tile.getAttribute("data-row"), 10);
+    const dist = Math.max(Math.abs(col - originCol), Math.abs(row - originRow));
+    tile.style.setProperty("--ripple-delay", (dist * 65) + "ms");
+    tile.style.setProperty("--ripple-hue", String((dist * 46) % 360));
+    tile.classList.remove("periodic-rgb-pulse");
+    void tile.offsetWidth; // restart the animation even if it's already mid-run
+    tile.classList.add("periodic-rgb-pulse");
+  });
+}
+
+function showPeriodicPopover(group, tileEl) {
+  const popover = document.getElementById("periodic-popover");
+  const title = document.getElementById("periodic-popover-title");
+  const list = document.getElementById("periodic-popover-list");
+  const canvas = document.getElementById("roadmap-periodic-canvas");
+  if (!popover || !canvas) return;
+
+  title.textContent = "Chapter " + group.label + " · " + roadmapPercentComplete(group.items) + "%";
+  list.innerHTML = roadmapChapterPopoverListHtml(group);
+
+  const tileRect = tileEl.getBoundingClientRect();
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popover.hidden = false;
+  const popoverWidth = popover.offsetWidth || 260;
+  let left = tileRect.left - canvasRect.left + canvas.scrollLeft + tileRect.width + 10;
+  if (left + popoverWidth > canvas.scrollLeft + canvasRect.width - 8) {
+    left = tileRect.left - canvasRect.left + canvas.scrollLeft - popoverWidth - 10;
+  }
+  let top = tileRect.top - canvasRect.top + canvas.scrollTop;
+  top = Math.max(4, Math.min(top, canvas.scrollTop + canvasRect.height - popover.offsetHeight - 4));
+
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+
+// Sizes the tiles from the canvas's actual measured space rather
+// than a guessed px value, so the table always fills the screen
+// exactly — no leftover gap, no scrolling to reach the footnote rows
+// — on whatever size window it's actually being viewed in. Only
+// meaningful once the view is visible (a hidden element measures
+// 0), so this only runs from activateView() when Periodic becomes
+// the shown view, plus on window resize while it's still showing.
+function roadmapFitPeriodicGrid() {
+  const grid = document.getElementById("roadmap-periodic-grid");
+  const canvas = document.getElementById("roadmap-periodic-canvas");
+  if (!grid || !canvas || canvas.clientHeight === 0) return;
+
+  const cols = 18;
+  const rows = 9; // periods 1-7 plus the two footnote rows — period 8 is an empty spacer, not a real row
+  const gapRatio = 0.085;
+  const footnoteGap = 8; // matches the margin-top on the period-9 (lanthanide) row
+  const canvasStyle = getComputedStyle(canvas);
+  const vPad = parseFloat(canvasStyle.paddingTop) + parseFloat(canvasStyle.paddingBottom);
+  const hPad = parseFloat(canvasStyle.paddingLeft) + parseFloat(canvasStyle.paddingRight);
+
+  // -2px safety margin so sub-pixel rounding never tips it into
+  // triggering the very scrollbar this is meant to avoid.
+  const sizeFromHeight = (canvas.clientHeight - vPad - footnoteGap - 2) / (rows + (rows - 1) * gapRatio);
+  const sizeFromWidth = (canvas.clientWidth - hPad - 2) / (cols + (cols - 1) * gapRatio);
+  const size = Math.max(22, Math.floor(Math.min(sizeFromHeight, sizeFromWidth)));
+  const gap = Math.max(2, Math.floor(size * gapRatio));
+
+  grid.style.gridTemplateColumns = "repeat(" + cols + ", " + size + "px)";
+  grid.style.gap = gap + "px";
+}
+
+function hidePeriodicPopover() {
+  const popover = document.getElementById("periodic-popover");
+  if (popover) popover.hidden = true;
+}
+
+// ---- Roadmap "Cell" view ----
+// Biology's signature view: one organelle per chapter, arranged in a
+// stylized generalized cell. Positions are hand-placed (not a formula
+// like Curve's polynomial or Periodic's atomic data) since a cell
+// diagram's layout is inherently illustrative, not derived from a
+// dataset — but the click interaction still follows the same pattern
+// as every other view: glow, ripple, popover.
+// Radii are deliberately modest relative to the membrane so the whole
+// cell reads as one picture at a glance instead of a few shapes
+// filling the frame — positions are unchanged from the original
+// layout, so shrinking them just opens up breathing room around each
+// organelle.
+const ROADMAP_CELL_SLOTS = [
+  { type: "nucleus",      cx: 300, cy: 300, r: 40, name: "Nucleus" },
+  { type: "nucleolus",    cx: 335, cy: 320, r: 13, name: "Nucleolus" },
+  { type: "roughER",      cx: 480, cy: 210, r: 36, name: "Rough ER" },
+  { type: "smoothER",     cx: 470, cy: 400, r: 36, name: "Smooth ER" },
+  { type: "golgi",        cx: 630, cy: 300, r: 30, name: "Golgi Apparatus" },
+  { type: "mito",         cx: 130, cy: 420, r: 26, rot: -20, name: "Mitochondrion" },
+  { type: "mito",         cx: 700, cy: 500, r: 26, rot: 20,  name: "Mitochondrion" },
+  { type: "mito",         cx: 720, cy: 170, r: 26, rot: 50,  name: "Mitochondrion" },
+  { type: "ribosomes",    cx: 220, cy: 190, r: 26, name: "Ribosomes" },
+  { type: "lysosome",     cx: 540, cy: 500, r: 17, name: "Lysosome" },
+  { type: "peroxisome",   cx: 600, cy: 540, r: 13, name: "Peroxisome" },
+  { type: "vacuole",      cx: 190, cy: 530, r: 36, name: "Vacuole" },
+  { type: "centriole",    cx: 370, cy: 120, r: 22, name: "Centrioles" },
+  { type: "cytoskeleton", cx: 300, cy: 570, r: 28, name: "Cytoskeleton" },
+  { type: "membrane",     cx: 790, cy: 300, r: 22, name: "Cell Membrane" },
+  { type: "chloroplast",  cx: 730, cy: 400, r: 32, rot: -15, name: "Chloroplast" },
+  { type: "cytoplasm",    cx: 500, cy: 80,  r: 28, name: "Cytoplasm" },
+  { type: "vesicle",      cx: 460, cy: 560, r: 14, name: "Vesicle" }
+];
+
+const ROADMAP_CELL_MEMBRANE_PATH =
+  "M 90 330 C 90 170, 230 40, 470 35 C 680 30, 830 140, 838 320 " +
+  "C 845 460, 760 600, 560 625 C 380 648, 160 610, 105 480 C 90 440, 85 380, 90 330 Z";
+
+// Draws one organelle's silhouette — built from plain circles/
+// ellipses/paths (no external art), styled by CSS class so
+// light/dark theme and status tinting stay in the stylesheet. Every
+// shape is a recognizable simplification of the standard textbook
+// diagram for that organelle (double-membrane nucleus with chromatin,
+// cristae-folded mitochondria, stacked Golgi cisternae with budding
+// vesicles, ribosome-studded rough ER vs. tubular smooth ER, grana
+// stacks inside the chloroplast, a phospholipid-bilayer membrane
+// segment, etc.) rather than a plain circle standing in for each —
+// all offsets are expressed as fractions of the slot's own radius so
+// the whole thing scales cleanly if the radii above ever change.
+// A soft translucent-white highlight ellipse, upper-left of an
+// organelle's center — the cheap trick that makes a flat shape read
+// as a glossy 3D "sticker" instead of a paper cutout. Reused across
+// most of the rounded organelle types below.
+function cellShine(cx, cy, rx, ry, ox, oy) {
+  return '<ellipse cx="' + (cx + ox) + '" cy="' + (cy + oy) + '" rx="' + rx + '" ry="' + ry + '" class="cell-shine"></ellipse>';
+}
+
+function roadmapCellBodySvg(slot) {
+  const cx = slot.cx, cy = slot.cy, r = slot.r, rot = slot.rot || 0;
+  switch (slot.type) {
+    case "nucleus": {
+      const rx = r, ry = r * 0.86;
+      let s = '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" class="cell-body cell-body-nucleus"></ellipse>' +
+        cellShine(cx, cy, rx * 0.32, ry * 0.22, -rx * 0.38, -ry * 0.4);
+      [[-0.32, -0.22], [0.18, -0.42], [-0.05, 0.32], [0.32, 0.18]].forEach(function (o) {
+        s += '<circle cx="' + (cx + o[0] * rx) + '" cy="' + (cy + o[1] * ry) + '" r="' + (r * 0.06) + '" class="cell-body-chromatin"></circle>';
+      });
+      return s;
+    }
+    case "nucleolus": {
+      // An organic, slightly asymmetric blob (built from four unevenly
+      // bowed curves) rather than a plain circle, closer to how a real
+      // nucleolus reads in an illustration.
+      const d = 'M ' + (cx - r) + ' ' + cy +
+        ' Q ' + (cx - r * 0.6) + ' ' + (cy - r * 1.05) + ', ' + cx + ' ' + (cy - r * 0.8) +
+        ' Q ' + (cx + r * 0.85) + ' ' + (cy - r * 0.55) + ', ' + (cx + r * 0.85) + ' ' + cy +
+        ' Q ' + (cx + r * 0.7) + ' ' + (cy + r * 0.85) + ', ' + cx + ' ' + (cy + r * 0.75) +
+        ' Q ' + (cx - r * 0.75) + ' ' + (cy + r * 0.55) + ', ' + (cx - r) + ' ' + cy + ' Z';
+      return '<path d="' + d + '" class="cell-body cell-body-nucleolus"></path>' +
+        cellShine(cx, cy, r * 0.24, r * 0.16, -r * 0.32, -r * 0.35);
+    }
+    case "roughER":
+    case "smoothER": {
+      const w = r * 1.5, h = r * 0.65;
+      const cls = slot.type === "roughER" ? "cell-body-er-rough" : "cell-body-er-smooth";
+      const d = 'M ' + (cx - w) + ' ' + (cy + h * 0.35) + ' Q ' + (cx - w * 0.5) + ' ' + (cy - h) + ', ' + cx + ' ' + cy + ' T ' + (cx + w) + ' ' + (cy - h * 0.5);
+      // A thick base ribbon plus a thinner, lighter highlight stroke
+      // riding along its top edge — reads as a rounded ribbon with a
+      // lit top surface rather than a flat line.
+      let s = '<path d="' + d + '" class="cell-body ' + cls + '" style="stroke-width:' + (r * 0.42) + 'px;"></path>' +
+        '<path d="' + d + '" class="cell-body-er-highlight" style="stroke-width:' + (r * 0.14) + 'px; transform:translateY(-' + (r * 0.1) + 'px);"></path>';
+      if (slot.type === "roughER") {
+        [-2, -1, 0, 1, 2].forEach(function (i) {
+          s += '<circle cx="' + (cx + i * r * 0.5) + '" cy="' + (cy - Math.sin(i) * r * 0.32) + '" r="' + (r * 0.1) + '" class="cell-body-ribo-dot"></circle>';
+        });
+      }
+      return s;
+    }
+    case "golgi": {
+      // Five nested, tapering cisternae shading from pale to deep
+      // coral toward the center, like stacked ribbons — plus two
+      // small vesicles budding off the ends.
+      const shades = ["#FFD3DE", "#FFA9C0", "#FF7DA0", "#F0507E", "#D62F5E"];
+      let s = "";
+      [0, 1, 2, 3, 4].forEach(function (i) {
+        const off = (i - 2) * (r * 0.24);
+        const width = r * (1 - Math.abs(i - 2) * 0.16);
+        s += '<path d="M ' + (cx - width) + ' ' + (cy + off) +
+          ' Q ' + cx + ' ' + (cy + off - r * 0.22) + ', ' + (cx + width) + ' ' + (cy + off) +
+          '" fill="none" style="stroke:' + shades[i] + '; stroke-width:' + (r * 0.19) + 'px;" stroke-linecap="round"></path>';
+      });
+      s += '<circle cx="' + (cx - r * 1.05) + '" cy="' + (cy + r * 0.5) + '" r="' + (r * 0.14) + '" fill="' + shades[1] + '" class="cell-body-golgi-vesicle"></circle>';
+      s += '<circle cx="' + (cx + r * 1.1) + '" cy="' + (cy - r * 0.4) + '" r="' + (r * 0.16) + '" fill="' + shades[3] + '" class="cell-body-golgi-vesicle"></circle>';
+      return s;
+    }
+    case "mito": {
+      // One continuous cristae wave running the body's full length —
+      // reads as a single folded inner membrane rather than a few
+      // disconnected arcs.
+      const rx = r, ry = r * 0.56;
+      const amp = ry * 0.55;
+      const xs = [-0.72, -0.36, 0, 0.36, 0.72].map(function (t) { return cx + t * rx; });
+      let d = 'M ' + xs[0] + ' ' + cy;
+      for (let i = 1; i < xs.length; i++) {
+        const bow = (i % 2 ? -1 : 1) * amp;
+        const mx = (xs[i - 1] + xs[i]) / 2;
+        d += ' Q ' + mx + ' ' + (cy + bow) + ', ' + xs[i] + ' ' + cy;
+      }
+      return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
+        '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" class="cell-body cell-body-mito"></ellipse>' +
+        cellShine(cx, cy, rx * 0.22, ry * 0.32, -rx * 0.45, -ry * 0.4) +
+        '<path d="' + d + '" class="cell-body-cristae"></path>' +
+      '</g>';
+    }
+    case "ribosomes": {
+      // A tight, overlapping cluster (not scattered dots) — reads as
+      // one polysome grouping rather than debris floating nearby.
+      let s = "";
+      [[-0.22, -0.14], [0.16, -0.22], [0, 0.06], [0.24, 0.16], [-0.22, 0.2]].forEach(function (o) {
+        const rx = cx + o[0] * r, ry = cy + o[1] * r;
+        s += '<circle cx="' + (rx - r * 0.05) + '" cy="' + (ry - r * 0.04) + '" r="' + (r * 0.2) + '" class="cell-body cell-body-ribo-dot"></circle>' +
+             '<circle cx="' + (rx + r * 0.09) + '" cy="' + (ry + r * 0.06) + '" r="' + (r * 0.14) + '" class="cell-body-ribo-dot-small"></circle>';
+      });
+      return s;
+    }
+    case "lysosome":
+    case "peroxisome":
+    case "vesicle": {
+      let s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="cell-body cell-body-' + slot.type + '"></circle>' +
+        cellShine(cx, cy, r * 0.26, r * 0.17, -r * 0.32, -r * 0.35);
+      [[-0.28, -0.15], [0.22, 0.1], [-0.05, 0.35]].forEach(function (o) {
+        s += '<circle cx="' + (cx + o[0] * r) + '" cy="' + (cy + o[1] * r) + '" r="' + (r * 0.13) + '" class="cell-body-' + slot.type + '-core"></circle>';
+      });
+      return s;
+    }
+    case "vacuole":
+      return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="cell-body cell-body-vacuole"></circle>' +
+             '<circle cx="' + cx + '" cy="' + cy + '" r="' + (r * 0.88) + '" class="cell-body-vacuole-outline"></circle>' +
+             cellShine(cx, cy, r * 0.26, r * 0.16, -r * 0.3, -r * 0.3);
+    case "centriole": {
+      const w = r * 0.36, len = r * 1.3;
+      let s = '<rect x="' + (cx - w / 2) + '" y="' + (cy - len * 0.65) + '" width="' + w + '" height="' + len + '" rx="' + (w / 2) + '" class="cell-body cell-body-centriole"></rect>';
+      [0.25, 0.5, 0.75].forEach(function (t) {
+        const ly = cy - len * 0.65 + len * t;
+        s += '<line x1="' + (cx - w / 2) + '" y1="' + ly + '" x2="' + (cx + w / 2) + '" y2="' + ly + '" class="cell-body-centriole-ring"></line>';
+      });
+      const ox = cx + len * 0.15, oy = cy + r * 0.18;
+      s += '<rect x="' + ox + '" y="' + (oy - w / 2) + '" width="' + len + '" height="' + w + '" rx="' + (w / 2) + '" class="cell-body cell-body-centriole"></rect>';
+      [0.25, 0.5, 0.75].forEach(function (t) {
+        const lx = ox + len * t;
+        s += '<line x1="' + lx + '" y1="' + (oy - w / 2) + '" x2="' + lx + '" y2="' + (oy + w / 2) + '" class="cell-body-centriole-ring"></line>';
+      });
+      return s;
+    }
+    case "cytoskeleton": {
+      let s = "";
+      [[1, -0.3], [0.6, -0.9], [-0.5, -0.8], [-1, -0.1], [0.2, 0.9]].forEach(function (b) {
+        const ex = cx + b[0] * r, ey = cy + b[1] * r;
+        const mx = cx + b[0] * r * 0.5 + b[1] * r * 0.15;
+        const my = cy + b[1] * r * 0.5 - b[0] * r * 0.15;
+        s += '<path d="M ' + cx + ' ' + cy + ' Q ' + mx + ' ' + my + ', ' + ex + ' ' + ey + '" class="cell-body cell-body-cytoskeleton"></path>';
+      });
+      return s;
+    }
+    case "membrane": {
+      const w = r * 1.7;
+      let s = '<path d="M ' + (cx - w) + ' ' + (cy - 5) + ' Q ' + cx + ' ' + (cy - 12) + ', ' + (cx + w) + ' ' + (cy - 5) + '" class="cell-body cell-body-membrane-line"></path>' +
+        '<path d="M ' + (cx - w) + ' ' + (cy + 5) + ' Q ' + cx + ' ' + (cy + 12) + ', ' + (cx + w) + ' ' + (cy + 5) + '" class="cell-body cell-body-membrane-line"></path>';
+      [-0.7, -0.35, 0.35, 0.7].forEach(function (t) {
+        s += '<circle cx="' + (cx + t * w) + '" cy="' + (cy - 6) + '" r="3" class="cell-body-membrane-head"></circle>';
+        s += '<circle cx="' + (cx + t * w) + '" cy="' + (cy + 6) + '" r="3" class="cell-body-membrane-head"></circle>';
+      });
+      s += '<rect x="' + (cx - 7) + '" y="' + (cy - 13) + '" width="14" height="26" rx="7" class="cell-body-membrane-protein"></rect>';
+      return s;
+    }
+    case "chloroplast": {
+      let s = '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
+        '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + r + '" ry="' + (r * 0.6) + '" class="cell-body cell-body-chloro"></ellipse>' +
+        cellShine(cx, cy, r * 0.24, r * 0.13, -r * 0.5, -r * 0.32);
+      [-0.5, 0, 0.5].forEach(function (t) {
+        const gx = cx + t * r * 0.85;
+        [0, 1, 2].forEach(function (i) {
+          s += '<ellipse cx="' + gx + '" cy="' + (cy - r * 0.14 + i * (r * 0.13)) + '" rx="' + (r * 0.15) + '" ry="' + (r * 0.07) + '" class="cell-body-chloro-grana"></ellipse>';
+        });
+      });
+      s += '<line x1="' + (cx - r * 0.45) + '" y1="' + cy + '" x2="' + (cx + r * 0.45) + '" y2="' + cy + '" class="cell-body-chloro-stripe"></line>';
+      return s + '</g>';
+    }
+    case "cytoplasm":
+      return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="cell-body cell-body-cytoplasm"></circle>';
+    default:
+      return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="cell-body"></circle>';
+  }
+}
+
+function renderRoadmapCell(course) {
+  const svg = document.getElementById("roadmap-cell-svg");
+  const legend = document.getElementById("roadmap-cell-legend");
+  if (!svg || !legend || !course) return;
+
+  const groups = roadmapGroupByChapter(course.roadmap || []);
+  if (groups.length === 0) {
+    svg.innerHTML = "";
+    legend.innerHTML = '<p class="roadmap-empty">Nothing here yet.</p>';
+    return;
+  }
+
+  legend.innerHTML = ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (status) {
+    const c = ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR;
+    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + status.replace(/-/g, " ") + '</span>';
+  }).join("");
+
+  const organellesHtml = groups.map(function (group, i) {
+    const slot = ROADMAP_CELL_SLOTS[i % ROADMAP_CELL_SLOTS.length];
+    const status = roadmapChapterOverallStatus(group.items);
+    const glowColor = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    const hitR = (slot.r || 40) + 14;
+    const glowR = (slot.r || 40) * 0.8;
+    return '<g class="roadmap-organelle" data-index="' + i + '" data-slot="' + (i % ROADMAP_CELL_SLOTS.length) + '" style="--organelle-glow:' + glowColor + ';">' +
+      '<circle class="organelle-glow" cx="' + slot.cx + '" cy="' + slot.cy + '" r="' + glowR + '" fill="' + glowColor + '"></circle>' +
+      '<g class="organelle-body" filter="url(#cell-glow-filter)">' + roadmapCellBodySvg(slot) + '</g>' +
+      '<circle class="organelle-hit" cx="' + slot.cx + '" cy="' + slot.cy + '" r="' + hitR + '" fill="transparent"></circle>' +
+      '<text class="organelle-label" x="' + slot.cx + '" y="' + (slot.cy + hitR + 16) + '">Ch. ' + group.label + '</text>' +
+    '</g>';
+  }).join("");
+
+  svg.innerHTML =
+    '<defs>' +
+      '<filter id="cell-glow-filter" x="-60%" y="-60%" width="220%" height="220%">' +
+        '<feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur>' +
+        '<feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>' +
+      '</filter>' +
+    '</defs>' +
+    '<path d="' + ROADMAP_CELL_MEMBRANE_PATH + '" class="cell-membrane-outline"></path>' +
+    '<g id="cell-wave-layer"></g>' +
+    organellesHtml;
+
+  svg.querySelectorAll(".roadmap-organelle").forEach(function (orgEl) {
+    orgEl.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const i = parseInt(orgEl.getAttribute("data-index"), 10);
+      const slot = ROADMAP_CELL_SLOTS[parseInt(orgEl.getAttribute("data-slot"), 10)];
+      roadmapCellActivate(svg, orgEl, groups[i], slot);
+    });
+  });
+
+  const popover = document.getElementById("cell-popover");
+  if (popover) popover.addEventListener("click", function (e) { e.stopPropagation(); });
+  document.addEventListener("click", hideCellPopover);
+}
+
+function roadmapCellActivate(svg, orgEl, group, slot) {
+  svg.querySelectorAll(".roadmap-organelle.is-active").forEach(function (g) { g.classList.remove("is-active"); });
+  orgEl.classList.add("is-active");
+  roadmapCellFireWave(slot.cx, slot.cy);
+  showCellPopover(group, slot);
+}
+
+// A soft "signaling wave" ripple expanding from the clicked organelle
+// across the whole cell — same rAF-driven-attribute approach as
+// Curve's tangent flash, so it stays reliable without relying on CSS
+// transitions of SVG geometry.
+function roadmapCellFireWave(cx, cy) {
+  const layer = document.getElementById("cell-wave-layer");
+  if (!layer) return;
+  layer.innerHTML = "";
+
+  const ns = "http://www.w3.org/2000/svg";
+  const ring = document.createElementNS(ns, "circle");
+  ring.setAttribute("cx", cx);
+  ring.setAttribute("cy", cy);
+  ring.setAttribute("class", "cell-wave-ring");
+  layer.appendChild(ring);
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const duration = reduceMotion ? 1 : 750;
+  const maxR = 420;
+  const start = performance.now();
+
+  (function step(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    ring.setAttribute("r", String(4 + eased * maxR));
+    ring.setAttribute("opacity", String(0.6 * (1 - t)));
+    if (t < 1) requestAnimationFrame(step);
+    else layer.innerHTML = "";
+  })(start);
+}
+
+function showCellPopover(group, slot) {
+  const popover = document.getElementById("cell-popover");
+  const title = document.getElementById("cell-popover-title");
+  const list = document.getElementById("cell-popover-list");
+  const canvas = document.getElementById("roadmap-cell-canvas");
+  const svg = document.getElementById("roadmap-cell-svg");
+  if (!popover || !canvas || !svg) return;
+
+  title.textContent = slot.name + " · Chapter " + group.label + " · " + roadmapPercentComplete(group.items) + "%";
+  list.innerHTML = roadmapChapterPopoverListHtml(group);
+
+  const pt = svg.createSVGPoint();
+  pt.x = slot.cx;
+  pt.y = slot.cy;
+  const screenPt = pt.matrixTransform(svg.getScreenCTM());
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popover.hidden = false;
+  const popoverWidth = popover.offsetWidth || 260;
+  let left = screenPt.x - canvasRect.left + 18;
+  if (left + popoverWidth > canvasRect.width - 8) {
+    left = screenPt.x - canvasRect.left - popoverWidth - 18;
+  }
+  let top = screenPt.y - canvasRect.top - 20;
+  top = Math.max(4, Math.min(top, canvasRect.height - popover.offsetHeight - 4));
+
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+
+function hideCellPopover() {
+  const popover = document.getElementById("cell-popover");
+  const layer = document.getElementById("cell-wave-layer");
+  if (popover) popover.hidden = true;
+  if (layer) layer.innerHTML = "";
+  document.querySelectorAll(".roadmap-organelle.is-active").forEach(function (g) { g.classList.remove("is-active"); });
+}
+
+// ---- Roadmap "Code" view ----
+// Computer Science's signature view: chapters rendered as method
+// declarations inside a syntax-highlighted, scrollable fake Java
+// source file — real code-editor styling (line numbers, keyword/
+// string/comment colors) around plausible-but-decorative filler, the
+// same "real texture around the handful that matter" idea as
+// Periodic's muted background elements. Each chapter's method NAME
+// is the clickable, status-colored token; everything else is just
+// there to make it read as an actual file you'd scroll through.
+
+function roadmapEscapeHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function ckw(t) { return { text: t, cls: "code-kw" }; }
+function cty(t) { return { text: t, cls: "code-type" }; }
+function cstr(t) { return { text: t, cls: "code-str" }; }
+function ccom(t) { return { text: t, cls: "code-com" }; }
+function cnum(t) { return { text: t, cls: "code-num" }; }
+function cfn(t) { return { text: t, cls: "code-fn" }; }
+function cvar(t) { return { text: t, cls: "code-var" }; }
+function cpn(t) { return { text: t }; }
+
+// Neutral, meaning-free filler lines — cycled through between
+// chapter methods purely for visual texture (a real file has more
+// than just method signatures in it).
+const ROADMAP_CODE_FILLER_LINES = [
+  [ckw("int"), cpn(" "), cvar("attempts"), cpn(" = "), cnum("0"), cpn(";")],
+  [ckw("if"), cpn(" ("), cvar("score"), cpn(" >= "), cvar("PASS_THRESHOLD"), cpn(") {")],
+  [cvar("attempts"), cpn("++;"), cpn(" }")],
+  [cfn("retry"), cpn("("), cvar("attempts"), cpn(");")],
+  [ckw("for"), cpn(" ("), ckw("int"), cpn(" "), cvar("i"), cpn(" = "), cnum("0"), cpn("; "), cvar("i"), cpn(" < "), cvar("n"), cpn("; "), cvar("i"), cpn("++) {")],
+  [cvar("total"), cpn(" += "), cfn("weight"), cpn("("), cvar("i"), cpn("); }")],
+  [ckw("return"), cpn(" "), cvar("total"), cpn(" / "), cvar("n"), cpn(";")],
+  [ccom("// review before moving on")],
+  [ccom("// double-check edge cases here")],
+  [cty("System"), cpn("."), cvar("out"), cpn("."), cfn("println"), cpn("("), cstr("\"checkpoint reached\""), cpn(");")],
+  [ckw("boolean"), cpn(" "), cvar("ready"), cpn(" = "), cvar("attempts"), cpn(" > "), cnum("2"), cpn(";")],
+  [cty("Map"), cpn("<"), cty("String"), cpn(", "), cty("Integer"), cpn("> "), cvar("notes"), cpn(" = "), ckw("new"), cpn(" "), cty("HashMap"), cpn("<>();")]
+];
+
+function codeLineHtml(tokens) {
+  return tokens.map(function (t) {
+    if (t.chapterIndex !== undefined) {
+      return '<span class="code-chapter-token" data-index="' + t.chapterIndex + '" tabindex="0" role="button" ' +
+        'style="--tok-color:' + t.statusColor + '; --tok-bg:' + t.statusColor + '26;">' + roadmapEscapeHtml(t.text) + '</span>';
+    }
+    return t.cls ? '<span class="' + t.cls + '">' + roadmapEscapeHtml(t.text) + '</span>' : roadmapEscapeHtml(t.text);
+  }).join("");
+}
+
+// "B6-Definite Integrals" -> "studyDefiniteIntegrals" — reuses
+// roadmapCardTopicName's title extraction, then camel-cases it into
+// something that reads as a real method name.
+function roadmapCodeMethodName(group) {
+  const topic = roadmapCardTopicName(group).replace(/[^a-zA-Z0-9 ]/g, "");
+  const words = topic.split(/\s+/).filter(Boolean);
+  const camel = words.map(function (w, i) {
+    const lower = w.toLowerCase();
+    return i === 0 ? lower : lower.charAt(0).toUpperCase() + lower.slice(1);
+  }).join("");
+  return "study" + camel.charAt(0).toUpperCase() + camel.slice(1);
+}
+
+function renderRoadmapCode(course) {
+  const editor = document.getElementById("roadmap-code-editor");
+  const legend = document.getElementById("roadmap-code-legend");
+  if (!editor || !legend || !course) return;
+
+  const groups = roadmapGroupByChapter(course.roadmap || []);
+  if (groups.length === 0) {
+    editor.innerHTML = "";
+    legend.innerHTML = '<p class="roadmap-empty">Nothing here yet.</p>';
+    return;
+  }
+
+  legend.innerHTML = ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (status) {
+    const c = ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR;
+    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + status.replace(/-/g, " ") + '</span>';
+  }).join("");
+
+  const lines = [];
+  function push(indent, tokens) { lines.push({ indent: indent, html: codeLineHtml(tokens) }); }
+  function blank() { lines.push({ indent: 0, html: "" }); }
+
+  push(0, [ccom("// " + course.name + " — Study Roadmap")]);
+  push(0, [ckw("import"), cpn(" "), cty("java.util.*"), cpn(";")]);
+  blank();
+  push(0, [ckw("public"), cpn(" "), ckw("class"), cpn(" "), cty("StudyPlan"), cpn(" {")]);
+  blank();
+  push(1, [ckw("private"), cpn(" "), cty("Progress"), cpn(" "), cvar("progress"), cpn(" = "), cty("Progress"), cpn("."), cvar("IN_PROGRESS"), cpn(";")]);
+  blank();
+
+  groups.forEach(function (group, i) {
+    const status = roadmapChapterOverallStatus(group.items);
+    const statusColor = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
+    const methodName = roadmapCodeMethodName(group);
+
+    push(1, [ccom("// Chapter " + group.label + " · " + status.replace(/-/g, " "))]);
+    push(1, [
+      ckw("public"), cpn(" "), ckw("static"), cpn(" "), ckw("void"), cpn(" "),
+      { text: methodName, chapterIndex: i, statusColor: statusColor },
+      cpn("() {")
+    ]);
+    push(2, ROADMAP_CODE_FILLER_LINES[i % ROADMAP_CODE_FILLER_LINES.length]);
+    push(2, ROADMAP_CODE_FILLER_LINES[(i + 5) % ROADMAP_CODE_FILLER_LINES.length]);
+    push(1, [cpn("}")]);
+    blank();
+  });
+
+  push(0, [cpn("}")]);
+
+  editor.innerHTML = lines.map(function (line, idx) {
+    const indentStr = "    ".repeat(line.indent);
+    return '<div class="code-line"><span class="code-line-num">' + (idx + 1) + '</span>' +
+      '<span class="code-line-content">' + indentStr + line.html + '</span></div>';
+  }).join("");
+
+  editor.querySelectorAll(".code-chapter-token").forEach(function (tok) {
+    tok.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const i = parseInt(tok.getAttribute("data-index"), 10);
+      roadmapCodeActivate(tok, groups[i]);
+    });
+    tok.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tok.click(); }
+    });
+  });
+
+  const popover = document.getElementById("code-popover");
+  if (popover) popover.addEventListener("click", function (e) { e.stopPropagation(); });
+  document.addEventListener("click", hideCodePopover);
+}
+
+function roadmapCodeActivate(tokenEl, group) {
+  document.querySelectorAll(".code-chapter-token.is-active").forEach(function (t) { t.classList.remove("is-active"); });
+  tokenEl.classList.add("is-active");
+  tokenEl.classList.remove("code-pulse");
+  void tokenEl.offsetWidth;
+  tokenEl.classList.add("code-pulse");
+  showCodePopover(group, tokenEl);
+}
+
+function showCodePopover(group, tokenEl) {
+  const popover = document.getElementById("code-popover");
+  const title = document.getElementById("code-popover-title");
+  const list = document.getElementById("code-popover-list");
+  const canvas = document.getElementById("roadmap-code-canvas");
+  if (!popover || !canvas) return;
+
+  title.textContent = "Chapter " + group.label + " · " + roadmapPercentComplete(group.items) + "%";
+  list.innerHTML = roadmapChapterPopoverListHtml(group);
+
+  const tokRect = tokenEl.getBoundingClientRect();
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popover.hidden = false;
+  const popoverWidth = popover.offsetWidth || 260;
+  let left = tokRect.left - canvasRect.left + canvas.scrollLeft + tokRect.width + 10;
+  if (left + popoverWidth > canvas.scrollLeft + canvasRect.width - 8) {
+    left = tokRect.left - canvasRect.left + canvas.scrollLeft - popoverWidth - 10;
+  }
+  let top = tokRect.top - canvasRect.top + canvas.scrollTop;
+  top = Math.max(4, Math.min(top, canvas.scrollTop + canvasRect.height - popover.offsetHeight - 4));
+
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+
+function hideCodePopover() {
+  const popover = document.getElementById("code-popover");
+  if (popover) popover.hidden = true;
+  document.querySelectorAll(".code-chapter-token.is-active").forEach(function (t) { t.classList.remove("is-active"); });
+}
+
 // ---- Roadmap "Cards" and "Orbit" views ----
 // Both show the same one-card-per-chapter content as Curve (reusing
 // roadmapGroupByChapter/roadmapChapterOverallStatus) — they differ
@@ -3053,6 +3968,22 @@ function roadmapSetUpScrollTrack(trackId, prevBtnId, nextBtnId, is3D) {
   if (nextBtn) nextBtn.addEventListener("click", function () { step(1); });
 }
 
+function roadmapStoredView(courseId) {
+  try {
+    return localStorage.getItem(ROADMAP_VIEW_KEY_PREFIX + courseId);
+  } catch (e) {
+    return null;
+  }
+}
+
+function roadmapRememberView(courseId, view) {
+  try {
+    localStorage.setItem(ROADMAP_VIEW_KEY_PREFIX + courseId, view);
+  } catch (e) {
+    // Private browsing / storage disabled — view choice just won't persist.
+  }
+}
+
 // Wires the Table/Curve/Cards/Orbit toggle buttons above the roadmap
 // and renders every view once up front so switching is instant.
 function setUpRoadmapViewSwitch(course) {
@@ -3062,6 +3993,9 @@ function setUpRoadmapViewSwitch(course) {
   renderRoadmapCurve(course);
   renderRoadmapCards(course);
   renderRoadmapOrbit(course);
+  renderRoadmapPeriodic(course);
+  renderRoadmapCell(course);
+  renderRoadmapCode(course);
   roadmapSetUpScrollTrack("roadmap-cards-track", "roadmap-cards-prev", "roadmap-cards-next", false);
   roadmapSetUpScrollTrack("roadmap-orbit-track", "roadmap-orbit-prev", "roadmap-orbit-next", true);
 
@@ -3069,24 +4003,47 @@ function setUpRoadmapViewSwitch(course) {
     table: document.getElementById("roadmap-view-table"),
     curve: document.getElementById("roadmap-view-curve"),
     cards: document.getElementById("roadmap-view-cards"),
-    orbit: document.getElementById("roadmap-view-orbit")
+    orbit: document.getElementById("roadmap-view-orbit"),
+    periodic: document.getElementById("roadmap-view-periodic"),
+    cell: document.getElementById("roadmap-view-cell"),
+    code: document.getElementById("roadmap-view-code")
   };
+
+  function activateView(view) {
+    switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-view") === view);
+    });
+    Object.keys(views).forEach(function (key) { views[key].hidden = key !== view; });
+    if (view !== "curve") hideCurvePopover();
+    if (view !== "periodic") hidePeriodicPopover();
+    if (view !== "cell") hideCellPopover();
+    if (view !== "code") hideCodePopover();
+
+    // Cards/Orbit/Periodic were rendered up front while still hidden,
+    // so any focus/transform/size computed then used zeroed-out
+    // (display:none) measurements. Recompute now that the view is
+    // actually visible and has real layout.
+    if (view === "cards") roadmapUpdateTrackFocus(document.getElementById("roadmap-cards-track"), false);
+    if (view === "orbit") roadmapUpdateTrackFocus(document.getElementById("roadmap-orbit-track"), true);
+    if (view === "periodic") roadmapFitPeriodicGrid();
+  }
+
+  const storedView = roadmapStoredView(course.id);
+  const initialView = storedView && views[storedView] ? storedView : (ROADMAP_DEFAULT_VIEWS[course.id] || "table");
+  if (initialView !== "table") activateView(initialView);
 
   switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (b) { b.classList.remove("active"); });
-      btn.classList.add("active");
-
       const view = btn.getAttribute("data-view");
-      Object.keys(views).forEach(function (key) { views[key].hidden = key !== view; });
-      if (view !== "curve") hideCurvePopover();
-
-      // Cards/Orbit were rendered up front while still hidden, so any
-      // focus/transform computed then used zeroed-out (display:none)
-      // measurements. Recompute now that the view is actually visible
-      // and has real layout.
-      if (view === "cards") roadmapUpdateTrackFocus(document.getElementById("roadmap-cards-track"), false);
-      if (view === "orbit") roadmapUpdateTrackFocus(document.getElementById("roadmap-orbit-track"), true);
+      activateView(view);
+      roadmapRememberView(course.id, view);
     });
+  });
+
+  // Keep the Periodic table's "perfect fit" sizing correct if the
+  // student resizes the window (or rotates a tablet) while it's the
+  // view currently showing.
+  window.addEventListener("resize", function () {
+    if (!views.periodic.hidden) roadmapFitPeriodicGrid();
   });
 }

@@ -32,6 +32,9 @@
       <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
       <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
       <button type="button" class="roadmap-view-btn" data-view="orbit">Orbit</button>
+      <button type="button" class="roadmap-view-btn" data-view="periodic">Periodic</button>
+      <button type="button" class="roadmap-view-btn" data-view="cell">Cell</button>
+      <button type="button" class="roadmap-view-btn" data-view="code">Code</button>
     </div>
   </div>
 
@@ -81,6 +84,39 @@
     </div>
     <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-orbit-prev" aria-label="Scroll left">‹</button>
     <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-orbit-next" aria-label="Scroll right">›</button>
+  </div>
+
+  <div class="roadmap-periodic-wrap" id="roadmap-view-periodic" hidden>
+    <div class="roadmap-periodic-legend" id="roadmap-periodic-legend"></div>
+    <div class="roadmap-periodic-canvas" id="roadmap-periodic-canvas">
+      <div class="roadmap-periodic-grid" id="roadmap-periodic-grid"></div>
+      <div class="curve-popover" id="periodic-popover" hidden>
+        <p class="curve-popover-title" id="periodic-popover-title"></p>
+        <div class="curve-popover-list" id="periodic-popover-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-cell-wrap" id="roadmap-view-cell" hidden>
+    <div class="roadmap-cell-legend" id="roadmap-cell-legend"></div>
+    <div class="roadmap-cell-canvas" id="roadmap-cell-canvas">
+      <svg id="roadmap-cell-svg" viewBox="0 0 900 660" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="curve-popover" id="cell-popover" hidden>
+        <p class="curve-popover-title" id="cell-popover-title"></p>
+        <div class="curve-popover-list" id="cell-popover-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-code-wrap" id="roadmap-view-code" hidden>
+    <div class="roadmap-code-legend" id="roadmap-code-legend"></div>
+    <div class="roadmap-code-canvas" id="roadmap-code-canvas">
+      <pre class="roadmap-code-editor" id="roadmap-code-editor"></pre>
+      <div class="curve-popover" id="code-popover" hidden>
+        <p class="curve-popover-title" id="code-popover-title"></p>
+        <div class="curve-popover-list" id="code-popover-list"></div>
+      </div>
+    </div>
   </div>
 </main>
 

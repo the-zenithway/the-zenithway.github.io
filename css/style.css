@@ -932,6 +932,9 @@ body.portal-body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 3px;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .roadmap-view-btn {
@@ -944,6 +947,7 @@ body.portal-body {
   padding: 6px 16px;
   border-radius: calc(var(--radius) - 3px);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .roadmap-view-btn:hover { color: var(--text); }
@@ -953,7 +957,8 @@ body.portal-body {
   color: var(--accent-ink);
 }
 
-.roadmap-table[hidden], .roadmap-curve-wrap[hidden], .roadmap-cards-wrap[hidden], .roadmap-orbit-wrap[hidden] { display: none; }
+.roadmap-table[hidden], .roadmap-curve-wrap[hidden], .roadmap-cards-wrap[hidden], .roadmap-orbit-wrap[hidden],
+.roadmap-periodic-wrap[hidden], .roadmap-cell-wrap[hidden], .roadmap-code-wrap[hidden] { display: none; }
 
 /* -------- Roadmap: cards + orbit (3D) views -------- */
 .roadmap-cards-wrap, .roadmap-orbit-wrap {
@@ -1335,6 +1340,345 @@ body.portal-body {
 }
 
 .curve-popover-item-link { text-align: right; margin: -4px 0 2px; }
+
+/* -------- Roadmap: periodic view -------- */
+.roadmap-periodic-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 12px;
+  overflow: auto;
+}
+
+.roadmap-periodic-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.roadmap-periodic-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.roadmap-periodic-grid {
+  display: grid;
+  /* Fixed (not 1fr, sized dynamically by roadmapFitPeriodicGrid) so
+     tiles stay compact instead of stretching to fill a wide canvas.
+     Centered because the fitted table is almost always narrower than
+     the canvas it sits in. */
+  grid-template-columns: repeat(18, 48px);
+  justify-content: center;
+  gap: 4px;
+}
+
+.periodic-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 5px;
+  border: 1.25px solid var(--cat-color, var(--border));
+  background: var(--cat-bg, var(--bg-elevated));
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  padding: 1px;
+  box-shadow: inset 0 0 0 2px transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.periodic-tile:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28); z-index: 1; }
+
+.periodic-tile.is-active {
+  box-shadow: inset 0 0 0 2px var(--status-color), 0 0 16px var(--status-color);
+}
+
+/* Every other element on the table — real tiles, real positions, but
+   quiet and non-interactive so the handful mapped to chapters are
+   what actually draws the eye. */
+.periodic-tile-muted {
+  border-color: rgba(148, 163, 184, 0.16);
+  background: rgba(148, 163, 184, 0.04);
+  color: var(--text-muted);
+  cursor: default;
+  opacity: 0.5;
+}
+.periodic-tile-muted:hover { transform: none; box-shadow: none; opacity: 0.75; }
+.periodic-tile-muted .periodic-symbol { font-weight: 600; }
+
+.periodic-num {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 0.46rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.periodic-symbol {
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
+.periodic-chapter {
+  font-size: 0.46rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.periodic-tile:not(.periodic-tile-muted)::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--status-color);
+}
+
+@keyframes periodic-rgb-sweep {
+  0% { box-shadow: inset 0 0 0 2px transparent; filter: none; }
+  30% {
+    box-shadow: inset 0 0 0 2px hsl(var(--ripple-hue, 0), 90%, 65%), 0 0 20px 2px hsl(var(--ripple-hue, 0), 90%, 60%);
+    filter: brightness(1.4) saturate(1.5);
+  }
+  100% { box-shadow: inset 0 0 0 2px transparent; filter: none; }
+}
+
+.periodic-tile.periodic-rgb-pulse {
+  animation: periodic-rgb-sweep 700ms ease-out;
+  animation-delay: var(--ripple-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .periodic-tile.periodic-rgb-pulse { animation: none; }
+}
+
+/* -------- Roadmap: cell view -------- */
+.roadmap-cell-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 24px;
+  overflow: auto;
+}
+
+.roadmap-cell-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.roadmap-cell-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* height:100% (not auto) so the SVG is contain-fit into the actual
+   available box on both axes — width:100%+height:auto was scaling
+   purely off width, so on a wide/short window the cell rendered
+   taller than the panel and the top/bottom (cytoplasm, membrane)
+   got clipped instead of shrinking to fit. */
+#roadmap-cell-svg { width: 100%; height: 100%; max-height: 100%; overflow: visible; }
+
+.cell-membrane-outline {
+  fill: rgba(148, 163, 184, 0.05);
+  stroke: var(--border);
+  stroke-width: 2.5;
+}
+
+.roadmap-organelle { cursor: pointer; }
+
+.organelle-glow {
+  opacity: 0.3;
+  filter: blur(14px);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .organelle-glow { animation: roadmap-gem-pulse 2.8s ease-in-out infinite; }
+  .roadmap-organelle:nth-of-type(2n) .organelle-glow { animation-delay: -1.3s; }
+}
+
+.roadmap-organelle.is-active .organelle-glow { opacity: 0.6; }
+.roadmap-organelle.is-active .organelle-body { filter: drop-shadow(0 0 8px var(--organelle-glow)); }
+
+.organelle-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  fill: var(--text-muted);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.cell-body { fill: rgba(150, 170, 200, 0.5); stroke: rgba(230, 238, 248, 0.75); stroke-width: 1.5; }
+
+/* Nucleus: solid lavender body, a few chromatin flecks, and a bold
+   asymmetric nucleolus blob (a separate clickable organelle) nested
+   inside it — bright, saturated "sticker" style rather than washed out. */
+.cell-body-nucleus { fill: #C4B5FD; stroke: #7C5CE0; stroke-width: 2; }
+.cell-body-chromatin { fill: #7C5CE0; stroke: none; opacity: 0.65; }
+.cell-body-nucleolus { fill: #9B6FE0; stroke: #6D3FC4; stroke-width: 2; stroke-linejoin: round; }
+
+/* Rough/smooth ER: one bold wavy ribbon stroke plus a thin lighter
+   highlight riding its top edge, like a lit rounded surface */
+.cell-body-er-rough { fill: none; stroke: #5B8DEF; stroke-linecap: round; stroke-linejoin: round; }
+.cell-body-er-smooth { fill: none; stroke: #A78BFA; stroke-linecap: round; stroke-linejoin: round; }
+.cell-body-er-highlight { fill: none; stroke: rgba(255, 255, 255, 0.4); stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.cell-body-ribo-dot { fill: #E0559A; stroke: none; }
+.cell-body-ribo-dot-small { fill: #F6A6CC; stroke: none; }
+
+/* Golgi: stack of tapering coral cisternae (each a shade darker toward the center) with small vesicles budding off each end */
+.cell-body-golgi-vesicle { stroke: none; }
+
+/* Mitochondrion: bold coral body with one continuous cristae wave, like a single ribbon folded inside */
+.cell-body-mito { fill: #F2704F; stroke: #C8431F; stroke-width: 2; }
+.cell-body-cristae { fill: none; stroke: #FFD9C7; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+
+.cell-body-lysosome { fill: #E0567A; stroke: #B22F53; stroke-width: 1.75; }
+.cell-body-lysosome-core { fill: #7A1E38; stroke: none; opacity: 0.65; }
+.cell-body-peroxisome { fill: #F5B942; stroke: #C4841A; stroke-width: 1.75; }
+.cell-body-peroxisome-core { fill: #8A5A0A; stroke: none; opacity: 0.6; }
+.cell-body-vesicle { fill: #6FCBEA; stroke: #2E8EB0; stroke-width: 1.75; }
+.cell-body-vesicle-core { fill: #14607E; stroke: none; opacity: 0.55; }
+
+.cell-body-vacuole { fill: #BEE3F5; stroke: #5AA8CC; stroke-width: 2; }
+.cell-body-vacuole-outline { fill: none; stroke: rgba(90, 168, 204, 0.5); stroke-width: 1; }
+
+/* The glossy highlight ellipse shared by most rounded organelles */
+.cell-shine { fill: rgba(255, 255, 255, 0.55); stroke: none; pointer-events: none; }
+
+/* Centrioles: two perpendicular barrels, each cross-hatched like microtubule triplets */
+.cell-body-centriole { fill: #94A3B8; stroke: #5B6B82; stroke-width: 1; }
+.cell-body-centriole-ring { stroke: rgba(30, 41, 59, 0.55); stroke-width: 1.25; }
+
+.cell-body-cytoskeleton { fill: none; stroke: #94A3B8; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; opacity: 0.9; }
+
+/* Membrane: phospholipid bilayer segment (two head rows) with an embedded channel protein */
+.cell-body-membrane-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+.cell-body-membrane-head { fill: var(--accent); stroke: none; }
+.cell-body-membrane-protein { fill: #E0B25C; stroke: var(--accent); stroke-width: 1.5; }
+
+/* Chloroplast: solid green envelope with stacked grana (thylakoid disc) columns linked by stroma lamellae */
+.cell-body-chloro { fill: #4CAF6E; stroke: #2E7D4F; stroke-width: 2; }
+.cell-body-chloro-grana { fill: #1F5C38; stroke: none; opacity: 0.9; }
+.cell-body-chloro-stripe { stroke: #DFF3E6; stroke-width: 1.25; opacity: 0.7; }
+
+.cell-body-cytoplasm { fill: rgba(148, 163, 184, 0.16); stroke: rgba(148, 163, 184, 0.4); stroke-dasharray: 2 4; }
+
+.cell-wave-ring { fill: none; stroke: var(--accent); stroke-width: 2.5; pointer-events: none; }
+
+/* -------- Roadmap: code view -------- */
+.roadmap-code-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 12px;
+  overflow: hidden;
+}
+
+.roadmap-code-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.roadmap-code-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  background: #1B1B27;
+  border: 1px solid var(--border);
+}
+
+.roadmap-code-editor {
+  margin: 0;
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #D4D4E0;
+}
+
+.code-line { display: flex; }
+
+.code-line-num {
+  flex: 0 0 auto;
+  width: 34px;
+  text-align: right;
+  margin-right: 16px;
+  color: #4B4B60;
+  user-select: none;
+}
+
+.code-line-content { flex: 1; white-space: pre-wrap; word-break: break-word; }
+
+.code-kw { color: #C586C0; }
+.code-type { color: #4EC9B0; }
+.code-str { color: #CE9178; }
+.code-com { color: #6A9955; font-style: italic; }
+.code-num { color: #B5CEA8; }
+.code-fn { color: #DCDCAA; }
+.code-var { color: #9CDCFE; }
+
+.code-chapter-token {
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: 0 -4px;
+  border: 1px solid var(--tok-color, var(--accent));
+  background: var(--tok-bg, rgba(214, 169, 74, 0.15));
+  color: var(--tok-color, var(--accent));
+  font-weight: 700;
+}
+
+.code-chapter-token:hover { filter: brightness(1.3); }
+
+.code-chapter-token.is-active {
+  box-shadow: 0 0 0 1px var(--tok-color, var(--accent));
+  filter: brightness(1.15);
+}
+
+@keyframes code-token-pulse {
+  0% { filter: brightness(1); transform: scale(1); }
+  35% { filter: brightness(1.7); transform: scale(1.1); }
+  100% { filter: brightness(1); transform: scale(1); }
+}
+
+.code-chapter-token.code-pulse { animation: code-token-pulse 480ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .code-chapter-token.code-pulse { animation: none; }
+}
 
 /* -------- Right Now page -------- */
 .rightnow-wrap {
@@ -2354,9 +2698,9 @@ footer {
 
   .roadmap-table td.roadmap-name::before { display: block; margin-bottom: 4px; }
 
-  /* Curve view: stop vertically centering in leftover viewport height —
-     on a phone that pushes the diagram far below the legend. */
-  .roadmap-curve-canvas { flex: none; min-height: 0; align-items: flex-start; padding-top: 12px; }
+  /* Curve/Cell views: stop vertically centering in leftover viewport
+     height — on a phone that pushes the diagram far below the legend. */
+  .roadmap-curve-canvas, .roadmap-cell-canvas { flex: none; min-height: 0; align-items: flex-start; padding-top: 12px; }
 }
 
 @media (max-width: 720px) {

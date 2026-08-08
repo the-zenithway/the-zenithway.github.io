@@ -17,8 +17,8 @@
 - [ ] formalized IRL sessions 
 - [ ] metric formalization, also but fix for some metrics not being edited 
 - [ ] AP Physics self study track
-- [ ] biology, chemistry view for couse  and other subjects too 
 - [ ] fix biology and chemistry course 
+- [ ] Refine biology view 
 
 ## 3. Improvement Brainstorm(Ideas)
 - [ ] Philosophies 
@@ -42,7 +42,10 @@
   - [ ] genuine mentorship 
   - [ ] teach inner excellence like we teach math 
 
-
-
-
-
+## Done
+- [x] Roadmap: Curve is now the default view for AP Calculus BC; every course remembers the last view a student picked (localStorage, per course) and reopens to it
+- [x] Two new roadmap views: "Periodic" (Chemistry's default) and "Cell" (Biology's default) — both work on every course, same as Curve does for Calc
+- [x] Periodic view draws the full 118-element table (incl. lanthanide/actinide rows) every time, muted gray except the chapters-mapped tiles; tiles size themselves dynamically to exactly fill the screen (no scroll) and are now centered
+- [x] Cell view organelles redrawn bolder/more detailed (solid saturated fills, continuous mitochondria cristae wave, gradient Golgi stack, asymmetric nucleolus blob) to read like a real vector-icon cell diagram
+- [x] Cell view: fixed a cutoff bug (SVG was scaling by width only via height:auto, so on wide/short windows the top/bottom got clipped) — now contain-fits both axes so the whole cell always fits with margin; added glossy highlight ellipses, a thicker ER ribbon with a lit top edge, and a tighter ribosome cluster
+- [x] New "Code" view — Computer Science's default — chapters as syntax-highlighted Java method names inside a fake scrollable source file; click a method name to open its chapter popover
