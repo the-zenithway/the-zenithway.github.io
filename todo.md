@@ -1,7 +1,7 @@
 ## 1. Priority Stuff
 - [ ] Philosophy, About us page
 - [ ] Blogs(1+)
-- [ ] dManual(pdf) + Video on yt 
+- [ ] Manual(pdf) + Video on yt 
 - [ ] Social Media posts
 - [ ] Get People 
 - [ ] Get teachers
