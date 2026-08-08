@@ -303,7 +303,7 @@
   {
     "id": "sub_1786096301424_l2wi8z",
     "receivedAt": "2026-08-07T09:51:41.424Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "kyjv9981",
     "chapter": "Chapter 2",
@@ -319,5 +319,30 @@
     },
     "ocrText": null,
     "formResponseId": "2_ABaOnufqPqewIH_PRA8HT9fR9V0atB2DE5mmUtVqpsFWHn3pcy7Q_74BcKF5ABIj-oycy0M"
+  },
+  {
+    "id": "sub_1786167722701_jlldxl",
+    "receivedAt": "2026-08-08T05:42:02.702Z",
+    "status": "pending",
+    "courseId": "ap-calculus-bc",
+    "username": "seohu",
+    "chapter": "Chapter 1",
+    "unit": "B",
+    "answers": {
+      "name": "Seohu Lee",
+      "username": "seohu",
+      "Upload the relevant files here": [
+        "1XlO2UysB87xGZ3CYZH2iX-H9QgyXBKY9",
+        "1LxORhExoWz4wkDZkltMGbuX19Sh6BLrP",
+        "1N-BUHkLg11t8uvjycGfTWtj9X60HR5gH"
+      ],
+      "Upload the relevant answers here": "",
+      "feedback-and-remarks": "",
+      "Course": "ap-calculus-bc",
+      "chapter": "1",
+      "unit": "B"
+    },
+    "ocrText": "\nо\ny= x\nTU-1)\nth\n(Fun Facts)\npressure is more than 1.000 times greater\nBecause of the enormous\nThe Mariana Trench\nEx 12)\n1= 4 sint sint = x\nY=5cost cost =\nsin't + 80s 't 9=1\ny =1\n212\n+\n25\nEx137\nd=1-t, y=√t tai, tay 42=1-22\nY = √1-x\n1-200 -13-11751\n앤 뭐임\nY=√1-x\nPat the rel\n\n---\n\n\nEx 14)\nλ = 4 cost + cos 12t\ny = 4 sin t + sin 12 t\n1-4wst y=4sint\ncost = 1/4\n醬+% =1\n16\nd2+y2 =16\nSint\n1\nd = cos 12t, y=sin 12t\ny\n4\nEx 16)\nfix=x2+x, f(x)\n*\n4=*+*2+17 a=yey2+17\nd=t, y=t\"+t ft2+t, y=t\n2+\n-21 2\nу=х\n4\nEx15)\n2=42-by+8\n2=(y-2724-4) 42-64+8 y=b479-1 x=(y-3)2 - 1 बबहान पत्र में\ny=3, d= -|\n(1113)\n7\n2\n4\n3\n-10\nEx177\n(a) =2+4sing\nthrough origin 7120\n274 sing=0\n4sing =-21\nsir 2=-\n0 = 20° = = π\n24 4sing = 3\n4sing = 1\nsin b = =\n4\n*\n0=ates in ≈ 0.253\n\n---\n\n\nEx18)\n+1+cose 6-\n=1+ 205\n++ 1+ 4 = 23/\n6-75\nf",
+    "formResponseId": "2_ABaOnuc0rJWBVnogm3tvEN7lEjD27fwCuxmQDzpe_tXmxiMGvDFP8xN8QaNLZavMQkO-rpY"
   }
 ]
