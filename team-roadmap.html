@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "teacher", active: "roadmap", actions: ["logout"] });</script>
+
+<main class="parent-wrap">
+  <div class="parent-col">
+    <p class="parent-greeting">Roadmap</p>
+    <p class="parent-subtitle">Everything open in todo.md, regrouped from "which pillar" into "what order." Nothing here needs a decision right now — it's a map to come back to whenever there's a free hour.</p>
+
+    <div class="plan-shipped">
+      <span>&#10003;</span>
+      <span><b>Just shipped:</b> teacher email notification on new submissions &mdash; still needs a real address in <code>TEACHERS[0].email</code> and the script pasted into the live Apps Script editor.</span>
+    </div>
+
+    <div class="plan-legend">
+      <span><i style="background:var(--tag-clarity)"></i>Absolute Clarity</span>
+      <span><i style="background:var(--tag-excellence)"></i>Inner Excellence</span>
+      <span><i style="background:var(--tag-mentor)"></i>Genuine Mentorship</span>
+      <span><i style="background:var(--tag-admin)"></i>Admin</span>
+      <span><i style="background:var(--tag-kick)"></i>Kickstart</span>
+      <span><i style="background:var(--tag-intra)"></i>Intra-school</span>
+    </div>
+
+    <div class="plan-mentor">
+      <p class="plan-eyebrow">Genuine Mentorship</p>
+      <p>This pillar has no checklist in todo.md because it isn't a phase &mdash; it's the standard every other phase gets built against. When a feature below can be done the efficient way or the way that treats a student like someone we see ourselves in, that's the tiebreaker.</p>
+    </div>
+
+    <div class="plan-spine">
+
+      <div class="plan-phase" data-n="1">
+        <h2>Fix what's already live</h2>
+        <p class="plan-why">Current students are touching these pages today &mdash; bugs here cost trust faster than any new feature builds it.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Fix biology and chemistry course</span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Mobile optimization for the newer features</span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Improve Korean wording on the resource page</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="2">
+        <h2>Teacher &harr; student workflow</h2>
+        <p class="plan-why">This is the daily engine &mdash; submissions, grading, alerts. Highest leverage per hour spent, because it's what every active student and teacher touches every week.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Teacher view for new submissions<span class="plan-item-note">show exactly what to do, not just that something arrived</span></span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Teacher notification checking + rethink the teacher/student workflow end to end</span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Improve submission process<span class="plan-item-note">autoparsing, auto grading</span></span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Scheduled email alerts, settable via a teacher article</span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Metric formalization</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="3">
+        <h2>Learning tools &amp; content infrastructure</h2>
+        <p class="plan-why">Once the workflow is solid, this is what makes the program useful to sit inside &mdash; the reference material students pull up mid-study.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Question database &mdash; search, ask, hints</span></div>
+          <div class="plan-item"><span class="plan-tag clarity">CLARITY</span><span class="plan-item-text">Automatic documentation gathering<span class="plan-item-note">Instagram bot logs, GitHub commits, lecture sessions, scores &mdash; partly done</span></span></div>
+          <div class="plan-item"><span class="plan-tag excellence">EXCELLENCE</span><span class="plan-item-text">Study-technique library page<span class="plan-item-note">spaced repetition, active recall, using the Cheat Sheet in review</span></span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Biology / chemistry course view for other subjects</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="4">
+        <h2>Inner Excellence &amp; daily touch</h2>
+        <p class="plan-why">Lower urgency than the workflow, but these are the small recurring touches that make the program feel like a relationship, not a portal.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag excellence">EXCELLENCE</span><span class="plan-item-text">Daily motivation &amp; Inner Excellence quotes</span></div>
+          <div class="plan-item"><span class="plan-tag excellence">EXCELLENCE</span><span class="plan-item-text">Every-day motivational article + regular check-ins</span></div>
+          <div class="plan-item"><span class="plan-tag excellence">EXCELLENCE</span><span class="plan-item-text">Formalize IRL sessions<span class="plan-item-note">발상노트 점검 + full chapter walkthrough + test/mock</span></span></div>
+          <div class="plan-item"><span class="plan-tag excellence">EXCELLENCE</span><span class="plan-item-text">Make the program feel encouraging wherever it currently doesn't</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="5">
+        <h2>Trust &amp; storytelling</h2>
+        <p class="plan-why">Pages a prospective family or first-timer lands on. Worth building once there's a track record and workflow to actually show &mdash; not before.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">About-us page</span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">First-timer manual<span class="plan-item-note">video or article, a real onboarding, not just a page</span></span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Alumni / results page</span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Timeline of features</span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Zenith blog<span class="plan-item-note">study-technique deep dives &middot; IVT vs MVT vs Rolle's-style pitfall posts &middot; student spotlights &middot; velocity not displacement &middot; the Zenith story &middot; inner excellence &middot; teach inner excellence like we teach math &middot; what if the thing missing wasn't studying but a compass</span></span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">Video production, uploaded directly to YouTube</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="6">
+        <h2>Growth</h2>
+        <p class="plan-why">Don't open the top of the funnel until phases 1&ndash;5 can actually hold new people well. Free, always &mdash; growth funds itself around the product, never inside it.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag kick">KICKSTART</span><span class="plan-item-text">Discord community</span></div>
+          <div class="plan-item"><span class="plan-tag admin">ADMIN</span><span class="plan-item-text">AP Physics self-study track</span></div>
+          <div class="plan-item"><span class="plan-tag kick">KICKSTART</span><span class="plan-item-text">Instagram / social media presence</span></div>
+          <div class="plan-item"><span class="plan-tag kick">KICKSTART</span><span class="plan-item-text">Get new people</span></div>
+        </div>
+      </div>
+
+      <div class="plan-phase" data-n="7">
+        <h2>Partnerships</h2>
+        <p class="plan-why">Needs the storytelling assets from phase 5 to actually pitch &mdash; a proposal is only as strong as the results page and timeline behind it.</p>
+        <div class="plan-items">
+          <div class="plan-item"><span class="plan-tag intra">INTRA-SCHOOL</span><span class="plan-item-text">Presentation deck</span></div>
+          <div class="plan-item"><span class="plan-tag intra">INTRA-SCHOOL</span><span class="plan-item-text">Formal proposal document</span></div>
+          <div class="plan-item"><span class="plan-tag intra">INTRA-SCHOOL</span><span class="plan-item-text">Zenith Local</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="plan-footer">Ordering is a judgment call, not a schedule &mdash; nothing here has a deadline attached. Pick up wherever there's a free hour; the tags are there so a 20-minute pocket of time and a free afternoon both have something sized to fit.</p>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  requireTeacherLogin();
+
+  document.getElementById('logout-btn').addEventListener('click', logout);
+</script>
+</body>
+</html>

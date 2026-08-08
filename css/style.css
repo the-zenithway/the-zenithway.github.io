@@ -15,6 +15,13 @@
   --accent-ink: #191919;
   --error: #D97878;
 
+  --tag-clarity: #7FA3D9;
+  --tag-excellence: #D6A94A;
+  --tag-mentor: #B39DDB;
+  --tag-admin: #A7AEC2;
+  --tag-kick: #7FCAA9;
+  --tag-intra: #7FC4D1;
+
   --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
   --font-logo: 'Space Grotesk', var(--font-sans);
@@ -2380,4 +2387,155 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+}
+
+/* -------- Team roadmap (internal, teacher nav) -------- */
+.plan-shipped {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 28px;
+}
+
+.plan-shipped b { color: var(--text); font-weight: 600; }
+
+.plan-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 0 28px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.plan-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.plan-legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+.plan-mentor {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--tag-mentor);
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 0 0 32px;
+}
+
+.plan-mentor .plan-eyebrow { color: var(--tag-mentor); }
+.plan-mentor p { margin: 0; color: var(--text); font-size: 0.9rem; }
+
+.plan-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.plan-spine { position: relative; padding-left: 34px; }
+
+.plan-spine::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--border), var(--accent));
+}
+
+.plan-phase { position: relative; margin-bottom: 30px; }
+
+.plan-phase::before {
+  content: attr(data-n);
+  position: absolute;
+  left: -34px;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan-phase h2 { font-size: 1.08rem; margin: 0 0 4px; color: var(--text); }
+
+.plan-phase .plan-why {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.83rem;
+  margin: 0 0 12px;
+}
+
+.plan-items {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.plan-item {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.86rem;
+}
+
+.plan-item:last-child { border-bottom: none; }
+
+.plan-tag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transform: translateY(-1px);
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.plan-item-text { color: var(--text); }
+
+.plan-item-note {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.plan-tag.clarity { color: var(--tag-clarity); border-color: var(--tag-clarity); }
+.plan-tag.excellence { color: var(--tag-excellence); border-color: var(--tag-excellence); }
+.plan-tag.mentor { color: var(--tag-mentor); border-color: var(--tag-mentor); }
+.plan-tag.admin { color: var(--tag-admin); border-color: var(--tag-admin); }
+.plan-tag.kick { color: var(--tag-kick); border-color: var(--tag-kick); }
+.plan-tag.intra { color: var(--tag-intra); border-color: var(--tag-intra); }
+
+.plan-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }

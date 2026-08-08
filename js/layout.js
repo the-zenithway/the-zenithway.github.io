@@ -32,7 +32,8 @@ const PORTAL_NAV_LINKS = [
 
 const TEACHER_NAV_LINKS = [
   { key: "dashboard", href: "teacher.html", label: "Teacher Dashboard" },
-  { key: "overview", href: "teacher-overview.html", label: "All Students" }
+  { key: "overview", href: "teacher-overview.html", label: "All Students" },
+  { key: "roadmap", href: "team-roadmap.html", label: "Roadmap" }
 ];
 
 const PORTAL_ACTION_HTML = {
@@ -119,7 +120,7 @@ function renderSiteHeader(opts) {
 // opts:
 //   nav: 'full' (default) — Courses/Now/Feedback/Calendar/Submit, needs `active`
 //   nav: 'resources' — Home/Resources/Student Portal self-study subnav
-//   nav: 'teacher' — Teacher Dashboard/All Students tabs, needs `active` ('dashboard'/'overview')
+//   nav: 'teacher' — Teacher Dashboard/All Students/Roadmap tabs, needs `active` ('dashboard'/'overview'/'roadmap')
 //   nav: 'label' — single non-link label, needs `label`
 //   actions: array of 'open' | 'allCourses' | 'logout' (default ['logout'])
 function renderPortalHeader(opts) {
