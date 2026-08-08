@@ -2898,11 +2898,18 @@ const STUDENTS = [
         "rightNow": {
           "state": "your-move",
           "chapter": "Chapter 1",
-          "unit": "B",
-          "instruction": "Read through the chapter and actively work through the examples as you go — don't just read past them. Use whatever helps you actually close the gaps. Message us once you're done.",
-          "due": "Wednesday"
+          "unit": "C",
+          "instruction": "Try to solve every problem in the given set!",
+          "due": "TBD"
         },
-        "feedback": [],
+        "feedback": [
+          {
+            "date": "Aug 8",
+            "chapter": "Chapter 1",
+            "unit": "B",
+            "content": "Great! Now head on to your C unit :)"
+          }
+        ],
         "cheatSheet": [],
         "roadmap": [
           {
@@ -6678,10 +6685,10 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 1",
-          "unit": "C1",
-          "instruction": "Complete C1 — Functions Problems. Work through the problems carefully, show each step, and use B1 as a reference whenever you need to revisit a function concept.",
-          "due": "Next session"
+          "chapter": "Chapter 1 & 2",
+          "unit": "B",
+          "instruction": "Complete entire chapter 1 & 2B rigorously. Consider each of the definition in detail.",
+          "due": "TBD"
         },
         "feedback": [
           {
@@ -7293,7 +7300,20 @@ const STUDENTS = [
             "chapter": "Chapter M",
             "status": "Locked"
           }
-        ]
+        ],
+        "metrics": {
+          "apPredictedScore": {
+            "score": 3,
+            "maxScore": 5,
+            "asOf": "Aug 8"
+          },
+          "motivation": [
+            {
+              "date": "Aug 5",
+              "score": 95
+            }
+          ]
+        }
       }
     ]
   },
