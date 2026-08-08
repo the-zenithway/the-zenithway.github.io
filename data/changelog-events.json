@@ -426,6 +426,13 @@
   "davidheo": [
     {
       "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 1 & 2 B (due TBD)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-08T07:59:58.554Z"
+    },
+    {
+      "type": "deadline",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — new task: Chapter 1-4 N1-4",
       "url": "right-now.html?course=ap-chemistry",
@@ -624,13 +631,6 @@
       "type": "roadmap",
       "courseId": "ap-chemistry",
       "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) unlocked",
-      "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-05T09:59:24.806Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) unlocked",
       "url": "roadmap.html?course=ap-chemistry",
       "timestamp": "2026-08-05T09:59:24.806Z"
     }
