@@ -758,6 +758,20 @@
   ],
   "seohu": [
     {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 1 C (due TBD)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-08T07:55:15.753Z"
+    },
+    {
+      "type": "feedback",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new feedback on Chapter 1 B",
+      "url": "feedback.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-08T07:55:15.753Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) unlocked",
