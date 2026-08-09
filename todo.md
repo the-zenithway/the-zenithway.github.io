@@ -8,6 +8,7 @@
 - [ ] Zenith Local, Club, Proposal, Presentation
 
 ## 2. Maintenance & Improvement 
+- [ ] Teacher/admin dashboard view of submitted requests (data/requests-log.json) — triage queue, status updates (New/In Progress/Done/Declined), admin dashboard doesn't exist yet either
 - [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Question database and like searching, asking questions, hints, etc.
 - [ ] mobile optimization for the new features 
@@ -43,6 +44,7 @@
   - [ ] teach inner excellence like we teach math 
 
 ## Done
+- [x] Requests page (requests.html) — students/teachers/parents submit a Feature Request / Resource Request / Bug Report / Concern, open to any logged-in role via new requireAnyLogin()/getCurrentPerson(); posts to a new submitRequest action on the existing zenith-data-writer.gs endpoint, logged to new data/requests-log.json; entry point is a "Requests" link on portal.html and teacher.html (not a new nav tab). Apps Script deployment still needs to be updated by hand with the new action before real submissions land in the log — see automation/zenith-data-writer.gs's setup steps.
 - [x] Roadmap: Curve is now the default view for AP Calculus BC; every course remembers the last view a student picked (localStorage, per course) and reopens to it
 - [x] Two new roadmap views: "Periodic" (Chemistry's default) and "Cell" (Biology's default) — both work on every course, same as Curve does for Calc
 - [x] Periodic view draws the full 118-element table (incl. lanthanide/actinide rows) every time, muted gray except the chapters-mapped tiles; tiles size themselves dynamically to exactly fill the screen (no scroll) and are now centered

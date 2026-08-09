@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requests — Zenith</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body class="portal-body">
+
+<div id="header-mount"></div>
+<script>renderPortalHeader({ nav: "label", label: "Requests", actions: ["logout"] });</script>
+
+<main class="requests-wrap">
+  <div class="requests-col">
+    <p class="requests-greeting" id="requests-greeting"></p>
+
+    <div class="requests-form-card">
+      <h2 class="requests-form-title">Submit a request</h2>
+      <p class="requests-form-text">Missing a resource, found a bug, or just have a concern? Tell us here — teachers and admins see every request that comes in.</p>
+
+      <label class="requests-field-label" for="requests-category">Category</label>
+      <select id="requests-category" class="requests-select">
+        <option value="Feature Request">Feature Request</option>
+        <option value="Resource Request">Resource Request</option>
+        <option value="Bug Report">Bug Report</option>
+        <option value="Concern / Other">Concern / Other</option>
+      </select>
+
+      <label class="requests-field-label" for="requests-title">Title</label>
+      <input id="requests-title" class="requests-input" type="text" maxlength="120" placeholder="Short summary">
+
+      <label class="requests-field-label" for="requests-details">Details</label>
+      <textarea id="requests-details" class="requests-textarea" rows="5" placeholder="As much detail as helps"></textarea>
+
+      <button type="button" class="btn-primary requests-submit-btn" id="requests-submit-btn">Submit request</button>
+    </div>
+
+    <div>
+      <h2 class="requests-log-heading">Your requests</h2>
+      <div class="requests-log-list" id="requests-log-list"></div>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  var person = requireAnyLogin();
+  if (person) {
+    document.getElementById('requests-greeting').textContent = "Hey " + person.name.split(" ")[0] + ",";
+    renderRequestsLog(person);
+
+    document.getElementById('requests-submit-btn').addEventListener('click', function () {
+      submitRequestForm_(person, this);
+    });
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', logout);
+</script>
+</body>
+</html>

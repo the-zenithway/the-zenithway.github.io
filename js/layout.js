@@ -40,6 +40,7 @@ const PORTAL_ACTION_HTML = {
   open: '<a id="open-direct-link" href="#" target="_blank" rel="noopener" class="portal-link">Open ↗</a>',
   allCourses: '<a href="portal.html" class="portal-link">All courses</a>',
   back: '<a href="resources.html" class="portal-link">← Back to Resources</a>',
+  requests: '<a href="requests.html" class="portal-link">Requests</a>',
   lang: '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>',
   logout: '<button id="logout-btn" class="portal-logout">Log out</button>'
 };
@@ -122,7 +123,7 @@ function renderSiteHeader(opts) {
 //   nav: 'resources' — Home/Resources/Student Portal self-study subnav
 //   nav: 'teacher' — Teacher Dashboard/All Students/Roadmap tabs, needs `active` ('dashboard'/'overview'/'roadmap')
 //   nav: 'label' — single non-link label, needs `label`
-//   actions: array of 'open' | 'allCourses' | 'logout' (default ['logout'])
+//   actions: array of 'open' | 'allCourses' | 'requests' | 'logout' (default ['logout'])
 function renderPortalHeader(opts) {
   opts = opts || {};
   const navType = opts.nav || "full";

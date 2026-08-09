@@ -46,7 +46,7 @@ const ROADMAP_DEFAULT_VIEWS = {
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS,
 // then PARENTS (from data.js). On success, remembers who's logged in
@@ -106,6 +106,34 @@ function getCurrentParent() {
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
   return PARENTS.find(function (p) { return p.username === username; }) || null;
+}
+
+// Returns { username, role, name } for whoever is logged in on this
+// browser, regardless of role, or null if nobody is. Backs pages like
+// requests.html that are open to students/teachers/parents alike,
+// where requireLogin()/requireTeacherLogin()/requireParentLogin()
+// would each wrongly bounce two of the three roles away.
+function getCurrentPerson() {
+  const role = localStorage.getItem(ROLE_KEY);
+  const person = role === "teacher" ? getCurrentTeacher()
+    : role === "parent" ? getCurrentParent()
+    : getCurrentStudent();
+  if (!person) return null;
+  return { username: person.username, role: role, name: person.name };
+}
+
+// Same idea as requireLogin(), but for pages any logged-in role
+// (student/teacher/parent) can use — sends to login.html (remembering
+// the page to return to) only if nobody at all is logged in, unlike
+// the role-specific require*Login() functions above which each bounce
+// two of the three roles to their own dashboard instead.
+function requireAnyLogin() {
+  if (!getCurrentPerson()) {
+    const here = window.location.pathname.split("/").pop() + window.location.search;
+    window.location.href = "login.html?redirect=" + encodeURIComponent(here);
+    return null;
+  }
+  return getCurrentPerson();
 }
 
 // Sends the visitor to the login page if nobody is logged in,
@@ -733,6 +761,104 @@ function renderSubmissionLog(student, course) {
     .catch(function () {
       list.innerHTML = '<p class="submit-log-empty">Could not load your submission history right now.</p>';
     });
+}
+
+// ---- Requests (requests.html) ----
+// A lightweight feature/resource/bug/concern submission form open to
+// any logged-in role (student/teacher/parent — see requireAnyLogin()/
+// getCurrentPerson() above). Posts straight to TEACHER_DATA_WRITE_URL's
+// submitRequest action via the shared postTeacherAction_ POST helper
+// (see automation/zenith-data-writer.gs) and reads back
+// data/requests-log.json for a "your requests" list — same shape as
+// submit.html's submission log just above.
+
+const REQUEST_CATEGORIES = ["Feature Request", "Resource Request", "Bug Report", "Concern / Other"];
+
+// Minimal HTML-escape for the free-text title/details fields below —
+// unlike submissionLogItemHtml's OCR text or a teacher-authored
+// feedback entry, this text is typed directly by whoever is logged
+// in (any role) and rendered back as innerHTML, so it needs escaping
+// to rule out a stored-XSS path through this page's own "your
+// requests" list (and, later, the teacher/admin dashboards reading
+// the same log).
+function escapeHtml_(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function requestLogItemHtml(entry) {
+  const statusClass = "requests-log-status-" + (entry.status || "New").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + escapeHtml_(entry.category) + '</span>' +
+      '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="requests-log-status ' + statusClass + '">' + escapeHtml_(entry.status || "New") + '</span>' +
+    '</div>' +
+    '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
+    '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+  '</div>';
+}
+
+// Fails quietly into the empty state if the fetch doesn't work (e.g.
+// opened from file:// instead of a real server) — same tradeoff as
+// renderSubmissionLog above.
+function renderRequestsLog(person) {
+  const list = document.getElementById("requests-log-list");
+  if (!list || !person) return;
+
+  list.innerHTML = '<p class="requests-log-empty">Loading your requests...</p>';
+
+  fetch("data/requests-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const mine = all.filter(function (entry) {
+        return entry.username === person.username;
+      }).sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+
+      if (mine.length === 0) {
+        list.innerHTML = '<p class="requests-log-empty">Nothing submitted yet — it\'ll show up here once you submit the form above.</p>';
+        return;
+      }
+
+      list.innerHTML = mine.map(requestLogItemHtml).join("");
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="requests-log-empty">Could not load your request history right now.</p>';
+    });
+}
+
+// Reads requests.html's form fields, validates, and posts via
+// postTeacherAction_ (the same POST helper teacher-student.html's
+// write controls use — generic despite its name, see its own comment
+// above). Clears the form and refreshes the log on success.
+function submitRequestForm_(person, buttonEl) {
+  const titleEl = document.getElementById("requests-title");
+  const detailsEl = document.getElementById("requests-details");
+  const categoryEl = document.getElementById("requests-category");
+
+  const title = titleEl.value.trim();
+  const details = detailsEl.value.trim();
+  if (!title || !details) {
+    alert("Please fill in both a title and details before submitting.");
+    return;
+  }
+
+  postTeacherAction_("submitRequest", {
+    username: person.username,
+    name: person.name,
+    role: person.role,
+    category: categoryEl.value,
+    title: title,
+    details: details
+  }, buttonEl, function () {
+    titleEl.value = "";
+    detailsEl.value = "";
+    renderRequestsLog(person);
+  });
 }
 
 // ---- Teacher dashboard (teacher.html) ----

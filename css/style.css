@@ -2438,6 +2438,158 @@ a.teacher-queue-student:hover { text-decoration: underline; }
   margin: 0;
 }
 
+/* -------- requests.html -------- */
+/* Same wrap/col/greeting/log shape as .submit-* above (requests.html
+   is structurally the same "form card + your history list" page as
+   submit.html) — kept as its own class family rather than reusing
+   .submit-* since this page is open to any logged-in role, not just
+   students, and the form itself (category/title/details) is a
+   different shape from submit.html's single "open the form" link. */
+.requests-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.requests-col {
+  width: 100%;
+  max-width: 560px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.requests-greeting {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.requests-form-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.requests-form-title {
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+}
+
+.requests-form-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.requests-field-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 4px 0 2px;
+}
+
+.requests-select,
+.requests-input,
+.requests-textarea {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.requests-textarea { min-height: 110px; resize: vertical; }
+
+.requests-submit-btn { margin-top: 4px; }
+.requests-submit-btn:disabled { opacity: 0.6; cursor: default; }
+
+.requests-log-heading {
+  font-size: 1rem;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+.requests-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.requests-log-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.requests-log-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 8px;
+  flex-wrap: wrap;
+}
+
+.requests-log-category {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.requests-log-date { color: var(--text-muted); font-size: 0.8rem; }
+
+.requests-log-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.requests-log-status-new { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+
+.requests-log-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.requests-log-details {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.requests-log-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
 /* One independently-foldable piece of a submission card (photos, OCR
    text, typed answer, remark) — used on submit.html, teacher.html's
    grading queue, and teacher-student.html's submissions list.
