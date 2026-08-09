@@ -59,6 +59,15 @@
     document.getElementById('requests-greeting').textContent = "Hey " + person.name.split(" ")[0] + ",";
     renderRequestsLog(person);
 
+    // Lets a link like resources.html's "Request a resource" banner
+    // land here with the right category already picked, instead of
+    // making the visitor re-select what they just clicked for.
+    var requestedCategory = new URLSearchParams(window.location.search).get('category');
+    var categorySelect = document.getElementById('requests-category');
+    if (requestedCategory && REQUEST_CATEGORIES.indexOf(requestedCategory) !== -1) {
+      categorySelect.value = requestedCategory;
+    }
+
     document.getElementById('requests-submit-btn').addEventListener('click', function () {
       submitRequestForm_(person, this);
     });

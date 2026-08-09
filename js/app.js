@@ -16,15 +16,17 @@
     - right-now.html is different — it's real content, not an embed,
       rendered by renderRightNow() below from each student's
       "rightNow" field in js/data.js.
-    - There are two roles now: students (STUDENTS in data.js) use all
-      the pages above; teachers (TEACHERS in data.js) log into
-      teacher.html instead, which is its own separate, much simpler
-      page for now — see requireTeacherLogin()/getCurrentTeacher()
-      below.
+    - There are four roles now: students (STUDENTS in data.js) use all
+      the pages above; teachers (TEACHERS) log into teacher.html;
+      parents (PARENTS) log into parent.html; admins (ADMINS) log into
+      admin.html. Each non-student role is its own separate, simpler
+      page — see requireTeacherLogin()/getCurrentTeacher(),
+      requireParentLogin()/getCurrentParent(), and
+      requireAdminLogin()/getCurrentAdmin() below.
 */
 
 const SESSION_KEY = "loggedInUsername";
-const ROLE_KEY = "loggedInRole"; // "student", "teacher", or "parent"
+const ROLE_KEY = "loggedInRole"; // "student", "teacher", "parent", or "admin"
 const ACTIVE_COURSE_KEY = "activeCourseId";
 const ROADMAP_VIEW_KEY_PREFIX = "roadmapView:"; // + course.id -> last view picked for that course
 // Curve is Calculus BC's signature view, Periodic is Chemistry's,
@@ -46,12 +48,12 @@ const ROADMAP_DEFAULT_VIEWS = {
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html", "admin.html"];
 
 // Checks a username/password against STUDENTS first, then TEACHERS,
-// then PARENTS (from data.js). On success, remembers who's logged in
-// and which role they are (in this browser) and returns true. Returns
-// false on a bad username/password.
+// then PARENTS, then ADMINS (from data.js). On success, remembers
+// who's logged in and which role they are (in this browser) and
+// returns true. Returns false on a bad username/password.
 function login(username, password) {
   const student = STUDENTS.find(function (s) {
     return s.username === username && s.password === password;
@@ -81,6 +83,15 @@ function login(username, password) {
     return true;
   }
 
+  const admin = ADMINS.find(function (a) {
+    return a.username === username && a.password === password;
+  });
+  if (admin) {
+    localStorage.setItem(SESSION_KEY, admin.username);
+    localStorage.setItem(ROLE_KEY, "admin");
+    return true;
+  }
+
   return false;
 }
 
@@ -101,22 +112,31 @@ function getCurrentTeacher() {
 }
 
 // Returns the currently logged-in parent object, or null if nobody
-// is logged in on this browser (or they're a student/teacher).
+// is logged in on this browser (or they're a student/teacher/admin).
 function getCurrentParent() {
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
   return PARENTS.find(function (p) { return p.username === username; }) || null;
 }
 
+// Returns the currently logged-in admin object, or null if nobody is
+// logged in on this browser (or they're a student/teacher/parent).
+function getCurrentAdmin() {
+  const username = localStorage.getItem(SESSION_KEY);
+  if (!username) return null;
+  return ADMINS.find(function (a) { return a.username === username; }) || null;
+}
+
 // Returns { username, role, name } for whoever is logged in on this
 // browser, regardless of role, or null if nobody is. Backs pages like
-// requests.html that are open to students/teachers/parents alike,
-// where requireLogin()/requireTeacherLogin()/requireParentLogin()
-// would each wrongly bounce two of the three roles away.
+// requests.html that are open to every role alike, where
+// requireLogin()/requireTeacherLogin()/requireParentLogin()/
+// requireAdminLogin() would each wrongly bounce the other three away.
 function getCurrentPerson() {
   const role = localStorage.getItem(ROLE_KEY);
   const person = role === "teacher" ? getCurrentTeacher()
     : role === "parent" ? getCurrentParent()
+    : role === "admin" ? getCurrentAdmin()
     : getCurrentStudent();
   if (!person) return null;
   return { username: person.username, role: role, name: person.name };
@@ -155,6 +175,7 @@ function requireLogin() {
     const role = localStorage.getItem(ROLE_KEY);
     if (role === "teacher") { window.location.href = "teacher.html"; return; }
     if (role === "parent") { window.location.href = "parent.html"; return; }
+    if (role === "admin") { window.location.href = "admin.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
     return;
@@ -165,25 +186,40 @@ function requireLogin() {
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
 // list instead of STUDENTS. Same cross-role redirect as requireLogin()
-// above, in the other direction (a logged-in student/parent landing
-// here goes to their own dashboard, not a login screen).
+// above, in the other direction (a logged-in student/parent/admin
+// landing here goes to their own dashboard, not a login screen).
 function requireTeacherLogin() {
   if (!getCurrentTeacher()) {
     const role = localStorage.getItem(ROLE_KEY);
     if (role === "student") { window.location.href = "portal.html"; return; }
     if (role === "parent") { window.location.href = "parent.html"; return; }
+    if (role === "admin") { window.location.href = "admin.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
 
 // Same as requireLogin(), but for parent.html — checks the PARENTS
-// list instead of STUDENTS. Same cross-role redirect as the two above.
+// list instead of STUDENTS. Same cross-role redirect as the others.
 function requireParentLogin() {
   if (!getCurrentParent()) {
     const role = localStorage.getItem(ROLE_KEY);
     if (role === "student") { window.location.href = "portal.html"; return; }
     if (role === "teacher") { window.location.href = "teacher.html"; return; }
+    if (role === "admin") { window.location.href = "admin.html"; return; }
+    const here = window.location.pathname.split("/").pop() + window.location.search;
+    window.location.href = "login.html?redirect=" + encodeURIComponent(here);
+  }
+}
+
+// Same as requireLogin(), but for admin.html — checks the ADMINS list
+// instead of STUDENTS. Same cross-role redirect as the others.
+function requireAdminLogin() {
+  if (!getCurrentAdmin()) {
+    const role = localStorage.getItem(ROLE_KEY);
+    if (role === "student") { window.location.href = "portal.html"; return; }
+    if (role === "teacher") { window.location.href = "teacher.html"; return; }
+    if (role === "parent") { window.location.href = "parent.html"; return; }
     const here = window.location.pathname.split("/").pop() + window.location.search;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
@@ -191,8 +227,8 @@ function requireParentLogin() {
 
 // Reads "?redirect=" from the login page's URL and returns it if
 // it's one of this site's own pages; otherwise falls back to a
-// role-appropriate default (teachers/parents -> their dashboard,
-// students -> home). Call this after a successful login.
+// role-appropriate default (teachers/parents/admins -> their
+// dashboard, students -> home). Call this after a successful login.
 function getLoginRedirect() {
   const requested = new URLSearchParams(window.location.search).get("redirect");
   const requestedPage = requested ? requested.split("?")[0] : "";
@@ -200,6 +236,7 @@ function getLoginRedirect() {
   const role = localStorage.getItem(ROLE_KEY);
   if (role === "teacher") return "teacher.html";
   if (role === "parent") return "parent.html";
+  if (role === "admin") return "admin.html";
   return "index.html";
 }
 
@@ -879,6 +916,70 @@ function submitRequestForm_(person, buttonEl) {
     detailsEl.value = "";
     renderRequestsLog(person);
   });
+}
+
+// ---- Admin dashboard (admin.html) ----
+// Read-only triage view over every entry in data/requests-log.json —
+// same file requests.html writes to, just unfiltered by submitter
+// (requestLogItemHtml/renderRequestsLog above only ever show "your
+// own" requests). No write controls yet (status changes, etc.) —
+// deliberately out of scope for now, see the "Teacher/admin dashboard
+// view" line in todo.md for that follow-up.
+
+// Same card shape as requestLogItemHtml, plus who submitted it, since
+// on the admin dashboard that's the whole point (unlike a student's
+// own "your requests" list, where "you" is implied).
+function adminRequestCardHtml_(entry) {
+  const statusClass = "requests-log-status-" + (entry.status || "New").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const submitter = escapeHtml_(entry.name || entry.username || "Unknown") +
+    (entry.role ? ' <span class="requests-log-role">(' + escapeHtml_(entry.role) + ")</span>" : "");
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + escapeHtml_(entry.category) + '</span>' +
+      '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="requests-log-status ' + statusClass + '">' + escapeHtml_(entry.status || "New") + '</span>' +
+    '</div>' +
+    '<p class="requests-log-submitter">' + submitter + '</p>' +
+    '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
+    '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+  '</div>';
+}
+
+// Fetches the full request log, filters by category (or "all"), sorts
+// newest first, and renders into #admin-requests-list. Also fills in
+// the per-category counts in the filter dropdown's labels the first
+// time it runs, same idea as teacher.html's subject filter.
+function renderAdminRequestsDashboard(categoryFilter) {
+  const list = document.getElementById("admin-requests-list");
+  if (!list) return;
+
+  list.innerHTML = '<p class="requests-log-empty">Loading requests...</p>';
+
+  fetch("data/requests-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      renderAdminCategoryCounts_(all);
+
+      const filtered = (categoryFilter && categoryFilter !== "all")
+        ? all.filter(function (entry) { return entry.category === categoryFilter; })
+        : all;
+      const sorted = filtered.slice().sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+
+      if (sorted.length === 0) {
+        list.innerHTML = '<p class="requests-log-empty">No requests in this category yet.</p>';
+        return;
+      }
+
+      list.innerHTML = sorted.map(adminRequestCardHtml_).join("");
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="requests-log-empty">Could not load the request log right now.</p>';
+    });
+}
+
+function renderAdminCategoryCounts_(all) {
+  const countEl = document.getElementById("admin-requests-count");
+  if (countEl) countEl.textContent = String(all.length);
 }
 
 // ---- Teacher dashboard (teacher.html) ----

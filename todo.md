@@ -37,6 +37,7 @@
 - [ ] daily/weekly digest, notifications for encouragement 
 - [ ] Update FAQ
 - [ ] cross checking features across, e.g. feedback for teachers as well and what they see in their dashbaord 
+- [ ] admin dashboard can assign classes, approvals for sign up, approvals for class registration, make new classes assign teachers and so on 
 
 ## 3. Improvement Brainstorm(Ideas)
 - [ ] Philosophies 
@@ -61,6 +62,7 @@
   - [ ] teach inner excellence like we teach math 
 
 ## Done
+- [x] Admin role + admin.html dashboard — new ADMINS array in js/data.js (own login, own requireAdminLogin()/getCurrentAdmin(), parallel to STUDENTS/TEACHERS/PARENTS rather than an isAdmin flag on TEACHERS — see the ADMINS comment in js/data.js for the reasoning); admin.html is a read-only view of every entry in data/requests-log.json, filterable by category, showing submitter name/role. No status-editing controls yet (see line above for that follow-up). resources.html also got a prominent "Request a resource" banner linking to requests.html?category=Resource%20Request, which pre-selects that category on arrival.
 - [x] Multi-teacher CLASSES system — per-(student, course) teacher assignment, scoped queue/roster/overview visibility, notifyTeachers_ routed through CLASSES instead of subject-only TEACHERS.courses
 - [x] Bulk "mark complete" for submissions via the shared pending-changes queue, on both teacher.html's queue and each student's own teacher-student.html page (mixable with roadmap/feedback changes in the same batch)
 - [x] Two-level "your classes → light student list → full student page" nav on teacher.html, replacing the always-expanded roster

@@ -64,6 +64,8 @@ function renderLangToggle(containerId, onChange) {
 const RESOURCES_KO = {
   "page-title": "자료실",
   "intro": "아래는 대입에 도움되는 자료를 주제별로 정리한 자료들입니다. 주기적으로 업데이트할려고 노력하고 있고, 원하시는 자료가 있으시면(예: Barron's AP World History 자료가 있는지 등) 하단의 링크를 통해 언제든 문의해 주세요.",
+  "resource-request-cta-tag": "원하는 자료가 없으신가요?",
+  "resource-request-cta-text": "자료 요청하기",
 
   "sat-bluebook-desc": "칼리지보드는 공식적으로 2026년 8월 기준 11횟수분의 무료 모의고사를 공식 블루북 앱에서 제공합니다.",
   "sat-khan-desc": "칸아카데미는 SAT를 위한 무료 연습 플랫폼을 제공합니다. 칸아카데미의 SAT 연습은 College Board와 공식적으로 제휴되어 있습니다.",

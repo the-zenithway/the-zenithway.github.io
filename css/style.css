@@ -2670,6 +2670,34 @@ body.portal-body {
   margin: 0;
 }
 
+/* -------- admin.html -------- */
+/* Reuses .requests-log-* (item/meta/category/date/status/title/
+   details/empty) from requests.html wholesale — same card shape, this
+   just adds a submitter line via adminRequestCardHtml_ in js/app.js,
+   since "who submitted it" only matters on the admin view. */
+.requests-log-submitter {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.requests-log-role {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: capitalize;
+}
+
+.admin-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.admin-requests-total {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
 /* One independently-foldable piece of a submission card (photos, OCR
    text, typed answer, remark) — used on submit.html, teacher.html's
    grading queue, and teacher-student.html's submissions list.
@@ -2766,6 +2794,27 @@ body.portal-body {
 }
 
 .cheatsheet-banner-arrow { color: var(--accent); font-weight: 600; }
+
+/* -------- resources.html: "request a resource" banner -------- */
+/* Same shape as .cheatsheet-banner above, just its own class since it
+   lives on a public site page (no [hidden]-by-default JS toggle, and
+   it's a two-part tag+text label instead of tag+count). */
+.resource-request-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-top: 20px;
+  text-decoration: none;
+  color: var(--text);
+}
+.resource-request-banner:hover { background: var(--bg); }
+.resource-request-banner-tag { font-size: 0.85rem; color: var(--text-muted); }
+.resource-request-banner-text { font-weight: 600; font-size: 0.95rem; color: var(--text); margin-left: auto; }
+.resource-request-banner-arrow { color: var(--accent); font-weight: 600; }
 
 .cheatsheet-topic {
   font-weight: 600;

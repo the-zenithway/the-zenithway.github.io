@@ -8647,3 +8647,25 @@ const PARENTS = [
     "linkedStudents": ["bogue"]
   }
 ];
+
+// Admins get their own login (admin.html) — a 4th top-level role
+// alongside STUDENTS/TEACHERS/PARENTS, same username/password shape.
+// In practice every admin is also a person who teaches (see the
+// "admin dashboard" note in todo.md — admins are a subset of
+// teachers), but that's a fact about who these people are, not how
+// login works here: an admin account is separate from a TEACHERS
+// entry, even for the same person, same as kyjteach existing as one
+// TEACHERS entry independent of any STUDENTS/PARENTS entry for the
+// same human. Give someone both a TEACHERS and an ADMINS entry (can
+// share a username) if they need both dashboards.
+//
+// Right now the only thing gated on "admin" is admin.html's requests
+// dashboard (every entry in data/requests-log.json, unfiltered).
+const ADMINS = [
+  {
+    "username": "kyjadmin",
+    "password": "password",
+    "name": "Yong Joon Kim(admin)",
+    "email": "yongjoon9981@gmail.com"
+  }
+];
