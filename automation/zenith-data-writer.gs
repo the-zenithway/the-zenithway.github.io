@@ -41,6 +41,14 @@
  * "TEACHER_DATA_WRITE_URL" name (kept as-is to avoid renaming churn
  * across js/app.js and js/data.js), this endpoint isn't
  * teacher-exclusive, it's just this repo's one data-write Web App.
+ * requests.html also lets a "Resource Request" through with no login
+ * at all (every other category still needs an account) — enforced
+ * here, not just client-side, see ACTIONS.submitRequest.handler below.
+ * Every successful submitRequest also sends a "got it" confirmation
+ * email via sendRequestConfirmationEmail_ — the first real submission
+ * after deploying this may prompt for an additional MailApp
+ * authorization scope ("Send email as you"); approve it once and it
+ * won't ask again.
  *
  * BATCHING: since 2026-08-05, teacher-student.html can stage several
  * changes (a roadmap unlock, a feedback entry, a Right Now update,
@@ -135,8 +143,12 @@
  *    the one file/field that action touches and nothing else. Then
  *    try a real batch (stage a couple of changes on teacher-student.html
  *    and hit Apply) and confirm it's exactly ONE commit covering all
- *    of them. Also submit one real request from requests.html and
- *    confirm data/requests-log.json gets exactly one new entry.
+ *    of them. Also submit one real request from requests.html (both
+ *    logged in and, separately, the no-login Resource Request path)
+ *    and confirm data/requests-log.json gets exactly one new entry
+ *    each time, and that a confirmation email actually arrives — the
+ *    first send may trigger a one-time MailApp authorization prompt
+ *    in the Apps Script editor (approve it, then retry).
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -207,6 +219,19 @@ function doPost(e) {
     if (requestsOps.length > 0) {
       var requestsPath = props.getProperty("REQUESTS_LOG_PATH") || "data/requests-log.json";
       commitJsonArrayMutation_(owner, repo, branch, requestsPath, token, requestsOps);
+      // Sent here, AFTER the commit succeeds — not from inside
+      // ACTIONS.submitRequest.handler — because a 409 retry re-runs
+      // every op's handler again from a fresh read (see
+      // commitJsonArrayMutation_ below); doing it there would send a
+      // duplicate confirmation email per retry. A failure to email
+      // (bad address, MailApp quota, etc.) is swallowed rather than
+      // failing the whole request — the log entry is already
+      // committed at this point, so the submitter still gets counted
+      // even if the confirmation email doesn't go out.
+      requestsOps.forEach(function (op) {
+        if (op.action !== "submitRequest") return;
+        try { sendRequestConfirmationEmail_(op.payload); } catch (e) { /* best-effort only */ }
+      });
     }
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -216,6 +241,26 @@ function doPost(e) {
 
 function jsonResponse_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// "We got it" confirmation for a submitRequest — mirrors
+// sendConfirmationEmail_ in submissions-compiler.gs in spirit, but
+// simpler: that one looks the student's email up server-side from
+// js/data.js by username (a Form submission only ever carries a
+// trusted username, never a raw email). Here payload.email is
+// whatever requests.html sent — the logged-in submitter's own email
+// (from STUDENTS/TEACHERS/PARENTS/ADMINS) or, for an anonymous
+// Resource Request, whatever they typed into the guest email field.
+// Trusting it directly is fine for a same-request "got it" notice —
+// this endpoint already doesn't authenticate its caller for anything
+// (see the file header), and the worst case of a bogus address is one
+// wasted email, not a data leak.
+function sendRequestConfirmationEmail_(payload) {
+  if (!payload.email) return; // no email on file / not given — nothing to send
+  MailApp.sendEmail(payload.email,
+    "Zenith — request received",
+    "Got your " + payload.category + " — \"" + payload.title + "\". We'll take it from here." +
+      (payload.username ? "" : "\n\n(You submitted this without logging in, so this email is the only way we can follow up with you.)"));
 }
 
 // ---------------------------------------------------------------
@@ -358,6 +403,14 @@ var ACTIONS = {
   // "sub_" ids — a timestamp+random suffix, "req_" prefixed. Every new
   // request starts "New"; status transitions (In Progress/Done/
   // Declined) are a teacher/admin-dashboard concern, not this action.
+  // Logged-in submitters (any role) can use any category. A request
+  // with no username — requests.html's guest path, reachable without
+  // logging in — is only allowed for "Resource Request", enforced
+  // here rather than trusting the client-side dropdown lock on
+  // requests.html, since that's just UI (a direct POST could claim
+  // any category otherwise). Anonymous submissions also require an
+  // email, since it's the only way to follow up with someone who
+  // isn't a logged-in account — see sendRequestConfirmationEmail_.
   submitRequest: {
     target: "requests",
     handler: function (requests, payload) {
@@ -370,12 +423,21 @@ var ACTIONS = {
       if (payload.role && REQUEST_ROLES_.indexOf(payload.role) === -1) {
         throw new Error("Invalid role: " + payload.role);
       }
+      if (!payload.username) {
+        if (payload.category !== "Resource Request") {
+          throw new Error("Submitting without an account is only allowed for Resource Request");
+        }
+        if (!payload.email) {
+          throw new Error("An email is required when submitting without an account");
+        }
+      }
       requests.unshift({
         id: "req_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
         receivedAt: new Date().toISOString(),
         status: "New",
         username: payload.username || null,
         name: payload.name || null,
+        email: payload.email || null,
         role: payload.role || null,
         category: payload.category,
         title: payload.title,

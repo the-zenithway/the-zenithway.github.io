@@ -8667,5 +8667,11 @@ const ADMINS = [
     "password": "password",
     "name": "Yong Joon Kim(admin)",
     "email": "yongjoon9981@gmail.com"
+  },
+  {
+    "username": "haminadmin",
+    "password": "password",
+    "name": "Hamin Park(admin)",
+    "email": "haminpark0419@gmail.com"
   }
 ];

@@ -17,7 +17,17 @@
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ nav: "label", label: "Requests", actions: ["logout"] });</script>
+<script>
+  // No requireAnyLogin() redirect on this page — a "Resource Request"
+  // can be submitted without an account (see the guest-mode branch
+  // below), so anyone reaching this page stays here. Logged-in users
+  // still get the full portal-style bar with a logout button; a
+  // logged-out visitor gets the same bar minus that button (localStorage
+  // is checked directly here, before js/app.js's getCurrentPerson()
+  // is even available, since that needs js/data.js which loads later).
+  var isLoggedIn = !!localStorage.getItem('loggedInRole');
+  renderPortalHeader({ nav: "label", label: "Requests", actions: isLoggedIn ? ["logout"] : [] });
+</script>
 
 <main class="requests-wrap">
   <div class="requests-col">
@@ -25,7 +35,15 @@
 
     <div class="requests-form-card">
       <h2 class="requests-form-title">Submit a request</h2>
-      <p class="requests-form-text">Missing a resource, found a bug, or just have a concern? Tell us here — teachers and admins see every request that comes in.</p>
+      <p class="requests-form-text" id="requests-form-text">Missing a resource, found a bug, or just have a concern? Tell us here — teachers and admins see every request that comes in.</p>
+
+      <div id="requests-guest-fields" hidden>
+        <label class="requests-field-label" for="requests-guest-name">Name</label>
+        <input id="requests-guest-name" class="requests-input" type="text" maxlength="80" placeholder="Your name">
+
+        <label class="requests-field-label" for="requests-guest-email">Email</label>
+        <input id="requests-guest-email" class="requests-input" type="email" maxlength="120" placeholder="you@example.com — so we can confirm we got it">
+      </div>
 
       <label class="requests-field-label" for="requests-category">Category</label>
       <select id="requests-category" class="requests-select">
@@ -34,6 +52,7 @@
         <option value="Bug Report">Bug Report</option>
         <option value="Concern / Other">Concern / Other</option>
       </select>
+      <p class="requests-field-note" id="requests-guest-note" hidden>Feature requests and bug reports need an account, so we know who to follow up with — <a href="login.html?redirect=requests.html">log in</a> to submit one of those instead.</p>
 
       <label class="requests-field-label" for="requests-title">Title</label>
       <input id="requests-title" class="requests-input" type="text" maxlength="120" placeholder="Short summary">
@@ -44,7 +63,7 @@
       <button type="button" class="btn-primary requests-submit-btn" id="requests-submit-btn">Submit request</button>
     </div>
 
-    <div>
+    <div id="requests-history-section">
       <h2 class="requests-log-heading">Your requests</h2>
       <div class="requests-log-list" id="requests-log-list"></div>
     </div>
@@ -54,7 +73,9 @@
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
-  var person = requireAnyLogin();
+  var person = getCurrentPerson(); // null, not a redirect — this page allows anonymous Resource Requests
+  var categorySelect = document.getElementById('requests-category');
+
   if (person) {
     document.getElementById('requests-greeting').textContent = "Hey " + person.name.split(" ")[0] + ",";
     renderRequestsLog(person);
@@ -63,17 +84,27 @@
     // land here with the right category already picked, instead of
     // making the visitor re-select what they just clicked for.
     var requestedCategory = new URLSearchParams(window.location.search).get('category');
-    var categorySelect = document.getElementById('requests-category');
     if (requestedCategory && REQUEST_CATEGORIES.indexOf(requestedCategory) !== -1) {
       categorySelect.value = requestedCategory;
     }
-
-    document.getElementById('requests-submit-btn').addEventListener('click', function () {
-      submitRequestForm_(person, this);
-    });
+  } else {
+    document.getElementById('requests-greeting').textContent = "Request a resource";
+    document.getElementById('requests-form-text').textContent = "Don't see a resource you need? Tell us here — no account needed.";
+    document.getElementById('requests-guest-fields').hidden = false;
+    document.getElementById('requests-guest-note').hidden = false;
+    document.getElementById('requests-history-section').hidden = true;
+    // Anonymous submissions are Resource-Request-only — enforced again
+    // server-side in zenith-data-writer.gs, this is just the UI lock.
+    categorySelect.innerHTML = '<option value="Resource Request">Resource Request</option>';
+    categorySelect.disabled = true;
   }
 
-  document.getElementById('logout-btn').addEventListener('click', logout);
+  document.getElementById('requests-submit-btn').addEventListener('click', function () {
+    submitRequestForm_(person, this);
+  });
+
+  var logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) logoutBtn.addEventListener('click', logout);
 </script>
 </body>
 </html>

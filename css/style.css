@@ -2685,6 +2685,14 @@ body.portal-body {
   font-size: 0.72rem;
   text-transform: capitalize;
 }
+.requests-log-email { font-size: 0.78rem; }
+
+.requests-field-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: -6px 0 12px;
+}
+.requests-field-note a { color: var(--accent); }
 
 .admin-filter-row {
   display: flex;

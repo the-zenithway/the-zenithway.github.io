@@ -139,7 +139,7 @@ function getCurrentPerson() {
     : role === "admin" ? getCurrentAdmin()
     : getCurrentStudent();
   if (!person) return null;
-  return { username: person.username, role: role, name: person.name };
+  return { username: person.username, role: role, name: person.name, email: person.email || "" };
 }
 
 // Same idea as requireLogin(), but for pages any logged-in role
@@ -892,6 +892,11 @@ function renderRequestsLog(person) {
 // postTeacherAction_ (the same POST helper teacher-student.html's
 // write controls use — generic despite its name, see its own comment
 // above). Clears the form and refreshes the log on success.
+// `person` is null on the guest path (requests.html's no-login
+// Resource Request flow) — name/email come from the guest fields
+// instead of a session in that case, and there's no "your requests"
+// history to refresh afterward since there's no username to filter
+// by, so a plain confirmation alert stands in for it.
 function submitRequestForm_(person, buttonEl) {
   const titleEl = document.getElementById("requests-title");
   const detailsEl = document.getElementById("requests-details");
@@ -904,17 +909,43 @@ function submitRequestForm_(person, buttonEl) {
     return;
   }
 
+  let name, email, username, role;
+  if (person) {
+    name = person.name;
+    email = person.email;
+    username = person.username;
+    role = person.role;
+  } else {
+    const guestNameEl = document.getElementById("requests-guest-name");
+    const guestEmailEl = document.getElementById("requests-guest-email");
+    name = guestNameEl.value.trim();
+    email = guestEmailEl.value.trim();
+    username = null;
+    role = null;
+    if (!name || !email) {
+      alert("Please fill in your name and email so we can follow up.");
+      return;
+    }
+  }
+
   postTeacherAction_("submitRequest", {
-    username: person.username,
-    name: person.name,
-    role: person.role,
+    username: username,
+    name: name,
+    email: email,
+    role: role,
     category: categoryEl.value,
     title: title,
     details: details
   }, buttonEl, function () {
     titleEl.value = "";
     detailsEl.value = "";
-    renderRequestsLog(person);
+    if (person) {
+      renderRequestsLog(person);
+    } else {
+      document.getElementById("requests-guest-name").value = "";
+      document.getElementById("requests-guest-email").value = "";
+      alert("Thanks — we got your request. Check your email for confirmation.");
+    }
   });
 }
 
@@ -931,8 +962,12 @@ function submitRequestForm_(person, buttonEl) {
 // own "your requests" list, where "you" is implied).
 function adminRequestCardHtml_(entry) {
   const statusClass = "requests-log-status-" + (entry.status || "New").toLowerCase().replace(/[^a-z0-9]+/g, "-");
-  const submitter = escapeHtml_(entry.name || entry.username || "Unknown") +
-    (entry.role ? ' <span class="requests-log-role">(' + escapeHtml_(entry.role) + ")</span>" : "");
+  // No role = the no-login Resource Request path (requests.html's
+  // guest fields), not a data gap — labeled "Guest" rather than left
+  // blank so it reads the same as every other role tag.
+  const submitter = escapeHtml_(entry.name || "Unknown") +
+    ' <span class="requests-log-role">(' + escapeHtml_(entry.role || "guest") + ")</span>" +
+    (entry.email ? ' <span class="requests-log-email">' + escapeHtml_(entry.email) + '</span>' : "");
   return '<div class="requests-log-item">' +
     '<div class="requests-log-meta">' +
       '<span class="requests-log-category">' + escapeHtml_(entry.category) + '</span>' +
