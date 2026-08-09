@@ -263,28 +263,30 @@ function renderSocialLinks() {
   }).join("");
 }
 
-// Swaps the nav's "Log In" button for the logged-in user's name —
-// student, teacher, or parent. Call this near the bottom of any
-// public page that has the site-header nav (index.html,
-// philosophy.html, resources.html, faq.html). Used to check only
-// getCurrentStudent(), so a logged-in teacher/parent browsing these
-// pages saw the generic "Log In" button instead of their own name —
-// looked exactly like they'd been logged out, even though their
-// session was untouched.
+// Swaps the nav's "Log In" button for the logged-in user's name — any
+// role. Call this near the bottom of any public page that has the
+// site-header nav (index.html, philosophy.html, resources.html,
+// faq.html). Used to check only getCurrentStudent(), so a logged-in
+// teacher/parent browsing these pages saw the generic "Log In" button
+// instead of their own name — looked exactly like they'd been logged
+// out, even though their session was untouched. Fixed for
+// teacher/parent, then reintroduced for admin when that 4th role was
+// added (this function calling the three role-specific getters
+// directly instead of the already-unified getCurrentPerson() above,
+// which is exactly what let it drift out of sync in the first place) —
+// now uses getCurrentPerson() so a 5th role, if one's ever added,
+// can't repeat this same bug a third time.
 function renderNavAuth() {
   const loginBtn = document.getElementById("nav-login-btn");
   const userName = document.getElementById("nav-user-name");
   if (!loginBtn || !userName) return;
 
-  const student = getCurrentStudent();
-  const teacher = !student ? getCurrentTeacher() : null;
-  const parent = (!student && !teacher) ? getCurrentParent() : null;
-  const loggedInName = student ? student.name : teacher ? teacher.name : parent ? parent.name : null;
+  const person = getCurrentPerson();
 
-  if (loggedInName) {
+  if (person) {
     loginBtn.hidden = true;
     userName.hidden = false;
-    userName.textContent = loggedInName;
+    userName.textContent = person.name;
   } else {
     loginBtn.hidden = false;
     userName.hidden = true;
