@@ -37,7 +37,10 @@
 - [ ] daily/weekly digest, notifications for encouragement 
 - [ ] Update FAQ
 - [ ] cross checking features across, e.g. feedback for teachers as well and what they see in their dashbaord 
-- [ ] admin dashboard can assign classes, approvals for sign up, approvals for class registration, make new classes assign teachers and so on 
+- [ ] admin dashboard can assign classes, approvals for sign up, approvals for class registration, make new classes assign teachers and so on
+- [ ] make like a stats that can be shown e.g. level, etc. 
+- [ ] admin dashboard can clear requests and concersna and all that similar to submissions like the teacher dashboard 
+- [ ] fix submission request feature, it somehow doesn't push on . 
 
 ## 3. Improvement Brainstorm(Ideas)
 - [ ] Philosophies 

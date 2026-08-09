@@ -8612,21 +8612,21 @@ const CLASSES = [
     "name": "AP Calculus A",
     "courseId": "ap-calculus-bc",
     "teacherUsernames": ["kyjteach"],
-    "studentUsernames": ["bogue", "davidheo", "seohu", "onyoo"]
+    "studentUsernames": ["bogue", "davidheo", "seohu", "onyoo", "kyjv9981", "hamin"]
   },
   {
     "id": "bio-a",
     "name": "AP Biology A",
     "courseId": "ap-biology",
     "teacherUsernames": ["haminpark"],
-    "studentUsernames": ["davidheo"]
+    "studentUsernames": ["davidheo", "kyjv9981", "hamin"]
   },
   {
     "id": "chem-a",
     "name": "AP Chemistry A",
     "courseId": "ap-chemistry",
     "teacherUsernames": ["haminpark"],
-    "studentUsernames": ["davidheo", "onyoo"]
+    "studentUsernames": ["davidheo", "onyoo", "kyjv9981", "hamin"]
   },
 ];
 
