@@ -1412,16 +1412,40 @@ function renderTeacherRoster(courseFilter) {
 }
 
 // ---- Scheduled notifications (teacher.html) ----
-// A teacher picks one of their own classes (teacherClasses_), writes a
-// subject/message, and picks a future send time. This only stages the
-// request via scheduleNotification (immediate POST, not the
+// A teacher checks off any number of individual students — pooled
+// across every class they teach, since one teacher can have several
+// (teacherAllStudents_ below dedupes a student who happens to be in
+// more than one of the teacher's classes down to a single checkbox) —
+// writes a subject/message, and picks a future send time. This only
+// stages the request via scheduleNotification (immediate POST, not the
 // pending-changes batch queue — there's no natural reason to combine
 // this with a roadmap/feedback edit, unlike markSubmissionComplete_).
 // The actual sending is a separate system entirely: a GitHub Actions
 // cron job (automation/notifications/send-scheduled-notifications.js)
 // polls data/scheduled-notifications.json independently and emails
-// every class member once its sendAt has passed — nothing on this
+// every checked recipient once its sendAt has passed — nothing on this
 // page sends anything itself.
+
+// One entry per distinct student across every class this teacher
+// teaches, in first-seen order, each carrying the list of this
+// teacher's class names that student belongs to (usually one, but a
+// student can be in more than one of the teacher's classes across
+// different subjects — shown as a tag, not split into duplicate rows).
+function teacherAllStudents_(teacher) {
+  const seen = {};
+  const result = [];
+  teacherClasses_(teacher).forEach(function (cls) {
+    cls.studentUsernames.forEach(function (username) {
+      if (seen[username]) { seen[username].classNames.push(cls.name); return; }
+      const student = STUDENTS.find(function (s) { return s.username === username; });
+      if (!student) return;
+      const entry = { username: username, name: student.name, classNames: [cls.name] };
+      seen[username] = entry;
+      result.push(entry);
+    });
+  });
+  return result;
+}
 
 function scheduledNotificationStatusClass_(status) {
   return "requests-log-status-" + (status || "Pending").toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -1431,14 +1455,17 @@ function scheduledNotificationItemHtml_(entry) {
   const cancelBtn = entry.status === "Pending"
     ? '<button type="button" class="teacher-add-btn scheduled-notif-cancel-btn" data-cancel-notification="' + entry.id + '">Cancel</button>'
     : "";
+  const names = entry.recipientNames || [];
+  const recipientLabel = names.length === 1 ? "1 student" : names.length + " students";
   return '<div class="requests-log-item">' +
     '<div class="requests-log-meta">' +
-      '<span class="requests-log-category">' + escapeHtml_(entry.className) + '</span>' +
+      '<span class="requests-log-category">' + escapeHtml_(recipientLabel) + '</span>' +
       '<span class="requests-log-date">Sends ' + submissionDateLabel(entry.sendAt) + '</span>' +
       '<span class="requests-log-status ' + scheduledNotificationStatusClass_(entry.status) + '">' + escapeHtml_(entry.status) + '</span>' +
     '</div>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.subject) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.message) + '</p>' +
+    '<p class="requests-log-submitter">To: ' + escapeHtml_(names.join(", ")) + '</p>' +
     cancelBtn +
   '</div>';
 }
@@ -1476,18 +1503,19 @@ function renderScheduledNotificationsList_(teacher) {
 }
 
 function scheduleNotificationForm_(teacher, buttonEl) {
-  const classSelect = document.getElementById("teacher-notif-class");
   const subjectEl = document.getElementById("teacher-notif-subject");
   const messageEl = document.getElementById("teacher-notif-message");
   const sendAtEl = document.getElementById("teacher-notif-send-at");
+  const checked = Array.prototype.slice.call(
+    document.querySelectorAll(".teacher-notif-recipient-checkbox:checked")
+  );
 
-  const classId = classSelect.value;
   const subject = subjectEl.value.trim();
   const message = messageEl.value.trim();
   const sendAtLocal = sendAtEl.value; // "YYYY-MM-DDTHH:mm", parsed as local time by `new Date(...)`
 
-  if (!classId || !subject || !message || !sendAtLocal) {
-    alert("Please fill in the class, subject, message, and send time.");
+  if (checked.length === 0 || !subject || !message || !sendAtLocal) {
+    alert("Please pick at least one student, and fill in subject, message, and send time.");
     return;
   }
   const sendAt = new Date(sendAtLocal);
@@ -1500,13 +1528,14 @@ function scheduleNotificationForm_(teacher, buttonEl) {
     return;
   }
 
-  const cls = teacherClasses_(teacher).find(function (c) { return c.id === classId; });
+  const recipientUsernames = checked.map(function (cb) { return cb.value; });
+  const recipientNames = checked.map(function (cb) { return cb.getAttribute("data-name"); });
 
   postTeacherAction_("scheduleNotification", {
     username: teacher.username,
     name: teacher.name,
-    classId: classId,
-    className: cls ? cls.name : classId,
+    recipientUsernames: recipientUsernames,
+    recipientNames: recipientNames,
     subject: subject,
     message: message,
     sendAt: sendAt.toISOString()
@@ -1514,23 +1543,42 @@ function scheduleNotificationForm_(teacher, buttonEl) {
     subjectEl.value = "";
     messageEl.value = "";
     sendAtEl.value = "";
+    document.querySelectorAll(".teacher-notif-recipient-checkbox").forEach(function (cb) { cb.checked = false; });
+    const selectAll = document.getElementById("teacher-notif-select-all");
+    if (selectAll) selectAll.checked = false;
     renderScheduledNotificationsList_(teacher);
   });
 }
 
 function renderScheduleNotificationForm_(teacher) {
-  const classSelect = document.getElementById("teacher-notif-class");
-  if (!classSelect || !teacher) return;
+  const recipientsWrap = document.getElementById("teacher-notif-recipients");
+  if (!recipientsWrap || !teacher) return;
 
-  const classes = teacherClasses_(teacher);
-  classSelect.innerHTML = classes.length === 0
-    ? '<option value="">No classes assigned</option>'
-    : classes.map(function (c) { return '<option value="' + c.id + '">' + escapeHtml_(c.name) + '</option>'; }).join("");
-  classSelect.disabled = classes.length === 0;
+  const allStudents = teacherAllStudents_(teacher);
+
+  if (allStudents.length === 0) {
+    recipientsWrap.innerHTML = '<p class="teacher-empty">No students assigned yet.</p>';
+  } else {
+    recipientsWrap.innerHTML =
+      '<label class="teacher-notif-recipient-row teacher-notif-select-all-row">' +
+        '<input type="checkbox" id="teacher-notif-select-all"> <strong>Select all (' + allStudents.length + ')</strong>' +
+      '</label>' +
+      allStudents.map(function (s) {
+        return '<label class="teacher-notif-recipient-row">' +
+          '<input type="checkbox" class="teacher-notif-recipient-checkbox" value="' + s.username + '" data-name="' + escapeHtml_(s.name) + '"> ' +
+          escapeHtml_(s.name) + ' <span class="requests-log-role">(' + escapeHtml_(s.classNames.join(", ")) + ')</span>' +
+        '</label>';
+      }).join("");
+
+    document.getElementById("teacher-notif-select-all").addEventListener("change", function () {
+      const isChecked = this.checked;
+      recipientsWrap.querySelectorAll(".teacher-notif-recipient-checkbox").forEach(function (cb) { cb.checked = isChecked; });
+    });
+  }
 
   const submitBtn = document.getElementById("teacher-notif-submit");
   if (submitBtn) {
-    submitBtn.disabled = classes.length === 0;
+    submitBtn.disabled = allStudents.length === 0;
     submitBtn.addEventListener("click", function () { scheduleNotificationForm_(teacher, this); });
   }
 }

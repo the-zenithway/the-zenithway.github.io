@@ -38,10 +38,11 @@
     <div id="teacher-queue-list" class="teacher-queue"></div>
 
     <h2 class="teacher-section-title">Schedule a notification</h2>
-    <p class="parent-subtitle">Emails everyone in the class at the time you pick — for session reminders, mostly. Sending happens on its own schedule (checked every 15 minutes or so), not the instant you click Schedule.</p>
+    <p class="parent-subtitle">Pick any students across your classes and email them at the time you choose — for session reminders, mostly. Sending happens on its own schedule (checked every 15 minutes or so), not the instant you click Schedule.</p>
     <div class="teacher-add-form">
+      <p class="teacher-add-form-title">Recipients</p>
+      <div class="teacher-notif-recipients" id="teacher-notif-recipients"></div>
       <div class="teacher-add-form-row">
-        <select class="teacher-add-input" id="teacher-notif-class"></select>
         <input type="datetime-local" class="teacher-add-input" id="teacher-notif-send-at">
       </div>
       <input type="text" class="teacher-add-input" id="teacher-notif-subject" placeholder="Subject (e.g. Session reminder — Thursday 6pm)">

@@ -33,13 +33,13 @@ runs on the live site itself. Three triggers:
    files actually changed in the push.
 6. **On a 15-minute schedule (cron)** — a teacher-initiated equivalent of
    point 4, added 2026-08-10: teacher.html has a "Schedule a notification"
-   form (pick one of your classes, write a subject/message, pick a send
-   time), which appends a "Pending" row to
+   form (check off any students across every class you teach, write a
+   subject/message, pick a send time), which appends a "Pending" row to
    `data/scheduled-notifications.json` via `zenith-data-writer.gs`'s
    `scheduleNotification` action — that write is instant, but nothing is
    emailed yet at that point. This job polls that file for `Pending` rows
-   whose `sendAt` has passed, emails every student in the target class
-   (resolved via `js/data.js`'s `CLASSES`) with a non-empty email, marks
+   whose `sendAt` has passed, emails every checked recipient (resolved
+   fresh against `js/data.js`'s `STUDENTS`) with a non-empty email, marks
    each sent row `Sent`, and commits the updated file back — unlike point 4,
    this cron IS live (unconditional, since it's a no-op when nothing's due).
 
@@ -105,7 +105,7 @@ node notify-session-reminder.js ../../js/data.js --dry-run
 node send-scheduled-notifications.js ../../js/data.js /path/to/test-notifications.json --dry-run
 ```
 
-The last one needs a hand-built `data/scheduled-notifications.json`-shaped file with at least one `"status": "Pending"` entry whose `"sendAt"` is in the past and a `"classId"` matching a real `CLASSES` entry — `--dry-run` prints what it would send without touching that file (a real run rewrites it, marking due entries `"Sent"`).
+The last one needs a hand-built `data/scheduled-notifications.json`-shaped file with at least one `"status": "Pending"` entry whose `"sendAt"` is in the past and a `"recipientUsernames"` array containing at least one real `STUDENTS[].username` with a non-empty email — `--dry-run` prints what it would send without touching that file (a real run rewrites it, marking due entries `"Sent"`).
 
 For a real send test without waiting for a push or a cron tick, either
 run a script directly with `GMAIL_USER`/`GMAIL_APP_PASSWORD` set as env vars

@@ -468,22 +468,28 @@ var ACTIONS = {
   },
 
   // Backs teacher.html's "Schedule a notification" form — a teacher
-  // picks one of their own CLASSES (see js/data.js), writes a
-  // subject/message, and picks a future send time. Doesn't send
-  // anything itself: this only appends a "Pending" row to
-  // data/scheduled-notifications.json; automation/notifications/
-  // send-scheduled-notifications.js (a separate GitHub Actions cron
-  // job, not this Apps Script) polls that file and does the actual
-  // sending once payload.sendAt has passed. classId/className aren't
-  // cross-checked against CLASSES here (same trust level as every
-  // other teacher-initiated action in this file — see the header
-  // comment), and the payload is trusted for who's allowed to send to
-  // that class, same as addFeedback trusts payload.courseId.
+  // checks off any number of individual students (pooled across every
+  // class they teach — teacherClasses_ in js/app.js, since one teacher
+  // can have several), writes a subject/message, and picks a future
+  // send time. Doesn't send anything itself: this only appends a
+  // "Pending" row to data/scheduled-notifications.json; automation/
+  // notifications/send-scheduled-notifications.js (a separate GitHub
+  // Actions cron job, not this Apps Script) polls that file and does
+  // the actual sending once payload.sendAt has passed.
+  //
+  // recipientUsernames isn't cross-checked against CLASSES here (same
+  // trust level as every other teacher-initiated action in this file —
+  // see the header comment); the payload is trusted for who it's
+  // allowed to address, same as addFeedback trusts payload.courseId.
+  // recipientNames is a display-only snapshot (so the teacher.html list
+  // still shows real names even if a student is later renamed/removed)
+  // — the actual send in send-scheduled-notifications.js re-resolves
+  // emails fresh from js/data.js by username, never from this snapshot.
   scheduleNotification: {
     target: "notifications",
     handler: function (notifications, payload) {
-      if (!payload.username || !payload.classId || !payload.subject || !payload.message || !payload.sendAt) {
-        throw new Error("scheduleNotification requires username, classId, subject, message, and sendAt");
+      if (!payload.username || !payload.recipientUsernames || !payload.recipientUsernames.length || !payload.subject || !payload.message || !payload.sendAt) {
+        throw new Error("scheduleNotification requires username, recipientUsernames (non-empty), subject, message, and sendAt");
       }
       var sendAt = new Date(payload.sendAt);
       if (isNaN(sendAt.getTime())) throw new Error("Invalid sendAt: " + payload.sendAt);
@@ -493,8 +499,9 @@ var ACTIONS = {
         createdByName: payload.name || payload.username,
         createdAt: new Date().toISOString(),
         sendAt: sendAt.toISOString(),
-        classId: payload.classId,
-        className: payload.className || payload.classId,
+        recipientUsernames: payload.recipientUsernames,
+        recipientNames: payload.recipientNames && payload.recipientNames.length === payload.recipientUsernames.length
+          ? payload.recipientNames : payload.recipientUsernames,
         subject: payload.subject,
         message: payload.message,
         status: "Pending",

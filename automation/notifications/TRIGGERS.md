@@ -129,26 +129,29 @@ no diffing involved at all. Still runnable manually via the workflow's
 `cancelScheduledNotification` actions; the send side is
 `send-scheduled-notifications.js`.
 **Logic:** two separate systems, deliberately not one. Scheduling
-(teacher.html's form) only appends a `"status": "Pending"` row to
-`data/scheduled-notifications.json` — instant, but sends nothing. Sending is
-a `*/15 * * * *` cron in `.github/workflows/notify.yml` that filters that
-file for `status === "Pending" && new Date(sendAt) <= now`, resolves each
-due row's `classId` against `js/data.js`'s `CLASSES` to get the student
-roster, emails everyone in it with a non-empty `email`, then flips that row
-to `"Sent"` (with `sentAt`/`recipientCount` filled in) and commits the file.
+(teacher.html's form — a checklist of individual students, pooled across
+every class the teacher teaches via `teacherAllStudents_` in js/app.js, not
+a single class picker) only appends a `"status": "Pending"` row to
+`data/scheduled-notifications.json`, with `recipientUsernames` (the actual
+send targets) and a `recipientNames` display snapshot — instant, but sends
+nothing. Sending is a `*/15 * * * *` cron in `.github/workflows/notify.yml`
+that filters that file for `status === "Pending" && new Date(sendAt) <=
+now`, resolves each due row's `recipientUsernames` fresh against
+`js/data.js`'s `STUDENTS` (never trusting the `recipientNames` snapshot for
+the actual send — that field exists purely so teacher.html's list still
+shows real names if a student is later renamed), emails everyone with a
+non-empty `email`, then flips that row to `"Sent"` (with `sentAt`/
+`recipientCount` filled in) and commits the file.
 **Why two systems:** `zenith-data-writer.gs` (Apps Script) only ever runs in
 response to a live HTTP request — it has no mechanism to wake itself up
 later at an arbitrary future time. A cron-scheduled job is the only piece of
 this stack that can poll "is it time yet," so the actual send has to live
 here, in the Node/GitHub-Actions side, not in the write endpoint.
-**A class deleted before its notification fires:** `send-scheduled-
-notifications.js` can't find the `classId` in `CLASSES` anymore — logs it,
-marks the row `Sent` with `recipientCount: 0` anyway rather than leaving it
-`Pending` forever (which would otherwise retry, and fail the same way, every
-15 minutes indefinitely).
-**A student in the class with no `email` on file:** silently excluded from
-that send, same convention as every other trigger in this file — not
-reflected in `recipientCount` (only actually-emailed students are counted).
+**A recipient removed/renamed before their notification fires:**
+`send-scheduled-notifications.js` just won't find that username in
+`STUDENTS` anymore — logged, silently excluded, same as a student with no
+`email` on file. Every recipient's send is independent, so this never blocks
+the others in the same row.
 **Cancelling:** only the teacher who created a `Pending` row can cancel it
 (`cancelScheduledNotification` checks `payload.username` against the row's
 `createdBy`), and only before it's sent — cancelling a `Sent` row is

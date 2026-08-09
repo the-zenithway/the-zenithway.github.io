@@ -2671,6 +2671,34 @@ body.portal-body {
    just indented back onto its own line instead of inline. */
 .scheduled-notif-cancel-btn { margin-top: 10px; }
 
+/* Recipient checklist on the "Schedule a notification" form
+   (renderScheduleNotificationForm_ in js/app.js) — every student
+   across all of a teacher's classes, deduped, scrollable once the
+   list gets long. */
+.teacher-notif-recipients {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+.teacher-notif-recipient-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+.teacher-notif-recipient-row input[type="checkbox"] { flex-shrink: 0; }
+.teacher-notif-select-all-row {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
 .requests-log-empty {
   color: var(--text-muted);
   font-size: 0.9rem;

@@ -13,11 +13,13 @@ const { createTransport } = require("./mailer");
  * Polls data/scheduled-notifications.json (written by teacher.html's
  * "Schedule a notification" form via zenith-data-writer.gs's
  * scheduleNotification action) for "Pending" entries whose `sendAt`
- * has passed, emails every student in the target class (resolved via
- * js/data.js's CLASSES) who has a non-empty email, marks each sent
- * entry "Sent", and writes the file back. The GitHub Actions workflow
- * that runs this is responsible for committing that write — same
- * division of labor as build-changelog-events.js and its caller in
+ * has passed, emails every recipient in that entry's
+ * `recipientUsernames` (resolved fresh against js/data.js's STUDENTS —
+ * NOT from the entry's `recipientNames` snapshot, which is display-only
+ * for teacher.html) who has a non-empty email, marks each sent entry
+ * "Sent", and writes the file back. The GitHub Actions workflow that
+ * runs this is responsible for committing that write — same division
+ * of labor as build-changelog-events.js and its caller in
  * .github/workflows/notify.yml.
  *
  * Deliberately NOT done inside zenith-data-writer.gs (Apps Script):
@@ -40,7 +42,7 @@ async function main() {
   const dataPath = positional[0] || path.join(__dirname, "../../js/data.js");
   const notificationsPath = positional[1] || path.join(__dirname, "../../data/scheduled-notifications.json");
 
-  const { students, classes } = loadData(fs.readFileSync(dataPath, "utf8"));
+  const { students } = loadData(fs.readFileSync(dataPath, "utf8"));
   const notifications = JSON.parse(fs.readFileSync(notificationsPath, "utf8"));
 
   const now = new Date();
@@ -54,13 +56,11 @@ async function main() {
   const transport = dryRun ? null : createTransport();
 
   for (const notif of due) {
-    const cls = classes.find((c) => c.id === notif.classId);
-    if (!cls) {
-      console.log(`"${notif.subject}" (${notif.id}): class "${notif.classId}" no longer exists in CLASSES — marking Sent with 0 recipients rather than retrying forever.`);
+    const wanted = notif.recipientUsernames || [];
+    const recipients = students.filter((s) => wanted.indexOf(s.username) !== -1 && s.email);
+    if (recipients.length < wanted.length) {
+      console.log(`"${notif.subject}" (${notif.id}): ${wanted.length - recipients.length} of ${wanted.length} recipient(s) skipped (removed/renamed since scheduling, or no email on file).`);
     }
-    const recipients = cls
-      ? students.filter((s) => cls.studentUsernames.indexOf(s.username) !== -1 && s.email)
-      : [];
 
     for (const student of recipients) {
       const { subject, html } = renderScheduledNotificationEmail(student.name, {
