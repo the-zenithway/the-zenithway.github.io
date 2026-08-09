@@ -4,18 +4,26 @@ on:
   push:
     branches: [main]
     paths: ["js/data.js", "js/blog-data.js", "resources.html", "philosophy.html"]
-  # No `schedule:` trigger yet — there are no IRL sessions running yet, so
-  # the weekly reminder has nothing real to remind anyone of. The job below
-  # is left in place (still runnable manually via workflow_dispatch) so it's
-  # ready to switch on: once sessions start, add back a `schedule:` block
-  # here with the real cron time, and fix SESSION_DAY/SESSION_TIME below to
-  # match it.
+  # No `schedule:` trigger for the weekly reminder yet — there are no IRL
+  # sessions running yet, so it has nothing real to remind anyone of. The
+  # job below is left in place (still runnable manually via
+  # workflow_dispatch) so it's ready to switch on: once sessions start, add
+  # back a `schedule:` block here with the real cron time, and fix
+  # SESSION_DAY/SESSION_TIME below to match it.
+  #
+  # send-scheduled-notifications, below, is different: it's opt-in per
+  # notification (a teacher has to actually schedule one via teacher.html),
+  # so unlike the weekly reminder it's safe to leave running unconditionally
+  # — a run with nothing due is a silent no-op, not an email nobody asked
+  # for. Its `schedule:` trigger IS live, at the bottom of this block.
+  schedule:
+    - cron: "*/15 * * * *" # send-scheduled-notifications only; see that job's `if:`. UTC; GitHub Actions cron can run several minutes late, especially on a low-activity repo — never early.
   workflow_dispatch:
     inputs:
       job:
         description: "Which job to run manually"
         type: choice
-        options: [notify-on-push, notify-content-updates, weekly-session-reminder]
+        options: [notify-on-push, notify-content-updates, weekly-session-reminder, send-scheduled-notifications]
         default: notify-on-push
 
 jobs:
@@ -93,7 +101,15 @@ jobs:
         working-directory: automation/notifications
 
   weekly-session-reminder:
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'weekly-session-reminder')
+    # No cron entry of its own yet (see the `on:` block above) — this
+    # job only runs via manual dispatch until one's added back. Do NOT
+    # widen this to a bare `github.event_name == 'schedule'`: that would
+    # also match send-scheduled-notifications' */15 cron below and start
+    # emailing every student every 15 minutes. Once real cron IS added
+    # here, match it specifically the same way send-scheduled-
+    # notifications does (github.event.schedule == '<that cron string>'),
+    # not a bare event_name check.
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'weekly-session-reminder'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -114,3 +130,40 @@ jobs:
           SESSION_TIME: "under 90 minutes"
         run: node notify-session-reminder.js ../../js/data.js
         working-directory: automation/notifications
+
+  send-scheduled-notifications:
+    # github.event.schedule (not just event_name) picks out THIS cron
+    # entry specifically — required since the workflow now has more than
+    # one potential `schedule:` trigger and they must not both fire the
+    # same job. This job is safe to run unconditionally every 15 minutes
+    # (see the `on:` block's comment) — a run with nothing due just logs
+    # and exits, no email sent, nothing committed.
+    if: (github.event_name == 'schedule' && github.event.schedule == '*/15 * * * *') || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'send-scheduled-notifications')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: automation/notifications
+
+      - name: Send due scheduled notifications
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: node send-scheduled-notifications.js ../../js/data.js ../../data/scheduled-notifications.json
+        working-directory: automation/notifications
+
+      - name: Commit updated scheduled-notifications.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/scheduled-notifications.json
+          git diff --staged --quiet || git commit -m "Mark sent scheduled notification(s)"
+          git push

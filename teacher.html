@@ -36,6 +36,19 @@
 
     <h2 class="teacher-section-title">Needs grading <span class="teacher-section-count" id="teacher-queue-count"></span></h2>
     <div id="teacher-queue-list" class="teacher-queue"></div>
+
+    <h2 class="teacher-section-title">Schedule a notification</h2>
+    <p class="parent-subtitle">Emails everyone in the class at the time you pick — for session reminders, mostly. Sending happens on its own schedule (checked every 15 minutes or so), not the instant you click Schedule.</p>
+    <div class="teacher-add-form">
+      <div class="teacher-add-form-row">
+        <select class="teacher-add-input" id="teacher-notif-class"></select>
+        <input type="datetime-local" class="teacher-add-input" id="teacher-notif-send-at">
+      </div>
+      <input type="text" class="teacher-add-input" id="teacher-notif-subject" placeholder="Subject (e.g. Session reminder — Thursday 6pm)">
+      <textarea class="teacher-add-textarea" id="teacher-notif-message" placeholder="Message"></textarea>
+      <button type="button" class="teacher-add-btn" id="teacher-notif-submit">Schedule</button>
+    </div>
+    <div class="requests-log-list" id="teacher-notifications-list"></div>
   </div>
 </main>
 

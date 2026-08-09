@@ -66,6 +66,31 @@ function renderSessionReminderEmail(name, { day, timeDescription } = {}) {
   return { subject, html };
 }
 
+// A teacher-authored notification, scheduled from teacher.html for a
+// specific class, sent by send-scheduled-notifications.js once its
+// sendAt has passed. `message` is plain text as the teacher typed it
+// (not HTML) — escaped and line-broken here rather than trusted raw,
+// since unlike this file's other templates it's free-form input from
+// a form, not developer-authored copy.
+function escapeHtml_(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function renderScheduledNotificationEmail(studentName, { teacherName, subject, message }) {
+  const fullSubject = "Zenith — " + subject;
+  const html =
+    `<p>Hi ${studentName},</p>` +
+    `<p>${escapeHtml_(message).replace(/\n/g, "<br>")}</p>` +
+    `<p>— ${teacherName}</p>` +
+    `<p><a href="${links.calendar()}">View the calendar</a></p>`;
+  return { subject: fullSubject, html };
+}
+
 function renderWelcomeEmail(name) {
   const subject = "Welcome to Zenith";
   const html =
@@ -99,6 +124,7 @@ module.exports = {
   renderDigestEmail,
   renderParentDigestEmail,
   renderSessionReminderEmail,
+  renderScheduledNotificationEmail,
   renderWelcomeEmail,
   renderContentUpdateEmail
 };

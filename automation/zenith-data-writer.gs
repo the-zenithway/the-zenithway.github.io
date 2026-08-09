@@ -6,10 +6,10 @@
  * see the note below) that backs every "write" control on the teacher
  * dashboard: marking a submission Complete, unlocking a roadmap item,
  * adding a feedback entry, adding a cheat sheet entry, updating a
- * course's Right Now task, logging a metrics data point, and (as of
- * 2026-08-09) submitting a feature/resource request. It writes to
- * three different files depending on the action — see
- * "THREE TARGET FILES" below.
+ * course's Right Now task, logging a metrics data point, submitting a
+ * feature/resource request, and (as of 2026-08-10) scheduling a
+ * notification email to a class. It writes to four different files
+ * depending on the action — see "FOUR TARGET FILES" below.
  *
  * This used to be two separate standalone scripts (this one, plus a
  * submission-status-updater.gs that only handled marking a submission
@@ -30,11 +30,19 @@
  * risk is that every action below is a single, specific, whitelisted
  * mutation (flip one roadmap item's status, mark one submission
  * Complete, append one feedback/cheat-sheet/metrics entry, replace
- * one course's rightNow, append one request) — never an arbitrary
- * field write, never a delete, never touching TEACHERS/PARENTS or any
- * student's login credentials. Batching (below) doesn't change this:
- * a batch is just a list of these same narrow actions, applied
- * together.
+ * one course's rightNow, append one request, append/cancel one
+ * scheduled notification) — never an arbitrary field write, never a
+ * delete, never touching TEACHERS/PARENTS or any student's login
+ * credentials. Batching (below) doesn't change this: a batch is just
+ * a list of these same narrow actions, applied together.
+ *
+ * scheduleNotification/cancelScheduledNotification (added 2026-08-10)
+ * back teacher.html's "Schedule a notification" form. This action
+ * ONLY writes the Pending row to data/scheduled-notifications.json —
+ * it does not send anything itself. The actual sending is a separate
+ * GitHub Actions cron job (automation/notifications/
+ * send-scheduled-notifications.js), polling that file independently
+ * of this endpoint. See that script and .github/workflows/notify.yml.
  *
  * submitRequest (added 2026-08-09) is called from requests.html by
  * students/teachers/parents, not just teacher.html — despite the
@@ -54,13 +62,14 @@
  * changes (a roadmap unlock, a feedback entry, a Right Now update,
  * etc.) and send them as one `applyBatch` request instead of one
  * request per change — see doPost below. Every action here writes to
- * one of three files (js/data.js, data/submissions-log.json, or
- * data/requests-log.json — see "THREE TARGET FILES"); a batch whose
- * actions all target the same file becomes exactly ONE git commit, no
- * matter how many actions it contains. A batch that mixes targets
- * (i.e. includes markSubmissionComplete or submitRequest alongside
- * anything else) still produces one commit per distinct file — that's
- * a hard limit of GitHub's Contents
+ * one of four files (js/data.js, data/submissions-log.json,
+ * data/requests-log.json, or data/scheduled-notifications.json — see
+ * "FOUR TARGET FILES"); a batch whose actions all target the same file
+ * becomes exactly ONE git commit, no matter how many actions it
+ * contains. A batch that mixes targets (i.e. includes
+ * markSubmissionComplete, submitRequest, or scheduleNotification/
+ * cancelScheduledNotification alongside anything else) still produces
+ * one commit per distinct file — that's a hard limit of GitHub's Contents
  * API, not something worth working around, since markSubmissionComplete
  * lives on a different page (teacher.html) and isn't part of any
  * teacher-student.html batch in practice.
@@ -70,13 +79,15 @@
  * below), not here. Copy it in by hand; nothing auto-syncs.
  *
  * ---------------------------------------------------------------
- * THREE TARGET FILES
+ * FOUR TARGET FILES
  * ---------------------------------------------------------------
- * `markSubmissionComplete` writes to data/submissions-log.json, and
- * `submitRequest` writes to data/requests-log.json — both plain JSON
- * files, so read/mutate/write there is a straightforward
- * JSON.parse/JSON.stringify (same as submissions-compiler.gs already
- * does for the former), and both share one committer function,
+ * `markSubmissionComplete` writes to data/submissions-log.json,
+ * `submitRequest` writes to data/requests-log.json, and
+ * scheduleNotification/cancelScheduledNotification write to
+ * data/scheduled-notifications.json — all three are plain JSON files,
+ * so read/mutate/write there is a straightforward JSON.parse/
+ * JSON.stringify (same as submissions-compiler.gs already does for the
+ * first), and all three share one committer function,
  * commitJsonArrayMutation_ below.
  *
  * Every other action writes to js/data.js, which is a hand-authored
@@ -124,9 +135,10 @@
  *      GITHUB_OWNER      the-zenithway
  *      GITHUB_REPO       the-zenithway.github.io
  *      GITHUB_BRANCH     main
- *      DATA_PATH         js/data.js
- *      LOG_PATH          data/submissions-log.json
- *      REQUESTS_LOG_PATH data/requests-log.json
+ *      DATA_PATH             js/data.js
+ *      LOG_PATH              data/submissions-log.json
+ *      REQUESTS_LOG_PATH     data/requests-log.json
+ *      NOTIFICATIONS_PATH    data/scheduled-notifications.json
  *
  * 3. Deploy -> New deployment -> "Web app".
  *      Execute as:      Me
@@ -148,7 +160,11 @@
  *    and confirm data/requests-log.json gets exactly one new entry
  *    each time, and that a confirmation email actually arrives — the
  *    first send may trigger a one-time MailApp authorization prompt
- *    in the Apps Script editor (approve it, then retry).
+ *    in the Apps Script editor (approve it, then retry). Also schedule
+ *    one real notification from teacher.html and confirm
+ *    data/scheduled-notifications.json gets exactly one new "Pending"
+ *    entry — actually sending it is a separate system, see
+ *    automation/notifications/send-scheduled-notifications.js.
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -207,6 +223,7 @@ function doPost(e) {
     var studentsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "students"; });
     var logOps = operations.filter(function (op) { return ACTIONS[op.action].target === "log"; });
     var requestsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "requests"; });
+    var notificationsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "notifications"; });
 
     if (studentsOps.length > 0) {
       var dataPath = props.getProperty("DATA_PATH") || "js/data.js";
@@ -215,6 +232,10 @@ function doPost(e) {
     if (logOps.length > 0) {
       var logPath = props.getProperty("LOG_PATH") || "data/submissions-log.json";
       commitJsonArrayMutation_(owner, repo, branch, logPath, token, logOps);
+    }
+    if (notificationsOps.length > 0) {
+      var notificationsPath = props.getProperty("NOTIFICATIONS_PATH") || "data/scheduled-notifications.json";
+      commitJsonArrayMutation_(owner, repo, branch, notificationsPath, token, notificationsOps);
     }
     if (requestsOps.length > 0) {
       var requestsPath = props.getProperty("REQUESTS_LOG_PATH") || "data/requests-log.json";
@@ -443,6 +464,65 @@ var ACTIONS = {
         title: payload.title,
         details: payload.details
       });
+    }
+  },
+
+  // Backs teacher.html's "Schedule a notification" form — a teacher
+  // picks one of their own CLASSES (see js/data.js), writes a
+  // subject/message, and picks a future send time. Doesn't send
+  // anything itself: this only appends a "Pending" row to
+  // data/scheduled-notifications.json; automation/notifications/
+  // send-scheduled-notifications.js (a separate GitHub Actions cron
+  // job, not this Apps Script) polls that file and does the actual
+  // sending once payload.sendAt has passed. classId/className aren't
+  // cross-checked against CLASSES here (same trust level as every
+  // other teacher-initiated action in this file — see the header
+  // comment), and the payload is trusted for who's allowed to send to
+  // that class, same as addFeedback trusts payload.courseId.
+  scheduleNotification: {
+    target: "notifications",
+    handler: function (notifications, payload) {
+      if (!payload.username || !payload.classId || !payload.subject || !payload.message || !payload.sendAt) {
+        throw new Error("scheduleNotification requires username, classId, subject, message, and sendAt");
+      }
+      var sendAt = new Date(payload.sendAt);
+      if (isNaN(sendAt.getTime())) throw new Error("Invalid sendAt: " + payload.sendAt);
+      notifications.unshift({
+        id: "notif_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
+        createdBy: payload.username,
+        createdByName: payload.name || payload.username,
+        createdAt: new Date().toISOString(),
+        sendAt: sendAt.toISOString(),
+        classId: payload.classId,
+        className: payload.className || payload.classId,
+        subject: payload.subject,
+        message: payload.message,
+        status: "Pending",
+        sentAt: null,
+        recipientCount: null
+      });
+    }
+  },
+
+  // A teacher can only cancel their own scheduled notification (checked
+  // against createdBy, not just "any teacher"), and only while it's
+  // still Pending — once send-scheduled-notifications.js has sent it,
+  // cancelling would be misleading (the emails are already out).
+  cancelScheduledNotification: {
+    target: "notifications",
+    handler: function (notifications, payload) {
+      if (!payload.id || !payload.username) {
+        throw new Error("cancelScheduledNotification requires id and username");
+      }
+      var entry = notifications.find(function (n) { return n.id === payload.id; });
+      if (!entry) throw new Error("No scheduled notification with id " + payload.id);
+      if (entry.createdBy !== payload.username) {
+        throw new Error("Only the teacher who scheduled this notification can cancel it");
+      }
+      if (entry.status !== "Pending") {
+        throw new Error("Only a Pending notification can be cancelled (this one is " + entry.status + ")");
+      }
+      entry.status = "Cancelled";
     }
   }
 };

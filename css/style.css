@@ -2647,7 +2647,8 @@ body.portal-body {
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
-.requests-log-status-new { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.requests-log-status-new,
+.requests-log-status-pending { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 
 .requests-log-title {
   font-weight: 600;
@@ -2663,6 +2664,12 @@ body.portal-body {
   margin: 0;
   white-space: pre-wrap;
 }
+
+/* Cancel button on a Pending scheduled-notification card
+   (scheduledNotificationItemHtml_ in js/app.js) — sits below the
+   message, same .teacher-add-btn look as every other write control,
+   just indented back onto its own line instead of inline. */
+.scheduled-notif-cancel-btn { margin-top: 10px; }
 
 .requests-log-empty {
   color: var(--text-muted);
