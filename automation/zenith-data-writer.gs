@@ -7,9 +7,37 @@
  * dashboard: marking a submission Complete, unlocking a roadmap item,
  * adding a feedback entry, adding a cheat sheet entry, updating a
  * course's Right Now task, logging a metrics data point, submitting a
- * feature/resource request, and (as of 2026-08-10) scheduling a
- * notification email to a class. It writes to four different files
- * depending on the action — see "FOUR TARGET FILES" below.
+ * feature/resource request, scheduling a notification email to a
+ * class, and (as of 2026-08-10) the student/teacher signup + admin
+ * approval flow. It writes to five different files depending on the
+ * action — see "TARGET FILES" below.
+ *
+ * SIGNUP (added 2026-08-10) backs signup.html (submitSignup, called by
+ * anyone, no login) and admin.html's "Sign-ups" tab
+ * (approveSignup/declineSignup/createStudentAccount/
+ * createTeacherAccount, called by an admin). A signup starts as a
+ * "Pending" row in data/signup-requests.json — nothing else happens
+ * until an admin approves or declines it. Approving is sent as a
+ * batch of TWO ops (e.g. `{action: "approveSignup", ...}` +
+ * `{action: "createStudentAccount", ...}`) so the account only gets
+ * created if the signup itself can still be marked Approved, and vice
+ * versa — see the doPost op-ordering note below for why
+ * createStudentAccount/createTeacherAccount run BEFORE approveSignup
+ * even though both are part of the same batch. Declining only flips
+ * status, no account is created. The password never travels or sits
+ * anywhere as plaintext: signup.html hashes it (SHA-256, Web Crypto)
+ * before it ever leaves the browser, so both data/signup-requests.json
+ * and the eventual STUDENTS/TEACHERS entry only ever hold
+ * `passwordHash`, never `password`. This is the one path that DOES
+ * touch STUDENTS/TEACHERS beyond the narrow field-level mutations
+ * described below — seemingly in tension with "never touching
+ * TEACHERS ... or any student's login credentials" above, but the
+ * risk model is the same: submitSignup only ever APPENDS a Pending
+ * row nobody acts on automatically, and createStudentAccount/
+ * createTeacherAccount only ever APPEND a brand new account (never
+ * edit or delete an existing one — both handlers throw if the
+ * username's already taken) and can only run at all from an
+ * approveSignup batch — i.e. only after a human admin reviewed it.
  *
  * This used to be two separate standalone scripts (this one, plus a
  * submission-status-updater.gs that only handled marking a submission
@@ -31,10 +59,17 @@
  * mutation (flip one roadmap item's status, mark one submission
  * Complete, append one feedback/cheat-sheet/metrics entry, replace
  * one course's rightNow, append one request, append/cancel one
- * scheduled notification) — never an arbitrary field write, never a
- * delete, never touching TEACHERS/PARENTS or any student's login
- * credentials. Batching (below) doesn't change this: a batch is just
- * a list of these same narrow actions, applied together.
+ * scheduled notification, append one Pending signup) — never an
+ * arbitrary field write, never an edit or delete of an existing
+ * STUDENTS/TEACHERS entry, and never touching PARENTS/ADMINS or any
+ * EXISTING account's login credentials at all. Batching (below)
+ * doesn't change this: a batch is just a list of these same narrow
+ * actions, applied together. The one deliberate exception is
+ * createStudentAccount/createTeacherAccount (see the SIGNUP note
+ * above) — each APPENDS one brand new account and nothing else, can
+ * only be reached from an admin-approved signup, and still can't
+ * touch an existing entry (both throw on a taken username rather than
+ * overwriting it).
  *
  * scheduleNotification/cancelScheduledNotification (added 2026-08-10)
  * back teacher.html's "Schedule a notification" form. This action
@@ -62,47 +97,61 @@
  * changes (a roadmap unlock, a feedback entry, a Right Now update,
  * etc.) and send them as one `applyBatch` request instead of one
  * request per change — see doPost below. Every action here writes to
- * one of four files (js/data.js, data/submissions-log.json,
- * data/requests-log.json, or data/scheduled-notifications.json — see
- * "FOUR TARGET FILES"); a batch whose actions all target the same file
- * becomes exactly ONE git commit, no matter how many actions it
- * contains. A batch that mixes targets (i.e. includes
- * markSubmissionComplete, submitRequest, or scheduleNotification/
- * cancelScheduledNotification alongside anything else) still produces
- * one commit per distinct file — that's a hard limit of GitHub's Contents
- * API, not something worth working around, since markSubmissionComplete
- * lives on a different page (teacher.html) and isn't part of any
- * teacher-student.html batch in practice.
+ * one of five files (js/data.js, data/submissions-log.json,
+ * data/requests-log.json, data/scheduled-notifications.json, or
+ * data/signup-requests.json — see "TARGET FILES"); a batch whose
+ * actions all target the same file becomes exactly ONE git commit, no
+ * matter how many actions it contains. A batch that mixes targets
+ * (i.e. includes markSubmissionComplete, submitRequest, or
+ * scheduleNotification/cancelScheduledNotification alongside anything
+ * else) still produces one commit per distinct file — that's a hard
+ * limit of GitHub's Contents API, not something worth working around,
+ * since markSubmissionComplete lives on a different page
+ * (teacher.html) and isn't part of any teacher-student.html batch in
+ * practice. An approveSignup batch is the one case that deliberately
+ * mixes targets every time (approveSignup itself targets "signups",
+ * paired with a createStudentAccount/createTeacherAccount targeting
+ * "students"/"teachers") — see doPost's op-ordering note for why that
+ * specific pairing runs account-creation first.
  *
  * This file is a reference copy for version history — the version
  * that actually runs lives inside its own Apps Script project (step 2
  * below), not here. Copy it in by hand; nothing auto-syncs.
  *
  * ---------------------------------------------------------------
- * FOUR TARGET FILES
+ * TARGET FILES
  * ---------------------------------------------------------------
  * `markSubmissionComplete` writes to data/submissions-log.json,
- * `submitRequest` writes to data/requests-log.json, and
- * scheduleNotification/cancelScheduledNotification write to
- * data/scheduled-notifications.json — all three are plain JSON files,
- * so read/mutate/write there is a straightforward JSON.parse/
- * JSON.stringify (same as submissions-compiler.gs already does for the
- * first), and all three share one committer function,
- * commitJsonArrayMutation_ below.
+ * `submitRequest`/`updateRequestStatus` write to data/requests-log.json,
+ * `scheduleNotification`/`cancelScheduledNotification` write to
+ * data/scheduled-notifications.json, and `submitSignup`/
+ * `approveSignup`/`declineSignup` write to data/signup-requests.json —
+ * all four are plain JSON files, so read/mutate/write there is a
+ * straightforward JSON.parse/JSON.stringify (same as
+ * submissions-compiler.gs already does for the first), and all four
+ * share one committer function, commitJsonArrayMutation_ below.
  *
  * Every other action writes to js/data.js, which is a hand-authored
- * JavaScript file (`const STUDENTS = [...]`), NOT JSON — it can't be
- * read with a plain JSON.parse. findConstArraySpan_/readConstArray_/
- * spliceConstArray_ below solve that by locating exactly the `const
- * STUDENTS = [ ... ]` span in the raw file text (a bracket-depth
- * scanner that also tracks string-literal boundaries, so it finds the
- * true matching close, not just the first stray "]"), evaluating only
- * that span (safe here — this is trusted first-party code reading its
- * own repo's data, not arbitrary user input), mutating the resulting
- * plain object in memory, then re-serializing with JSON.stringify and
- * splicing it back into the original file text in place of the old
- * span. Everything outside that span — the header comment, the other
- * consts, TEACHERS, PARENTS — is left untouched byte-for-byte.
+ * JavaScript file (`const STUDENTS = [...]` / `const TEACHERS = [...]`),
+ * NOT JSON — it can't be read with a plain JSON.parse.
+ * findConstArraySpan_/readConstArray_/spliceConstArray_ below solve
+ * that by locating exactly one `const <NAME> = [ ... ]` span in the
+ * raw file text (a bracket-depth scanner that also tracks string-
+ * literal boundaries, so it finds the true matching close, not just
+ * the first stray "]"), evaluating only that span (safe here — this
+ * is trusted first-party code reading its own repo's data, not
+ * arbitrary user input), mutating the resulting plain object in
+ * memory, then re-serializing with JSON.stringify and splicing it
+ * back into the original file text in place of the old span.
+ * Everything outside that span — the header comment, the other
+ * consts — is left untouched byte-for-byte. Two separate consts in
+ * this one file can each be targeted this way: `commitStudentsMutation_`
+ * for STUDENTS (existing "students" target), `commitTeachersMutation_`
+ * for TEACHERS (new "teachers" target, added for createTeacherAccount)
+ * — PARENTS/ADMINS have no writer and stay off-limits, per the "never
+ * touching TEACHERS/PARENTS or any student's login credentials" line
+ * above (createTeacherAccount is the one narrow, deliberate exception
+ * to the TEACHERS half of that, see the SIGNUP note above for why).
  *
  * Caveat worth knowing: any hand-written comment *inside* a STUDENTS
  * array entry (there are none as of this writing) would be lost the
@@ -139,6 +188,7 @@
  *      LOG_PATH              data/submissions-log.json
  *      REQUESTS_LOG_PATH     data/requests-log.json
  *      NOTIFICATIONS_PATH    data/scheduled-notifications.json
+ *      SIGNUPS_PATH          data/signup-requests.json
  *
  * 3. Deploy -> New deployment -> "Web app".
  *      Execute as:      Me
@@ -164,7 +214,22 @@
  *    one real notification from teacher.html and confirm
  *    data/scheduled-notifications.json gets exactly one new "Pending"
  *    entry — actually sending it is a separate system, see
- *    automation/notifications/send-scheduled-notifications.js.
+ *    automation/notifications/send-scheduled-notifications.js. Also
+ *    submit one real signup from signup.html (both roles) and confirm
+ *    data/signup-requests.json gets a new "Pending" entry and a
+ *    "we got your signup" email arrives; then from admin.html's
+ *    Sign-ups tab approve one and decline one, and confirm: the
+ *    approved one flips to "Approved" in data/signup-requests.json,
+ *    js/data.js gets a new STUDENTS or TEACHERS entry (2 commits, one
+ *    per file) with a passwordHash but no plaintext password, an
+ *    approval email arrives, and the new account can actually log in;
+ *    the declined one just flips to "Declined" with no js/data.js
+ *    commit and no account created. Also try approving two signups at
+ *    once (bulk) and confirm it's still just 2 commits total (one for
+ *    data/signup-requests.json covering both status flips, one for
+ *    js/data.js covering both new accounts — or two js/data.js commits
+ *    if one signup is a student and the other a teacher, since those
+ *    are two different consts, see commitTeachersMutation_ below).
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -182,8 +247,14 @@
  * from commitLogMutation_ is new as of 2026-08-09 and untested too — it's
  * the same code path markSubmissionComplete already exercises, just
  * parameterized to a second path, so risk is low, but still unverified
- * against a real deployment. If step 5 throws or produces an
- * unexpected diff, send the exact error text or diff.
+ * against a real deployment. The whole SIGNUP path (submitSignup/
+ * approveSignup/declineSignup/createStudentAccount/
+ * createTeacherAccount, commitTeachersMutation_) is new as of
+ * 2026-08-10 and completely unexercised — commitTeachersMutation_ in
+ * particular is a fresh near-duplicate of commitStudentsMutation_,
+ * never round-tripped against the real js/data.js the way
+ * findConstArraySpan_ was for STUDENTS. If step 5 throws or produces
+ * an unexpected diff, send the exact error text or diff.
  */
 
 // Every request becomes a list of { action, payload } operations — a
@@ -221,13 +292,28 @@ function doPost(e) {
     }
 
     var studentsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "students"; });
+    var teachersOps = operations.filter(function (op) { return ACTIONS[op.action].target === "teachers"; });
     var logOps = operations.filter(function (op) { return ACTIONS[op.action].target === "log"; });
     var requestsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "requests"; });
     var notificationsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "notifications"; });
+    var signupsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "signups"; });
 
+    // studentsOps/teachersOps (createStudentAccount/createTeacherAccount)
+    // run BEFORE signupsOps (approveSignup) on purpose: an
+    // approve-a-signup batch sends both in one request, and if account
+    // creation throws (e.g. the username got taken in the meantime),
+    // this whole function throws before ever reaching the signupsOps
+    // block below — so the signup is left "Pending" instead of getting
+    // marked "Approved" for an account that doesn't actually exist. The
+    // reverse order would risk exactly that: a signup marked Approved
+    // whose account creation then failed.
     if (studentsOps.length > 0) {
       var dataPath = props.getProperty("DATA_PATH") || "js/data.js";
       commitStudentsMutation_(owner, repo, branch, dataPath, token, studentsOps);
+    }
+    if (teachersOps.length > 0) {
+      var teachersDataPath = props.getProperty("DATA_PATH") || "js/data.js";
+      commitTeachersMutation_(owner, repo, branch, teachersDataPath, token, teachersOps);
     }
     if (logOps.length > 0) {
       var logPath = props.getProperty("LOG_PATH") || "data/submissions-log.json";
@@ -252,6 +338,23 @@ function doPost(e) {
       requestsOps.forEach(function (op) {
         if (op.action !== "submitRequest") return;
         try { sendRequestConfirmationEmail_(op.payload); } catch (e) { /* best-effort only */ }
+      });
+    }
+    if (signupsOps.length > 0) {
+      var signupsPath = props.getProperty("SIGNUPS_PATH") || "data/signup-requests.json";
+      commitJsonArrayMutation_(owner, repo, branch, signupsPath, token, signupsOps);
+      // Same "send after the commit, not inside the handler" reasoning
+      // as submitRequest above (avoids a duplicate email on a 409
+      // retry). By the time we get here, any paired
+      // createStudentAccount/createTeacherAccount op already committed
+      // successfully (see the ordering note above) — the account is
+      // real by the time this "you're approved" email goes out.
+      signupsOps.forEach(function (op) {
+        if (op.action === "submitSignup") {
+          try { sendSignupReceivedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        } else if (op.action === "approveSignup") {
+          try { sendSignupApprovedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        }
       });
     }
     return jsonResponse_({ ok: true });
@@ -284,20 +387,67 @@ function sendRequestConfirmationEmail_(payload) {
       (payload.username ? "" : "\n\n(You submitted this without logging in, so this email is the only way we can follow up with you.)"));
 }
 
+// "We got it" confirmation for submitSignup — sent right after the
+// Pending row lands in data/signup-requests.json, same "AFTER the
+// commit, from doPost, not from inside the handler" reasoning as
+// sendRequestConfirmationEmail_ above. payload.email is whatever
+// signup.html sent (whatever the applicant typed into the signup
+// form) — not yet a real account, so there's nothing server-side to
+// look it up against.
+function sendSignupReceivedEmail_(payload) {
+  if (!payload.email) return;
+  MailApp.sendEmail(payload.email,
+    "Zenith — signup received",
+    "Hey " + payload.name + ",\n\n" +
+    "We got your " + payload.role + " signup (username \"" + payload.username + "\"). " +
+    "An admin reviews every signup by hand, which usually takes anywhere from 15 minutes to 1 day " +
+    "depending on when you signed up — you'll get a second email the moment it's approved and your " +
+    "account is ready to log into.\n\nThanks for your patience.");
+}
+
+// "You're in" notice for approveSignup — sent right after BOTH the
+// signup's status flip AND its paired createStudentAccount/
+// createTeacherAccount commit have succeeded (see doPost's op-
+// ordering note), so this email never promises an account that
+// doesn't actually exist yet. payload here is whatever admin.html
+// sent along with the approveSignup op (name/email/username/role
+// snapshotted from the signup entry being approved).
+function sendSignupApprovedEmail_(payload) {
+  if (!payload.email) return;
+  MailApp.sendEmail(payload.email,
+    "Zenith — you're approved!",
+    "Hey " + payload.name + ",\n\n" +
+    "Your " + payload.role + " signup was just approved — you can log in now with username \"" +
+    payload.username + "\" and the password you picked when you signed up.\n\nSee you inside.");
+}
+
 // ---------------------------------------------------------------
-// Action handlers. Each has a `target` ("students" or "log") saying
-// which file it mutates, and a `handler(data, payload)` that mutates
-// `data` in place (the STUDENTS array for "students", the submissions
-// log array for "log") and throws a descriptive error on any missing/
-// invalid input. Kept deliberately narrow: one action, one specific
-// mutation, nothing generic/arbitrary.
+// Action handlers. Each has a `target` ("students", "teachers", "log",
+// "requests", "notifications", or "signups") saying which file it
+// mutates, and a `handler(data, payload)` that mutates `data` in place
+// (the STUDENTS array for "students", the TEACHERS array for
+// "teachers", the submissions log array for "log", etc.) and throws a
+// descriptive error on any missing/invalid input. Kept deliberately
+// narrow: one action, one specific mutation, nothing generic/
+// arbitrary.
 // ---------------------------------------------------------------
 
 var ROADMAP_STATUSES_ = ["Locked", "Unlocked", "Complete", "Review", "Optional-Reading"];
 var METRIC_ARRAY_TYPES_ = ["topicMastery", "chapterScores", "motivation", "mockScores", "timeToCompletion", "personality"];
 var AP_SCORE_FIELDS_ = ["apPredictedScore", "apFinalScore", "responsiveness"];
-var REQUEST_CATEGORIES_ = ["Feature Request", "Resource Request", "Bug Report", "Concern / Other"];
-var REQUEST_ROLES_ = ["student", "teacher", "parent"];
+var REQUEST_CATEGORIES_ = ["Feature Request", "Resource Request", "Bug Report", "Ask My Teacher", "Concern / Other"];
+// "admin" was missing here until 2026-08-10 — an admin submitting a
+// request via requests.html (getCurrentPerson() supports all 4 roles)
+// would have been rejected server-side with "Invalid role: admin",
+// even though nothing in the client ever stopped them from trying.
+var REQUEST_ROLES_ = ["student", "teacher", "parent", "admin"];
+var REQUEST_STATUSES_ = ["New", "In Progress", "Completed"];
+var SIGNUP_ROLES_ = ["student", "teacher"];
+// 3-30 chars, letters/numbers/underscore/period/hyphen — same rough
+// shape as every existing STUDENTS/TEACHERS username, just not
+// formally enforced anywhere until now since every existing one was
+// hand-typed by us, not submitted by a stranger over the network.
+var USERNAME_PATTERN_ = /^[a-zA-Z0-9_.-]{3,30}$/;
 
 function findCourse_(students, username, courseId) {
   var student = students.find(function (s) { return s.username === username; });
@@ -452,6 +602,9 @@ var ACTIONS = {
           throw new Error("An email is required when submitting without an account");
         }
       }
+      if (payload.category === "Ask My Teacher" && !payload.courseId) {
+        throw new Error("Ask My Teacher requires a courseId, so a teacher can be found for it");
+      }
       requests.unshift({
         id: "req_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
         receivedAt: new Date().toISOString(),
@@ -461,9 +614,33 @@ var ACTIONS = {
         email: payload.email || null,
         role: payload.role || null,
         category: payload.category,
+        courseId: payload.courseId || null,
+        courseName: payload.courseName || null,
         title: payload.title,
         details: payload.details
       });
+    }
+  },
+
+  // Backs teacher.html's "Needs to review" queue (Ask My Teacher
+  // requests) — a teacher moves one from New to In Progress to
+  // Completed (or straight to Completed). No ownership check against
+  // CLASSES here (same trust level as every other action in this
+  // file, see the header comment): the UI only ever shows a teacher
+  // their own students' requests, via teacherCanSeeCourse_ in
+  // js/app.js, client-side.
+  updateRequestStatus: {
+    target: "requests",
+    handler: function (requests, payload) {
+      if (!payload.id || !payload.status) {
+        throw new Error("updateRequestStatus requires id and status");
+      }
+      if (REQUEST_STATUSES_.indexOf(payload.status) === -1) {
+        throw new Error("Invalid status: " + payload.status);
+      }
+      var entry = requests.find(function (r) { return r.id === payload.id; });
+      if (!entry) throw new Error("No request with id " + payload.id);
+      entry.status = payload.status;
     }
   },
 
@@ -530,6 +707,152 @@ var ACTIONS = {
         throw new Error("Only a Pending notification can be cancelled (this one is " + entry.status + ")");
       }
       entry.status = "Cancelled";
+    }
+  },
+
+  // Backs signup.html — anyone, no login required (that's the whole
+  // point). Appends one "Pending" row to data/signup-requests.json;
+  // nothing else happens until an admin approves or declines it from
+  // admin.html. id/receivedAt/status are generated here, never trusted
+  // from the client, same as submitRequest above. passwordHash is
+  // whatever signup.html computed client-side (SHA-256 over the
+  // password, via Web Crypto) — this endpoint never sees, stores, or
+  // forwards a plaintext password anywhere, for either role.
+  //
+  // Uniqueness is only checked against OTHER non-Declined signups in
+  // this same file — this handler has no visibility into js/data.js's
+  // STUDENTS/TEACHERS (different file, different commit). The real,
+  // authoritative uniqueness check happens at approval time, inside
+  // createStudentAccount/createTeacherAccount below, which DO read the
+  // live STUDENTS/TEACHERS array right before writing to it. That means
+  // two people could both submit the same desired username and both
+  // land in the Pending queue — that's fine, intentional even: an
+  // admin sees both, and approving whichever one first simply makes
+  // the other's later approval attempt fail with a clear "already
+  // taken" error instead of silently colliding.
+  submitSignup: {
+    target: "signups",
+    handler: function (signups, payload) {
+      if (!payload.role || SIGNUP_ROLES_.indexOf(payload.role) === -1) {
+        throw new Error("Invalid role: " + payload.role);
+      }
+      if (!payload.username || !payload.name || !payload.email || !payload.passwordHash) {
+        throw new Error("submitSignup requires username, name, email, and passwordHash");
+      }
+      if (!USERNAME_PATTERN_.test(payload.username)) {
+        throw new Error("Username must be 3-30 characters: letters, numbers, underscore, period, or hyphen only");
+      }
+      var alreadyPending = signups.some(function (s) {
+        return s.username === payload.username && s.status !== "Declined";
+      });
+      if (alreadyPending) {
+        throw new Error("A signup for username \"" + payload.username + "\" is already pending or approved");
+      }
+      signups.unshift({
+        id: "signup_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
+        receivedAt: new Date().toISOString(),
+        status: "Pending",
+        role: payload.role,
+        username: payload.username,
+        name: payload.name,
+        email: payload.email,
+        passwordHash: payload.passwordHash,
+        decidedAt: null,
+        decidedBy: null
+      });
+    }
+  },
+
+  // Backs admin.html's "Approve" control (single or bulk — bulk just
+  // sends one applyBatch with N of these, one per selected signup,
+  // each paired with its own createStudentAccount/createTeacherAccount
+  // op — see the doPost op-ordering note for why account-creation
+  // always runs first). Only a still-Pending signup can be approved,
+  // so double-approving (e.g. two admins racing) fails loudly on the
+  // second attempt rather than silently no-op-ing.
+  approveSignup: {
+    target: "signups",
+    handler: function (signups, payload) {
+      if (!payload.id) throw new Error("approveSignup requires an id");
+      var entry = signups.find(function (s) { return s.id === payload.id; });
+      if (!entry) throw new Error("No signup with id " + payload.id);
+      if (entry.status !== "Pending") {
+        throw new Error("Signup " + payload.id + " is not Pending (it's " + entry.status + ")");
+      }
+      entry.status = "Approved";
+      entry.decidedAt = new Date().toISOString();
+      entry.decidedBy = payload.decidedBy || null;
+    }
+  },
+
+  // Backs admin.html's "Decline" control (single or bulk, same
+  // shape as approveSignup). Only flips status — never touches
+  // js/data.js, since nothing should exist for a declined signup.
+  declineSignup: {
+    target: "signups",
+    handler: function (signups, payload) {
+      if (!payload.id) throw new Error("declineSignup requires an id");
+      var entry = signups.find(function (s) { return s.id === payload.id; });
+      if (!entry) throw new Error("No signup with id " + payload.id);
+      if (entry.status !== "Pending") {
+        throw new Error("Signup " + payload.id + " is not Pending (it's " + entry.status + ")");
+      }
+      entry.status = "Declined";
+      entry.decidedAt = new Date().toISOString();
+      entry.decidedBy = payload.decidedBy || null;
+    }
+  },
+
+  // Only reachable as part of an approveSignup batch from admin.html
+  // (see the SIGNUP header note) — appends ONE brand new STUDENTS
+  // entry with no enrolled courses yet (course registration is future
+  // work, deliberately out of scope here — see todo.md). Throws if the
+  // username is already taken by an existing student, which is the
+  // real (as opposed to submitSignup's best-effort) uniqueness gate,
+  // since this reads the live STUDENTS array right before writing it.
+  createStudentAccount: {
+    target: "students",
+    handler: function (students, payload) {
+      if (!payload.username || !payload.name || !payload.passwordHash) {
+        throw new Error("createStudentAccount requires username, name, and passwordHash");
+      }
+      if (!USERNAME_PATTERN_.test(payload.username)) {
+        throw new Error("Invalid username: " + payload.username);
+      }
+      var taken = students.some(function (s) { return s.username === payload.username; });
+      if (taken) throw new Error("Username already taken: " + payload.username);
+      students.push({
+        username: payload.username,
+        name: payload.name,
+        passwordHash: payload.passwordHash,
+        email: payload.email || "",
+        courses: []
+      });
+    }
+  },
+
+  // Same idea as createStudentAccount, appending to TEACHERS instead
+  // (see commitTeachersMutation_ below for how that gets written back
+  // — TEACHERS has no "courses" field of its own; which classes a
+  // teacher sees is entirely CLASSES-driven, assigned by hand
+  // separately, same as for any existing teacher).
+  createTeacherAccount: {
+    target: "teachers",
+    handler: function (teachers, payload) {
+      if (!payload.username || !payload.name || !payload.passwordHash) {
+        throw new Error("createTeacherAccount requires username, name, and passwordHash");
+      }
+      if (!USERNAME_PATTERN_.test(payload.username)) {
+        throw new Error("Invalid username: " + payload.username);
+      }
+      var taken = teachers.some(function (t) { return t.username === payload.username; });
+      if (taken) throw new Error("Username already taken: " + payload.username);
+      teachers.push({
+        username: payload.username,
+        name: payload.name,
+        passwordHash: payload.passwordHash,
+        email: payload.email || ""
+      });
     }
   }
 };
@@ -704,6 +1027,49 @@ function commitStudentsMutation_(owner, repo, branch, path, token, ops, attempt)
   if (putResp.getResponseCode() === 409 && attempt < 3) {
     Utilities.sleep(500 * attempt);
     commitStudentsMutation_(owner, repo, branch, path, token, ops, attempt + 1);
+    return;
+  }
+  if (putResp.getResponseCode() >= 300) {
+    throw new Error("Could not write " + path + " (HTTP " + putResp.getResponseCode() + "): " + putResp.getContentText());
+  }
+}
+
+// Same read/mutate/splice/write/retry shape as commitStudentsMutation_
+// just above, parameterized to the TEACHERS const instead of STUDENTS
+// — kept as its own near-duplicate function rather than a shared
+// helper taking a constName, since this whole file already documents
+// itself as "untested against a real deployment" (see the header) and
+// duplicating a ~25-line function is a much smaller risk than
+// reshaping the one code path (createStudentAccount via
+// commitStudentsMutation_) that's closest to having run for real.
+// `path` is the same js/data.js as commitStudentsMutation_ — if a
+// batch contains both a createStudentAccount and a
+// createTeacherAccount, doPost commits STUDENTS first (fresh sha),
+// then this function does its own fresh GET (picking up that first
+// commit's new sha) before writing TEACHERS — two commits to the same
+// file, not a conflict.
+function commitTeachersMutation_(owner, repo, branch, path, token, ops, attempt) {
+  attempt = attempt || 1;
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch;
+  var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
+
+  var getResp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
+  if (getResp.getResponseCode() !== 200) {
+    throw new Error("Could not read " + path + " on branch " + branch + " (HTTP " + getResp.getResponseCode() + "): " + getResp.getContentText());
+  }
+  var file = JSON.parse(getResp.getContentText());
+  var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
+
+  var teachers = readConstArray_(source, "TEACHERS");
+  ops.forEach(function (op) { ACTIONS[op.action].handler(teachers, op.payload); }); // mutates `teachers` in place; throws on invalid payload
+  var newSource = spliceConstArray_(source, "TEACHERS", teachers);
+  var newContent = Utilities.base64Encode(newSource, Utilities.Charset.UTF_8);
+
+  var putResp = commitFile_(owner, repo, branch, path, token, newContent, file.sha, commitMessageForOps_(ops));
+
+  if (putResp.getResponseCode() === 409 && attempt < 3) {
+    Utilities.sleep(500 * attempt);
+    commitTeachersMutation_(owner, repo, branch, path, token, ops, attempt + 1);
     return;
   }
   if (putResp.getResponseCode() >= 300) {

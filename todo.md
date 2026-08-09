@@ -9,39 +9,33 @@
 
 ## 2. Maintenance & Improvement 
 - [ ] Teacher/admin dashboard view of submitted requests (data/requests-log.json) — triage queue, status updates (New/In Progress/Done/Declined), admin dashboard doesn't exist yet either
-- [ ] Question database and like searching, asking questions, hints, etc.
-- [ ] mobile optimization for the new features 
 - [ ] view for the teachers too like what to do exactly is shown 
 - [ ] notification checking for teachers as well, and thinking of teacher student workflow completely
 - [ ] improve submission process(e.g. autoparsing, auto grading)
 - [ ] formalized IRL sessions 
 - [ ] metric formalization, also but fix for some metrics not being edited 
-- [ ] AP Physics self study track
-- [ ] fix biology and chemistry course 
-- [ ] physics view 
-- [ ] Refine biology view 
-- [ ] teacher dashboard improvement 
-- [ ] student sign up, addition of students, registering to classes via website, classes intertwined to students and teachers and notifications and submissions and teacher portal based on that 
+- [ ] registering to classes via the website at signup/after approval — classes intertwined to students and teachers and notifications and submissions and teacher portal based on that (accounts themselves now come through signup.html + admin approval, see Done below — this is just the remaining "which course(s)" half, deliberately skipped for now)
 - [ ] course templates for the above sign up too, like if there is a new format for the course easier universal change 
 - [ ] submission doesn't use google form, purely intra-site 
-- [ ] sign up ideas : email, name, password, etc. and information tracked and approval via dashboard 
-- [ ] admin dashboard(all admins are teachers but not all teachers are admins)  
 - [ ] request access for units(e.g. please unlock x) 
-- [ ] students can leave a note in the feedback page 
 - [ ] IRL session log and like calendar view is improved, mayhbe a better view(wseek view) 
-- [ ] bulk actions integrated for submission completion as well, and also intra student portal 
 - [ ] Formalied documentations 
-- [ ] update readme 
 - [ ] teachers can send scheduled messages and set irl sessions via portal 
-- [ ] improve parent portal 
 - [ ] daily/weekly digest, notifications for encouragement 
-- [ ] Update FAQ
 - [ ] cross checking features across, e.g. feedback for teachers as well and what they see in their dashbaord 
-- [ ] admin dashboard can assign classes, approvals for sign up, approvals for class registration, make new classes assign teachers and so on
-- [ ] make like a stats that can be shown e.g. level, etc. 
+- [ ] admin dashboard can assign classes, approvals for class registration, make new classes assign teachers and so on (signup approval itself is done, see Done below — this is the remaining class-assignment half)
 - [ ] admin dashboard can clear requests and concersna and all that similar to submissions like the teacher dashboard 
-- [ ] fix submission request feature, it somehow doesn't push on . 
 
+- [ ] add the new physics resources 
+- [ ] AP Physics self study track
+- [ ] fix biology and chemistry course 
+- [ ] Refine biology view 
+- [ ] physics view 
+- [ ] update readme 
+- [ ] mobile optimization for the new features 
+- [ ] Update FAQ
+- [ ] improve parent portal 
+- [ ] Question database and like searching, asking questions, hints, etc.
 ## 3. Improvement Brainstorm(Ideas)
 - [ ] Philosophies 
   - [ ] 1. Absolute Clarity
@@ -65,16 +59,6 @@
   - [ ] teach inner excellence like we teach math 
 
 ## Done
-- [x] Teachers can schedule a notification email to specific students (not just a whole class) for a future time — "Schedule a notification" form on teacher.html: a deduplicated checklist of every student across ALL classes a teacher teaches (teacherAllStudents_, since one teacher can have several), each tagged with which of their classes that student's in, plus Select-all. Backed by scheduleNotification/cancelScheduledNotification in zenith-data-writer.gs writing to new data/scheduled-notifications.json (recipientUsernames is the real send target; recipientNames is just a display snapshot). Actual sending is a separate system: a GitHub Actions cron job (every 15 min, automation/notifications/send-scheduled-notifications.js) polls that file for due Pending rows, re-resolves recipients fresh against js/data.js, and emails them via the existing Gmail/nodemailer setup. Doesn't cover "set IRL sessions" (calendar creation) — just the scheduled-email half of that todo line above.
-- [x] requests.html now takes a Resource Request with no login at all (name+email fields replace the session, category dropdown locked to just that one option, enforced again server-side in zenith-data-writer.gs so a spoofed direct POST can't claim Feature Request/Bug Report anonymously); every successful submitRequest — guest or logged-in — now sends a "we got it" confirmation email via MailApp, sent once after the GitHub commit succeeds (not from inside the retriable handler, to avoid duplicate emails on a 409 retry).
-- [x] Admin role + admin.html dashboard — new ADMINS array in js/data.js (own login, own requireAdminLogin()/getCurrentAdmin(), parallel to STUDENTS/TEACHERS/PARENTS rather than an isAdmin flag on TEACHERS — see the ADMINS comment in js/data.js for the reasoning); admin.html is a read-only view of every entry in data/requests-log.json, filterable by category, showing submitter name/role. No status-editing controls yet (see line above for that follow-up). resources.html also got a prominent "Request a resource" banner linking to requests.html?category=Resource%20Request, which pre-selects that category on arrival.
-- [x] Multi-teacher CLASSES system — per-(student, course) teacher assignment, scoped queue/roster/overview visibility, notifyTeachers_ routed through CLASSES instead of subject-only TEACHERS.courses
-- [x] Bulk "mark complete" for submissions via the shared pending-changes queue, on both teacher.html's queue and each student's own teacher-student.html page (mixable with roadmap/feedback changes in the same batch)
-- [x] Two-level "your classes → light student list → full student page" nav on teacher.html, replacing the always-expanded roster
-- [x] Requests page (requests.html) — students/teachers/parents submit a Feature Request / Resource Request / Bug Report / Concern, open to any logged-in role via new requireAnyLogin()/getCurrentPerson(); posts to a new submitRequest action on the existing zenith-data-writer.gs endpoint, logged to new data/requests-log.json; entry point is a "Requests" link on portal.html and teacher.html (not a new nav tab). Apps Script deployment still needs to be updated by hand with the new action before real submissions land in the log — see automation/zenith-data-writer.gs's setup steps.
-- [x] Roadmap: Curve is now the default view for AP Calculus BC; every course remembers the last view a student picked (localStorage, per course) and reopens to it
-- [x] Two new roadmap views: "Periodic" (Chemistry's default) and "Cell" (Biology's default) — both work on every course, same as Curve does for Calc
-- [x] Periodic view draws the full 118-element table (incl. lanthanide/actinide rows) every time, muted gray except the chapters-mapped tiles; tiles size themselves dynamically to exactly fill the screen (no scroll) and are now centered
-- [x] Cell view organelles redrawn bolder/more detailed (solid saturated fills, continuous mitochondria cristae wave, gradient Golgi stack, asymmetric nucleolus blob) to read like a real vector-icon cell diagram
-- [x] Cell view: fixed a cutoff bug (SVG was scaling by width only via height:auto, so on wide/short windows the top/bottom got clipped) — now contain-fits both axes so the whole cell always fits with margin; added glossy highlight ellipses, a thicker ER ribbon with a lit top edge, and a tighter ribosome cluster
-- [x] New "Code" view — Computer Science's default — chapters as syntax-highlighted Java method names inside a fake scrollable source file; click a method name to open its chapter popover
+- [x] "Ask My Teacher" request category — students can ask their own teacher a direct question from requests.html (picks which enrolled course it's about, so CLASSES can resolve the right teacher); shows up in a new "Needs to review" queue on teacher.html (between Needs grading and Schedule a notification), where a teacher moves it New → In Progress → Completed via a real status <select> + Update button — a Completed one drops off that queue but stays visible, with its status, on the student's own requests.html history and on that student's teacher-student.html page (new "Requests to you" section, read-only there — status only changes from the queue). Backed by a new updateRequestStatus action in zenith-data-writer.gs; also fixed REQUEST_ROLES_ there, which never included "admin" and would have rejected an admin's own request submission. Also redid the "Schedule a notification" recipient checklist's CSS — bigger rows, hover state, accent checkboxes, class tags as right-aligned pills (hidden entirely for a single-class teacher), live "N selected" counter — the previous version was cramped and hard to scan.
+- [x] Student/teacher signup + admin approval — new signup.html (role, name, username, email, password, confirm; password is SHA-256-hashed in the browser via Web Crypto before it ever leaves the page, so it's never stored or transmitted as plaintext, not even in the public data/signup-requests.json log) posts a new `submitSignup` action to zenith-data-writer.gs, landing as a "Pending" row. Admin.html got a second tab, "Sign-ups" (alongside the existing Requests tab), listing every signup filterable by status/role, with per-row Approve/Decline plus checkbox-driven bulk actions ("Approve selected"/"Decline selected") — approving sends one applyBatch request per click that both flips the signup to Approved and appends a brand-new STUDENTS or TEACHERS entry (createStudentAccount/createTeacherAccount — account creation is ordered to run first server-side, so a failed creation never leaves a signup marked Approved with no real account behind it). New accounts carry no enrolled courses yet — course/class registration during signup is deliberately deferred, see the open todo lines above. login() now checks a `passwordHash` field (hashing the attempt and comparing) when present, falling back to the legacy plaintext `password` field for every pre-existing account — both shapes coexist. Two emails: one the moment a signup is submitted (mentions the 15-minutes-to-1-day review window) and one the moment it's approved. Apps Script deployment still needs the new SIGNUPS_PATH script property and a redeploy with the updated code before real signups land — see automation/zenith-data-writer.gs's setup steps.
+- [x] Removed unused Roadmap tab/page from Teacher Dashboard (team-roadmap.html)

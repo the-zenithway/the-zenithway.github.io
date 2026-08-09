@@ -50,49 +50,185 @@ const ROADMAP_DEFAULT_VIEWS = {
 // external site or a javascript: URL.
 const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html", "admin.html"];
 
+// SHA-256 hex digest via the browser's built-in Web Crypto. Used by
+// signup.html to hash a password before it ever leaves the browser
+// (submitSignup's payload only ever carries passwordHash, never a
+// plaintext password), and by login() below to check an attempt
+// against an account created that way. Returns a Promise<string>
+// since crypto.subtle.digest is itself async.
+function sha256Hex_(text) {
+  const data = new TextEncoder().encode(text);
+  return crypto.subtle.digest("SHA-256", data).then(function (buf) {
+    return Array.from(new Uint8Array(buf)).map(function (b) {
+      return b.toString(16).padStart(2, "0");
+    }).join("");
+  });
+}
+
 // Checks a username/password against STUDENTS first, then TEACHERS,
 // then PARENTS, then ADMINS (from data.js). On success, remembers
 // who's logged in and which role they are (in this browser) and
-// returns true. Returns false on a bad username/password.
+// resolves true. Resolves false on a bad username/password.
+//
+// Returns a Promise (not a plain boolean) because an account created
+// via signup.html's admin-approval flow (added 2026-08-10) stores
+// `passwordHash` instead of a plaintext `password` — checking one of
+// those means hashing the login attempt first, and Web Crypto only
+// does that asynchronously. Every hand-authored account in js/data.js
+// still has a plain `password` field and is checked exactly as
+// before, synchronously in spirit even though the whole function now
+// resolves via a Promise; a `passwordHash` account and a `password`
+// account happily coexist in the same STUDENTS/TEACHERS/PARENTS/
+// ADMINS array.
 function login(username, password) {
-  const student = STUDENTS.find(function (s) {
-    return s.username === username && s.password === password;
-  });
-  if (student) {
-    localStorage.setItem(SESSION_KEY, student.username);
-    localStorage.setItem(ROLE_KEY, "student");
-    localStorage.removeItem(ACTIVE_COURSE_KEY);
-    return true;
-  }
+  return sha256Hex_(password).then(function (hash) {
+    function matches(entry) {
+      return entry.username === username &&
+        (entry.passwordHash ? entry.passwordHash === hash : entry.password === password);
+    }
 
-  const teacher = TEACHERS.find(function (t) {
-    return t.username === username && t.password === password;
-  });
-  if (teacher) {
-    localStorage.setItem(SESSION_KEY, teacher.username);
-    localStorage.setItem(ROLE_KEY, "teacher");
-    return true;
-  }
+    const student = STUDENTS.find(matches);
+    if (student) {
+      localStorage.setItem(SESSION_KEY, student.username);
+      localStorage.setItem(ROLE_KEY, "student");
+      localStorage.removeItem(ACTIVE_COURSE_KEY);
+      return true;
+    }
 
-  const parent = PARENTS.find(function (p) {
-    return p.username === username && p.password === password;
-  });
-  if (parent) {
-    localStorage.setItem(SESSION_KEY, parent.username);
-    localStorage.setItem(ROLE_KEY, "parent");
-    return true;
-  }
+    const teacher = TEACHERS.find(matches);
+    if (teacher) {
+      localStorage.setItem(SESSION_KEY, teacher.username);
+      localStorage.setItem(ROLE_KEY, "teacher");
+      return true;
+    }
 
-  const admin = ADMINS.find(function (a) {
-    return a.username === username && a.password === password;
-  });
-  if (admin) {
-    localStorage.setItem(SESSION_KEY, admin.username);
-    localStorage.setItem(ROLE_KEY, "admin");
-    return true;
-  }
+    const parent = PARENTS.find(matches);
+    if (parent) {
+      localStorage.setItem(SESSION_KEY, parent.username);
+      localStorage.setItem(ROLE_KEY, "parent");
+      return true;
+    }
 
-  return false;
+    const admin = ADMINS.find(matches);
+    if (admin) {
+      localStorage.setItem(SESSION_KEY, admin.username);
+      localStorage.setItem(ROLE_KEY, "admin");
+      return true;
+    }
+
+    return false;
+  });
+}
+
+// ---- Sign up (signup.html) ----
+// Lets anyone request a student or teacher account with no login —
+// name/username/email/password. The password is hashed client-side
+// (sha256Hex_ above) before it ever leaves the browser, so it never
+// travels or sits anywhere as plaintext — not in the request, not in
+// data/signup-requests.json (a public file in this repo, same
+// exposure as js/data.js itself, see its "NOT SECURE by design"
+// header). Submitting only appends a "Pending" row; nothing is
+// created until an admin approves it from admin.html's Sign-ups tab
+// (see zenith-data-writer.gs's createStudentAccount/
+// createTeacherAccount for what happens then).
+const SIGNUP_USERNAME_PATTERN_ = /^[a-zA-Z0-9_.-]{3,30}$/;
+
+// Best-effort "is this username already spoken for" check, run before
+// submitting so most collisions get caught without a wasted round
+// trip — NOT the real gate. The real, authoritative check is
+// server-side in createStudentAccount/createTeacherAccount, which
+// reads the live STUDENTS/TEACHERS array right before writing to it;
+// this only checks what's visible to the browser right now (the four
+// existing-account lists already loaded via js/data.js, plus whatever
+// data/signup-requests.json currently holds), which can go stale the
+// instant another signup gets approved or declined.
+function signupUsernameTaken_(username) {
+  const inExisting = [STUDENTS, TEACHERS, PARENTS, ADMINS].some(function (list) {
+    return list.some(function (entry) { return entry.username === username; });
+  });
+  if (inExisting) return Promise.resolve(true);
+
+  return fetch("data/signup-requests.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      return all.some(function (s) { return s.username === username && s.status !== "Declined"; });
+    })
+    // Can't check right now (offline, endpoint not deployed yet,
+    // whatever) — don't block the signup over it, the server-side
+    // gate in createStudentAccount/createTeacherAccount still catches
+    // a real collision at approval time.
+    .catch(function () { return false; });
+}
+
+function setUpSignupForm_() {
+  const form = document.getElementById("signup-form");
+  if (!form) return;
+
+  const errorEl = document.getElementById("signup-error");
+  const successEl = document.getElementById("signup-success");
+  const buttonEl = document.getElementById("signup-submit-btn");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    errorEl.hidden = true;
+
+    const role = document.getElementById("signup-role").value;
+    const name = document.getElementById("signup-name").value.trim();
+    const username = document.getElementById("signup-username").value.trim();
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value;
+    const confirm = document.getElementById("signup-confirm").value;
+
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+    }
+
+    if (!name || !username || !email || !password) {
+      showError("Please fill in every field.");
+      return;
+    }
+    if (!SIGNUP_USERNAME_PATTERN_.test(username)) {
+      showError("Username must be 3–30 characters: letters, numbers, underscore, period, or hyphen only.");
+      return;
+    }
+    if (password.length < 8) {
+      showError("Password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      showError("Passwords don't match.");
+      return;
+    }
+
+    const originalText = buttonEl.textContent;
+    buttonEl.disabled = true;
+    buttonEl.textContent = "Checking...";
+
+    signupUsernameTaken_(username).then(function (taken) {
+      if (taken) {
+        buttonEl.disabled = false;
+        buttonEl.textContent = originalText;
+        showError("That username is already taken or already pending review — pick another.");
+        return;
+      }
+
+      sha256Hex_(password).then(function (passwordHash) {
+        buttonEl.disabled = false;
+        buttonEl.textContent = originalText;
+        postTeacherAction_("submitSignup", {
+          role: role,
+          username: username,
+          name: name,
+          email: email,
+          passwordHash: passwordHash
+        }, buttonEl, function () {
+          form.hidden = true;
+          successEl.hidden = false;
+        });
+      });
+    });
+  });
 }
 
 // Returns the currently logged-in student object, or null if
@@ -831,7 +967,13 @@ function renderSubmissionLog(student, course) {
 // data/requests-log.json for a "your requests" list — same shape as
 // submit.html's submission log just above.
 
-const REQUEST_CATEGORIES = ["Feature Request", "Resource Request", "Bug Report", "Concern / Other"];
+// "Ask My Teacher" is student-only (requests.html only offers it when
+// getCurrentPerson().role === "student") and routes to whichever
+// teacher(s) CLASSES assigns to the course the student picks — see
+// the course-select wiring further down and teacherCanSeeCourse_'s use
+// on teacher.html's "Needs to review" queue.
+const REQUEST_CATEGORIES = ["Feature Request", "Resource Request", "Bug Report", "Ask My Teacher", "Concern / Other"];
+const REQUEST_STATUSES = ["New", "In Progress", "Completed"];
 
 // Minimal HTML-escape for the free-text title/details fields below —
 // unlike submissionLogItemHtml's OCR text or a teacher-authored
@@ -911,6 +1053,18 @@ function submitRequestForm_(person, buttonEl) {
     return;
   }
 
+  let courseId = null, courseName = null;
+  if (categoryEl.value === "Ask My Teacher") {
+    const courseSelect = document.getElementById("requests-course");
+    courseId = courseSelect ? courseSelect.value : "";
+    if (!courseId) {
+      alert("Please pick which course this is about.");
+      return;
+    }
+    const opt = courseSelect.options[courseSelect.selectedIndex];
+    courseName = opt ? opt.textContent : courseId;
+  }
+
   let name, email, username, role;
   if (person) {
     name = person.name;
@@ -936,6 +1090,8 @@ function submitRequestForm_(person, buttonEl) {
     email: email,
     role: role,
     category: categoryEl.value,
+    courseId: courseId,
+    courseName: courseName,
     title: title,
     details: details
   }, buttonEl, function () {
@@ -1017,6 +1173,209 @@ function renderAdminRequestsDashboard(categoryFilter) {
 function renderAdminCategoryCounts_(all) {
   const countEl = document.getElementById("admin-requests-count");
   if (countEl) countEl.textContent = String(all.length);
+}
+
+// ---- Admin dashboard: Sign-ups tab (admin.html) ----
+// Every entry in data/signup-requests.json, filterable by status
+// (defaults to Pending — the only actionable state) and role. Each
+// Pending row gets a checkbox plus its own Approve/Decline buttons; a
+// bulk bar above the list acts on every checked row at once (hidden
+// entirely when nothing in view is Pending, since there'd be nothing
+// to check). Approving sends ONE applyBatch request containing, for
+// every selected signup, a createStudentAccount/createTeacherAccount
+// op (role-dependent) PLUS an approveSignup op — see
+// zenith-data-writer.gs's doPost for why that pairing is safe
+// (account creation runs before the signup flips to Approved, so a
+// failed creation never leaves an "Approved" signup with no real
+// account behind it). Declining is just declineSignup, no account
+// involved.
+let adminSignupsCache_ = null;
+
+function adminSignupCardHtml_(entry) {
+  const statusClass = scheduledNotificationStatusClass_(entry.status);
+  const checkbox = entry.status === "Pending"
+    ? '<input type="checkbox" class="admin-signup-checkbox" value="' + entry.id + '">'
+    : '<span class="admin-signup-checkbox-spacer"></span>';
+  const actions = entry.status === "Pending"
+    ? '<div class="admin-signup-actions">' +
+        '<button type="button" class="teacher-add-btn" data-approve-signup="' + entry.id + '">Approve</button>' +
+        '<button type="button" class="teacher-add-btn admin-bulk-decline-btn" data-decline-signup="' + entry.id + '">Decline</button>' +
+      '</div>'
+    : "";
+  return '<div class="requests-log-item admin-signup-item">' +
+    '<label class="admin-signup-row-head">' +
+      checkbox +
+      '<div class="admin-signup-row-meta">' +
+        '<div class="requests-log-meta">' +
+          '<span class="requests-log-category">' + escapeHtml_(entry.role) + '</span>' +
+          '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+          '<span class="requests-log-status ' + statusClass + '">' + escapeHtml_(entry.status) + '</span>' +
+        '</div>' +
+        '<p class="requests-log-submitter">' + escapeHtml_(entry.name) +
+          ' <span class="requests-log-email">' + escapeHtml_(entry.email) + '</span></p>' +
+        '<p class="requests-log-title">' + escapeHtml_(entry.username) + '</p>' +
+      '</div>' +
+    '</label>' +
+    actions +
+  '</div>';
+}
+
+function updateAdminSignupsSelectedCount_() {
+  const countEl = document.getElementById("admin-signups-selected-count");
+  const approveBtn = document.getElementById("admin-signups-bulk-approve");
+  const declineBtn = document.getElementById("admin-signups-bulk-decline");
+  const n = document.querySelectorAll(".admin-signup-checkbox:checked").length;
+  if (countEl) countEl.textContent = n === 1 ? "1 selected" : n + " selected";
+  if (approveBtn) approveBtn.disabled = n === 0;
+  if (declineBtn) declineBtn.disabled = n === 0;
+}
+
+// Builds the createStudentAccount/createTeacherAccount op for a
+// signup — role picks which action name (and therefore which
+// js/data.js const) it lands in. passwordHash rides straight through
+// from the signup entry; it was hashed client-side by signup.html and
+// never existed as plaintext anywhere this admin dashboard can see.
+function signupAccountCreateOp_(entry) {
+  const payload = { username: entry.username, name: entry.name, email: entry.email, passwordHash: entry.passwordHash };
+  return entry.role === "teacher"
+    ? { action: "createTeacherAccount", payload: payload }
+    : { action: "createStudentAccount", payload: payload };
+}
+
+function signupApproveOp_(entry, admin) {
+  return { action: "approveSignup", payload: {
+    id: entry.id, decidedBy: admin.username,
+    username: entry.username, name: entry.name, email: entry.email, role: entry.role
+  } };
+}
+
+function signupDeclineOp_(entry, admin) {
+  return { action: "declineSignup", payload: { id: entry.id, decidedBy: admin.username } };
+}
+
+function wireAdminSignupRowActions_(admin, statusFilter, roleFilter) {
+  const list = document.getElementById("admin-signups-list");
+  if (!list) return;
+
+  function refresh() { renderAdminSignupsDashboard_(admin, statusFilter, roleFilter); }
+  function entryById(id) { return (adminSignupsCache_ || []).find(function (s) { return s.id === id; }); }
+  function checkedEntries() {
+    return Array.from(list.querySelectorAll(".admin-signup-checkbox:checked"))
+      .map(function (cb) { return entryById(cb.value); })
+      .filter(Boolean);
+  }
+
+  list.querySelectorAll(".admin-signup-checkbox").forEach(function (cb) {
+    cb.addEventListener("change", updateAdminSignupsSelectedCount_);
+  });
+
+  list.querySelectorAll("[data-approve-signup]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const entry = entryById(btn.getAttribute("data-approve-signup"));
+      if (!entry) return;
+      postTeacherAction_("applyBatch",
+        { operations: [signupAccountCreateOp_(entry), signupApproveOp_(entry, admin)] },
+        btn, refresh);
+    });
+  });
+
+  list.querySelectorAll("[data-decline-signup]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const entry = entryById(btn.getAttribute("data-decline-signup"));
+      if (!entry) return;
+      postTeacherAction_("declineSignup", signupDeclineOp_(entry, admin).payload, btn, refresh);
+    });
+  });
+
+  const selectAll = document.getElementById("admin-signups-select-all");
+  if (selectAll) {
+    selectAll.checked = false;
+    selectAll.onchange = function () {
+      list.querySelectorAll(".admin-signup-checkbox").forEach(function (cb) { cb.checked = selectAll.checked; });
+      updateAdminSignupsSelectedCount_();
+    };
+  }
+
+  const bulkApproveBtn = document.getElementById("admin-signups-bulk-approve");
+  if (bulkApproveBtn) {
+    bulkApproveBtn.onclick = function () {
+      const entries = checkedEntries();
+      if (entries.length === 0) return;
+      const operations = [];
+      entries.forEach(function (entry) {
+        operations.push(signupAccountCreateOp_(entry));
+        operations.push(signupApproveOp_(entry, admin));
+      });
+      postTeacherAction_("applyBatch", { operations: operations }, bulkApproveBtn, function () {
+        if (selectAll) selectAll.checked = false;
+        refresh();
+      });
+    };
+  }
+
+  const bulkDeclineBtn = document.getElementById("admin-signups-bulk-decline");
+  if (bulkDeclineBtn) {
+    bulkDeclineBtn.onclick = function () {
+      const entries = checkedEntries();
+      if (entries.length === 0) return;
+      const operations = entries.map(function (entry) { return signupDeclineOp_(entry, admin); });
+      postTeacherAction_("applyBatch", { operations: operations }, bulkDeclineBtn, function () {
+        if (selectAll) selectAll.checked = false;
+        refresh();
+      });
+    };
+  }
+}
+
+function renderAdminSignupsDashboard_(admin, statusFilter, roleFilter) {
+  const list = document.getElementById("admin-signups-list");
+  if (!list) return;
+
+  list.innerHTML = '<p class="requests-log-empty">Loading sign-ups...</p>';
+
+  fetch("data/signup-requests.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      adminSignupsCache_ = all;
+      const countEl = document.getElementById("admin-signups-count");
+      if (countEl) countEl.textContent = String(all.length);
+
+      let filtered = all;
+      if (statusFilter && statusFilter !== "all") filtered = filtered.filter(function (s) { return s.status === statusFilter; });
+      if (roleFilter && roleFilter !== "all") filtered = filtered.filter(function (s) { return s.role === roleFilter; });
+      const sorted = filtered.slice().sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+
+      const bulkBar = document.getElementById("admin-signups-bulk-bar");
+      if (bulkBar) bulkBar.hidden = !sorted.some(function (s) { return s.status === "Pending"; });
+
+      if (sorted.length === 0) {
+        list.innerHTML = '<p class="requests-log-empty">No sign-ups in this view.</p>';
+        updateAdminSignupsSelectedCount_();
+        return;
+      }
+
+      list.innerHTML = sorted.map(adminSignupCardHtml_).join("");
+      wireAdminSignupRowActions_(admin, statusFilter, roleFilter);
+      updateAdminSignupsSelectedCount_();
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="requests-log-empty">Could not load sign-ups right now.</p>';
+    });
+}
+
+// Called once, the first time admin.html's "Sign-ups" tab is opened
+// (see that page's inline script) — wires the status/role filters and
+// does the first render.
+function setUpAdminSignupsDashboard_(admin) {
+  const statusSelect = document.getElementById("admin-signup-status-filter");
+  const roleSelect = document.getElementById("admin-signup-role-filter");
+  if (!statusSelect || !roleSelect) return;
+
+  function refresh() { renderAdminSignupsDashboard_(admin, statusSelect.value, roleSelect.value); }
+
+  refresh();
+  statusSelect.addEventListener("change", refresh);
+  roleSelect.addEventListener("change", refresh);
 }
 
 // ---- Teacher dashboard (teacher.html) ----
@@ -1546,8 +1905,16 @@ function scheduleNotificationForm_(teacher, buttonEl) {
     document.querySelectorAll(".teacher-notif-recipient-checkbox").forEach(function (cb) { cb.checked = false; });
     const selectAll = document.getElementById("teacher-notif-select-all");
     if (selectAll) selectAll.checked = false;
+    updateTeacherNotifSelectedCount_();
     renderScheduledNotificationsList_(teacher);
   });
+}
+
+function updateTeacherNotifSelectedCount_() {
+  const countEl = document.getElementById("teacher-notif-selected-count");
+  if (!countEl) return;
+  const n = document.querySelectorAll(".teacher-notif-recipient-checkbox:checked").length;
+  countEl.textContent = n === 1 ? "1 selected" : n + " selected";
 }
 
 function renderScheduleNotificationForm_(teacher) {
@@ -1555,32 +1922,120 @@ function renderScheduleNotificationForm_(teacher) {
   if (!recipientsWrap || !teacher) return;
 
   const allStudents = teacherAllStudents_(teacher);
+  // Only show which class(es) a student's in when the teacher actually
+  // has more than one — with a single class it's redundant on every row.
+  const showClassTags = teacherClasses_(teacher).length > 1;
 
   if (allStudents.length === 0) {
     recipientsWrap.innerHTML = '<p class="teacher-empty">No students assigned yet.</p>';
   } else {
     recipientsWrap.innerHTML =
       '<label class="teacher-notif-recipient-row teacher-notif-select-all-row">' +
-        '<input type="checkbox" id="teacher-notif-select-all"> <strong>Select all (' + allStudents.length + ')</strong>' +
+        '<input type="checkbox" id="teacher-notif-select-all"> Select all (' + allStudents.length + ')' +
       '</label>' +
       allStudents.map(function (s) {
+        const classTag = showClassTags
+          ? '<span class="teacher-notif-recipient-classes">' + escapeHtml_(s.classNames.join(", ")) + '</span>'
+          : "";
         return '<label class="teacher-notif-recipient-row">' +
-          '<input type="checkbox" class="teacher-notif-recipient-checkbox" value="' + s.username + '" data-name="' + escapeHtml_(s.name) + '"> ' +
-          escapeHtml_(s.name) + ' <span class="requests-log-role">(' + escapeHtml_(s.classNames.join(", ")) + ')</span>' +
+          '<input type="checkbox" class="teacher-notif-recipient-checkbox" value="' + s.username + '" data-name="' + escapeHtml_(s.name) + '">' +
+          '<span class="teacher-notif-recipient-name">' + escapeHtml_(s.name) + '</span>' +
+          classTag +
         '</label>';
       }).join("");
 
     document.getElementById("teacher-notif-select-all").addEventListener("change", function () {
       const isChecked = this.checked;
       recipientsWrap.querySelectorAll(".teacher-notif-recipient-checkbox").forEach(function (cb) { cb.checked = isChecked; });
+      updateTeacherNotifSelectedCount_();
+    });
+    recipientsWrap.querySelectorAll(".teacher-notif-recipient-checkbox").forEach(function (cb) {
+      cb.addEventListener("change", updateTeacherNotifSelectedCount_);
     });
   }
+  updateTeacherNotifSelectedCount_();
 
   const submitBtn = document.getElementById("teacher-notif-submit");
   if (submitBtn) {
     submitBtn.disabled = allStudents.length === 0;
     submitBtn.addEventListener("click", function () { scheduleNotificationForm_(teacher, this); });
   }
+}
+
+// ---- Teacher "Needs to review" queue (teacher.html) ----
+// "Ask My Teacher" requests (see REQUEST_CATEGORIES / requests.html)
+// whose courseId this teacher can see (teacherCanSeeCourse_ — same
+// visibility rule the grading queue and roster already use) and whose
+// status isn't yet "Completed". Status changes post updateRequestStatus
+// immediately via a real <button> (not the <select> itself — passing a
+// <select> to postTeacherAction_ would wipe out its <option>s, since
+// that helper sets buttonEl.textContent = "Saving..." while in flight)
+// and then re-renders the whole queue, so a request just marked
+// Completed drops off the list right away.
+function teacherRequestQueueItemHtml_(entry, student) {
+  const studentLabel = student ? student.name : (entry.name || entry.username || "Unknown");
+  const courseLabel = entry.courseName || "Course not recorded";
+  const statusOptions = REQUEST_STATUSES.map(function (s) {
+    return '<option value="' + s + '"' + (s === entry.status ? " selected" : "") + '>' + s + '</option>';
+  }).join("");
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + escapeHtml_(courseLabel) + '</span>' +
+      '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="requests-log-status ' + scheduledNotificationStatusClass_(entry.status) + '">' + escapeHtml_(entry.status) + '</span>' +
+    '</div>' +
+    '<p class="requests-log-submitter">' + escapeHtml_(studentLabel) + '</p>' +
+    '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
+    '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    '<div class="teacher-request-status-row">' +
+      '<select class="teacher-filter-select teacher-request-status-select" data-request-id="' + entry.id + '">' + statusOptions + '</select>' +
+      '<button type="button" class="teacher-add-btn" data-update-request="' + entry.id + '">Update</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderTeacherRequestsQueue_(teacher) {
+  const list = document.getElementById("teacher-requests-queue-list");
+  if (!list || !teacher) return;
+
+  list.innerHTML = '<p class="teacher-empty">Loading...</p>';
+
+  fetch("data/requests-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const mine = all.filter(function (entry) {
+        if (entry.category !== "Ask My Teacher" || entry.status === "Completed") return false;
+        const student = STUDENTS.find(function (s) { return s.username === entry.username; });
+        return !!student && teacherCanSeeCourse_(teacher, student, entry.courseId);
+      }).sort(function (a, b) { return new Date(a.receivedAt) - new Date(b.receivedAt); });
+
+      const countEl = document.getElementById("teacher-requests-queue-count");
+      if (countEl) countEl.textContent = mine.length > 0 ? String(mine.length) : "";
+
+      if (mine.length === 0) {
+        list.innerHTML = '<p class="teacher-empty">Nothing waiting on you here.</p>';
+        return;
+      }
+
+      list.innerHTML = mine.map(function (entry) {
+        const student = STUDENTS.find(function (s) { return s.username === entry.username; });
+        return teacherRequestQueueItemHtml_(entry, student);
+      }).join("");
+
+      list.querySelectorAll("[data-update-request]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const id = btn.getAttribute("data-update-request");
+          const select = list.querySelector('.teacher-request-status-select[data-request-id="' + id + '"]');
+          if (!select) return;
+          postTeacherAction_("updateRequestStatus", { id: id, status: select.value }, btn, function () {
+            renderTeacherRequestsQueue_(teacher);
+          });
+        });
+      });
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="teacher-empty">Could not load requests right now.</p>';
+    });
 }
 
 function renderTeacherDashboard(teacher) {
@@ -1597,6 +2052,7 @@ function renderTeacherDashboard(teacher) {
   renderTeacherCourseFilter();
   renderTeacherQueue("");
   renderTeacherRoster("");
+  renderTeacherRequestsQueue_(teacher);
   renderScheduleNotificationForm_(teacher);
   renderScheduledNotificationsList_(teacher);
 }
@@ -2430,6 +2886,45 @@ function renderTeacherMetricsForm_(student, course) {
   draw();
 }
 
+// Read-only — no status <select>/button here, unlike
+// teacherRequestQueueItemHtml_ on teacher.html. This is a historical
+// log ("logged in their respective teacher shown portal"), not another
+// place to triage from; status changes happen on the "Needs to review"
+// queue on teacher.html only, so there's exactly one place a status
+// can drift out of sync with what's shown, not two.
+function teacherStudentRequestItemHtml_(entry) {
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="requests-log-status ' + scheduledNotificationStatusClass_(entry.status) + '">' + escapeHtml_(entry.status) + '</span>' +
+    '</div>' +
+    '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
+    '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+  '</div>';
+}
+
+function renderTeacherStudentRequestsList_(student, course) {
+  const list = document.getElementById("teacher-student-requests");
+  if (!list) return;
+
+  list.innerHTML = '<p class="requests-log-empty">Loading requests...</p>';
+
+  fetch("data/requests-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const mine = all.filter(function (entry) {
+        return entry.category === "Ask My Teacher" && entry.username === student.username && entry.courseId === course.id;
+      }).sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
+
+      list.innerHTML = mine.length === 0
+        ? '<p class="requests-log-empty">Nothing asked for this course yet.</p>'
+        : mine.map(teacherStudentRequestItemHtml_).join("");
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="requests-log-empty">Could not load requests right now.</p>';
+    });
+}
+
 function renderTeacherStudentPage() {
   const params = new URLSearchParams(window.location.search);
   const username = params.get("username");
@@ -2472,6 +2967,8 @@ function renderTeacherStudentPage() {
 
   renderTeacherStudentCheatSheetList_(course);
   renderTeacherCheatSheetForm_(student, course);
+
+  renderTeacherStudentRequestsList_(student, course);
 
   renderMath(document.getElementById("teacher-student-content"));
 

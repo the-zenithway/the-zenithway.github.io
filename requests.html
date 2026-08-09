@@ -50,9 +50,15 @@
         <option value="Feature Request">Feature Request</option>
         <option value="Resource Request">Resource Request</option>
         <option value="Bug Report">Bug Report</option>
+        <option value="Ask My Teacher">Ask My Teacher</option>
         <option value="Concern / Other">Concern / Other</option>
       </select>
       <p class="requests-field-note" id="requests-guest-note" hidden>Feature requests and bug reports need an account, so we know who to follow up with — <a href="login.html?redirect=requests.html">log in</a> to submit one of those instead.</p>
+
+      <div id="requests-course-field" hidden>
+        <label class="requests-field-label" for="requests-course">Which course is this about?</label>
+        <select id="requests-course" class="requests-select"></select>
+      </div>
 
       <label class="requests-field-label" for="requests-title">Title</label>
       <input id="requests-title" class="requests-input" type="text" maxlength="120" placeholder="Short summary">
@@ -75,10 +81,34 @@
 <script>
   var person = getCurrentPerson(); // null, not a redirect — this page allows anonymous Resource Requests
   var categorySelect = document.getElementById('requests-category');
+  var courseField = document.getElementById('requests-course-field');
+  var courseSelect = document.getElementById('requests-course');
+
+  // "Ask My Teacher" only makes sense for a logged-in student — it
+  // routes to whichever teacher CLASSES assigns to the course picked
+  // below. Anonymous mode already replaces the whole dropdown with
+  // just "Resource Request" further down, so this only needs handling
+  // for logged-in non-student roles (teacher/parent/admin).
+  function toggleCourseField_() {
+    var isAskTeacher = categorySelect.value === 'Ask My Teacher';
+    courseField.hidden = !isAskTeacher;
+  }
 
   if (person) {
     document.getElementById('requests-greeting').textContent = "Hey " + person.name.split(" ")[0] + ",";
     renderRequestsLog(person);
+
+    if (person.role === 'student') {
+      var student = getCurrentStudent();
+      courseSelect.innerHTML = (student.courses || []).map(function (c) {
+        return '<option value="' + c.id + '">' + escapeHtml_(c.name) + '</option>';
+      }).join('');
+    } else {
+      Array.prototype.slice.call(categorySelect.options).forEach(function (opt) {
+        if (opt.value === 'Ask My Teacher') categorySelect.removeChild(opt);
+      });
+    }
+    categorySelect.addEventListener('change', toggleCourseField_);
 
     // Lets a link like resources.html's "Request a resource" banner
     // land here with the right category already picked, instead of
@@ -86,6 +116,7 @@
     var requestedCategory = new URLSearchParams(window.location.search).get('category');
     if (requestedCategory && REQUEST_CATEGORIES.indexOf(requestedCategory) !== -1) {
       categorySelect.value = requestedCategory;
+      toggleCourseField_();
     }
   } else {
     document.getElementById('requests-greeting').textContent = "Request a resource";
