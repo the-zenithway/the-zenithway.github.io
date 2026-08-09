@@ -6,9 +6,10 @@
  * see the note below) that backs every "write" control on the teacher
  * dashboard: marking a submission Complete, unlocking a roadmap item,
  * adding a feedback entry, adding a cheat sheet entry, updating a
- * course's Right Now task, and logging a metrics data point. It
- * writes to two different files depending on the action — see
- * "TWO TARGET FILES" below.
+ * course's Right Now task, logging a metrics data point, and (as of
+ * 2026-08-09) submitting a feature/resource request. It writes to
+ * three different files depending on the action — see
+ * "THREE TARGET FILES" below.
  *
  * This used to be two separate standalone scripts (this one, plus a
  * submission-status-updater.gs that only handled marking a submission
@@ -29,21 +30,29 @@
  * risk is that every action below is a single, specific, whitelisted
  * mutation (flip one roadmap item's status, mark one submission
  * Complete, append one feedback/cheat-sheet/metrics entry, replace
- * one course's rightNow) — never an arbitrary field write, never a
- * delete, never touching TEACHERS/PARENTS or any student's login
- * credentials. Batching (below) doesn't change this: a batch is just
- * a list of these same narrow actions, applied together.
+ * one course's rightNow, append one request) — never an arbitrary
+ * field write, never a delete, never touching TEACHERS/PARENTS or any
+ * student's login credentials. Batching (below) doesn't change this:
+ * a batch is just a list of these same narrow actions, applied
+ * together.
+ *
+ * submitRequest (added 2026-08-09) is called from requests.html by
+ * students/teachers/parents, not just teacher.html — despite the
+ * "TEACHER_DATA_WRITE_URL" name (kept as-is to avoid renaming churn
+ * across js/app.js and js/data.js), this endpoint isn't
+ * teacher-exclusive, it's just this repo's one data-write Web App.
  *
  * BATCHING: since 2026-08-05, teacher-student.html can stage several
  * changes (a roadmap unlock, a feedback entry, a Right Now update,
  * etc.) and send them as one `applyBatch` request instead of one
  * request per change — see doPost below. Every action here writes to
- * one of two files (js/data.js or data/submissions-log.json, see
- * "TWO TARGET FILES"); a batch whose actions all target the same file
- * becomes exactly ONE git commit, no matter how many actions it
- * contains. A batch that mixes both (i.e. includes
- * markSubmissionComplete alongside anything else) still produces two
- * commits, one per file — that's a hard limit of GitHub's Contents
+ * one of three files (js/data.js, data/submissions-log.json, or
+ * data/requests-log.json — see "THREE TARGET FILES"); a batch whose
+ * actions all target the same file becomes exactly ONE git commit, no
+ * matter how many actions it contains. A batch that mixes targets
+ * (i.e. includes markSubmissionComplete or submitRequest alongside
+ * anything else) still produces one commit per distinct file — that's
+ * a hard limit of GitHub's Contents
  * API, not something worth working around, since markSubmissionComplete
  * lives on a different page (teacher.html) and isn't part of any
  * teacher-student.html batch in practice.
@@ -53,12 +62,14 @@
  * below), not here. Copy it in by hand; nothing auto-syncs.
  *
  * ---------------------------------------------------------------
- * TWO TARGET FILES
+ * THREE TARGET FILES
  * ---------------------------------------------------------------
- * `markSubmissionComplete` writes to data/submissions-log.json, a
- * plain JSON file — read/mutate/write there is a straightforward
- * JSON.parse/JSON.stringify, same as submissions-compiler.gs already
- * does.
+ * `markSubmissionComplete` writes to data/submissions-log.json, and
+ * `submitRequest` writes to data/requests-log.json — both plain JSON
+ * files, so read/mutate/write there is a straightforward
+ * JSON.parse/JSON.stringify (same as submissions-compiler.gs already
+ * does for the former), and both share one committer function,
+ * commitJsonArrayMutation_ below.
  *
  * Every other action writes to js/data.js, which is a hand-authored
  * JavaScript file (`const STUDENTS = [...]`), NOT JSON — it can't be
@@ -100,13 +111,14 @@
  *    not the same one as the Form-bound submissions-compiler.gs.)
  *
  * 2. Project Settings (gear icon) -> Script Properties -> add:
- *      GITHUB_TOKEN   Fine-grained PAT scoped to ONLY this repo, with
- *                     "Contents: Read and write" permission.
- *      GITHUB_OWNER   the-zenithway
- *      GITHUB_REPO    the-zenithway.github.io
- *      GITHUB_BRANCH  main
- *      DATA_PATH      js/data.js
- *      LOG_PATH       data/submissions-log.json
+ *      GITHUB_TOKEN      Fine-grained PAT scoped to ONLY this repo, with
+ *                        "Contents: Read and write" permission.
+ *      GITHUB_OWNER      the-zenithway
+ *      GITHUB_REPO       the-zenithway.github.io
+ *      GITHUB_BRANCH     main
+ *      DATA_PATH         js/data.js
+ *      LOG_PATH          data/submissions-log.json
+ *      REQUESTS_LOG_PATH data/requests-log.json
  *
  * 3. Deploy -> New deployment -> "Web app".
  *      Execute as:      Me
@@ -123,7 +135,8 @@
  *    the one file/field that action touches and nothing else. Then
  *    try a real batch (stage a couple of changes on teacher-student.html
  *    and hit Apply) and confirm it's exactly ONE commit covering all
- *    of them.
+ *    of them. Also submit one real request from requests.html and
+ *    confirm data/requests-log.json gets exactly one new entry.
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -135,10 +148,14 @@
  * Apps Script) against the real js/data.js — round-tripped a real
  * mutation and syntax-checked the result — but that's not the same as
  * a real Apps Script + GitHub API run. The batching logic (doPost's
- * operations-list dispatch, commitStudentsMutation_/commitLogMutation_
+ * operations-list dispatch, commitStudentsMutation_/commitJsonArrayMutation_
  * taking a list of ops) is new as of 2026-08-05 and hasn't run for
- * real either. If step 5 throws or produces an unexpected diff, send
- * the exact error text or diff.
+ * real either. submitRequest/commitJsonArrayMutation_'s generalization
+ * from commitLogMutation_ is new as of 2026-08-09 and untested too — it's
+ * the same code path markSubmissionComplete already exercises, just
+ * parameterized to a second path, so risk is low, but still unverified
+ * against a real deployment. If step 5 throws or produces an
+ * unexpected diff, send the exact error text or diff.
  */
 
 // Every request becomes a list of { action, payload } operations — a
@@ -175,8 +192,9 @@ function doPost(e) {
       throw new Error("Missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO script property — see setup steps at the top of this file.");
     }
 
-    var studentsOps = operations.filter(function (op) { return ACTIONS[op.action].target !== "log"; });
+    var studentsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "students"; });
     var logOps = operations.filter(function (op) { return ACTIONS[op.action].target === "log"; });
+    var requestsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "requests"; });
 
     if (studentsOps.length > 0) {
       var dataPath = props.getProperty("DATA_PATH") || "js/data.js";
@@ -184,7 +202,11 @@ function doPost(e) {
     }
     if (logOps.length > 0) {
       var logPath = props.getProperty("LOG_PATH") || "data/submissions-log.json";
-      commitLogMutation_(owner, repo, branch, logPath, token, logOps);
+      commitJsonArrayMutation_(owner, repo, branch, logPath, token, logOps);
+    }
+    if (requestsOps.length > 0) {
+      var requestsPath = props.getProperty("REQUESTS_LOG_PATH") || "data/requests-log.json";
+      commitJsonArrayMutation_(owner, repo, branch, requestsPath, token, requestsOps);
     }
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -208,6 +230,8 @@ function jsonResponse_(obj) {
 var ROADMAP_STATUSES_ = ["Locked", "Unlocked", "Complete", "Review", "Optional-Reading"];
 var METRIC_ARRAY_TYPES_ = ["topicMastery", "chapterScores", "motivation", "mockScores", "timeToCompletion", "personality"];
 var AP_SCORE_FIELDS_ = ["apPredictedScore", "apFinalScore", "responsiveness"];
+var REQUEST_CATEGORIES_ = ["Feature Request", "Resource Request", "Bug Report", "Concern / Other"];
+var REQUEST_ROLES_ = ["student", "teacher", "parent"];
 
 function findCourse_(students, username, courseId) {
   var student = students.find(function (s) { return s.username === username; });
@@ -326,6 +350,37 @@ var ACTIONS = {
       if (!payload.value) throw new Error("setApScore requires a value");
       if (!course.metrics) course.metrics = {};
       course.metrics[payload.field] = payload.value;
+    }
+  },
+
+  // Backs requests.html. id/receivedAt are generated here (not trusted
+  // from the client) same reasoning as submissions-compiler.gs's
+  // "sub_" ids — a timestamp+random suffix, "req_" prefixed. Every new
+  // request starts "New"; status transitions (In Progress/Done/
+  // Declined) are a teacher/admin-dashboard concern, not this action.
+  submitRequest: {
+    target: "requests",
+    handler: function (requests, payload) {
+      if (!payload.category || !payload.title || !payload.details) {
+        throw new Error("submitRequest requires category, title, and details");
+      }
+      if (REQUEST_CATEGORIES_.indexOf(payload.category) === -1) {
+        throw new Error("Invalid category: " + payload.category);
+      }
+      if (payload.role && REQUEST_ROLES_.indexOf(payload.role) === -1) {
+        throw new Error("Invalid role: " + payload.role);
+      }
+      requests.unshift({
+        id: "req_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
+        receivedAt: new Date().toISOString(),
+        status: "New",
+        username: payload.username || null,
+        name: payload.name || null,
+        role: payload.role || null,
+        category: payload.category,
+        title: payload.title,
+        details: payload.details
+      });
     }
   }
 };
@@ -446,12 +501,13 @@ function compactObjectString_(obj) {
 // GitHub Contents API read/mutate/write, same GET -> mutate -> PUT
 // (+409 retry) pattern as commitNewEntry_ in submissions-compiler.gs —
 // one variant for js/data.js (splice-based, since it's not JSON), one
-// for the plain-JSON submissions log. Both now take a LIST of ops
-// (`ops`, each `{action, payload}`) rather than one — every op in the
-// list is applied to the same single read before one write, which is
-// what makes "5 roadmap changes = 1 commit" possible. A single-action
-// request from doPost is just a 1-element list, so there's no
-// separate "non-batch" code path to keep in sync.
+// generic one (commitJsonArrayMutation_) for any plain-JSON array file
+// (the submissions log and the requests log both qualify). All three
+// now take a LIST of ops (`ops`, each `{action, payload}`) rather than
+// one — every op in the list is applied to the same single read before
+// one write, which is what makes "5 roadmap changes = 1 commit"
+// possible. A single-action request from doPost is just a 1-element
+// list, so there's no separate "non-batch" code path to keep in sync.
 //
 // On a 409 retry, the whole function re-runs from a fresh GET and
 // reapplies every op in `ops` again from scratch — safe and correct
@@ -465,7 +521,11 @@ function compactObjectString_(obj) {
 function commitMessageForOps_(ops) {
   if (ops.length === 1) {
     var op = ops[0], payload = op.payload;
-    return "Teacher dashboard: " + op.action +
+    // submitRequest can come from a student/parent, not just a
+    // teacher, so it gets its own prefix instead of the misleading
+    // "Teacher dashboard: submitRequest for <username>".
+    var prefix = op.action === "submitRequest" ? "Request submitted" : "Teacher dashboard: " + op.action;
+    return prefix +
       (payload.username ? " for " + payload.username + (payload.courseId ? " / " + payload.courseId : "") : "") +
       (payload.id ? " (" + payload.id + ")" : "");
   }
@@ -502,7 +562,7 @@ function commitStudentsMutation_(owner, repo, branch, path, token, ops, attempt)
   }
 }
 
-function commitLogMutation_(owner, repo, branch, path, token, ops, attempt) {
+function commitJsonArrayMutation_(owner, repo, branch, path, token, ops, attempt) {
   attempt = attempt || 1;
   var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch;
   var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
@@ -521,7 +581,7 @@ function commitLogMutation_(owner, repo, branch, path, token, ops, attempt) {
 
   if (putResp.getResponseCode() === 409 && attempt < 3) {
     Utilities.sleep(500 * attempt);
-    commitLogMutation_(owner, repo, branch, path, token, ops, attempt + 1);
+    commitJsonArrayMutation_(owner, repo, branch, path, token, ops, attempt + 1);
     return;
   }
   if (putResp.getResponseCode() >= 300) {

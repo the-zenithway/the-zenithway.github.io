@@ -8,6 +8,7 @@
 - [ ] Zenith Local, Club, Proposal, Presentation
 
 ## 2. Maintenance & Improvement 
+- [ ] Teacher/admin dashboard view of submitted requests (data/requests-log.json) — triage queue, status updates (New/In Progress/Done/Declined), admin dashboard doesn't exist yet either
 - [ ] Question database and like searching, asking questions, hints, etc.
 - [ ] mobile optimization for the new features 
 - [ ] view for the teachers too like what to do exactly is shown 
@@ -22,7 +23,6 @@
 - [ ] teacher dashboard improvement 
 - [ ] student sign up, addition of students, registering to classes via website, classes intertwined to students and teachers and notifications and submissions and teacher portal based on that 
 - [ ] course templates for the above sign up too, like if there is a new format for the course easier universal change 
-- [ ] feature request form, ideas form 
 - [ ] submission doesn't use google form, purely intra-site 
 - [ ] sign up ideas : email, name, password, etc. and information tracked and approval via dashboard 
 - [ ] admin dashboard(all admins are teachers but not all teachers are admins)  
@@ -64,3 +64,10 @@
 - [x] Multi-teacher CLASSES system — per-(student, course) teacher assignment, scoped queue/roster/overview visibility, notifyTeachers_ routed through CLASSES instead of subject-only TEACHERS.courses
 - [x] Bulk "mark complete" for submissions via the shared pending-changes queue, on both teacher.html's queue and each student's own teacher-student.html page (mixable with roadmap/feedback changes in the same batch)
 - [x] Two-level "your classes → light student list → full student page" nav on teacher.html, replacing the always-expanded roster
+- [x] Requests page (requests.html) — students/teachers/parents submit a Feature Request / Resource Request / Bug Report / Concern, open to any logged-in role via new requireAnyLogin()/getCurrentPerson(); posts to a new submitRequest action on the existing zenith-data-writer.gs endpoint, logged to new data/requests-log.json; entry point is a "Requests" link on portal.html and teacher.html (not a new nav tab). Apps Script deployment still needs to be updated by hand with the new action before real submissions land in the log — see automation/zenith-data-writer.gs's setup steps.
+- [x] Roadmap: Curve is now the default view for AP Calculus BC; every course remembers the last view a student picked (localStorage, per course) and reopens to it
+- [x] Two new roadmap views: "Periodic" (Chemistry's default) and "Cell" (Biology's default) — both work on every course, same as Curve does for Calc
+- [x] Periodic view draws the full 118-element table (incl. lanthanide/actinide rows) every time, muted gray except the chapters-mapped tiles; tiles size themselves dynamically to exactly fill the screen (no scroll) and are now centered
+- [x] Cell view organelles redrawn bolder/more detailed (solid saturated fills, continuous mitochondria cristae wave, gradient Golgi stack, asymmetric nucleolus blob) to read like a real vector-icon cell diagram
+- [x] Cell view: fixed a cutoff bug (SVG was scaling by width only via height:auto, so on wide/short windows the top/bottom got clipped) — now contain-fits both axes so the whole cell always fits with margin; added glossy highlight ellipses, a thicker ER ribbon with a lit top edge, and a tighter ribosome cluster
+- [x] New "Code" view — Computer Science's default — chapters as syntax-highlighted Java method names inside a fake scrollable source file; click a method name to open its chapter popover
