@@ -14,6 +14,7 @@
   --accent: #D6A94A;
   --accent-ink: #191919;
   --error: #D97878;
+  --success: #4ADE80;
 
   --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
@@ -1975,17 +1976,34 @@ body.portal-body {
   padding: 6px 10px;
 }
 
-.teacher-queue { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+/* Collapsed by default — native <details>/<summary>, same pattern as
+   .teacher-submission-item on teacher-student.html. */
+.teacher-queue { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
 .teacher-queue-item {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
 }
-.teacher-queue-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-.teacher-queue-student { font-weight: 600; font-size: 0.92rem; color: var(--text); text-decoration: none; }
-a.teacher-queue-student:hover { text-decoration: underline; }
-.teacher-queue-course { font-size: 0.8rem; color: var(--text-muted); }
+.teacher-queue-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 18px;
+}
+.teacher-queue-summary::-webkit-details-marker { display: none; }
+.teacher-queue-summary::before {
+  content: "▸";
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  transition: transform 0.15s ease;
+}
+.teacher-queue-item[open] .teacher-queue-summary::before { transform: rotate(90deg); }
+.teacher-queue-summary:hover { background: var(--bg); border-radius: var(--radius); }
+.teacher-queue-class { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+.teacher-queue-student { font-size: 0.85rem; color: var(--text-muted); }
 .teacher-queue-course-unresolved { color: var(--error); font-style: italic; }
 .teacher-queue-waiting {
   margin-left: auto;
@@ -1993,7 +2011,16 @@ a.teacher-queue-student:hover { text-decoration: underline; }
   font-size: 0.72rem;
   color: var(--accent);
 }
-.teacher-queue-chapter { font-size: 0.88rem; color: var(--text); margin: 0 0 6px; }
+.teacher-queue-chapter { font-size: 0.85rem; color: var(--text); }
+.teacher-queue-detail { padding: 0 18px 18px; }
+.teacher-queue-view-student {
+  display: inline-block;
+  margin: 4px 0 10px;
+  font-size: 0.82rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.teacher-queue-view-student:hover { text-decoration: underline; }
 .teacher-unlocked { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
 .teacher-unlocked-empty { font-size: 0.85rem; color: var(--text-muted); margin: 12px 0; }
 .teacher-latest-feedback {
@@ -2246,6 +2273,58 @@ a.teacher-queue-student:hover { text-decoration: underline; }
 }
 .teacher-pending-discard:hover { color: var(--text); border-color: var(--text-muted); }
 
+.teacher-class-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.teacher-class-card-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--font-sans);
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 16px;
+}
+.teacher-class-name { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+.teacher-class-subject { font-size: 0.8rem; color: var(--text-muted); }
+.teacher-class-count { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); }
+.teacher-class-toggle-icon { font-size: 0.75rem; color: var(--text-muted); transition: transform 0.15s ease; }
+.teacher-class-card-head[aria-expanded="true"] .teacher-class-toggle-icon { transform: rotate(180deg); }
+.teacher-class-body { border-top: 1px solid var(--border); padding: 10px 16px; }
+.teacher-class-student-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.teacher-class-student-list li { display: flex; align-items: center; gap: 8px; padding: 6px 4px; }
+.teacher-class-student-link {
+  font-size: 0.88rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.teacher-class-student-link:hover { color: var(--accent); text-decoration: underline; }
+
+/* Green = nothing pending, yellow (var(--accent)) = at least one
+   ungraded submission. Used both on teacher.html (class card header +
+   each student in its roster) and on submit.html's own submission log
+   — same color meaning everywhere on the site. Hidden by default so a
+   dot whose status hasn't loaded yet (an async fetch, on teacher.html)
+   doesn't flash the wrong color before being set. */
+.status-dot {
+  display: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+.status-dot:not([hidden]) { display: inline-block; }
+.status-dot.is-pending { background: var(--accent); }
+
 /* -------- Feedback page -------- */
 .feedback-wrap {
   flex: 1;
@@ -2383,10 +2462,11 @@ a.teacher-queue-student:hover { text-decoration: underline; }
 .submit-log-meta {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   margin: 0 0 8px;
 }
+.submit-log-meta-left { display: flex; align-items: center; gap: 8px; }
 
 .submit-log-date { color: var(--text-muted); font-size: 0.8rem; }
 

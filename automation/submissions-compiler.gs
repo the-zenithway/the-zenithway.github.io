@@ -16,10 +16,10 @@
  * GitHub Actions side, for deadline/feedback/roadmap emails on push).
  *
  * As of 2026-08-05, it ALSO emails the teacher(s) — see notifyTeachers_
- * below. Every TEACHERS entry in js/data.js with a non-empty "email"
- * gets notified on every submission, unless that entry has an optional
- * "courses" list, in which case only submissions for one of those
- * course ids notify them. See the TEACHERS comment in js/data.js.
+ * below. As of 2026-08-09, this is routed through js/data.js's CLASSES
+ * array: whichever teacher(s) are assigned (via CLASSES.teacherUsernames)
+ * to a class matching the submission's student + course get emailed —
+ * see the CLASSES comment in js/data.js.
  *
  * This file is a reference copy for version history — the version
  * that actually runs lives inside the Apps Script editor (step 2
@@ -365,18 +365,22 @@ function sendConfirmationEmail_(owner, repo, token, entry) {
     "Got your submission for " + (entry.chapter || "your course") + (entry.unit ? " (" + entry.unit + ")" : "") + ". We'll take it from here — you'll get another email once feedback is written.");
 }
 
-// Notifies every teacher who should hear about this submission — each
-// TEACHERS entry in js/data.js can optionally have a `courses` array
-// (e.g. ["ap-calculus-bc", "ap-chemistry"]); a teacher with no
-// `courses` field at all gets notified about every submission (the
-// default for a single-teacher setup), while a teacher with a
-// `courses` list only gets notified when entry.courseId is in it.
-// Unlike sendConfirmationEmail_ above (a regex scrape, fine for one
-// flat "username"/"email" pair), this needs to read each teacher's
-// optional `courses` array, so it properly evaluates the TEACHERS
-// array via the same bracket-depth scan zenith-data-writer.gs uses
-// for STUDENTS — copied here rather than shared, since this is a
-// separate Apps Script project with no shared-library setup.
+// Notifies every teacher assigned to this submission's student+course,
+// via js/data.js's CLASSES array — the single source of truth for
+// teacher->student assignment (see the CLASSES doc comment in
+// js/data.js). A class can have more than one teacherUsername
+// (co-teaching), and a student+courseId pair can match more than one
+// class (multiple sections of the same subject with different
+// rosters/teachers) — every matching class's teachers get notified,
+// deduped by username. A teacher with no email on file is silently
+// skipped. This replaced the old TEACHERS[].courses subject-only
+// filter (2026-08-09) since that couldn't express "this teacher only
+// gets THIS specific class's students", only "this subject,
+// everyone's submissions".
+// Reads both CLASSES and TEACHERS via the same bracket-depth scan
+// zenith-data-writer.gs uses for STUDENTS — copied here rather than
+// shared, since this is a separate Apps Script project with no
+// shared-library setup.
 function notifyTeachers_(owner, repo, token, entry) {
   var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/js/data.js?ref=main";
   var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
@@ -388,11 +392,16 @@ function notifyTeachers_(owner, repo, token, entry) {
   var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
 
   var teachers = readConstArray_(source, "TEACHERS");
-  var toNotify = teachers.filter(function (t) {
-    if (!t.email) return false;
-    if (!t.courses || t.courses.length === 0) return true; // no filter set = notify about everything
-    return !!entry.courseId && t.courses.indexOf(entry.courseId) !== -1;
+  var classes = readConstArray_(source, "CLASSES");
+
+  var matchingUsernames = {};
+  classes.forEach(function (c) {
+    if (c.courseId !== entry.courseId) return;
+    if (!entry.username || c.studentUsernames.indexOf(entry.username) === -1) return;
+    (c.teacherUsernames || []).forEach(function (username) { matchingUsernames[username] = true; });
   });
+
+  var toNotify = teachers.filter(function (t) { return matchingUsernames[t.username] && !!t.email; });
   if (toNotify.length === 0) return;
 
   var chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "chapter/unit not recorded";

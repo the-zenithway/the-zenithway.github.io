@@ -608,10 +608,20 @@ function submissionDateLabel(receivedAt) {
 function submissionLogItemHtml(entry) {
   const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
   const status = entry.status || "pending";
+  const isPending = status !== "Complete";
 
+  // Same green/yellow status-dot scheme as the class rosters on
+  // teacher.html — green once a teacher's graded it, yellow while
+  // it's still sitting in their queue. Known synchronously here (no
+  // separate fetch needed, unlike the roster's async pending-count
+  // lookup), so no [hidden] gating — it just renders the right color
+  // straight away.
   return '<div class="submit-log-item">' +
     '<div class="submit-log-meta">' +
-      '<span class="submit-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '<span class="submit-log-meta-left">' +
+        '<span class="status-dot' + (isPending ? ' is-pending' : '') + '" title="' + (isPending ? "Not graded yet" : "Graded") + '"></span>' +
+        '<span class="submit-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
+      '</span>' +
       roadmapPillHtml(status, SUBMISSION_STATUS_COLORS, status) +
     '</div>' +
     '<p class="submit-log-chapter">' + chapterUnit + '</p>' +
@@ -641,6 +651,15 @@ function teacherSubmissionCardHtml(entry) {
   if (textAnswer) hints.push("typed answer");
   if (remark) hints.push("remark");
 
+  // Queued via the same pending-changes/apply-batch system every other
+  // write control here uses (see markSubmissionComplete_) — so marking
+  // a submission complete can be staged in the same batch as a roadmap
+  // unlock or a feedback entry, applied together with one click.
+  const pendingKey = "markSubmissionComplete:" + entry.id;
+  const isPending = teacherPendingChanges.some(function (c) { return c.key === pendingKey; });
+  const markCompleteHtml = status === "Complete" ? "" :
+    '<button type="button" class="teacher-mark-complete-btn" data-mark-complete="' + entry.id + '"' + (isPending ? " disabled" : "") + '>' + (isPending ? "Queued" : "Mark complete") + '</button>';
+
   return '<details class="teacher-submission-item">' +
     '<summary class="teacher-submission-summary">' +
       '<span class="submit-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
@@ -650,6 +669,7 @@ function teacherSubmissionCardHtml(entry) {
     '</summary>' +
     '<div class="teacher-submission-detail">' +
       (hints.length === 0 ? '<p class="submit-log-empty">No photos, OCR text, typed answer, or remark on this submission.</p>' : submissionFoldSectionsHtml(entry)) +
+      markCompleteHtml +
     '</div>' +
   '</details>';
 }
@@ -775,21 +795,57 @@ function teacherDaysAgoLabel(receivedAt) {
   return days + " days ago";
 }
 
-// One entry per distinct enrolled course across all students, in
-// first-seen order — feeds the subject filter dropdown without
-// needing a separate hardcoded course list to keep in sync.
-function teacherAllCourses() {
-  const seen = {};
-  const list = [];
-  STUDENTS.forEach(function (s) {
-    (s.courses || []).forEach(function (c) {
-      if (!seen[c.id]) {
-        seen[c.id] = true;
-        list.push({ id: c.id, name: c.name });
-      }
-    });
+// ---- Teacher visibility scoping (CLASSES, js/data.js) ----
+// A teacher sees/acts on only students explicitly assigned to them —
+// never the whole STUDENTS array. Visibility is resolved per
+// (student, courseId) pair, not per student: being on a student's
+// Calculus class doesn't also grant visibility into that same
+// student's Chemistry data unless a separate class grants it. A
+// teacher with zero assigned classes sees nothing (an empty
+// dashboard), not "everyone" — deliberate, so a new teacher account
+// starts scoped to nothing until explicitly assigned in CLASSES.
+
+// Every class (js/data.js CLASSES) this teacher is assigned to —
+// checks membership in teacherUsernames, which can have more than
+// one teacher per class (co-teaching).
+function teacherClasses_(teacher) {
+  if (!teacher) return [];
+  return CLASSES.filter(function (c) { return c.teacherUsernames.indexOf(teacher.username) !== -1; });
+}
+
+// Whether `teacher` is assigned to see this specific student, in this
+// specific course — true only if some class assigned to this teacher
+// has this courseId AND lists this student.
+function teacherCanSeeCourse_(teacher, student, courseId) {
+  if (!teacher || !student || !courseId) return false;
+  return CLASSES.some(function (c) {
+    return c.teacherUsernames.indexOf(teacher.username) !== -1 &&
+      c.courseId === courseId &&
+      c.studentUsernames.indexOf(student.username) !== -1;
   });
-  return list;
+}
+
+// One entry per distinct course this teacher is assigned to (via
+// CLASSES), in first-seen order — feeds the subject filter dropdowns
+// on teacher.html/teacher-overview.html. CLASSES only stores the
+// courseId, not a display name, so the name is looked up from
+// whichever STUDENTS record happens to have that course.
+function teacherAllCourses(teacher) {
+  const seen = {};
+  const courseIds = [];
+  teacherClasses_(teacher).forEach(function (c) {
+    if (!seen[c.courseId]) { seen[c.courseId] = true; courseIds.push(c.courseId); }
+  });
+
+  return courseIds.map(function (courseId) {
+    let name = courseId;
+    STUDENTS.some(function (s) {
+      const course = (s.courses || []).find(function (c) { return c.id === courseId; });
+      if (course) { name = course.name; return true; }
+      return false;
+    });
+    return { id: courseId, name: name };
+  });
 }
 
 function renderTeacherCourseFilter() {
@@ -797,7 +853,7 @@ function renderTeacherCourseFilter() {
   if (!select) return;
 
   select.innerHTML = '<option value="">All subjects</option>' +
-    teacherAllCourses().map(function (c) {
+    teacherAllCourses(getCurrentTeacher()).map(function (c) {
       return '<option value="' + c.id + '">' + c.name + '</option>';
     }).join("");
 
@@ -807,63 +863,110 @@ function renderTeacherCourseFilter() {
   });
 }
 
-// Posts the "markSubmissionComplete" action to TEACHER_DATA_WRITE_URL
-// via postTeacherAction_ (defined further down, but function
-// declarations are hoisted so the forward reference is fine) — same
-// endpoint every other teacher-dashboard write control uses now that
-// the old dedicated submission-status-updater.gs was merged into
-// zenith-data-writer.gs. On success, updates the cached entry in
-// place and re-renders the queue so the item disappears immediately
-// instead of waiting for a full reload.
-function markSubmissionComplete_(id, buttonEl) {
-  postTeacherAction_("markSubmissionComplete", { id: id }, buttonEl, function () {
-    const entry = (teacherSubmissionsCache || []).find(function (e) { return e.id === id; });
-    if (entry) entry.status = "Complete";
-    const select = document.getElementById("teacher-course-filter");
-    renderTeacherQueue(select ? select.value : "", teacherSubmissionsCache);
-  });
+// Stages "mark this submission complete" as one pending change,
+// shared by teacher.html's queue and teacher-student.html's
+// submissions list — reuses the exact same queueTeacherChange_/
+// pending-panel/apply-batch system every other write control here
+// uses, instead of posting immediately. That's what makes bulk
+// mark-complete possible: stage several (across many students, on
+// teacher.html; or alongside a roadmap/feedback change, on
+// teacher-student.html), then Apply once. Every markSubmissionComplete
+// op targets the same "log" file in zenith-data-writer.gs, so any
+// number of them staged together still collapse into a single commit.
+function markSubmissionComplete_(entry, label) {
+  queueTeacherChange_(
+    "markSubmissionComplete:" + entry.id,
+    "markSubmissionComplete",
+    { id: entry.id },
+    label,
+    function () {
+      const cached = (teacherSubmissionsCache || []).find(function (e) { return e.id === entry.id; });
+      if (cached) cached.status = "Complete";
+      const teacherStudentCached = teacherStudentSubmissionsCache_.find(function (e) { return e.id === entry.id; });
+      if (teacherStudentCached) teacherStudentCached.status = "Complete";
+    }
+  );
 }
 
+// Which CLASSES entry (of this teacher's own classes) this submission
+// belongs to, so the queue can show the class name ("CalculusA")
+// rather than the subject name — more specific once a teacher has more
+// than one class in the same subject. Falls back to null (caller shows
+// the subject name instead) if nothing matches, e.g. a submission whose
+// course didn't resolve at all.
+function teacherQueueEntryClass_(teacher, student, courseId) {
+  if (!teacher || !student || !courseId) return null;
+  return CLASSES.find(function (c) {
+    return c.teacherUsernames.indexOf(teacher.username) !== -1 &&
+      c.courseId === courseId &&
+      c.studentUsernames.indexOf(student.username) !== -1;
+  }) || null;
+}
+
+// Collapsed by default (native <details>/<summary>, same pattern as
+// teacherSubmissionCardHtml on teacher-student.html) — the queue can
+// get long once several students' submissions pile up, and scanning
+// class/student/chapter one line at a time beats a full card per
+// submission. Photos/OCR/answer/remark and the mark-complete button
+// only render once a row is expanded.
 function teacherQueueItemHtml(entry) {
+  const teacher = getCurrentTeacher();
   const student = STUDENTS.find(function (s) { return s.username === entry.username; });
   const resolvedCourseId = submissionCourseId(entry);
   const course = student ? getStudentCourse(student, resolvedCourseId) : null;
   const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+  const matchingClass = student ? teacherQueueEntryClass_(teacher, student, resolvedCourseId) : null;
+  const classLabel = matchingClass ? matchingClass.name
+    : (course ? course.name : '<span class="teacher-queue-course-unresolved">Course not recorded</span>');
+  const studentLabel = student ? student.name : entry.username;
+
+  const pendingKey = "markSubmissionComplete:" + entry.id;
+  const isPending = teacherPendingChanges.some(function (c) { return c.key === pendingKey; });
+
   // Only link through to teacher-student.html when the course
   // actually resolved (see submissionCourseId above) — an
   // unresolved course would otherwise send the teacher to a dead
   // "couldn't find that student/course" page, which reads as "this
   // student has no submissions" even though the entry is sitting
   // right here in the queue.
-  const studentLink = (student && course)
-    ? '<a class="teacher-queue-student" href="teacher-student.html?username=' + encodeURIComponent(student.username) + '&course=' + encodeURIComponent(resolvedCourseId) + '">' + student.name + '</a>'
-    : '<span class="teacher-queue-student">' + (student ? student.name : entry.username) + '</span>';
-  const courseLabel = course ? course.name : '<span class="teacher-queue-course-unresolved">Course not recorded</span>';
+  const viewStudentHtml = (student && course)
+    ? '<a class="teacher-queue-view-student" href="teacher-student.html?username=' + encodeURIComponent(student.username) + '&course=' + encodeURIComponent(resolvedCourseId) + '">View ' + student.name + "'s page →</a>"
+    : '';
 
-  return '<div class="teacher-queue-item" data-submission-id="' + entry.id + '">' +
-    '<div class="teacher-queue-head">' +
-      studentLink +
-      '<span class="teacher-queue-course">' + courseLabel + '</span>' +
+  return '<details class="teacher-queue-item" data-submission-id="' + entry.id + '">' +
+    '<summary class="teacher-queue-summary">' +
+      '<span class="teacher-queue-class">' + classLabel + '</span>' +
+      '<span class="teacher-queue-student">' + studentLabel + '</span>' +
+      '<span class="teacher-queue-chapter">' + chapterUnit + '</span>' +
       '<span class="teacher-queue-waiting">' + teacherDaysAgoLabel(entry.receivedAt) + '</span>' +
+    '</summary>' +
+    '<div class="teacher-queue-detail">' +
+      submissionFoldSectionsHtml(entry) +
+      viewStudentHtml +
+      '<button type="button" class="teacher-mark-complete-btn" data-mark-complete="' + entry.id + '"' + (isPending ? " disabled" : "") + '>' + (isPending ? "Queued" : "Mark complete") + '</button>' +
     '</div>' +
-    '<p class="teacher-queue-chapter">' + chapterUnit + '</p>' +
-    submissionFoldSectionsHtml(entry) +
-    '<button type="button" class="teacher-mark-complete-btn" data-mark-complete="' + entry.id + '">Mark complete</button>' +
-  '</div>';
+  '</details>';
 }
 
-// `cached`, if given, skips the fetch (used by markSubmissionComplete_
-// to re-render instantly off the already-fetched list after a status
-// change instead of hitting the network again).
+// `cached`, if given, skips the fetch (used as a pending-panel refresh
+// callback to re-render instantly off the already-fetched list after
+// any queue change, instead of hitting the network again).
 function renderTeacherQueue(courseFilter, cached) {
   const list = document.getElementById("teacher-queue-list");
   if (!list) return;
+
+  const teacher = getCurrentTeacher();
 
   const render = function (all) {
     teacherSubmissionsCache = all;
     const pending = all
       .filter(function (entry) { return entry.status !== "Complete"; })
-      .filter(function (entry) { return !courseFilter || submissionCourseId(entry) === courseFilter; })
+      .filter(function (entry) {
+        const resolvedCourseId = submissionCourseId(entry);
+        if (courseFilter && resolvedCourseId !== courseFilter) return false;
+        const student = STUDENTS.find(function (s) { return s.username === entry.username; });
+        return !!student && teacherCanSeeCourse_(teacher, student, resolvedCourseId);
+      })
       .sort(function (a, b) { return new Date(a.receivedAt) - new Date(b.receivedAt); });
 
     const countEl = document.getElementById("teacher-queue-count");
@@ -877,7 +980,12 @@ function renderTeacherQueue(courseFilter, cached) {
     list.innerHTML = pending.map(teacherQueueItemHtml).join("");
     list.querySelectorAll("[data-mark-complete]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        markSubmissionComplete_(btn.getAttribute("data-mark-complete"), btn);
+        const id = btn.getAttribute("data-mark-complete");
+        const entry = pending.find(function (e) { return e.id === id; });
+        if (!entry) return;
+        const entryStudent = STUDENTS.find(function (s) { return s.username === entry.username; });
+        const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+        markSubmissionComplete_(entry, "Mark complete: " + (entryStudent ? entryStudent.name : entry.username) + " — " + chapterUnit);
       });
     });
   };
@@ -933,35 +1041,123 @@ function teacherStudentCardHtml(student, course) {
   '</div>';
 }
 
+// Two-level nav: "your classes" as collapsed cards (name, subject,
+// student count) → toggle to reveal a light student list (name only,
+// no metrics/progress) → click a student to go to their full page.
+// This matches the described "usual workflow" — skim classes, skim
+// names, click into the one student you actually need detail on —
+// instead of the old always-fully-expanded roster of heavy cards for
+// every student at once.
+function teacherClassCardHtml_(cls, courseName) {
+  const students = cls.studentUsernames
+    .map(function (username) { return STUDENTS.find(function (s) { return s.username === username; }); })
+    .filter(Boolean);
+
+  const studentListHtml = students.length === 0
+    ? '<p class="teacher-empty">No students in this class yet.</p>'
+    : '<ul class="teacher-class-student-list">' +
+        students.map(function (s) {
+          const href = "teacher-student.html?username=" + encodeURIComponent(s.username) + "&course=" + encodeURIComponent(cls.courseId);
+          // Filled in (unhidden + colored) once renderTeacherRoster's
+          // own submissions-log fetch resolves — see below. Starts
+          // hidden so a fetch failure just means no dot, not a
+          // stuck/wrong color.
+          return '<li>' +
+            '<span class="status-dot" data-student-status-dot="' + cls.id + ':' + s.username + '" hidden></span>' +
+            '<a class="teacher-class-student-link" href="' + href + '">' + s.name + '</a>' +
+          '</li>';
+        }).join("") +
+      '</ul>';
+
+  return '<div class="teacher-class-card">' +
+    '<button type="button" class="teacher-class-card-head" data-toggle-class="' + cls.id + '" aria-expanded="false">' +
+      '<span class="status-dot" data-class-status-dot="' + cls.id + '" hidden></span>' +
+      '<span class="teacher-class-name">' + cls.name + '</span>' +
+      '<span class="teacher-class-subject">' + courseName + '</span>' +
+      '<span class="teacher-class-count">' + students.length + (students.length === 1 ? " student" : " students") + '</span>' +
+      '<span class="teacher-class-toggle-icon" aria-hidden="true">▾</span>' +
+    '</button>' +
+    '<div class="teacher-class-body" data-class-body="' + cls.id + '" hidden>' + studentListHtml + '</div>' +
+  '</div>';
+}
+
 function renderTeacherRoster(courseFilter) {
   const wrap = document.getElementById("teacher-roster");
   if (!wrap) return;
 
-  const withCourses = STUDENTS
-    .map(function (s) {
-      const courses = (s.courses || []).filter(function (c) { return !courseFilter || c.id === courseFilter; });
-      return { student: s, courses: courses };
-    })
-    .filter(function (entry) { return entry.courses.length > 0; });
+  const teacher = getCurrentTeacher();
+  const classes = teacherClasses_(teacher).filter(function (c) { return !courseFilter || c.courseId === courseFilter; });
 
-  if (withCourses.length === 0) {
-    wrap.innerHTML = '<p class="teacher-empty">No students match this filter.</p>';
+  if (classes.length === 0) {
+    wrap.innerHTML = '<p class="teacher-empty">No classes assigned yet.</p>';
     return;
   }
 
-  wrap.innerHTML = withCourses.map(function (entry) {
-    const body = entry.courses.map(function (course) { return teacherStudentCardHtml(entry.student, course); }).join("");
-    return '<section class="parent-student">' +
-      '<h2 class="parent-student-name">' + entry.student.name + '</h2>' +
-      body +
-    '</section>';
-  }).join("");
+  const courseNames = teacherAllCourses(teacher);
+  const courseName = function (courseId) {
+    const match = courseNames.find(function (c) { return c.id === courseId; });
+    return match ? match.name : courseId;
+  };
+
+  wrap.innerHTML = classes.map(function (cls) { return teacherClassCardHtml_(cls, courseName(cls.courseId)); }).join("");
+
+  wrap.querySelectorAll("[data-toggle-class]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const body = wrap.querySelector('[data-class-body="' + btn.getAttribute("data-toggle-class") + '"]');
+      if (!body) return;
+      const nowHidden = !body.hidden;
+      body.hidden = nowHidden;
+      btn.setAttribute("aria-expanded", nowHidden ? "false" : "true");
+    });
+  });
+
+  // Fills in each student's status dot (green/yellow) and each class's
+  // own header dot (yellow if ANY of its students has something
+  // pending) — a separate, independent fetch (rather than reusing
+  // teacherSubmissionsCache) since renderTeacherQueue's own fetch may
+  // not have resolved yet by the time this runs; this way the dots
+  // show up correctly no matter which render happens to finish first.
+  fetch("data/submissions-log.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      const pendingCounts = {};
+      all.forEach(function (entry) {
+        if (entry.status === "Complete") return;
+        const key = entry.username + "::" + submissionCourseId(entry);
+        pendingCounts[key] = (pendingCounts[key] || 0) + 1;
+      });
+      classes.forEach(function (cls) {
+        let classHasPending = false;
+        cls.studentUsernames.forEach(function (username) {
+          const count = pendingCounts[username + "::" + cls.courseId] || 0;
+          if (count > 0) classHasPending = true;
+          const dot = wrap.querySelector('[data-student-status-dot="' + cls.id + ':' + username + '"]');
+          if (!dot) return;
+          dot.hidden = false;
+          dot.classList.toggle("is-pending", count > 0);
+          dot.title = count === 0 ? "Nothing pending" : (count === 1 ? "1 submission needs grading" : count + " submissions need grading");
+        });
+        const classDot = wrap.querySelector('[data-class-status-dot="' + cls.id + '"]');
+        if (!classDot) return;
+        classDot.hidden = false;
+        classDot.classList.toggle("is-pending", classHasPending);
+        classDot.title = classHasPending ? "This class has pending submissions" : "Nothing pending in this class";
+      });
+    })
+    .catch(function () {});
 }
 
 function renderTeacherDashboard(teacher) {
   if (!teacher) return;
   document.getElementById("teacher-greeting").textContent =
     "Hey " + teacher.name.split(" ")[0] + ",";
+  teacherPendingChanges = [];
+  teacherPendingRefreshCallbacks_ = [];
+  registerTeacherPendingRefresh_(function () {
+    const select = document.getElementById("teacher-course-filter");
+    renderTeacherQueue(select ? select.value : "", teacherSubmissionsCache);
+  });
+  renderTeacherPendingPanel_();
   renderTeacherCourseFilter();
   renderTeacherQueue("");
   renderTeacherRoster("");
@@ -1027,10 +1223,12 @@ function renderTeacherOverviewTable_(courseFilter) {
   const empty = document.getElementById("teacher-overview-empty");
   if (!tbody) return;
 
+  const teacher = getCurrentTeacher();
   const rows = [];
   STUDENTS.forEach(function (student) {
     (student.courses || []).forEach(function (course) {
       if (courseFilter && course.id !== courseFilter) return;
+      if (!teacherCanSeeCourse_(teacher, student, course.id)) return;
       rows.push(teacherOverviewRowHtml(student, course));
     });
   });
@@ -1056,7 +1254,7 @@ function renderTeacherOverviewTable_(courseFilter) {
 function renderTeacherOverviewPage() {
   const select = document.getElementById("teacher-overview-filter");
   select.innerHTML = '<option value="">All subjects</option>' +
-    teacherAllCourses().map(function (c) {
+    teacherAllCourses(getCurrentTeacher()).map(function (c) {
       return '<option value="' + c.id + '">' + c.name + '</option>';
     }).join("");
 
@@ -1315,11 +1513,20 @@ function postTeacherAction_(action, payload, buttonEl, onSuccess) {
 // actually saved until "Apply" is clicked.
 let teacherPendingChanges = []; // [{ key, action, payload, label, applyLocally }]
 let teacherPendingKeyCounter_ = 0;
-// Set once by renderTeacherStudentPage() so the pending panel can
-// refresh the roadmap table's per-row "Queued" indicators after any
-// queue change (add/remove/apply/discard) — the panel itself doesn't
-// otherwise know which student/course it's staging changes for.
-let teacherPendingContext_ = null;
+// Functions to call after any queue change (add/remove/apply/discard)
+// so per-item "Queued" indicators stay in sync — e.g.
+// renderTeacherRoadmapActions_(student, course) on teacher-student.html,
+// or a queue re-render on teacher.html. Was a single hardcoded
+// {student, course} context (teacherPendingContext_) tied only to the
+// roadmap table; generalized to a callback list so teacher.html's
+// queue can share this exact same pending/apply-batch system for bulk
+// "mark complete" instead of needing its own parallel one. Reset to
+// [] by whichever page's entry point renders first (each page
+// registers only its own refresh(es)).
+let teacherPendingRefreshCallbacks_ = [];
+function registerTeacherPendingRefresh_(fn) {
+  teacherPendingRefreshCallbacks_.push(fn);
+}
 
 // A fresh, collision-free key for an "append" style change (feedback/
 // cheat-sheet/metrics entries) — these never replace each other the
@@ -1407,9 +1614,7 @@ function renderTeacherPendingPanel_() {
     }
   }
 
-  if (teacherPendingContext_) {
-    renderTeacherRoadmapActions_(teacherPendingContext_.student, teacherPendingContext_.course);
-  }
+  teacherPendingRefreshCallbacks_.forEach(function (fn) { fn(); });
 }
 
 // Factored out of renderTeacherStudentPage so both the initial render
@@ -1811,7 +2016,8 @@ function renderTeacherStudentPage() {
   document.title = student.name + " · " + course.name + " — Zenith";
 
   teacherPendingChanges = [];
-  teacherPendingContext_ = { student: student, course: course };
+  teacherPendingRefreshCallbacks_ = [];
+  registerTeacherPendingRefresh_(function () { renderTeacherRoadmapActions_(student, course); });
   renderTeacherPendingPanel_();
 
   renderTeacherStudentNow_(course);
@@ -1837,14 +2043,13 @@ function renderTeacherStudentPage() {
   fetch("data/submissions-log.json")
     .then(function (res) { return res.json(); })
     .then(function (all) {
-      const mine = all
+      teacherStudentSubmissionsCache_ = all
         .filter(function (entry) { return entry.username === student.username && submissionCourseId(entry) === course.id; })
         .sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
-      subList.innerHTML = mine.length === 0
-        ? '<p class="submit-log-empty">Nothing submitted yet for this course.</p>'
-        : mine.map(teacherSubmissionCardHtml).join("");
+      renderTeacherStudentSubmissionsList_();
+      registerTeacherPendingRefresh_(renderTeacherStudentSubmissionsList_);
       if (subPatterns) {
-        const patternsHtml = teacherSubmissionPatternsHtml_(mine);
+        const patternsHtml = teacherSubmissionPatternsHtml_(teacherStudentSubmissionsCache_);
         subPatterns.innerHTML = patternsHtml;
         subPatterns.hidden = patternsHtml === "";
       }
@@ -1853,6 +2058,30 @@ function renderTeacherStudentPage() {
       subList.innerHTML = '<p class="submit-log-empty">Could not load submissions right now.</p>';
       if (subPatterns) subPatterns.hidden = true;
     });
+}
+
+// Cache of this student+course's own submissions, populated once by
+// renderTeacherStudentPage() — lets renderTeacherStudentSubmissionsList_
+// re-render (to refresh "Queued" mark-complete states) without
+// refetching, same pattern teacherSubmissionsCache uses for the queue.
+let teacherStudentSubmissionsCache_ = [];
+
+function renderTeacherStudentSubmissionsList_() {
+  const subList = document.getElementById("teacher-student-submissions");
+  if (!subList) return;
+  const mine = teacherStudentSubmissionsCache_;
+  subList.innerHTML = mine.length === 0
+    ? '<p class="submit-log-empty">Nothing submitted yet for this course.</p>'
+    : mine.map(teacherSubmissionCardHtml).join("");
+  subList.querySelectorAll("[data-mark-complete]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const id = btn.getAttribute("data-mark-complete");
+      const entry = mine.find(function (e) { return e.id === id; });
+      if (!entry) return;
+      const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
+      markSubmissionComplete_(entry, "Mark complete: " + chapterUnit);
+    });
+  });
 }
 
 // ---- Parent dashboard (parent.html) ----

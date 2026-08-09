@@ -73,21 +73,42 @@ def split_blocks(raw_text):
     return blocks
 
 
+def _letter_or_skip(ch):
+    """'*' is a student-side convention for "skipped / unsure" (seen
+    first in a real submission, remarks confirmed it means exactly
+    that) — treat it as unanswered, same as a position that's simply
+    missing, never as a wrong answer."""
+    return None if ch == "*" else ch.upper()
+
+
 def try_positional_parse(blocks, groups):
     """Case 1 (most submissions so far): each block is just a bare
-    sequence of letters, one per problem, in problem order. Succeeds
-    only if block count and each block's letter-count match the bank's
-    id-groups exactly — otherwise we refuse to guess."""
+    sequence of letters (optionally '*' for skipped), one per problem,
+    in problem order. Succeeds only if block count and each block's
+    character-count match the bank's id-groups exactly — otherwise we
+    refuse to guess."""
     if len(blocks) != len(groups):
         return None
     answers = {}
     for block, (prefix, ids) in zip(blocks, groups):
-        letters = re.sub(r"[^A-Da-d]", "", block)
-        if len(letters) != len(ids):
+        chars = re.sub(r"[^A-Da-d*]", "", block)
+        if len(chars) != len(ids):
             return None
-        for pid, letter in zip(ids, letters.upper()):
-            answers[pid] = letter
+        for pid, ch in zip(ids, chars):
+            answers[pid] = _letter_or_skip(ch)
     return answers
+
+
+def try_merged_positional_parse(raw_text, ordered_ids):
+    """Case 3: some submissions don't separate groups with a blank
+    line at all — the whole answer is one continuous run of letters
+    (optionally '*' for skipped) covering every id-group back to back
+    in bank order. Succeeds only if the total character count matches
+    the bank's total problem count exactly."""
+    chars = re.sub(r"[^A-Da-d*]", "", raw_text)
+    if len(chars) != len(ordered_ids):
+        return None
+    return {pid: _letter_or_skip(ch) for pid, ch in zip(ordered_ids, chars)}
 
 
 def try_numbered_parse(blocks, groups):
@@ -120,6 +141,10 @@ def parse_answers(raw_text, groups):
     if parsed is None:
         parsed = try_numbered_parse(blocks, groups)
         method = "numbered"
+    if parsed is None:
+        ordered_ids = [pid for _, ids in groups for pid in ids]
+        parsed = try_merged_positional_parse(raw_text, ordered_ids)
+        method = "merged_positional"
     if parsed is None:
         return None, None
     return parsed, method

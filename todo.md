@@ -8,7 +8,6 @@
 - [ ] Zenith Local, Club, Proposal, Presentation
 
 ## 2. Maintenance & Improvement 
-- [ ] Automatic documentation — auto-gather docs from all around (Instagram bot logs, GitHub commit logs across all repos, lecture videos/sessions, session scores, etc.) - partly done, think about more ways to work on this 
 - [ ] Question database and like searching, asking questions, hints, etc.
 - [ ] mobile optimization for the new features 
 - [ ] view for the teachers too like what to do exactly is shown 
@@ -18,7 +17,26 @@
 - [ ] metric formalization, also but fix for some metrics not being edited 
 - [ ] AP Physics self study track
 - [ ] fix biology and chemistry course 
+- [ ] physics view 
 - [ ] Refine biology view 
+- [ ] teacher dashboard improvement 
+- [ ] student sign up, addition of students, registering to classes via website, classes intertwined to students and teachers and notifications and submissions and teacher portal based on that 
+- [ ] course templates for the above sign up too, like if there is a new format for the course easier universal change 
+- [ ] feature request form, ideas form 
+- [ ] submission doesn't use google form, purely intra-site 
+- [ ] sign up ideas : email, name, password, etc. and information tracked and approval via dashboard 
+- [ ] admin dashboard(all admins are teachers but not all teachers are admins)  
+- [ ] request access for units(e.g. please unlock x) 
+- [ ] students can leave a note in the feedback page 
+- [ ] IRL session log and like calendar view is improved, mayhbe a better view(wseek view) 
+- [ ] bulk actions integrated for submission completion as well, and also intra student portal 
+- [ ] Formalied documentations 
+- [ ] update readme 
+- [ ] teachers can send scheduled messages and set irl sessions via portal 
+- [ ] improve parent portal 
+- [ ] daily/weekly digest, notifications for encouragement 
+- [ ] Update FAQ
+- [ ] cross checking features across, e.g. feedback for teachers as well and what they see in their dashbaord 
 
 ## 3. Improvement Brainstorm(Ideas)
 - [ ] Philosophies 
@@ -43,9 +61,6 @@
   - [ ] teach inner excellence like we teach math 
 
 ## Done
-- [x] Roadmap: Curve is now the default view for AP Calculus BC; every course remembers the last view a student picked (localStorage, per course) and reopens to it
-- [x] Two new roadmap views: "Periodic" (Chemistry's default) and "Cell" (Biology's default) — both work on every course, same as Curve does for Calc
-- [x] Periodic view draws the full 118-element table (incl. lanthanide/actinide rows) every time, muted gray except the chapters-mapped tiles; tiles size themselves dynamically to exactly fill the screen (no scroll) and are now centered
-- [x] Cell view organelles redrawn bolder/more detailed (solid saturated fills, continuous mitochondria cristae wave, gradient Golgi stack, asymmetric nucleolus blob) to read like a real vector-icon cell diagram
-- [x] Cell view: fixed a cutoff bug (SVG was scaling by width only via height:auto, so on wide/short windows the top/bottom got clipped) — now contain-fits both axes so the whole cell always fits with margin; added glossy highlight ellipses, a thicker ER ribbon with a lit top edge, and a tighter ribosome cluster
-- [x] New "Code" view — Computer Science's default — chapters as syntax-highlighted Java method names inside a fake scrollable source file; click a method name to open its chapter popover
+- [x] Multi-teacher CLASSES system — per-(student, course) teacher assignment, scoped queue/roster/overview visibility, notifyTeachers_ routed through CLASSES instead of subject-only TEACHERS.courses
+- [x] Bulk "mark complete" for submissions via the shared pending-changes queue, on both teacher.html's queue and each student's own teacher-student.html page (mixable with roadmap/feedback changes in the same batch)
+- [x] Two-level "your classes → light student list → full student page" nav on teacher.html, replacing the always-expanded roster

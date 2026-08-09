@@ -22,18 +22,20 @@
 <main class="parent-wrap">
   <div class="parent-col">
     <p class="parent-greeting" id="teacher-greeting"></p>
-    <p class="parent-subtitle">Grading can be marked complete below; feedback, cheat sheets, and unlocks are still done by hand in the data.</p>
+    <p class="parent-subtitle">Grading can be marked complete in bulk below; feedback, cheat sheets, and unlocks are still done from each student's own page.</p>
+
+    <div id="teacher-pending-panel" hidden></div>
 
     <div class="teacher-filter-row">
       <label for="teacher-course-filter" class="teacher-filter-label">Subject</label>
       <select id="teacher-course-filter" class="teacher-filter-select"></select>
     </div>
 
+    <h2 class="teacher-section-title">Classes</h2>
+    <div id="teacher-roster"></div>
+
     <h2 class="teacher-section-title">Needs grading <span class="teacher-section-count" id="teacher-queue-count"></span></h2>
     <div id="teacher-queue-list" class="teacher-queue"></div>
-
-    <h2 class="teacher-section-title">Students</h2>
-    <div id="teacher-roster"></div>
   </div>
 </main>
 

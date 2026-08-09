@@ -8556,29 +8556,78 @@ const STUDENTS = [
 //
 // "email" is used by automation/submissions-compiler.gs's
 // notifyTeachers_ — every new Form submission emails whichever
-// teachers below have an email on file, right alongside the existing
-// "we got it" confirmation email to the student.
+// teachers are assigned (via CLASSES, below) to that submission's
+// student+course, provided they have an email on file — right
+// alongside the existing "we got it" confirmation email to the
+// student.
 //
-// "courses" (optional) scopes which submissions a teacher gets
-// notified about — e.g. ["ap-calculus-bc", "ap-chemistry"]. Leave it
-// off entirely (as below) to be notified about every submission
-// regardless of subject — the default while there's only one teacher.
-// Once there's more than one, give each teacher a "courses" list and
-// notifyTeachers_ only emails the ones whose list includes that
-// submission's courseId.
+// "courses" (optional, legacy) used to scope which submissions a
+// teacher got notified about by subject alone. As of the CLASSES
+// concept below, notifyTeachers_ no longer reads this field — actual
+// assignment is per (student, course) via CLASSES, which is strictly
+// more precise (two classes can share a subject with different
+// teachers/rosters, which "courses" alone couldn't express). Left in
+// place on existing entries rather than stripped out, but it's inert.
 const TEACHERS = [
   {
-    "username": "teacher",
+    "username": "kyjteach",
     "password": "password",
-    "name": "Zenith Teacher",
+    "name": "Yong Joon Kim(teacher)",
     "email": "yongjoon9981@gmail.com"
   },
   {
     "username": "haminpark",
     "password": "password",
-    "name": "Hamin Park",
+    "name": "Hamin Park(teacher)",
     "email": "haminpark0419@gmail.com"
   }
+];
+
+// CLASSES is the source of truth for "which teacher(s) see/get
+// notified about which students, in which course." A teacher with no
+// classes assigned here sees an empty dashboard (not "everyone") —
+// deliberate, so a new teacher account starts scoped to nothing until
+// explicitly assigned, rather than accidentally exposed to every
+// student. Hand-edited for now, same as STUDENTS/TEACHERS — no
+// dashboard UI creates/edits a class yet.
+//
+//   id: a stable slug, unique per class (used as a key, not shown)
+//   name: the human label shown on the dashboard, e.g. "CalculusA"
+//   courseId: which STUDENTS[].courses[].id this class is for.
+//     NOT unique across classes on purpose — two classes can share a
+//     subject with different teachers and different rosters (e.g.
+//     "CalculusA" and "CalculusB", same course, different sections)
+//   teacherUsernames: [TEACHERS[].username, ...] — more than one
+//     teacher can be assigned to the same class (co-teaching)
+//   studentUsernames: [STUDENTS[].username, ...] — the exact roster;
+//     same array-of-usernames idiom PARENTS[].linkedStudents uses
+//
+// Visibility is resolved per (student, courseId) pair, not per
+// student — being assigned to a student's Calculus class does not
+// also grant visibility into that same student's Chemistry data
+// unless a separate class grants it.
+const CLASSES = [
+  {
+    "id": "calc-a",
+    "name": "AP Calculus A",
+    "courseId": "ap-calculus-bc",
+    "teacherUsernames": ["kyjteach"],
+    "studentUsernames": ["bogue", "davidheo", "seohu", "onyoo"]
+  },
+  {
+    "id": "bio-a",
+    "name": "AP Biology A",
+    "courseId": "ap-biology",
+    "teacherUsernames": ["haminpark"],
+    "studentUsernames": ["davidheo"]
+  },
+  {
+    "id": "chem-a",
+    "name": "AP Chemistry A",
+    "courseId": "ap-chemistry",
+    "teacherUsernames": ["haminpark"],
+    "studentUsernames": ["davidheo", "onyoo"]
+  },
 ];
 
 // Parents get their own read-only login (parent.html) — same
