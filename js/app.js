@@ -1190,6 +1190,12 @@ function submitRequestForm_(person, buttonEl) {
 // Same card shape as requestLogItemHtml, plus who submitted it, since
 // on the admin dashboard that's the whole point (unlike a student's
 // own "your requests" list, where "you" is implied).
+// Status is editable here too — same updateRequestStatus action
+// teacher.html's "Needs to review" queue uses (it's not scoped to any
+// one category or requester, so Feature/Resource/Bug/Concern all work
+// the same way as Ask My Teacher does there). Same real-<button>-not-
+// <select> reasoning as teacherRequestQueueItemHtml_: passing the
+// <select> itself to postTeacherAction_ would wipe its <option>s.
 function adminRequestCardHtml_(entry) {
   const statusClass = "requests-log-status-" + (entry.status || "New").toLowerCase().replace(/[^a-z0-9]+/g, "-");
   // No role = the no-login Resource Request path (requests.html's
@@ -1198,6 +1204,9 @@ function adminRequestCardHtml_(entry) {
   const submitter = escapeHtml_(entry.name || "Unknown") +
     ' <span class="requests-log-role">(' + escapeHtml_(entry.role || "guest") + ")</span>" +
     (entry.email ? ' <span class="requests-log-email">' + escapeHtml_(entry.email) + '</span>' : "");
+  const statusOptions = REQUEST_STATUSES.map(function (s) {
+    return '<option value="' + s + '"' + (s === entry.status ? " selected" : "") + '>' + s + '</option>';
+  }).join("");
   return '<div class="requests-log-item">' +
     '<div class="requests-log-meta">' +
       '<span class="requests-log-category">' + escapeHtml_(entry.category) + '</span>' +
@@ -1207,6 +1216,10 @@ function adminRequestCardHtml_(entry) {
     '<p class="requests-log-submitter">' + submitter + '</p>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    '<div class="teacher-request-status-row">' +
+      '<select class="teacher-filter-select admin-request-status-select" data-request-id="' + entry.id + '">' + statusOptions + '</select>' +
+      '<button type="button" class="teacher-add-btn" data-admin-update-request="' + entry.id + '">Update</button>' +
+    '</div>' +
   '</div>';
 }
 
@@ -1236,6 +1249,16 @@ function renderAdminRequestsDashboard(categoryFilter) {
       }
 
       list.innerHTML = sorted.map(adminRequestCardHtml_).join("");
+      list.querySelectorAll("[data-admin-update-request]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const id = btn.getAttribute("data-admin-update-request");
+          const select = list.querySelector('.admin-request-status-select[data-request-id="' + id + '"]');
+          if (!select) return;
+          postTeacherAction_("updateRequestStatus", { id: id, status: select.value }, btn, function () {
+            renderAdminRequestsDashboard(categoryFilter);
+          });
+        });
+      });
     })
     .catch(function () {
       list.innerHTML = '<p class="requests-log-empty">Could not load the request log right now.</p>';
