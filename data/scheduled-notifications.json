@@ -1,5 +1,24 @@
 [
   {
+    "id": "notif_1786361465275_p5d9ap",
+    "createdBy": "haminpark",
+    "createdByName": "Hamin Park(teacher)",
+    "createdAt": "2026-08-10T11:31:05.275Z",
+    "sendAt": "2026-08-12T08:00:00.000Z",
+    "recipientUsernames": [
+      "davidheo"
+    ],
+    "recipientNames": [
+      "David Heo"
+    ],
+    "subject": "Session reminder — Wednesday 4:30~6:30",
+    "message": "session for ap chemistry",
+    "status": "Pending",
+    "sentAt": null,
+    "recipientCount": null,
+    "eventId": "evt_1786361463511_6jol48"
+  },
+  {
     "id": "notif_1786361318031_5tgofa",
     "createdBy": "haminpark",
     "createdByName": "Hamin Park(teacher)",
