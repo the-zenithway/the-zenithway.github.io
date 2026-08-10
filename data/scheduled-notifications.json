@@ -1,5 +1,26 @@
 [
   {
+    "id": "notif_1786361928683_lqiqqn",
+    "createdBy": "haminpark",
+    "createdByName": "Hamin Park(teacher)",
+    "createdAt": "2026-08-10T11:38:48.683Z",
+    "sendAt": "2026-08-10T11:39:00.000Z",
+    "recipientUsernames": [
+      "davidheo",
+      "kyjv9981"
+    ],
+    "recipientNames": [
+      "David Heo",
+      "Yong Joon Kim"
+    ],
+    "subject": "session on wed",
+    "message": "ap chem",
+    "status": "Pending",
+    "sentAt": null,
+    "recipientCount": null,
+    "eventId": null
+  },
+  {
     "id": "notif_1786361465275_p5d9ap",
     "createdBy": "haminpark",
     "createdByName": "Hamin Park(teacher)",
