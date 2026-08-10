@@ -32,7 +32,7 @@
     ],
     "subject": "Session reminder — Wednesday 4:30~6:30",
     "message": "Chemistry",
-    "status": "Pending",
+    "status": "Cancelled",
     "sentAt": null,
     "recipientCount": null,
     "eventId": null
