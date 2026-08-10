@@ -2888,9 +2888,9 @@ const STUDENTS = [
         "rightNow": {
           "state": "your-move",
           "chapter": "Chapter 1",
-          "unit": "C",
-          "instruction": "Try to solve every problem in the given set!",
-          "due": "TBD"
+          "unit": "R",
+          "instruction": "Review the given items; write notes for every item!\n-A9, A33, A34\n-A19, A23, A27, A29, A30(missed)",
+          "due": "Wednesday"
         },
         "feedback": [
           {
