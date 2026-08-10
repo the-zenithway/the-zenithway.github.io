@@ -1857,13 +1857,6 @@ const STUDENTS = [
     ]
   },
   {
-    "username": "kyjtest2",
-    "name": "kyjtest2",
-    "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-    "email": "kyjvariable@gmail.com",
-    "courses": []
-  },
-  {
     "username": "kyjtest",
     "name": "kyjtest",
     "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
