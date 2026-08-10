@@ -445,6 +445,29 @@ nav > a.active { color: var(--text); }
 
 .blog-article-body a:hover { filter: brightness(1.1); }
 
+/* Tag chips — used on both the public blog (blog-preview-tags on
+   blog.html's cards, blog-article-tags on blog-post.html) and
+   admin.html's Blog tab post cards, all sharing the plain .blog-tag
+   chip look. */
+.blog-preview-tags,
+.blog-article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+.blog-article-tags { margin: 0 0 28px; }
+.blog-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
 /* -------- login page -------- */
 .login-section {
   display: flex;
@@ -735,6 +758,103 @@ body.portal-body {
   margin: 0;
 }
 
+/* Announcements badge — same shell as .whatsnew-* above, separate
+   class names since this isn't the changelog, and items need a
+   title + meta row + body rather than a single link line. */
+.announce-badge-wrap { position: relative; }
+
+.announce-badge-btn {
+  position: relative;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.announce-badge-btn:hover { color: var(--text); border-color: var(--text-muted); }
+
+.announce-badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  margin-left: 7px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.announce-badge-count[hidden] { display: none; }
+
+.announce-badge-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  z-index: 30;
+}
+
+.announce-badge-menu[hidden] { display: none; }
+
+.announce-badge-item {
+  display: block;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.announce-badge-item:first-child { border-top: none; }
+
+.announce-badge-item-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 3px;
+}
+
+.announce-badge-item-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin: 0 0 5px;
+}
+
+.announce-badge-item-body {
+  font-size: 0.82rem;
+  color: var(--text);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.announce-badge-empty {
+  padding: 12px 10px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Delete button on a teacher/admin's own announcement (teacher.html's
+   "My announcements", admin.html's Announcements tab) — same
+   .admin-bulk-decline-btn red-ish "destructive" cue the Blog tab's
+   Delete button already uses, plus the same spacing modifier
+   .scheduled-notif-cancel-btn already establishes for a button
+   trailing a .requests-log-item card. */
+.announce-delete-btn { margin-top: 10px; }
+
 .portal-frame-wrap { flex: 1; display: flex; }
 
 .embed-frame {
@@ -900,6 +1020,108 @@ body.portal-body {
   font-size: 0.72rem;
   color: var(--text-muted);
 }
+
+/* -------- course catalog (catalog page) -------- */
+.catalog-wrap {
+  flex: 1;
+  padding: 48px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.catalog-panel {
+  width: min(100%, 860px);
+}
+
+.catalog-heading { margin-bottom: 28px; }
+
+.catalog-eyebrow {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-heading h1 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.25;
+}
+
+.catalog-subtitle {
+  margin: 7px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  max-width: 56ch;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.catalog-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(44, 44, 44, 0.82);
+}
+
+.catalog-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  flex-shrink: 0;
+}
+
+.catalog-card-icon svg { width: 34px; height: 34px; }
+
+.catalog-card-body { min-width: 0; }
+
+.catalog-card-subject {
+  margin: 0 0 2px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.catalog-card-name {
+  margin: 0 0 4px;
+  font-size: 1.02rem;
+  line-height: 1.3;
+}
+
+.catalog-card-teacher {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.catalog-lock-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* State variants for a student's own registration in a class — set by
+   catalogBadgeHtml_() in js/app.js alongside the base .catalog-lock-badge
+   above, which stays the default "locked" look. */
+.catalog-badge-enrolled { background: rgba(76, 175, 122, 0.18); color: #7fd9a8; }
+.catalog-badge-pending { background: rgba(214, 169, 74, 0.18); color: var(--accent); }
 
 .roadmap-course-heading {
   display: flex;
@@ -2435,7 +2657,9 @@ body.portal-body {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .submit-cta-title {
@@ -2447,7 +2671,7 @@ body.portal-body {
   color: var(--text-muted);
   font-size: 0.92rem;
   line-height: 1.5;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 }
 
 .submit-log-heading {
@@ -2792,6 +3016,12 @@ body.portal-body {
   margin-left: auto;
 }
 
+/* Spacing between the "Pending registrations" / "Existing classes"
+   blocks on admin.html's Classes tab — everything inside them reuses
+   .requests-log-* wholesale, this is just the gap the Create-a-class
+   form (a .requests-form-card) doesn't already provide via margin. */
+.admin-classes-block { margin-top: 28px; }
+
 /* Requests / Sign-ups tab switcher above admin.html's filter row —
    two plain buttons, not links (no URL per tab, both render into the
    same page via #admin-requests-section/#admin-signups-section
@@ -2899,6 +3129,63 @@ body.portal-body {
 
 .requests-log-status-approved { color: var(--success); background: var(--bg); border-color: var(--success); }
 .requests-log-status-declined { color: var(--error); background: var(--bg); border-color: var(--error); }
+
+/* -------- admin.html: Blog tab -------- */
+/* Edit/Delete row under each post card in #admin-blog-list — reuses
+   .requests-log-item wholesale for the card itself, same as the
+   Requests/Sign-ups tabs, and .teacher-add-btn for the buttons (the
+   Delete button additionally gets .admin-bulk-decline-btn's red-ish
+   look, same "destructive" cue bulk-decline already established). */
+.admin-blog-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* The publish/edit form — a full-width card below the post list,
+   hidden until "New post" or a card's "Edit" is clicked (toggled via
+   #admin-blog-editor[hidden] in js/app.js). */
+.admin-blog-editor { margin-top: 20px; }
+
+/* Markdown textarea, then its rendered preview below — stacked rather
+   than side-by-side, since .requests-col (the shared container every
+   admin.html tab renders into) caps out at 560px wide, too narrow for
+   two readable columns. */
+.admin-blog-split {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.admin-blog-md-input {
+  min-height: 260px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+.admin-blog-preview {
+  min-height: 160px;
+  max-height: 420px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+/* .blog-article-body sizes paragraphs/headings/lists for the public
+   article width (max-width: 680px) — inside this narrower editor pane
+   the same sizing just needs to drop down a notch so long lines don't
+   look oversized relative to the source textarea beside them. */
+.admin-blog-preview.blog-article-body p,
+.admin-blog-preview.blog-article-body ul { font-size: 0.92rem; }
+.admin-blog-preview.blog-article-body h2 { font-size: 1.1rem; margin: 24px 0 12px; }
+
+.admin-blog-editor-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
 
 /* One independently-foldable piece of a submission card (photos, OCR
    text, typed answer, remark) — used on submit.html, teacher.html's
@@ -3327,4 +3614,173 @@ footer {
   border-top: 1px solid var(--border);
   font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+/* -------- Calendar (calendar.html) --------
+   Month grid + a detail panel (renderCalendarMonth_/
+   openCalendarEventDetail_ in js/app.js), plus a create-event form that
+   reuses .teacher-add-form*/.teacher-notif-recipient-row from the
+   scheduled-notification form above almost verbatim. */
+
+.calendar-month-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 16px;
+}
+.calendar-month-nav button {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.calendar-month-nav button:hover { opacity: 0.85; }
+.calendar-month-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-right: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+  /* Without this, the grid's own `overflow: hidden` makes its automatic
+     minimum size 0 per the flexbox spec (.parent-col is a column flex
+     container) — flex-shrink then collapses it toward that 0 instead
+     of its actual (grid-template-rows-driven) content height. */
+  flex-shrink: 0;
+}
+.calendar-grid-weekday {
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 4px;
+}
+.calendar-day-cell {
+  background: var(--bg);
+  min-height: 84px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.calendar-day-cell.is-other-month { background: var(--bg); opacity: 0.45; }
+.calendar-day-cell.is-today .calendar-day-number {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 999px;
+}
+.calendar-day-number {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.calendar-event-chip {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.calendar-event-chip:hover { border-color: var(--accent); }
+.calendar-event-chip-time { color: var(--text-muted); }
+.calendar-more-chip {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 0 5px;
+}
+
+/* Same hidden-attribute inline-panel idiom as .teacher-pending-panel
+   above, rather than a new modal/overlay pattern. */
+.calendar-detail-panel[hidden] { display: none; }
+.calendar-detail-panel {
+  position: relative;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.calendar-detail-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.calendar-detail-title { font-size: 1.05rem; color: var(--text); margin: 0 24px 0 0; }
+.calendar-detail-time { font-size: 0.85rem; color: var(--accent); margin: 0; }
+.calendar-detail-description { font-size: 0.88rem; color: var(--text); line-height: 1.5; margin: 0; white-space: pre-wrap; }
+.calendar-detail-people { font-size: 0.85rem; color: var(--text); margin: 0; }
+.calendar-detail-people strong { color: var(--text-muted); font-weight: 600; }
+.calendar-detail-creator { font-size: 0.78rem; color: var(--text-muted); margin: 0; }
+.calendar-cancel-btn { align-self: flex-start; margin-top: 4px; }
+
+.calendar-participant-class-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+}
+.calendar-participant-class-row input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.calendar-notify-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+.calendar-notify-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
 }

@@ -25,8 +25,59 @@
 
     <div class="submit-cta-card">
       <h2 class="submit-cta-title">Submit your work</h2>
-      <p class="submit-cta-text">Finished a chapter or unit? Open the form to submit it — you'll pick your class, chapter, and unit there, and can attach a photo of your work.</p>
-      <a id="submit-cta-link" class="btn-primary" href="#" target="_blank" rel="noopener">Open the submission form ↗</a>
+      <p class="submit-cta-text">Finished a chapter's coursework or test? Type your answer below and submit it right here.</p>
+
+      <label class="requests-field-label" for="submit-chapter">Chapter</label>
+      <select id="submit-chapter" class="requests-select">
+        <option value="Chapter 1">Chapter 1</option>
+        <option value="Chapter 2">Chapter 2</option>
+        <option value="Chapter 3">Chapter 3</option>
+        <option value="Chapter 4">Chapter 4</option>
+        <option value="Chapter 5">Chapter 5</option>
+        <option value="Chapter 6">Chapter 6</option>
+        <option value="Chapter 7">Chapter 7</option>
+        <option value="Chapter 8">Chapter 8</option>
+        <option value="Chapter 9">Chapter 9</option>
+        <option value="Chapter 10">Chapter 10</option>
+        <option value="Chapter 11">Chapter 11</option>
+        <option value="Chapter 12">Chapter 12</option>
+        <option value="M1">M1</option>
+        <option value="M2">M2</option>
+        <option value="M3">M3</option>
+        <option value="M4">M4</option>
+        <option value="M5">M5</option>
+        <option value="M6">M6</option>
+        <option value="M7">M7</option>
+        <option value="M8">M8</option>
+        <option value="M9">M9</option>
+        <option value="M10">M10</option>
+        <option value="M11">M11</option>
+        <option value="M12">M12</option>
+        <option value="M13">M13</option>
+        <option value="M14">M14</option>
+        <option value="M15">M15</option>
+        <option value="M16">M16</option>
+      </select>
+
+      <label class="requests-field-label" for="submit-unit">Type</label>
+      <select id="submit-unit" class="requests-select">
+        <option value="B">Book chapter (B)</option>
+        <option value="C">Coursework (C)</option>
+        <option value="S">Solution manual (S)</option>
+        <option value="R">Review (R)</option>
+        <option value="T">Test (T)</option>
+        <option value="N">Notes Submission (N)</option>
+        <option value="L">Learning (L)</option>
+      </select>
+      <p class="requests-field-note">Need to attach a photo of your written work? Use the <a id="submit-cta-link" href="#" target="_blank" rel="noopener">Google Form</a> instead.</p>
+
+      <label class="requests-field-label" for="submit-answer">Your answer</label>
+      <textarea id="submit-answer" class="requests-textarea" rows="4" placeholder="Your answer, notes, or a summary of what you covered"></textarea>
+
+      <label class="requests-field-label" for="submit-remarks">Remarks (optional)</label>
+      <textarea id="submit-remarks" class="requests-textarea" rows="3" placeholder="Anything you want your teacher to know"></textarea>
+
+      <button type="button" class="btn-primary requests-submit-btn" id="submit-form-btn">Submit</button>
     </div>
 
     <div>
@@ -46,7 +97,11 @@
     var formUrl = course.submissionFormUrl || SUBMISSION_FORM_URL;
     document.getElementById('submit-greeting').textContent = "Hey " + student.name.split(" ")[0] + ",";
     document.getElementById('submit-cta-link').href = formUrl;
-    document.getElementById('open-direct-link').href = formUrl;
+
+    document.getElementById('submit-form-btn').addEventListener('click', function () {
+      submitWorkForm_(student, course, this);
+    });
+
     renderSubmissionLog(student, course);
   }
 

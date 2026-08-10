@@ -23,132 +23,18 @@
   <div class="roadmap-course-heading">
     <a href="resources.html" class="roadmap-back">← All resources</a>
     <h1 id="roadmap-course-name">AP Biology — Self Study Track</h1>
-    <span class="roadmap-course-progress" id="roadmap-course-progress"></span>
   </div>
 
-  <div class="roadmap-toolbar">
-    <div class="roadmap-view-switch" id="roadmap-view-switch">
-      <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
-      <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
-      <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
-      <button type="button" class="roadmap-view-btn" data-view="orbit">Orbit</button>
-      <button type="button" class="roadmap-view-btn" data-view="periodic">Periodic</button>
-      <button type="button" class="roadmap-view-btn" data-view="cell">Cell</button>
-      <button type="button" class="roadmap-view-btn" data-view="code">Code</button>
-    </div>
-  </div>
-
-  <div class="roadmap-wrap" id="roadmap-view-table">
-    <p class="roadmap-empty" id="roadmap-empty" hidden>Nothing here yet — check back once this roadmap is set up.</p>
-    <table class="roadmap-table" id="roadmap-table" hidden>
-      <colgroup>
-        <col style="width: 112px">
-        <col>
-        <col style="width: 150px">
-        <col style="width: 155px">
-        <col style="width: 84px">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>Chapter</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Status</th>
-          <th>Links</th>
-        </tr>
-      </thead>
-      <tbody id="roadmap-tbody"></tbody>
-    </table>
-  </div>
-
-  <div class="roadmap-curve-wrap" id="roadmap-view-curve" hidden>
-    <div class="roadmap-curve-legend" id="roadmap-curve-legend"></div>
-    <div class="roadmap-curve-canvas" id="roadmap-curve-canvas">
-      <svg id="roadmap-curve-svg" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid meet"></svg>
-      <div class="curve-popover" id="curve-popover" hidden>
-        <p class="curve-popover-title" id="curve-popover-title"></p>
-        <div class="curve-popover-list" id="curve-popover-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="roadmap-cards-wrap" id="roadmap-view-cards" hidden>
-    <div class="roadmap-cards-track" id="roadmap-cards-track" tabindex="0"></div>
-    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-cards-prev" aria-label="Scroll left">‹</button>
-    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-cards-next" aria-label="Scroll right">›</button>
-  </div>
-
-  <div class="roadmap-orbit-wrap" id="roadmap-view-orbit" hidden>
-    <div class="roadmap-orbit-stage">
-      <div class="roadmap-orbit-track" id="roadmap-orbit-track" tabindex="0"></div>
-    </div>
-    <button type="button" class="roadmap-scroll-btn roadmap-scroll-prev" id="roadmap-orbit-prev" aria-label="Scroll left">‹</button>
-    <button type="button" class="roadmap-scroll-btn roadmap-scroll-next" id="roadmap-orbit-next" aria-label="Scroll right">›</button>
-  </div>
-
-  <div class="roadmap-periodic-wrap" id="roadmap-view-periodic" hidden>
-    <div class="roadmap-periodic-legend" id="roadmap-periodic-legend"></div>
-    <div class="roadmap-periodic-canvas" id="roadmap-periodic-canvas">
-      <div class="roadmap-periodic-grid" id="roadmap-periodic-grid"></div>
-      <div class="curve-popover" id="periodic-popover" hidden>
-        <p class="curve-popover-title" id="periodic-popover-title"></p>
-        <div class="curve-popover-list" id="periodic-popover-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="roadmap-cell-wrap" id="roadmap-view-cell" hidden>
-    <div class="roadmap-cell-legend" id="roadmap-cell-legend"></div>
-    <div class="roadmap-cell-canvas" id="roadmap-cell-canvas">
-      <svg id="roadmap-cell-svg" viewBox="0 0 900 660" preserveAspectRatio="xMidYMid meet"></svg>
-      <div class="curve-popover" id="cell-popover" hidden>
-        <p class="curve-popover-title" id="cell-popover-title"></p>
-        <div class="curve-popover-list" id="cell-popover-list"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="roadmap-code-wrap" id="roadmap-view-code" hidden>
-    <div class="roadmap-code-legend" id="roadmap-code-legend"></div>
-    <div class="roadmap-code-canvas" id="roadmap-code-canvas">
-      <pre class="roadmap-code-editor" id="roadmap-code-editor"></pre>
-      <div class="curve-popover" id="code-popover" hidden>
-        <p class="curve-popover-title" id="code-popover-title"></p>
-        <div class="curve-popover-list" id="code-popover-list"></div>
-      </div>
-    </div>
-  </div>
+  <p class="roadmap-empty">This self-study track is temporarily unavailable while we review its content.</p>
 </main>
 
 <div id="footer-mount"></div>
 <script>renderFooter();</script>
 
 <script src="js/social-links.js"></script>
-<script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
-  // Public self-study copy of the canonical AP Biology roadmap.
-  // Course content stays in sync, while enrolled student progress is untouched.
-  var biologyCourse;
-  STUDENTS.some(function (student) {
-    return (student.courses || []).some(function (candidate) {
-      if (candidate.id !== "ap-biology") return false;
-      biologyCourse = candidate;
-      return true;
-    });
-  });
-
-  var course = {
-    "id": "ap-biology-self-study",
-    "name": "AP Biology — Self Study Track",
-    "roadmap": biologyCourse ? biologyCourse.roadmap.map(function (item) {
-      return Object.assign({}, item, { "status": "Complete" });
-    }) : []
-  };
-
   renderSocialLinks();
-  renderRoadmap(course);
-  setUpRoadmapViewSwitch(course);
 </script>
 </body>
 </html>

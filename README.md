@@ -160,8 +160,11 @@ Several legacy student pages and public resources still link out to
 Notion; the native roadmap system (Table/Curve/Cards/Orbit views driven
 by `js/data.js`) is gradually replacing that dependency course by
 course — see the migration procedure in [PROGRESS.md](PROGRESS.md). The
-Calendar and Submit pages are intentional, permanent embeds (Google
-Calendar / Google Forms), not something being migrated away from.
+Submit page is an intentional, permanent embed (Google Forms), not
+something being migrated away from. The Calendar page (`calendar.html`)
+was previously a Google Calendar embed; it's now a native, role-aware
+in-site calendar backed by `data/calendar-events.json` — see
+`automation/zenith-data-writer.gs`'s `createEvent`/`cancelEvent` actions.
 
 ## Using AI coding assistants in development
 

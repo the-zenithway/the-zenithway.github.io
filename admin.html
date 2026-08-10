@@ -13,29 +13,156 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/layout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 </head>
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ nav: "label", label: "Admin", actions: ["requests", "logout"] });</script>
+<script>renderPortalHeader({ nav: "label", label: "Admin", actions: ["calendar", "requests", "logout"] });</script>
 
 <main class="requests-wrap">
   <div class="requests-col">
     <p class="requests-greeting" id="admin-greeting"></p>
 
-    <div class="admin-filter-row">
-      <label for="admin-category-filter" class="teacher-filter-label">Category</label>
-      <select id="admin-category-filter" class="teacher-filter-select">
-        <option value="all">All categories</option>
-        <option value="Feature Request">Feature Request</option>
-        <option value="Resource Request">Resource Request</option>
-        <option value="Bug Report">Bug Report</option>
-        <option value="Concern / Other">Concern / Other</option>
-      </select>
-      <span class="admin-requests-total"><span id="admin-requests-count">0</span> total</span>
+    <div class="admin-tabs" id="admin-tabs">
+      <button type="button" class="admin-tab-btn active" data-admin-tab="requests">Requests</button>
+      <button type="button" class="admin-tab-btn" data-admin-tab="signups">Sign-ups</button>
+      <button type="button" class="admin-tab-btn" data-admin-tab="blog">Blog</button>
+      <button type="button" class="admin-tab-btn" data-admin-tab="announcements">Announcements</button>
+      <button type="button" class="admin-tab-btn" data-admin-tab="classes">Classes</button>
     </div>
 
-    <div class="requests-log-list" id="admin-requests-list"></div>
+    <section id="admin-requests-section">
+      <div class="admin-filter-row">
+        <label for="admin-category-filter" class="teacher-filter-label">Category</label>
+        <select id="admin-category-filter" class="teacher-filter-select">
+          <option value="all">All categories</option>
+          <option value="Feature Request">Feature Request</option>
+          <option value="Resource Request">Resource Request</option>
+          <option value="Bug Report">Bug Report</option>
+          <option value="Ask My Teacher">Ask My Teacher</option>
+          <option value="Concern / Other">Concern / Other</option>
+        </select>
+        <span class="admin-requests-total"><span id="admin-requests-count">0</span> total</span>
+      </div>
+
+      <div class="requests-log-list" id="admin-requests-list"></div>
+    </section>
+
+    <section id="admin-signups-section" hidden>
+      <div class="admin-filter-row">
+        <label for="admin-signup-status-filter" class="teacher-filter-label">Status</label>
+        <select id="admin-signup-status-filter" class="teacher-filter-select">
+          <option value="Pending" selected>Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Declined">Declined</option>
+          <option value="all">All</option>
+        </select>
+        <label for="admin-signup-role-filter" class="teacher-filter-label">Role</label>
+        <select id="admin-signup-role-filter" class="teacher-filter-select">
+          <option value="all">All roles</option>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+        </select>
+        <span class="admin-requests-total"><span id="admin-signups-count">0</span> total</span>
+      </div>
+
+      <div class="admin-bulk-bar" id="admin-signups-bulk-bar" hidden>
+        <label class="admin-bulk-select-all-label">
+          <input type="checkbox" id="admin-signups-select-all"> Select all
+        </label>
+        <span class="admin-bulk-selected-count" id="admin-signups-selected-count">0 selected</span>
+        <button type="button" class="teacher-add-btn" id="admin-signups-bulk-approve" disabled>Approve selected</button>
+        <button type="button" class="teacher-add-btn admin-bulk-decline-btn" id="admin-signups-bulk-decline" disabled>Decline selected</button>
+      </div>
+
+      <div class="requests-log-list" id="admin-signups-list"></div>
+    </section>
+
+    <section id="admin-blog-section" hidden>
+      <div class="admin-filter-row">
+        <button type="button" class="teacher-add-btn" id="admin-blog-new-btn">+ New post</button>
+        <span class="admin-requests-total"><span id="admin-blog-count">0</span> posts</span>
+      </div>
+
+      <div class="requests-log-list" id="admin-blog-list"></div>
+
+      <div class="admin-blog-editor" id="admin-blog-editor" hidden>
+        <div class="requests-form-card">
+          <h3 class="requests-form-title" id="admin-blog-editor-title">New post</h3>
+
+          <label class="requests-field-label" for="admin-blog-title">Title</label>
+          <input type="text" id="admin-blog-title" class="requests-input" placeholder="Post title">
+
+          <label class="requests-field-label" for="admin-blog-slug">Slug (URL) — locked once published</label>
+          <input type="text" id="admin-blog-slug" class="requests-input" placeholder="auto-generated-from-title">
+
+          <label class="requests-field-label" for="admin-blog-author">Author</label>
+          <input type="text" id="admin-blog-author" class="requests-input" placeholder="Author name">
+
+          <label class="requests-field-label" for="admin-blog-date">Date</label>
+          <input type="date" id="admin-blog-date" class="requests-input">
+
+          <label class="requests-field-label" for="admin-blog-tags">Tags (comma-separated)</label>
+          <input type="text" id="admin-blog-tags" class="requests-input" placeholder="Study Tips, Calculus">
+
+          <label class="requests-field-label" for="admin-blog-excerpt">Excerpt</label>
+          <textarea id="admin-blog-excerpt" class="requests-textarea" placeholder="One or two sentences shown on the blog index"></textarea>
+
+          <label class="requests-field-label">Content — Markdown, with a live preview</label>
+          <div class="admin-blog-split">
+            <textarea id="admin-blog-content" class="requests-textarea admin-blog-md-input" placeholder="# Write in Markdown...&#10;&#10;Supports **bold**, _italics_, [links](https://example.com), lists, and more."></textarea>
+            <div id="admin-blog-preview" class="blog-article-body admin-blog-preview"></div>
+          </div>
+
+          <div class="admin-blog-editor-actions">
+            <button type="button" class="teacher-add-btn" id="admin-blog-save-btn">Publish</button>
+            <button type="button" class="teacher-add-btn admin-bulk-decline-btn" id="admin-blog-cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="admin-announcements-section" hidden>
+      <p class="requests-greeting">Posted here goes to every teacher's dashboard — for class-scoped announcements, teachers post those themselves from teacher.html.</p>
+      <div class="teacher-add-form">
+        <p class="teacher-add-form-title">New announcement to teachers</p>
+        <input type="text" class="teacher-add-input" id="admin-announce-title" placeholder="Title (e.g. Fall session schedule)">
+        <textarea class="teacher-add-textarea" id="admin-announce-message" placeholder="Message"></textarea>
+        <button type="button" class="teacher-add-btn" id="admin-announce-submit">Post</button>
+      </div>
+      <div class="requests-log-list" id="admin-announcements-list"></div>
+    </section>
+
+    <section id="admin-classes-section" hidden>
+      <div class="requests-form-card">
+        <h3 class="requests-form-title">Create a class</h3>
+
+        <label class="requests-field-label" for="admin-class-name">Class name</label>
+        <input type="text" id="admin-class-name" class="requests-input" placeholder="e.g. AP Calculus B">
+
+        <label class="requests-field-label" for="admin-class-subject">Subject</label>
+        <select id="admin-class-subject" class="requests-select"></select>
+
+        <label class="requests-field-label">Teachers</label>
+        <div class="teacher-notif-recipients" id="admin-class-teachers"></div>
+
+        <label class="requests-field-label">Candidate students — each one needs your approval below before they're actually enrolled</label>
+        <div class="teacher-notif-recipients" id="admin-class-students"></div>
+
+        <button type="button" class="teacher-add-btn requests-submit-btn" id="admin-class-create-btn">Create class</button>
+      </div>
+
+      <div class="admin-classes-block">
+        <h3 class="requests-log-heading">Pending registrations</h3>
+        <div class="requests-log-list" id="admin-class-pending-list"></div>
+      </div>
+
+      <div class="admin-classes-block">
+        <h3 class="requests-log-heading">Existing classes</h3>
+        <div class="requests-log-list" id="admin-class-existing-list"></div>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -50,6 +177,39 @@
 
     document.getElementById('admin-category-filter').addEventListener('change', function () {
       renderAdminRequestsDashboard(this.value);
+    });
+
+    var signupsLoaded = false;
+    var blogLoaded = false;
+    var announcementsLoaded = false;
+    var classesLoaded = false;
+    document.querySelectorAll('.admin-tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.admin-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var tab = btn.getAttribute('data-admin-tab');
+        document.getElementById('admin-requests-section').hidden = tab !== 'requests';
+        document.getElementById('admin-signups-section').hidden = tab !== 'signups';
+        document.getElementById('admin-blog-section').hidden = tab !== 'blog';
+        document.getElementById('admin-announcements-section').hidden = tab !== 'announcements';
+        document.getElementById('admin-classes-section').hidden = tab !== 'classes';
+        if (tab === 'signups' && !signupsLoaded) {
+          signupsLoaded = true;
+          setUpAdminSignupsDashboard_(admin);
+        }
+        if (tab === 'blog' && !blogLoaded) {
+          blogLoaded = true;
+          setUpAdminBlogDashboard_(admin);
+        }
+        if (tab === 'announcements' && !announcementsLoaded) {
+          announcementsLoaded = true;
+          setUpAdminAnnouncementsDashboard_(admin);
+        }
+        if (tab === 'classes' && !classesLoaded) {
+          classesLoaded = true;
+          setUpAdminClassesDashboard_(admin);
+        }
+      });
     });
   }
 

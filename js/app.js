@@ -48,7 +48,7 @@ const ROADMAP_DEFAULT_VIEWS = {
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html", "admin.html"];
+const REDIRECTABLE_PAGES = ["index.html", "portal.html", "catalog.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html", "admin.html"];
 
 // SHA-256 hex digest via the browser's built-in Web Crypto. Used by
 // signup.html to hash a password before it ever leaves the browser
@@ -221,7 +221,8 @@ function setUpSignupForm_() {
           username: username,
           name: name,
           email: email,
-          passwordHash: passwordHash
+          passwordHash: passwordHash,
+          adminEmails: adminEmails_()
         }, buttonEl, function () {
           form.hidden = true;
           successEl.hidden = false;
@@ -318,6 +319,7 @@ function requireLogin() {
   }
   setUpCourseNavigation(student);
   setUpWhatsNew(student);
+  setUpStudentAnnouncements_(student);
 }
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
@@ -958,6 +960,61 @@ function renderSubmissionLog(student, course) {
     });
 }
 
+// ---- Submission form (submit.html) ----
+// Backs the in-site "Submit your work" form — a typed-answer
+// alternative to the external Google Form link, posting straight to
+// TEACHER_DATA_WRITE_URL's submitWork action (see
+// automation/zenith-data-writer.gs). Chapter (Chapter 1-12, M1-M16) and
+// unit (B/C/S/R/T/N/L) are both fixed option lists hardcoded directly
+// into submit.html's markup — not derived from course.roadmap, since a
+// Mock roadmap item's own "chapter" field is just the literal string
+// "Chapter M" for every mock (M1 through M16 alike; see js/data.js),
+// so there's no per-course roadmap data this dropdown could actually
+// be built from. Photo attachments still aren't collected here — use
+// the external Google Form for a submission that needs one.
+
+// Reads submit.html's form fields, validates, and posts via
+// postTeacherAction_. Clears the answer/remarks fields and refreshes
+// the submission log on success. email/name/courseName/teacherEmails
+// ride along in the payload so zenith-data-writer.gs can send the
+// "we got it" confirmation and the teacher "new submission" notice
+// without re-fetching js/data.js itself — see that file's NOTIFICATIONS
+// note.
+function submitWorkForm_(student, course, buttonEl) {
+  const chapterEl = document.getElementById("submit-chapter");
+  const unitEl = document.getElementById("submit-unit");
+  const answerEl = document.getElementById("submit-answer");
+  const remarksEl = document.getElementById("submit-remarks");
+
+  const chapter = chapterEl.value;
+  const answer = answerEl.value.trim();
+  if (!chapter) {
+    alert("There's no chapter to submit against yet.");
+    return;
+  }
+  if (!answer) {
+    alert("Please enter your answer before submitting.");
+    return;
+  }
+
+  postTeacherAction_("submitWork", {
+    username: student.username,
+    name: student.name,
+    email: student.email,
+    courseId: course.id,
+    courseName: course.name,
+    chapter: chapter,
+    unit: unitEl.value,
+    answer: answer,
+    remarks: remarksEl.value.trim(),
+    teacherEmails: teachersForStudentCourse_(student, course.id).map(function (t) { return t.email; })
+  }, buttonEl, function () {
+    answerEl.value = "";
+    remarksEl.value = "";
+    renderSubmissionLog(student, course);
+  });
+}
+
 // ---- Requests (requests.html) ----
 // A lightweight feature/resource/bug/concern submission form open to
 // any logged-in role (student/teacher/parent — see requireAnyLogin()/
@@ -1084,6 +1141,19 @@ function submitRequestForm_(person, buttonEl) {
     }
   }
 
+  // Ask My Teacher routes to the assigned teacher(s) instead of admins
+  // (courseId is only ever set for that category, above — see the
+  // getCurrentStudent() call, safe since Ask My Teacher only ever shows
+  // for a logged-in student); every other category goes to admins, who
+  // triage from admin.html's Requests tab. Both lists are resolved
+  // client-side from TEACHERS/CLASSES/ADMINS (already loaded via
+  // js/data.js) — see the NOTIFICATIONS note in
+  // automation/zenith-data-writer.gs for why that Apps Script trusts
+  // them rather than re-deriving the same addresses itself.
+  const teacherEmails = courseId
+    ? teachersForStudentCourse_(getCurrentStudent(), courseId).map(function (t) { return t.email; })
+    : [];
+
   postTeacherAction_("submitRequest", {
     username: username,
     name: name,
@@ -1093,7 +1163,9 @@ function submitRequestForm_(person, buttonEl) {
     courseId: courseId,
     courseName: courseName,
     title: title,
-    details: details
+    details: details,
+    teacherEmails: teacherEmails,
+    adminEmails: adminEmails_()
   }, buttonEl, function () {
     titleEl.value = "";
     detailsEl.value = "";
@@ -1250,7 +1322,10 @@ function signupApproveOp_(entry, admin) {
 }
 
 function signupDeclineOp_(entry, admin) {
-  return { action: "declineSignup", payload: { id: entry.id, decidedBy: admin.username } };
+  return { action: "declineSignup", payload: {
+    id: entry.id, decidedBy: admin.username,
+    username: entry.username, name: entry.name, email: entry.email, role: entry.role
+  } };
 }
 
 function wireAdminSignupRowActions_(admin, statusFilter, roleFilter) {
@@ -1378,6 +1453,513 @@ function setUpAdminSignupsDashboard_(admin) {
   roleSelect.addEventListener("change", refresh);
 }
 
+// ---- Admin dashboard: Classes tab (admin.html) ----
+// Backs catalog.html's write path: an admin creates a class (name,
+// subject, teachers, a candidate/"pending" student roster), then
+// separately approves or declines each pending student — approving is
+// what actually enrolls them (see createClass/approveClassRegistration/
+// declineClassRegistration/enrollStudentInCourse in
+// zenith-data-writer.gs for the full server-side shape and why
+// approving sends a 2-op applyBatch, same pairing idea as
+// signupAccountCreateOp_/signupApproveOp_ above).
+//
+// CLASSES lives in js/data.js, not a separately fetchable JSON file
+// like signups/blog posts do, so there's no live re-fetch after a
+// write the way renderAdminSignupsDashboard_ has — every success
+// handler below instead mutates the in-memory CLASSES/STUDENTS arrays
+// to match what the server just committed, then re-renders from that.
+// The real change lands on GitHub; this session's own view of it is
+// just kept in sync locally (same limitation already accepted for
+// every other STUDENTS/TEACHERS write in this file).
+
+// Turns a class name into an id: same generic slugify createClass's
+// slug-shaped id needs, reusing blogSlugify_ since its behavior isn't
+// actually blog-specific (lowercase, non-alnum runs -> one hyphen,
+// trimmed). De-duplicated against the in-memory CLASSES ids by
+// appending -2, -3, ... since createClass throws on a repeat id.
+function adminClassIdFromName_(name) {
+  const base = blogSlugify_(name) || "class";
+  let id = base;
+  let n = 2;
+  while (CLASSES.some(function (c) { return c.id === id; })) {
+    id = base + "-" + n;
+    n++;
+  }
+  return id;
+}
+
+// Every (class, pending username) pair across all of CLASSES, each
+// resolved to the student's display name — the flat list the "Pending
+// registrations" block renders one row per entry from.
+function adminPendingClassRegistrations_() {
+  const rows = [];
+  CLASSES.forEach(function (cls) {
+    (cls.pendingStudentUsernames || []).forEach(function (username) {
+      const student = STUDENTS.find(function (s) { return s.username === username; });
+      rows.push({ cls: cls, username: username, studentName: student ? student.name : username });
+    });
+  });
+  return rows;
+}
+
+function adminPendingClassRowHtml_(row) {
+  const course = courseDisplayInfo_(row.cls.courseId);
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + escapeHtml_(course.name) + '</span>' +
+    '</div>' +
+    '<p class="requests-log-submitter">' + escapeHtml_(row.studentName) + '</p>' +
+    '<p class="requests-log-title">' + escapeHtml_(row.cls.name) + '</p>' +
+    '<div class="admin-signup-actions">' +
+      '<button type="button" class="teacher-add-btn" data-approve-class="' + escapeHtml_(row.cls.id) + '" data-approve-username="' + escapeHtml_(row.username) + '">Approve</button>' +
+      '<button type="button" class="teacher-add-btn admin-bulk-decline-btn" data-decline-class="' + escapeHtml_(row.cls.id) + '" data-decline-username="' + escapeHtml_(row.username) + '">Decline</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function adminExistingClassCardHtml_(cls) {
+  const course = courseDisplayInfo_(cls.courseId);
+  const teacherNames = cls.teacherUsernames.map(function (username) {
+    const teacher = TEACHERS.find(function (t) { return t.username === username; });
+    return teacher ? teacher.name : username;
+  }).join(", ") || "none";
+  const pendingCount = (cls.pendingStudentUsernames || []).length;
+  return '<div class="requests-log-item">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + escapeHtml_(course.name) + '</span>' +
+    '</div>' +
+    '<p class="requests-log-title">' + escapeHtml_(cls.name) + '</p>' +
+    '<p class="requests-log-details">Teachers: ' + escapeHtml_(teacherNames) + '<br>' +
+      'Confirmed roster: ' + cls.studentUsernames.length +
+      (pendingCount ? ' · ' + pendingCount + ' pending approval' : '') +
+    '</p>' +
+  '</div>';
+}
+
+// Renders both lists from the current in-memory CLASSES/STUDENTS and
+// wires every row's Approve/Decline button — called on first load of
+// the Classes tab, and again after every create/approve/decline so
+// both lists stay in sync with the optimistic local state.
+function renderAdminClassesLists_(admin) {
+  const pendingList = document.getElementById("admin-class-pending-list");
+  const existingList = document.getElementById("admin-class-existing-list");
+  if (!pendingList || !existingList) return;
+
+  const pendingRows = adminPendingClassRegistrations_();
+  pendingList.innerHTML = pendingRows.length
+    ? pendingRows.map(adminPendingClassRowHtml_).join("")
+    : '<p class="requests-log-empty">No pending registrations.</p>';
+
+  existingList.innerHTML = CLASSES.length
+    ? CLASSES.map(adminExistingClassCardHtml_).join("")
+    : '<p class="requests-log-empty">No classes yet — create one above.</p>';
+
+  pendingList.querySelectorAll("[data-approve-class]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const classId = btn.getAttribute("data-approve-class");
+      const username = btn.getAttribute("data-approve-username");
+      const cls = CLASSES.find(function (c) { return c.id === classId; });
+      if (!cls) return;
+      const operations = [
+        { action: "enrollStudentInCourse", payload: { username: username, courseId: cls.courseId } },
+        { action: "approveClassRegistration", payload: { classId: classId, username: username } }
+      ];
+      postTeacherAction_("applyBatch", { operations: operations }, btn, function () {
+        const idx = (cls.pendingStudentUsernames || []).indexOf(username);
+        if (idx !== -1) cls.pendingStudentUsernames.splice(idx, 1);
+        if (cls.studentUsernames.indexOf(username) === -1) cls.studentUsernames.push(username);
+        renderAdminClassesLists_(admin);
+      });
+    });
+  });
+
+  pendingList.querySelectorAll("[data-decline-class]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const classId = btn.getAttribute("data-decline-class");
+      const username = btn.getAttribute("data-decline-username");
+      const cls = CLASSES.find(function (c) { return c.id === classId; });
+      if (!cls) return;
+      postTeacherAction_("declineClassRegistration", { classId: classId, username: username }, btn, function () {
+        const idx = (cls.pendingStudentUsernames || []).indexOf(username);
+        if (idx !== -1) cls.pendingStudentUsernames.splice(idx, 1);
+        renderAdminClassesLists_(admin);
+      });
+    });
+  });
+}
+
+// Called once, the first time admin.html's "Classes" tab is opened —
+// fills in the Subject <select> and the teacher/student checklists
+// (same .teacher-notif-recipient-row markup/CSS the "Schedule a
+// notification" recipient checklist already uses, reused here as a
+// plain picker rather than a filtered/searchable one, since both
+// TEACHERS and STUDENTS are short lists), wires the "Create class"
+// button, and does the first render of both lists below the form.
+function setUpAdminClassesDashboard_(admin) {
+  const subjectSelect = document.getElementById("admin-class-subject");
+  const teachersWrap = document.getElementById("admin-class-teachers");
+  const studentsWrap = document.getElementById("admin-class-students");
+  const createBtn = document.getElementById("admin-class-create-btn");
+  if (!subjectSelect || !teachersWrap || !studentsWrap || !createBtn) return;
+
+  const subjects = allKnownCourses_();
+  subjectSelect.innerHTML = subjects.length
+    ? subjects.map(function (c) { return '<option value="' + escapeHtml_(c.id) + '">' + escapeHtml_(c.name) + '</option>'; }).join("")
+    : '<option value="">No subjects available yet</option>';
+
+  teachersWrap.innerHTML = TEACHERS.map(function (t) {
+    return '<label class="teacher-notif-recipient-row">' +
+      '<input type="checkbox" class="admin-class-teacher-checkbox" value="' + escapeHtml_(t.username) + '">' +
+      '<span class="teacher-notif-recipient-name">' + escapeHtml_(t.name) + '</span>' +
+    '</label>';
+  }).join("");
+
+  studentsWrap.innerHTML = STUDENTS.map(function (s) {
+    return '<label class="teacher-notif-recipient-row">' +
+      '<input type="checkbox" class="admin-class-student-checkbox" value="' + escapeHtml_(s.username) + '">' +
+      '<span class="teacher-notif-recipient-name">' + escapeHtml_(s.name) + '</span>' +
+    '</label>';
+  }).join("");
+
+  createBtn.addEventListener("click", function () {
+    const nameInput = document.getElementById("admin-class-name");
+    const name = nameInput.value.trim();
+    const courseId = subjectSelect.value;
+    const teacherUsernames = Array.from(teachersWrap.querySelectorAll(".admin-class-teacher-checkbox:checked")).map(function (cb) { return cb.value; });
+    const pendingStudentUsernames = Array.from(studentsWrap.querySelectorAll(".admin-class-student-checkbox:checked")).map(function (cb) { return cb.value; });
+
+    if (!name || !courseId || teacherUsernames.length === 0) {
+      alert("Please give the class a name, pick a subject, and choose at least one teacher.");
+      return;
+    }
+
+    const payload = {
+      id: adminClassIdFromName_(name),
+      name: name,
+      courseId: courseId,
+      teacherUsernames: teacherUsernames,
+      pendingStudentUsernames: pendingStudentUsernames
+    };
+
+    postTeacherAction_("createClass", payload, createBtn, function () {
+      CLASSES.push({
+        id: payload.id,
+        name: payload.name,
+        courseId: payload.courseId,
+        teacherUsernames: payload.teacherUsernames,
+        studentUsernames: [],
+        pendingStudentUsernames: payload.pendingStudentUsernames
+      });
+      nameInput.value = "";
+      teachersWrap.querySelectorAll(".admin-class-teacher-checkbox").forEach(function (cb) { cb.checked = false; });
+      studentsWrap.querySelectorAll(".admin-class-student-checkbox").forEach(function (cb) { cb.checked = false; });
+      renderAdminClassesLists_(admin);
+    });
+  });
+
+  renderAdminClassesLists_(admin);
+}
+
+// ---- Admin dashboard: Blog tab (admin.html) ----
+// A markdown-authoring CMS layered on top of data/blog-posts.json —
+// unlike Requests/Sign-ups (triage over something someone else
+// submitted), every post here is admin-authored, so there's no
+// approve/decline step: publish writes immediately, same trust level
+// as every other admin.html write control. See the publishBlogPost/
+// updateBlogPost/deleteBlogPost note in automation/zenith-data-writer.gs
+// for the full write-path design (slug immutability, why markdown is
+// stored raw rather than pre-rendered, etc).
+
+// Lowercases, replaces runs of non a-z0-9 with a single hyphen, and
+// trims leading/trailing hyphens — used to auto-suggest a slug from
+// the title as the admin types (see the title-input listener wired in
+// admin.html), never to overwrite one the admin already edited by hand.
+function blogSlugify_(title) {
+  return String(title || "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+// Renders markdown to HTML via marked.js (loaded over CDN on
+// admin.html and blog-post.html only, never fetched or bundled here —
+// see those files' <script> tags). Falls back to an escaped <pre>
+// block if the CDN request ever fails, so a missing library reads as
+// "raw text, ugly but safe" instead of a blank pane or a thrown error.
+function renderMarkdown_(md) {
+  if (typeof marked === "undefined") {
+    return "<pre>" + escapeHtml_(md) + "</pre>";
+  }
+  return marked.parse(md || "");
+}
+
+// Cache of the fetched post list so editing/deleting a card doesn't
+// need a second fetch just to find the entry the click came from —
+// same "cache what you just rendered" idea as teacherSubmissionsCache
+// below and adminSignupsCache_ above.
+let adminBlogCache_ = [];
+// null while creating a new post; the post's own slug while editing
+// an existing one (immutable across the edit — see updateBlogPost's
+// handler in zenith-data-writer.gs, which looks the entry up by this
+// same slug and never lets it change).
+let adminBlogEditingSlug_ = null;
+// Whether the admin has typed into the slug field themselves during
+// this new-post session — once true, the title-input listener stops
+// auto-suggesting a slug so it never clobbers a deliberate edit.
+let adminBlogSlugTouched_ = false;
+
+function adminBlogCardHtml_(post) {
+  const meta = escapeHtml_(post.date || "") + (post.author ? " · " + escapeHtml_(post.author) : "");
+  const tagsHtml = (post.tags && post.tags.length)
+    ? '<div class="blog-preview-tags">' + post.tags.map(function (t) { return '<span class="blog-tag">' + escapeHtml_(t) + '</span>'; }).join("") + '</div>'
+    : "";
+  return '<div class="requests-log-item admin-blog-card">' +
+    '<div class="requests-log-meta">' +
+      '<span class="requests-log-category">' + meta + '</span>' +
+    '</div>' +
+    '<p class="requests-log-title">' + escapeHtml_(post.title) + '</p>' +
+    '<p class="requests-log-details">' + escapeHtml_(post.excerpt || "") + '</p>' +
+    tagsHtml +
+    '<div class="admin-blog-card-actions">' +
+      '<button type="button" class="teacher-add-btn admin-blog-edit-btn" data-slug="' + escapeHtml_(post.slug) + '">Edit</button>' +
+      '<button type="button" class="teacher-add-btn admin-bulk-decline-btn admin-blog-delete-btn" data-slug="' + escapeHtml_(post.slug) + '">Delete</button>' +
+    '</div>' +
+  '</div>';
+}
+
+// Fetches the live post list, renders the card grid, and (re)wires
+// each card's Edit/Delete buttons — called on first load of the Blog
+// tab and again after every publish/update/delete so the list always
+// reflects what's actually in data/blog-posts.json.
+function renderAdminBlogDashboard_(admin) {
+  const list = document.getElementById("admin-blog-list");
+  if (!list) return;
+
+  list.innerHTML = '<p class="requests-log-empty">Loading posts...</p>';
+
+  fetch("data/blog-posts.json")
+    .then(function (res) { return res.json(); })
+    .then(function (posts) {
+      adminBlogCache_ = posts;
+      const countEl = document.getElementById("admin-blog-count");
+      if (countEl) countEl.textContent = String(posts.length);
+
+      if (posts.length === 0) {
+        list.innerHTML = '<p class="requests-log-empty">No posts yet — click "New post" to write one.</p>';
+        return;
+      }
+
+      list.innerHTML = posts.map(adminBlogCardHtml_).join("");
+
+      list.querySelectorAll(".admin-blog-edit-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const post = adminBlogCache_.find(function (p) { return p.slug === btn.getAttribute("data-slug"); });
+          if (post) openAdminBlogEditor_(admin, post);
+        });
+      });
+      list.querySelectorAll(".admin-blog-delete-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (!confirm('Delete "' + btn.closest(".admin-blog-card").querySelector(".requests-log-title").textContent + '"? This can\'t be undone.')) return;
+          postTeacherAction_("deleteBlogPost", { slug: btn.getAttribute("data-slug") }, btn, function () {
+            renderAdminBlogDashboard_(admin);
+          });
+        });
+      });
+    })
+    .catch(function () {
+      list.innerHTML = '<p class="requests-log-empty">Could not load posts right now.</p>';
+    });
+}
+
+// Re-renders #admin-blog-preview from the current content textarea via
+// renderMarkdown_ — the exact same call blog-post.html makes at read
+// time, so what the admin sees while writing is what visitors will
+// actually get, not an approximation.
+function updateAdminBlogPreview_() {
+  const preview = document.getElementById("admin-blog-preview");
+  const contentEl = document.getElementById("admin-blog-content");
+  if (!preview || !contentEl) return;
+  const md = contentEl.value;
+  preview.innerHTML = md.trim() ? renderMarkdown_(md) : '<p class="blog-empty">Nothing to preview yet.</p>';
+}
+
+// Opens the editor pre-filled for a new post (post == null) or for
+// editing an existing one. The slug field is locked while editing
+// (see adminBlogEditingSlug_'s comment above) — visible but disabled,
+// so the admin can still see which post they're editing without being
+// able to change the URL out from under an already-shared link.
+function openAdminBlogEditor_(admin, post) {
+  adminBlogEditingSlug_ = post ? post.slug : null;
+  adminBlogSlugTouched_ = false;
+
+  document.getElementById("admin-blog-editor-title").textContent = post ? "Edit post" : "New post";
+  document.getElementById("admin-blog-title").value = post ? post.title : "";
+  const slugEl = document.getElementById("admin-blog-slug");
+  slugEl.value = post ? post.slug : "";
+  slugEl.disabled = !!post;
+  document.getElementById("admin-blog-author").value = post ? post.author : admin.name;
+  document.getElementById("admin-blog-date").value =
+    post && post.publishedAt ? post.publishedAt.slice(0, 10) : new Date().toISOString().slice(0, 10);
+  document.getElementById("admin-blog-tags").value = post && post.tags ? post.tags.join(", ") : "";
+  document.getElementById("admin-blog-excerpt").value = post ? post.excerpt || "" : "";
+  document.getElementById("admin-blog-content").value = post ? post.contentMd || "" : "";
+  document.getElementById("admin-blog-save-btn").textContent = post ? "Save changes" : "Publish";
+
+  updateAdminBlogPreview_();
+  const editor = document.getElementById("admin-blog-editor");
+  editor.hidden = false;
+  editor.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeAdminBlogEditor_() {
+  document.getElementById("admin-blog-editor").hidden = true;
+  adminBlogEditingSlug_ = null;
+}
+
+// Reads every editor field, validates, and posts publishBlogPost (new
+// post) or updateBlogPost (adminBlogEditingSlug_ set) via
+// postTeacherAction_. A blank slug field on a new post falls back to
+// blogSlugify_(title) so publishing never fails just because the
+// admin deleted the auto-suggested slug without typing a replacement.
+function saveAdminBlogPost_(admin, buttonEl) {
+  const title = document.getElementById("admin-blog-title").value.trim();
+  const author = document.getElementById("admin-blog-author").value.trim();
+  const dateValue = document.getElementById("admin-blog-date").value;
+  const tagsRaw = document.getElementById("admin-blog-tags").value;
+  const excerpt = document.getElementById("admin-blog-excerpt").value.trim();
+  const contentMd = document.getElementById("admin-blog-content").value;
+
+  if (!title || !author || !contentMd.trim()) {
+    alert("Please fill in a title, author, and some content before publishing.");
+    return;
+  }
+
+  const slug = adminBlogEditingSlug_ || document.getElementById("admin-blog-slug").value.trim() || blogSlugify_(title);
+  if (!slug) {
+    alert("Please provide a slug for this post's URL.");
+    return;
+  }
+
+  const d = dateValue ? new Date(dateValue + "T00:00:00") : new Date();
+  const tags = tagsRaw.split(",").map(function (t) { return t.trim(); }).filter(Boolean);
+
+  const payload = {
+    slug: slug,
+    title: title,
+    author: author,
+    date: d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" }),
+    publishedAt: d.toISOString(),
+    tags: tags,
+    excerpt: excerpt,
+    contentMd: contentMd,
+    publishedBy: admin.username
+  };
+
+  const action = adminBlogEditingSlug_ ? "updateBlogPost" : "publishBlogPost";
+  postTeacherAction_(action, payload, buttonEl, function () {
+    closeAdminBlogEditor_();
+    renderAdminBlogDashboard_(admin);
+  });
+}
+
+// Wires the Blog tab's static controls (New post/Cancel/Save, the
+// title->slug auto-suggest, and the live markdown preview) — called
+// once, the first time the tab is opened (see admin.html's inline
+// script), same lazy-setup pattern signupsLoaded already uses for the
+// Sign-ups tab.
+function setUpAdminBlogDashboard_(admin) {
+  const newBtn = document.getElementById("admin-blog-new-btn");
+  const cancelBtn = document.getElementById("admin-blog-cancel-btn");
+  const saveBtn = document.getElementById("admin-blog-save-btn");
+  const titleEl = document.getElementById("admin-blog-title");
+  const slugEl = document.getElementById("admin-blog-slug");
+  const contentEl = document.getElementById("admin-blog-content");
+  if (!newBtn || !cancelBtn || !saveBtn || !titleEl || !slugEl || !contentEl) return;
+
+  renderAdminBlogDashboard_(admin);
+
+  newBtn.addEventListener("click", function () { openAdminBlogEditor_(admin, null); });
+  cancelBtn.addEventListener("click", closeAdminBlogEditor_);
+  saveBtn.addEventListener("click", function () { saveAdminBlogPost_(admin, saveBtn); });
+  contentEl.addEventListener("input", updateAdminBlogPreview_);
+  slugEl.addEventListener("input", function () { adminBlogSlugTouched_ = true; });
+  titleEl.addEventListener("input", function () {
+    if (adminBlogEditingSlug_ || adminBlogSlugTouched_) return;
+    slugEl.value = blogSlugify_(titleEl.value);
+  });
+}
+
+// ---- Admin announcements (admin.html "Announcements" tab) ----
+// Same postAnnouncement/deleteAnnouncement actions as teacher.html's
+// "Announce to your class", just fixed to audience:"teachers" (no
+// class picker) — visible on every teacher's dashboard. See
+// ACTIONS.postAnnouncement in automation/zenith-data-writer.gs for why
+// classId/className/courseId must be absent for this audience.
+
+function renderAdminAnnouncementsList_(admin) {
+  const list = document.getElementById("admin-announcements-list");
+  if (!list) return;
+
+  fetch(ANNOUNCEMENTS_URL)
+    .then(function (res) { return res.ok ? res.json() : []; })
+    .catch(function () { return []; })
+    .then(function (all) {
+      const mine = all.filter(function (a) {
+        return a.createdBy === admin.username && a.status === "Active";
+      }).sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+
+      list.innerHTML = mine.length > 0
+        ? mine.map(function (a) {
+            return announcementItemHtml_(a, '<button type="button" class="teacher-add-btn admin-bulk-decline-btn announce-delete-btn" data-delete-announcement="' + a.id + '">Delete</button>');
+          }).join("")
+        : '<p class="requests-log-empty">Nothing posted yet.</p>';
+
+      list.querySelectorAll("[data-delete-announcement]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          deleteAnnouncement_(admin.username, btn.getAttribute("data-delete-announcement"), btn, function () {
+            renderAdminAnnouncementsList_(admin);
+          });
+        });
+      });
+    });
+}
+
+function postAdminAnnouncementForm_(admin, buttonEl) {
+  const titleEl = document.getElementById("admin-announce-title");
+  const messageEl = document.getElementById("admin-announce-message");
+  const title = titleEl.value.trim();
+  const message = messageEl.value.trim();
+
+  if (!title || !message) {
+    alert("Please fill in both title and message.");
+    return;
+  }
+
+  postTeacherAction_("postAnnouncement", {
+    username: admin.username,
+    name: admin.name,
+    createdByRole: "admin",
+    audience: "teachers",
+    title: title,
+    message: message
+  }, buttonEl, function () {
+    titleEl.value = "";
+    messageEl.value = "";
+    renderAdminAnnouncementsList_(admin);
+  });
+}
+
+// Wires the Announcements tab's static controls — called once, the
+// first time the tab is opened (see admin.html's inline script), same
+// lazy-setup pattern the Sign-ups/Blog tabs already use.
+function setUpAdminAnnouncementsDashboard_(admin) {
+  renderAdminAnnouncementsList_(admin);
+  const submitBtn = document.getElementById("admin-announce-submit");
+  if (submitBtn) {
+    submitBtn.addEventListener("click", function () { postAdminAnnouncementForm_(admin, this); });
+  }
+}
+
 // ---- Teacher dashboard (teacher.html) ----
 // A triage view over the same data the student/parent pages already
 // read — data/submissions-log.json and each student's course records
@@ -1448,6 +2030,160 @@ function teacherCanSeeCourse_(teacher, student, courseId) {
   });
 }
 
+// The inverse of teacherCanSeeCourse_ — every teacher assigned (via
+// CLASSES) to this specific student, in this specific course, deduped
+// by username and filtered to those with an email on file. Backs the
+// client-resolved recipient lists submit.html (new submission) and
+// requests.html (Ask My Teacher) send along with their write actions —
+// see the NOTIFICATIONS note in automation/zenith-data-writer.gs for
+// why that Apps Script trusts a client-resolved list here rather than
+// re-deriving it server-side.
+function teachersForStudentCourse_(student, courseId) {
+  if (!student || !courseId) return [];
+  const usernames = {};
+  CLASSES.forEach(function (c) {
+    if (c.courseId !== courseId) return;
+    if (c.studentUsernames.indexOf(student.username) === -1) return;
+    (c.teacherUsernames || []).forEach(function (u) { usernames[u] = true; });
+  });
+  return TEACHERS.filter(function (t) { return usernames[t.username] && !!t.email; });
+}
+
+// Every admin's email — same client-resolved-recipient-list reasoning
+// as teachersForStudentCourse_ above, just for ADMINS instead of a
+// per-course teacher lookup.
+function adminEmails_() {
+  return ADMINS.map(function (a) { return a.email; }).filter(Boolean);
+}
+
+// Every class (js/data.js CLASSES) this student is enrolled in — the
+// inverse of teacherClasses_ above, used to scope which
+// audience:"class" announcements (data/announcements.json) this
+// student is allowed to see.
+function classesForStudent_(student) {
+  if (!student) return [];
+  return CLASSES.filter(function (c) { return c.studentUsernames.indexOf(student.username) !== -1; });
+}
+
+// ---- Announcements (data/announcements.json) ----
+// Teachers post audience:"class" announcements to one of their own
+// classes from teacher.html; admins post audience:"teachers"
+// announcements visible to every teacher from admin.html's
+// Announcements tab. In-app only — no email, unlike
+// scheduleNotification (see ACTIONS.postAnnouncement in
+// automation/zenith-data-writer.gs). The student-facing badge
+// (setUpStudentAnnouncements_ below, called from requireLogin) and the
+// teacher-facing badge/feed (initTeacherAnnouncements_, called from
+// renderTeacherDashboard) share the badge/dropdown widget and item
+// markup here — only the filtered `items` list passed in differs.
+
+const ANNOUNCEMENTS_URL = "data/announcements.json";
+const ZENITH_ANNOUNCEMENTS_LAST_SEEN_PREFIX = "zenithAnnouncementsLastSeen:";
+
+function announcementDateLabel_(createdAt) {
+  const d = new Date(createdAt);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+// One row — title, a tag (the class name, or "From Admin" for an
+// audience:"teachers" entry), the date, and the message body. Shared
+// by the badge dropdown and the full list views on teacher.html/
+// admin.html; `extraHtml` (e.g. a Delete button) is appended as-is for
+// an author's own list.
+function announcementItemHtml_(entry, extraHtml) {
+  const tag = entry.audience === "class" ? entry.className : "From Admin";
+  return '<div class="announce-badge-item">' +
+    '<p class="announce-badge-item-title">' + escapeHtml_(entry.title) + '</p>' +
+    '<p class="announce-badge-item-meta">' + escapeHtml_(tag) + ' · ' + announcementDateLabel_(entry.createdAt) + '</p>' +
+    '<p class="announce-badge-item-body">' + escapeHtml_(entry.message) + '</p>' +
+    (extraHtml || "") +
+  '</div>';
+}
+
+// Builds (once) and refreshes an "Announcements" button + dropdown in
+// the header's action row — same shell/localStorage-diff pattern as
+// setUpWhatsNew below, generalized to take a pre-filtered/sorted
+// `items` list and a per-person `storageKey` rather than being
+// student-only, since teacher.html needs the same widget for
+// admin-authored announcements.
+function setUpAnnouncementsBadge_(storageKey, items) {
+  const actions = document.querySelector(".portal-actions");
+  if (!actions) return;
+
+  let wrap = document.getElementById("announce-badge-wrap");
+  if (!wrap) {
+    wrap = document.createElement("div");
+    wrap.className = "announce-badge-wrap";
+    wrap.id = "announce-badge-wrap";
+    wrap.innerHTML =
+      '<button type="button" class="announce-badge-btn" id="announce-badge-btn">Announcements<span class="announce-badge-count" id="announce-badge-count" hidden></span></button>' +
+      '<div class="announce-badge-menu" id="announce-badge-menu" hidden></div>';
+    actions.insertBefore(wrap, actions.firstChild);
+  }
+
+  const btn = document.getElementById("announce-badge-btn");
+  const badge = document.getElementById("announce-badge-count");
+  const menu = document.getElementById("announce-badge-menu");
+
+  // A missing last-seen timestamp means this is the first time we've
+  // looked on this device — seed "now" silently rather than flagging
+  // every existing announcement as new, same reasoning as
+  // computeWhatsNew's isFirstVisit below.
+  const lastSeen = localStorage.getItem(storageKey);
+  const isFirstVisit = !lastSeen;
+  const unseen = lastSeen ? items.filter(function (a) { return a.createdAt > lastSeen; }) : [];
+
+  badge.hidden = unseen.length === 0;
+  badge.textContent = String(unseen.length);
+
+  menu.innerHTML = items.length > 0
+    ? items.map(function (a) { return announcementItemHtml_(a); }).join("")
+    : '<p class="announce-badge-empty">No announcements yet.</p>';
+
+  btn.onclick = function (e) {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    if (!menu.hidden) {
+      localStorage.setItem(storageKey, new Date().toISOString());
+      badge.hidden = true;
+    }
+  };
+  menu.onclick = function (e) { e.stopPropagation(); };
+  document.addEventListener("click", function () { menu.hidden = true; });
+
+  if (isFirstVisit) {
+    localStorage.setItem(storageKey, new Date().toISOString());
+  }
+}
+
+// Student-facing entry point — audience:"class" announcements scoped
+// to every class this student belongs to. Called from requireLogin()
+// alongside setUpWhatsNew(student). No badge at all for a student in
+// zero classes, rather than an always-empty one.
+function setUpStudentAnnouncements_(student) {
+  if (!student) return;
+  const classIds = classesForStudent_(student).map(function (c) { return c.id; });
+  if (classIds.length === 0) return;
+
+  fetch(ANNOUNCEMENTS_URL)
+    .then(function (res) { return res.ok ? res.json() : []; })
+    .catch(function () { return []; })
+    .then(function (all) {
+      const items = all.filter(function (a) {
+        return a.audience === "class" && a.status === "Active" && classIds.indexOf(a.classId) !== -1;
+      }).sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+
+      setUpAnnouncementsBadge_(ZENITH_ANNOUNCEMENTS_LAST_SEEN_PREFIX + student.username, items);
+    });
+}
+
+// Posts to ACTIONS.deleteAnnouncement — shared by teacher.html's "My
+// announcements" list and admin.html's Announcements tab.
+function deleteAnnouncement_(username, id, buttonEl, onSuccess) {
+  postTeacherAction_("deleteAnnouncement", { id: id, username: username }, buttonEl, onSuccess);
+}
+
 // One entry per distinct course this teacher is assigned to (via
 // CLASSES), in first-seen order — feeds the subject filter dropdowns
 // on teacher.html/teacher-overview.html. CLASSES only stores the
@@ -1496,11 +2232,24 @@ function renderTeacherCourseFilter() {
 // teacher-student.html), then Apply once. Every markSubmissionComplete
 // op targets the same "log" file in zenith-data-writer.gs, so any
 // number of them staged together still collapse into a single commit.
-function markSubmissionComplete_(entry, label) {
+// `student` (the STUDENTS record, nullable) rides along as
+// email/name/courseName so zenith-data-writer.gs can send the "your
+// submission was graded" notice without looking the student back up
+// itself — see that file's NOTIFICATIONS note.
+function markSubmissionComplete_(entry, label, student) {
+  const courseId = submissionCourseId(entry);
+  const course = student ? (student.courses || []).find(function (c) { return c.id === courseId; }) : null;
   queueTeacherChange_(
     "markSubmissionComplete:" + entry.id,
     "markSubmissionComplete",
-    { id: entry.id },
+    {
+      id: entry.id,
+      email: student ? student.email : null,
+      name: student ? student.name : null,
+      chapter: entry.chapter,
+      unit: entry.unit,
+      courseName: course ? course.name : courseId
+    },
     label,
     function () {
       const cached = (teacherSubmissionsCache || []).find(function (e) { return e.id === entry.id; });
@@ -1608,7 +2357,7 @@ function renderTeacherQueue(courseFilter, cached) {
         if (!entry) return;
         const entryStudent = STUDENTS.find(function (s) { return s.username === entry.username; });
         const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
-        markSubmissionComplete_(entry, "Mark complete: " + (entryStudent ? entryStudent.name : entry.username) + " — " + chapterUnit);
+        markSubmissionComplete_(entry, "Mark complete: " + (entryStudent ? entryStudent.name : entry.username) + " — " + chapterUnit, entryStudent);
       });
     });
   };
@@ -1962,6 +2711,116 @@ function renderScheduleNotificationForm_(teacher) {
   }
 }
 
+// ---- Class announcements (teacher.html "Announce to your class") ----
+// A teacher picks one of their own classes (teacherClasses_), writes a
+// title/message, and posts immediately (no future send time, unlike
+// scheduleNotification) — visible right away to every student in that
+// class. Deliberately post + soft-delete only, no edit — see
+// ACTIONS.postAnnouncement/deleteAnnouncement in
+// automation/zenith-data-writer.gs.
+
+function renderAnnounceForm_(teacher) {
+  const classSelect = document.getElementById("teacher-announce-class");
+  if (!classSelect || !teacher) return;
+
+  const classes = teacherClasses_(teacher);
+  const submitBtn = document.getElementById("teacher-announce-submit");
+
+  if (classes.length === 0) {
+    classSelect.innerHTML = '<option value="">No classes assigned yet</option>';
+    classSelect.disabled = true;
+    if (submitBtn) submitBtn.disabled = true;
+    return;
+  }
+
+  classSelect.innerHTML = classes.map(function (c) {
+    return '<option value="' + c.id + '">' + escapeHtml_(c.name) + '</option>';
+  }).join("");
+
+  if (submitBtn) {
+    submitBtn.addEventListener("click", function () { postAnnouncementForm_(teacher, this); });
+  }
+}
+
+function postAnnouncementForm_(teacher, buttonEl) {
+  const classSelect = document.getElementById("teacher-announce-class");
+  const titleEl = document.getElementById("teacher-announce-title");
+  const messageEl = document.getElementById("teacher-announce-message");
+
+  const cls = teacherClasses_(teacher).find(function (c) { return c.id === classSelect.value; });
+  const title = titleEl.value.trim();
+  const message = messageEl.value.trim();
+
+  if (!cls || !title || !message) {
+    alert("Please pick a class and fill in both title and message.");
+    return;
+  }
+
+  postTeacherAction_("postAnnouncement", {
+    username: teacher.username,
+    name: teacher.name,
+    createdByRole: "teacher",
+    audience: "class",
+    classId: cls.id,
+    className: cls.name,
+    courseId: cls.courseId,
+    title: title,
+    message: message
+  }, buttonEl, function () {
+    titleEl.value = "";
+    messageEl.value = "";
+    initTeacherAnnouncements_(teacher);
+  });
+}
+
+// One fetch of ANNOUNCEMENTS_URL drives three things: the header badge
+// (audience:"teachers" entries — i.e. what this teacher sees "from
+// admin"), the read-only "From Admin" list, and this teacher's own
+// "My announcements" list (any audience they authored, each with a
+// Delete button). See setUpAnnouncementsBadge_/announcementItemHtml_
+// above for the shared rendering pieces.
+function initTeacherAnnouncements_(teacher) {
+  if (!teacher) return;
+  const adminList = document.getElementById("teacher-admin-announcements-list");
+  const ownList = document.getElementById("teacher-own-announcements-list");
+
+  fetch(ANNOUNCEMENTS_URL)
+    .then(function (res) { return res.ok ? res.json() : []; })
+    .catch(function () { return []; })
+    .then(function (all) {
+      const byNewest = function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); };
+
+      const fromAdmin = all.filter(function (a) {
+        return a.audience === "teachers" && a.status === "Active";
+      }).sort(byNewest);
+      setUpAnnouncementsBadge_(ZENITH_ANNOUNCEMENTS_LAST_SEEN_PREFIX + teacher.username, fromAdmin);
+
+      if (adminList) {
+        adminList.innerHTML = fromAdmin.length > 0
+          ? fromAdmin.map(function (a) { return announcementItemHtml_(a); }).join("")
+          : '<p class="requests-log-empty">Nothing from admin yet.</p>';
+      }
+
+      if (ownList) {
+        const mine = all.filter(function (a) {
+          return a.createdBy === teacher.username && a.status === "Active";
+        }).sort(byNewest);
+        ownList.innerHTML = mine.length > 0
+          ? mine.map(function (a) {
+              return announcementItemHtml_(a, '<button type="button" class="teacher-add-btn admin-bulk-decline-btn announce-delete-btn" data-delete-announcement="' + a.id + '">Delete</button>');
+            }).join("")
+          : '<p class="requests-log-empty">Nothing posted yet.</p>';
+        ownList.querySelectorAll("[data-delete-announcement]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            deleteAnnouncement_(teacher.username, btn.getAttribute("data-delete-announcement"), btn, function () {
+              initTeacherAnnouncements_(teacher);
+            });
+          });
+        });
+      }
+    });
+}
+
 // ---- Teacher "Needs to review" queue (teacher.html) ----
 // "Ask My Teacher" requests (see REQUEST_CATEGORIES / requests.html)
 // whose courseId this teacher can see (teacherCanSeeCourse_ — same
@@ -2027,7 +2886,20 @@ function renderTeacherRequestsQueue_(teacher) {
           const id = btn.getAttribute("data-update-request");
           const select = list.querySelector('.teacher-request-status-select[data-request-id="' + id + '"]');
           if (!select) return;
-          postTeacherAction_("updateRequestStatus", { id: id, status: select.value }, btn, function () {
+          const entry = mine.find(function (e) { return e.id === id; });
+          // email/name/title/category snapshotted from the request entry
+          // itself (already in memory here) so zenith-data-writer.gs can
+          // email the original submitter about the status change without
+          // looking the entry back up by id — see that file's
+          // NOTIFICATIONS note.
+          postTeacherAction_("updateRequestStatus", {
+            id: id,
+            status: select.value,
+            email: entry ? entry.email : null,
+            name: entry ? entry.name : null,
+            title: entry ? entry.title : null,
+            category: entry ? entry.category : null
+          }, btn, function () {
             renderTeacherRequestsQueue_(teacher);
           });
         });
@@ -2055,6 +2927,8 @@ function renderTeacherDashboard(teacher) {
   renderTeacherRequestsQueue_(teacher);
   renderScheduleNotificationForm_(teacher);
   renderScheduledNotificationsList_(teacher);
+  renderAnnounceForm_(teacher);
+  initTeacherAnnouncements_(teacher);
 }
 
 // ---- Teacher overview (teacher-overview.html) ----
@@ -3013,10 +3887,528 @@ function renderTeacherStudentSubmissionsList_() {
       const id = btn.getAttribute("data-mark-complete");
       const entry = mine.find(function (e) { return e.id === id; });
       if (!entry) return;
+      const entryStudent = STUDENTS.find(function (s) { return s.username === entry.username; });
       const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
-      markSubmissionComplete_(entry, "Mark complete: " + chapterUnit);
+      markSubmissionComplete_(entry, "Mark complete: " + chapterUnit, entryStudent);
     });
   });
+}
+
+// ---- Calendar (calendar.html) ----
+// A single role-aware page: student/teacher/parent/admin all land here
+// and see a month grid of the events they're allowed to see (visibility
+// helpers below), can click any event to see who's part of it, and —
+// teacher/admin only — can create a new event, picking participants via
+// the same class-shortcut + hand-pick checklist UX the scheduled-
+// notification form above already uses, with an optional "also notify
+// participants" sub-form that reuses the scheduleNotification action
+// itself (linked back to the event via payload.eventId).
+
+// Every Active event a student is an explicit participant in.
+function studentCalendarEvents_(student, allEvents) {
+  if (!student) return [];
+  return allEvents.filter(function (e) {
+    return e.status === "Active" && e.participantStudentUsernames.indexOf(student.username) !== -1;
+  });
+}
+
+// Every Active event a teacher can see: they created it, they're a
+// hand-picked teacher participant, OR it's scoped to a class they
+// teach (classIds intersects teacherClasses_(teacher)) — classroom
+// membership itself grants visibility, same as it does for a teacher's
+// normal roster/notification pool above.
+function teacherCalendarEvents_(teacher, allEvents) {
+  if (!teacher) return [];
+  const myClassIds = teacherClasses_(teacher).map(function (c) { return c.id; });
+  return allEvents.filter(function (e) {
+    if (e.status !== "Active") return false;
+    if (e.createdBy === teacher.username) return true;
+    if (e.participantTeacherUsernames.indexOf(teacher.username) !== -1) return true;
+    return (e.classIds || []).some(function (id) { return myClassIds.indexOf(id) !== -1; });
+  });
+}
+
+// Manage (cancel) rights are narrower than visibility — only the
+// creator, same restriction ACTIONS.cancelEvent enforces server-side.
+// The admin override lives at the call site (openCalendarEventDetail_
+// below), since admin isn't a "teacher" record.
+function teacherCanManageCalendarEvent_(teacher, event) {
+  return !!teacher && event.createdBy === teacher.username;
+}
+
+// Derived, not explicit — parent.linkedStudents intersects the event's
+// participantStudentUsernames. There's no participantParentUsernames
+// field (see data/calendar-events.json's shape): a parent is never an
+// invitee, just a viewer of their own student's events, same
+// read-only-derived model parent.html already uses everywhere else.
+function parentCalendarEvents_(parent, allEvents) {
+  if (!parent) return [];
+  const linked = parent.linkedStudents || [];
+  return allEvents.filter(function (e) {
+    return e.status === "Active" && e.participantStudentUsernames.some(function (u) { return linked.indexOf(u) !== -1; });
+  });
+}
+
+// Admin: global, unscoped — every event regardless of status, so a
+// Cancelled event stays visible/auditable to admins (same "everyone,
+// unfiltered" visibility admin already has for requests/signups).
+function adminCalendarEvents_(allEvents) {
+  return allEvents;
+}
+
+function calendarVisibleEventsFor_(role, record, allEvents) {
+  if (role === "student") return studentCalendarEvents_(record, allEvents);
+  if (role === "teacher") return teacherCalendarEvents_(record, allEvents);
+  if (role === "parent") return parentCalendarEvents_(record, allEvents);
+  if (role === "admin") return adminCalendarEvents_(allEvents);
+  return [];
+}
+
+// Shared by both teacher and admin create-forms: given a list of
+// CLASSES entries (teacherClasses_(teacher) for a teacher, the full
+// CLASSES array for admin), returns deduped student/teacher pools —
+// each entry carries every one of those classIds it belongs to, so the
+// picker's "select whole class" checkboxes can toggle the right rows.
+function calendarParticipantPool_(classes) {
+  const studentSeen = {};
+  const students = [];
+  const teacherSeen = {};
+  const teachersPool = [];
+  classes.forEach(function (cls) {
+    cls.studentUsernames.forEach(function (username) {
+      if (studentSeen[username]) { studentSeen[username].classIds.push(cls.id); return; }
+      const s = STUDENTS.find(function (x) { return x.username === username; });
+      if (!s) return;
+      const entry = { username: username, name: s.name, classIds: [cls.id] };
+      studentSeen[username] = entry;
+      students.push(entry);
+    });
+    (cls.teacherUsernames || []).forEach(function (username) {
+      if (teacherSeen[username]) { teacherSeen[username].classIds.push(cls.id); return; }
+      const t = TEACHERS.find(function (x) { return x.username === username; });
+      if (!t) return;
+      const entry = { username: username, name: t.name, classIds: [cls.id] };
+      teacherSeen[username] = entry;
+      teachersPool.push(entry);
+    });
+  });
+  return { classes: classes, students: students, teachers: teachersPool };
+}
+
+// ---- Calendar rendering (calendar.html) ----
+
+let calendarPerson_ = null;       // { username, role, name, email } — getCurrentPerson()
+let calendarRoleRecord_ = null;   // the full STUDENTS/TEACHERS/PARENTS/ADMINS record for calendarPerson_
+let calendarViewYear_ = null;
+let calendarViewMonth_ = null;    // 0-indexed, like Date
+let calendarVisibleEvents_ = [];  // this person's visible subset, recomputed by loadCalendarEvents_
+
+const CALENDAR_WEEKDAY_LABELS_ = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function calendarLocalDateKey_(isoString) {
+  const d = new Date(isoString);
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+// Buckets by the LOCAL calendar date of startAt only — a multi-day
+// event (endAt on a later date) still renders once, on its start date.
+// Deliberate v1 simplification, not an oversight.
+function groupCalendarEventsByDate_(events) {
+  const byDate = {};
+  events.forEach(function (e) {
+    const key = calendarLocalDateKey_(e.startAt);
+    (byDate[key] = byDate[key] || []).push(e);
+  });
+  Object.keys(byDate).forEach(function (key) {
+    byDate[key].sort(function (a, b) { return new Date(a.startAt) - new Date(b.startAt); });
+  });
+  return byDate;
+}
+
+function calendarEventTimeLabel_(event) {
+  return new Date(event.startAt).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+
+// Plain Date arithmetic, no calendar library — keeps this repo's
+// zero-dependency, no-build-step approach intact.
+function calendarMonthGridHtml_(year, month, eventsByDate) {
+  const firstWeekday = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const todayKey = calendarLocalDateKey_(new Date().toISOString());
+
+  const cells = [];
+  for (let i = firstWeekday - 1; i >= 0; i--) {
+    cells.push({ dayNum: daysInPrevMonth - i, inMonth: false, key: null });
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push({ dayNum: d, inMonth: true, key: year + "-" + String(month + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0") });
+  }
+  let nextDay = 1;
+  while (cells.length % 7 !== 0) {
+    cells.push({ dayNum: nextDay++, inMonth: false, key: null });
+  }
+
+  const weekdayRow = CALENDAR_WEEKDAY_LABELS_.map(function (label) {
+    return '<div class="calendar-grid-weekday">' + label + '</div>';
+  }).join("");
+
+  const dayCells = cells.map(function (cell) {
+    const dayEvents = cell.key ? (eventsByDate[cell.key] || []) : [];
+    const shown = dayEvents.slice(0, 3);
+    const extra = dayEvents.length - shown.length;
+    const chips = shown.map(function (e) {
+      return '<button type="button" class="calendar-event-chip" data-event-id="' + e.id + '">' +
+        '<span class="calendar-event-chip-time">' + calendarEventTimeLabel_(e) + '</span> ' + escapeHtml_(e.title) +
+      '</button>';
+    }).join("");
+    const more = extra > 0 ? '<div class="calendar-more-chip">+' + extra + ' more</div>' : "";
+    const cellClass = "calendar-day-cell" +
+      (cell.inMonth ? "" : " is-other-month") +
+      (cell.key && cell.key === todayKey ? " is-today" : "");
+    return '<div class="' + cellClass + '"><span class="calendar-day-number">' + cell.dayNum + '</span>' + chips + more + '</div>';
+  }).join("");
+
+  return weekdayRow + dayCells;
+}
+
+function renderCalendarMonth_(year, month) {
+  calendarViewYear_ = year;
+  calendarViewMonth_ = month;
+
+  const titleEl = document.getElementById("calendar-month-title");
+  if (titleEl) titleEl.textContent = new Date(year, month, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+
+  const grid = document.getElementById("calendar-grid");
+  if (!grid) return;
+  grid.innerHTML = calendarMonthGridHtml_(year, month, groupCalendarEventsByDate_(calendarVisibleEvents_));
+  grid.querySelectorAll("[data-event-id]").forEach(function (chip) {
+    chip.addEventListener("click", function () { openCalendarEventDetail_(chip.getAttribute("data-event-id")); });
+  });
+}
+
+// Fills/un-hides #calendar-detail-panel — follows the same
+// hidden-attribute inline-panel idiom teacher.html's pending-changes
+// panel already uses, rather than introducing new modal/overlay CSS
+// (none exists anywhere in this stylesheet, and an inline panel is
+// simpler on mobile than a fixed overlay).
+function openCalendarEventDetail_(eventId) {
+  const panel = document.getElementById("calendar-detail-panel");
+  if (!panel) return;
+  const event = calendarVisibleEvents_.find(function (e) { return e.id === eventId; });
+  if (!event) return;
+
+  const timeRange = event.endAt
+    ? submissionDateLabel(event.startAt) + " – " + new Date(event.endAt).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
+    : submissionDateLabel(event.startAt);
+
+  const studentNames = event.participantStudentUsernames.map(function (u) {
+    const s = STUDENTS.find(function (x) { return x.username === u; });
+    return s ? s.name : u;
+  });
+  const teacherNames = event.participantTeacherUsernames.map(function (u) {
+    const t = TEACHERS.find(function (x) { return x.username === u; });
+    return t ? t.name : u;
+  });
+
+  const canManage =
+    (calendarPerson_.role === "teacher" && teacherCanManageCalendarEvent_(calendarRoleRecord_, event)) ||
+    calendarPerson_.role === "admin";
+  const cancelBtn = (canManage && event.status === "Active")
+    ? '<button type="button" class="teacher-add-btn calendar-cancel-btn" data-cancel-event="' + event.id + '">Cancel event</button>'
+    : "";
+  const cancelledTag = event.status === "Cancelled"
+    ? ' <span class="requests-log-status requests-log-status-cancelled">Cancelled</span>'
+    : "";
+
+  panel.innerHTML =
+    '<button type="button" class="calendar-detail-close" id="calendar-detail-close">Close</button>' +
+    '<h3 class="calendar-detail-title">' + escapeHtml_(event.title) + cancelledTag + '</h3>' +
+    '<p class="calendar-detail-time">' + timeRange + '</p>' +
+    (event.description ? '<p class="calendar-detail-description">' + escapeHtml_(event.description) + '</p>' : "") +
+    '<p class="calendar-detail-people"><strong>Students:</strong> ' + (studentNames.length ? escapeHtml_(studentNames.join(", ")) : "None") + '</p>' +
+    '<p class="calendar-detail-people"><strong>Teachers:</strong> ' + (teacherNames.length ? escapeHtml_(teacherNames.join(", ")) : "None") + '</p>' +
+    '<p class="calendar-detail-creator">Created by ' + escapeHtml_(event.createdByName) + '</p>' +
+    cancelBtn;
+  panel.hidden = false;
+
+  document.getElementById("calendar-detail-close").addEventListener("click", closeCalendarEventDetail_);
+  const cancelBtnEl = panel.querySelector("[data-cancel-event]");
+  if (cancelBtnEl) {
+    cancelBtnEl.addEventListener("click", function () {
+      postTeacherAction_("cancelEvent", {
+        id: event.id,
+        username: calendarPerson_.username,
+        role: calendarPerson_.role
+      }, cancelBtnEl, function () {
+        closeCalendarEventDetail_();
+        loadCalendarEvents_();
+      });
+    });
+  }
+}
+
+function closeCalendarEventDetail_() {
+  const panel = document.getElementById("calendar-detail-panel");
+  if (panel) panel.hidden = true;
+}
+
+function updateCalendarParticipantSelectedCount_() {
+  const countEl = document.getElementById("calendar-participant-selected-count");
+  if (!countEl) return;
+  const n = document.querySelectorAll(".calendar-participant-checkbox:checked").length;
+  countEl.textContent = n === 1 ? "1 selected" : n + " selected";
+}
+
+// One "select whole class" checkbox per class — toggles every
+// student/co-teacher checkbox tagged with that class id via a
+// whitespace-token attribute selector (~=), not substring matching, so
+// "calc-a" never accidentally also matches "calc-ab" — then a flat
+// Students checkbox list and a flat Co-teachers checkbox list, reusing
+// .teacher-notif-recipient-row markup/CSS verbatim from the scheduled-
+// notification form above.
+function renderCalendarParticipantPicker_(classes, excludeUsername) {
+  const wrap = document.getElementById("calendar-event-participants");
+  if (!wrap) return;
+  const pool = calendarParticipantPool_(classes);
+  const teachersPool = pool.teachers.filter(function (t) { return t.username !== excludeUsername; });
+
+  if (classes.length === 0 && pool.students.length === 0 && teachersPool.length === 0) {
+    wrap.innerHTML = '<p class="teacher-empty">No classes assigned yet.</p>';
+    return;
+  }
+
+  const classRows = classes.map(function (cls) {
+    return '<label class="calendar-participant-class-row">' +
+      '<input type="checkbox" class="calendar-select-class-checkbox" data-select-class="' + cls.id + '"> Select whole class: ' + escapeHtml_(cls.name) +
+    '</label>';
+  }).join("");
+
+  const participantRow = function (person, roleClass) {
+    return '<label class="teacher-notif-recipient-row" data-participant-class-ids="' + person.classIds.join(" ") + '">' +
+      '<input type="checkbox" class="calendar-participant-checkbox ' + roleClass + '" value="' + person.username + '">' +
+      '<span class="teacher-notif-recipient-name">' + escapeHtml_(person.name) + '</span>' +
+    '</label>';
+  };
+
+  wrap.innerHTML = classRows +
+    (pool.students.length
+      ? '<p class="teacher-section-title">Students</p><div class="teacher-notif-recipients">' +
+        pool.students.map(function (s) { return participantRow(s, "calendar-participant-student"); }).join("") + '</div>'
+      : "") +
+    (teachersPool.length
+      ? '<p class="teacher-section-title">Co-teachers</p><div class="teacher-notif-recipients">' +
+        teachersPool.map(function (t) { return participantRow(t, "calendar-participant-teacher"); }).join("") + '</div>'
+      : "") +
+    '<p class="teacher-notif-selected-count" id="calendar-participant-selected-count">0 selected</p>';
+
+  wrap.querySelectorAll(".calendar-select-class-checkbox").forEach(function (cb) {
+    cb.addEventListener("change", function () {
+      const classId = cb.getAttribute("data-select-class");
+      wrap.querySelectorAll('[data-participant-class-ids~="' + classId + '"] .calendar-participant-checkbox').forEach(function (box) {
+        box.checked = cb.checked;
+      });
+      updateCalendarParticipantSelectedCount_();
+    });
+  });
+  wrap.querySelectorAll(".calendar-participant-checkbox").forEach(function (cb) {
+    cb.addEventListener("change", updateCalendarParticipantSelectedCount_);
+  });
+  updateCalendarParticipantSelectedCount_();
+}
+
+function createCalendarEventForm_(buttonEl) {
+  const titleEl = document.getElementById("calendar-event-title");
+  const descEl = document.getElementById("calendar-event-description");
+  const startEl = document.getElementById("calendar-event-start");
+  const endEl = document.getElementById("calendar-event-end");
+  const checked = Array.prototype.slice.call(document.querySelectorAll(".calendar-participant-checkbox:checked"));
+
+  const title = titleEl.value.trim();
+  const startLocal = startEl.value;
+  if (!title || !startLocal) { alert("Please fill in a title and a start time."); return; }
+
+  const startAt = new Date(startLocal);
+  if (isNaN(startAt.getTime())) { alert("That start time doesn't look valid."); return; }
+
+  let endAt = null;
+  if (endEl.value) {
+    endAt = new Date(endEl.value);
+    if (isNaN(endAt.getTime())) { alert("That end time doesn't look valid."); return; }
+    if (endAt.getTime() < startAt.getTime()) { alert("End time can't be before the start time."); return; }
+  }
+
+  if (checked.length === 0) { alert("Please pick at least one participant."); return; }
+
+  const participantStudentUsernames = checked
+    .filter(function (cb) { return cb.classList.contains("calendar-participant-student"); })
+    .map(function (cb) { return cb.value; });
+  const participantTeacherUsernames = checked
+    .filter(function (cb) { return cb.classList.contains("calendar-participant-teacher"); })
+    .map(function (cb) { return cb.value; });
+  const classIds = Array.prototype.slice.call(document.querySelectorAll(".calendar-select-class-checkbox:checked"))
+    .map(function (cb) { return cb.getAttribute("data-select-class"); });
+
+  // Client-generated (unlike every other id in this app), because
+  // doPost only ever returns {ok:true} — see ACTIONS.createEvent's own
+  // comment in zenith-data-writer.gs for why the id has to already be
+  // known here, before the request goes out, so the optional linked
+  // notification below can reference it.
+  const id = "evt_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8);
+  const createPayload = {
+    id: id,
+    username: calendarPerson_.username,
+    name: calendarPerson_.name,
+    role: calendarPerson_.role,
+    title: title,
+    description: descEl.value.trim(),
+    startAt: startAt.toISOString(),
+    endAt: endAt ? endAt.toISOString() : null,
+    classIds: classIds,
+    participantStudentUsernames: participantStudentUsernames,
+    participantTeacherUsernames: participantTeacherUsernames
+  };
+
+  const operations = [{ action: "createEvent", payload: createPayload }];
+
+  const notifyToggle = document.getElementById("calendar-notify-toggle");
+  if (notifyToggle && notifyToggle.checked) {
+    const subjectEl = document.getElementById("calendar-notif-subject");
+    const messageEl = document.getElementById("calendar-notif-message");
+    const sendAtEl = document.getElementById("calendar-notif-send-at");
+    const subject = subjectEl.value.trim();
+    const message = messageEl.value.trim();
+
+    // Only student participants — the underlying scheduleNotification
+    // pipeline (send-scheduled-notifications.js) only ever resolves
+    // recipientUsernames against STUDENTS, so a hand-picked co-teacher
+    // couldn't be emailed through this path even if listed here.
+    if (participantStudentUsernames.length === 0) {
+      alert("The linked notification can only email student participants, and none are picked — either pick a student or uncheck \"also notify participants.\"");
+      return;
+    }
+    if (!subject || !message || !sendAtEl.value) {
+      alert("Fill in the notification's subject, message, and send time — or uncheck \"also notify participants.\"");
+      return;
+    }
+    const sendAt = new Date(sendAtEl.value);
+    if (isNaN(sendAt.getTime())) { alert("That notification send time doesn't look valid."); return; }
+    if (sendAt.getTime() <= Date.now()) { alert("Pick a notification send time in the future."); return; }
+
+    operations.push({
+      action: "scheduleNotification",
+      payload: {
+        username: calendarPerson_.username,
+        name: calendarPerson_.name,
+        recipientUsernames: participantStudentUsernames,
+        recipientNames: participantStudentUsernames.map(function (u) {
+          const s = STUDENTS.find(function (x) { return x.username === u; });
+          return s ? s.name : u;
+        }),
+        subject: subject,
+        message: message,
+        sendAt: sendAt.toISOString(),
+        eventId: id
+      }
+    });
+  }
+
+  const isBatch = operations.length > 1;
+  postTeacherAction_(
+    isBatch ? "applyBatch" : "createEvent",
+    isBatch ? { operations: operations } : createPayload,
+    buttonEl,
+    function () {
+      titleEl.value = "";
+      descEl.value = "";
+      startEl.value = "";
+      endEl.value = "";
+      document.querySelectorAll(".calendar-participant-checkbox, .calendar-select-class-checkbox").forEach(function (cb) { cb.checked = false; });
+      updateCalendarParticipantSelectedCount_();
+      if (notifyToggle) notifyToggle.checked = false;
+      const notifyFields = document.getElementById("calendar-notify-fields");
+      if (notifyFields) notifyFields.hidden = true;
+      ["calendar-notif-subject", "calendar-notif-message", "calendar-notif-send-at"].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      loadCalendarEvents_();
+    }
+  );
+}
+
+function renderCreateCalendarEventForm_() {
+  const section = document.getElementById("calendar-create-section");
+  if (!section) return;
+  if (calendarPerson_.role !== "teacher" && calendarPerson_.role !== "admin") {
+    section.hidden = true;
+    return;
+  }
+  section.hidden = false;
+
+  const classes = calendarPerson_.role === "admin" ? CLASSES : teacherClasses_(calendarRoleRecord_);
+  renderCalendarParticipantPicker_(classes, calendarPerson_.username);
+
+  const notifyToggle = document.getElementById("calendar-notify-toggle");
+  const notifyFields = document.getElementById("calendar-notify-fields");
+  if (notifyToggle && notifyFields) {
+    notifyToggle.addEventListener("change", function () { notifyFields.hidden = !this.checked; });
+  }
+
+  const submitBtn = document.getElementById("calendar-event-submit");
+  if (submitBtn) submitBtn.addEventListener("click", function () { createCalendarEventForm_(submitBtn); });
+}
+
+function loadCalendarEvents_() {
+  return fetch("data/calendar-events.json")
+    .then(function (res) { return res.json(); })
+    .then(function (all) {
+      calendarVisibleEvents_ = calendarVisibleEventsFor_(calendarPerson_.role, calendarRoleRecord_, all);
+      renderCalendarMonth_(calendarViewYear_, calendarViewMonth_);
+    })
+    .catch(function () {
+      const grid = document.getElementById("calendar-grid");
+      if (grid) grid.innerHTML = '<p class="teacher-empty">Could not load the calendar right now.</p>';
+    });
+}
+
+// Single per-page entry point (mirrors renderTeacherDashboard/
+// renderParentDashboard's convention) — resolves the full role record,
+// wires month nav + the create-event form (teacher/admin only), and
+// loads the current month's events.
+function renderCalendarPage(person) {
+  calendarPerson_ = person;
+  calendarRoleRecord_ =
+    person.role === "teacher" ? getCurrentTeacher() :
+    person.role === "parent" ? getCurrentParent() :
+    person.role === "admin" ? getCurrentAdmin() :
+    getCurrentStudent();
+
+  const greeting = document.getElementById("calendar-greeting");
+  if (greeting) greeting.textContent = "Hey " + person.name.split(" ")[0] + ",";
+
+  const now = new Date();
+  calendarViewYear_ = now.getFullYear();
+  calendarViewMonth_ = now.getMonth();
+
+  const prevBtn = document.getElementById("calendar-prev-month");
+  const nextBtn = document.getElementById("calendar-next-month");
+  const todayBtn = document.getElementById("calendar-today-btn");
+  if (prevBtn) prevBtn.addEventListener("click", function () {
+    const d = new Date(calendarViewYear_, calendarViewMonth_ - 1, 1);
+    renderCalendarMonth_(d.getFullYear(), d.getMonth());
+  });
+  if (nextBtn) nextBtn.addEventListener("click", function () {
+    const d = new Date(calendarViewYear_, calendarViewMonth_ + 1, 1);
+    renderCalendarMonth_(d.getFullYear(), d.getMonth());
+  });
+  if (todayBtn) todayBtn.addEventListener("click", function () {
+    const t = new Date();
+    renderCalendarMonth_(t.getFullYear(), t.getMonth());
+  });
+
+  renderCreateCalendarEventForm_();
+  loadCalendarEvents_();
 }
 
 // ---- Parent dashboard (parent.html) ----
@@ -3153,51 +4545,91 @@ function parentCourseCardHtml(course, lang) {
   '</div>';
 }
 
-// Fills in blog.html's post list from BLOG_POSTS (js/blog-data.js),
-// newest first, exactly as the array is ordered (add new posts to
-// the top by hand). Each preview links to blog-post.html?slug=....
+// Merges admin-published posts from data/blog-posts.json with the
+// hand-authored BLOG_POSTS array (js/blog-data.js) — the JSON file is
+// the live list admin.html's Blog tab writes to; BLOG_POSTS stays as a
+// manual escape hatch for anything typed straight into that file.
+// JSON posts come back already newest-first (the write endpoint
+// unshifts each new one), so they're shown ahead of BLOG_POSTS, which
+// keeps its own existing newest-first convention — good enough without
+// parsing every post's free-text "date" field as a real date. Fails
+// quietly into just BLOG_POSTS if the fetch doesn't work (e.g. opened
+// from file:// instead of a real server).
+function fetchBlogPosts_() {
+  return fetch("data/blog-posts.json")
+    .then(function (res) { return res.json(); })
+    .catch(function () { return []; })
+    .then(function (jsonPosts) { return jsonPosts.concat(BLOG_POSTS); });
+}
+
+function blogTagsHtml_(post, className) {
+  if (!post.tags || !post.tags.length) return "";
+  return '<div class="' + className + '">' +
+    post.tags.map(function (t) { return '<span class="blog-tag">' + escapeHtml_(t) + '</span>'; }).join("") +
+  '</div>';
+}
+
+// Fills in blog.html's post list. See fetchBlogPosts_ above for where
+// the posts come from and their order. Each preview links to
+// blog-post.html?slug=....
 function renderBlogList() {
   const list = document.getElementById("blog-list");
   if (!list) return;
 
-  if (BLOG_POSTS.length === 0) {
-    list.innerHTML = '<p class="blog-empty">No posts yet — check back soon.</p>';
-    return;
-  }
+  fetchBlogPosts_().then(function (posts) {
+    if (posts.length === 0) {
+      list.innerHTML = '<p class="blog-empty">No posts yet — check back soon.</p>';
+      return;
+    }
 
-  list.innerHTML = BLOG_POSTS.map(function (post) {
-    return '<a href="blog-post.html?slug=' + encodeURIComponent(post.slug) + '" class="blog-preview">' +
-      '<span class="blog-preview-date">' + post.date + '</span>' +
-      '<h2>' + post.title + '</h2>' +
-      '<p class="blog-preview-excerpt">' + post.excerpt + '</p>' +
-      '<span class="blog-read-more">Read more →</span>' +
-    '</a>';
-  }).join("");
+    list.innerHTML = posts.map(function (post) {
+      const meta = escapeHtml_(post.date) + (post.author ? " · " + escapeHtml_(post.author) : "");
+      return '<a href="blog-post.html?slug=' + encodeURIComponent(post.slug) + '" class="blog-preview">' +
+        '<span class="blog-preview-date">' + meta + '</span>' +
+        '<h2>' + escapeHtml_(post.title) + '</h2>' +
+        '<p class="blog-preview-excerpt">' + escapeHtml_(post.excerpt) + '</p>' +
+        blogTagsHtml_(post, "blog-preview-tags") +
+        '<span class="blog-read-more">Read more →</span>' +
+      '</a>';
+    }).join("");
+  });
 }
 
-// Fills in blog-post.html from the "?slug=" in the URL, looking it
-// up in BLOG_POSTS (js/blog-data.js). Shows a friendly "not found"
-// message (with a link back to the index) for an unknown/missing
-// slug instead of a blank page.
+// Fills in blog-post.html from the "?slug=" in the URL. See
+// fetchBlogPosts_ above for where posts come from. Shows a friendly
+// "not found" message (with a link back to the index) for an
+// unknown/missing slug instead of a blank page. Admin-published posts
+// carry raw markdown (post.contentMd), rendered here via
+// renderMarkdown_ — the same call admin.html's live preview already
+// makes, so a visitor sees exactly what the admin previewed while
+// writing. Legacy BLOG_POSTS entries (post.content, an array of
+// paragraph strings) still render the old way.
 function renderBlogPost() {
   const article = document.getElementById("blog-article");
   if (!article) return;
 
   const slug = new URLSearchParams(window.location.search).get("slug");
-  const post = BLOG_POSTS.find(function (p) { return p.slug === slug; });
 
-  if (!post) {
-    article.innerHTML = '<h1>Post not found</h1>' +
-      '<p class="blog-preview-excerpt">That post doesn\'t exist, or may have moved.</p>';
-    return;
-  }
+  fetchBlogPosts_().then(function (posts) {
+    const post = posts.find(function (p) { return p.slug === slug; });
 
-  document.title = post.title + " — Zenith";
-  article.innerHTML = '<span class="blog-article-date">' + post.date + '</span>' +
-    '<h1>' + post.title + '</h1>' +
-    '<div class="blog-article-body">' +
-      post.content.map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join("") +
-    '</div>';
+    if (!post) {
+      article.innerHTML = '<h1>Post not found</h1>' +
+        '<p class="blog-preview-excerpt">That post doesn\'t exist, or may have moved.</p>';
+      return;
+    }
+
+    document.title = post.title + " — Zenith";
+    const meta = escapeHtml_(post.date) + (post.author ? " · " + escapeHtml_(post.author) : "");
+    const bodyHtml = post.contentMd
+      ? renderMarkdown_(post.contentMd)
+      : post.content.map(function (paragraph) { return '<p>' + paragraph + '</p>'; }).join("");
+
+    article.innerHTML = '<span class="blog-article-date">' + meta + '</span>' +
+      '<h1>' + escapeHtml_(post.title) + '</h1>' +
+      blogTagsHtml_(post, "blog-article-tags") +
+      '<div class="blog-article-body">' + bodyHtml + '</div>';
+  });
 }
 
 // Returns one enrolled course from a student record by its stable URL id.
@@ -3454,6 +4886,76 @@ function renderCoursePortal(student) {
 
   const weekLink = document.getElementById("course-folder-week-link");
   if (weekLink) weekLink.hidden = courses.length < 2;
+}
+
+// Every distinct courseId that exists anywhere in STUDENTS[].courses,
+// deduped in first-seen order, as { id, name, icon }. There's still no
+// standalone catalog of subject names/icons (no COURSE_TEMPLATES yet —
+// see js/data.js), so this is the closest thing to one: it backs both
+// courseDisplayInfo_ below and the Subject <select> on admin.html's
+// "Create a class" form, since a class can only be created for a
+// subject that already has at least one real roadmap to clone from
+// (see enrollStudentInCourse in zenith-data-writer.gs).
+function allKnownCourses_() {
+  const seen = {};
+  const list = [];
+  STUDENTS.forEach(function (s) {
+    (s.courses || []).forEach(function (c) {
+      if (!seen[c.id]) { seen[c.id] = true; list.push({ id: c.id, name: c.name, icon: c.icon }); }
+    });
+  });
+  return list;
+}
+
+// Looks up a single course's display name + icon by courseId.
+function courseDisplayInfo_(courseId) {
+  const found = allKnownCourses_().find(function (c) { return c.id === courseId; });
+  return found || { name: courseId, icon: "" };
+}
+
+// One catalog card's registration badge, from this student's point of
+// view: "Enrolled" if they're on the class's confirmed roster,
+// "Pending approval" if they're a candidate awaiting an admin's
+// decision, otherwise the default locked state (registering yourself
+// isn't a thing here — an admin picks the candidate roster when they
+// create the class, see admin.html's Classes tab).
+function catalogBadgeHtml_(cls, student) {
+  const username = student ? student.username : null;
+  if (username && cls.studentUsernames.indexOf(username) !== -1) {
+    return '<span class="catalog-lock-badge catalog-badge-enrolled">✓ Enrolled</span>';
+  }
+  if (username && (cls.pendingStudentUsernames || []).indexOf(username) !== -1) {
+    return '<span class="catalog-lock-badge catalog-badge-pending">⏳ Pending approval</span>';
+  }
+  return '<span class="catalog-lock-badge">🔒 Registration locked</span>';
+}
+
+// Builds the class catalog on catalog.html — one card per CLASSES
+// entry (the site's real source of truth for "what classes exist"),
+// showing its subject, assigned teacher(s), and this student's own
+// registration state in it (see catalogBadgeHtml_). Every student sees
+// the same full list of classes — only the badge is personalized.
+function renderCatalog(student) {
+  const grid = document.getElementById("catalog-grid");
+  if (!grid) return;
+
+  grid.innerHTML = CLASSES.map(function (cls) {
+    const course = courseDisplayInfo_(cls.courseId);
+    const teacherNames = cls.teacherUsernames.map(function (username) {
+      const teacher = TEACHERS.find(function (t) { return t.username === username; });
+      return teacher ? teacher.name : username;
+    }).join(", ");
+
+    return '<div class="catalog-card">' +
+      '<span class="catalog-card-icon course-app-icon course-app-icon--' + course.icon + '">' + courseIconHtml(course.icon) + '</span>' +
+      '<div class="catalog-card-body">' +
+        '<p class="catalog-card-subject">' + course.name + '</p>' +
+        '<h3 class="catalog-card-name">' + cls.name + '</h3>' +
+        '<p class="catalog-card-teacher">' + teacherNames + '</p>' +
+        catalogBadgeHtml_(cls, student) +
+      '</div>' +
+    '</div>';
+  }).join("");
 }
 
 // ---- This Week (week.html) ----

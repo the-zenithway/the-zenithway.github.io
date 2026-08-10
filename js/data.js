@@ -816,11 +816,6 @@ const STUDENTS = [
               "chapter": "Chapter 1",
               "cScore": 75,
               "tScore": 93
-            },
-            {
-              "chapter": "Chapter 2",
-              "cScore": 100,
-              "tScore": null
             }
           ],
           "motivation": [],
@@ -838,13 +833,8 @@ const STUDENTS = [
           },
           "apFinalScore": null,
           "responsiveness": {
-            "score": 85,
-            "note": "Replies same day, shows up to sessions on time",
-            "asOf": "Aug 6"
           },
           "personality": [
-            "Night owl",
-            "Meticulous notetaker"
           ]
         }
       }

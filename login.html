@@ -36,6 +36,8 @@
 
         <button type="submit" class="btn-primary btn-full">Log In</button>
       </form>
+
+      <p class="hint">Don't have an account? <a href="signup.html">Sign up</a> — a student or teacher account, reviewed and approved by an admin.</p>
     </div>
   </section>
 </main>
@@ -54,11 +56,13 @@
     var username = document.getElementById('username').value.trim();
     var password = document.getElementById('password').value;
 
-    if (login(username, password)) {
-      window.location.href = getLoginRedirect();
-    } else {
-      document.getElementById('login-error').hidden = false;
-    }
+    login(username, password).then(function (ok) {
+      if (ok) {
+        window.location.href = getLoginRedirect();
+      } else {
+        document.getElementById('login-error').hidden = false;
+      }
+    });
   });
 </script>
 </body>

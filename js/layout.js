@@ -24,6 +24,7 @@ const SITE_NAV_LINKS = [
 
 const PORTAL_NAV_LINKS = [
   { key: "courses", href: "portal.html", label: "Courses" },
+  { key: "catalog", href: "catalog.html", label: "Catalog" },
   { key: "now", href: "right-now.html", label: "Now" },
   { key: "feedback", href: "feedback.html", label: "Feedback" },
   { key: "calendar", href: "calendar.html", label: "Calendar" },
@@ -33,7 +34,7 @@ const PORTAL_NAV_LINKS = [
 const TEACHER_NAV_LINKS = [
   { key: "dashboard", href: "teacher.html", label: "Teacher Dashboard" },
   { key: "overview", href: "teacher-overview.html", label: "All Students" },
-  { key: "roadmap", href: "team-roadmap.html", label: "Roadmap" }
+  { key: "calendar", href: "calendar.html", label: "Calendar" }
 ];
 
 const PORTAL_ACTION_HTML = {
@@ -41,6 +42,7 @@ const PORTAL_ACTION_HTML = {
   allCourses: '<a href="portal.html" class="portal-link">All courses</a>',
   back: '<a href="resources.html" class="portal-link">← Back to Resources</a>',
   requests: '<a href="requests.html" class="portal-link">Requests</a>',
+  calendar: '<a href="calendar.html" class="portal-link">Calendar</a>',
   lang: '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>',
   logout: '<button id="logout-btn" class="portal-logout">Log out</button>'
 };
@@ -121,9 +123,9 @@ function renderSiteHeader(opts) {
 // opts:
 //   nav: 'full' (default) — Courses/Now/Feedback/Calendar/Submit, needs `active`
 //   nav: 'resources' — Home/Resources/Student Portal self-study subnav
-//   nav: 'teacher' — Teacher Dashboard/All Students/Roadmap tabs, needs `active` ('dashboard'/'overview'/'roadmap')
+//   nav: 'teacher' — Teacher Dashboard/All Students/Calendar tabs, needs `active` ('dashboard'/'overview'/'calendar')
 //   nav: 'label' — single non-link label, needs `label`
-//   actions: array of 'open' | 'allCourses' | 'requests' | 'logout' (default ['logout'])
+//   actions: array of 'open' | 'allCourses' | 'requests' | 'calendar' | 'lang' | 'logout' (default ['logout'])
 function renderPortalHeader(opts) {
   opts = opts || {};
   const navType = opts.nav || "full";

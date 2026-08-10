@@ -79,6 +79,113 @@
  * send-scheduled-notifications.js), polling that file independently
  * of this endpoint. See that script and .github/workflows/notify.yml.
  *
+ * submitWork (added 2026-08-10) backs submit.html's own in-site
+ * submission form — a typed-answer alternative to that page's external
+ * Google Form link, covering every submittable roadmap unit —
+ * B (Book chapter), C (Coursework), S (Solution manual), R (Review),
+ * T (Test), N (Notes Submission), L (Learning) — see SUBMISSION_UNITS_
+ * below — over a fixed chapter list (Chapter 1-12, plus M1-M16 for
+ * mocks — see SUBMISSION_CHAPTERS_ below). The Google Form is still the
+ * only path for a submission that needs a photo attached, since this
+ * action only accepts typed text.
+ * Writes to data/submissions-log.json, same as markSubmissionComplete
+ * and the Form-bound submissions-compiler.gs — see ACTIONS.submitWork
+ * below for the entry shape.
+ *
+ * publishBlogPost/updateBlogPost/deleteBlogPost (added 2026-08-10)
+ * back admin.html's new Blog tab — a markdown editor with a live
+ * preview (rendered client-side via marked.js, same call blog-post.html
+ * uses to render the published post, so there's exactly one markdown->
+ * HTML code path, not two that could drift). Writes append/edit/remove
+ * one entry in data/blog-posts.json; nothing here renders markdown or
+ * touches HTML — contentMd is stored raw. slug is admin-typed (auto-
+ * suggested from the title, editable) and enforced unique by
+ * publishBlogPost, then immutable across edits (updateBlogPost/
+ * deleteBlogPost both look the post up BY that same slug), so a
+ * blog-post.html?slug=... link already shared out never breaks out
+ * from under a later edit. No approval step, no notification email —
+ * unlike signups/requests this is admin-authored content, not
+ * something submitted by someone else that needs review.
+ *
+ * postAnnouncement/deleteAnnouncement (added 2026-08-10) back
+ * teacher.html's "Announce to your class" form and admin.html's new
+ * "Announcements" tab — both write to data/announcements.json.
+ * `audience: "class"` (teacher-authored, carries classId/className/
+ * courseId from CLASSES) is visible to that class's students;
+ * `audience: "teachers"` (admin-authored) is visible to every teacher
+ * — see teacherClasses_/classesForStudent_ in js/app.js for how each
+ * side filters this same file down to what it's allowed to see.
+ * deleteAnnouncement is a soft delete (status Active -> Deleted, same
+ * shape as cancelScheduledNotification's Pending -> Cancelled) rather
+ * than an array splice, so history isn't destroyed — only the entry's
+ * own createdBy can delete it. In-app only, deliberately no email for
+ * this pass (unlike every other action covered by the NOTIFICATIONS
+ * paragraph right below).
+ *
+ * createEvent/cancelEvent (added 2026-08-10) back calendar.html's "New
+ * event" form (teacher/admin only) — writes to data/calendar-events.json.
+ * A teacher or admin picks a title/description/start/end time and
+ * participants (a class shortcut and/or hand-picked individual
+ * students/co-teachers, resolved client-side the same way
+ * scheduleNotification's recipient picker already works), and can
+ * optionally also schedule a one-time notification in the SAME
+ * applyBatch request (one createEvent op + one scheduleNotification op
+ * carrying payload.eventId) — see js/app.js's createCalendarEventForm_.
+ * The event's id is the one deliberate exception to "ids are always
+ * minted server-side" in this file: doPost only ever returns
+ * {ok:true} (never echoes a generated id back), so linking a
+ * same-batch notification to its event requires the id to already be
+ * known client-side before the request goes out — see
+ * ACTIONS.createEvent's own comment for the full reasoning.
+ * cancelEvent is a soft delete (Active -> Cancelled, same shape as
+ * cancelScheduledNotification), cancellable by the event's own creator
+ * OR any admin (admin has global, unscoped calendar visibility/
+ * management, unlike a teacher who's scoped to classes they teach —
+ * see teacherCalendarEvents_/adminCalendarEvents_ in js/app.js).
+ * Cancelling an event does NOT cascade-cancel its linkedNotificationId,
+ * if one exists — that's a known v1.1 gap, not an oversight.
+ *
+ * createClass/approveClassRegistration/declineClassRegistration/
+ * enrollStudentInCourse (added 2026-08-10) back admin.html's "Classes"
+ * tab, the write path behind catalog.html. createClass appends a new
+ * CLASSES entry with an empty confirmed roster and a candidate
+ * ("pending") roster of whichever students the admin picked — nothing
+ * touches STUDENTS yet. Approving one candidate is sent as a batch of
+ * TWO ops, same shape as signup approval: enrollStudentInCourse (target
+ * "students", runs first) actually appends the course — cloning a
+ * roadmap template from whichever other student already has that
+ * courseId, since there's still no COURSE_TEMPLATES (see js/data.js) —
+ * paired with approveClassRegistration (target "classes"), which moves
+ * the username from pending to confirmed. Declining just removes the
+ * candidate, no STUDENTS mutation. Both write to js/data.js via
+ * commitClassesMutation_/commitStudentsMutation_ under the same
+ * DATA_PATH property STUDENTS/TEACHERS already use — no new script
+ * property needed.
+ *
+ * NOTIFICATIONS (systematized 2026-08-10): every write action that
+ * should tell someone something now does, on top of the "we got it"
+ * confirmations that already existed — a new submission emails the
+ * assigned teacher(s) (notifyTeachersOfWork_), a graded submission
+ * emails the student (sendSubmissionGradedEmail_), a new signup emails
+ * every admin (notifyAdminsOfSignup_), a declined signup emails the
+ * applicant (sendSignupDeclinedEmail_), a new request emails every
+ * admin UNLESS it's "Ask My Teacher" which emails the assigned
+ * teacher(s) instead (notifyAdminsOfRequest_/notifyTeachersOfRequest_),
+ * and a request status change emails the original submitter
+ * (sendRequestStatusChangedEmail_). All of these follow the exact same
+ * pattern the existing confirmation emails already established: sent
+ * from doPost AFTER the relevant commit succeeds (never from inside a
+ * handler — see the submitRequest email comment below for why),
+ * best-effort (a MailApp failure never fails the write itself), and
+ * silently skipped if the needed address/list is missing. Recipient
+ * addresses are never looked up server-side here — every one rides in
+ * on the payload, resolved client-side from STUDENTS/TEACHERS/CLASSES/
+ * ADMINS (all already loaded in the browser via js/data.js on every
+ * page that can trigger one of these actions), same trust model
+ * scheduleNotification's client-resolved recipientUsernames already
+ * established — see each notify*_/send*_ function below for exactly
+ * which payload fields it expects.
+ *
  * submitRequest (added 2026-08-09) is called from requests.html by
  * students/teachers/parents, not just teacher.html — despite the
  * "TEACHER_DATA_WRITE_URL" name (kept as-is to avoid renaming churn
@@ -97,9 +204,11 @@
  * changes (a roadmap unlock, a feedback entry, a Right Now update,
  * etc.) and send them as one `applyBatch` request instead of one
  * request per change — see doPost below. Every action here writes to
- * one of five files (js/data.js, data/submissions-log.json,
- * data/requests-log.json, data/scheduled-notifications.json, or
- * data/signup-requests.json — see "TARGET FILES"); a batch whose
+ * one of eight files (js/data.js, data/submissions-log.json,
+ * data/requests-log.json, data/scheduled-notifications.json,
+ * data/signup-requests.json, data/blog-posts.json,
+ * data/announcements.json, or data/calendar-events.json — see "TARGET
+ * FILES"); a batch whose
  * actions all target the same file becomes exactly ONE git commit, no
  * matter how many actions it contains. A batch that mixes targets
  * (i.e. includes markSubmissionComplete, submitRequest, or
@@ -121,15 +230,19 @@
  * ---------------------------------------------------------------
  * TARGET FILES
  * ---------------------------------------------------------------
- * `markSubmissionComplete` writes to data/submissions-log.json,
+ * `markSubmissionComplete`/`submitWork` write to data/submissions-log.json,
  * `submitRequest`/`updateRequestStatus` write to data/requests-log.json,
  * `scheduleNotification`/`cancelScheduledNotification` write to
- * data/scheduled-notifications.json, and `submitSignup`/
- * `approveSignup`/`declineSignup` write to data/signup-requests.json —
- * all four are plain JSON files, so read/mutate/write there is a
- * straightforward JSON.parse/JSON.stringify (same as
- * submissions-compiler.gs already does for the first), and all four
- * share one committer function, commitJsonArrayMutation_ below.
+ * data/scheduled-notifications.json, `submitSignup`/`approveSignup`/
+ * `declineSignup` write to data/signup-requests.json,
+ * `publishBlogPost`/`updateBlogPost`/`deleteBlogPost` write to
+ * data/blog-posts.json, `postAnnouncement`/`deleteAnnouncement`
+ * write to data/announcements.json, and `createEvent`/`cancelEvent`
+ * write to data/calendar-events.json — all seven are plain JSON files, so
+ * read/mutate/write there is a straightforward JSON.parse/
+ * JSON.stringify (same as submissions-compiler.gs already does for the
+ * first), and all seven share one committer function,
+ * commitJsonArrayMutation_ below.
  *
  * Every other action writes to js/data.js, which is a hand-authored
  * JavaScript file (`const STUDENTS = [...]` / `const TEACHERS = [...]`),
@@ -189,6 +302,9 @@
  *      REQUESTS_LOG_PATH     data/requests-log.json
  *      NOTIFICATIONS_PATH    data/scheduled-notifications.json
  *      SIGNUPS_PATH          data/signup-requests.json
+ *      ANNOUNCEMENTS_PATH    data/announcements.json
+ *      BLOG_PATH              data/blog-posts.json
+ *      EVENTS_PATH            data/calendar-events.json
  *
  * 3. Deploy -> New deployment -> "Web app".
  *      Execute as:      Me
@@ -230,6 +346,29 @@
  *    js/data.js covering both new accounts — or two js/data.js commits
  *    if one signup is a student and the other a teacher, since those
  *    are two different consts, see commitTeachersMutation_ below).
+ *    Also publish one real post from admin.html's Blog tab and confirm
+ *    data/blog-posts.json gets exactly one new entry, that it shows up
+ *    on blog.html, and that blog-post.html?slug=... renders its
+ *    markdown as HTML; then edit that same post (confirm the slug
+ *    stays the same and the content updates in place) and finally
+ *    delete it (confirm the entry disappears from data/blog-posts.json
+ *    and both public pages). Also post one real class announcement from
+ *    teacher.html and one admin announcement from admin.html's
+ *    Announcements tab, and confirm data/announcements.json gets one new
+ *    "Active" entry each time; delete one and confirm it flips to
+ *    "Deleted" in the file rather than disappearing, and that it drops
+ *    off both the author's own list and the recipient's badge/dropdown.
+ *    Also create one real calendar event from calendar.html (as a
+ *    teacher, with a hand-picked individual student AND a whole-class
+ *    shortcut both checked) with the "also notify participants" toggle
+ *    ON, and confirm the single applyBatch request produces TWO
+ *    commits — one adding an "Active" entry to
+ *    data/calendar-events.json, one adding a "Pending" entry to
+ *    data/scheduled-notifications.json whose eventId matches the new
+ *    event's id. Then cancel that event (as the creator) and confirm
+ *    it flips to "Cancelled" with a cancelledAt timestamp; separately
+ *    create a second event as one teacher and confirm a DIFFERENT
+ *    teacher can't cancel it (expect an error) but an admin can.
  *
  * ---------------------------------------------------------------
  * WHAT COUNTS AS "DONE" HERE
@@ -254,7 +393,45 @@
  * particular is a fresh near-duplicate of commitStudentsMutation_,
  * never round-tripped against the real js/data.js the way
  * findConstArraySpan_ was for STUDENTS. If step 5 throws or produces
- * an unexpected diff, send the exact error text or diff.
+ * an unexpected diff, send the exact error text or diff. submitWork
+ * (2026-08-10) is new and untested too — same log-append code path
+ * markSubmissionComplete already exercises via commitJsonArrayMutation_,
+ * just a different handler, so risk is low, but try one real submission
+ * from submit.html's form and confirm data/submissions-log.json gets a
+ * new "pending" entry with the right chapter/unit/answer before relying
+ * on it. The whole NOTIFICATIONS layer (2026-08-10) is new and
+ * completely unexercised too — every notify*_/send*_ function added
+ * with it follows the same MailApp.sendEmail pattern the
+ * already-working confirmation emails use, so the mechanism itself is
+ * low-risk, but the actual trigger wiring (which action fires which
+ * email, reading the right payload fields) hasn't run for real. Worth
+ * testing deliberately: submit one piece of work and confirm both the
+ * student "received" email and the teacher "new submission" email
+ * arrive; mark it complete and confirm the student gets a "graded"
+ * email; submit a signup and confirm every admin gets a "new signup"
+ * email (in addition to the applicant's existing "received" email);
+ * decline one and confirm the applicant gets a "not this time" email;
+ * submit a Feature Request and confirm every admin gets it, then submit
+ * an Ask My Teacher and confirm the assigned teacher gets it INSTEAD of
+ * admins; and update a request's status from teacher.html and confirm
+ * the original submitter gets a status-change email. publishBlogPost/
+ * updateBlogPost/deleteBlogPost (2026-08-10) are new and completely
+ * unexercised too — same commitJsonArrayMutation_ path every other
+ * "log" target already uses, so the mechanism is low-risk, but try the
+ * publish/edit/delete sequence in step 5 above before relying on it.
+ * postAnnouncement/deleteAnnouncement (2026-08-10) are new and
+ * unexercised too — same commitJsonArrayMutation_ path, so the
+ * mechanism is low-risk, but the audience-based validation (class vs
+ * teachers, which fields are required/forbidden for each) hasn't run
+ * for real; try both audiences and one delete in step 5 above before
+ * relying on it. createEvent/cancelEvent (2026-08-10) are new and
+ * completely unexercised too — same commitJsonArrayMutation_ path as
+ * every other "log"-shaped target, so the mechanism is low-risk, but
+ * the two-target applyBatch pairing with scheduleNotification (and the
+ * client-generated id it depends on) has never actually run against a
+ * real deployment; try the full sequence in step 5 above — create with
+ * a linked notification, cancel as creator, confirm a non-creator
+ * teacher can't cancel but an admin can — before relying on it.
  */
 
 // Every request becomes a list of { action, payload } operations — a
@@ -297,6 +474,10 @@ function doPost(e) {
     var requestsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "requests"; });
     var notificationsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "notifications"; });
     var signupsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "signups"; });
+    var blogOps = operations.filter(function (op) { return ACTIONS[op.action].target === "blog"; });
+    var eventsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "events"; });
+    var announcementsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "announcements"; });
+    var classesOps = operations.filter(function (op) { return ACTIONS[op.action].target === "classes"; });
 
     // studentsOps/teachersOps (createStudentAccount/createTeacherAccount)
     // run BEFORE signupsOps (approveSignup) on purpose: an
@@ -315,9 +496,39 @@ function doPost(e) {
       var teachersDataPath = props.getProperty("DATA_PATH") || "js/data.js";
       commitTeachersMutation_(owner, repo, branch, teachersDataPath, token, teachersOps);
     }
+    // classesOps (createClass/approveClassRegistration/
+    // declineClassRegistration) run AFTER studentsOps on purpose, same
+    // ordering reasoning as signups above: an approve-a-registration
+    // batch pairs enrollStudentInCourse (target "students") with
+    // approveClassRegistration (target "classes") in one applyBatch, so
+    // if enrolling the student throws (e.g. already enrolled), this
+    // function throws before ever reaching the classesOps commit below
+    // — the class never shows a "confirmed" student with no real course
+    // behind it.
+    if (classesOps.length > 0) {
+      var classesDataPath = props.getProperty("DATA_PATH") || "js/data.js";
+      commitClassesMutation_(owner, repo, branch, classesDataPath, token, classesOps);
+    }
     if (logOps.length > 0) {
       var logPath = props.getProperty("LOG_PATH") || "data/submissions-log.json";
       commitJsonArrayMutation_(owner, repo, branch, logPath, token, logOps);
+      // Same "send after the commit, not inside the handler" reasoning as
+      // submitRequest below — avoids a duplicate email on a 409 retry.
+      // Every recipient address (student, teacher) rides in on the
+      // payload rather than being looked up here — submit.html/
+      // teacher.html already have STUDENTS/TEACHERS/CLASSES loaded
+      // client-side (same trust model as scheduleNotification's
+      // recipientUsernames, see the file header), so there's no reason
+      // to re-fetch and re-parse js/data.js from inside this Apps
+      // Script just to re-derive an email address the caller already has.
+      logOps.forEach(function (op) {
+        if (op.action === "submitWork") {
+          try { sendWorkReceivedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+          try { notifyTeachersOfWork_(op.payload); } catch (e) { /* best-effort only */ }
+        } else if (op.action === "markSubmissionComplete") {
+          try { sendSubmissionGradedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        }
+      });
     }
     if (notificationsOps.length > 0) {
       var notificationsPath = props.getProperty("NOTIFICATIONS_PATH") || "data/scheduled-notifications.json";
@@ -336,8 +547,20 @@ function doPost(e) {
       // committed at this point, so the submitter still gets counted
       // even if the confirmation email doesn't go out.
       requestsOps.forEach(function (op) {
-        if (op.action !== "submitRequest") return;
-        try { sendRequestConfirmationEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        if (op.action === "submitRequest") {
+          try { sendRequestConfirmationEmail_(op.payload); } catch (e) { /* best-effort only */ }
+          // "Ask My Teacher" routes to the assigned teacher(s) instead of
+          // admins — that's the whole point of the category (see
+          // REQUEST_CATEGORIES_ above); every other category goes to
+          // admins, who triage from admin.html's Requests tab.
+          if (op.payload.category === "Ask My Teacher") {
+            try { notifyTeachersOfRequest_(op.payload); } catch (e) { /* best-effort only */ }
+          } else {
+            try { notifyAdminsOfRequest_(op.payload); } catch (e) { /* best-effort only */ }
+          }
+        } else if (op.action === "updateRequestStatus") {
+          try { sendRequestStatusChangedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        }
       });
     }
     if (signupsOps.length > 0) {
@@ -352,10 +575,31 @@ function doPost(e) {
       signupsOps.forEach(function (op) {
         if (op.action === "submitSignup") {
           try { sendSignupReceivedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+          try { notifyAdminsOfSignup_(op.payload); } catch (e) { /* best-effort only */ }
         } else if (op.action === "approveSignup") {
           try { sendSignupApprovedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        } else if (op.action === "declineSignup") {
+          try { sendSignupDeclinedEmail_(op.payload); } catch (e) { /* best-effort only */ }
         }
       });
+    }
+    if (blogOps.length > 0) {
+      var blogPath = props.getProperty("BLOG_PATH") || "data/blog-posts.json";
+      commitJsonArrayMutation_(owner, repo, branch, blogPath, token, blogOps);
+    }
+    if (announcementsOps.length > 0) {
+      var announcementsPath = props.getProperty("ANNOUNCEMENTS_PATH") || "data/announcements.json";
+      commitJsonArrayMutation_(owner, repo, branch, announcementsPath, token, announcementsOps);
+    }
+    if (eventsOps.length > 0) {
+      var eventsPath = props.getProperty("EVENTS_PATH") || "data/calendar-events.json";
+      commitJsonArrayMutation_(owner, repo, branch, eventsPath, token, eventsOps);
+      // No email here — createEvent/cancelEvent send nothing themselves.
+      // The optional "also notify participants" step is just a second,
+      // ordinary scheduleNotification op riding in the same applyBatch
+      // (see createCalendarEventForm_ in js/app.js) — its own
+      // notificationsOps block above already handles it; payload.eventId
+      // just rides along as an extra field on that entry.
     }
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -421,10 +665,134 @@ function sendSignupApprovedEmail_(payload) {
     payload.username + "\" and the password you picked when you signed up.\n\nSee you inside.");
 }
 
+// "Not this time" notice for declineSignup — same trigger point as
+// sendSignupApprovedEmail_ (after the status-flip commit succeeds), the
+// other half of the same decision. payload here is whatever admin.html
+// sent along with the declineSignup op — see signupDeclineOp_ in
+// js/app.js, which snapshots name/email/role from the signup entry the
+// same way signupApproveOp_ already does for approveSignup.
+function sendSignupDeclinedEmail_(payload) {
+  if (!payload.email) return;
+  MailApp.sendEmail(payload.email,
+    "Zenith — about your signup",
+    "Hey " + payload.name + ",\n\n" +
+    "Your " + payload.role + " signup (username \"" + payload.username + "\") wasn't approved. " +
+    "If you think this is a mistake, reply to this email and we'll sort it out.");
+}
+
+// Tells every admin a new signup is waiting on them in admin.html's
+// Sign-ups tab. payload.adminEmails is whatever signup.html resolved
+// client-side from ADMINS in js/data.js (already public information —
+// every visitor's browser already has the full ADMINS array, same
+// "NOT SECURE" trust model the file header describes) — trusted the
+// same way scheduleNotification already trusts a client-resolved
+// recipient list, rather than this Apps Script re-fetching and
+// re-parsing js/data.js just to re-derive the same addresses.
+function notifyAdminsOfSignup_(payload) {
+  var emails = payload.adminEmails || [];
+  if (emails.length === 0) return;
+  var subject = "Zenith — new " + (payload.role || "signup") + " signup to review";
+  var body = (payload.name || "Someone") + " (username \"" + payload.username + "\") just signed up as a " +
+    (payload.role || "user") + ". Review it on admin.html's Sign-ups tab.";
+  emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
+}
+
+// "We got it" confirmation for submitWork — same idea as
+// sendRequestConfirmationEmail_, and the intra-site equivalent of
+// submissions-compiler.gs's sendConfirmationEmail_ for a Form
+// submission, so a student sees the same behavior regardless of which
+// path they submitted through. payload.email is whatever submit.html
+// sent (the logged-in student's own email, from STUDENTS).
+function sendWorkReceivedEmail_(payload) {
+  if (!payload.email) return;
+  var chapterUnit = [payload.chapter, payload.unit].filter(Boolean).join(" · ") || "your course";
+  MailApp.sendEmail(payload.email,
+    "Zenith — submission received",
+    "Got your submission for " + chapterUnit + ". We'll take it from here — you'll get another email once feedback is written.");
+}
+
+// Notifies every teacher assigned to this submission's student+course —
+// the intra-site equivalent of submissions-compiler.gs's
+// notifyTeachers_ for a Form submission. payload.teacherEmails is
+// whatever submit.html resolved client-side via CLASSES/TEACHERS in
+// js/data.js (same trust model as notifyAdminsOfSignup_ above).
+function notifyTeachersOfWork_(payload) {
+  var emails = payload.teacherEmails || [];
+  if (emails.length === 0) return;
+  var chapterUnit = [payload.chapter, payload.unit].filter(Boolean).join(" · ") || "chapter/unit not recorded";
+  var subject = "Zenith — new submission (" + (payload.name || payload.username || "unknown student") + ", " + chapterUnit + ")";
+  var body = (payload.name || payload.username || "A student") + " just submitted " + chapterUnit +
+    (payload.courseName ? " for " + payload.courseName : "") + ".\n\n" +
+    "Review it on the Teacher Dashboard's grading queue.";
+  emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
+}
+
+// "It's graded" notice for markSubmissionComplete — the one step in
+// the submission lifecycle that never emailed anyone before. payload
+// here is whatever teacher.html/teacher-student.html sent alongside
+// {id}: email/name/chapter/unit/courseName, snapshotted client-side
+// from the STUDENTS record and the submission entry itself (both
+// already in memory there — see markSubmissionComplete_ in js/app.js)
+// rather than this Apps Script re-fetching js/data.js just to look up
+// one email address by username.
+function sendSubmissionGradedEmail_(payload) {
+  if (!payload.email) return;
+  var chapterUnit = [payload.chapter, payload.unit].filter(Boolean).join(" · ") || "your submission";
+  MailApp.sendEmail(payload.email,
+    "Zenith — your submission was graded",
+    "Your submission for " + chapterUnit +
+    (payload.courseName ? " (" + payload.courseName + ")" : "") +
+    " has been marked complete. Log in to see any feedback left on it.");
+}
+
+// Tells every admin a new request landed in admin.html's Requests tab —
+// every category except "Ask My Teacher", which routes to a teacher
+// instead (see notifyTeachersOfRequest_ below). payload.adminEmails is
+// client-resolved from ADMINS, same trust model as notifyAdminsOfSignup_.
+function notifyAdminsOfRequest_(payload) {
+  var emails = payload.adminEmails || [];
+  if (emails.length === 0) return;
+  var subject = "Zenith — new " + payload.category + ": " + payload.title;
+  var body = (payload.name || "Someone") + " submitted a " + payload.category + " — \"" + payload.title + "\":\n\n" +
+    payload.details + "\n\nReview it on admin.html's Requests tab.";
+  emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
+}
+
+// Tells the assigned teacher(s) a student asked them something via
+// "Ask My Teacher" — this is what actually gets a teacher's attention
+// beyond having to remember to check teacher.html's "Needs to review"
+// queue. payload.teacherEmails is client-resolved via CLASSES/TEACHERS
+// from the student's own courseId, same as notifyTeachersOfWork_ above.
+function notifyTeachersOfRequest_(payload) {
+  var emails = payload.teacherEmails || [];
+  if (emails.length === 0) return;
+  var subject = "Zenith — " + (payload.name || "a student") + " asked you a question";
+  var body = (payload.name || "A student") + (payload.courseName ? " (" + payload.courseName + ")" : "") +
+    " asked: \"" + payload.title + "\"\n\n" + payload.details +
+    "\n\nReply on the Teacher Dashboard's \"Needs to review\" queue.";
+  emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
+}
+
+// Tells the original submitter their request's status changed —
+// updateRequestStatus never emailed anyone before this. payload here is
+// whatever teacher.html sent alongside {id, status}: email/name/title/
+// category, snapshotted client-side from the request entry itself
+// (already in memory in the "Needs to review" queue — see
+// renderTeacherRequestsQueue_ in js/app.js) rather than this Apps
+// Script re-fetching data/requests-log.json just to look the entry back
+// up by id.
+function sendRequestStatusChangedEmail_(payload) {
+  if (!payload.email) return;
+  MailApp.sendEmail(payload.email,
+    "Zenith — your request is now \"" + payload.status + "\"",
+    "Your " + (payload.category || "request") + " — \"" + payload.title + "\" — is now \"" + payload.status + "\".");
+}
+
 // ---------------------------------------------------------------
 // Action handlers. Each has a `target` ("students", "teachers", "log",
-// "requests", "notifications", or "signups") saying which file it
-// mutates, and a `handler(data, payload)` that mutates `data` in place
+// "requests", "notifications", "signups", "blog", or "announcements")
+// saying which file it mutates, and a `handler(data, payload)` that
+// mutates `data` in place
 // (the STUDENTS array for "students", the TEACHERS array for
 // "teachers", the submissions log array for "log", etc.) and throws a
 // descriptive error on any missing/invalid input. Kept deliberately
@@ -443,6 +811,30 @@ var REQUEST_CATEGORIES_ = ["Feature Request", "Resource Request", "Bug Report", 
 var REQUEST_ROLES_ = ["student", "teacher", "parent", "admin"];
 var REQUEST_STATUSES_ = ["New", "In Progress", "Completed"];
 var SIGNUP_ROLES_ = ["student", "teacher"];
+// Only a teacher or an admin can create/cancel a calendar event — a
+// student/parent can only ever be a participant, never an organizer.
+var CALENDAR_EVENT_ROLES_ = ["teacher", "admin"];
+var ANNOUNCEMENT_AUDIENCES_ = ["class", "teachers"];
+var ANNOUNCEMENT_ROLES_ = ["teacher", "admin"];
+// Every roadmap unit letter submittable through submit.html's in-site
+// form — matches the fixed <option> list hardcoded into submit.html's
+// "Type" dropdown. I-information, F-Final Self Check, and M-Mock are
+// deliberately excluded: Mock isn't a unit here, it's a chapter — see
+// SUBMISSION_CHAPTERS_ just below.
+var SUBMISSION_UNITS_ = ["B", "C", "S", "R", "T", "N", "L"];
+// Every chapter selectable through submit.html's "Chapter" dropdown —
+// Chapter 1 through 12, plus M1 through M16 for mocks. Mock roadmap
+// items in js/data.js all share the literal chapter value "Chapter M"
+// regardless of which mock number they are (see the M-Mock category),
+// so there's no way to derive "M1"..."M16" from course.roadmap the way
+// the regular chapters could be — this list is hand-authored to match
+// submit.html's markup instead.
+var SUBMISSION_CHAPTERS_ = (function () {
+  var chapters = [];
+  for (var i = 1; i <= 12; i++) chapters.push("Chapter " + i);
+  for (var i = 1; i <= 16; i++) chapters.push("M" + i);
+  return chapters;
+})();
 // 3-30 chars, letters/numbers/underscore/period/hyphen — same rough
 // shape as every existing STUDENTS/TEACHERS username, just not
 // formally enforced anywhere until now since every existing one was
@@ -465,6 +857,56 @@ var ACTIONS = {
       var entry = log.find(function (e) { return e.id === payload.id; });
       if (!entry) throw new Error("No submission with id " + payload.id + " found in the log");
       entry.status = "Complete";
+    }
+  },
+
+  // Backs submit.html's in-site submission form — an alternative to
+  // going through the external Google Form + submissions-compiler.gs
+  // pipeline, for any of SUBMISSION_UNITS_'s roadmap categories
+  // (answerable as typed text) over any of SUBMISSION_CHAPTERS_'s
+  // chapters. A submission that needs a photo of written work attached
+  // still has to go through the Google Form — this action only ever
+  // accepts typed text, never a file. Produces an entry shaped exactly
+  // like buildEntryFromResponse_ in submissions-compiler.gs
+  // (id/receivedAt/status/courseId/username/chapter/unit/answers/
+  // ocrText/formResponseId) so every existing reader
+  // (renderSubmissionLog, teacherSubmissionCardHtml,
+  // submissionTextAnswer, the grading workflow in CLAUDE.md) treats a
+  // form-submitted and a site-submitted entry identically. ocrText and
+  // formResponseId are always null here — there's no photo to OCR and
+  // no Google Form response behind this path. See doPost's NOTIFICATIONS
+  // note above for the "we got it"/teacher-notify emails this sends.
+  submitWork: {
+    target: "log",
+    handler: function (log, payload) {
+      if (!payload.username || !payload.courseId || !payload.chapter || !payload.unit || !payload.answer) {
+        throw new Error("submitWork requires username, courseId, chapter, unit, and answer");
+      }
+      if (SUBMISSION_UNITS_.indexOf(payload.unit) === -1) {
+        throw new Error("Invalid unit: " + payload.unit + " (must be one of " + SUBMISSION_UNITS_.join(", ") + ")");
+      }
+      if (SUBMISSION_CHAPTERS_.indexOf(payload.chapter) === -1) {
+        throw new Error("Invalid chapter: " + payload.chapter + " (must be one of " + SUBMISSION_CHAPTERS_.join(", ") + ")");
+      }
+      log.unshift({
+        id: "sub_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
+        receivedAt: new Date().toISOString(),
+        status: "pending",
+        courseId: payload.courseId,
+        username: payload.username,
+        chapter: payload.chapter,
+        unit: payload.unit,
+        answers: {
+          username: payload.username,
+          course: payload.courseId,
+          chapter: payload.chapter,
+          unit: payload.unit,
+          answer: payload.answer,
+          "feedback-and-remarks": payload.remarks || ""
+        },
+        ocrText: null,
+        formResponseId: null
+      });
     }
   },
 
@@ -683,7 +1125,14 @@ var ACTIONS = {
         message: payload.message,
         status: "Pending",
         sentAt: null,
-        recipientCount: null
+        recipientCount: null,
+        // Set only when this notification was scheduled alongside a
+        // calendar event (createCalendarEventForm_'s "also notify"
+        // sub-form, js/app.js) — an ordinary teacher.html notification
+        // never sets this, so it stays null there. Purely informational;
+        // nothing currently reads it back (no cascade-cancel yet — see
+        // ACTIONS.cancelEvent, which doesn't touch this file).
+        eventId: payload.eventId || null
       });
     }
   },
@@ -707,6 +1156,88 @@ var ACTIONS = {
         throw new Error("Only a Pending notification can be cancelled (this one is " + entry.status + ")");
       }
       entry.status = "Cancelled";
+    }
+  },
+
+  // Backs calendar.html's "New event" form (teacher.html/admin.html's
+  // in-site calendar) — creates one Active event in
+  // data/calendar-events.json. The event's own id is CLIENT-generated
+  // (payload.id), unlike every other action in this file, because
+  // doPost only ever returns {ok:true} — an id minted here could never
+  // be echoed back in time to let the caller link a same-request
+  // scheduleNotification (payload.eventId) to this event via one
+  // applyBatch. participantStudentUsernames/participantTeacherUsernames/
+  // classIds aren't cross-checked against CLASSES here — same trust
+  // level as scheduleNotification's recipientUsernames (see header
+  // comment). The creator is force-included as a teacher participant
+  // even if the client forgot to check their own box.
+  createEvent: {
+    target: "events",
+    handler: function (events, payload) {
+      if (!payload.id || !payload.username || !payload.role || !payload.title || !payload.startAt) {
+        throw new Error("createEvent requires id, username, role, title, and startAt");
+      }
+      if (CALENDAR_EVENT_ROLES_.indexOf(payload.role) === -1) {
+        throw new Error("Invalid role: " + payload.role);
+      }
+      if (events.some(function (e) { return e.id === payload.id; })) {
+        throw new Error("Event id already exists: " + payload.id);
+      }
+      var startAt = new Date(payload.startAt);
+      if (isNaN(startAt.getTime())) throw new Error("Invalid startAt: " + payload.startAt);
+      var endAt = null;
+      if (payload.endAt) {
+        endAt = new Date(payload.endAt);
+        if (isNaN(endAt.getTime())) throw new Error("Invalid endAt: " + payload.endAt);
+        if (endAt.getTime() < startAt.getTime()) throw new Error("endAt can't be before startAt");
+      }
+      var teacherParticipants = payload.participantTeacherUsernames || [];
+      if (teacherParticipants.indexOf(payload.username) === -1) {
+        teacherParticipants = teacherParticipants.concat([payload.username]);
+      }
+      events.unshift({
+        id: payload.id,
+        title: payload.title,
+        description: payload.description || "",
+        startAt: startAt.toISOString(),
+        endAt: endAt ? endAt.toISOString() : null,
+        createdBy: payload.username,
+        createdByName: payload.name || payload.username,
+        createdByRole: payload.role,
+        classIds: payload.classIds || [],
+        participantStudentUsernames: payload.participantStudentUsernames || [],
+        participantTeacherUsernames: teacherParticipants,
+        linkedNotificationId: payload.linkedNotificationId || null,
+        status: "Active",
+        createdAt: new Date().toISOString(),
+        cancelledAt: null
+      });
+    }
+  },
+
+  // Only the event's own creator or an admin can cancel it (an admin
+  // override, unlike cancelScheduledNotification, since admin has
+  // global calendar visibility/management — see teacherCalendarEvents_/
+  // adminCalendarEvents_ in js/app.js). No updateEvent yet — same
+  // create+cancel-only precedent as scheduleNotification/
+  // cancelScheduledNotification; editing is a natural v1.1 addition on
+  // this same "events" target scaffolding, deliberately deferred.
+  cancelEvent: {
+    target: "events",
+    handler: function (events, payload) {
+      if (!payload.id || !payload.username || !payload.role) {
+        throw new Error("cancelEvent requires id, username, and role");
+      }
+      var entry = events.find(function (e) { return e.id === payload.id; });
+      if (!entry) throw new Error("No event with id " + payload.id);
+      if (entry.createdBy !== payload.username && payload.role !== "admin") {
+        throw new Error("Only the event's creator or an admin can cancel it");
+      }
+      if (entry.status !== "Active") {
+        throw new Error("Only an Active event can be cancelled (this one is " + entry.status + ")");
+      }
+      entry.status = "Cancelled";
+      entry.cancelledAt = new Date().toISOString();
     }
   },
 
@@ -854,6 +1385,265 @@ var ACTIONS = {
         email: payload.email || ""
       });
     }
+  },
+
+  // CLASSES (added 2026-08-10) — backs admin.html's "Classes" tab.
+  // createClass appends a brand-new class with a confirmed roster of
+  // zero and a candidate ("pending") roster of whichever students the
+  // admin picked at creation time — nobody's STUDENTS record is touched
+  // yet. A student only actually gets the course once an admin approves
+  // them individually (approveClassRegistration below, always paired
+  // with enrollStudentInCourse — see the doPost ordering note for why
+  // that pairing is safe). id is a stable slug (auto-suggested
+  // client-side from the class name, same idea as blog's slug) and must
+  // be unique across CLASSES, same as every other id-keyed collection in
+  // this file.
+  createClass: {
+    target: "classes",
+    handler: function (classes, payload) {
+      if (!payload.id || !payload.name || !payload.courseId || !payload.teacherUsernames || !payload.teacherUsernames.length) {
+        throw new Error("createClass requires id, name, courseId, and at least one teacherUsername");
+      }
+      if (!/^[a-z0-9-]{2,60}$/.test(payload.id)) {
+        throw new Error("Class id must be 2-60 characters: lowercase letters, numbers, and hyphens only");
+      }
+      var taken = classes.some(function (c) { return c.id === payload.id; });
+      if (taken) throw new Error("A class with id \"" + payload.id + "\" already exists");
+      classes.push({
+        id: payload.id,
+        name: payload.name,
+        courseId: payload.courseId,
+        teacherUsernames: payload.teacherUsernames,
+        studentUsernames: [],
+        pendingStudentUsernames: payload.pendingStudentUsernames || []
+      });
+    }
+  },
+
+  // Moves one username from pendingStudentUsernames to
+  // studentUsernames on the given class — the confirmed roster
+  // (studentUsernames) is what teacherCanSeeCourse_/teacherClasses_ in
+  // js/app.js actually key visibility off of, so this is the moment a
+  // teacher gains visibility into this student, not class creation.
+  // Only reachable paired with enrollStudentInCourse in one applyBatch
+  // from admin.html (see the doPost ordering note above) — never called
+  // alone, so a class can't show a confirmed student with no course.
+  approveClassRegistration: {
+    target: "classes",
+    handler: function (classes, payload) {
+      if (!payload.classId || !payload.username) {
+        throw new Error("approveClassRegistration requires classId and username");
+      }
+      var cls = classes.find(function (c) { return c.id === payload.classId; });
+      if (!cls) throw new Error("No class with id " + payload.classId);
+      var pending = cls.pendingStudentUsernames || [];
+      var idx = pending.indexOf(payload.username);
+      if (idx === -1) throw new Error(payload.username + " is not a pending registration for class " + payload.classId);
+      pending.splice(idx, 1);
+      cls.pendingStudentUsernames = pending;
+      if (cls.studentUsernames.indexOf(payload.username) === -1) cls.studentUsernames.push(payload.username);
+    }
+  },
+
+  // Just removes the candidate from pendingStudentUsernames — no
+  // STUDENTS mutation, since nothing was ever created for a declined
+  // registration (same shape as declineSignup above).
+  declineClassRegistration: {
+    target: "classes",
+    handler: function (classes, payload) {
+      if (!payload.classId || !payload.username) {
+        throw new Error("declineClassRegistration requires classId and username");
+      }
+      var cls = classes.find(function (c) { return c.id === payload.classId; });
+      if (!cls) throw new Error("No class with id " + payload.classId);
+      var pending = cls.pendingStudentUsernames || [];
+      var idx = pending.indexOf(payload.username);
+      if (idx === -1) throw new Error(payload.username + " is not a pending registration for class " + payload.classId);
+      pending.splice(idx, 1);
+      cls.pendingStudentUsernames = pending;
+    }
+  },
+
+  // Appends one real course entry onto an EXISTING student's `courses`
+  // — the actual "enrollment," only reachable from an
+  // approveClassRegistration batch (see above). There's still no
+  // COURSE_TEMPLATES (see the NOT YET IMPLEMENTED note near the top of
+  // js/data.js), so the roadmap has to be cloned from whichever other
+  // student already has this exact courseId — cloneRoadmapTemplate_
+  // below does that, resetting every item's status to "Unlocked" for
+  // Chapter 0/Chapter 1 (Chapter 0 is always-available reference
+  // material — real roadmap data has zero Chapter-0 items ever
+  // "Locked" — and Chapter 1 is the standard starting point) and
+  // "Locked" everywhere else. Throws if no student anywhere has this
+  // courseId yet (nothing to clone) or if this student is already
+  // enrolled in it.
+  enrollStudentInCourse: {
+    target: "students",
+    handler: function (students, payload) {
+      if (!payload.username || !payload.courseId) {
+        throw new Error("enrollStudentInCourse requires username and courseId");
+      }
+      var student = students.find(function (s) { return s.username === payload.username; });
+      if (!student) throw new Error("No student with username " + payload.username);
+      student.courses = student.courses || [];
+      var already = student.courses.some(function (c) { return c.id === payload.courseId; });
+      if (already) throw new Error(payload.username + " is already enrolled in " + payload.courseId);
+      var template = cloneRoadmapTemplate_(students, payload.courseId);
+      student.courses.push({
+        id: payload.courseId,
+        name: template.name,
+        icon: template.icon,
+        roadmap: template.roadmap,
+        feedback: [],
+        cheatSheet: []
+      });
+    }
+  },
+
+  // Backs admin.html's Blog tab "Publish" button (added 2026-08-10) —
+  // appends one post to data/blog-posts.json. Markdown is stored raw
+  // (payload.contentMd, never pre-rendered to HTML here) since
+  // blog-post.html renders it client-side with the same marked.js call
+  // admin.html's live preview already uses — one rendering code path,
+  // not two that could drift. slug is admin-typed (auto-suggested from
+  // the title client-side, editable before publish) rather than
+  // generated here, so the URL is stable and human-chosen; uniqueness
+  // IS enforced here since two posts sharing a slug would silently
+  // shadow each other on blog-post.html's ?slug= lookup.
+  publishBlogPost: {
+    target: "blog",
+    handler: function (posts, payload) {
+      if (!payload.slug || !payload.title || !payload.author || !payload.contentMd) {
+        throw new Error("publishBlogPost requires slug, title, author, and contentMd");
+      }
+      if (!/^[a-z0-9-]{3,80}$/.test(payload.slug)) {
+        throw new Error("Slug must be 3-80 characters: lowercase letters, numbers, and hyphens only");
+      }
+      var taken = posts.some(function (p) { return p.slug === payload.slug; });
+      if (taken) throw new Error("A post with slug \"" + payload.slug + "\" already exists");
+      posts.unshift({
+        slug: payload.slug,
+        title: payload.title,
+        author: payload.author,
+        date: payload.date || new Date().toISOString().slice(0, 10),
+        publishedAt: payload.publishedAt || new Date().toISOString(),
+        tags: payload.tags || [],
+        excerpt: payload.excerpt || "",
+        contentMd: payload.contentMd,
+        publishedBy: payload.publishedBy || null,
+        createdAt: new Date().toISOString(),
+        updatedAt: null
+      });
+    }
+  },
+
+  // Backs admin.html's "Save changes" on an existing post — looked up
+  // by slug, which stays immutable once published (the admin UI keeps
+  // the slug field locked when editing) so blog-post.html?slug=... links
+  // already shared out never break out from under an edit.
+  updateBlogPost: {
+    target: "blog",
+    handler: function (posts, payload) {
+      if (!payload.slug) throw new Error("updateBlogPost requires slug");
+      var entry = posts.find(function (p) { return p.slug === payload.slug; });
+      if (!entry) throw new Error("No post with slug " + payload.slug);
+      if (!payload.title || !payload.author || !payload.contentMd) {
+        throw new Error("updateBlogPost requires title, author, and contentMd");
+      }
+      entry.title = payload.title;
+      entry.author = payload.author;
+      entry.date = payload.date || entry.date;
+      entry.publishedAt = payload.publishedAt || entry.publishedAt;
+      entry.tags = payload.tags || [];
+      entry.excerpt = payload.excerpt || "";
+      entry.contentMd = payload.contentMd;
+      entry.updatedAt = new Date().toISOString();
+    }
+  },
+
+  // Backs admin.html's "Delete" control on a post card — permanent,
+  // no undo (same as every other delete-shaped control in this repo,
+  // there are none yet; this is the first). No confirmation step
+  // exists server-side — admin.html's own confirm() dialog is the only
+  // guard, same trust level as every other action in this file.
+  deleteBlogPost: {
+    target: "blog",
+    handler: function (posts, payload) {
+      if (!payload.slug) throw new Error("deleteBlogPost requires slug");
+      var index = posts.findIndex(function (p) { return p.slug === payload.slug; });
+      if (index === -1) throw new Error("No post with slug " + payload.slug);
+      posts.splice(index, 1);
+    }
+  },
+
+  // Backs teacher.html's "Announce to your class" form
+  // (audience: "class") and admin.html's "Announcements" tab
+  // (audience: "teachers"). classId/className/courseId are required
+  // for "class" (resolved client-side from CLASSES, same trust level
+  // as scheduleNotification trusts recipientUsernames — see the file
+  // header) and forbidden for "teachers", since an admin announcement
+  // has no single class to scope to. id/createdAt/status are generated
+  // here, never trusted from the client, same as every other "append a
+  // log row" action above.
+  postAnnouncement: {
+    target: "announcements",
+    handler: function (announcements, payload) {
+      if (!payload.username || !payload.name || !payload.title || !payload.message) {
+        throw new Error("postAnnouncement requires username, name, title, and message");
+      }
+      if (ANNOUNCEMENT_ROLES_.indexOf(payload.createdByRole) === -1) {
+        throw new Error("Invalid createdByRole: " + payload.createdByRole);
+      }
+      if (ANNOUNCEMENT_AUDIENCES_.indexOf(payload.audience) === -1) {
+        throw new Error("Invalid audience: " + payload.audience);
+      }
+      if (payload.audience === "class") {
+        if (!payload.classId || !payload.className || !payload.courseId) {
+          throw new Error("postAnnouncement requires classId, className, and courseId when audience is \"class\"");
+        }
+      } else if (payload.classId || payload.className || payload.courseId) {
+        throw new Error("postAnnouncement must not include classId/className/courseId when audience is \"teachers\"");
+      }
+      announcements.unshift({
+        id: "ann_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
+        createdBy: payload.username,
+        createdByName: payload.name,
+        createdByRole: payload.createdByRole,
+        createdAt: new Date().toISOString(),
+        audience: payload.audience,
+        classId: payload.classId || null,
+        className: payload.className || null,
+        courseId: payload.courseId || null,
+        title: payload.title,
+        message: payload.message,
+        status: "Active"
+      });
+    }
+  },
+
+  // A teacher/admin can only delete their own announcement (checked
+  // against createdBy), and only while it's still Active. Soft delete
+  // (status -> "Deleted"), same shape as cancelScheduledNotification —
+  // keeps the row for history instead of splicing it out, unlike
+  // deleteBlogPost above (that one's a real delete, since a published
+  // post has no "who can still see it" audience concern the way an
+  // announcement does).
+  deleteAnnouncement: {
+    target: "announcements",
+    handler: function (announcements, payload) {
+      if (!payload.id || !payload.username) {
+        throw new Error("deleteAnnouncement requires id and username");
+      }
+      var entry = announcements.find(function (a) { return a.id === payload.id; });
+      if (!entry) throw new Error("No announcement with id " + payload.id);
+      if (entry.createdBy !== payload.username) {
+        throw new Error("Only the author of this announcement can delete it");
+      }
+      if (entry.status !== "Active") {
+        throw new Error("This announcement was already deleted");
+      }
+      entry.status = "Deleted";
+    }
   }
 };
 
@@ -919,6 +1709,33 @@ function spliceConstArray_(source, constName, newValue) {
   var span = findConstArraySpan_(source, constName);
   var newLiteral = stringifyStudents_(newValue);
   return source.slice(0, span.literalStart) + newLiteral + source.slice(span.literalEnd);
+}
+
+// Used by enrollStudentInCourse — scans `students` (already loaded for
+// this same commit) for any existing course entry with this courseId
+// and deep-copies its roadmap as the template for a brand-new
+// enrollment, resetting every item's status along the way: "Unlocked"
+// for Chapter 0 (reference material — never actually "Locked" in real
+// data) and Chapter 1 (the standard starting point), "Locked"
+// everywhere else. Throws if no student anywhere has this courseId,
+// since there's nothing to clone (no COURSE_TEMPLATES yet — see the
+// NOT YET IMPLEMENTED note near the top of js/data.js).
+function cloneRoadmapTemplate_(students, courseId) {
+  var found = null;
+  students.some(function (s) {
+    var course = (s.courses || []).find(function (c) { return c.id === courseId; });
+    if (course) { found = course; return true; }
+    return false;
+  });
+  if (!found) throw new Error("No existing student has courseId \"" + courseId + "\" — nothing to clone a roadmap from");
+
+  var roadmap = found.roadmap.map(function (item) {
+    var copy = {};
+    Object.keys(item).forEach(function (k) { copy[k] = item[k]; });
+    copy.status = (item.chapter === "Chapter 0" || item.chapter === "Chapter 1") ? "Unlocked" : "Locked";
+    return copy;
+  });
+  return { name: found.name, icon: found.icon, roadmap: roadmap };
 }
 
 // Same output as JSON.stringify(value, null, 2) EXCEPT roadmap items
@@ -1070,6 +1887,43 @@ function commitTeachersMutation_(owner, repo, branch, path, token, ops, attempt)
   if (putResp.getResponseCode() === 409 && attempt < 3) {
     Utilities.sleep(500 * attempt);
     commitTeachersMutation_(owner, repo, branch, path, token, ops, attempt + 1);
+    return;
+  }
+  if (putResp.getResponseCode() >= 300) {
+    throw new Error("Could not write " + path + " (HTTP " + putResp.getResponseCode() + "): " + putResp.getContentText());
+  }
+}
+
+// Same read/mutate/splice/write/retry shape as commitTeachersMutation_
+// just above, parameterized to the CLASSES const instead — same
+// near-duplicate-over-shared-helper reasoning as that function's own
+// comment. `path` is the same js/data.js as commitStudentsMutation_; an
+// approveClassRegistration batch always pairs with enrollStudentInCourse,
+// so doPost commits STUDENTS first (fresh sha), then this function does
+// its own fresh GET (picking up that commit's new sha) before writing
+// CLASSES — two commits to the same file, not a conflict.
+function commitClassesMutation_(owner, repo, branch, path, token, ops, attempt) {
+  attempt = attempt || 1;
+  var apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path + "?ref=" + branch;
+  var headers = { Authorization: "token " + token, Accept: "application/vnd.github+json" };
+
+  var getResp = UrlFetchApp.fetch(apiUrl, { headers: headers, muteHttpExceptions: true });
+  if (getResp.getResponseCode() !== 200) {
+    throw new Error("Could not read " + path + " on branch " + branch + " (HTTP " + getResp.getResponseCode() + "): " + getResp.getContentText());
+  }
+  var file = JSON.parse(getResp.getContentText());
+  var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
+
+  var classes = readConstArray_(source, "CLASSES");
+  ops.forEach(function (op) { ACTIONS[op.action].handler(classes, op.payload); }); // mutates `classes` in place; throws on invalid payload
+  var newSource = spliceConstArray_(source, "CLASSES", classes);
+  var newContent = Utilities.base64Encode(newSource, Utilities.Charset.UTF_8);
+
+  var putResp = commitFile_(owner, repo, branch, path, token, newContent, file.sha, commitMessageForOps_(ops));
+
+  if (putResp.getResponseCode() === 409 && attempt < 3) {
+    Utilities.sleep(500 * attempt);
+    commitClassesMutation_(owner, repo, branch, path, token, ops, attempt + 1);
     return;
   }
   if (putResp.getResponseCode() >= 300) {

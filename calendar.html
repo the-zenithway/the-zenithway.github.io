@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Calendar — Zenith</title>
+<title>Calendar — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -17,21 +17,87 @@
 <body class="portal-body">
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ active: "calendar", actions: ["open", "logout"] });</script>
+<script>
+  // Role isn't known via js/app.js yet (not loaded until below, and
+  // that needs js/data.js too) — same direct-localStorage read
+  // requests.html already uses. This page is open to all four roles,
+  // each with a different nav treatment: a student gets the normal
+  // portal nav with Calendar highlighted, a teacher gets their own
+  // Dashboard/All Students/Calendar nav, and parent/admin (who have no
+  // dedicated nav array) get a static "Calendar" label — same as
+  // admin.html's "Admin" label — with their usual action links.
+  var calendarRole = localStorage.getItem('loggedInRole');
+  if (calendarRole === 'teacher') {
+    renderPortalHeader({ nav: "teacher", active: "calendar", actions: ["requests", "logout"] });
+  } else if (calendarRole === 'parent') {
+    renderPortalHeader({ nav: "label", label: "Calendar", actions: ["lang", "logout"] });
+  } else if (calendarRole === 'admin') {
+    renderPortalHeader({ nav: "label", label: "Calendar", actions: ["requests", "logout"] });
+  } else {
+    renderPortalHeader({ nav: "full", active: "calendar", actions: ["logout"] });
+  }
+</script>
 
-<main class="portal-frame-wrap">
-  <iframe id="embed-frame" class="embed-frame" title="Google Calendar"></iframe>
+<main class="parent-wrap">
+  <div class="parent-col parent-col-wide">
+    <p class="parent-greeting" id="calendar-greeting"></p>
+
+    <div class="calendar-month-nav">
+      <button type="button" id="calendar-prev-month" aria-label="Previous month">←</button>
+      <span class="calendar-month-title" id="calendar-month-title"></span>
+      <button type="button" id="calendar-next-month" aria-label="Next month">→</button>
+      <button type="button" id="calendar-today-btn">Today</button>
+    </div>
+
+    <div id="calendar-grid" class="calendar-grid"></div>
+
+    <div id="calendar-detail-panel" class="calendar-detail-panel" hidden></div>
+
+    <div id="calendar-create-section" hidden>
+      <h2 class="teacher-section-title">New event</h2>
+      <div class="teacher-add-form">
+        <input type="text" class="teacher-add-input" id="calendar-event-title" placeholder="Title" maxlength="120">
+        <textarea class="teacher-add-textarea" id="calendar-event-description" placeholder="Description (optional)"></textarea>
+
+        <div class="teacher-add-form-row">
+          <div>
+            <label class="requests-field-label" for="calendar-event-start">Starts</label>
+            <input type="datetime-local" class="teacher-add-input" id="calendar-event-start">
+          </div>
+          <div>
+            <label class="requests-field-label" for="calendar-event-end">Ends (optional)</label>
+            <input type="datetime-local" class="teacher-add-input" id="calendar-event-end">
+          </div>
+        </div>
+
+        <p class="teacher-add-form-title">Participants</p>
+        <div id="calendar-event-participants"></div>
+
+        <label class="calendar-notify-toggle-row">
+          <input type="checkbox" id="calendar-notify-toggle"> Also schedule a notification email to the student participants above
+        </label>
+        <div id="calendar-notify-fields" class="calendar-notify-fields" hidden>
+          <input type="text" class="teacher-add-input" id="calendar-notif-subject" placeholder="Subject (e.g. Session reminder — Thursday 6pm)">
+          <textarea class="teacher-add-textarea" id="calendar-notif-message" placeholder="Message"></textarea>
+          <div class="teacher-add-form-row">
+            <div>
+              <label class="requests-field-label" for="calendar-notif-send-at">Send at</label>
+              <input type="datetime-local" class="teacher-add-input" id="calendar-notif-send-at">
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="teacher-add-btn" id="calendar-event-submit">Create event</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script>
-  requireLogin();
-  var student = getCurrentStudent();
-  var course = requireSelectedCourse(student);
-  if (course) {
-    renderEmbedPage(student, course.calendarUrl || CALENDAR_URL, "Google Calendar");
-  }
+  var person = requireAnyLogin();
+  if (person) renderCalendarPage(person);
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
