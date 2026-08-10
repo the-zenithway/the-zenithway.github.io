@@ -15,9 +15,9 @@
     ],
     "subject": "session on wed",
     "message": "ap chem",
-    "status": "Pending",
-    "sentAt": null,
-    "recipientCount": null,
+    "status": "Sent",
+    "sentAt": "2026-08-10T15:30:59.064Z",
+    "recipientCount": 2,
     "eventId": null
   },
   {
