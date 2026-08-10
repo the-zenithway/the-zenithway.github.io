@@ -760,6 +760,13 @@
     {
       "type": "deadline",
       "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 1 R (due Wednesday)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-08-10T07:43:48.237Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — new task: Chapter 1 C (due TBD)",
       "url": "right-now.html?course=ap-calculus-bc",
       "timestamp": "2026-08-08T07:55:15.753Z"
