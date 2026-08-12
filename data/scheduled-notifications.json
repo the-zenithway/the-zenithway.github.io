@@ -34,9 +34,9 @@
     ],
     "subject": "Session reminder — Wednesday 4:30~6:30",
     "message": "session for ap chemistry",
-    "status": "Pending",
-    "sentAt": null,
-    "recipientCount": null,
+    "status": "Sent",
+    "sentAt": "2026-08-12T09:41:45.550Z",
+    "recipientCount": 1,
     "eventId": "evt_1786361463511_6jol48"
   },
   {
