@@ -43,8 +43,7 @@ const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
 // status, mark one submission Complete, append one feedback/cheat-
 // sheet/metrics entry, replace one course's rightNow) — never an
 // arbitrary field write, never touching logins or TEACHERS/PARENTS.
-const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbxBll3lRMEbpfsy3R0N-dCdPi9yFyBDpD7GBgvgbZSZr6YsPMEvGhYqL2Y9fEhDLF6XEw/exec";
-
+const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbwcAO2H2NKVErrYs0_z7MaUWh1U54tETGslsnMTCBUrSQTZl0kCiVM-c8PvTOS4weZh3w/exec";
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
@@ -113,12 +112,6 @@ const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbxBll3lR
 // a template only removes the need to copy an existing student's
 // roadmap and manually strip their progress every time.
 const STUDENTS = [
-  {
-    "username": "alice",
-    "password": "alice123",
-    "name": "Alice Inthe Wonderland",
-    "email": ""
-  },
   {
     "username": "bogue",
     "password": "password",

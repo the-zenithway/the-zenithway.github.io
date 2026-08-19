@@ -11,16 +11,20 @@ const { createTransport } = require("./mailer");
  * Usage: node send-scheduled-notifications.js [<data.js-path>] [<notifications-path>] [--dry-run]
  *
  * Polls data/scheduled-notifications.json (written by teacher.html's
- * "Schedule a notification" form via zenith-data-writer.gs's
- * scheduleNotification action) for "Pending" entries whose `sendAt`
- * has passed, emails every recipient in that entry's
- * `recipientUsernames` (resolved fresh against js/data.js's STUDENTS —
- * NOT from the entry's `recipientNames` snapshot, which is display-only
- * for teacher.html) who has a non-empty email, marks each sent entry
- * "Sent", and writes the file back. The GitHub Actions workflow that
- * runs this is responsible for committing that write — same division
- * of labor as build-changelog-events.js and its caller in
- * .github/workflows/notify.yml.
+ * "Schedule a notification" form, or automatically by
+ * zenith-data-writer.gs's createEvent — see sessionPhotoReminderOp_
+ * there — via the same scheduleNotification action either way) for
+ * "Pending" entries whose `sendAt` has passed, emails every recipient in
+ * that entry's `recipientUsernames` (resolved fresh against js/data.js's
+ * STUDENTS *and* TEACHERS — NOT from the entry's `recipientNames`
+ * snapshot, which is display-only for teacher.html) who has a
+ * non-empty email, marks each sent entry "Sent", and writes the file
+ * back. Teachers joined the recipient pool alongside students on
+ * 2026-08-10 for the session-photo-reminder use case above — before
+ * that, every recipientUsername was always a student's. The GitHub
+ * Actions workflow that runs this is responsible for committing that
+ * write — same division of labor as build-changelog-events.js and its
+ * caller in .github/workflows/notify.yml.
  *
  * Deliberately NOT done inside zenith-data-writer.gs (Apps Script):
  * that endpoint only ever runs in response to a live request from a
@@ -42,7 +46,16 @@ async function main() {
   const dataPath = positional[0] || path.join(__dirname, "../../js/data.js");
   const notificationsPath = positional[1] || path.join(__dirname, "../../data/scheduled-notifications.json");
 
-  const { students } = loadData(fs.readFileSync(dataPath, "utf8"));
+  const { students, teachers } = loadData(fs.readFileSync(dataPath, "utf8"));
+  // A recipient pool of students AND teachers — originally this only
+  // ever addressed students (a teacher notifying their own class), but
+  // zenith-data-writer.gs's createEvent now auto-schedules a session
+  // photo-upload reminder addressed to the event's teacher participants
+  // (see sessionPhotoReminderOp_ there), so a recipientUsername can now
+  // be a teacher's username too. Looked up by username across both
+  // arrays rather than picking a pool per-notification, since nothing
+  // here currently marks which kind of username a given entry expects.
+  const people = students.concat(teachers);
   const notifications = JSON.parse(fs.readFileSync(notificationsPath, "utf8"));
 
   const now = new Date();
@@ -57,25 +70,25 @@ async function main() {
 
   for (const notif of due) {
     const wanted = notif.recipientUsernames || [];
-    const recipients = students.filter((s) => wanted.indexOf(s.username) !== -1 && s.email);
+    const recipients = people.filter((p) => wanted.indexOf(p.username) !== -1 && p.email);
     if (recipients.length < wanted.length) {
       console.log(`"${notif.subject}" (${notif.id}): ${wanted.length - recipients.length} of ${wanted.length} recipient(s) skipped (removed/renamed since scheduling, or no email on file).`);
     }
 
-    for (const student of recipients) {
-      const { subject, html } = renderScheduledNotificationEmail(student.name, {
-        teacherName: notif.createdByName || "your teacher",
+    for (const person of recipients) {
+      const { subject, html } = renderScheduledNotificationEmail(person.name, {
+        teacherName: notif.createdByName || "Zenith",
         subject: notif.subject,
         message: notif.message
       });
       if (dryRun) {
-        console.log(`--- would email ${student.email} (${student.username}) ---`);
+        console.log(`--- would email ${person.email} (${person.username}) ---`);
         console.log(`Subject: ${subject}`);
         console.log(html);
         continue;
       }
-      await transport.sendMail({ from: process.env.GMAIL_USER, to: student.email, subject, html });
-      console.log(`Sent "${notif.subject}" to ${student.email} (${student.username}).`);
+      await transport.sendMail({ from: process.env.GMAIL_USER, to: person.email, subject, html });
+      console.log(`Sent "${notif.subject}" to ${person.email} (${person.username}).`);
     }
 
     notif.status = "Sent";

@@ -707,11 +707,31 @@ const SUBMISSION_STATUS_COLORS = {
 // Every non-file answer is a string; a file-upload question's answer
 // is the only array (a list of Drive file IDs) — so scanning for the
 // first array value finds it without depending on the exact question
-// title, which can change on the Form.
+// title, which can change on the Form. A submitWork submission (the
+// intra-site path, no Form involved) carries at most one photo instead,
+// as a plain URL on entry.photoUrl rather than a Drive-ID array — folded
+// into this same list so submissionThumbHtml_ below (and anything else
+// that calls this) doesn't need to know the two paths exist.
 function submissionFileIds(entry) {
   const answers = entry.answers || {};
   const key = Object.keys(answers).find(function (k) { return Array.isArray(answers[k]); });
-  return key ? answers[key] : [];
+  const ids = key ? answers[key] : [];
+  return entry.photoUrl ? ids.concat([entry.photoUrl]) : ids;
+}
+
+// One thumbnail for a submission/request photo — `idOrUrl` is either a
+// bare Drive file ID (legacy Form uploads, wrapped in a Drive thumbnail/
+// view URL) or a full URL already (a submitWork/submitRequest upload,
+// committed straight into this repo by commitUploadedPhoto_ in
+// zenith-data-writer.gs — see that function for why it's a plain repo
+// URL rather than another Drive ID).
+function submissionThumbHtml_(idOrUrl) {
+  const isUrl = idOrUrl.indexOf("://") !== -1;
+  const viewUrl = isUrl ? idOrUrl : "https://drive.google.com/file/d/" + idOrUrl + "/view";
+  const thumbUrl = isUrl ? idOrUrl : "https://drive.google.com/thumbnail?id=" + idOrUrl + "&sz=w400";
+  return '<a class="submit-log-thumb" href="' + escapeHtml_(viewUrl) + '" target="_blank" rel="noopener">' +
+    '<img src="' + escapeHtml_(thumbUrl) + '" alt="Submitted photo" loading="lazy">' +
+  '</a>';
 }
 
 // A submission's actual work can arrive as an uploaded photo (OCR'd
@@ -757,11 +777,7 @@ function submissionFoldHtml(label, innerHtml) {
 // ("feedback-and-remarks" on the Form) — each independently foldable
 // rather than one all-or-nothing toggle for the whole card.
 function submissionFoldSectionsHtml(entry) {
-  const thumbsHtml = submissionFileIds(entry).map(function (id) {
-    return '<a class="submit-log-thumb" href="https://drive.google.com/file/d/' + id + '/view" target="_blank" rel="noopener">' +
-      '<img src="https://drive.google.com/thumbnail?id=' + id + '&sz=w400" alt="Submitted photo" loading="lazy">' +
-    '</a>';
-  }).join("");
+  const thumbsHtml = submissionFileIds(entry).map(submissionThumbHtml_).join("");
   const textAnswer = submissionTextAnswer(entry);
   const remark = (entry.answers && entry.answers["feedback-and-remarks"]) || "";
 
@@ -973,18 +989,62 @@ function renderSubmissionLog(student, course) {
 // be built from. Photo attachments still aren't collected here — use
 // the external Google Form for a submission that needs one.
 
+// Reads an <input type="file"> photo (from submit.html or requests.html),
+// downsizes it via <canvas> to a max 1600px edge — a phone photo can be
+// 3000px+/several MB, and zenith-data-writer.gs's commitUploadedPhoto_
+// enforces a size ceiling on what it'll commit to the repo, so shrinking
+// client-side (rather than rejecting client-side) is what actually keeps
+// a normal phone photo submittable — and returns
+// { dataBase64, mimeType, filename }, or resolves null if no file was
+// chosen. mimeType is kept as the original file's type (PNG stays PNG,
+// so a screenshot's text doesn't pick up JPEG compression artifacts;
+// anything else is normalized to JPEG) — only pixel dimensions shrink,
+// canvas.toDataURL's quality argument is simply ignored for PNG.
+function readImageAsCompressedBase64_(file) {
+  if (!file) return Promise.resolve(null);
+  if (file.size > 20 * 1024 * 1024) {
+    return Promise.reject(new Error("That photo is too large (over 20MB) — try a smaller one."));
+  }
+  return new Promise(function (resolve, reject) {
+    const reader = new FileReader();
+    reader.onerror = function () { reject(new Error("Could not read the selected photo.")); };
+    reader.onload = function () {
+      const img = new Image();
+      img.onerror = function () { reject(new Error("Could not read the selected photo — try a JPEG or PNG.")); };
+      img.onload = function () {
+        const maxEdge = 1600;
+        const scale = Math.min(1, maxEdge / Math.max(img.width, img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * scale) || 1;
+        canvas.height = Math.round(img.height * scale) || 1;
+        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+        const mimeType = file.type === "image/png" ? "image/png" : "image/jpeg";
+        const dataUrl = canvas.toDataURL(mimeType, 0.85);
+        resolve({ dataBase64: dataUrl.split(",")[1], mimeType: mimeType, filename: file.name });
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 // Reads submit.html's form fields, validates, and posts via
-// postTeacherAction_. Clears the answer/remarks fields and refreshes
-// the submission log on success. email/name/courseName/teacherEmails
-// ride along in the payload so zenith-data-writer.gs can send the
-// "we got it" confirmation and the teacher "new submission" notice
-// without re-fetching js/data.js itself — see that file's NOTIFICATIONS
-// note.
+// postTeacherAction_. Clears the answer/remarks/photo fields and
+// refreshes the submission log on success. email/name/courseName/
+// teacherEmails ride along in the payload so zenith-data-writer.gs can
+// send the "we got it" confirmation and the teacher "new submission"
+// notice without re-fetching js/data.js itself — see that file's
+// NOTIFICATIONS note. The optional photo (see readImageAsCompressedBase64_
+// above) rides along as `photo` — zenith-data-writer.gs uploads it and
+// replaces it with a `photoUrl` before ACTIONS.submitWork ever sees the
+// payload, so this function doesn't need to know anything about where
+// it ends up.
 function submitWorkForm_(student, course, buttonEl) {
   const chapterEl = document.getElementById("submit-chapter");
   const unitEl = document.getElementById("submit-unit");
   const answerEl = document.getElementById("submit-answer");
   const remarksEl = document.getElementById("submit-remarks");
+  const photoEl = document.getElementById("submit-photo");
 
   const chapter = chapterEl.value;
   const answer = answerEl.value.trim();
@@ -997,21 +1057,35 @@ function submitWorkForm_(student, course, buttonEl) {
     return;
   }
 
-  postTeacherAction_("submitWork", {
-    username: student.username,
-    name: student.name,
-    email: student.email,
-    courseId: course.id,
-    courseName: course.name,
-    chapter: chapter,
-    unit: unitEl.value,
-    answer: answer,
-    remarks: remarksEl.value.trim(),
-    teacherEmails: teachersForStudentCourse_(student, course.id).map(function (t) { return t.email; })
-  }, buttonEl, function () {
-    answerEl.value = "";
-    remarksEl.value = "";
-    renderSubmissionLog(student, course);
+  const originalText = buttonEl.textContent;
+  buttonEl.disabled = true;
+  buttonEl.textContent = "Reading photo...";
+
+  readImageAsCompressedBase64_(photoEl && photoEl.files[0]).then(function (photo) {
+    buttonEl.disabled = false;
+    buttonEl.textContent = originalText;
+    postTeacherAction_("submitWork", {
+      username: student.username,
+      name: student.name,
+      email: student.email,
+      courseId: course.id,
+      courseName: course.name,
+      chapter: chapter,
+      unit: unitEl.value,
+      answer: answer,
+      remarks: remarksEl.value.trim(),
+      photo: photo,
+      teacherEmails: teachersForStudentCourse_(student, course.id).map(function (t) { return t.email; })
+    }, buttonEl, function () {
+      answerEl.value = "";
+      remarksEl.value = "";
+      if (photoEl) photoEl.value = "";
+      renderSubmissionLog(student, course);
+    });
+  }, function (err) {
+    buttonEl.disabled = false;
+    buttonEl.textContent = originalText;
+    alert(err.message);
   });
 }
 
@@ -1048,6 +1122,15 @@ function escapeHtml_(str) {
     .replace(/'/g, "&#39;");
 }
 
+// One optional photo/screenshot per request — reuses submissionThumbHtml_
+// (and its .submit-log-thumb/.submit-log-thumbs CSS) rather than a
+// second thumbnail implementation, even though a request only ever
+// carries at most one. Most useful for a Bug Report screenshot, but not
+// restricted to that category — see submitRequestForm_ in requests.html.
+function requestPhotoHtml_(entry) {
+  return entry.photoUrl ? '<div class="submit-log-thumbs">' + submissionThumbHtml_(entry.photoUrl) + '</div>' : "";
+}
+
 function requestLogItemHtml(entry) {
   const statusClass = "requests-log-status-" + (entry.status || "New").toLowerCase().replace(/[^a-z0-9]+/g, "-");
   return '<div class="requests-log-item">' +
@@ -1058,6 +1141,7 @@ function requestLogItemHtml(entry) {
     '</div>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    requestPhotoHtml_(entry) +
   '</div>';
 }
 
@@ -1102,6 +1186,7 @@ function submitRequestForm_(person, buttonEl) {
   const titleEl = document.getElementById("requests-title");
   const detailsEl = document.getElementById("requests-details");
   const categoryEl = document.getElementById("requests-category");
+  const photoEl = document.getElementById("requests-photo");
 
   const title = titleEl.value.trim();
   const details = detailsEl.value.trim();
@@ -1154,28 +1239,46 @@ function submitRequestForm_(person, buttonEl) {
     ? teachersForStudentCourse_(getCurrentStudent(), courseId).map(function (t) { return t.email; })
     : [];
 
-  postTeacherAction_("submitRequest", {
-    username: username,
-    name: name,
-    email: email,
-    role: role,
-    category: categoryEl.value,
-    courseId: courseId,
-    courseName: courseName,
-    title: title,
-    details: details,
-    teacherEmails: teacherEmails,
-    adminEmails: adminEmails_()
-  }, buttonEl, function () {
-    titleEl.value = "";
-    detailsEl.value = "";
-    if (person) {
-      renderRequestsLog(person);
-    } else {
-      document.getElementById("requests-guest-name").value = "";
-      document.getElementById("requests-guest-email").value = "";
-      alert("Thanks — we got your request. Check your email for confirmation.");
-    }
+  const originalText = buttonEl.textContent;
+  buttonEl.disabled = true;
+  buttonEl.textContent = "Reading photo...";
+
+  // Optional screenshot/photo (most useful for a Bug Report, but not
+  // restricted to it) — see readImageAsCompressedBase64_ above.
+  // zenith-data-writer.gs uploads it and replaces `photo` with a
+  // `photoUrl` before ACTIONS.submitRequest ever sees the payload.
+  readImageAsCompressedBase64_(photoEl && photoEl.files[0]).then(function (photo) {
+    buttonEl.disabled = false;
+    buttonEl.textContent = originalText;
+    postTeacherAction_("submitRequest", {
+      username: username,
+      name: name,
+      email: email,
+      role: role,
+      category: categoryEl.value,
+      courseId: courseId,
+      courseName: courseName,
+      title: title,
+      details: details,
+      photo: photo,
+      teacherEmails: teacherEmails,
+      adminEmails: adminEmails_()
+    }, buttonEl, function () {
+      titleEl.value = "";
+      detailsEl.value = "";
+      if (photoEl) photoEl.value = "";
+      if (person) {
+        renderRequestsLog(person);
+      } else {
+        document.getElementById("requests-guest-name").value = "";
+        document.getElementById("requests-guest-email").value = "";
+        alert("Thanks — we got your request. Check your email for confirmation.");
+      }
+    });
+  }, function (err) {
+    buttonEl.disabled = false;
+    buttonEl.textContent = originalText;
+    alert(err.message);
   });
 }
 
@@ -1216,6 +1319,7 @@ function adminRequestCardHtml_(entry) {
     '<p class="requests-log-submitter">' + submitter + '</p>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    requestPhotoHtml_(entry) +
     '<div class="teacher-request-status-row">' +
       '<select class="teacher-filter-select admin-request-status-select" data-request-id="' + entry.id + '">' + statusOptions + '</select>' +
       '<button type="button" class="teacher-add-btn" data-admin-update-request="' + entry.id + '">Update</button>' +
@@ -1547,6 +1651,17 @@ function adminExistingClassCardHtml_(cls) {
     return teacher ? teacher.name : username;
   }).join(", ") || "none";
   const pendingCount = (cls.pendingStudentUsernames || []).length;
+  const onRoster = (cls.studentUsernames || []).concat(cls.pendingStudentUsernames || []);
+  const addable = STUDENTS.filter(function (s) { return onRoster.indexOf(s.username) === -1; });
+  const addCheckboxesHtml = addable.length
+    ? addable.map(function (s) {
+        return '<label class="teacher-notif-recipient-row">' +
+          '<input type="checkbox" class="admin-class-add-student-checkbox" value="' + escapeHtml_(s.username) + '">' +
+          '<span class="teacher-notif-recipient-name">' + escapeHtml_(s.name) + '</span>' +
+        '</label>';
+      }).join("")
+    : '<p class="requests-log-empty">Every student is already on this class’s roster.</p>';
+
   return '<div class="requests-log-item">' +
     '<div class="requests-log-meta">' +
       '<span class="requests-log-category">' + escapeHtml_(course.name) + '</span>' +
@@ -1556,6 +1671,11 @@ function adminExistingClassCardHtml_(cls) {
       'Confirmed roster: ' + cls.studentUsernames.length +
       (pendingCount ? ' · ' + pendingCount + ' pending approval' : '') +
     '</p>' +
+    '<button type="button" class="teacher-add-btn admin-class-toggle-add-btn" data-toggle-add-class="' + escapeHtml_(cls.id) + '">+ Add candidate students</button>' +
+    '<div class="admin-class-add-panel" data-add-panel-class="' + escapeHtml_(cls.id) + '" hidden>' +
+      '<div class="teacher-notif-recipients">' + addCheckboxesHtml + '</div>' +
+      (addable.length ? '<button type="button" class="teacher-add-btn" data-submit-add-class="' + escapeHtml_(cls.id) + '">Add selected as candidates</button>' : '') +
+    '</div>' +
   '</div>';
 }
 
@@ -1563,6 +1683,29 @@ function adminExistingClassCardHtml_(cls) {
 // wires every row's Approve/Decline button — called on first load of
 // the Classes tab, and again after every create/approve/decline so
 // both lists stay in sync with the optimistic local state.
+// { username, name, email } for each given username — rides along on
+// createClass/addPendingClassStudents payloads as `candidateStudents`
+// so zenith-data-writer.gs can email each new candidate without a
+// server-side STUDENTS lookup (same client-resolved-recipient trust
+// model every other notification in this file already uses).
+function classCandidateEmailInfo_(usernames) {
+  return usernames.map(function (username) {
+    const s = STUDENTS.find(function (st) { return st.username === username; });
+    return { username: username, name: s ? s.name : username, email: s ? (s.email || "") : "" };
+  });
+}
+
+// This class's teachers' email addresses, for the "new student
+// enrolled" notification — same resolution teacherEmails already uses
+// elsewhere (courseWriteContext_ in the teacher-student write-control
+// section above).
+function classTeacherEmails_(cls) {
+  return cls.teacherUsernames.map(function (username) {
+    const t = TEACHERS.find(function (te) { return te.username === username; });
+    return t ? (t.email || "") : "";
+  }).filter(Boolean);
+}
+
 function renderAdminClassesLists_(admin) {
   const pendingList = document.getElementById("admin-class-pending-list");
   const existingList = document.getElementById("admin-class-existing-list");
@@ -1583,9 +1726,17 @@ function renderAdminClassesLists_(admin) {
       const username = btn.getAttribute("data-approve-username");
       const cls = CLASSES.find(function (c) { return c.id === classId; });
       if (!cls) return;
+      const student = STUDENTS.find(function (s) { return s.username === username; });
+      const course = courseDisplayInfo_(cls.courseId);
       const operations = [
         { action: "enrollStudentInCourse", payload: { username: username, courseId: cls.courseId } },
-        { action: "approveClassRegistration", payload: { classId: classId, username: username } }
+        { action: "approveClassRegistration", payload: {
+            classId: classId, username: username,
+            studentEmail: student ? (student.email || "") : "",
+            studentName: student ? student.name : username,
+            className: cls.name, courseName: course.name,
+            teacherEmails: classTeacherEmails_(cls)
+          } }
       ];
       postTeacherAction_("applyBatch", { operations: operations }, btn, function () {
         const idx = (cls.pendingStudentUsernames || []).indexOf(username);
@@ -1602,9 +1753,57 @@ function renderAdminClassesLists_(admin) {
       const username = btn.getAttribute("data-decline-username");
       const cls = CLASSES.find(function (c) { return c.id === classId; });
       if (!cls) return;
-      postTeacherAction_("declineClassRegistration", { classId: classId, username: username }, btn, function () {
+      const student = STUDENTS.find(function (s) { return s.username === username; });
+      const course = courseDisplayInfo_(cls.courseId);
+      postTeacherAction_("declineClassRegistration", {
+        classId: classId, username: username,
+        studentEmail: student ? (student.email || "") : "",
+        studentName: student ? student.name : username,
+        className: cls.name, courseName: course.name
+      }, btn, function () {
         const idx = (cls.pendingStudentUsernames || []).indexOf(username);
         if (idx !== -1) cls.pendingStudentUsernames.splice(idx, 1);
+        renderAdminClassesLists_(admin);
+      });
+    });
+  });
+
+  // "+ Add candidate students" just shows/hides that class's own
+  // checkbox panel (built fresh into the card's HTML above, already
+  // excluding anyone on the confirmed or pending roster) — no fetch,
+  // it's already in the DOM.
+  existingList.querySelectorAll("[data-toggle-add-class]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const panel = existingList.querySelector('[data-add-panel-class="' + btn.getAttribute("data-toggle-add-class") + '"]');
+      if (panel) panel.hidden = !panel.hidden;
+    });
+  });
+
+  // Adding candidates to an EXISTING class (including the 3 original
+  // hand-authored ones, which had no way to gain new candidates once
+  // created before this) — same addPendingClassStudents action/pairing
+  // idea as createClass's initial roster, just appended after the fact.
+  existingList.querySelectorAll("[data-submit-add-class]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const classId = btn.getAttribute("data-submit-add-class");
+      const cls = CLASSES.find(function (c) { return c.id === classId; });
+      if (!cls) return;
+      const panel = existingList.querySelector('[data-add-panel-class="' + classId + '"]');
+      const usernames = Array.from(panel.querySelectorAll(".admin-class-add-student-checkbox:checked")).map(function (cb) { return cb.value; });
+      if (usernames.length === 0) {
+        alert("Pick at least one student to add as a candidate first.");
+        return;
+      }
+      const course = courseDisplayInfo_(cls.courseId);
+      postTeacherAction_("addPendingClassStudents", {
+        classId: classId, usernames: usernames,
+        className: cls.name, courseName: course.name,
+        candidateStudents: classCandidateEmailInfo_(usernames)
+      }, btn, function () {
+        cls.pendingStudentUsernames = cls.pendingStudentUsernames || [];
+        usernames.forEach(function (u) {
+          if (cls.pendingStudentUsernames.indexOf(u) === -1 && cls.studentUsernames.indexOf(u) === -1) cls.pendingStudentUsernames.push(u);
+        });
         renderAdminClassesLists_(admin);
       });
     });
@@ -1661,7 +1860,9 @@ function setUpAdminClassesDashboard_(admin) {
       name: name,
       courseId: courseId,
       teacherUsernames: teacherUsernames,
-      pendingStudentUsernames: pendingStudentUsernames
+      pendingStudentUsernames: pendingStudentUsernames,
+      courseName: courseDisplayInfo_(courseId).name,
+      candidateStudents: classCandidateEmailInfo_(pendingStudentUsernames)
     };
 
     postTeacherAction_("createClass", payload, createBtn, function () {
@@ -2869,6 +3070,7 @@ function teacherRequestQueueItemHtml_(entry, student) {
     '<p class="requests-log-submitter">' + escapeHtml_(studentLabel) + '</p>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    requestPhotoHtml_(entry) +
     '<div class="teacher-request-status-row">' +
       '<select class="teacher-filter-select teacher-request-status-select" data-request-id="' + entry.id + '">' + statusOptions + '</select>' +
       '<button type="button" class="teacher-add-btn" data-update-request="' + entry.id + '">Update</button>' +
@@ -3797,6 +3999,7 @@ function teacherStudentRequestItemHtml_(entry) {
     '</div>' +
     '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
     '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
+    requestPhotoHtml_(entry) +
   '</div>';
 }
 

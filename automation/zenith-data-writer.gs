@@ -145,19 +145,42 @@
  * Cancelling an event does NOT cascade-cancel its linkedNotificationId,
  * if one exists — that's a known v1.1 gap, not an oversight.
  *
- * createClass/approveClassRegistration/declineClassRegistration/
- * enrollStudentInCourse (added 2026-08-10) back admin.html's "Classes"
- * tab, the write path behind catalog.html. createClass appends a new
- * CLASSES entry with an empty confirmed roster and a candidate
- * ("pending") roster of whichever students the admin picked — nothing
- * touches STUDENTS yet. Approving one candidate is sent as a batch of
- * TWO ops, same shape as signup approval: enrollStudentInCourse (target
- * "students", runs first) actually appends the course — cloning a
- * roadmap template from whichever other student already has that
- * courseId, since there's still no COURSE_TEMPLATES (see js/data.js) —
- * paired with approveClassRegistration (target "classes"), which moves
- * the username from pending to confirmed. Declining just removes the
- * candidate, no STUDENTS mutation. Both write to js/data.js via
+ * SESSION PHOTO REMINDER (added 2026-08-10): every createEvent also
+ * auto-schedules its own companion notification — no opt-in, no extra
+ * click — reminding the event's teacher participants to file session
+ * photos in the shared Drive folder 30 minutes after the event ends.
+ * See sessionPhotoReminderOp_ (defined right after doPost) for the
+ * exact message/timing and SESSION_PHOTOS_DRIVE_FOLDER_URL_ for the
+ * destination folder. Built entirely on the EXISTING
+ * scheduleNotification/send-scheduled-notifications.js machinery — no
+ * new file, no new cron job — which is why
+ * automation/notifications/send-scheduled-notifications.js's recipient
+ * resolution had to widen from STUDENTS-only to STUDENTS+TEACHERS on
+ * this same date (a scheduleNotification's recipientUsernames used to
+ * always be a student's; this is the first case where it's a
+ * teacher's). Deliberately unconditional ("any scheduled event", not
+ * just ones explicitly flagged as an IRL session) since there's no
+ * "this is an in-person session" field on a calendar event to gate on.
+ *
+ * createClass/addPendingClassStudents/approveClassRegistration/
+ * declineClassRegistration/enrollStudentInCourse (added 2026-08-10,
+ * addPendingClassStudents added shortly after) back admin.html's
+ * "Classes" tab, the write path behind catalog.html. createClass
+ * appends a new CLASSES entry with an empty confirmed roster and a
+ * candidate ("pending") roster of whichever students the admin picked
+ * at creation — nothing touches STUDENTS yet. addPendingClassStudents
+ * is the same idea applied to a class that already exists — it's what
+ * lets an admin keep nominating candidates for a class after creation,
+ * including the 3 originally hand-authored classes (calc-a/bio-a/
+ * chem-a), which had no way to gain candidates through the UI before
+ * this. Approving one candidate is sent as a batch of TWO ops, same
+ * shape as signup approval: enrollStudentInCourse (target "students",
+ * runs first) actually appends the course — cloning a roadmap template
+ * from whichever other student already has that courseId, since
+ * there's still no COURSE_TEMPLATES (see js/data.js) — paired with
+ * approveClassRegistration (target "classes"), which moves the
+ * username from pending to confirmed. Declining just removes the
+ * candidate, no STUDENTS mutation. All of these write to js/data.js via
  * commitClassesMutation_/commitStudentsMutation_ under the same
  * DATA_PATH property STUDENTS/TEACHERS already use — no new script
  * property needed.
@@ -172,7 +195,14 @@
  * admin UNLESS it's "Ask My Teacher" which emails the assigned
  * teacher(s) instead (notifyAdminsOfRequest_/notifyTeachersOfRequest_),
  * and a request status change emails the original submitter
- * (sendRequestStatusChangedEmail_). All of these follow the exact same
+ * (sendRequestStatusChangedEmail_). Extended again for the Classes
+ * feature: createClass/addPendingClassStudents each email every new
+ * candidate student (sendClassCandidateAddedEmail_, one per
+ * payload.candidateStudents entry), approveClassRegistration emails
+ * both the newly-enrolled student (sendClassRegistrationApprovedEmail_)
+ * and that class's teacher(s) (notifyTeachersOfClassEnrollment_), and
+ * declineClassRegistration emails the candidate
+ * (sendClassRegistrationDeclinedEmail_). All of these follow the exact same
  * pattern the existing confirmation emails already established: sent
  * from doPost AFTER the relevant commit succeeds (never from inside a
  * handler — see the submitRequest email comment below for why),
@@ -185,6 +215,28 @@
  * scheduleNotification's client-resolved recipientUsernames already
  * established — see each notify*_/send*_ function below for exactly
  * which payload fields it expects.
+ *
+ * PHOTO UPLOADS (added 2026-08-10): submitWork and submitRequest can
+ * both carry one optional photo — a submitted photo of written work, or
+ * a bug-report screenshot — as `payload.photo` ({ dataBase64, mimeType,
+ * filename }, already downsized client-side by
+ * readImageAsCompressedBase64_ in js/app.js). doPost uploads it BEFORE
+ * any of the target-grouped commits below (see the photo-upload
+ * preprocessing step near the top of doPost), replacing `photo` with a
+ * plain `photoUrl` string so ACTIONS.submitWork/submitRequest's
+ * handlers never see the raw image data at all — just the URL they
+ * store on the new entry. Uploaded straight into this repo via
+ * commitFile_ (commitUploadedPhoto_, near commitFile_ below) rather
+ * than to Google Drive, the way the Form-bound submissions-compiler.gs
+ * does it — that needs no new OAuth scope on top of the GITHUB_TOKEN
+ * this deployment already has, at the cost of the front-end (js/app.js)
+ * needing to render two different photo shapes: a bare Drive file ID
+ * (legacy Form uploads) or a full URL (this path) — see
+ * submissionFileIds/submissionThumbHtml_ in js/app.js. Unlike the
+ * notification emails above, a failed photo upload is NOT best-effort —
+ * it throws and aborts the whole request, since a photo the submitter
+ * explicitly attached silently going missing would be real content
+ * loss, not a missed nice-to-have.
  *
  * submitRequest (added 2026-08-09) is called from requests.html by
  * students/teachers/parents, not just teacher.html — despite the
@@ -243,6 +295,13 @@
  * JSON.stringify (same as submissions-compiler.gs already does for the
  * first), and all seven share one committer function,
  * commitJsonArrayMutation_ below.
+ *
+ * An eighth, different-shaped target: submitWork/submitRequest's
+ * optional photo (see the PHOTO UPLOADS note above) commits straight to
+ * a fresh path under data/uploads/ — a raw binary file, not a JSON
+ * array entry, so it's NOT one of the seven above and doesn't go
+ * through commitJsonArrayMutation_ at all. See commitUploadedPhoto_
+ * near commitFile_ below.
  *
  * Every other action writes to js/data.js, which is a hand-authored
  * JavaScript file (`const STUDENTS = [...]` / `const TEACHERS = [...]`),
@@ -309,7 +368,17 @@
  * 3. Deploy -> New deployment -> "Web app".
  *      Execute as:      Me
  *      Who has access:  Anyone
- *    Copy the resulting /exec URL.
+ *    Copy the resulting /exec URL — NOT the raw "Deployment ID" shown
+ *    if you click into the deployment's own details, which is a
+ *    different thing and not what TEACHER_DATA_WRITE_URL needs.
+ *
+ *    Before moving on: run testMailAppAuthorization_ once by hand
+ *    (function dropdown, top toolbar -> testMailAppAuthorization_ ->
+ *    Run) and approve the consent prompt it triggers. Every email this
+ *    file sends happens inside a try/catch that fails silently — an
+ *    unauthorized MailApp scope looks EXACTLY like "email just didn't
+ *    send, no error, no clue why" otherwise. See that function's own
+ *    comment for the full reasoning.
  *
  * 4. Paste that URL into TEACHER_DATA_WRITE_URL in js/data.js and
  *    commit. Both "Mark complete" (teacher.html) and every write
@@ -432,6 +501,44 @@
  * real deployment; try the full sequence in step 5 above — create with
  * a linked notification, cancel as creator, confirm a non-creator
  * teacher can't cancel but an admin can — before relying on it.
+ * PHOTO UPLOADS (2026-08-10) are new and completely unexercised too —
+ * commitUploadedPhoto_ is a straightforward reuse of commitFile_ (the
+ * confirmed-working GitHub Contents API write path), so the mechanism
+ * is low-risk, but the doPost preprocessing step that rewrites `photo`
+ * to `photoUrl` before any target-grouped commit runs has never fired
+ * for real, and this is also the first thing in this whole file
+ * committing binary (non-JSON, non-js/data.js) content — worth
+ * confirming the resulting data/uploads/*.jpg actually opens as a valid
+ * image, not just that the commit succeeds. Try one real submitWork
+ * with a photo attached and confirm data/submissions-log.json's new
+ * entry has a working photoUrl; separately try one submitRequest (e.g.
+ * a Bug Report) with a screenshot attached and confirm the same for
+ * data/requests-log.json. Also worth trying a too-large photo (over the
+ * ~8MB MAX_PHOTO_MB_ ceiling — client-side resizing in
+ * readImageAsCompressedBase64_ should normally prevent this, but a
+ * direct POST could bypass it) and confirming it fails loudly rather
+ * than silently truncating.
+ * SESSION PHOTO REMINDER (2026-08-10) is new and unexercised too —
+ * sessionPhotoReminderOp_ itself is pure/synchronous (no network calls
+ * of its own; it just builds a plain object), so the real risk is
+ * entirely in the two things around it: the doPost wiring (does every
+ * createEvent actually produce and commit a companion notification?)
+ * and send-scheduled-notifications.js's newly-widened recipient pool
+ * (does a teacher username actually resolve now, where it silently
+ * wouldn't have before?) — the latter WAS verified locally (real `node
+ * send-scheduled-notifications.js ... --dry-run` run against a
+ * synthetic fixture with a teacher recipient, confirmed the email
+ * would send and render correctly), but only as a Node script against
+ * fixture data, not through this Apps Script or a real GitHub Actions
+ * run. Try creating one real calendar event from calendar.html and
+ * confirm data/scheduled-notifications.json gets a second new "Pending"
+ * entry (not just the event itself in data/calendar-events.json) with
+ * sendAt 30 minutes after the event's end time and recipientUsernames
+ * matching the event's teacher participants; then either wait for it or
+ * hand-edit its sendAt into the past and run
+ * send-scheduled-notifications.js for real (not --dry-run) to confirm
+ * the teacher actually receives the email with a working Drive folder
+ * link.
  */
 
 // Every request becomes a list of { action, payload } operations — a
@@ -467,6 +574,23 @@ function doPost(e) {
     if (!token || !owner || !repo) {
       throw new Error("Missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO script property — see setup steps at the top of this file.");
     }
+
+    // submitWork/submitRequest can carry an optional `photo` (base64 +
+    // mimeType, from readImageAsCompressedBase64_ in js/app.js) — upload
+    // it FIRST, before any of the target-grouped commits below, and
+    // replace it with a plain `photoUrl` string on the op's payload.
+    // Deliberately NOT best-effort like the notification emails further
+    // down: a photo the submitter explicitly attached silently going
+    // missing would be a real content loss, not a missed nice-to-have,
+    // so a failed upload here throws and aborts the whole request rather
+    // than silently logging a photo-less submission. See
+    // commitUploadedPhoto_ below for why this uploads straight into the
+    // repo rather than to Google Drive.
+    operations.forEach(function (op) {
+      if (!op.payload || !op.payload.photo) return;
+      op.payload.photoUrl = commitUploadedPhoto_(owner, repo, branch, token, op.payload.photo);
+      delete op.payload.photo;
+    });
 
     var studentsOps = operations.filter(function (op) { return ACTIONS[op.action].target === "students"; });
     var teachersOps = operations.filter(function (op) { return ACTIONS[op.action].target === "teachers"; });
@@ -508,6 +632,29 @@ function doPost(e) {
     if (classesOps.length > 0) {
       var classesDataPath = props.getProperty("DATA_PATH") || "js/data.js";
       commitClassesMutation_(owner, repo, branch, classesDataPath, token, classesOps);
+      // Same "send after the commit, not inside the handler" reasoning
+      // as submitRequest above. createClass/addPendingClassStudents
+      // each email every new candidate in payload.candidateStudents (one
+      // MailApp call per student — see sendClassCandidateAddedEmail_);
+      // approveClassRegistration emails the newly-enrolled student AND
+      // the class's teacher(s); declineClassRegistration emails the
+      // student. By the time we get here, any paired
+      // enrollStudentInCourse op already committed successfully (see the
+      // ordering note above), so the "you're enrolled" email never
+      // promises a course that isn't actually there.
+      classesOps.forEach(function (op) {
+        if (op.action === "createClass" || op.action === "addPendingClassStudents") {
+          var candidates = op.payload.candidateStudents || [];
+          candidates.forEach(function (student) {
+            try { sendClassCandidateAddedEmail_(student, op.payload); } catch (e) { /* best-effort only */ }
+          });
+        } else if (op.action === "approveClassRegistration") {
+          try { sendClassRegistrationApprovedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+          try { notifyTeachersOfClassEnrollment_(op.payload); } catch (e) { /* best-effort only */ }
+        } else if (op.action === "declineClassRegistration") {
+          try { sendClassRegistrationDeclinedEmail_(op.payload); } catch (e) { /* best-effort only */ }
+        }
+      });
     }
     if (logOps.length > 0) {
       var logPath = props.getProperty("LOG_PATH") || "data/submissions-log.json";
@@ -600,6 +747,33 @@ function doPost(e) {
       // (see createCalendarEventForm_ in js/app.js) — its own
       // notificationsOps block above already handles it; payload.eventId
       // just rides along as an extra field on that entry.
+
+      // SESSION PHOTO REMINDER (added 2026-08-10): every createEvent
+      // automatically gets its own companion "Pending" scheduled
+      // notification too, addressed to the event's teacher
+      // participants, reminding them to file session photos in the
+      // shared Drive folder — see sessionPhotoReminderOp_ and
+      // SESSION_PHOTOS_DRIVE_FOLDER_URL_ below. Unconditional, not
+      // opt-in — every event gets one, independent of whatever
+      // optional student-facing "also notify" message the creator
+      // attached above. Committed as its OWN commitJsonArrayMutation_
+      // call — a second write to data/scheduled-notifications.json
+      // within this one request if the "also notify" op above also
+      // targeted it — safe, since each call does its own fresh
+      // GET/PUT/retry cycle rather than sharing state.
+      // Known gap: if the event is later cancelled (cancelEvent), this
+      // reminder is NOT automatically cancelled with it — the creating
+      // teacher can cancel it by hand from teacher.html's "Scheduled
+      // notifications" list, same as any other one they created (it's
+      // attributed to them there, not to "Zenith" — see
+      // sessionPhotoReminderOp_ for why).
+      var photoReminderOps = eventsOps
+        .filter(function (op) { return op.action === "createEvent"; })
+        .map(sessionPhotoReminderOp_);
+      if (photoReminderOps.length > 0) {
+        var photoReminderNotificationsPath = props.getProperty("NOTIFICATIONS_PATH") || "data/scheduled-notifications.json";
+        commitJsonArrayMutation_(owner, repo, branch, photoReminderNotificationsPath, token, photoReminderOps);
+      }
     }
     return jsonResponse_({ ok: true });
   } catch (err) {
@@ -607,8 +781,86 @@ function doPost(e) {
   }
 }
 
+// Shared session-documentation folder every teacher files photos
+// under, one subfolder per session — a single fixed destination, not
+// per-course/per-teacher, since there's only one standing
+// documentation folder as of this writing. If that ever needs to
+// change without a redeploy, move it to a Script Property (same as
+// GITHUB_TOKEN etc.) instead — left as a plain constant for now since
+// it's expected to be stable.
+var SESSION_PHOTOS_DRIVE_FOLDER_URL_ = "https://drive.google.com/drive/folders/1enTgIl53iVLCEfKzUWqOp_7-unDEpF-9?usp=sharing";
+
+// Builds the companion scheduleNotification op for one createEvent
+// op — see the SESSION PHOTO REMINDER note in doPost above for when/
+// why this runs. sendAt is 30 minutes after the event ends (endAt,
+// falling back to startAt if the event has no explicit end time) —
+// long enough that the session has actually wrapped up, short enough
+// that it's still top-of-mind. recipientUsernames reuses the exact
+// same "force-include the creator" computation
+// ACTIONS.createEvent.handler already ran on this same payload object
+// — recomputed here rather than read back from the just-committed
+// event, since this Apps Script has no cheap way to read its own
+// commit's result back out without a second GitHub API round trip, and
+// the payload already has everything needed. `username` is set to the
+// EVENT'S creator, not some generic "system" account, specifically so
+// this reminder shows up in (and can be cancelled from) that teacher's
+// own "Scheduled notifications" list on teacher.html, exactly like any
+// notification they scheduled by hand — `name` carries "Zenith" so the
+// email still reads as system-generated, not as a message from a
+// colleague.
+function sessionPhotoReminderOp_(op) {
+  var payload = op.payload;
+  var teacherParticipants = payload.participantTeacherUsernames || [];
+  if (teacherParticipants.indexOf(payload.username) === -1) {
+    teacherParticipants = teacherParticipants.concat([payload.username]);
+  }
+  var endAt = payload.endAt ? new Date(payload.endAt) : new Date(payload.startAt);
+  var sendAt = new Date(endAt.getTime() + 30 * 60 * 1000);
+  return {
+    action: "scheduleNotification",
+    payload: {
+      username: payload.username,
+      name: "Zenith",
+      recipientUsernames: teacherParticipants,
+      recipientNames: teacherParticipants,
+      subject: "Upload photos from \"" + payload.title + "\"",
+      message: "Session's done — time to file the photos.\n\n" +
+        "1. Open the shared session folder: " + SESSION_PHOTOS_DRIVE_FOLDER_URL_ + "\n" +
+        "2. Create a new folder inside it for \"" + payload.title + "\" (e.g. dated).\n" +
+        "3. Upload every relevant photo/file from the session into that new folder.",
+      sendAt: sendAt.toISOString(),
+      eventId: payload.id
+    }
+  };
+}
+
 function jsonResponse_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Not called by doPost or anything else — a manual, one-time-use
+// utility to surface MailApp's authorization prompt. Every real email
+// send in this file (sendRequestConfirmationEmail_, notifyAdminsOfSignup_,
+// etc.) runs inside a try/catch that swallows failures silently — the
+// right call for a live doPost request (a bad email address shouldn't
+// fail the whole write), but that same silence means an UNAUTHORIZED
+// MailApp scope fails exactly the same way: no error, no email, no clue
+// why. A web app trigger runs unattended, so it can't show the
+// interactive consent screen MailApp needs the first time — only a
+// function you run BY HAND from this editor can. Run this one once
+// (function dropdown, top toolbar -> testMailAppAuthorization_ -> Run),
+// approve the "wants to send email as you" prompt it pops up (Review
+// permissions -> your account -> Advanced -> Go to (project name)
+// (unsafe) -> Allow), and check your own inbox for the test email. Once
+// authorized, every other MailApp.sendEmail call in this file works
+// from doPost too — the grant applies to the whole project/deployment,
+// not just this one function. Safe to leave in permanently; costs
+// nothing sitting unused, and saves reconstructing this from scratch on
+// the next redeploy to a fresh Apps Script project.
+function testMailAppAuthorization_() {
+  var me = Session.getActiveUser().getEmail();
+  MailApp.sendEmail(me, "Zenith — MailApp test", "If this arrived, MailApp is authorized — every other email in zenith-data-writer.gs will now actually send.");
+  Logger.log("Sent a test email to " + me + " — check your inbox.");
 }
 
 // "We got it" confirmation for a submitRequest — mirrors
@@ -745,6 +997,73 @@ function sendSubmissionGradedEmail_(payload) {
     " has been marked complete. Log in to see any feedback left on it.");
 }
 
+// "You're a candidate" notice for createClass's initial roster and
+// addPendingClassStudents' later additions — mirrors
+// sendSignupReceivedEmail_'s "we got it, still needs a human step"
+// framing: this isn't an enrollment yet, just a heads-up that one is
+// pending. `student` is one entry of payload.candidateStudents (each
+// {username, name, email}, resolved client-side in
+// classCandidateEmailInfo_ in js/app.js); `payload` is the createClass/
+// addPendingClassStudents op's own payload, for className/courseName —
+// addPendingClassStudents sends `className`, createClass sends `name`
+// (its own class-name field), hence the fallback.
+function sendClassCandidateAddedEmail_(student, payload) {
+  if (!student.email) return;
+  var className = payload.className || payload.name;
+  MailApp.sendEmail(student.email,
+    "Zenith — you've been added to a class",
+    "Hey " + student.name + ",\n\n" +
+    "An admin added you as a candidate for \"" + className + "\"" +
+    (payload.courseName ? " (" + payload.courseName + ")" : "") + ". " +
+    "This isn't final yet — you'll get another email once an admin approves it and the course shows up in your portal.");
+}
+
+// "You're enrolled" notice for approveClassRegistration — sent only
+// after BOTH the paired enrollStudentInCourse (STUDENTS) commit and
+// this class's own commit have succeeded (see the classesOps ordering
+// note in doPost), so this never promises a course that doesn't
+// actually exist yet on the student's record. payload is
+// approveClassRegistration's own payload — studentEmail/studentName/
+// className/courseName snapshotted client-side in the Approve button's
+// click handler (see renderAdminClassesLists_ in js/app.js).
+function sendClassRegistrationApprovedEmail_(payload) {
+  if (!payload.studentEmail) return;
+  MailApp.sendEmail(payload.studentEmail,
+    "Zenith — you're enrolled!",
+    "Hey " + payload.studentName + ",\n\n" +
+    "You're officially enrolled in \"" + payload.className + "\"" +
+    (payload.courseName ? " (" + payload.courseName + ")" : "") + " — it's live in your portal now.");
+}
+
+// Tells this class's teacher(s) they just gained a student — the
+// class-enrollment equivalent of notifyTeachersOfWork_ above. Sent
+// alongside sendClassRegistrationApprovedEmail_, same trigger point.
+// payload.teacherEmails is classTeacherEmails_(cls) from js/app.js,
+// same client-resolved-recipient trust model as every other notify*_
+// function here.
+function notifyTeachersOfClassEnrollment_(payload) {
+  var emails = payload.teacherEmails || [];
+  if (emails.length === 0) return;
+  var subject = "Zenith — new student in " + payload.className;
+  var body = (payload.studentName || "A student") + " was just approved into \"" + payload.className + "\"" +
+    (payload.courseName ? " (" + payload.courseName + ")" : "") + " — they'll now show up on your dashboard.";
+  emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
+}
+
+// "Not this time" notice for declineClassRegistration — the class
+// registration equivalent of sendSignupDeclinedEmail_. No STUDENTS
+// record was ever touched for a declined candidate, so there's nothing
+// to undo — just the email.
+function sendClassRegistrationDeclinedEmail_(payload) {
+  if (!payload.studentEmail) return;
+  MailApp.sendEmail(payload.studentEmail,
+    "Zenith — about your class registration",
+    "Hey " + payload.studentName + ",\n\n" +
+    "Your candidate registration for \"" + payload.className + "\"" +
+    (payload.courseName ? " (" + payload.courseName + ")" : "") + " wasn't approved this time. " +
+    "If you think this is a mistake, reply to this email and we'll sort it out.");
+}
+
 // Tells every admin a new request landed in admin.html's Requests tab —
 // every category except "Ask My Teacher", which routes to a teacher
 // instead (see notifyTeachersOfRequest_ below). payload.adminEmails is
@@ -864,16 +1183,21 @@ var ACTIONS = {
   // going through the external Google Form + submissions-compiler.gs
   // pipeline, for any of SUBMISSION_UNITS_'s roadmap categories
   // (answerable as typed text) over any of SUBMISSION_CHAPTERS_'s
-  // chapters. A submission that needs a photo of written work attached
-  // still has to go through the Google Form — this action only ever
-  // accepts typed text, never a file. Produces an entry shaped exactly
-  // like buildEntryFromResponse_ in submissions-compiler.gs
+  // chapters, with an optional single photo (payload.photoUrl — already
+  // uploaded and rewritten from `photo` by doPost's photo-upload
+  // preprocessing step above by the time this handler runs; see
+  // commitUploadedPhoto_). Only the Google Form still supports more than
+  // one photo per submission. Produces an entry shaped exactly like
+  // buildEntryFromResponse_ in submissions-compiler.gs
   // (id/receivedAt/status/courseId/username/chapter/unit/answers/
-  // ocrText/formResponseId) so every existing reader
+  // ocrText/formResponseId/photoUrl) so every existing reader
   // (renderSubmissionLog, teacherSubmissionCardHtml,
   // submissionTextAnswer, the grading workflow in CLAUDE.md) treats a
-  // form-submitted and a site-submitted entry identically. ocrText and
-  // formResponseId are always null here — there's no photo to OCR and
+  // form-submitted and a site-submitted entry identically — photoUrl is
+  // the one field the Form path never populates (that path's photos
+  // stay in `answers` as Drive file IDs instead; see submissionFileIds
+  // in js/app.js, which reads both shapes). ocrText and formResponseId
+  // are always null here — there's no OCR run on an intra-site photo and
   // no Google Form response behind this path. See doPost's NOTIFICATIONS
   // note above for the "we got it"/teacher-notify emails this sends.
   submitWork: {
@@ -905,7 +1229,8 @@ var ACTIONS = {
           "feedback-and-remarks": payload.remarks || ""
         },
         ocrText: null,
-        formResponseId: null
+        formResponseId: null,
+        photoUrl: payload.photoUrl || null
       });
     }
   },
@@ -1023,7 +1348,12 @@ var ACTIONS = {
   // requests.html, since that's just UI (a direct POST could claim
   // any category otherwise). Anonymous submissions also require an
   // email, since it's the only way to follow up with someone who
-  // isn't a logged-in account — see sendRequestConfirmationEmail_.
+  // isn't a logged-in account — see sendRequestConfirmationEmail_. An
+  // optional single photo/screenshot (payload.photoUrl — most useful
+  // for a Bug Report, but not restricted to it) works the same way as
+  // submitWork's does: already uploaded and rewritten from `photo` by
+  // doPost's photo-upload preprocessing step by the time this handler
+  // runs — see commitUploadedPhoto_.
   submitRequest: {
     target: "requests",
     handler: function (requests, payload) {
@@ -1059,7 +1389,8 @@ var ACTIONS = {
         courseId: payload.courseId || null,
         courseName: payload.courseName || null,
         title: payload.title,
-        details: payload.details
+        details: payload.details,
+        photoUrl: payload.photoUrl || null
       });
     }
   },
@@ -1416,6 +1747,34 @@ var ACTIONS = {
         teacherUsernames: payload.teacherUsernames,
         studentUsernames: [],
         pendingStudentUsernames: payload.pendingStudentUsernames || []
+      });
+    }
+  },
+
+  // Appends more candidates to an ALREADY-EXISTING class's
+  // pendingStudentUsernames — createClass only sets the initial
+  // candidate roster at creation time; this is what lets an admin keep
+  // nominating students for a class afterward, including the 3
+  // originally hand-authored classes (calc-a/bio-a/chem-a), which
+  // otherwise have no candidates and no way to gain any through the
+  // UI. Silently skips (never throws for) any username already on
+  // either the confirmed or pending roster, so re-submitting an
+  // already-checked box is harmless — same idempotent-ish spirit as
+  // approveClassRegistration only throwing on a genuinely bad state.
+  addPendingClassStudents: {
+    target: "classes",
+    handler: function (classes, payload) {
+      if (!payload.classId || !payload.usernames || !payload.usernames.length) {
+        throw new Error("addPendingClassStudents requires classId and at least one username");
+      }
+      var cls = classes.find(function (c) { return c.id === payload.classId; });
+      if (!cls) throw new Error("No class with id " + payload.classId);
+      cls.studentUsernames = cls.studentUsernames || [];
+      cls.pendingStudentUsernames = cls.pendingStudentUsernames || [];
+      payload.usernames.forEach(function (username) {
+        if (cls.studentUsernames.indexOf(username) === -1 && cls.pendingStudentUsernames.indexOf(username) === -1) {
+          cls.pendingStudentUsernames.push(username);
+        }
       });
     }
   },
@@ -1976,3 +2335,41 @@ function commitFile_(owner, repo, branch, path, token, base64Content, sha, messa
     }
   );
 }
+
+// Uploads one submitWork/submitRequest photo straight into this repo,
+// reusing commitFile_ (the exact same GitHub Contents API write path
+// every other action here already uses) rather than adding a second
+// storage system like Google Drive — Drive would need this deployment
+// to request a new OAuth scope it doesn't have yet, where GitHub needs
+// nothing beyond the GITHUB_TOKEN this script already has. `photo` is
+// { dataBase64, mimeType, filename } from readImageAsCompressedBase64_
+// in js/app.js (already downsized client-side). `sha` is omitted (not
+// just null — omitted, since commitFile_'s JSON.stringify drops an
+// `undefined` property entirely) because this always creates a brand
+// new file at a fresh, timestamp+random path, never overwrites one —
+// so there's no existing blob sha to provide, and none is required by
+// GitHub's API for a create. Returns the photo's raw.githubusercontent.com
+// URL, which serves directly from the git blob on `branch` — no GitHub
+// Pages rebuild to wait on, unlike a githubpages.io URL would need.
+function commitUploadedPhoto_(owner, repo, branch, token, photo) {
+  if (!photo || !photo.dataBase64) throw new Error("Missing photo data");
+  var mimeType = photo.mimeType || "image/jpeg";
+  var ext = PHOTO_EXTENSIONS_[mimeType] || "jpg";
+  if (photo.dataBase64.length > MAX_PHOTO_BASE64_LENGTH_) {
+    throw new Error("Photo is too large (max " + MAX_PHOTO_MB_ + "MB) — try a smaller photo.");
+  }
+  var path = "data/uploads/" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8) + "." + ext;
+  var putResp = commitFile_(owner, repo, branch, path, token, photo.dataBase64, undefined, "Upload photo: " + path);
+  if (putResp.getResponseCode() >= 300) {
+    throw new Error("Could not upload photo (HTTP " + putResp.getResponseCode() + "): " + putResp.getContentText());
+  }
+  return "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + "/" + path;
+}
+
+var PHOTO_EXTENSIONS_ = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" };
+// ~8MB decoded (base64 runs about 4/3 the size of the raw bytes) —
+// comfortably under Apps Script's request-size ceiling, and plenty for
+// a phone photo once readImageAsCompressedBase64_'s client-side resize
+// has already run.
+var MAX_PHOTO_MB_ = 8;
+var MAX_PHOTO_BASE64_LENGTH_ = MAX_PHOTO_MB_ * 1024 * 1024 * 4 / 3;

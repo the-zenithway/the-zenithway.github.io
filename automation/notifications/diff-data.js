@@ -14,11 +14,15 @@ const vm = require("vm");
  * appending the extraction into the *same* script keeps it in scope.
  */
 function loadData(sourceText) {
-  const script = `${sourceText}\n;this.__STUDENTS__ = STUDENTS;\nthis.__PARENTS__ = typeof PARENTS !== "undefined" ? PARENTS : [];`;
+  const script = `${sourceText}\n;this.__STUDENTS__ = STUDENTS;\nthis.__PARENTS__ = typeof PARENTS !== "undefined" ? PARENTS : [];\nthis.__TEACHERS__ = typeof TEACHERS !== "undefined" ? TEACHERS : [];`;
   const sandbox = {};
   vm.createContext(sandbox);
   vm.runInContext(script, sandbox, { filename: "data.js" });
-  return { students: sandbox.__STUDENTS__ || [], parents: sandbox.__PARENTS__ || [] };
+  return {
+    students: sandbox.__STUDENTS__ || [],
+    parents: sandbox.__PARENTS__ || [],
+    teachers: sandbox.__TEACHERS__ || []
+  };
 }
 
 function extractStudents(sourceText) {

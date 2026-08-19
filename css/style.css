@@ -2831,6 +2831,14 @@ body.portal-body {
 
 .requests-textarea { min-height: 110px; resize: vertical; }
 
+.requests-file-input {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  width: 100%;
+  margin-bottom: 8px;
+}
+
 .requests-submit-btn { margin-top: 4px; }
 .requests-submit-btn:disabled { opacity: 0.6; cursor: default; }
 
@@ -3021,6 +3029,14 @@ body.portal-body {
    .requests-log-* wholesale, this is just the gap the Create-a-class
    form (a .requests-form-card) doesn't already provide via margin. */
 .admin-classes-block { margin-top: 28px; }
+
+/* "+ Add candidate students" toggle + its reveal panel on an existing
+   class card — .teacher-notif-recipients inside already has its own
+   box/scroll styling, this just adds the gaps around it. */
+.admin-class-toggle-add-btn { margin-top: 10px; }
+.admin-class-add-panel { margin-top: 10px; }
+.admin-class-add-panel[hidden] { display: none; }
+.admin-class-add-panel .teacher-notif-recipients { margin-bottom: 10px; }
 
 /* Requests / Sign-ups tab switcher above admin.html's filter row —
    two plain buttons, not links (no URL per tab, both render into the
@@ -3776,6 +3792,18 @@ footer {
   gap: 8px;
   font-size: 0.85rem;
   color: var(--text);
+  cursor: pointer;
+}
+/* Without this, the sitewide `input { width: 100% }` reset (css/style.css
+   ~line 504) stretches the checkbox itself to fill the row — same fix
+   every other checkbox in the app already needs, see
+   .teacher-notif-recipient-row/.calendar-participant-class-row's
+   input[type="checkbox"] rules. */
+.calendar-notify-toggle-row input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--accent);
   cursor: pointer;
 }
 .calendar-notify-fields {

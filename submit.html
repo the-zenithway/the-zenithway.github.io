@@ -69,13 +69,16 @@
         <option value="N">Notes Submission (N)</option>
         <option value="L">Learning (L)</option>
       </select>
-      <p class="requests-field-note">Need to attach a photo of your written work? Use the <a id="submit-cta-link" href="#" target="_blank" rel="noopener">Google Form</a> instead.</p>
-
       <label class="requests-field-label" for="submit-answer">Your answer</label>
       <textarea id="submit-answer" class="requests-textarea" rows="4" placeholder="Your answer, notes, or a summary of what you covered"></textarea>
 
+      <label class="requests-field-label" for="submit-photo">Photo (optional)</label>
+      <input type="file" id="submit-photo" class="requests-file-input" accept="image/*">
+
       <label class="requests-field-label" for="submit-remarks">Remarks (optional)</label>
       <textarea id="submit-remarks" class="requests-textarea" rows="3" placeholder="Anything you want your teacher to know"></textarea>
+
+      <p class="requests-field-note">Need to attach more than one photo? Use the <a id="submit-cta-link" href="#" target="_blank" rel="noopener">Google Form</a> instead.</p>
 
       <button type="button" class="btn-primary requests-submit-btn" id="submit-form-btn">Submit</button>
     </div>
