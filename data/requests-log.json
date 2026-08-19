@@ -1,5 +1,20 @@
 [
   {
+    "id": "req_1786542306073_n9i50m",
+    "receivedAt": "2026-08-12T13:45:06.073Z",
+    "status": "New",
+    "username": "davidheo",
+    "name": "David Heo",
+    "email": "Heodavidheo@gmail.com",
+    "role": "student",
+    "category": "Resource Request",
+    "courseId": null,
+    "courseName": null,
+    "title": "Environmental science",
+    "details": "master oogway and mantis thank you",
+    "photoUrl": null
+  },
+  {
     "id": "req_1786349783783_gv7f9e",
     "receivedAt": "2026-08-10T08:16:23.783Z",
     "status": "New",
@@ -16,7 +31,7 @@
   {
     "id": "req_1786349776113_xtofy8",
     "receivedAt": "2026-08-10T08:16:16.114Z",
-    "status": "New",
+    "status": "Completed",
     "username": "kyjv9981",
     "name": "Yong Joon Kim",
     "email": "yongjoon9981@gmail.com",

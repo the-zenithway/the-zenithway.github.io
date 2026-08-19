@@ -1,1 +1,61 @@
-[]
+[
+  {
+    "id": "notif_1786361928683_lqiqqn",
+    "createdBy": "haminpark",
+    "createdByName": "Hamin Park(teacher)",
+    "createdAt": "2026-08-10T11:38:48.683Z",
+    "sendAt": "2026-08-10T11:39:00.000Z",
+    "recipientUsernames": [
+      "davidheo",
+      "kyjv9981"
+    ],
+    "recipientNames": [
+      "David Heo",
+      "Yong Joon Kim"
+    ],
+    "subject": "session on wed",
+    "message": "ap chem",
+    "status": "Sent",
+    "sentAt": "2026-08-10T15:30:59.064Z",
+    "recipientCount": 2,
+    "eventId": null
+  },
+  {
+    "id": "notif_1786361465275_p5d9ap",
+    "createdBy": "haminpark",
+    "createdByName": "Hamin Park(teacher)",
+    "createdAt": "2026-08-10T11:31:05.275Z",
+    "sendAt": "2026-08-12T08:00:00.000Z",
+    "recipientUsernames": [
+      "davidheo"
+    ],
+    "recipientNames": [
+      "David Heo"
+    ],
+    "subject": "Session reminder — Wednesday 4:30~6:30",
+    "message": "session for ap chemistry",
+    "status": "Sent",
+    "sentAt": "2026-08-12T09:41:45.550Z",
+    "recipientCount": 1,
+    "eventId": "evt_1786361463511_6jol48"
+  },
+  {
+    "id": "notif_1786361318031_5tgofa",
+    "createdBy": "haminpark",
+    "createdByName": "Hamin Park(teacher)",
+    "createdAt": "2026-08-10T11:28:38.031Z",
+    "sendAt": "2026-08-12T11:28:00.000Z",
+    "recipientUsernames": [
+      "davidheo"
+    ],
+    "recipientNames": [
+      "David Heo"
+    ],
+    "subject": "Session reminder — Wednesday 4:30~6:30",
+    "message": "Chemistry",
+    "status": "Cancelled",
+    "sentAt": null,
+    "recipientCount": null,
+    "eventId": null
+  }
+]
