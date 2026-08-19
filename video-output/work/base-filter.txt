@@ -1,0 +1,19 @@
+[0:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v0];
+[1:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=8.199967,asetpts=PTS-STARTPTS[a0];
+[2:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v1];
+[3:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=28.033300,asetpts=PTS-STARTPTS[a1];
+[4:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v2];
+[5:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=8.066633,asetpts=PTS-STARTPTS[a2];
+[6:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85,drawbox=x=570:y=275:w=780:h=420:color=0x111827@0.96:t=fill:enable='between(t,0,7.5)',drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:text='DEMO LOGIN':fontcolor=0xE8C875:fontsize=44:x=(w-text_w)/2:y=390:enable='between(t,0,7.5)',drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Credentials hidden for privacy':fontcolor=white:fontsize=30:x=(w-text_w)/2:y=470:enable='between(t,0,7.5)'[v3];
+[7:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=14.433300,asetpts=PTS-STARTPTS[a3];
+[8:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v4];
+[9:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=18.709313,asetpts=PTS-STARTPTS[a4];
+[10:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v5];
+[11:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=6.805313,asetpts=PTS-STARTPTS[a5];
+[12:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85,drawbox=x=650:y=350:w=430:h=100:color=0x191919:t=fill:enable='between(t,0,5.7)',drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Welcome back':fontcolor=white:fontsize=34:x=700:y=385:enable='between(t,0,5.7)'[v6];
+[13:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=9.833300,asetpts=PTS-STARTPTS[a6];
+[14:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v7];
+[15:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=9.535979,asetpts=PTS-STARTPTS[a7];
+[16:v]crop=2560:1440:0:44,scale=1920:1080,fps=30,format=yuv420p,drawbox=x=1340:y=68:w=210:h=58:color=0x191919:t=fill,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf:text='Demo Student':fontcolor=0xB8B8B8:fontsize=23:x=1362:y=85[v8];
+[17:a]loudnorm=I=-16:TP=-1.5:LRA=11,adelay=400,apad,atrim=duration=7.166633,asetpts=PTS-STARTPTS[a8];
+[v0][a0][v1][a1][v2][a2][v3][a3][v4][a4][v5][a5][v6][a6][v7][a7][v8][a8]concat=n=9:v=1:a=1[v][a]

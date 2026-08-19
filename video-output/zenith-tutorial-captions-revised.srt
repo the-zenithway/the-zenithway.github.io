@@ -1,0 +1,91 @@
+1
+00:00:00,604 --> 00:00:06,884
+Welcome to Zenith, a personalized learning platform designed to make your academic journey clear, active, and supported.
+
+2
+00:00:08,782 --> 00:00:10,570
+Zenith is built on three pillars.
+
+3
+00:00:11,487 --> 00:00:13,017
+First, Absolute Clarity:
+
+4
+00:00:14,003 --> 00:00:17,193
+always know what to do, where to find it, and what comes next.
+
+5
+00:00:18,138 --> 00:00:20,448
+Second, Active Engagement and Motivation:
+
+6
+00:00:21,410 --> 00:00:25,404
+your work is checked, your progress is recognized, and you learn at your own pace.
+
+7
+00:00:26,321 --> 00:00:29,061
+Third, Advice, Direction, and Community:
+
+8
+00:00:30,004 --> 00:00:33,446
+receive personalized guidance and support without unhealthy competition.
+
+9
+00:00:36,817 --> 00:00:40,409
+The Resources page provides recommended SAT and AP materials,
+
+10
+00:00:40,655 --> 00:00:43,602
+including public self-study tracks that anyone can use.
+
+11
+00:00:44,910 --> 00:00:47,708
+Students can log in to access their personalized portal.
+
+12
+00:00:48,752 --> 00:00:52,902
+Select a course here, or return whenever you need to switch subjects.
+
+13
+00:00:59,324 --> 00:01:01,712
+The Roadmap displays your complete learning path.
+
+14
+00:01:02,709 --> 00:01:07,646
+Each item shows what is complete, available, recommended for review, or still locked.
+
+15
+00:01:08,612 --> 00:01:11,098
+You can also choose the roadmap view
+
+16
+00:01:12,103 --> 00:01:14,918
+that works best for you.
+
+17
+00:01:18,031 --> 00:01:22,921
+The Now page shows the most important task you should work on next.
+
+18
+00:01:24,859 --> 00:01:26,974
+Feedback explains how you can improve,
+
+19
+00:01:27,252 --> 00:01:32,212
+while your personalized Cheat Sheet preserves important concepts and lessons from previous work.
+
+20
+00:01:34,701 --> 00:01:36,801
+Use Calendar to check upcoming dates,
+
+21
+00:01:37,044 --> 00:01:40,273
+and Submit to turn in your work and confirm that it was received.
+
+22
+00:01:44,215 --> 00:01:47,787
+With Zenith, the process is clear, your potential is limitless.
+
+23
+00:01:48,739 --> 00:01:49,556
+Let’s get to work.

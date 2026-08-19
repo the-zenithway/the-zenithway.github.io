@@ -1,0 +1,67 @@
+1
+00:00:00,400 --> 00:00:07,768
+Welcome to Zenith, a personalized learning platform designed to make your academic journey clear, active, and supported.
+
+2
+00:00:08,600 --> 00:00:13,900
+Zenith is built on three pillars.
+
+3
+00:00:13,900 --> 00:00:21,500
+First, Absolute Clarity: always know what to do, where to find it, and what comes next.
+
+4
+00:00:21,500 --> 00:00:29,600
+Second, Active Engagement and Motivation: your work is checked, your progress is recognized, and you learn at your own pace.
+
+5
+00:00:29,600 --> 00:00:34,304
+Third, Advice, Direction, and Community: receive personalized guidance and support without unhealthy competition.
+
+6
+00:00:36,633 --> 00:00:44,057
+The Resources page provides recommended SAT and AP materials, including public self-study tracks that anyone can use.
+
+7
+00:00:44,700 --> 00:00:49,400
+Students can log in to access their personalized portal.
+
+8
+00:00:49,400 --> 00:00:53,772
+Select a course here, or return to this page whenever you need to switch subjects.
+
+9
+00:00:59,133 --> 00:01:04,200
+The Roadmap displays your complete learning path.
+
+10
+00:01:04,200 --> 00:01:10,500
+Each item shows what is complete, available, recommended for review, or still locked.
+
+11
+00:01:10,500 --> 00:01:16,261
+You can also choose the roadmap view that works best for you.
+
+12
+00:01:17,843 --> 00:01:23,819
+The Now page keeps things simple by showing the most important task you should work on next.
+
+13
+00:01:24,648 --> 00:01:28,900
+Feedback explains how you can improve,
+
+14
+00:01:28,900 --> 00:01:33,120
+while your personalized Cheat Sheet preserves important concepts and lessons from previous work.
+
+15
+00:01:34,481 --> 00:01:38,000
+Use Calendar to check upcoming dates,
+
+16
+00:01:38,000 --> 00:01:41,201
+and Submit to turn in your work and confirm that it was received.
+
+17
+00:01:44,017 --> 00:01:50,449
+With Zenith, the process is clear, your potential is limitless. Let’s get to work.

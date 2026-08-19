@@ -31,7 +31,7 @@
   - [ ] 1.3.3 Multi-Role Access Control (Student, Mentor, Parent, Admin)
 
 #### SECTION 2: PARENT CORE — CURRICULUM & PEDAGOGICAL ENGINE
-- [ ] 2.1 Modular Subject Frameworks
+- [] 2.1 Modular Subject Frameworks
   - [ ] 2.1.1 Mathematics Track: Foundational Arithmetic -> Algebra/Geometry -> Advanced AP Calculus
   - [ ] 2.1.2 English & Literacy Track: Grammar, Reading Comprehension, Vocabulary, & SAT verbal
   - [ ] 2.1.3 STEM Extensions: AP Chemistry, AP Biology, AP Computer Science A
