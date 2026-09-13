@@ -751,12 +751,18 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 1",
+          "chapter": "Chapter 2",
           "unit": "R",
-          "instruction": "Review the given items; write notes for every item!\n-A9, A33, A34\n-A19, A23, A27, A29, A30(missed)",
-          "due": "Wednesday"
+          "instruction": "Resolve Items:A22,A25,A26,B11\nmost of these are minor mistakes, so I think it's best to figure them out by trying them out again slowly. \n\nAlso, you missed A17, A20, A24, and B10. Try to study them with any kind of help(AI, google, youtube, whatever)\nTry to master all these problems at a level where you can explain them. Let's plan a session soon!",
+          "due": "TBD"
         },
         "feedback": [
+          {
+            "date": "Sep 13",
+            "chapter": "Chapter 2",
+            "unit": "C",
+            "content": "Great progress, check the right now page for the most recent feedback."
+          },
           {
             "date": "Aug 8",
             "chapter": "Chapter 1",
@@ -768,13 +774,13 @@ const STUDENTS = [
         "roadmap": [
           { "name": "AP Calculus BC Exam Booklet", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1Zm7BzijHtGZOmttmyEjfNXPvUe-o_il7/view?usp=drive_link" },
           { "name": "AP Calculus Exam Meta Information", "category": "I-information", "chapter": "Chapter 0", "status": "Complete", "url": "https://drive.google.com/file/d/1ZQ_sPhP3ZTm9BBAlWH713yreCzF7ci-m/view?usp=drive_link" },
-          { "name": "B1-Functions", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1JKFuYfSijODTUWMusFJS70BRhqNuvUQa/view?usp=drive_link" },
-          { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Unlocked", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
+          { "name": "B1-Functions", "category": "B-book chapter", "chapter": "Chapter 1", "status": "Review", "url": "https://drive.google.com/file/d/1JKFuYfSijODTUWMusFJS70BRhqNuvUQa/view?usp=drive_link" },
+          { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Review", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
           { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
           { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Locked" },
           { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
-          { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
-          { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Unlocked", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
+          { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Review", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
+          { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Review", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
           { "name": "S2-Limits and Continuity Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/17pzhOM1QGu8z-zm3YovNEe40ECpexSaF/view?usp=drive_link" },
           { "name": "R2-Functions Review", "category": "R-Review", "chapter": "Chapter 2", "status": "Locked" },
           { "name": "T2-Functions Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link" },
@@ -783,8 +789,8 @@ const STUDENTS = [
           { "name": "S3-Differentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1EolTf6Fc9d4kROvX_-h_kdgXVhQCINZD/view?usp=drive_link" },
           { "name": "R3-Differentiation Review", "category": "R-Review", "chapter": "Chapter 3", "status": "Locked" },
           { "name": "T3-Differentiation Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link" },
-          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
-          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
+          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
+          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
           { "name": "S4-Application of Differential Calculus Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1s6gS0JXb7Qkv4bcuScdMHolZpQzwZA3o/view?usp=drive_link" },
           { "name": "R4-Application of Differential Calculus Review", "category": "R-Review", "chapter": "Chapter 4", "status": "Locked" },
           { "name": "T4-Application of Differential Calculus Test", "category": "T-Test", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1vEDN8SnqdVuYLOvJ8RJg0lEMYuvmsUPc/view?usp=drive_link" },
