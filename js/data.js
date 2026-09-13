@@ -866,6 +866,39 @@ const STUDENTS = [
             {
               "date": "Aug 1",
               "score": 70
+            },
+            {
+              "date": "Sep 14",
+              "score": 85
+            }
+          ],
+          "responsiveness": {
+            "score": 90,
+            "note": "",
+            "asOf": "Sep 14"
+          },
+          "topicMastery": [
+            {
+              "chapter": "Chatper 1",
+              "topic": "Functions",
+              "score": 87
+            },
+            {
+              "chapter": "Chapter 2",
+              "topic": "Limits and Continuity",
+              "score": 90
+            }
+          ],
+          "chapterScores": [
+            {
+              "chapter": "Chapter 1",
+              "cScore": 80,
+              "tScore": null
+            },
+            {
+              "chapter": "Chapter 2",
+              "cScore": 81,
+              "tScore": null
             }
           ]
         }
