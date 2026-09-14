@@ -2,7 +2,7 @@
   {
     "id": "sub_1789311253371_ckp8tr",
     "receivedAt": "2026-09-13T14:54:13.371Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "seohu",
     "chapter": "Chapter 2",
@@ -194,7 +194,7 @@
   {
     "id": "sub_1785937236509_vx1xvo",
     "receivedAt": "2026-08-05T13:40:36.509Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "davidheo",
     "chapter": "Chapter 3",
@@ -214,7 +214,7 @@
   {
     "id": "sub_1785937394417_3xuqma",
     "receivedAt": "2026-08-05T13:43:14.417Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "davidheo",
     "chapter": "Chapter 2",
