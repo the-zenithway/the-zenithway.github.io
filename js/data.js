@@ -124,10 +124,9 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Master Concepts in Chapter 2 and 3",
-          "unit": "B",
-          "instruction": "Master every single concept in chapters 2 and 3 — review and master every concept, and especially, memorize all the formulas.",
-          "due": "Tuesday"
+          "chapter": "Review Chapter 9 and 10",
+          "unit": "R",
+          "instruction": "Review wrong answers in Chapters 9 and 10:\nChapter 10 : A13, A18, A19, A20, B3, B4\nChapter 9 : A8, A15, A20, A22, B14"
         },
         "feedback": [
           {
@@ -233,15 +232,15 @@ const STUDENTS = [
           { "name": "S8-Further Application of Integration Solutions", "category": "S-solution manual", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/1OV_9DvjrlOeVzup-RpgobnQfMLXXn4TR/view?usp=drive_link" },
           { "name": "R8-Further Application of Integration Review", "category": "R-Review", "chapter": "Chapter 8", "status": "Locked" },
           { "name": "T8-Further Application of Integration Test", "category": "T-Test", "chapter": "Chapter 8", "status": "Locked", "url": "https://drive.google.com/file/d/17FByPnuBhvoA5VgfkN36tir3sUV1aPWz/view?usp=drive_link" },
-          { "name": "B9-Differential Equations", "category": "B-book chapter", "chapter": "Chapter 9", "status": "Unlocked", "url": "https://drive.google.com/file/d/1eW1C11UZUfhdYyEqu-yOHIh4hn_46qvA/view?usp=drive_link" },
-          { "name": "C9-Differential Equations Problems", "category": "C-coursework", "chapter": "Chapter 9", "status": "Unlocked", "url": "https://drive.google.com/file/d/14AVNzubvCBozVWwd_UwLKAzXVqwjz0L1/view?usp=drive_link" },
-          { "name": "S9-Differential Equations Solutions", "category": "S-solution manual", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1dyBogdVu21CpfiaCyUqViZ2fVcJn01zf/view?usp=drive_link" },
-          { "name": "R9-Differential Equations Review", "category": "R-Review", "chapter": "Chapter 9", "status": "Locked" },
+          { "name": "B9-Differential Equations", "category": "B-book chapter", "chapter": "Chapter 9", "status": "Complete", "url": "https://drive.google.com/file/d/1eW1C11UZUfhdYyEqu-yOHIh4hn_46qvA/view?usp=drive_link" },
+          { "name": "C9-Differential Equations Problems", "category": "C-coursework", "chapter": "Chapter 9", "status": "Complete", "url": "https://drive.google.com/file/d/14AVNzubvCBozVWwd_UwLKAzXVqwjz0L1/view?usp=drive_link" },
+          { "name": "S9-Differential Equations Solutions", "category": "S-solution manual", "chapter": "Chapter 9", "status": "Unlocked", "url": "https://drive.google.com/file/d/1dyBogdVu21CpfiaCyUqViZ2fVcJn01zf/view?usp=drive_link" },
+          { "name": "R9-Differential Equations Review", "category": "R-Review", "chapter": "Chapter 9", "status": "Unlocked" },
           { "name": "T9-Differential Equations Test", "category": "T-Test", "chapter": "Chapter 9", "status": "Locked", "url": "https://drive.google.com/file/d/1PbCX33colHuixlE6UwCIGECZ3iFP7Hvq/view?usp=drive_link" },
-          { "name": "B10-Sequences and Series", "category": "B-book chapter", "chapter": "Chapter 10", "status": "Unlocked", "url": "https://drive.google.com/file/d/1On07-Pxn3yhw9rqqy2UzHL_HXguwHL6H/view?usp=drive_link" },
-          { "name": "C10-Sequences and Series Problems", "category": "C-coursework", "chapter": "Chapter 10", "status": "Unlocked", "url": "https://drive.google.com/file/d/12lbYSKyWNW1Ab100P6_wWOnWKfRVuWpm/view?usp=drive_link" },
-          { "name": "S10-Sequences and Series Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/1qSZ-foEm_3_UGJDIj68J5-9wvH1Ea7ga/view?usp=drive_link" },
-          { "name": "R10-Sequences and Series Review", "category": "R-Review", "chapter": "Chapter 10", "status": "Locked" },
+          { "name": "B10-Sequences and Series", "category": "B-book chapter", "chapter": "Chapter 10", "status": "Complete", "url": "https://drive.google.com/file/d/1On07-Pxn3yhw9rqqy2UzHL_HXguwHL6H/view?usp=drive_link" },
+          { "name": "C10-Sequences and Series Problems", "category": "C-coursework", "chapter": "Chapter 10", "status": "Complete", "url": "https://drive.google.com/file/d/12lbYSKyWNW1Ab100P6_wWOnWKfRVuWpm/view?usp=drive_link" },
+          { "name": "S10-Sequences and Series Solutions", "category": "S-solution manual", "chapter": "Chapter 10", "status": "Unlocked", "url": "https://drive.google.com/file/d/1qSZ-foEm_3_UGJDIj68J5-9wvH1Ea7ga/view?usp=drive_link" },
+          { "name": "R10-Sequences and Series Review", "category": "R-Review", "chapter": "Chapter 10", "status": "Unlocked" },
           { "name": "T10-Sequences and Series Test", "category": "T-Test", "chapter": "Chapter 10", "status": "Locked", "url": "https://drive.google.com/file/d/10ZUMaxj373j5OjRlylEBuIzPOTjd_733/view?usp=drive_link" },
           { "name": "C11-Miscellaneous Multiple Choice Questions", "category": "C-coursework", "chapter": "Chapter 11", "status": "Locked", "url": "https://drive.google.com/file/d/1LIgCn4eavP3B2Ne-gGbnKx_qr3XxT9-i/view?usp=drive_link" },
           { "name": "S11-Miscellaneous Multiple Choice Questions Solutions", "category": "S-solution manual", "chapter": "Chapter 11", "status": "Locked", "url": "https://drive.google.com/file/d/18CRylj_a4Ocnf1Yk46PQomBaI2Co84h-/view?usp=drive_link" },
