@@ -853,6 +853,69 @@
     {
       "type": "deadline",
       "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Review Chapter 9 and 10 R",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (B9-Differential Equations) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (C9-Differential Equations Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (S9-Differential Equations Solutions) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 9 (R9-Differential Equations Review) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (B10-Sequences and Series) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (C10-Sequences and Series Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (S10-Sequences and Series Solutions) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 10 (R10-Sequences and Series Review) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-09T08:50:57.705Z"
+    },
+    {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — new task: Master Concepts in Chapter 2 and 3 B (due Tuesday)",
       "url": "right-now.html?course=ap-calculus-bc",
       "timestamp": "2026-08-07T07:15:54.286Z"
