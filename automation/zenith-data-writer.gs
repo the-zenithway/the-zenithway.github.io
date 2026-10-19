@@ -586,9 +586,23 @@ function doPost(e) {
     // than silently logging a photo-less submission. See
     // commitUploadedPhoto_ below for why this uploads straight into the
     // repo rather than to Google Drive.
+    //
+    // submitWork can carry several (`photos`, an array → `photoUrls`);
+    // submitRequest still carries at most one (`photo` → `photoUrl`).
     operations.forEach(function (op) {
-      if (!op.payload || !op.payload.photo) return;
-      op.payload.photoUrl = commitUploadedPhoto_(owner, repo, branch, token, op.payload.photo);
+      if (!op.payload) return;
+      if (op.payload.photos && op.payload.photos.length > 0) {
+        if (op.payload.photos.length > MAX_PHOTOS_PER_SUBMISSION_) {
+          throw new Error("Too many photos (max " + MAX_PHOTOS_PER_SUBMISSION_ + ").");
+        }
+        op.payload.photoUrls = op.payload.photos.map(function (photo) {
+          return commitUploadedPhoto_(owner, repo, branch, token, photo);
+        });
+      }
+      delete op.payload.photos;
+      if (op.payload.photo) {
+        op.payload.photoUrl = commitUploadedPhoto_(owner, repo, branch, token, op.payload.photo);
+      }
       delete op.payload.photo;
     });
 
@@ -1183,20 +1197,20 @@ var ACTIONS = {
   // going through the external Google Form + submissions-compiler.gs
   // pipeline, for any of SUBMISSION_UNITS_'s roadmap categories
   // (answerable as typed text) over any of SUBMISSION_CHAPTERS_'s
-  // chapters, with an optional single photo (payload.photoUrl — already
-  // uploaded and rewritten from `photo` by doPost's photo-upload
+  // chapters, with optional photos (payload.photoUrls — already
+  // uploaded and rewritten from `photos` by doPost's photo-upload
   // preprocessing step above by the time this handler runs; see
-  // commitUploadedPhoto_). Only the Google Form still supports more than
-  // one photo per submission. Produces an entry shaped exactly like
+  // commitUploadedPhoto_). Produces an entry shaped exactly like
   // buildEntryFromResponse_ in submissions-compiler.gs
   // (id/receivedAt/status/courseId/username/chapter/unit/answers/
-  // ocrText/formResponseId/photoUrl) so every existing reader
+  // ocrText/formResponseId/photoUrls) so every existing reader
   // (renderSubmissionLog, teacherSubmissionCardHtml,
   // submissionTextAnswer, the grading workflow in CLAUDE.md) treats a
-  // form-submitted and a site-submitted entry identically — photoUrl is
-  // the one field the Form path never populates (that path's photos
-  // stay in `answers` as Drive file IDs instead; see submissionFileIds
-  // in js/app.js, which reads both shapes). ocrText and formResponseId
+  // form-submitted and a site-submitted entry identically — photoUrls
+  // (older entries: the single photoUrl) is the one field the Form path
+  // never populates (that path's photos stay in `answers` as Drive file
+  // IDs instead; see submissionFileIds in js/app.js, which reads both
+  // shapes). ocrText and formResponseId
   // are always null here — there's no OCR run on an intra-site photo and
   // no Google Form response behind this path. See doPost's NOTIFICATIONS
   // note above for the "we got it"/teacher-notify emails this sends.
@@ -1230,7 +1244,7 @@ var ACTIONS = {
         },
         ocrText: null,
         formResponseId: null,
-        photoUrl: payload.photoUrl || null
+        photoUrls: payload.photoUrls || []
       });
     }
   },
@@ -2366,6 +2380,7 @@ function commitUploadedPhoto_(owner, repo, branch, token, photo) {
   return "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + "/" + path;
 }
 
+var MAX_PHOTOS_PER_SUBMISSION_ = 10;
 var PHOTO_EXTENSIONS_ = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" };
 // ~8MB decoded (base64 runs about 4/3 the size of the raw bytes) —
 // comfortably under Apps Script's request-size ceiling, and plenty for

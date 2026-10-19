@@ -105,6 +105,7 @@
 - [ ] Get People 
 - [ ] Get teachers
 - [ ] Zenith Local, Club, Proposal, Presentation
+- [ ] School talk: confirm date, deck, activity, application form (see talk-plan.md)
 
 ### PHASE 3  
 - [ ] fix biology and chemistry course 
@@ -123,3 +124,7 @@
 - [ ] Question database and like searching, asking questions, hints, etc. + auto checking 
 
 ### PHASE Y: Think about ways to improve our curriculum(reductionist, unviersal view)
+
+## Done
+- [x] School talk plan (talk-plan.md): three-act structure (mindset, AP/SAT + Zenith, interview), thread, bridges, to-do list, reply draft
+- [x] Submissions tab: attach multiple photos per submission (up to 10) — submit.html, js/app.js, zenith-data-writer.gs (redeploy needed)

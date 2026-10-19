@@ -708,15 +708,18 @@ const SUBMISSION_STATUS_COLORS = {
 // is the only array (a list of Drive file IDs) — so scanning for the
 // first array value finds it without depending on the exact question
 // title, which can change on the Form. A submitWork submission (the
-// intra-site path, no Form involved) carries at most one photo instead,
-// as a plain URL on entry.photoUrl rather than a Drive-ID array — folded
-// into this same list so submissionThumbHtml_ below (and anything else
-// that calls this) doesn't need to know the two paths exist.
+// intra-site path, no Form involved) carries its photos instead as plain
+// URLs — entry.photoUrls (an array; current) and/or the single
+// entry.photoUrl (older entries, and submitRequest) — rather than a
+// Drive-ID array, folded into this same list so submissionThumbHtml_
+// below (and anything else that calls this) doesn't need to know the two
+// paths exist.
 function submissionFileIds(entry) {
   const answers = entry.answers || {};
   const key = Object.keys(answers).find(function (k) { return Array.isArray(answers[k]); });
   const ids = key ? answers[key] : [];
-  return entry.photoUrl ? ids.concat([entry.photoUrl]) : ids;
+  const urls = (entry.photoUrls || []).concat(entry.photoUrl ? [entry.photoUrl] : []);
+  return ids.concat(urls);
 }
 
 // One thumbnail for a submission/request photo — `idOrUrl` is either a
@@ -986,8 +989,9 @@ function renderSubmissionLog(student, course) {
 // Mock roadmap item's own "chapter" field is just the literal string
 // "Chapter M" for every mock (M1 through M16 alike; see js/data.js),
 // so there's no per-course roadmap data this dropdown could actually
-// be built from. Photo attachments still aren't collected here — use
-// the external Google Form for a submission that needs one.
+// be built from. Photos (up to MAX_SUBMIT_PHOTOS_) are collected via a
+// multi-file input and sent as `photos`.
+const MAX_SUBMIT_PHOTOS_ = 10;
 
 // Reads an <input type="file"> photo (from submit.html or requests.html),
 // downsizes it via <canvas> to a max 1600px edge — a phone photo can be
@@ -1034,9 +1038,9 @@ function readImageAsCompressedBase64_(file) {
 // teacherEmails ride along in the payload so zenith-data-writer.gs can
 // send the "we got it" confirmation and the teacher "new submission"
 // notice without re-fetching js/data.js itself — see that file's
-// NOTIFICATIONS note. The optional photo (see readImageAsCompressedBase64_
-// above) rides along as `photo` — zenith-data-writer.gs uploads it and
-// replaces it with a `photoUrl` before ACTIONS.submitWork ever sees the
+// NOTIFICATIONS note. The optional photos (see readImageAsCompressedBase64_
+// above) ride along as `photos` — zenith-data-writer.gs uploads them and
+// replaces them with `photoUrls` before ACTIONS.submitWork ever sees the
 // payload, so this function doesn't need to know anything about where
 // it ends up.
 function submitWorkForm_(student, course, buttonEl) {
@@ -1057,11 +1061,17 @@ function submitWorkForm_(student, course, buttonEl) {
     return;
   }
 
+  const files = photoEl ? Array.prototype.slice.call(photoEl.files) : [];
+  if (files.length > MAX_SUBMIT_PHOTOS_) {
+    alert("Please attach at most " + MAX_SUBMIT_PHOTOS_ + " photos at a time.");
+    return;
+  }
+
   const originalText = buttonEl.textContent;
   buttonEl.disabled = true;
-  buttonEl.textContent = "Reading photo...";
+  buttonEl.textContent = files.length > 1 ? "Reading photos..." : "Reading photo...";
 
-  readImageAsCompressedBase64_(photoEl && photoEl.files[0]).then(function (photo) {
+  Promise.all(files.map(readImageAsCompressedBase64_)).then(function (photos) {
     buttonEl.disabled = false;
     buttonEl.textContent = originalText;
     postTeacherAction_("submitWork", {
@@ -1074,7 +1084,7 @@ function submitWorkForm_(student, course, buttonEl) {
       unit: unitEl.value,
       answer: answer,
       remarks: remarksEl.value.trim(),
-      photo: photo,
+      photos: photos,
       teacherEmails: teachersForStudentCourse_(student, course.id).map(function (t) { return t.email; })
     }, buttonEl, function () {
       answerEl.value = "";
