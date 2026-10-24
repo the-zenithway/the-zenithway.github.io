@@ -1,5 +1,25 @@
 [
   {
+    "id": "sub_1792869273324_elfw3d",
+    "receivedAt": "2026-10-24T19:14:33.324Z",
+    "status": "pending",
+    "courseId": "ap-calculus-bc",
+    "username": "seohu",
+    "chapter": "Chapter 4",
+    "unit": "B",
+    "answers": {
+      "username": "seohu",
+      "course": "ap-calculus-bc",
+      "chapter": "Chapter 4",
+      "unit": "B",
+      "answer": "Ex1.answer: x = 0, 1 (임계수 / Critical numbers)\n\nEx2.answer: 임계수 없음 (No critical values)\n\nEx3.answer: x = 1 (미분불가능한 임계수 / Critical value where f' does not exist)\n\nEx4.answer: 평균 유출률 = -10000 gal/min, 5분 후 유출률 = -8000 gal/min\n\nEx5.answer: f(0) = 0 (임계점), f'(x) > 0 이므로 항상 증가함수, x = 0 은 변곡점 (Inflection point)\n\nEx6.answer: (0, 2)에서의 접선의 방정식: y = -1/12 x + 2, 기울기 m = -1/12\n\nEx7.answer: horizontal tangent point (접선의 기울기가 0인 점) = (-2, 1), (2, -1)\n\nEx8.answer: x = pi/4 + n*pi - 1 (n은 정수)\n\nEx9.answer: t = pi/3에서의 접선의 방정식: y - 3/2 = -2(x - 1/2) 또는 y = -2x + 5/2\n\nEx10.answer: 증가 구간: x > 3 (또는 (3, inf)), 감소 구간: x < 3 (또는 (-inf, 3))\n\nEx11.answer: (-inf, -1)에서 감소, (-1, inf)에서 감소, x = -1에서는 미분불가능(Undefined)\n\nEx12.answer: 극댓값 = f(1/3) = 175/27 (x = 1/3), 극솟값 = f(3) = -3 (x = 3), 변곡점 = (5/3, 119/27)\n\nEx13.answer: (노트 상 Ex7 Ex14 표기) x = 0에서 정의됨 f(0)=0, x < 0에서 감소 f'(-1) < 0, x > 0에서 증가 f'(1) > 0, x = 0에서 극소\n\nEx14.answer: 극솟값 = f(3) = -27 (x = 3), 변곡점 = (0, 0), (2, -16)\n\nEx15.answer: (Ex5 풀이 참고) x = 0 은 변곡점 (Inflection point)\n\nEx16.answer: (a) [-2, 3] 구간: 절대극대(Global max) y = 7 (at x = -1), 절대극소(Global min) y = -20 (at x = 2) / (b) [0, 3] 구간: Global min y = -20 (at x = 2)\n\nEx17.answer: f'(x) DNE at x = 0, x = 0에서 절대극소(Global min) 값 y = 0\n\nEx18.answer: y = 1/x 의 경우 x = 0에서 f(x)가 정의되지 않음 (최댓값/최솟값 존재하지 않음)\n\nEx19.answer: y = (2x+1)/(x-1) 점근선 x = 1, y = 2\n\nEx20.answer: (a) x축 대칭 (Symmetry about the x-axis) / (b) 원점 대칭 (Symmetry about the origin) / (c) x축, y축, 원점 대칭 (Symmetry about x-axis, y-axis, and origin)\n\nEx21.answer: Maximum area = pi/4 (y = 1/sqrt(2) 일 때)\n\nEx22.answer: h = 2r (비율 h : r = 2 : 1 일 때 표면적 최소)\n\nEx23.answer: 최대 수익을 얻기 위한 참가자 수 = 28명 (x = 10, 최대 수익 = $1792)\n\nEx24.answer: u = sqrt(7) miles (또는 u = sqrt(3) miles / 조건에 따른 최소 비용 위치)\n\nEx25.answer: (A) C1 극대, C2 변곡점, C3 극소, C4 변곡점, C5 극대 / (B) x = -3에서 극소, x = 2에서 극대, x = 0에서 변곡점\n\nEx26.answer: (a) t < 1 또는 t > 2 에서 속도 v > 0 / (b) t > 3/2 에서 가속도 a > 0 / (c) t >= 2 및 1 < t < 3/2 에서 속력 증가 / (d) t = 3/2 일 때 가속도 0 및 위치 S(3/2) = -3/2\nEx27.answer: (a) t > 3 (속도 v > 0 조건) / (b) t < 0 또는 t > 2 (가속도 a > 0 조건) / (c) t > 3 (속력 증가 조건: v>0, a>0) 및 0 < t < 2 (속력 증가 조건: v<0, a<0) / (d) min v = -27 (t = 3/2일 때) / (e) 이동 거리(Total distance) = 54 (t = 0 ~ 4 구간)\n\nEx28.answer: (a) 4x^2 + 9y^2 = 36 / (b) v(t) = (-3 sin t, 2 cos t), a(t) = (-3 cos t, -2 sin t) / (c) a(pi/6) = (-3sqrt(3)/2, -1), a(pi) = (3, 0), v(pi/6) = (-3/2, sqrt(3)), v(pi) = (0, -2), R(pi/6) = (3sqrt(3)/2, 1), R(pi) = (-3, 0) / (d) t = pi/6에서의 속력(Speed) = sqrt(21)/2, 가속도 크기 = sqrt(31)/2 / (e) 속력 최댓값 = 3 (t = pi/2 또는 3pi/2 일 때), 속력 최솟값 = 2 (t = 0 또는 pi 일 때)\n\nEx29.answer: Vx = 1/2, Vy = -sqrt(10)/2 (또는 x = (1 +- sqrt(10))/2 일 때의 각 속도 성분)\n\nEx30.answer: (a) L(x) = x (a = 0에서 sin x의 선형 approximation) / (b) L(x) = -x + pi/2 (a = pi/2에서 cos x의 선형 approximation) / (c) L(x) = 3x - 4 / (d) L(x) = (x + 10) / 6\n\nEx31.answer: theta = pi/3, 5pi/3, pi (dr/dtheta 및 극좌표 방정식 만족점)\n\nEx32.answer: cos theta = 1/2 또는 -1 (theta = pi/3, 5pi/3, pi)\n\nEx33.answer: f(x) 약 3 + 6x, f(0.05) 약 3.3\n\nEx34.answer: dz/dt = -1/10 ft/s\n\nEx35.answer: dh/dt = -1/(2*pi)\n\nEx36.answer: dy/dx = pi/(3) (또는 각 미분계수 대입값: r'sin(pi/6) + r cos(pi/6) 등 계산값)",
+      "feedback-and-remarks": "사진 왜 아직도 한장..+답변 내 노트보고 제미나이한테 써달라함"
+    },
+    "ocrText": null,
+    "formResponseId": null,
+    "photoUrls": []
+  },
+  {
     "id": "sub_1792821284615_pv6cyq",
     "receivedAt": "2026-10-24T05:54:44.615Z",
     "status": "pending",
