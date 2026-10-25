@@ -956,6 +956,48 @@
   ],
   "bogue": [
     {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (C2-Limits and Continuity Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (S2-Limits and Continuity Solutions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (B3-Differentiation) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (C3-Differentiation Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (S3-Differentiation Solutions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T15:43:06.564Z"
+    },
+    {
       "type": "deadline",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — new task: Review Chapter 9 and 10 R",
@@ -1120,41 +1162,6 @@
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 8 (B8-Further Applications of Integration) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 8 (C8-Further Application of Integration Problems) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 9 (B9-Differential Equations) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 9 (C9-Differential Equations Problems) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 10 (B10-Sequences and Series) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 10 (C10-Sequences and Series Problems) unlocked",
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-06T10:40:51.701Z"
     }
