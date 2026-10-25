@@ -758,6 +758,111 @@
   ],
   "seohu": [
     {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (B1-Functions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (C1-Functions Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (S1-Functions Solutions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (R1-Functions Review) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (C2-Limits and Continuity Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (S2-Limits and Continuity Solutions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (R2-Functions Review) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 2 (T2-Functions Test) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (B3-Differentiation) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (C3-Differentiation Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (S3-Differentiation Solutions) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (R3-Differentiation Review) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 3 (T3-Differentiation Test) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-25T03:07:53.107Z"
+    },
+    {
       "type": "deadline",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — new task: Chapter 2 R (due TBD)",
