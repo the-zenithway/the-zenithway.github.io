@@ -22,7 +22,7 @@
   {
     "id": "sub_1792821284615_pv6cyq",
     "receivedAt": "2026-10-24T05:54:44.615Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 5",
@@ -42,7 +42,7 @@
   {
     "id": "sub_1792753720767_5vktay",
     "receivedAt": "2026-10-23T11:08:40.767Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 4",
@@ -62,7 +62,7 @@
   {
     "id": "sub_1792574292295_2qlj71",
     "receivedAt": "2026-10-21T09:18:12.295Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 4",
@@ -102,7 +102,7 @@
   {
     "id": "sub_1792147934411_uvfc9f",
     "receivedAt": "2026-10-16T10:52:14.411Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 3",
@@ -142,7 +142,7 @@
   {
     "id": "sub_1791817592427_y1aogu",
     "receivedAt": "2026-10-12T15:06:32.427Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 9",
@@ -162,7 +162,7 @@
   {
     "id": "sub_1791802772603_9c81z7",
     "receivedAt": "2026-10-12T10:59:32.603Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 10",
@@ -182,7 +182,7 @@
   {
     "id": "sub_1791455762166_qnaifi",
     "receivedAt": "2026-10-08T10:36:02.166Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 9",
@@ -202,7 +202,7 @@
   {
     "id": "sub_1789357446926_y2wqsc",
     "receivedAt": "2026-09-14T03:44:06.926Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 10",
