@@ -124,9 +124,10 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Review Chapter 9 and 10",
-          "unit": "R",
-          "instruction": "Review wrong answers in Chapters 9 and 10:\nChapter 10 : A13, A18, A19, A20, B3, B4\nChapter 9 : A8, A15, A20, A22, B14"
+          "chapter": "Chapter 5",
+          "unit": "C",
+          "instruction": "Let's grind until chapter 8. Please finish Chap 5C by Tuesday. \n\nBrief agenda: Grind until chap 8, then review entire thing, write final review note, and review mistakes. Then spam mock exams and mock FRQs",
+          "due": "Wednesday"
         },
         "feedback": [
           {
