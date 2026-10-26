@@ -758,6 +758,13 @@
   ],
   "seohu": [
     {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 4 C (due Wednesday)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-26T01:35:08.922Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 1 (B1-Functions) marked complete",
