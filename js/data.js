@@ -750,10 +750,10 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 2",
-          "unit": "R",
-          "instruction": "Resolve Items:A22,A25,A26,B11\nmost of these are minor mistakes, so I think it's best to figure them out by trying them out again slowly. \n\nAlso, you missed A17, A20, A24, and B10. Try to study them with any kind of help(AI, google, youtube, whatever)\nTry to master all these problems at a level where you can explain them. Let's plan a session soon!",
-          "due": "TBD"
+          "chapter": "Chapter 4",
+          "unit": "C",
+          "instruction": "Get this going!",
+          "due": "Wednesday"
         },
         "feedback": [
           {
