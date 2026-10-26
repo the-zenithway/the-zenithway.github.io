@@ -963,6 +963,13 @@
   ],
   "bogue": [
     {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 5 C (due Wednesday)",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-10-26T08:15:18.000Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) marked complete",
@@ -1162,13 +1169,6 @@
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 7 (C7-Application of Integration to Geometry Problems) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-06T10:40:51.701Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 8 (B8-Further Applications of Integration) unlocked",
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-08-06T10:40:51.701Z"
     }
