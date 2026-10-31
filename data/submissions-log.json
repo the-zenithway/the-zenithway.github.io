@@ -2,7 +2,7 @@
   {
     "id": "sub_1793177263334_gxt5yv",
     "receivedAt": "2026-10-28T08:47:43.334Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 6",
@@ -22,7 +22,7 @@
   {
     "id": "sub_1793093164108_c2vhgk",
     "receivedAt": "2026-10-27T09:26:04.108Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 5",
@@ -42,7 +42,7 @@
   {
     "id": "sub_1793008069675_8eifwi",
     "receivedAt": "2026-10-26T09:47:49.675Z",
-    "status": "pending",
+    "status": "Complete",
     "courseId": "ap-calculus-bc",
     "username": "bogue",
     "chapter": "Chapter 3",
