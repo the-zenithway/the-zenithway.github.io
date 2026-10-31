@@ -778,29 +778,29 @@ const STUDENTS = [
           { "name": "C1-Functions Problems", "category": "C-coursework", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1srrUF6c_0cXnEdLiaD9Le05iWw7_kCXJ/view?usp=drive_link" },
           { "name": "S1-Functions Solutions", "category": "S-solution manual", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1DPo60sEJWR7Byl70U1pOHBTQaBFw5Ey8/view?usp=drive_link" },
           { "name": "R1-Functions Review", "category": "R-Review", "chapter": "Chapter 1", "status": "Complete" },
-          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Complete", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
+          { "name": "T1-Functions Test", "category": "T-Test", "chapter": "Chapter 1", "status": "Locked", "url": "https://drive.google.com/file/d/1NWDwuGjIrsGFNhIauv8_lrJqzt0LtAhH/view?usp=drive_link" },
           { "name": "B2-Limits and Continuity", "category": "B-book chapter", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1xDn8xrsDdYVlDl5l4hLWlVzWUkEe7Bs9/view?usp=drive_link" },
           { "name": "C2-Limits and Continuity Problems", "category": "C-coursework", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1_o35NK356pUnoAIAfQZang5vgH3AMOQP/view?usp=drive_link" },
           { "name": "S2-Limits and Continuity Solutions", "category": "S-solution manual", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/17pzhOM1QGu8z-zm3YovNEe40ECpexSaF/view?usp=drive_link" },
           { "name": "R2-Functions Review", "category": "R-Review", "chapter": "Chapter 2", "status": "Complete" },
-          { "name": "T2-Functions Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Complete", "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link" },
+          { "name": "T2-Functions Test", "category": "T-Test", "chapter": "Chapter 2", "status": "Locked", "url": "https://drive.google.com/file/d/1xLk2aH6HcbhjqxTEYE7PkTP6U6W3zkp8/view?usp=drive_link" },
           { "name": "B3-Differentiation", "category": "B-book chapter", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1Pmtx_jKUGFLyOQhlFoYmI73UaW0AVEp7/view?usp=drive_link" },
           { "name": "C3-Differentiation Problems", "category": "C-coursework", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/19NGG8CUv7LhzRoVS6q7kx_pGaBkeHQL_/view?usp=drive_link" },
           { "name": "S3-Differentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1EolTf6Fc9d4kROvX_-h_kdgXVhQCINZD/view?usp=drive_link" },
           { "name": "R3-Differentiation Review", "category": "R-Review", "chapter": "Chapter 3", "status": "Complete" },
-          { "name": "T3-Differentiation Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Complete", "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link" },
-          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
-          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
+          { "name": "T3-Differentiation Test", "category": "T-Test", "chapter": "Chapter 3", "status": "Locked", "url": "https://drive.google.com/file/d/1tA4IwjRfMD7tYarq_9gZorOsr0OQXsef/view?usp=drive_link" },
+          { "name": "B4-Application of Differential Calculus", "category": "B-book chapter", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://drive.google.com/file/d/176JaK2_fIDJKMu4r5lswHf55VDoHb1Yh/view?usp=drive_link" },
+          { "name": "C4-Application of Differential Calculus Problems", "category": "C-coursework", "chapter": "Chapter 4", "status": "Unlocked", "url": "https://drive.google.com/file/d/1nEcmDBxr7c4SnXnzoqVC8xWJULMjKv1V/view?usp=drive_link" },
           { "name": "S4-Application of Differential Calculus Solutions", "category": "S-solution manual", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1s6gS0JXb7Qkv4bcuScdMHolZpQzwZA3o/view?usp=drive_link" },
           { "name": "R4-Application of Differential Calculus Review", "category": "R-Review", "chapter": "Chapter 4", "status": "Locked" },
           { "name": "T4-Application of Differential Calculus Test", "category": "T-Test", "chapter": "Chapter 4", "status": "Locked", "url": "https://drive.google.com/file/d/1vEDN8SnqdVuYLOvJ8RJg0lEMYuvmsUPc/view?usp=drive_link" },
-          { "name": "B5-Antidifferentiation", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link" },
-          { "name": "C5-Antidifferentiation Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link" },
+          { "name": "B5-Antidifferentiation", "category": "B-book chapter", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1bt6G1c_qpNHzB8sk-JI2t-Vc1kaG333K/view?usp=drive_link" },
+          { "name": "C5-Antidifferentiation Problems", "category": "C-coursework", "chapter": "Chapter 5", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1vNyQOAqiXgRB1yfvsxw7E5lhAxALJ8UB/view?usp=drive_link" },
           { "name": "S5-Antidifferentiation Solutions", "category": "S-solution manual", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1dGO0xQYAWr9ial7bo62ATko0e1V9npbo/view?usp=drive_link" },
           { "name": "R5-Antidifferentiation Review", "category": "R-Review", "chapter": "Chapter 5", "status": "Locked" },
           { "name": "T5-Antidifferentiation Test", "category": "T-Test", "chapter": "Chapter 5", "status": "Locked", "url": "https://drive.google.com/file/d/1qesZmf7OpPNdpXTkN98ZQt6S8PwaNICa/view?usp=drive_link" },
-          { "name": "B6-Definite Integrals", "category": "B-book chapter", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1zDSFHj-udXu9Qy0nrN-B8VbWRD0KmIUt/view?usp=drive_link" },
-          { "name": "C6-Definite Integrals Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1MN9WDjoFhj29pTPRd622yPdGLKQFXsld/view?usp=drive_link" },
+          { "name": "B6-Definite Integrals", "category": "B-book chapter", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1zDSFHj-udXu9Qy0nrN-B8VbWRD0KmIUt/view?usp=drive_link" },
+          { "name": "C6-Definite Integrals Problems", "category": "C-coursework", "chapter": "Chapter 6", "status": "Optional-Reading", "url": "https://drive.google.com/file/d/1MN9WDjoFhj29pTPRd622yPdGLKQFXsld/view?usp=drive_link" },
           { "name": "S6-Definite Integrals Solutions", "category": "S-solution manual", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1pML1Se9S-xH4bS1TFBp3UpNSyYuqQwla/view?usp=drive_link" },
           { "name": "R6-Definite Integrals Review", "category": "R-Review", "chapter": "Chapter 6", "status": "Locked" },
           { "name": "T6-Definite Integrals Test", "category": "T-Test", "chapter": "Chapter 6", "status": "Locked", "url": "https://drive.google.com/file/d/1bEwXfFKlZPrdqAWFXx5IB9_CBCfgcJQW/view?usp=drive_link" },
@@ -870,12 +870,16 @@ const STUDENTS = [
             {
               "date": "Sep 14",
               "score": 85
+            },
+            {
+              "date": "Nov 1",
+              "score": 95
             }
           ],
           "responsiveness": {
-            "score": 90,
+            "score": 95,
             "note": "",
-            "asOf": "Sep 14"
+            "asOf": "Nov 1"
           },
           "topicMastery": [
             {
