@@ -2540,6 +2540,16 @@ body.portal-body {
   text-decoration: none;
 }
 .teacher-class-student-link:hover { color: var(--accent); text-decoration: underline; }
+.teacher-class-student-former { opacity: 0.75; }
+.teacher-class-former-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(214, 169, 74, 0.18);
+  color: var(--accent);
+  white-space: nowrap;
+}
 
 /* Green = nothing pending, yellow (var(--accent)) = at least one
    ungraded submission. Used both on teacher.html (class card header +

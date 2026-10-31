@@ -130,3 +130,4 @@
 - [x] Submissions tab: attach multiple photos per submission (up to 10) — submit.html, js/app.js, zenith-data-writer.gs (redeploy needed)
 - [x] Added self-study student "asher" (js/data.js): all 4 courses, every roadmap item Complete, no class/teacher assignment
 - [x] Added self-study student "selfstudy" (js/data.js): same setup as asher — all 4 courses 100% Complete, no class assignment
+- [x] Self-study switch: davidheo, kyjv9981, hamin moved to CLASSES formerStudentUsernames (shown on teacher roster/student page as "No longer in class · self-study"); davidheo, kyjv9981 + hamin set to 100% Complete in all their courses, rightNow cleared

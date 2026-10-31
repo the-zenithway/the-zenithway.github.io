@@ -2659,7 +2659,21 @@ function teacherClassCardHtml_(cls, courseName) {
     .map(function (username) { return STUDENTS.find(function (s) { return s.username === username; }); })
     .filter(Boolean);
 
-  const studentListHtml = students.length === 0
+  // Students who moved to the self-study track (CLASSES
+  // formerStudentUsernames) — still listed and linked, just marked, and
+  // with no status dot (nothing here is theirs to grade for this class).
+  const former = (cls.formerStudentUsernames || [])
+    .map(function (username) { return STUDENTS.find(function (s) { return s.username === username; }); })
+    .filter(Boolean);
+  const formerHtml = former.map(function (s) {
+    const href = "teacher-student.html?username=" + encodeURIComponent(s.username) + "&course=" + encodeURIComponent(cls.courseId);
+    return '<li class="teacher-class-student-former">' +
+      '<a class="teacher-class-student-link" href="' + href + '">' + s.name + '</a>' +
+      '<span class="teacher-class-former-badge">No longer in class · self-study</span>' +
+    '</li>';
+  }).join("");
+
+  const studentListHtml = students.length === 0 && former.length === 0
     ? '<p class="teacher-empty">No students in this class yet.</p>'
     : '<ul class="teacher-class-student-list">' +
         students.map(function (s) {
@@ -2672,7 +2686,7 @@ function teacherClassCardHtml_(cls, courseName) {
             '<span class="status-dot" data-student-status-dot="' + cls.id + ':' + s.username + '" hidden></span>' +
             '<a class="teacher-class-student-link" href="' + href + '">' + s.name + '</a>' +
           '</li>';
-        }).join("") +
+        }).join("") + formerHtml +
       '</ul>';
 
   return '<div class="teacher-class-card">' +
@@ -4055,7 +4069,18 @@ function renderTeacherStudentPage() {
   content.hidden = false;
 
   document.getElementById("teacher-student-name").textContent = student.name;
-  document.getElementById("teacher-student-course").textContent = course.name;
+  const courseLabelEl = document.getElementById("teacher-student-course");
+  courseLabelEl.textContent = course.name;
+  const leftClass = CLASSES.find(function (c) {
+    return c.courseId === course.id && (c.formerStudentUsernames || []).indexOf(student.username) !== -1;
+  });
+  if (leftClass) {
+    const badge = document.createElement("span");
+    badge.className = "teacher-class-former-badge";
+    badge.textContent = "No longer in " + leftClass.name + " · self-study";
+    courseLabelEl.appendChild(document.createTextNode(" "));
+    courseLabelEl.appendChild(badge);
+  }
   document.title = student.name + " · " + course.name + " — Zenith";
 
   teacherPendingChanges = [];
