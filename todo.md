@@ -128,3 +128,4 @@
 ## Done
 - [x] School talk plan (talk-plan.md): three-act structure (mindset, AP/SAT + Zenith, interview), thread, bridges, to-do list, reply draft
 - [x] Submissions tab: attach multiple photos per submission (up to 10) — submit.html, js/app.js, zenith-data-writer.gs (redeploy needed)
+- [x] Added self-study student "asher" (js/data.js): all 4 courses, every roadmap item Complete, no class/teacher assignment
