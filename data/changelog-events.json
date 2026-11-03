@@ -639,121 +639,212 @@
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 0 (Advanced Chemistry Booklet) unlocked",
+      "text": "AP Chemistry — Chapter 0 (Advanced Chemistry Booklet) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Booklet) unlocked",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Booklet) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Description) unlocked",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Exam Description) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 0 (AP Chemistry Reference Sheet) unlocked",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Reference Sheet) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 0 (AP Chemistry Barron's Book) unlocked",
+      "text": "AP Chemistry — Chapter 0 (AP Chemistry Barron's Book) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 1 (L1-Atomic Structure and Properties (Khan Academy)) unlocked",
+      "text": "AP Chemistry — Chapter 1 (L1-Atomic Structure and Properties (Khan Academy)) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 1 (N1-Atomic Structure and Properties Notes Submission) unlocked",
+      "text": "AP Chemistry — Chapter 1 (N1-Atomic Structure and Properties Notes Submission) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 1 (C1-Atomic Structure and Properties Problems) unlocked",
+      "text": "AP Chemistry — Chapter 1 (C1-Atomic Structure and Properties Problems) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked optional reading",
+      "text": "AP Chemistry — Chapter 1 (S1-Atomic Structure and Properties Solutions) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked optional reading",
+      "text": "AP Chemistry — Chapter 1 (T1-Atomic Structure and Properties Test) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
       "courseId": "ap-chemistry",
-      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked optional reading",
+      "text": "AP Chemistry — Chapter 2 (L2-Molecular and Ionic Compound Structure and Properties (Khan Academy)) marked complete",
       "url": "roadmap.html?course=ap-chemistry",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 0 (AP Calculus BC Exam Booklet) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (N2-Molecular and Ionic Compound Structure and Properties Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 0 (AP Calculus Exam Meta Information) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (C2-Molecular and Ionic Compound Structure and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (B1-Functions) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (S2-Molecular and Ionic Compound Structure and Properties Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (C1-Functions Problems) unlocked",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 2 (T2-Molecular and Ionic Compound Structure and Properties Test) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) marked optional reading",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (L3-Intermolecular Forces and Properties (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     },
     {
       "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 2 (C2-Limits and Continuity Problems) marked optional reading",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-08-04T10:46:39.262Z"
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (N3-Intermolecular Forces and Properties Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (C3-Intermolecular Forces and Properties Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (S3-Intermolecular Forces and Properties Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 3 (T3-Intermolecular Forces and Properties Test) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (L4-Chemical Reactions (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (N4-Chemical Reactions Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (C4-Chemical Reactions Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (S4-Chemical Reactions Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 4 (T4-Chemical Reactions Test) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (L5-Kinetics (Khan Academy)) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (N5-Kinetics Notes Submission) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (C5-Kinetics Problems) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (S5-Kinetics Solutions) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-chemistry",
+      "text": "AP Chemistry — Chapter 5 (T5-Kinetics Test) marked complete",
+      "url": "roadmap.html?course=ap-chemistry",
+      "timestamp": "2026-11-03T03:08:17.410Z"
     }
   ],
   "seohu": [
