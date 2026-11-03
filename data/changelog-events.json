@@ -758,6 +758,55 @@
   ],
   "seohu": [
     {
+      "type": "deadline",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — new task: Chapter 5 B",
+      "url": "right-now.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (B4-Application of Differential Calculus) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (C4-Application of Differential Calculus Problems) marked complete",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (S4-Application of Differential Calculus Solutions) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 4 (R4-Application of Differential Calculus Review) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (B6-Definite Integrals) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
+      "type": "roadmap",
+      "courseId": "ap-calculus-bc",
+      "text": "AP Calculus BC — Chapter 6 (C6-Definite Integrals Problems) unlocked",
+      "url": "roadmap.html?course=ap-calculus-bc",
+      "timestamp": "2026-11-03T02:26:34.367Z"
+    },
+    {
       "type": "roadmap",
       "courseId": "ap-calculus-bc",
       "text": "AP Calculus BC — Chapter 1 (T1-Functions Test) locked",
@@ -917,55 +966,6 @@
       "text": "AP Calculus BC — Chapter 3 (S3-Differentiation Solutions) marked complete",
       "url": "roadmap.html?course=ap-calculus-bc",
       "timestamp": "2026-10-25T03:07:53.107Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 3 (R3-Differentiation Review) marked complete",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-10-25T03:07:53.107Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 3 (T3-Differentiation Test) marked complete",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-10-25T03:07:53.107Z"
-    },
-    {
-      "type": "deadline",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — new task: Chapter 2 R (due TBD)",
-      "url": "right-now.html?course=ap-calculus-bc",
-      "timestamp": "2026-09-13T15:11:09.591Z"
-    },
-    {
-      "type": "feedback",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — new feedback on Chapter 2 C",
-      "url": "feedback.html?course=ap-calculus-bc",
-      "timestamp": "2026-09-13T15:11:09.591Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (B1-Functions) Review",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-09-13T15:11:09.591Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 1 (C1-Functions Problems) Review",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-09-13T15:11:09.591Z"
-    },
-    {
-      "type": "roadmap",
-      "courseId": "ap-calculus-bc",
-      "text": "AP Calculus BC — Chapter 2 (B2-Limits and Continuity) Review",
-      "url": "roadmap.html?course=ap-calculus-bc",
-      "timestamp": "2026-09-13T15:11:09.591Z"
     }
   ],
   "bogue": [
