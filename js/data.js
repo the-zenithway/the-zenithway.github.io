@@ -707,11 +707,18 @@ const STUDENTS = [
         "icon": "calculus",
         "rightNow": {
           "state": "your-move",
-          "chapter": "Chapter 5",
-          "unit": "B",
-          "instruction": "Get this going!"
+          "chapter": "Chapter 4",
+          "unit": "R",
+          "instruction": "Resolve the mistakes in chapter 4C!",
+          "due": "Wednesday"
         },
         "feedback": [
+          {
+            "date": "Nov 3",
+            "chapter": "Chapter 4",
+            "unit": "C",
+            "content": "Chapter 4 C feedback: 78/93 (84%). Big jump from last time, especially in the B section. Nice work!\n\nWhat to fix:\n\n1) Particle motion (A18, A25, A26, A28, A29, B10, B23)\n- A26: v = 5t^3(t+4) changes sign at t = -4 and t = 0, so there are 2 reversals. You answered 0.\n- A25: you picked 27, which is the value at the turning point t = 3. When asked for a maximum on a closed interval, always check the endpoints too. At t = -2 the value is 48.\n- B23: constant speed means velocity and acceleration are perpendicular. Speed is not velocity, so a does not have to be 0.\n- A18, A28, A29, B10 are the vector and graph versions of the same ideas. Redo them after the ones above.\n\n2) Max/min logic (A15, A37, B17)\n- A15: the factors (x-3)^2 and (x+1)^4 have even powers, so they never change sign. Only x = 0 is a local max/min. You answered 3.\n- A37: x = 10 gives the maximum product, not the minimum, so no minimum exists. Always check whether a critical point is a max or a min.\n- B17: a calculator problem. Graph f' and find where it changes from positive to negative.\n\n3) Tangent lines (A3, A4, B2)\n- B2: for x^2 = 4y at x = -2, the slope is -1 and y = 1, which gives x + y + 1 = 0. You chose x + y - 3 = 0.\n- A4: y' = e^(-x)(1 - x) = 0 at x = 1. Careful with the factoring and sign.\n\n4) Differentials / linear approximation (A11, A39)\n- A11: 1% of 10 is 0.1, and dV = 3e^2 * de = 300 * 0.1 = 30. You answered 3.\n- A39: you skipped it. It is a local linear approximation near 27, so just try it.\n\nResolve slowly: A3, A4, A11, A25, B2, B17, A39\nStudy and be able to explain: A15, A18, A26, A28, A29, A37, B10, B23"
+          },
           {
             "date": "Sep 13",
             "chapter": "Chapter 2",
