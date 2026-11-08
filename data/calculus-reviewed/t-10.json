@@ -1,0 +1,581 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "Which sequence converges?",
+    "choices_tex": [
+      "$a_n = n+\\dfrac{5}{n}$",
+      "$a_n = 2+\\dfrac{(-1)^n}{n}$",
+      "$a_n = \\cos\\dfrac{n\\pi}{2}$",
+      "$a_n = \\dfrac{n!}{4^n}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "In B, $|(-1)^n/n|=1/n\\to0$, so $a_n\\to2$. A grows without bound; C oscillates; D eventually grows because the ratio of successive terms is $(n+1)/4>1$ and eventually exceeds2."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "If $s_n = 2+\\dfrac{(-1)^n}{n^2}$, then",
+    "choices_tex": [
+      "$s_n$ diverges by oscillation",
+      "$s_n$ converges to zero",
+      "$\\displaystyle\\lim_{n\\to\\infty} s_n = 2$",
+      "$s_n$ diverges to infinity"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $|(-1)^n/n^2|\\leq1/n^2\\to0$, the squeeze theorem gives $s_n\\to2$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "The sequence $a_n = \\sin\\dfrac{n\\pi}{6}$",
+    "choices_tex": [
+      "is unbounded",
+      "converges to a number less than 1",
+      "is bounded",
+      "diverges to infinity"
+    ],
+    "correct": "C",
+    "explanation_tex": "Every sine value lies in $[-1,1]$, so the sequence is bounded. It does not converge: the subsequences $n=12k+3$ and $n=12k+9$ have values1 and $-1$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "Which of the following sequences diverges?",
+    "choices_tex": [
+      "$a_n = \\dfrac{(-1)^{n+1}}{2n}$",
+      "$a_n = \\dfrac{2^n}{e^n}$",
+      "$a_n = \\dfrac{n^3}{e^n}$",
+      "$a_n = \\dfrac{n}{\\ln(n+1)}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A tends to zero by squeezing, B is geometric with ratio $2/e<1$, and exponential growth dominates the polynomial in C. In D, $n/\\ln(n+1)\\to\\infty$, so D diverges."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "The sequence $\\{r^n\\}$ converges if and only if",
+    "choices_tex": [
+      "$|r|<1$",
+      "$|r|\\leq 1$",
+      "$-1<r\\leq 1$",
+      "$0<r<1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $|r|<1$, $r^n\\to0$; for $r=1$, the sequence is constantly1. At $r=-1$ it oscillates, and for $|r|>1$ its magnitude grows without bound. Thus exactly $-1<r\\leq1$ works."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "$\\displaystyle\\sum u_n$ is a series of constants for which $\\displaystyle\\lim_{n\\to\\infty} u_n=0$. Which of the following statements is always true?",
+    "choices_tex": [
+      "$\\displaystyle\\sum u_n$ converges to a finite sum.",
+      "$\\displaystyle\\sum u_n$ does not diverge to infinity.",
+      "$\\displaystyle\\sum u_n$ is a positive series.",
+      "None of statements (A), (B), or (C) are always true."
+    ],
+    "correct": "D",
+    "explanation_tex": "Terms tending to zero are necessary but not sufficient for series convergence. The harmonic series $\\sum1/n$ disproves A and B; $\\sum(-1)^n/n$ disproves C. Therefore none is guaranteed."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "Note that $\\dfrac{1}{n(n+2)}=\\dfrac{1}{2}\\left(\\dfrac{1}{n}-\\dfrac{1}{n+2}\\right)$ $(n\\geq 1)$. $\\displaystyle\\sum_{n=1}^\\infty \\dfrac{1}{n(n+2)}$ equals",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{1}{2}$",
+      "$\\dfrac{3}{4}$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The partial sum telescopes to $\\frac12(1+\\frac12-\\frac1{N+1}-\\frac1{N+2})$. Its limit is $3/4$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "The sum of the geometric series $4-\\dfrac{4}{3}+\\dfrac{4}{9}-\\dfrac{4}{27}+\\cdots$ is",
+    "choices_tex": [
+      "$3$",
+      "$2$",
+      "$\\dfrac{9}{4}$",
+      "$6$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The first term is4 and the ratio is $-1/3$. Since its magnitude is below1, the sum is $4/(1+1/3)=3$."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "Which of the following statements about series is true?",
+    "choices_tex": [
+      "If $\\displaystyle\\lim_{n\\to\\infty} u_n=0$, then $\\displaystyle\\sum u_n$ converges.",
+      "If $\\displaystyle\\lim_{n\\to\\infty} u_n\\neq 0$, then $\\displaystyle\\sum u_n$ diverges.",
+      "If $\\displaystyle\\sum u_n$ diverges, then $\\displaystyle\\lim_{n\\to\\infty} u_n\\neq 0$.",
+      "$\\displaystyle\\sum u_n$ converges if and only if $\\displaystyle\\lim_{n\\to\\infty} u_n=0$."
+    ],
+    "correct": "B",
+    "explanation_tex": "If a series converges, its terms must tend to zero. The contrapositive gives B. The harmonic series is a counterexample to the converse statements."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "Which of the following series diverges?",
+    "choices_tex": [
+      "$\\displaystyle\\sum \\dfrac{1}{n^2}$",
+      "$\\displaystyle\\sum \\dfrac{1}{n^2+3n}$",
+      "$\\displaystyle\\sum \\dfrac{n}{n^3+5}$",
+      "$\\displaystyle\\sum \\dfrac{n}{\\sqrt{9n^2-1}}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The terms in D tend to $1/3$, not zero, so D diverges by the term test. A is a convergent $p$-series; B and C compare with $1/n^2$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "Which of the following series diverges?",
+    "choices_tex": [
+      "$4-\\dfrac{4}{5}+\\dfrac{4}{25}-\\cdots$",
+      "$\\dfrac{1}{\\sqrt{3}}-\\dfrac{1}{\\sqrt{4}}+\\dfrac{1}{\\sqrt{5}}-\\cdots$",
+      "$\\dfrac{1}{9}-\\dfrac{1}{16}+\\dfrac{1}{25}-\\cdots$",
+      "$1-1.2+1.44-1.728+\\cdots$"
+    ],
+    "correct": "D",
+    "explanation_tex": "D is geometric with ratio $-1.2$, so its terms do not tend to zero. A is geometric with ratio $-1/5$; B satisfies the alternating-series test; C converges absolutely by comparison with $1/n^2$."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "Let $S=\\displaystyle\\sum_{n=1}^\\infty \\left(\\dfrac{3}{4}\\right)^n$; then $S$ equals",
+    "choices_tex": [
+      "$\\dfrac{4}{3}$",
+      "$\\dfrac{3}{2}$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "This geometric series starts with $3/4$ and has ratio $3/4$, so $S=(3/4)/(1-3/4)=3$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "Which of the following expansions is impossible?",
+    "choices_tex": [
+      "$\\sqrt{x-2}$ in powers of $x$",
+      "$\\sqrt{x+2}$ in powers of $x$",
+      "$\\ln x$ in powers of $(x-1)$",
+      "$\\tan x$ in powers of $\\left(x-\\dfrac{\\pi}{4}\\right)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "A real Taylor expansion at zero requires the function to be real and differentiable near zero. $\\sqrt{x-2}$ is not real there. Each other function is analytic near its stated center."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "The series $\\displaystyle\\sum_{n=0}^\\infty n!(x-4)^n$ converges if and only if",
+    "choices_tex": [
+      "$x=0$",
+      "$3<x<5$",
+      "$x=4$",
+      "$3\\leq x\\leq 5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne4$, the absolute ratio of consecutive terms is $(n+1)|x-4|\\to\\infty$, so the series diverges. At $x=4$ all positive-degree terms vanish, leaving the constant term1."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "Let $f(x)=\\displaystyle\\sum_{n=0}^\\infty x^n$. The radius of convergence of $\\displaystyle\\int_0^x f(t)\\,dt$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$e$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Termwise integration gives $\\sum_{n=0}^\\infty x^{n+1}/(n+1)$. Integration preserves the radius of convergence of a power series; the original geometric series has radius1."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "The coefficient of $x^4$ in the Maclaurin series for $f(x)=e^{-x/3}$ is",
+    "choices_tex": [
+      "$-\\dfrac{1}{1944}$",
+      "$\\dfrac{1}{1944}$",
+      "$-\\dfrac{1}{162}$",
+      "$\\dfrac{1}{162}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Use $e^u=\\sum u^n/n!$ with $u=-x/3$. The coefficient is $(-1/3)^4/4!=1/1944$."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "If an appropriate series is used to evaluate $\\displaystyle\\int_0^{0.2} x^2 e^{-x^2}\\,dx$, then, correct to four decimal places, the definite integral equals",
+    "choices_tex": [
+      "$0.0002$",
+      "$0.0013$",
+      "$0.0026$",
+      "$0.0033$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrating $x^2e^{-x^2}=x^2-x^4+x^6/2!-\\cdots$ gives $a^3/3-a^5/5+a^7/14-\\cdots$ at $a=0.2$. This is about $0.00260357$, which rounds to $0.0026$. The next term after these three is below $10^{-8}$."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "If the series $\\tan^{-1}1 = 1-\\dfrac{1}{3}+\\dfrac{1}{5}-\\dfrac{1}{7}+\\cdots$ is used to approximate $\\dfrac{\\pi}{4}$ with an error less than $0.002$, then the smallest number of terms guaranteed sufficient by the first-omitted-term alternating-series bound is",
+    "choices_tex": [
+      "$100$",
+      "$150$",
+      "$200$",
+      "$250$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The alternating-series remainder bound after $N$ terms is $1/(2N+1)$. Requiring $1/(2N+1)<0.002$ gives $N>249.5$, hence250. This is the minimum guaranteed by this bound, not the actual minimum based on the exact error.",
+    "source_correction": "Specified the alternating-series bound; the printed claim of an unqualified minimum is not justified by that bound."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "Let $f(x)=\\tan^{-1}x$ and $P_5(x)$ be the Taylor polynomial of degree 5 for $f$ about $x=0$. Given $\\tan^{-1}x = \\displaystyle\\sum_{n=0}^\\infty \\dfrac{(-1)^n x^{2n+1}}{2n+1}$, it follows that if $-0.5<x<0.5$,",
+    "choices_tex": [
+      "$P_5(x)\\leq \\tan^{-1}x$",
+      "$P_5(x)\\geq \\tan^{-1}x$",
+      "$P_5(x)>\\tan^{-1}x$ if $x<0$ but $P_5(x)<\\tan^{-1}x$ if $x>0$",
+      "$P_5(x)<\\tan^{-1}x$ if $x<0$ but $P_5(x)>\\tan^{-1}x$ if $x>0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $x>0$, the first omitted term after $P_5$ is $-x^7/7$, so $P_5(x)>\\arctan x$. Both functions are odd, reversing the inequality for $x<0$. This is D."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "Let $f(x)=\\tan^{-1}x$ and $P_{11}(x)$ be the Taylor polynomial of degree 11 for $f$ about $x=0$. Given $\\tan^{-1}x = \\displaystyle\\sum_{n=0}^\\infty \\dfrac{(-1)^n x^{2n+1}}{2n+1}$, it follows that if $-0.5<x<0.5$,",
+    "choices_tex": [
+      "$P_{11}(x)\\leq \\tan^{-1}x$",
+      "$P_{11}(x)\\geq \\tan^{-1}x$",
+      "$P_{11}(x)>\\tan^{-1}x$ if $x<0$ but $P_{11}(x)<\\tan^{-1}x$ if $x>0$",
+      "$P_{11}(x)<\\tan^{-1}x$ if $x<0$ but $P_{11}(x)>\\tan^{-1}x$ if $x>0$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x>0$, the first omitted term after $P_{11}$ is $+x^{13}/13$, so $P_{11}(x)<\\arctan x$. Odd symmetry reverses the inequality for $x<0$, giving C."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "Which of the following series converges?",
+    "choices_tex": [
+      "$\\displaystyle\\sum \\dfrac{1}{\\sqrt[3]{n}}$",
+      "$\\displaystyle\\sum \\dfrac{1}{\\sqrt{n}}$",
+      "$\\displaystyle\\sum \\dfrac{1}{8n-3}$",
+      "$\\displaystyle\\sum \\dfrac{3}{n^2-7}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "D has terms asymptotic to $3/n^2$, so its tail converges by limit comparison with a $p$-series of exponent2. Finitely many initial terms do not change convergence. A and B have exponents at most1; C compares with the harmonic series."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "Which of the following series diverges?",
+    "choices_tex": [
+      "$\\displaystyle\\sum_{n=1}^\\infty \\dfrac{n+2}{n!}$",
+      "$\\displaystyle\\sum_{n=2}^\\infty \\dfrac{1}{n\\ln n}$",
+      "$\\displaystyle\\sum_{n=1}^\\infty \\dfrac{\\ln n}{3^n}$",
+      "$\\displaystyle\\sum_{n=1}^\\infty \\dfrac{n}{3^n}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The integral $\\int_2^M dx/(x\\ln x)=\\ln\\ln M-\\ln\\ln2$ grows without bound, so B diverges. The ratio test gives limits0 for A and $1/3$ for C and D, proving their convergence."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "For which of the following series does the Ratio Test fail?",
+    "choices_tex": [
+      "$\\displaystyle\\sum \\dfrac{1}{n!}$",
+      "$\\displaystyle\\sum \\dfrac{n}{3^n}$",
+      "$1+\\dfrac{1}{2^{5/2}}+\\dfrac{1}{3^{5/2}}+\\dfrac{1}{4^{5/2}}+\\cdots$",
+      "$\\displaystyle\\sum \\dfrac{n^n}{n!}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For C, $a_{n+1}/a_n=(n/(n+1))^{5/2}\\to1$, so the ratio test is inconclusive (though the $p$-series converges). The other ratio limits are0, $1/3$, and $e>1$, respectively."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "Which of the following alternating series diverges?",
+    "choices_tex": [
+      "$\\displaystyle\\sum \\dfrac{(-1)^{n+1}(n+1)}{n+2}$",
+      "$\\displaystyle\\sum \\dfrac{(-1)^{n+1}}{\\ln(n+2)}$",
+      "$\\displaystyle\\sum \\dfrac{(-1)^{n-1}}{\\sqrt[3]{n}}$",
+      "$\\displaystyle\\sum \\dfrac{(-1)^{n-1}n}{n^2+3}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "In A the term magnitudes $(n+1)/(n+2)$ tend to1, so the terms fail to tend to zero. In B, C, and D the positive magnitudes eventually decrease to zero, so the alternating-series test applies."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "The power series $x+\\dfrac{x^2}{4}+\\dfrac{x^3}{9}+\\cdots+\\dfrac{x^n}{n^2}+\\cdots$ converges if and only if",
+    "choices_tex": [
+      "$-1<x<1$",
+      "$-1\\leq x\\leq 1$",
+      "$-1\\leq x<1$",
+      "$-1<x\\leq 1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The ratio test gives convergence for $|x|<1$ and divergence for $|x|>1$. At $x=\\pm1$, absolute values form the convergent series $\\sum1/n^2$. Thus both endpoints are included."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "The power series $(x+2)-\\dfrac{(x+2)^2}{2!}+\\dfrac{(x+2)^3}{3!}-\\dfrac{(x+2)^4}{4!}+\\cdots$ diverges",
+    "choices_tex": [
+      "for no real $x$",
+      "if $-3<x\\leq -1$",
+      "if $x<-3$ or $x>-1$",
+      "if $-3\\leq x<-1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The ratio of successive absolute terms is $|x+2|/(n+1)\\to0$ for every fixed real $x$. The series converges absolutely everywhere, so there is no real value where it diverges."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "The series obtained by differentiating term by term the series\n\\[\n(x-3)+\\dfrac{(x-3)^2}{4}+\\dfrac{(x-3)^3}{9}+\\dfrac{(x-3)^4}{16}+\\cdots\n\\]\nconverges for",
+    "choices_tex": [
+      "$2\\leq x\\leq 4$",
+      "$2\\leq x<4$",
+      "$2<x\\leq 4$",
+      "$1<x<5$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiation gives $\\sum_{n=1}^\\infty(x-3)^{n-1}/n$, with radius1. At $x=2$ it is alternating harmonic and converges; at $x=4$ it is harmonic and diverges. The interval is $[2,4)$."
+  },
+  {
+    "id": "T28",
+    "stem_tex": "The Taylor polynomial of degree 3 at $x=0$ for $f(x)=\\sqrt{1-x}$ is",
+    "choices_tex": [
+      "$1-\\dfrac{x}{2}-\\dfrac{x^2}{8}-\\dfrac{x^3}{16}$",
+      "$1-\\dfrac{x}{2}+\\dfrac{x^2}{8}-\\dfrac{x^3}{16}$",
+      "$1-\\dfrac{x}{2}-\\dfrac{x^2}{4}-\\dfrac{x^3}{8}$",
+      "$1+\\dfrac{x}{2}-\\dfrac{x^2}{8}+\\dfrac{x^3}{16}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Use the binomial coefficients for exponent $1/2$ with argument $-x$: $1-x/2-x^2/8-x^3/16$ through degree3."
+  },
+  {
+    "id": "T29",
+    "stem_tex": "The Taylor polynomial of degree 3 at $x=2$ for $e^x$ is",
+    "choices_tex": [
+      "$e^2\\left[1+(x-2)+\\dfrac{(x-2)^2}{2}+\\dfrac{(x-2)^3}{3}\\right]$",
+      "$e^2\\left[1+(x+2)+\\dfrac{(x+2)^2}{2!}+\\dfrac{(x+2)^3}{3!}\\right]$",
+      "$e^2\\left[1+(x-2)+\\dfrac{(x-2)^2}{2!}+\\dfrac{(x-2)^3}{3!}\\right]$",
+      "$e^2\\left[1-(x-2)+\\dfrac{(x-2)^2}{2!}-\\dfrac{(x-2)^3}{3!}\\right]$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Every derivative of $e^x$ equals $e^x$, so all derivatives at2 equal $e^2$. Taylor's formula gives $e^2\\sum_{k=0}^3(x-2)^k/k!$, which is C."
+  },
+  {
+    "id": "T30",
+    "stem_tex": "The coefficient of $\\left(x-\\dfrac{\\pi}{3}\\right)^3$ in the Taylor series about $\\dfrac{\\pi}{3}$ of $f(x)=\\sin x$ is",
+    "choices_tex": [
+      "$-\\dfrac{1}{12}$",
+      "$\\dfrac{1}{12}$",
+      "$\\dfrac{1}{6\\sqrt{3}}$",
+      "$-\\dfrac{1}{3\\sqrt{3}}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The coefficient is $f'''(\\pi/3)/3!$. Since $f'''(x)=-\\cos x$, it is $(-1/2)/6=-1/12$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "The coefficient of $x^2$ in the Maclaurin series for $e^{2\\sin x}$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $2\\sin x=2x+O(x^3)$, substituting into $e^u=1+u+u^2/2+\\cdots$ gives the quadratic term $(2x)^2/2=2x^2$."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "The coefficient of $(x-1)^4$ in the Taylor series for $x^2\\ln x$ about $x=1$ is",
+    "choices_tex": [
+      "$-\\dfrac{1}{20}$",
+      "$-\\dfrac{1}{12}$",
+      "$-\\dfrac{1}{5!}$",
+      "$-\\dfrac{1}{4!}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $h=x-1$. Multiply $(1+2h+h^2)$ by $\\ln(1+h)=h-h^2/2+h^3/3-h^4/4+\\cdots$. The $h^4$ coefficient is $-1/4+2/3-1/2=-1/12$."
+  },
+  {
+    "id": "T33",
+    "stem_tex": "The radius of convergence of the series $\\displaystyle\\sum_{n=1}^\\infty \\dfrac{x^n}{3^n}\\cdot\\dfrac{n^n}{n!}$ is",
+    "choices_tex": [
+      "$3$",
+      "$\\dfrac{3}{e}$",
+      "$\\dfrac{e}{3}$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "For the absolute terms, the consecutive ratio tends to $\\frac{|x|}{3}(1+1/n)^n\\to e|x|/3$. Convergence requires $|x|<3/e$, so the radius is $3/e$."
+  },
+  {
+    "id": "T34",
+    "stem_tex": "The Taylor polynomial of degree 3 at $x=0$ for $(1+x)^p$, where $p$ is a constant, is",
+    "choices_tex": [
+      "$1+px+p(p-1)x^2+p(p-1)(p-2)x^3$",
+      "$1+px+\\dfrac{p(p-1)}{2}x^2+\\dfrac{p(p-1)(p-2)}{3}x^3$",
+      "$1+px+\\dfrac{p(p-1)}{2!}x^2+\\dfrac{p(p-1)(p-2)}{3!}x^3$",
+      "$px+\\dfrac{p(p-1)}{2!}x^2+\\dfrac{p(p-1)(p-2)}{3!}x^3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At zero, the first four derivative values are $1,p,p(p-1),p(p-1)(p-2)$. Divide the degree2 and degree3 terms by $2!$ and $3!$, giving C."
+  },
+  {
+    "id": "T35",
+    "stem_tex": "The Taylor series for $\\ln(1+3x)$ about $x=0$ is",
+    "choices_tex": [
+      "$3x-\\dfrac{9}{2}x^2+9x^3-\\dfrac{81}{4}x^4+\\cdots$",
+      "$3x-9x^2+27x^3-\\cdots$",
+      "$3x-\\dfrac{3}{2}x^2+9x^3-\\dfrac{81}{4}x^4+\\cdots$",
+      "$3x-\\dfrac{9}{2}x^2+\\dfrac{9}{2}x^3-\\dfrac{27}{8}x^4+\\cdots$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Insert $u=3x$ into $\\ln(1+u)=u-u^2/2+u^3/3-u^4/4+\\cdots$. This gives $3x-9x^2/2+9x^3-81x^4/4+\\cdots$."
+  },
+  {
+    "id": "T36",
+    "stem_tex": "The set of all values of $x$ for which $\\displaystyle\\sum_{n=1}^\\infty \\dfrac{n\\cdot 3^n}{x^n}$ converges is",
+    "choices_tex": [
+      "only $x=0$",
+      "$-3<x<3$",
+      "$|x|>3$",
+      "$|x|\\geq 3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne0$, the absolute ratio tends to $3/|x|$. Thus convergence holds for $|x|>3$. At $x=\\pm3$ the term magnitude is $n$, so neither endpoint works; at zero the expression is undefined."
+  },
+  {
+    "id": "T37",
+    "stem_tex": "The third-degree Taylor polynomial $P_3(x)$ for $\\cos x$ about $\\dfrac{\\pi}{4}$ is",
+    "choices_tex": [
+      "$\\dfrac{1}{\\sqrt{2}}\\left(\\left(x-\\dfrac{\\pi}{4}\\right)-\\dfrac{1}{3!}\\left(x-\\dfrac{\\pi}{4}\\right)^3\\right)$",
+      "$\\dfrac{1}{\\sqrt{2}}\\left(1+\\left(x-\\dfrac{\\pi}{4}\\right)-\\dfrac{1}{2}\\left(x-\\dfrac{\\pi}{4}\\right)^2+\\dfrac{1}{3!}\\left(x-\\dfrac{\\pi}{4}\\right)^3\\right)$",
+      "$\\dfrac{1}{\\sqrt{2}}\\left(1-\\left(x-\\dfrac{\\pi}{4}\\right)-\\dfrac{1}{2!}\\left(x-\\dfrac{\\pi}{4}\\right)^2+\\dfrac{1}{3!}\\left(x-\\dfrac{\\pi}{4}\\right)^3\\right)$",
+      "$1+\\left(x-\\dfrac{\\pi}{4}\\right)-\\dfrac{1}{2}\\left(x-\\dfrac{\\pi}{4}\\right)^2-\\dfrac{1}{6}\\left(x-\\dfrac{\\pi}{4}\\right)^3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $a=\\pi/4$, the derivatives of cosine through order3 are $1/\\sqrt2,-1/\\sqrt2,-1/\\sqrt2,1/\\sqrt2$. Taylor's formula gives $\\frac1{\\sqrt2}(1-(x-a)-(x-a)^2/2!+(x-a)^3/3!)$."
+  },
+  {
+    "id": "T38",
+    "stem_tex": "Let $h$ be a function for which all derivatives exist at $x=1$. If $h(1)=h'(1)=h''(1)=h'''(1)=8$, which third-degree polynomial best approximates $h$ there?",
+    "choices_tex": [
+      "$8+8x+8x^2+8x^3$",
+      "$8+8(x-1)+4(x-1)^2+\\dfrac{4}{3}(x-1)^3$",
+      "$8+8x+4x^2+x^3$",
+      "$8+8(x-1)+3(x-1)^2+(x-1)^3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Taylor's formula gives $8+8(x-1)+\\frac8{2!}(x-1)^2+\\frac8{3!}(x-1)^3=8+8(x-1)+4(x-1)^2+\\frac43(x-1)^3$."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "Which of the following statements about series is false?",
+    "choices_tex": [
+      "$\\displaystyle\\sum_{k=1}^\\infty u_k = \\displaystyle\\sum_{k=m}^\\infty u_k$, where $m$ is any positive integer.",
+      "If $\\displaystyle\\sum u_n$ converges, so does $\\displaystyle\\sum cu_n$ if $c\\neq 0$.",
+      "If $\\displaystyle\\sum a_n$ and $\\displaystyle\\sum b_n$ converge, so does $\\displaystyle\\sum(ca_n+b_n)$, where $c\\neq 0$.",
+      "Rearranging the terms of a positive convergent series will not affect its convergence or its sum."
+    ],
+    "correct": "A",
+    "explanation_tex": "Deleting finitely many initial terms preserves convergence but generally changes the sum by their total. Hence A is false. Constant multiplication, addition of convergent series, and rearrangement of a positive convergent series are valid."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "Which of the following statements is always true?",
+    "choices_tex": [
+      "If $\\displaystyle\\sum u_n$ converges, then so does the series $\\displaystyle\\sum |u_n|$.",
+      "If a series is truncated after the $n$th term, then the error is less than the first term omitted.",
+      "If the terms of an alternating series decrease, then the series converges.",
+      "None of statements (A), (B), or (C) are always true."
+    ],
+    "correct": "D",
+    "explanation_tex": "Conditional convergence disproves A. B needs additional hypotheses such as alternating, decreasing magnitudes tending to zero. C omits the requirement that magnitudes tend to zero. Thus none of A–C is always valid."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "Which of the following series can be used to compute $\\ln 0.7$?",
+    "choices_tex": [
+      "$\\ln(x-1)$ expanded about $x=0$",
+      "$\\ln x$ about $x=0$",
+      "$\\ln x$ expanded about $x=1$",
+      "$\\ln(x-1)$ expanded about $x=1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The expansion $\\ln x=\\sum_{n=1}^\\infty(-1)^{n+1}(x-1)^n/n$ about1 converges at $x=0.7$, since $|x-1|=0.3<1$. The other proposed real Taylor centers are outside their functions' domains."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "Let $f(x)=\\displaystyle\\sum_{n=0}^\\infty a_nx^n$, $g(x)=\\displaystyle\\sum_{n=0}^\\infty b_nx^n$. Suppose both series converge for $|x|<R$. Let $x_0$ be a number such that $|x_0|<R$. Which of statements (A)--(C) is false?",
+    "choices_tex": [
+      "$\\displaystyle\\sum_{n=0}^\\infty (a_n+b_n)(x_0)^n$ converges to $f(x_0)+g(x_0)$.",
+      "$f(x)=\\displaystyle\\sum_{n=0}^\\infty a_nx^n$ is continuous at $x=x_0$.",
+      "$\\displaystyle\\sum_{n=1}^\\infty na_nx_0^{n-1}$ converges to $f'(x_0)$.",
+      "Statements (A)--(C) are all true."
+    ],
+    "correct": "D",
+    "explanation_tex": "Inside a power series' radius of convergence, sums can be added termwise, the represented functions are continuous, and the series can be differentiated termwise. Thus A–C are all true and D is the appropriate response."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "When $\\sin x$ is approximated by $x-x^3/3!$ for every $|x|<1.5$ radians, which is the smallest listed number greater than the absolute error throughout that interval?",
+    "choices_tex": [
+      "$0.05$",
+      "$0.063$",
+      "$0.08$",
+      "$0.1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "For $x\\ge0$, $E(x)=\\sin x-x+x^3/6$ increases because $E\\prime(x)=\\cos x-1+x^2/2\\ge0$. Odd symmetry gives the same absolute error at $-x$. The supremum for $|x|<1.5$ is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. Thus0.05 is too small and0.063 is the smallest listed uniform upper bound. The first-omitted-term estimate0.06328125 alone would not establish0.063.",
+    "source_original": {
+      "stem_tex": "If the approximate formula $\\sin x = x-\\dfrac{x^3}{3!}$ is used and $|x|<1.5$ (radian), then the error is numerically less than",
+      "choices_tex": [
+        "$0.05$",
+        "$0.063$",
+        "$0.08$",
+        "$0.1$"
+      ],
+      "correct": null,
+      "explanation_tex": "For $0\\leq x<1.5$, the error $E(x)=\\sin x-x+x^3/6$ increases: $E'(x)=\\cos x-1+x^2/2\\geq0$. Its supremum is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. The error is therefore less than0.063,0.08,and0.1, so B,C,andD are all valid. The first-omitted-term bound is $1.5^5/120=0.06328125$, which alone does not establish0.063.",
+      "source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer."
+    },
+    "resolved_source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer.",
+    "source_correction": "Asked for the smallest listed uniform upper bound for the actual error."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The function $f(x)=\\displaystyle\\sum_{n=0}^\\infty a_nx^n$ and $f'(x)=-f(x)$ for all $x$. If $f(0)=1$, then how many terms of the series are needed to find $f(0.3)$ correct to three decimal places?",
+    "choices_tex": [
+      "$2$",
+      "$3$",
+      "$4$",
+      "$5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The initial-value problem gives $f(x)=e^{-x}$. Four terms give $1-0.3+0.3^2/2-0.3^3/6=0.7405$, with error below $0.3^4/24=0.0003375$. The value is between0.7405 and0.7408375, so it rounds to0.741. Three terms give0.745 and are insufficient."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "The sum of the series $\\displaystyle\\sum_{n=1}^\\infty \\left(\\dfrac{e^2}{2e}\\right)^n$",
+    "choices_tex": [
+      "$=1$",
+      "$=\\dfrac{2e}{e^2-2e}$",
+      "$=\\dfrac{e^2}{2e-e^2}$",
+      "diverges"
+    ],
+    "correct": "D",
+    "explanation_tex": "The ratio is $e^2/(2e)=e/2>1$, so the terms do not approach zero. The geometric series diverges; the finite-sum formula is inapplicable."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "When $\\displaystyle\\sum_{n=1}^\\infty \\dfrac{(-1)^{n-1}}{4n-1}$ is approximated by the sum of its first 300 terms, the error is closest to",
+    "choices_tex": [
+      "$0.001$",
+      "$0.002$",
+      "$0.005$",
+      "$0.01$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The error is the alternating tail starting with $1/1203$. More precisely its magnitude is $\\int_0^1x^{1202}/(1+x^4)\\,dx\\approx0.0004163$, so among the listed choices0.001 is closest. The simpler alternating bound is $|R_{300}|<1/1203\\approx0.0008313$."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "You wish to estimate $e^x$, over the interval $|x|\\leq 3$, with an error less than $0.001$. The Lagrange error term suggests that you use a Taylor polynomial at 0 with degree at least",
+    "choices_tex": [
+      "$11$",
+      "$12$",
+      "$13$",
+      "$14$"
+    ],
+    "correct": "D",
+    "explanation_tex": "On $[-3,3]$, use $M=e^3$. The uniform Lagrange bound is $e^3 3^{n+1}/(n+1)!$. It is about0.001102 for degree13 and0.0002204 for degree14; degree14 is the first sufficient choice."
+  }
+]

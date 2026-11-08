@@ -1,0 +1,244 @@
+{
+  "scope": "AP Calculus BC",
+  "chapters": [
+    {
+      "kind": "C",
+      "chapter": "1",
+      "total": 40,
+      "reviewed": 40,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "2",
+      "total": 42,
+      "reviewed": 42,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "3",
+      "total": 101,
+      "reviewed": 101,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "A23",
+        "A61",
+        "B21"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "4",
+      "total": 93,
+      "reviewed": 93,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "5",
+      "total": 79,
+      "reviewed": 79,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "6",
+      "total": 54,
+      "reviewed": 54,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "7",
+      "total": 56,
+      "reviewed": 56,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "8",
+      "total": 31,
+      "reviewed": 31,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "9",
+      "total": 52,
+      "reviewed": 52,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "10",
+      "total": 47,
+      "reviewed": 47,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "11",
+      "total": 111,
+      "reviewed": 111,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "B50"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "C",
+      "chapter": "12",
+      "total": 39,
+      "reviewed": 39,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "1",
+      "total": 40,
+      "reviewed": 40,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "2",
+      "total": 42,
+      "reviewed": 42,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "3",
+      "total": 101,
+      "reviewed": 101,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "T23",
+        "T61",
+        "TB10",
+        "TB21"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "4",
+      "total": 93,
+      "reviewed": 93,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "T3",
+        "T6",
+        "TB5",
+        "TB11",
+        "TB13",
+        "TB20",
+        "TB21",
+        "TB35",
+        "TB37"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "5",
+      "total": 79,
+      "reviewed": 79,
+      "pending_ids": [],
+      "repaired_source_ids": [],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "6",
+      "total": 54,
+      "reviewed": 54,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "T37"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "7",
+      "total": 56,
+      "reviewed": 56,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "TB4",
+        "TB6",
+        "TB15"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "8",
+      "total": 31,
+      "reviewed": 31,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "TB12",
+        "TB17"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "9",
+      "total": 52,
+      "reviewed": 52,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "TB8",
+        "TB9",
+        "TB13"
+      ],
+      "source_issues": []
+    },
+    {
+      "kind": "T",
+      "chapter": "10",
+      "total": 47,
+      "reviewed": 47,
+      "pending_ids": [],
+      "repaired_source_ids": [
+        "TB5"
+      ],
+      "source_issues": []
+    }
+  ],
+  "total": 1340,
+  "reviewed": 1340,
+  "repaired_source_count": 27,
+  "source_issue_count": 0,
+  "complete": true
+}

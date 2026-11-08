@@ -1,0 +1,687 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "Acceleration is $a(t)=4t-1$ and velocity satisfies $v(1)=3$. Find $v(t)$.",
+    "choices_tex": [
+      "$2t^2-t$",
+      "$2t^2-t+1$",
+      "$2t^2-t+2$",
+      "$2t^2+1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrate to get $v=2t^2-t+C$. Substitution gives $3=1+C$, so $C=2$."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "Acceleration is $a(t)=20t^3-6t$, and position satisfies $s(-1)=2$, $s(1)=4$. Find velocity $v(t)$.",
+    "choices_tex": [
+      "$5t^4-3t^2+1$",
+      "$5t^4-3t^2+3$",
+      "$t^5-t^3+t+3$",
+      "$t^5-t^3+1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Two integrations give $v=5t^4-3t^2+C$ and $s=t^5-t^3+Ct+D$. The initial positions give $-C+D=2$, $C+D=4$, so $C=1$."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "Acceleration is $a(t)=20t^3-6t$, and position satisfies $s(-1)=2$, $s(1)=4$. Find $s(0)$.",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "$4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrating twice gives $s=t^5-t^3+Ct+D$. Adding the two position conditions gives $2D=6$, so $s(0)=3$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "A stone is thrown upward from a building at 40 ft/sec and hits the ground 4 seconds later. With gravity $-32$ ft/sec$^2$, find the building height in feet.",
+    "choices_tex": [
+      "$88$",
+      "$96$",
+      "$112$",
+      "$128$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$s(t)=H+40t-16t^2$. Setting $s(4)=0$ gives $H=256-160=96$ feet."
+  },
+  {
+    "id": "A5",
+    "stem_tex": "A stone is thrown upward from a building at 40 ft/sec and hits the ground 4 seconds later. With gravity $-32$ ft/sec$^2$, when does it reach maximum height?",
+    "choices_tex": [
+      "$4/5$ second",
+      "$4$ seconds",
+      "$5/4$ seconds",
+      "$2$ seconds"
+    ],
+    "correct": "C",
+    "explanation_tex": "At maximum height $v=40-32t=0$, so $t=5/4$ seconds."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "A car accelerates constantly from 0 to 60 mph in 10 seconds. Given 60 mph = 88 ft/sec, find distance traveled.",
+    "choices_tex": [
+      "$44$ feet",
+      "$88$ feet",
+      "$400$ feet",
+      "$440$ feet"
+    ],
+    "correct": "D",
+    "explanation_tex": "Average speed is $(0+88)/2=44$ ft/sec. Multiplying by 10 seconds gives $440$ feet."
+  },
+  {
+    "id": "A7",
+    "stem_tex": "A stone has velocity $v(t)=100-20t$ ft/sec and hits a target at $t=1$ second. Find distance from sling to target.",
+    "choices_tex": [
+      "$80$ feet",
+      "$90$ feet",
+      "$100$ feet",
+      "$110$ feet"
+    ],
+    "correct": "B",
+    "explanation_tex": "Velocity is positive until impact, so distance is $\\int_0^1(100-20t)\\,dt=90$ feet."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "A stone is thrown vertically from the ground. With gravity $-32$ ft/sec$^2$, what initial velocity gives a maximum height of 100 feet?",
+    "choices_tex": [
+      "$50$ ft/sec",
+      "$80$ ft/sec",
+      "$92$ ft/sec",
+      "$96$ ft/sec"
+    ],
+    "correct": "B",
+    "explanation_tex": "At the peak $0=v_0^2-64(100)$, so the upward initial velocity is $80$ ft/sec. The source repeats the choice label A; these options retain their printed order.",
+    "source_correction": "Source option labels all repeat A; indexed by printed order."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "If the velocity of a car traveling in a straight line at time $t$ is $v(t)$, then the difference in its odometer readings between times $t=a$ and $t=b$ is",
+    "choices_tex": [
+      "$\\displaystyle\\int_a^b |v(t)|\\,dt$",
+      "$\\displaystyle\\int_a^b v(t)\\,dt$",
+      "the net displacement of the car's position from $t=a$ to $t=b$",
+      "the change in the car's position from $t=a$ to $t=b$"
+    ],
+    "correct": "A",
+    "explanation_tex": "An odometer accumulates distance irrespective of direction, so its change is $\\int_a^b|v(t)|\\,dt$, not the signed velocity integral."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "If an object is moving up and down along the $y$-axis with velocity $v(t)$ and $s'(t)=v(t)$, then it is false that $\\displaystyle\\int_a^b v(t)\\,dt$ gives",
+    "choices_tex": [
+      "$s(b)-s(a)$",
+      "the total change in $s(t)$ between $t=a$ and $t=b$",
+      "the shift in the object's position from $t=a$ to $t=b$",
+      "the total distance covered by the object from $t=a$ to $t=b$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The Fundamental Theorem gives $\\int_a^bv(t)\\,dt=s(b)-s(a)$, the signed position change. Total distance instead integrates $|v|$, so D is false in general."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "Solutions of $dy/dx=x/y$ have the form",
+    "choices_tex": [
+      "$x^2-y^2=C$",
+      "$x^2+y^2=C$",
+      "$x^2-Cy^2=0$",
+      "$x^2=C-y^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Separate $y\\,dy=x\\,dx$ and integrate to obtain $y^2=x^2+C$, equivalent to A after renaming the constant."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "Find the domain of the particular solution of $dy/dx=x/y$ through $(-2,1)$.",
+    "choices_tex": [
+      "$x<0$",
+      "$-2\\le x<0$",
+      "$x<-\\sqrt3$",
+      "$|x|>\\sqrt3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The solution satisfies $y^2=x^2-3$ and has positive branch at the initial point. The maximal connected interval containing $-2$ and avoiding $y=0$ is $(-\\infty,-\\sqrt3)$."
+  },
+  {
+    "id": "A13",
+    "stem_tex": "If $dy/dx=y/(2\\sqrt x)$ and $y(4)=1$, then",
+    "choices_tex": [
+      "$\\ln y=4\\sqrt x-8$",
+      "$\\ln y=\\sqrt{x-2}$",
+      "$y=e^{\\sqrt x}$",
+      "$y=e^{\\sqrt x-2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Separation gives $\\ln y=\\sqrt x+C$. Using $y(4)=1$ gives $C=-2$, hence $y=e^{\\sqrt x-2}$."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "If $dy/dx=e^y$ and $y(1)=0$, then",
+    "choices_tex": [
+      "$y=\\ln x$",
+      "$y=\\ln(2-x)$",
+      "$y=-\\ln(2-x)$",
+      "$y=-\\ln x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrating $e^{-y}dy=dx$ gives $e^{-y}=C-x$. The initial value yields $C=2$, so $y=-\\ln(2-x)$."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "If $dy/dx=x/\\sqrt{9+x^2}$ and $y(4)=5$, find $y$.",
+    "choices_tex": [
+      "$\\sqrt{9+x^2}-5$",
+      "$\\sqrt{9+x^2}$",
+      "$(\\sqrt{9+x^2}+5)/2$",
+      "$\\sqrt{9+x^2}/2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integrate to obtain $y=\\sqrt{9+x^2}+C$. Substituting $(4,5)$ gives $C=0$."
+  },
+  {
+    "id": "A16",
+    "stem_tex": "The general solution of $x\\,dy=y\\,dx$ is a family of",
+    "choices_tex": [
+      "circles",
+      "hyperbolas",
+      "parabolas",
+      "none of these"
+    ],
+    "correct": "D",
+    "explanation_tex": "Separation gives $\\ln|y|=\\ln|x|+C$, or $y=Cx$. These are lines through the origin, so none of the named families applies."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "The general solution of $dy/dx=y$ is a family of",
+    "choices_tex": [
+      "parabolas",
+      "lines",
+      "ellipses",
+      "exponential curves"
+    ],
+    "correct": "D",
+    "explanation_tex": "Solving the separable equation gives $y=Ce^x$, including the zero equilibrium, so D describes the family."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "Find $f$ satisfying $f(x)f'(x)=x$ and $f(0)=1$.",
+    "choices_tex": [
+      "$\\sqrt{x^2+1}$",
+      "$\\sqrt{1-x^2}$",
+      "$x$",
+      "$e^x$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Integrate $(f^2)'=2x$ to get $f^2=x^2+C$. The initial value gives $C=1$ and selects the positive branch."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "A curve passes through $(1,1)$ and satisfies $dy/dx=3y/x$. Its equation is",
+    "choices_tex": [
+      "$3x-2=y$",
+      "$y^3=x$",
+      "$y=x^3$",
+      "$3y^2=x^2+2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Separating and integrating gives $y=Cx^3$ on $x>0$. Substitution of $(1,1)$ gives $C=1$."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "Find the domain of the particular solution of $dy/dx=3y/x$ through $(1,1)$.",
+    "choices_tex": [
+      "all real numbers",
+      "$|x|\\le1$",
+      "$x\\ne0$",
+      "$x>0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The equation is undefined at $x=0$. Its maximal connected solution interval containing $1$ is $x>0$, even though the polynomial formula extends farther."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "If $dy/dx=k/x$, $y(1)=2$, and $y(e)=4$, what is $y(2)$?",
+    "choices_tex": [
+      "$4$",
+      "$\\ln8$",
+      "$\\ln2+2$",
+      "$\\ln4+2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$y=k\\ln x+C$. The conditions give $C=2$ and $k=2$, so $y(2)=2+2\\ln2=2+\\ln4$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "Which differential equation has the displayed slope field on $[-2\\pi,2\\pi]\\times[-1.5,1.5]$?",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=\\sin x$",
+      "$\\dfrac{dy}{dx}=-\\sin x$",
+      "$\\dfrac{dy}{dx}=\\cos x$",
+      "$\\dfrac{dy}{dx}=-\\cos x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The field is constant down each vertical column and has positive slope $1$ at $x=0$. The slopes oscillate with $x$, matching $\\cos x$, not either sine or negative cosine.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a22.png",
+      "alt": "Source graph for A22"
+    }
+  },
+  {
+    "id": "A23",
+    "stem_tex": "Which equation has the displayed slope field on $[-5,5]\\times[-3,3]$?",
+    "choices_tex": [
+      "$y'=2x$",
+      "$y'=2x-4$",
+      "$y'=4-2x$",
+      "$y'=y$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The field depends only on $x$, with horizontal segments at $x=2$, negative slopes to the left, and positive slopes to the right. Thus $y'=2x-4$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a23.png",
+      "alt": "Source graph for A23"
+    }
+  },
+  {
+    "id": "A24",
+    "stem_tex": "A solution curve has been superimposed on the slope field shown above. The solution is for the differential equation and initial condition",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=\\tan x$; $y(0)=0$",
+      "$\\dfrac{dy}{dx}=1+x^2$; $y(0)=0$",
+      "$\\dfrac{dy}{dx}=\\dfrac{1}{1+x^2}$; $y\\left(\\dfrac{\\pi}{4}\\right)=1$",
+      "$\\dfrac{dy}{dx}=1+y^2$; $y(0)=0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Slopes depend on $y$, are always positive, and grow with $|y|$. Thus $y'=1+y^2$; the superimposed curve passes through $(0,0)$ and is $y=\\tan x$ locally.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a24.png",
+      "alt": "Source graph for A24"
+    }
+  },
+  {
+    "id": "A25",
+    "stem_tex": "Which displayed slope field represents $dy/dx=y$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "B",
+    "explanation_tex": "Slopes depend only on $y$, are zero on the horizontal axis, positive above it, and negative below it. This is field II.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a25-a29.png",
+      "alt": "Source slope fields I, II, III, IV."
+    }
+  },
+  {
+    "id": "A26",
+    "stem_tex": "Which displayed slope field represents $dy/dx=-x/y$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "D",
+    "explanation_tex": "Integral curves satisfy $x^2+y^2=C$, so their tangents form the circular pattern in IV. Slopes vanish on the vertical axis and become steep near the horizontal axis.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a25-a29.png",
+      "alt": "Source slope fields I, II, III, IV."
+    }
+  },
+  {
+    "id": "A27",
+    "stem_tex": "Which displayed slope field represents $dy/dx=\\sin x$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "C",
+    "explanation_tex": "The slopes depend only on $x$ and oscillate with zeros at multiples of $\\pi$. This identifies field III.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a25-a29.png",
+      "alt": "Source slope fields I, II, III, IV."
+    }
+  },
+  {
+    "id": "A28",
+    "stem_tex": "Which displayed slope field represents $dy/dx=2x$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "A",
+    "explanation_tex": "Slopes are constant down each vertical column, negative to the left, positive to the right, and grow in magnitude with $|x|$. This is field I.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a25-a29.png",
+      "alt": "Source slope fields I, II, III, IV."
+    }
+  },
+  {
+    "id": "A29",
+    "stem_tex": "The solution represented by field II passes through $(0,-1)$. Its equation is",
+    "choices_tex": [
+      "$y=-e^x$",
+      "$y=-e^{-x}$",
+      "$y=x^2-1$",
+      "$y=-\\cos x$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Field II represents $y'=y$, so $y=Ce^x$. The initial value gives $C=-1$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a25-a29.png",
+      "alt": "Source slope fields I, II, III, IV."
+    }
+  },
+  {
+    "id": "A30",
+    "stem_tex": "Use Euler's method with step $0.1$ for $y'=x$, $y(1)=5$, to estimate $y(1.2)$.",
+    "choices_tex": [
+      "$5.10$",
+      "$5.20$",
+      "$5.21$",
+      "$6.05$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The updates give $y(1.1)\\approx5+0.1(1)=5.1$ and $y(1.2)\\approx5.1+0.1(1.1)=5.21$."
+  },
+  {
+    "id": "A31",
+    "stem_tex": "For $y'=x$ and $y(1)=5$, Euler's method with step $0.1$ estimates $y(1.2)$ as $5.21$. What is the absolute error?",
+    "choices_tex": [
+      "$0.005$",
+      "$0.010$",
+      "$0.050$",
+      "$0.500$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The exact value is $5+\\int_1^{1.2}x\\,dx=5.22$, so the error is $|5.22-5.21|=0.010$."
+  },
+  {
+    "id": "A32",
+    "stem_tex": "Which differential equation has the displayed slope field?",
+    "choices_tex": [
+      "$y'=y(y+2)$",
+      "$y'=xy+2$",
+      "$y'=x/(y+2)$",
+      "$y'=y/(y+2)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Slopes depend only on $y$, are negative between $-2$ and $0$, and positive outside. They approach zero at both boundaries, matching $y(y+2)$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a32.png",
+      "alt": "Source graph for A32"
+    }
+  },
+  {
+    "id": "A33",
+    "stem_tex": "Which function can solve the displayed slope field?",
+    "choices_tex": [
+      "$y=1-\\ln x$",
+      "$y=1+\\ln x$",
+      "$y=1+e^x$",
+      "$y=1+\\tan x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The field depends on $y$, with zero slope near $y=1$, positive slopes above, and negative below, matching $y'=y-1$. The function $1+e^x$ has derivative $e^x=y-1$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a33.png",
+      "alt": "Source graph for A33"
+    }
+  },
+  {
+    "id": "A34",
+    "stem_tex": "Which differential equation has the displayed field on $[-10,10]\\times[-7,7]$?",
+    "choices_tex": [
+      "$y'=x^2+2y^2+1$",
+      "$y'=2y+1$",
+      "$y'=x-2y+1$",
+      "$y'=x+2y+1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The horizontal segments lie along the descending line $x+2y+1=0$, and slopes increase as either coordinate increases. This identifies D.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a34.png",
+      "alt": "Source graph for A34"
+    }
+  },
+  {
+    "id": "A35",
+    "stem_tex": "Which differential equation has the displayed field on $[-10,10]\\times[-7,7]$?",
+    "choices_tex": [
+      "$y'=x(x+y)$",
+      "$y'=y(x+y)$",
+      "$y'=x(x+1)$",
+      "$y'=x(x^2+y)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Zero slopes lie on $x=0$ and $y=-x$. The sign changes across these lines agree with the product $x(x+y)$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a35.png",
+      "alt": "Source graph for A35"
+    }
+  },
+  {
+    "id": "A36",
+    "stem_tex": "Which differential equation has the displayed field on $[-10,10]\\times[-4,4]$?",
+    "choices_tex": [
+      "$y'=2x/(2+y^2)$",
+      "$y'=2/(2+x^2)$",
+      "$y'=2y/(2+y^2)$",
+      "$y'=2/(2+y^2)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Slopes are positive, constant along horizontal rows, symmetric about $y=0$, and decrease as $|y|$ grows, matching D.",
+    "figure": {
+      "src": "data/calculus-figures/c9-a36.png",
+      "alt": "Source graph for A36"
+    }
+  },
+  {
+    "id": "B1",
+    "stem_tex": "If $ds/dt=\\sin^2(\\pi s/2)$ and $s(0)=1$, find $t$ when $s=3/2$.",
+    "choices_tex": [
+      "$1/2$",
+      "$\\pi/2$",
+      "$2/\\pi$",
+      "$-2/\\pi$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Separate variables to obtain $t=\\int_1^{3/2}\\csc^2(\\pi s/2)\\,ds=[-2\\cot(\\pi s/2)/\\pi]_1^{3/2}=2/\\pi$."
+  },
+  {
+    "id": "B2",
+    "stem_tex": "If radium decomposes at a rate proportional to the amount present, then the amount $R$ left after $t$ years, if $R_0$ is present initially and $k$ is the negative constant of proportionality, is given by",
+    "choices_tex": [
+      "$R=R_0 kt$",
+      "$R=R_0 e^{kt}$",
+      "$R=e^{R_0 kt}$",
+      "$R=e^{R_0+kt}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The model is $R'=kR$. Its solution with $R(0)=R_0$ is $R=R_0e^{kt}$; $k<0$ gives decay."
+  },
+  {
+    "id": "B3",
+    "stem_tex": "Population grows at a rate proportional to its current size and doubles in 50 years. Find $P/P_0$ after 75 years.",
+    "choices_tex": [
+      "$9/4$",
+      "$5/2$",
+      "$4$",
+      "$2\\sqrt2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The ratio is $2^{t/50}$, giving $2^{75/50}=2^{3/2}=2\\sqrt2$."
+  },
+  {
+    "id": "B4",
+    "stem_tex": "A substance decays at a rate proportional to its amount, falling from 40 g to 10 g in 2 hours. Find the proportionality constant.",
+    "choices_tex": [
+      "$-\\ln2$",
+      "$-1/2$",
+      "$-1/4$",
+      "$\\ln(1/4)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The model is $M=40e^{kt}$. Thus $10=40e^{2k}$, so $k=\\ln(1/4)/2=-\\ln2$."
+  },
+  {
+    "id": "B5",
+    "stem_tex": "If $(g'(x))^2=g(x)$ for every real $x$, $g(0)=0$, and $g(4)=4$, find $g(1)$.",
+    "choices_tex": [
+      "$1/4$",
+      "$1/2$",
+      "$2$",
+      "$4$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Where positive, $h=\\sqrt g$ has $|h'|=1/2$. Its rise from $h(0)=0$ to $h(4)=2$ is maximal, forcing $h=x/2$ throughout $[0,4]$. Thus $g(1)=1/4$."
+  },
+  {
+    "id": "B6",
+    "stem_tex": "The solution of $y'=y$ through $(2,3)$ is",
+    "choices_tex": [
+      "$y=e^x+3$",
+      "$y=0.406e^x$",
+      "$y=e^x-(e^2+3)$",
+      "$y=e^x/0.406$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The exact solution is $y=3e^{x-2}=(3e^{-2})e^x$. Since $3e^{-2}\\approx0.406$, B is the rounded-coefficient choice."
+  },
+  {
+    "id": "B7",
+    "stem_tex": "Where a solution of $y'=x+y$ intersects $x+y=0$, the function",
+    "choices_tex": [
+      "equals zero",
+      "has a local maximum",
+      "has a local minimum",
+      "has an inflection point"
+    ],
+    "correct": "C",
+    "explanation_tex": "At the intersection $y'=0$. Differentiating gives $y''=1+y'=1>0$, so the point is a local minimum."
+  },
+  {
+    "id": "B8",
+    "stem_tex": "The graph shows the slope field $F'(x)=e^{-x^2}$ and solution $F(0)=0$. Find $\\lim_{x\\to\\infty}F(x)$ to three decimals.",
+    "choices_tex": [
+      "$0.886$",
+      "$0.987$",
+      "$1.000$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$F(x)=\\int_0^xe^{-u^2}\\,du$. The limit is the convergent Gaussian integral $\\sqrt\\pi/2\\approx0.886$.",
+    "figure": {
+      "src": "data/calculus-figures/c9-b8.png",
+      "alt": "Source graph for B8"
+    }
+  },
+  {
+    "id": "B9",
+    "stem_tex": "The graph shows logistic growth of frog population $F$ toward 1000. Which equation models it?",
+    "choices_tex": [
+      "$F'=1.5F-0.003F^2$",
+      "$F'=1.5F^2-0.003F$",
+      "$F'=3F-0.003F^2$",
+      "$F'=0.003F^2-3F$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Choice C is $F'=0.003F(1000-F)$, positive below 1000 and zero at capacity, agreeing with the graph.",
+    "figure": {
+      "src": "data/calculus-figures/c9-b9.png",
+      "alt": "Source graph for B9"
+    }
+  },
+  {
+    "id": "B10",
+    "stem_tex": "The derivative table is $\\begin{array}{c|rrrrrr}x&2&3&4&5&6&7\\\\\\hline f\\prime(x)&2&2.5&1&-0.5&-1.5&0.5\\end{array}$. Given $f(3)=100$, use Euler's method with step $2$ to estimate $f(7)$.",
+    "choices_tex": [
+      "$102.5$",
+      "$103$",
+      "$104$",
+      "$104.5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use derivatives at the starts of the two steps: $f(7)\\approx100+2f'(3)+2f'(5)=100+5-1=104$."
+  },
+  {
+    "id": "B11",
+    "stem_tex": "Coffee initially at $180^\\circ$F cools in a $68^\\circ$F room according to $y'=-0.11(y-68)$. Find its temperature after 10 minutes.",
+    "choices_tex": [
+      "$96$",
+      "$100$",
+      "$105$",
+      "$110$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$y(t)=68+112e^{-0.11t}$, hence $y(10)=68+112e^{-1.1}\\approx105.28^\\circ$F."
+  },
+  {
+    "id": "B12",
+    "stem_tex": "Coffee initially at $180^\\circ$F cools in a $68^\\circ$F room according to $y'=-0.11(y-68)$. About how many minutes until it reaches $75^\\circ$F?",
+    "choices_tex": [
+      "$15$",
+      "$18$",
+      "$20$",
+      "$25$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $75=68+112e^{-0.11t}$. Then $e^{-0.11t}=1/16$, so $t=\\ln16/0.11\\approx25.205$ minutes."
+  },
+  {
+    "id": "B13",
+    "stem_tex": "Medication concentration drops at a rate proportional to its current concentration, with proportionality factor 30 percent per hour. About how many hours until one-tenth remains?",
+    "choices_tex": [
+      "$3$",
+      "$4\\tfrac13$",
+      "$6\\tfrac23$",
+      "$7\\tfrac23$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The ratio is $e^{-0.3t}$. Set it to $0.1$ to obtain $t=\\ln10/0.3\\approx7.675$, closest to $7\\tfrac23$ hours."
+  },
+  {
+    "id": "B14",
+    "stem_tex": "Which of the following statements characterize(s) the logistic growth of a population whose limiting value is $L$ and whose initial value is less than $\\dfrac{L}{2}$?\n\n I. The growth rate initially increases. II. The growth rate is maximal at population $L/2$. III. The growth rate tends to zero as population tends to $L$.",
+    "choices_tex": [
+      "I only",
+      "I and II only",
+      "II and III only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $P'=kP(1-P/L)$, the growth rate is a downward-opening quadratic in $P$, maximized at $L/2$. Starting below $L/2$, it first increases, then decreases to zero as $P\\to L$. All three statements hold."
+  },
+  {
+    "id": "B15",
+    "stem_tex": "Which differential equation is not logistic?",
+    "choices_tex": [
+      "$P'=P-P^2$",
+      "$y'=0.01y(100-y)$",
+      "$x'=0.8x-0.004x^2$",
+      "$R'=0.16(350-R)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "D is linear in the population and approaches its equilibrium exponentially. It lacks the population-times-remaining-capacity product of a logistic equation."
+  },
+  {
+    "id": "B16",
+    "stem_tex": "An animal population satisfies $P'=0.002P(1000-P)$ with $P(0)=200$. When is it growing fastest?",
+    "choices_tex": [
+      "Initially",
+      "When $P=500$",
+      "When $P=1000$",
+      "When $P''>0$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The rate as a function of $P$ is a downward-opening quadratic, maximized at $P=1000/2=500$. The population starts below this value and grows through it."
+  }
+]

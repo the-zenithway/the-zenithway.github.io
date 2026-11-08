@@ -1,0 +1,666 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "$\\displaystyle\\int_{-1}^{2} (x^2-2x-3)\\,dx =$",
+    "choices_tex": [
+      "$-3$",
+      "$0$",
+      "$-9$",
+      "$9$"
+    ],
+    "correct": "C",
+    "explanation_tex": "An antiderivative is $x^3/3-x^2-3x$. Evaluate at2 and $-1$ to obtain $-22/3-5/3=-9$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "$\\displaystyle\\int_{1}^{2} \\dfrac{4x-1}{4x}\\,dx =$",
+    "choices_tex": [
+      "$\\dfrac{3}{4}$",
+      "$1-\\dfrac{1}{4}\\ln 2$",
+      "$1-\\ln 2$",
+      "$-\\dfrac{1}{4}\\ln 2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write the integrand as $1-1/(4x)$. Then $[x-\\frac14\\ln x]_1^2=1-\\frac14\\ln2$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "$\\displaystyle\\int_{0}^{8} \\dfrac{dt}{\\sqrt{9-t}} =$",
+    "choices_tex": [
+      "$-2$",
+      "$4$",
+      "$-4$",
+      "$8$"
+    ],
+    "correct": "B",
+    "explanation_tex": "An antiderivative is $-2\\sqrt{9-t}$, giving $-2+6=4$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "$\\displaystyle\\int_{-1}^{0} \\sqrt{8u+9}\\,du =$",
+    "choices_tex": [
+      "$2$",
+      "$\\dfrac{13}{6}$",
+      "$\\dfrac{26}{3}$",
+      "$\\dfrac{13}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Use $\\frac1{12}(8u+9)^{3/2}$ as an antiderivative. Its difference is $(27-1)/12=13/6$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "$\\displaystyle\\int_{2}^{3} \\dfrac{dy}{3y-4} =$",
+    "choices_tex": [
+      "$\\ln 5$",
+      "$\\dfrac{1}{3}\\ln\\dfrac{5}{2}$",
+      "$\\dfrac{25}{16}$",
+      "$\\ln\\sqrt[3]{5}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The antiderivative is $\\frac13\\ln|3y-4|$, so the value is $\\frac13(\\ln5-\\ln2)=\\frac13\\ln(5/2)$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "$\\displaystyle\\int_{0}^{\\sqrt{12}} \\dfrac{x\\,dx}{\\sqrt{16-x^2}} =$",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{\\pi}{6}$",
+      "$-1$",
+      "$2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Substitute $u=16-x^2$. An antiderivative is $-\\sqrt{16-x^2}$, giving $-2+4=2$."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "$\\displaystyle\\int_{0}^{1} (3t-1)^3\\,dt =$",
+    "choices_tex": [
+      "$\\dfrac{1}{4}$",
+      "$\\dfrac{5}{4}$",
+      "$0$",
+      "$4$"
+    ],
+    "correct": "B",
+    "explanation_tex": "An antiderivative is $(3t-1)^4/12$. Evaluate to get $(16-1)/12=5/4$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "$\\displaystyle\\int_{4}^{9} \\dfrac{3+x}{2\\sqrt{x}}\\,dx =$",
+    "choices_tex": [
+      "$\\dfrac{28}{3}$",
+      "$\\dfrac{41}{3}$",
+      "$\\dfrac{100}{3}$",
+      "$\\dfrac{5}{3}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Rewrite as $\\frac32x^{-1/2}+\\frac12x^{1/2}$. The antiderivative $3\\sqrt{x}+x^{3/2}/3$ gives $18-26/3=28/3$."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "$\\displaystyle\\int_{-4}^{4} \\dfrac{dx}{16+x^2} =$",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{4}$",
+      "$0$",
+      "$\\dfrac{\\pi}{8}$",
+      "$-\\dfrac{\\pi}{4}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use $\\frac14\\arctan(x/4)$, giving $\\frac14(\\pi/4+\\pi/4)=\\pi/8$."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "$\\displaystyle\\int_{0}^{2} e^{-x}\\,dx =$",
+    "choices_tex": [
+      "$\\dfrac{1}{e^2}-1$",
+      "$-\\dfrac{1}{e^2}$",
+      "$1-\\dfrac{1}{e^2}$",
+      "$\\dfrac{1}{e^2}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The antiderivative is $-e^{-x}$, giving $1-e^{-2}$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "$\\displaystyle\\int_{0}^{2} xe^{x^2}\\,dx =$",
+    "choices_tex": [
+      "$e^4-1$",
+      "$\\dfrac{1}{2}(e^4-1)$",
+      "$2(e^4-1)$",
+      "$\\dfrac{e^4}{2}-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=x^2$ and $du=2x\\,dx$. The integral is $\\frac12\\int_0^4e^u\\,du=(e^4-1)/2$."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "$\\displaystyle\\int_{0}^{\\pi/6} \\sin 3\\theta\\,d\\theta =$",
+    "choices_tex": [
+      "$3$",
+      "$\\dfrac{1}{3}$",
+      "$-1$",
+      "$-\\dfrac{1}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Evaluate $[-\\frac13\\cos(3\\theta)]_0^{\\pi/6}=1/3$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "$\\displaystyle\\int_{1}^{2} \\dfrac{dz}{4-z} =$",
+    "choices_tex": [
+      "$-\\ln\\dfrac{3}{2}$",
+      "$\\ln 3$",
+      "$\\dfrac{1}{2}\\ln\\dfrac{3}{2}$",
+      "$\\ln\\dfrac{3}{2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "An antiderivative is $-\\ln|4-z|$, giving $\\ln3-\\ln2=\\ln(3/2)$."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "If we let $x=4\\sin\\theta$, then $\\displaystyle\\int_{2}^{4} \\dfrac{\\sqrt{16-x^2}}{x}\\,dx$ is equivalent to",
+    "choices_tex": [
+      "$\\displaystyle 2\\int_{\\pi/6}^{\\pi/2} \\dfrac{\\cos^2\\theta}{\\sin\\theta}\\,d\\theta$",
+      "$\\displaystyle \\int_{\\pi/6}^{\\pi/2} \\dfrac{\\cos\\theta}{\\sin\\theta}\\,d\\theta$",
+      "$\\displaystyle 4\\int_{\\pi/6}^{\\pi/2} \\dfrac{\\cos^2\\theta}{\\sin\\theta}\\,d\\theta$",
+      "$\\displaystyle \\int_{2}^{4} \\dfrac{\\cos\\theta}{\\sin\\theta}\\,d\\theta$"
+    ],
+    "correct": "C",
+    "explanation_tex": "On $[\\pi/6,\\pi/2]$, $\\sqrt{16-x^2}=4\\cos\\theta$ and $dx=4\\cos\\theta\\,d\\theta$. Thus the transformed integrand is $4\\cos^2\\theta/\\sin\\theta$ with those limits."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "$\\displaystyle\\int_{0}^{\\pi/2} \\cos^2\\theta\\sin\\theta\\,d\\theta =$",
+    "choices_tex": [
+      "$-\\dfrac{2}{3}$",
+      "$1$",
+      "$\\dfrac{2}{3}$",
+      "$\\dfrac{1}{3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=\\cos\\theta$, so the integral becomes $\\int_0^1u^2\\,du=1/3$."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "$\\displaystyle\\int_{1}^{e^2} \\dfrac{\\ln x}{x}\\,dx =$",
+    "choices_tex": [
+      "$2$",
+      "$\\dfrac{1}{2}(e^2-1)$",
+      "$4$",
+      "$e^2-1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=\\ln x$. The transformed integral is $\\int_0^2u\\,du=2$."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "$\\displaystyle\\int_{0}^{2} xe^x\\,dx =$",
+    "choices_tex": [
+      "$-1$",
+      "$e^2+1$",
+      "$1$",
+      "$e^2-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integration by parts gives the antiderivative $(x-1)e^x$. Evaluate to obtain $e^2-(-1)=e^2+1$."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "$\\displaystyle\\int_{0}^{\\pi/6} \\dfrac{\\cos\\theta}{1+3\\sin\\theta}\\,d\\theta =$",
+    "choices_tex": [
+      "$\\ln\\dfrac{5}{2}$",
+      "$\\dfrac{3}{8}$",
+      "$-\\dfrac{1}{3}\\ln\\dfrac{5}{2}$",
+      "$\\ln\\sqrt[3]{5/2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=1+3\\sin\\theta$. The limits become1 and $5/2$, so the value is $\\frac13\\ln(5/2)=\\ln\\sqrt[3]{5/2}$."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "$\\displaystyle\\int_{\\sqrt{2}}^{3} \\dfrac{u\\,du}{u^2-1} =$",
+    "choices_tex": [
+      "$\\ln\\sqrt{8}$",
+      "$\\dfrac{8}{9}$",
+      "$\\ln\\dfrac{3}{2}$",
+      "$\\ln 3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "An antiderivative is $\\frac12\\ln|u^2-1|$. Evaluate to get $\\frac12\\ln8=\\ln\\sqrt8$."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "$\\displaystyle\\int_{\\sqrt{2}}^{3} \\dfrac{u\\,du}{(u^2-1)^2} =$",
+    "choices_tex": [
+      "$-\\dfrac{1}{3}$",
+      "$-\\dfrac{7}{16}$",
+      "$\\dfrac{7}{16}$",
+      "$\\dfrac{1}{3}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use the antiderivative $-1/[2(u^2-1)]$. The difference is $-1/16+1/2=7/16$."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "$\\displaystyle\\int_{\\pi/18}^{\\pi/6} \\dfrac{\\cos 3x\\,dx}{\\sin^2 3x} =$",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{1}{3}$",
+      "$-\\dfrac{1}{3}$",
+      "$-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=\\sin3x$. The limits become $1/2$ and1, giving $\\frac13[-1/u]_{1/2}^1=1/3$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "$\\displaystyle\\int_{0}^{1} \\dfrac{e^{-x}+2}{e^{-x}}\\,dx =$",
+    "choices_tex": [
+      "$2e-1$",
+      "$2+e$",
+      "$\\dfrac{1}{e}$",
+      "$1+e$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The integrand simplifies to $1+2e^x$. Thus $[x+2e^x]_0^1=2e-1$."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "$\\displaystyle\\int_{0}^{1} \\dfrac{e^x}{e^x+2}\\,dx =$",
+    "choices_tex": [
+      "$\\ln 2$",
+      "$1+e$",
+      "$-\\ln 2$",
+      "$\\ln\\dfrac{e+2}{3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Substitute $u=e^x+2$, giving $[\\ln(e^x+2)]_0^1=\\ln((e+2)/3)$."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "If we let $x=\\tan\\theta$, then $\\displaystyle\\int_{0}^{1} \\sqrt{1+x^2}\\,dx$ is equivalent to",
+    "choices_tex": [
+      "$\\displaystyle\\int_{0}^{\\pi/4} \\sec\\theta\\,d\\theta$",
+      "$\\displaystyle\\int_{0}^{1} \\sec^3\\theta\\,d\\theta$",
+      "$\\displaystyle\\int_{0}^{\\pi/4} \\sec^3\\theta\\,d\\theta$",
+      "$\\displaystyle\\int_{0}^{\\pi/4} \\sec^2\\theta\\tan\\theta\\,d\\theta$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Here $dx=\\sec^2\\theta\\,d\\theta$ and $\\sqrt{1+\\tan^2\\theta}=\\sec\\theta$. The new interval is $[0,\\pi/4]$, giving $\\int_0^{\\pi/4}\\sec^3\\theta\\,d\\theta$."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "If the substitution $u=\\sqrt{x+1}$ is used, then $\\displaystyle\\int_{0}^{8} \\dfrac{dx}{x\\sqrt{x+1}}$ is equivalent to",
+    "choices_tex": [
+      "$\\displaystyle\\int_{1}^{3} \\dfrac{du}{u^2-1}$",
+      "$\\displaystyle\\int_{1}^{3} \\dfrac{2\\,du}{u^2-1}$",
+      "$\\displaystyle 2\\int_{0}^{3} \\dfrac{du}{(u-1)(u+1)}$",
+      "$\\displaystyle 2\\int_{1}^{3} \\dfrac{du}{u(u^2-1)}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $x=u^2-1$ and $dx=2u\\,du$, the new integrand is $2/(u^2-1)$ and the limits are1 and3. Both expressions are improper integrals diverging to $+\\infty$; the substitution is interpreted through limits."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "The table lists values of $f$ and its derivative: $\\begin{array}{c|rrrrr}x&0&2&4&6&8\\\\\\hline f(x)&9&14&18&13&6\\\\f'(x)&4&3&-2&-4&0\\end{array}$. Evaluate $\\int_8^0f'(x)\\,dx$.",
+    "choices_tex": [
+      "$-\\dfrac{1}{2}$",
+      "$3$",
+      "$4$",
+      "$-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "By the Fundamental Theorem, $\\int_8^0f'(x)\\,dx=f(0)-f(8)=9-6=3$."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "Using a midpoint Riemann Sum with 4 equal width subintervals, find the approximate area of the region under $y=8x-x^2$ on $[0,8]$.",
+    "choices_tex": [
+      "$44$",
+      "$72$",
+      "$88$",
+      "$128$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The width is2 and the midpoints are1,3,5,7. The heights are7,15,15,7, so $M_4=2(7+15+15+7)=88$."
+  },
+  {
+    "id": "T28",
+    "stem_tex": "The graph of a continuous function $f$ passes through the points $(3,2)$, $(5,8)$, $(6,6)$, and $(9,12)$. Using trapezoids, we estimate that $\\displaystyle\\int_{3}^{9} f(x)\\,dx \\approx$",
+    "choices_tex": [
+      "$40$",
+      "$44$",
+      "$48$",
+      "$52$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Use the actual widths: $2(2+8)/2+1(8+6)/2+3(6+12)/2=10+7+27=44$."
+  },
+  {
+    "id": "T29",
+    "stem_tex": "Using left and right sums with 3 equal subintervals on $[1,4]$ for $y=1/x$, which gives the resulting lower and upper bounds directly for $\\ln4$?",
+    "choices_tex": [
+      "$\\dfrac{1}{4} < \\displaystyle\\int_{1}^{4} \\dfrac{1}{x}\\,dx < 1$",
+      "$\\dfrac{13}{12} < \\displaystyle\\int_{1}^{4} \\dfrac{1}{x}\\,dx < \\dfrac{11}{6}$",
+      "$\\dfrac{1}{4} < \\displaystyle\\int_{3}^{4} \\dfrac{1}{x}\\,dx < \\dfrac{1}{3}$",
+      "$\\dfrac{11}{6} < \\displaystyle\\int_{1}^{4} \\dfrac{1}{x}\\,dx < \\dfrac{13}{12}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $1/x$ is strictly decreasing, the right sum $1/2+1/3+1/4=13/12$ is below the integral and the left sum $1+1/2+1/3=11/6$ is above it.",
+    "source_correction": "Clarified that the requested bounds are the two whole-interval Riemann sums; another printed option concerns only a subinterval."
+  },
+  {
+    "id": "T30",
+    "stem_tex": "Let $A = \\displaystyle\\int_{0}^{1} \\sqrt{1-x^2}\\,dx$. We estimate $A$ using the $L$, $R$, and $T$ approximations with $n=100$ subintervals. Which is true?",
+    "choices_tex": [
+      "$R < T < A < L$",
+      "$L < T < A < R$",
+      "$R < A < T < L$",
+      "$L < A < T < R$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The quarter-circle function is decreasing and concave down. Thus $R<A<L$ and trapezoids underestimate, so $T<A$. Because $T=(L+R)/2$, the order is $R<T<A<L$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "$\\displaystyle\\int_{-2}^{3} |x|\\,dx =$",
+    "choices_tex": [
+      "$\\dfrac{7}{2}$",
+      "$4$",
+      "$\\dfrac{9}{2}$",
+      "$\\dfrac{13}{2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Split at zero. The two triangle areas are $2^2/2$ and $3^2/2$, totaling $13/2$."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "$\\displaystyle\\int_{-4}^{3} |x+2|\\,dx =$",
+    "choices_tex": [
+      "$\\dfrac{21}{2}$",
+      "$\\dfrac{25}{2}$",
+      "$\\dfrac{27}{2}$",
+      "$\\dfrac{29}{2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Split at $x=-2$. The triangles have widths2 and5 and corresponding heights2 and5, so the area is $(4+25)/2=29/2$."
+  },
+  {
+    "id": "T33",
+    "stem_tex": "The average value of $y=\\sqrt{36-x^2}$ on its domain is",
+    "choices_tex": [
+      "$3$",
+      "$6$",
+      "$\\dfrac{3\\pi}{2}$",
+      "$3\\pi$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The domain is $[-6,6]$. The integral equals the area of a radius6 semicircle, $18\\pi$. Dividing by the interval width12 gives $3\\pi/2$."
+  },
+  {
+    "id": "T34",
+    "stem_tex": "The average value of $\\sin x$ over the interval $\\dfrac{\\pi}{6} \\leq x \\leq \\dfrac{\\pi}{3}$ is",
+    "choices_tex": [
+      "$\\dfrac{3}{\\pi}$",
+      "$\\dfrac{3(\\sqrt{3}-1)}{\\pi}$",
+      "$\\dfrac{3}{2\\pi}$",
+      "$\\dfrac{2}{3\\pi}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The interval width is $\\pi/6$. Thus the average is $\\frac6\\pi[-\\cos x]_{\\pi/6}^{\\pi/3}=3(\\sqrt3-1)/\\pi$."
+  },
+  {
+    "id": "T35",
+    "stem_tex": "The average value of $\\sec^2 x$ over the interval from $x=\\dfrac{\\pi}{6}$ to $x=\\dfrac{\\pi}{4}$ is",
+    "choices_tex": [
+      "$\\dfrac{3\\sqrt{3}}{\\pi}$",
+      "$\\dfrac{\\sqrt{3}}{\\pi}$",
+      "$\\dfrac{4(3-\\sqrt{3})}{\\pi}$",
+      "$\\dfrac{3(3-\\sqrt{3})}{\\pi}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The interval width is $\\pi/12$ and an antiderivative is $\\tan x$. The average is $\\frac{12}\\pi(1-1/\\sqrt3)=4(3-\\sqrt3)/\\pi$."
+  },
+  {
+    "id": "T36",
+    "stem_tex": "Choose the Riemann Sum whose limit is the integral $\\displaystyle\\int_{2}^{6} x^3\\,dx$.",
+    "choices_tex": [
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\left(2+\\dfrac{k}{n}\\right)^3\\cdot\\left(\\dfrac{4}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\left(2+\\dfrac{4k}{n}\\right)^3\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\left(2+\\dfrac{4k}{n}\\right)^3\\cdot\\left(\\dfrac{4}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\left(2+\\dfrac{k}{n}\\right)^3\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The width is $\\Delta x=4/n$ and the right endpoints are $x_k=2+4k/n$. Insert both into $\\sum f(x_k)\\Delta x$ to obtain C."
+  },
+  {
+    "id": "T37",
+    "stem_tex": "Which expression is obtained by constructing the right-endpoint Riemann sum for $\\int_0^{2\\pi}\\sin(4x)\\,dx$ using $n$ equal subintervals of $[0,2\\pi]$, then taking its limit?",
+    "choices_tex": [
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$",
+      "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $n$ equal subintervals of $[0,2\\pi]$, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$. Thus $f(x_k)\\Delta x=\\sin(8\\pi k/n)(2\\pi/n)$, exactly D. B also has limit zero, but it is not this right-endpoint construction.",
+    "source_original": {
+      "stem_tex": "Choose the Riemann Sum whose limit is the integral $\\displaystyle\\int_{0}^{2\\pi} \\sin(4x)\\,dx$.",
+      "choices_tex": [
+        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
+        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
+        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$",
+        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$"
+      ],
+      "correct": null,
+      "explanation_tex": "For the stated interval, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$, giving D. However, the integral is zero and option B also has limit zero, so the original wording does not yield a unique answer. Only D is the standard right-endpoint construction on the stated interval.",
+      "source_issue": "Both B and D have limit zero, so the original question has two correct options."
+    },
+    "resolved_source_issue": "Both B and D have limit zero, so the original question has two correct options.",
+    "source_correction": "Specified the right-endpoint construction on the stated interval, rather than equality of limits alone."
+  },
+  {
+    "id": "T38",
+    "stem_tex": "Choose the integral that is the limit of the Riemann Sum\n\\[\n\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(2+\\dfrac{8k}{n}\\right)\\cdot\\left(\\dfrac{4}{n}\\right)\\right).\n\\]",
+    "choices_tex": [
+      "$\\displaystyle\\int_{2}^{6} \\sin(8x)\\,dx$",
+      "$\\displaystyle\\int_{0}^{4} \\sin(2x+2)\\,dx$",
+      "$\\displaystyle\\int_{2}^{6} \\sin(2x)\\,dx$",
+      "$\\displaystyle\\int_{0}^{4} \\sin(8x+2)\\,dx$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Take $\\Delta x=4/n$ and $x_k=4k/n$ on $[0,4]$. The sine argument is $2+2x_k$, yielding $\\int_0^4\\sin(2x+2)\\,dx$."
+  },
+  {
+    "id": "T39",
+    "stem_tex": "$\\displaystyle\\int_{\\pi/6}^{\\pi/3} \\sin^3\\alpha\\cos\\alpha\\,d\\alpha$ is equal to",
+    "choices_tex": [
+      "$\\dfrac{3}{16}$",
+      "$\\dfrac{1}{8}$",
+      "$-\\dfrac{1}{8}$",
+      "$-\\dfrac{3}{16}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The antiderivative is $\\sin^4\\alpha/4$. Its endpoint difference is $((\\sqrt3/2)^4-(1/2)^4)/4=(9/16-1/16)/4=1/8$."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "Find the average value on $[0,6]$ of the piecewise linear function joining $(0,0),(3,12),(6,12)$.",
+    "choices_tex": [
+      "$6$",
+      "$8$",
+      "$9$",
+      "$12$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The area is a triangle plus a rectangle: $\\frac12(3)(12)+3(12)=54$. Divide by the interval width6 to obtain9."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "The integral $\\displaystyle\\int_{-5}^{5} \\sqrt{25-x^2}\\,dx$ gives the area of",
+    "choices_tex": [
+      "a circle of radius 5",
+      "a semicircle of radius 5",
+      "a quadrant of a circle of radius 5",
+      "half of an ellipse"
+    ],
+    "correct": "B",
+    "explanation_tex": "The curve satisfies $x^2+y^2=25$ and $y\\geq0$. Over $[-5,5]$ it traces the entire upper semicircle of radius5."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "The graph of $f$ consists of line segments joining $(0,2),(3,8),(9,0)$. Which intervals contain a point $c$ where $f(c)$ equals its average on $[0,9]$? I. $[0,3]$; II. $[3,6]$; III. $[6,9]$.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "III only",
+      "I and II only"
+    ],
+    "correct": "D",
+    "explanation_tex": "The area is $3(2+8)/2+6(8)/2=39$, so the average is $13/3$. On the rising line $f(x)=2+2x$, this occurs at $x=7/6$; on the falling line $f(x)=12-4x/3$, it occurs at $x=23/4$. These lie in I and II."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "The graph of $f$ consists of line segments joining $(0,2),(3,8),(9,0)$. $\\displaystyle\\int_{0}^{2} f'(3x)\\,dx =$",
+    "choices_tex": [
+      "$-2$",
+      "$-\\dfrac{2}{3}$",
+      "$\\dfrac{2}{3}$",
+      "$2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=3x$. Then $\\int_0^2f'(3x)\\,dx=\\frac13[f(6)-f(0)]=\\frac13(4-2)=2/3$. The single corner does not affect the piecewise integral."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "The graph of $f$ consists of line segments joining $(0,2),(3,8),(9,0)$. Let $g(x) = \\displaystyle\\int_{0}^{2x} f(t)\\,dt$; then $g'(1) =$",
+    "choices_tex": [
+      "$6$",
+      "$8$",
+      "$10$",
+      "$12$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The Fundamental Theorem and chain rule give $g'(x)=2f(2x)$. Thus $g'(1)=2f(2)=2(6)=12$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The graph of $f$ consists of line segments joining $(0,2),(3,8),(9,0)$. Let $h(x) = x^2 - f(x)$. Find $\\displaystyle\\int_{0}^{9} h(x)\\,dx$.",
+    "choices_tex": [
+      "$165$",
+      "$204$",
+      "$235$",
+      "$243$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The area under $f$ is $15+24=39$. Hence $\\int_0^9(x^2-f(x))\\,dx=9^3/3-39=243-39=204$."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "If $f(x)$ is continuous on the closed interval $[a,b]$, then there exists at least one number $c$, $a<c<b$, such that $\\displaystyle\\int_{a}^{b} f(x)\\,dx$ is equal to",
+    "choices_tex": [
+      "$\\dfrac{f(c)}{b-a}$",
+      "$f'(c)(b-a)$",
+      "$f(c)(b-a)$",
+      "$\\dfrac{f'(c)}{b-a}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The integral mean value theorem says $\\frac1{b-a}\\int_a^bf(x)\\,dx=f(c)$ for some interior $c$, assuming $a<b$. Multiplying by $b-a$ gives C."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "If $f(x)$ is continuous on the closed interval $[a,b]$ and $k$ is a constant, then $\\displaystyle\\int_{a}^{b} kf(x)\\,dx$ is equal to",
+    "choices_tex": [
+      "$k(b-a)$",
+      "$k[f(b)-f(a)]$",
+      "$\\dfrac{[kf(x)]^2}{2}\\Big|_a^b$",
+      "$k\\displaystyle\\int_{a}^{b} f(x)\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "By linearity, a constant multiplier can be taken outside an integral: $\\int_a^bkf(x)\\,dx=k\\int_a^bf(x)\\,dx$."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "$\\displaystyle\\dfrac{d}{dt}\\int_{0}^{t} \\sqrt{x^3+1}\\,dx =$",
+    "choices_tex": [
+      "$\\sqrt{t^3+1}$",
+      "$\\dfrac{\\sqrt{t^3+1}}{3t^2}$",
+      "$3x^2\\sqrt{x^3+1}$",
+      "$\\sqrt{t^3+1}-1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The Fundamental Theorem returns the integrand evaluated at the variable upper limit: $\\sqrt{t^3+1}$."
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "If $F(u) = \\displaystyle\\int_{1}^{u} (3-x^2)^4\\,dx$, then $F'(u)$ is equal to",
+    "choices_tex": [
+      "$-8u(3-u^2)^3$",
+      "$(3-u^2)^4-1$",
+      "$(3-u^2)^4$",
+      "$-2u(3-u^2)^4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The Fundamental Theorem gives $F'(u)=(3-u^2)^4$. The fixed lower limit contributes no derivative term."
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "$\\displaystyle\\dfrac{d}{dx}\\int_{\\pi/2}^{x^3} \\sqrt{\\sin t}\\,dt =$",
+    "choices_tex": [
+      "$\\sqrt{\\sin t^3}$",
+      "$3x^2\\sqrt{\\sin x^3}-1$",
+      "$\\sqrt{\\sin x^3}-1$",
+      "$3x^2\\sqrt{\\sin x^3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Apply the Fundamental Theorem and chain rule: $\\sqrt{\\sin(x^3)}\\frac{d}{dx}x^3=3x^2\\sqrt{\\sin(x^3)}$, wherever the real integral is defined and differentiable."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "On the upper ellipse branch $x=5\\cos\\theta$, $y=4\\sin\\theta$, $0\\leq\\theta\\leq\\pi/3$, the integral $\\int_{2.5}^5xy\\,dx$ is equivalent to",
+    "choices_tex": [
+      "$\\displaystyle 100\\int_{\\pi/3}^{0} \\sin\\theta\\cos^2\\theta\\,d\\theta$",
+      "$\\displaystyle 100\\int_{2.5}^{5} \\sin^2\\theta\\cos\\theta\\,d\\theta$",
+      "$\\displaystyle 100\\int_{0}^{\\pi/3} \\sin\\theta\\cos^2\\theta\\,d\\theta$",
+      "$\\displaystyle 100\\int_{0}^{\\pi/3} \\sin^2\\theta\\cos\\theta\\,d\\theta$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $dx=-5\\sin\\theta\\,d\\theta$, we have $xy\\,dx=-100\\sin^2\\theta\\cos\\theta\\,d\\theta$. On the upper branch, the limits change from $x=2.5,5$ to $\\theta=\\pi/3,0$. Reversing them gives D.",
+    "source_correction": "Specified the upper ellipse branch, which the printed question leaves implicit."
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "Use a left rectangular sum on the five table intervals to estimate $\\int_0^{28}f(x)\\,dx$: $\\begin{array}{c|rrrrrr}x&0&4&10&18&22&28\\\\\\hline f(x)&8&12&6&2&0&3\\end{array}$.",
+    "choices_tex": [
+      "$130$",
+      "$150$",
+      "$160$",
+      "$175$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The left sum is $4(8)+6(12)+8(6)+4(2)+6(0)=32+72+48+8=160$."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "Find the value of $x$ at which the function $y=x^2$ reaches its average value on the interval $[0,12]$.",
+    "choices_tex": [
+      "$6.351$",
+      "$6.928$",
+      "$7.211$",
+      "$20.78$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The average is $\\frac1{12}\\int_0^{12}x^2\\,dx=48$. The value in the interval satisfying $x^2=48$ is $x=4\\sqrt3\\approx6.928$."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "The average value of $f(x) = \\begin{cases} x^3 & x<3 \\\\ 5x & x \\geq 3 \\end{cases}$ on the interval $0 \\leq x \\leq 6$ is",
+    "choices_tex": [
+      "$12.25$",
+      "$13.5$",
+      "$14.625$",
+      "$18$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Split at3. The average is $\\frac16(\\int_0^3x^3\\,dx+\\int_3^65x\\,dx)=\\frac16(81/4+135/2)=14.625$."
+  }
+]

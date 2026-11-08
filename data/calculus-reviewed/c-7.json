@@ -1,0 +1,706 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "Find the area bounded by $y=x^2$, $y=0$, $x=-1$, and $x=2$.",
+    "choices_tex": [
+      "$11/3$",
+      "$7/3$",
+      "$3$",
+      "$5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$A=\\int_{-1}^2x^2\\,dx=[x^3/3]_{-1}^2=3$."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "Find the area between $y=x^2-3$ and $y=1$.",
+    "choices_tex": [
+      "$8/3$",
+      "$32$",
+      "$32/3$",
+      "$16/3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The intersections are $x=\\pm2$. Thus $A=\\int_{-2}^2(4-x^2)\\,dx=32/3$."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "Find the area bounded by $x=y^2-1$ and the $y$-axis.",
+    "choices_tex": [
+      "$4/3$",
+      "$2/3$",
+      "$8/3$",
+      "$1/2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Horizontal strips give $A=\\int_{-1}^1(1-y^2)\\,dy=4/3$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "Find the area between $y^2=x$ and $x+y=2$.",
+    "choices_tex": [
+      "$15/2$",
+      "$3/2$",
+      "$21/6$",
+      "$9/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Intersections solve $y^2+y-2=0$, giving $y=-2,1$. Thus $A=\\int_{-2}^1(2-y-y^2)\\,dy=9/2$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a4.png",
+      "alt": "Source graph for A4"
+    }
+  },
+  {
+    "id": "A5",
+    "stem_tex": "Find the area bounded by $y=4/(x^2+4)$, the $x$-axis, and $x=-2,2$.",
+    "choices_tex": [
+      "$\\pi/4$",
+      "$\\pi/2$",
+      "$2\\pi$",
+      "$\\pi$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$A=[2\\arctan(x/2)]_{-2}^{2}=\\pi$."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "Find the area between $x=y^2-5y$ and $x=3y-y^2$.",
+    "choices_tex": [
+      "$32/3$",
+      "$139/6$",
+      "$64/3$",
+      "$128/3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The curves meet at $y=0,4$. Right minus left gives $A=\\int_0^4(8y-2y^2)\\,dy=64/3$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a6.png",
+      "alt": "Source graph for A6"
+    }
+  },
+  {
+    "id": "A7",
+    "stem_tex": "Find the area between $y=2/x$ and $x+y=3$.",
+    "choices_tex": [
+      "$1/2-2\\ln2$",
+      "$3/2$",
+      "$1/2-\\ln4$",
+      "$3/2-\\ln4$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Intersections are $x=1,2$. Hence $A=\\int_1^2(3-x-2/x)\\,dx=3/2-2\\ln2$."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "Find the first-quadrant area bounded below by the $x$-axis and above by $y=\\sin x$ and $y=\\cos x$.",
+    "choices_tex": [
+      "$2-\\sqrt2$",
+      "$2+\\sqrt2$",
+      "$2$",
+      "$\\sqrt2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The upper boundary switches at $\\pi/4$: $A=\\int_0^{\\pi/4}\\sin x\\,dx+\\int_{\\pi/4}^{\\pi/2}\\cos x\\,dx=2-\\sqrt2$."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "Find the area above $y=\\cos x$ and below $y=\\sin x$ for $\\pi/4\\le x\\le5\\pi/4$.",
+    "choices_tex": [
+      "$2\\sqrt2$",
+      "$2/\\sqrt2$",
+      "$2(\\sqrt2-1)$",
+      "$2(\\sqrt2+1)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$A=[-\\cos x-\\sin x]_{\\pi/4}^{5\\pi/4}=2\\sqrt2$."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "Find the area bounded by $y=\\cot x$, $x=\\pi/4$, and the $x$-axis.",
+    "choices_tex": [
+      "$\\ln2$",
+      "$\\tfrac12\\ln\\tfrac12$",
+      "$1$",
+      "$\\tfrac12\\ln2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The intercept is $\\pi/2$. Therefore $A=[\\ln(\\sin x)]_{\\pi/4}^{\\pi/2}=\\tfrac12\\ln2$."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "Find the total area bounded by $y=x^3-2x^2-3x$ and the $x$-axis.",
+    "choices_tex": [
+      "$28/3$",
+      "$79/6$",
+      "$45/4$",
+      "$71/6$"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $f(x)=x(x-3)(x+1)$, split at the zeros $-1,0,3$. Thus $A=\\int_{-1}^0f(x)\\,dx-\\int_0^3f(x)\\,dx=71/6$."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "Find the total area bounded by $x=y^3-y$ and $x=3y$.",
+    "choices_tex": [
+      "$4$",
+      "$16/3$",
+      "$8$",
+      "$16$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Intersections have $y=0,\\pm2$. By symmetry, $A=2\\int_0^2(4y-y^3)\\,dy=8$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a12.png",
+      "alt": "Source graph for A12"
+    }
+  },
+  {
+    "id": "A13",
+    "stem_tex": "Find the area bounded by $y=e^x$, $y=2$, and the $y$-axis.",
+    "choices_tex": [
+      "$3-e$",
+      "$e^2+1$",
+      "$2\\ln2-1$",
+      "$2\\ln2-3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The right boundary is $x=\\ln2$, so $A=\\int_0^{\\ln2}(2-e^x)\\,dx=2\\ln2-1$."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "The area enclosed by $y^2=x(1-x)$ is given by",
+    "choices_tex": [
+      "$2\\int_0^1x\\sqrt{1-x}\\,dx$",
+      "$2\\int_0^1\\sqrt{x-x^2}\\,dx$",
+      "$4\\int_0^1\\sqrt{x-x^2}\\,dx$",
+      "$\\pi$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The vertical height is $\\sqrt{x-x^2}-(-\\sqrt{x-x^2})=2\\sqrt{x-x^2}$, over $0\\le x\\le1$."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "The figure shows $y=x^3$ and a rectangle with bottom vertices $(0,0)$ and $(c,0)$ and upper-right vertex on the curve. What is the ratio of the rectangle's area to its shaded part above the cubic?",
+    "choices_tex": [
+      "$3:4$",
+      "$5:4$",
+      "$4:3$",
+      "$3:1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The rectangle has area $c^4$. The shaded area is $c^4-\\int_0^cx^3\\,dx=3c^4/4$, giving ratio $4:3$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a15.png",
+      "alt": "Source graph for A15"
+    }
+  },
+  {
+    "id": "A16",
+    "stem_tex": "Find the volume when the region bounded by $y=x^2$, $x=2$, and $y=0$ rotates about the $x$-axis.",
+    "choices_tex": [
+      "$64\\pi/3$",
+      "$8\\pi$",
+      "$8\\pi/3$",
+      "$32\\pi/5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Disks give $V=\\pi\\int_0^2x^4\\,dx=32\\pi/5$."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "Find the volume when the region bounded by $y=x^2$, $x=2$, and $y=0$ rotates about the $y$-axis.",
+    "choices_tex": [
+      "$16\\pi/3$",
+      "$4\\pi$",
+      "$32\\pi/5$",
+      "$8\\pi$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Shells give $V=2\\pi\\int_0^2x^3\\,dx=8\\pi$."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "Find the volume when the first-quadrant region bounded by $y=x^2$, the $y$-axis, and $y=4$ rotates about the $y$-axis.",
+    "choices_tex": [
+      "$8\\pi$",
+      "$4\\pi$",
+      "$32\\pi/3$",
+      "$16\\pi/3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Disks have radius $\\sqrt y$, so $V=\\pi\\int_0^4y\\,dy=8\\pi$."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "Find the volume when the region between $y=x^2$ and $y=4$ rotates about the $x$-axis.",
+    "choices_tex": [
+      "$64\\pi/5$",
+      "$512\\pi/15$",
+      "$256\\pi/5$",
+      "$128\\pi/5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Washers give $V=\\pi\\int_{-2}^2(16-x^4)\\,dx=256\\pi/5$."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "Find the volume when the region between $y=x^2$ and $y=4$ rotates about $y=4$.",
+    "choices_tex": [
+      "$256\\pi/15$",
+      "$256\\pi/5$",
+      "$512\\pi/5$",
+      "$512\\pi/15$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Disks give $V=\\pi\\int_{-2}^2(4-x^2)^2\\,dx=512\\pi/15$."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "Find the volume when one arch of $y=\\sin x$ and the $x$-axis rotates about the $x$-axis.",
+    "choices_tex": [
+      "$\\tfrac\\pi2(\\pi-\\tfrac12)$",
+      "$\\pi^2/2$",
+      "$\\pi^2/4$",
+      "$\\pi^2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "One arch spans $[0,\\pi]$, so $V=\\pi\\int_0^\\pi\\sin^2x\\,dx=\\pi^2/2$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "Find the volume when the trapezoid with vertices $(2,0),(2,2),(4,0),(4,4)$ rotates about the $x$-axis.",
+    "choices_tex": [
+      "$56\\pi/3$",
+      "$128\\pi/3$",
+      "$92\\pi/3$",
+      "$112\\pi/3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The top edge is $y=x$, giving $V=\\pi\\int_2^4x^2\\,dx=56\\pi/3$."
+  },
+  {
+    "id": "A23",
+    "stem_tex": "A solid has a circular base of radius $a$, centered at the origin. Cross sections perpendicular to the $x$-axis are squares. Find its volume.",
+    "choices_tex": [
+      "$8a^3/3$",
+      "$2\\pi a^3$",
+      "$4\\pi a^3$",
+      "$16a^3/3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The side length is $2\\sqrt{a^2-x^2}$, so $V=\\int_{-a}^a4(a^2-x^2)\\,dx=16a^3/3$."
+  },
+  {
+    "id": "A24",
+    "stem_tex": "A solid has base bounded by $x^2=8y$ and $y=4$. Cross sections perpendicular to the $y$-axis are equilateral triangles. Find its volume.",
+    "choices_tex": [
+      "$64\\sqrt3/3$",
+      "$64\\sqrt3$",
+      "$32\\sqrt3$",
+      "$32$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The side is $2\\sqrt{8y}$, and the triangle area is $8\\sqrt3y$. Thus $V=\\int_0^4 8\\sqrt3y\\,dy=64\\sqrt3$."
+  },
+  {
+    "id": "A25",
+    "stem_tex": "A solid has base bounded by $y=e^{-x}$, the coordinate axes, and $x=1$. Cross sections perpendicular to the $x$-axis are squares. Find its volume.",
+    "choices_tex": [
+      "$e^2-1$",
+      "$1-e^{-2}$",
+      "$(e^2-1)/2$",
+      "$\\tfrac12(1-e^{-2})$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Square area is $e^{-2x}$, hence $V=\\int_0^1e^{-2x}\\,dx=(1-e^{-2})/2$."
+  },
+  {
+    "id": "A26",
+    "stem_tex": "Find the length of the curve $y^2=x^3$ cut off by $x=4$.",
+    "choices_tex": [
+      "$\\tfrac43(10\\sqrt{10}-1)$",
+      "$\\tfrac8{27}(10^{3/2}-1)$",
+      "$\\tfrac{16}{27}(10^{3/2}-1)$",
+      "$\\tfrac{16}{27}10\\sqrt{10}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Both branches are included: $L=2\\int_0^4\\sqrt{1+9x/4}\\,dx=\\frac{16}{27}(10^{3/2}-1)$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a26.png",
+      "alt": "Source graph for A26"
+    }
+  },
+  {
+    "id": "A27",
+    "stem_tex": "The length of $y=\\ln(\\cos x)$ from $x=\\pi/4$ to $x=\\pi/3$ equals",
+    "choices_tex": [
+      "$\\int_{\\pi/4}^{\\pi/3}\\sqrt{1+\\tan^2x}\\,dx$",
+      "$\\int_{\\pi/4}^{\\pi/3}\\sqrt{1+(\\ln(\\cos x))^2}\\,dx$",
+      "$\\int_{\\pi/4}^{\\pi/3}\\sqrt{1+1/\\cos^2x}\\,dx$",
+      "$\\int_{\\pi/4}^{\\pi/3}\\sqrt{1+\\cot^2x}\\,dx$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Differentiate to get $y'=-\\tan x$. Substitution into $L=\\int\\sqrt{1+(y')^2}\\,dx$ gives A."
+  },
+  {
+    "id": "A28",
+    "stem_tex": "$\\int_0^\\infty e^{-x}\\,dx=$",
+    "choices_tex": [
+      "$1$",
+      "$1/e$",
+      "$-1$",
+      "divergent"
+    ],
+    "correct": "A",
+    "explanation_tex": "$\\lim_{b\\to\\infty}[-e^{-x}]_0^b=1$."
+  },
+  {
+    "id": "A29",
+    "stem_tex": "$\\int_0^e du/u=$",
+    "choices_tex": [
+      "$1$",
+      "$1/e$",
+      "$-1/e^2$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "$\\lim_{a\\to0^+}(1-\\ln a)=+\\infty$; the logarithmic singularity diverges."
+  },
+  {
+    "id": "A30",
+    "stem_tex": "$\\int_1^2(t-1)^{-1/3}\\,dt=$",
+    "choices_tex": [
+      "$2/3$",
+      "$3/2$",
+      "$3$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "The endpoint singularity is integrable: $[\\tfrac32(t-1)^{2/3}]_1^2=3/2$ interpreted as a one-sided limit."
+  },
+  {
+    "id": "A31",
+    "stem_tex": "$\\int_2^4(x-3)^{-2/3}\\,dx=$",
+    "choices_tex": [
+      "$6$",
+      "$0$",
+      "$2/3$",
+      "divergent"
+    ],
+    "correct": "A",
+    "explanation_tex": "Split at $3$. Each side contributes $\\int_0^1u^{-2/3}\\,du=3$, so the sum is $6$."
+  },
+  {
+    "id": "A32",
+    "stem_tex": "$\\int_2^4(x-3)^{-2}\\,dx=$",
+    "choices_tex": [
+      "$2$",
+      "$-2$",
+      "$0$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "At the interior singularity $x=3$, each one-sided integral diverges since the power $2$ exceeds $1$."
+  },
+  {
+    "id": "A33",
+    "stem_tex": "$\\int_0^{\\pi/2}\\frac{\\sin x}{\\sqrt{1-\\cos x}}\\,dx=$",
+    "choices_tex": [
+      "$-2$",
+      "$1/2$",
+      "$2$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Let $u=1-\\cos x$. Then the integral is $\\int_0^1u^{-1/2}\\,du=2$."
+  },
+  {
+    "id": "A34",
+    "stem_tex": "Find the first-quadrant area under $y=e^{-x}$.",
+    "choices_tex": [
+      "$1$",
+      "$e$",
+      "$1/e$",
+      "divergent"
+    ],
+    "correct": "A",
+    "explanation_tex": "$A=\\int_0^\\infty e^{-x}\\,dx=[-e^{-x}]_0^\\infty=1$."
+  },
+  {
+    "id": "A35",
+    "stem_tex": "Find the first-quadrant area under $y=xe^{-x^2}$.",
+    "choices_tex": [
+      "$2$",
+      "$2/e$",
+      "$1/2$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Substitute $u=x^2$, $du=2x\\,dx$: $A=\\tfrac12\\int_0^\\infty e^{-u}\\,du=1/2$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a35.png",
+      "alt": "Source graph for A35"
+    }
+  },
+  {
+    "id": "A36",
+    "stem_tex": "Find the first-quadrant area above $y=1$, between the $y$-axis and $y=1/x$.",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$1/2$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "Horizontal strips give $A=\\int_1^\\infty dy/y$, which diverges logarithmically."
+  },
+  {
+    "id": "A37",
+    "stem_tex": "Find the area between $y=4/(1+x^2)$ and the $x$-axis.",
+    "choices_tex": [
+      "$2\\pi$",
+      "$4\\pi$",
+      "$8\\pi$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "$A=4[\\arctan x]_{-\\infty}^{\\infty}=4\\pi$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a37.png",
+      "alt": "Source graph for A37"
+    }
+  },
+  {
+    "id": "A38",
+    "stem_tex": "Find the area above the $x$-axis, between $y=4/\\sqrt{1-x^2}$ and its asymptotes.",
+    "choices_tex": [
+      "$\\pi$",
+      "$2\\pi$",
+      "$4\\pi$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "The asymptotes are $x=\\pm1$. The convergent improper integral gives $A=4[\\arcsin x]_{-1}^{1}=4\\pi$.",
+    "figure": {
+      "src": "data/calculus-figures/c7-a38.png",
+      "alt": "Source graph for A38"
+    }
+  },
+  {
+    "id": "A39",
+    "stem_tex": "Find the volume generated by rotating the region under $y=1/x$, to the right of $x=1$, and above $y=0$ about the $x$-axis.",
+    "choices_tex": [
+      "$\\pi/2$",
+      "$\\pi$",
+      "$2\\pi$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "Disks give $V=\\pi\\int_1^\\infty x^{-2}\\,dx=\\pi$."
+  },
+  {
+    "id": "A40",
+    "stem_tex": "Find the volume generated by rotating the first-quadrant region under $y=e^{-x}$ about the $x$-axis.",
+    "choices_tex": [
+      "$\\pi/2$",
+      "$\\pi$",
+      "$2\\pi$",
+      "divergent"
+    ],
+    "correct": "A",
+    "explanation_tex": "$V=\\pi\\int_0^\\infty e^{-2x}\\,dx=\\pi/2$."
+  },
+  {
+    "id": "B1",
+    "stem_tex": "The area between $y=2-x^2$ and $y=x-4$ is given by",
+    "choices_tex": [
+      "$\\int_{-2}^3(6-x-x^2)\\,dx$",
+      "$\\int_{-2}^1(2+x+x^2)\\,dx$",
+      "$\\int_{-3}^2(6-x-x^2)\\,dx$",
+      "$2\\int_0^{\\sqrt2}(2-x^2)\\,dx+\\int_{-3}^2(4-x)\\,dx$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Intersections solve $x^2+x-6=0$, giving $-3,2$. Upper minus lower is $6-x-x^2$, giving C."
+  },
+  {
+    "id": "B2",
+    "stem_tex": "For continuous $f$ on $[1,8]$, the table is $\\begin{array}{c|ccccc}x&1&2&5&6&8\\\\\\hline f(x)&1.62&4.15&7.5&9.0&12.13\\end{array}$. Use four trapezoids to approximate the area under the curve from $1$ to $8$, to two decimal places.",
+    "choices_tex": [
+      "$24.87$",
+      "$39.57$",
+      "$49.74$",
+      "$59.91$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use each actual width: $A\\approx(1.62+4.15)/2+3(4.15+7.5)/2+(7.5+9)/2+2(9+12.13)/2=49.74$."
+  },
+  {
+    "id": "B3",
+    "stem_tex": "Find the area enclosed by the four-leaved rose $r=\\cos2\\theta$, to three decimal places.",
+    "choices_tex": [
+      "$0.785$",
+      "$1.571$",
+      "$3.142$",
+      "$6.283$"
+    ],
+    "correct": "B",
+    "explanation_tex": "One petal has area $\\tfrac12\\int_{-\\pi/4}^{\\pi/4}\\cos^2(2\\theta)\\,d\\theta=\\pi/8$. Four petals give $\\pi/2\\approx1.571$."
+  },
+  {
+    "id": "B4",
+    "stem_tex": "The area of the small loop of $r=1-2\\sin\\theta$ is given by",
+    "choices_tex": [
+      "$\\int_{\\pi/3}^{5\\pi/3}[\\tfrac12(1-2\\sin\\theta)]^2\\,d\\theta$",
+      "$\\int_{7\\pi/6}^{3\\pi/2}(1-2\\sin\\theta)^2\\,d\\theta$",
+      "$\\int_{\\pi/6}^{\\pi/2}(1-2\\sin\\theta)^2\\,d\\theta$",
+      "$\\int_0^{\\pi/6}[\\tfrac12(1-2\\sin\\theta)]^2\\,d\\theta+\\int_{5\\pi/6}^{\\pi}[\\tfrac12(1-2\\sin\\theta)]^2\\,d\\theta$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The loop lies between zeros $\\pi/6,5\\pi/6$. Symmetry around $\\pi/2$ cancels the polar factor $1/2$, giving $A=\\int_{\\pi/6}^{\\pi/2}(1-2\\sin\\theta)^2\\,d\\theta$."
+  },
+  {
+    "id": "B5",
+    "stem_tex": "Find the volume generated by rotating the region between $y=x^2$ and $y=4$ about $y=-1$.",
+    "choices_tex": [
+      "$4\\pi\\int_{-1}^4(y+1)\\sqrt y\\,dy$",
+      "$2\\pi\\int_0^2(4-x^2)^2\\,dx$",
+      "$\\pi\\int_{-2}^2(16-x^4)\\,dx$",
+      "$2\\pi\\int_0^2(24-2x^2-x^4)\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Washer radii are $5$ and $x^2+1$. Their squared difference is $24-2x^2-x^4$, and symmetry gives D."
+  },
+  {
+    "id": "B6",
+    "stem_tex": "Find the volume generated by rotating the region between $y=3x-x^2$ and $y=0$ about the $x$-axis.",
+    "choices_tex": [
+      "$\\pi\\int_0^3(9x^2+x^4)\\,dx$",
+      "$\\pi\\int_0^3(3x-x^2)^2\\,dx$",
+      "$\\pi\\int_0^{\\sqrt3}(3x-x^2)\\,dx$",
+      "$2\\pi\\int_0^3y\\sqrt{9-4y}\\,dy$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The zeros are $0,3$ and disk radius is $3x-x^2$, so the disk method gives B. D uses an upper height exceeding the maximum $9/4$."
+  },
+  {
+    "id": "B7",
+    "stem_tex": "Find the volume generated by rotating the region between $y=3x-x^2$ and $y=x$ about the $x$-axis.",
+    "choices_tex": [
+      "$\\pi\\int_0^{3/2}[(3x-x^2)^2-x^2]\\,dx$",
+      "$\\pi\\int_0^2(9x^2-6x^3)\\,dx$",
+      "$\\pi\\int_0^2[(3x-x^2)^2-x^2]\\,dx$",
+      "$\\pi\\int_0^3(2x-x^2)^2\\,dx$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The intersections are $0,2$. Outer and inner washer radii are $3x-x^2$ and $x$, giving C."
+  },
+  {
+    "id": "B8",
+    "stem_tex": "Find the volume generated by rotating the region bounded by $y=\\ln x$, $y=0$, and $x=e$ about $x=e$.",
+    "choices_tex": [
+      "$\\pi\\int_1^e(e-x)\\ln x\\,dx$",
+      "$\\pi\\int_0^1(e-e^y)^2\\,dy$",
+      "$2\\pi\\int_1^e(e-\\ln x)\\,dx$",
+      "$\\pi\\int_0^e(e^2-2e^{y+1}+e^{2y})\\,dy$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At height $0\\le y\\le1$, the disk radius is $e-e^y$. Integrate its squared radius times $\\pi$ to get B."
+  },
+  {
+    "id": "B9",
+    "stem_tex": "A sphere of radius $r$ is cut by a plane at distance $h$ from the center, where $0<h<r$. Find the smaller part's volume.",
+    "choices_tex": [
+      "$\\tfrac\\pi3(2r^3+h^3-3r^2h)$",
+      "$\\tfrac{\\pi h}3(3r^2-h^2)$",
+      "$\\tfrac43\\pi r^3+\\tfrac{h^3}3-r^2h$",
+      "$\\tfrac\\pi3(2r^3+3r^2h-h^3)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Disks perpendicular to the center-to-plane direction give $V=\\pi\\int_h^r(r^2-x^2)\\,dx=\\frac\\pi3(2r^3+h^3-3r^2h)$."
+  },
+  {
+    "id": "B10",
+    "stem_tex": "If $f$ and $g$ intersect at $a,b$ and $f(x)>g(x)>0$ on $(a,b)$, find the volume generated by rotating their enclosed region about the $x$-axis.",
+    "choices_tex": [
+      "$\\pi\\int_a^bf(x)^2\\,dx-\\int_a^bg(x)^2\\,dx$",
+      "$\\pi\\int_a^b[f(x)-g(x)]^2\\,dx$",
+      "$2\\pi\\int_a^bx[f(x)-g(x)]\\,dx$",
+      "$\\pi\\int_a^b[f(x)^2-g(x)^2]\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Each washer has area $\\pi[f(x)^2-g(x)^2]$. Integrating this area gives D."
+  },
+  {
+    "id": "B11",
+    "stem_tex": "The length of one arch of $x=t-\\sin t$, $y=1-\\cos t$ equals",
+    "choices_tex": [
+      "$\\int_0^\\pi\\sqrt{1-\\cos t}\\,dt$",
+      "$\\int_0^{2\\pi}\\sqrt{(1-\\cos t)/2}\\,dt$",
+      "$\\int_0^\\pi\\sqrt{2-2\\cos t}\\,dt$",
+      "$\\int_0^{2\\pi}\\sqrt{2-2\\cos t}\\,dt$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The speed is $\\sqrt{(1-\\cos t)^2+\\sin^2t}=\\sqrt{2-2\\cos t}$, and one arch spans $0\\le t\\le2\\pi$."
+  },
+  {
+    "id": "B12",
+    "stem_tex": "The length of $4x=y^2$ cut off by $x=2$ is given by",
+    "choices_tex": [
+      "$\\int_{-1}^1\\sqrt{x^2+1}\\,dx$",
+      "$\\tfrac12\\int_0^2\\sqrt{4+y^2}\\,dy$",
+      "$\\int_{-1}^1\\sqrt{1+x}\\,dx$",
+      "$\\int_0^{2\\sqrt2}\\sqrt{4+y^2}\\,dy$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $dx/dy=y/2$, symmetry gives $L=2\\int_0^{2\\sqrt2}\\sqrt{1+y^2/4}\\,dy=\\int_0^{2\\sqrt2}\\sqrt{4+y^2}\\,dy$."
+  },
+  {
+    "id": "B13",
+    "stem_tex": "Find the length of $x=e^t\\cos t$, $y=e^t\\sin t$ for $2\\le t\\le3$.",
+    "choices_tex": [
+      "$17.956$",
+      "$25.393$",
+      "$26.413$",
+      "$37.354$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The speed is $\\sqrt2e^t$, so $L=\\sqrt2(e^3-e^2)\\approx17.956$."
+  },
+  {
+    "id": "B14",
+    "stem_tex": "Which integral is improper?",
+    "choices_tex": [
+      "$\\int_0^2\\frac{dx}{\\sqrt{x+1}}$",
+      "$\\int_{-1}^1\\frac{dx}{1+x^2}$",
+      "$\\int_0^2\\frac{x\\,dx}{1-x^2}$",
+      "$\\int_0^{\\pi/3}\\frac{\\sin x\\,dx}{\\cos^2x}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Only C has an integrand singularity within its interval: $1-x^2=0$ at $x=1$."
+  },
+  {
+    "id": "B15",
+    "stem_tex": "Which improper integral diverges?",
+    "choices_tex": [
+      "$\\int_1^\\infty x^{-2}\\,dx$",
+      "$\\int_0^\\infty e^{-x}\\,dx$",
+      "$\\int_{-1}^1\\frac{dx}{\\sqrt[3]x}$",
+      "$\\int_{-1}^1x^{-2}\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "D diverges on each side of zero by the local $p$-test with $p=2$. A and B converge to $1$; C has integrable exponent $1/3<1$ on both sides and totals $0$."
+  },
+  {
+    "id": "B16",
+    "stem_tex": "Which improper integral diverges?",
+    "choices_tex": [
+      "$\\int_0^\\infty\\frac{dx}{1+x^2}$",
+      "$\\int_0^1x^{-1/3}\\,dx$",
+      "$\\int_0^\\infty\\frac{dx}{e^x+2}$",
+      "$\\int_0^\\infty x^{-1/3}\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "D diverges at infinity because $p=1/3\\le1$. A is an arctangent integral, B has integrable endpoint power, and C is bounded above by $e^{-x}$, so all three converge."
+  }
+]

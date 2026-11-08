@@ -1,0 +1,1408 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "Which function is continuous at $x=0$?",
+    "choices_tex": [
+      "$f(x)=\\begin{cases}\\sin(1/x)&x\\ne0\\\\0&x=0\\end{cases}$",
+      "$f(x)=\\begin{cases}x/x&x\\ne0\\\\0&x=0\\end{cases}$",
+      "$f(x)=\\begin{cases}x\\sin(1/x)&x\\ne0\\\\0&x=0\\end{cases}$",
+      "$f(x)=(x+1)/x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $|x\\sin(1/x)|\\le|x|$, the squeeze theorem gives limit $0=f(0)$ in C. A oscillates, B has limit 1 but value 0, and D is undefined at 0."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "Which statement about $y=(x^2+1)/(x^2-1)$ is not true?",
+    "choices_tex": [
+      "The graph is symmetric about the $y$-axis.",
+      "There is no $y$-intercept.",
+      "The graph has one horizontal asymptote.",
+      "There is no $x$-intercept."
+    ],
+    "correct": "B",
+    "explanation_tex": "At $x=0$, $y=-1$, so there is a $y$-intercept. The function is even, has horizontal asymptote $y=1$, and its numerator never vanishes over the reals."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "Evaluate $\\lim_{x\\to1^-}(\\lfloor x\\rfloor-|x|)$, where $\\lfloor x\\rfloor$ is the greatest integer function.",
+    "choices_tex": [
+      "$-1$",
+      "$0$",
+      "$1$",
+      "$2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $0<x<1$, $\\lfloor x\\rfloor=0$ and $|x|=x$, so the expression tends to $-1$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "The $x$-coordinate on $y=x^2-2x+3$ where the tangent is perpendicular to $x+3y+3=0$ is",
+    "choices_tex": [
+      "$-5/2$",
+      "$-1/2$",
+      "$7/6$",
+      "$5/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The given line has slope $-1/3$, so the tangent slope must be 3. Solve $2x-2=3$ to get $x=5/2$."
+  },
+  {
+    "id": "A5",
+    "stem_tex": "$\\lim_{x\\to1}\\dfrac{3/x-3}{x-1}=$",
+    "choices_tex": [
+      "$-3$",
+      "$-1$",
+      "$1$",
+      "$3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $x\\ne1$, $(3/x-3)/(x-1)=-3/x$, whose limit is $-3$."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "For a polynomial $p$, $p^{\\prime\\prime}(2)=-4$, $p^{\\prime\\prime}(4)=0$, and $p^{\\prime\\prime}(5)=2$. Which must be true?",
+    "choices_tex": [
+      "$p$ has an inflection point at $x=4$.",
+      "$p$ has a minimum at $x=4$.",
+      "$p$ has a root at $x=4$.",
+      "None of A–C must be true."
+    ],
+    "correct": "D",
+    "explanation_tex": "A zero of $p^{\\prime\\prime}$ need not change sign. For example $p^{\\prime\\prime}(x)=(x-4)^2(x-3)$ satisfies all three values but has no sign change at 4. Integration constants can change $p(4)$ and $p^{\\prime}(4)$, so neither a root nor minimum is forced."
+  },
+  {
+    "id": "A7",
+    "stem_tex": "$\\int_0^6|x-4|\\,dx=$",
+    "choices_tex": [
+      "$6$",
+      "$8$",
+      "$10$",
+      "$12$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Split at 4: the two triangular areas are $\\frac12(4)(4)=8$ and $\\frac12(2)(2)=2$, totaling 10."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "$\\lim_{x\\to\\infty}\\dfrac{3+x-2x^2}{4x^2+9}=$",
+    "choices_tex": [
+      "$-1/2$",
+      "$1/2$",
+      "$1$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "Dividing by $x^2$ gives limit $(-2)/4=-1/2$."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "The maximum of $f(x)=x^4-4x^3+6$ on $[1,4]$ is",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$3$",
+      "$6$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$f^{\\prime}(x)=4x^2(x-3)$ has the interior critical point 3. Compare $f(1)=3$, $f(3)=-21$, and $f(4)=6$; the maximum is 6."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "Let $f(x)=\\begin{cases}(\\sqrt{x+4}-3)/(x-5)&x\\ne5\\\\c&x=5\\end{cases}$. If $f$ is continuous at 5, find $c$.",
+    "choices_tex": [
+      "$0$",
+      "$1/6$",
+      "$1$",
+      "$6$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Rationalizing gives $f(x)=1/(\\sqrt{x+4}+3)$ for $x\\ne5$. Continuity requires $c=1/6$."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "$\\int_0^{\\pi/2}\\cos^2x\\sin x\\,dx=$",
+    "choices_tex": [
+      "$-1$",
+      "$-1/3$",
+      "$1/3$",
+      "$1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "An antiderivative is $-\\cos^3x/3$. Its endpoint difference is $0-(-1/3)=1/3$."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "If $\\sin x=\\ln y$ and $0<x<\\pi$, express $dy/dx$ in terms of $x$.",
+    "choices_tex": [
+      "$e^{\\sin x}\\cos x$",
+      "$e^{-\\sin x}\\cos x$",
+      "$e^{\\sin x}/\\cos x$",
+      "$e^{\\cos x}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$y=e^{\\sin x}$, so the chain rule gives $y^{\\prime}=e^{\\sin x}\\cos x$."
+  },
+  {
+    "id": "A13",
+    "stem_tex": "If $f(x)=x\\cos x$, find $f^{\\prime}(\\pi/2)$.",
+    "choices_tex": [
+      "$\\pi/2$",
+      "$0$",
+      "$-1$",
+      "$-\\pi/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$f^{\\prime}(x)=\\cos x-x\\sin x$, so $f^{\\prime}(\\pi/2)=-\\pi/2$."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "An equation of the tangent to $y=e^x\\ln x$ at $x=1$ is",
+    "choices_tex": [
+      "$y=ex$",
+      "$y=e(x-1)$",
+      "$y=ex+1$",
+      "$y=x-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The point is $(1,0)$ and $y^{\\prime}=e^x\\ln x+e^x/x$ has value $e$ there. Thus $y=e(x-1)$."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "A particle on the $x$-axis has displacement $s=3+(t-2)^4$. How many times does it reverse direction?",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$v=4(t-2)^3$ changes sign from negative to positive exactly once, at $t=2$."
+  },
+  {
+    "id": "A16",
+    "stem_tex": "$\\int_{-1}^0 e^{-x}\\,dx=$",
+    "choices_tex": [
+      "$1-e$",
+      "$e-1$",
+      "$1-1/e$",
+      "$e+1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$[-e^{-x}]_{-1}^0=-1+e=e-1$."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "If $f(x)=\\begin{cases}x^2&x\\le2\\\\4x-x^2&x>2\\end{cases}$, find $\\int_{-1}^4f(x)\\,dx$.",
+    "choices_tex": [
+      "$7$",
+      "$23/3$",
+      "$25/3$",
+      "$9$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Splitting at 2 gives $[x^3/3]_{-1}^2+[2x^2-x^3/3]_2^4=3+16/3=25/3$."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "A particle has position $s=t^3+3t$. Its speed is decreasing when",
+    "choices_tex": [
+      "$-1<t<1$",
+      "$-1<t<0$",
+      "$t<0$",
+      "$t>0$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$v=3t^2+3>0$, so speed equals velocity and its derivative is $a=6t$. This is negative exactly when $t<0$."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "A rectangle with one side on the $x$-axis is inscribed in the triangle formed by $y=x$, $y=0$, and $2x+y=12$. Find its largest area.",
+    "choices_tex": [
+      "$6$",
+      "$3$",
+      "$5/2$",
+      "$5$"
+    ],
+    "correct": "A",
+    "explanation_tex": "At height $h$, its horizontal endpoints are $x=h$ and $x=6-h/2$. Thus $A(h)=h(6-3h/2)$ on $[0,4]$. The concave quadratic peaks at $h=2$, yielding area 6."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "Find the $x$-coordinate of the first-quadrant point on $x^2-y^2=1$ closest to $(3,0)$.",
+    "choices_tex": [
+      "$1$",
+      "$3/2$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The squared distance is $(x-3)^2+y^2=(x-3)^2+x^2-1=2x^2-6x+8$ for $x>1$. Its unique minimum occurs at $4x-6=0$, or $x=3/2$."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "If $y=\\ln(4x+1)$, then $d^2y/dx^2=$",
+    "choices_tex": [
+      "$-1/(4x+1)^2$",
+      "$-4/(4x+1)^2$",
+      "$-16/(4x+1)^2$",
+      "$-1/[16(4x+1)^2]$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$y^{\\prime}=4/(4x+1)$ and differentiating once more gives $y^{\\prime\\prime}=-16/(4x+1)^2$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "The region between $y=x^2$ and $y=6x-x^2$ is revolved about the $x$-axis. For what $x$ does a vertical slice generate a ring of largest area?",
+    "choices_tex": [
+      "$3$",
+      "$5/2$",
+      "$2$",
+      "$3/2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The curves intersect at 0 and 3. The washer area is $A=\\pi[(6x-x^2)^2-x^4]=12\\pi x^2(3-x)$. Thus $A^{\\prime}=36\\pi x(2-x)$, positive before 2 and negative after 2; the maximum is at 2."
+  },
+  {
+    "id": "A23",
+    "stem_tex": "$\\int\\dfrac{dx}{x\\ln x}=$",
+    "choices_tex": [
+      "$\\ln|\\ln x|+C$",
+      "$-1/\\ln^2x+C$",
+      "$(\\ln x)^2/2+C$",
+      "$\\ln x+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "With $u=\\ln x$, $du=dx/x$, so the integral is $\\int du/u=\\ln|u|+C=\\ln|\\ln x|+C$."
+  },
+  {
+    "id": "A24",
+    "stem_tex": "Find the volume obtained by rotating the region between $x=y^2$ and $x=2-y^2$ about the $y$-axis.",
+    "choices_tex": [
+      "$16\\pi/3$",
+      "$32\\pi/3$",
+      "$32\\pi/15$",
+      "$64\\pi/15$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The intersections have $y=\\pm1$. Washers give $V=\\pi\\int_{-1}^1[(2-y^2)^2-y^4]dy=4\\pi\\int_{-1}^1(1-y^2)dy=16\\pi/3$."
+  },
+  {
+    "id": "A25",
+    "stem_tex": "The general solution of $dy/dx=(1-2x)/y$ is a family of",
+    "choices_tex": [
+      "circles",
+      "hyperbolas",
+      "parabolas",
+      "ellipses"
+    ],
+    "correct": "D",
+    "explanation_tex": "Separate and integrate: $y^2/2=x-x^2+C$. Completing the square gives $2(x-1/2)^2+y^2=C_1$, an ellipse wherever a real nondegenerate solution exists."
+  },
+  {
+    "id": "A26",
+    "stem_tex": "Estimate $\\int_0^4\\sqrt{25-x^2}\\,dx$ using a left rectangular sum with two equal subintervals.",
+    "choices_tex": [
+      "$5+\\sqrt{21}$",
+      "$6+2\\sqrt{21}$",
+      "$8+2\\sqrt{21}$",
+      "$10+2\\sqrt{21}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The width is 2 and the left endpoints are 0 and 2. Thus $L_2=2(5+\\sqrt{21})$."
+  },
+  {
+    "id": "A27",
+    "stem_tex": "$\\int_0^7\\sin(\\pi x)\\,dx=$",
+    "choices_tex": [
+      "$-2/\\pi$",
+      "$0$",
+      "$1/\\pi$",
+      "$2/\\pi$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$[-\\cos(\\pi x)/\\pi]_0^7=(1+1)/\\pi=2/\\pi$."
+  },
+  {
+    "id": "A28",
+    "stem_tex": "$\\lim_{x\\to0}\\dfrac{\\tan3x}{2x}=$",
+    "choices_tex": [
+      "$0$",
+      "$2/3$",
+      "$3/2$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Write the quotient as $\\frac32\\frac{\\tan3x}{3x}$ and use $\\lim_{u\\to0}\\tan u/u=1$."
+  },
+  {
+    "id": "A29",
+    "stem_tex": "$\\lim_{h\\to0}\\dfrac{\\tan(\\pi/4+h)-1}{h}=$",
+    "choices_tex": [
+      "$0$",
+      "$1/2$",
+      "$1$",
+      "$2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "This is the derivative of $\\tan x$ at $\\pi/4$, namely $\\sec^2(\\pi/4)=2$."
+  },
+  {
+    "id": "A30",
+    "stem_tex": "How many values of $k$ give $f(x)=e^x$ and $g(x)=k\\sin x$ a common point of tangency?",
+    "choices_tex": [
+      "0",
+      "1",
+      "large but finite",
+      "infinite"
+    ],
+    "correct": "D",
+    "explanation_tex": "Equal values and slopes require $e^x=k\\sin x=k\\cos x$. Hence $x=\\pi/4+n\\pi$ and $k=e^x/\\sin x=(-1)^n\\sqrt2e^{\\pi/4+n\\pi}$. These give infinitely many distinct values of $k$."
+  },
+  {
+    "id": "A31",
+    "stem_tex": "The curve $2x^2y+y^2=2x+13$ passes through $(3,1)$. Use its tangent line there to approximate $y$ at $x=2.8$.",
+    "choices_tex": [
+      "$0.5$",
+      "$0.9$",
+      "$0.95$",
+      "$1.1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Implicit differentiation gives $(2x^2+2y)y^{\\prime}=2-4xy$. At $(3,1)$ the slope is $-10/20=-1/2$, so $y\\approx1-\\frac12(2.8-3)=1.1$."
+  },
+  {
+    "id": "A32",
+    "stem_tex": "$\\int\\cos^3x\\,dx=$",
+    "choices_tex": [
+      "$\\cos^4x/4+C$",
+      "$\\sin x-\\sin^3x/3+C$",
+      "$\\sin x+\\sin^3x/3+C$",
+      "$\\cos x-\\cos^3x/3+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write $\\cos^3x=(1-\\sin^2x)\\cos x$. With $u=\\sin x$, integrate $1-u^2$ to obtain $u-u^3/3+C$."
+  },
+  {
+    "id": "A33",
+    "stem_tex": "The region bounded by $y=\\tan x$, $y=0$, and $x=\\pi/4$ is rotated about the $x$-axis. Find its volume.",
+    "choices_tex": [
+      "$\\pi-\\pi^2/4$",
+      "$\\pi(\\sqrt2-1)$",
+      "$3\\pi/4$",
+      "$\\pi(1+\\pi/4)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$V=\\pi\\int_0^{\\pi/4}\\tan^2x\\,dx=\\pi[\\tan x-x]_0^{\\pi/4}=\\pi-\\pi^2/4$."
+  },
+  {
+    "id": "A34",
+    "stem_tex": "For $a>0$, $\\lim_{h\\to0}(a^h-1)/h=$",
+    "choices_tex": [
+      "$1$",
+      "$a$",
+      "$\\ln a$",
+      "$a\\ln a$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The limit is the derivative of $a^x$ at $x=0$: $a^0\\ln a=\\ln a$."
+  },
+  {
+    "id": "A35",
+    "stem_tex": "Solutions of the differential equation whose slope field is shown are most likely to be",
+    "choices_tex": [
+      "quadratic",
+      "cubic",
+      "exponential",
+      "logarithmic"
+    ],
+    "correct": "D",
+    "explanation_tex": "The slopes depend only on $x$, are negative to the left and positive to the right of zero, and decrease in magnitude away from zero. This matches $y^{\\prime}=1/x$, whose solutions are $\\ln|x|+C$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-a35.png",
+      "alt": "Slope field with reciprocal-x slopes."
+    }
+  },
+  {
+    "id": "A36",
+    "stem_tex": "$\\lim_{h\\to0}\\dfrac1h\\int_{\\pi/4}^{\\pi/4+h}\\dfrac{\\sin x}{x}\\,dx=$",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$\\sqrt2/2$",
+      "$2\\sqrt2/\\pi$"
+    ],
+    "correct": "D",
+    "explanation_tex": "By the Fundamental Theorem of Calculus, this derivative equals the integrand at $\\pi/4$: $(\\sqrt2/2)/(\\pi/4)=2\\sqrt2/\\pi$."
+  },
+  {
+    "id": "A37",
+    "stem_tex": "The graph of $g$ consists of two quarter-circle arcs and two line segments. Find $\\int_0^{12}g(x)\\,dx$.",
+    "choices_tex": [
+      "$\\pi+2$",
+      "$7\\pi/4+9/2$",
+      "$7\\pi/4+8$",
+      "$25\\pi/4+21/2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The signed areas are a positive quarter-disk $4\\pi$, a negative triangle $-3$, a negative quarter-disk $-9\\pi/4$, and a positive triangle $15/2$. Their sum is $7\\pi/4+9/2$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-a37.png",
+      "alt": "Graph of g with quarter-circle arcs and line segments."
+    }
+  },
+  {
+    "id": "A38",
+    "stem_tex": "Which could be a particular solution of the differential equation whose slope field is shown?",
+    "choices_tex": [
+      "$y=1/x$",
+      "$y=\\ln x$",
+      "$y=e^x$",
+      "$y=e^{-x}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The field has positive slopes for $y>0$, negative slopes for $y<0$, and horizontal slopes at $y=0$, consistent with $y^{\\prime}=y$. The function $e^x$ satisfies this equation.",
+    "figure": {
+      "src": "data/calculus-figures/c11-a38.png",
+      "alt": "Slope field with slopes depending on y and matching y prime equals y."
+    }
+  },
+  {
+    "id": "A39",
+    "stem_tex": "What is the domain of the particular solution $y=f(x)$ of $dy/dx=6x/(x^2-4)$ containing $(-1,\\ln3)$?",
+    "choices_tex": [
+      "$x<0$",
+      "$x>-2$",
+      "$-2<x<2$",
+      "$x\\ne\\pm2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrating yields $y=3\\ln|x^2-4|+C$. The differential equation is undefined at $\\pm2$, so its maximal interval containing $-1$ is $(-2,2)$."
+  },
+  {
+    "id": "A40",
+    "stem_tex": "The slope field shown is for which differential equation?",
+    "choices_tex": [
+      "$y^{\\prime}=1/x$",
+      "$y^{\\prime}=\\ln x$",
+      "$y^{\\prime}=e^x$",
+      "$y^{\\prime}=y^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The slope is constant along each vertical line, positive for positive $x$, very steep near zero, and decreases as $x$ grows. These are exactly the features of $1/x$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-a40.png",
+      "alt": "Positive reciprocal-x slope field."
+    }
+  },
+  {
+    "id": "A41",
+    "stem_tex": "With $x=\\tan\\theta$, which is equivalent to $\\int_0^1\\sqrt{1+x^2}\\,dx$?",
+    "choices_tex": [
+      "$\\int_0^1\\sec\\theta\\,d\\theta$",
+      "$\\int_0^{\\pi/4}\\sec\\theta\\,d\\theta$",
+      "$\\int_0^{\\pi/4}\\sec^3\\theta\\,d\\theta$",
+      "$\\int_0^{\\tan1}\\sec^3\\theta\\,d\\theta$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$dx=\\sec^2\\theta\\,d\\theta$ and $\\sqrt{1+\\tan^2\\theta}=\\sec\\theta$ on $[0,\\pi/4]$. The transformed limits are 0 and $\\arctan1=\\pi/4$."
+  },
+  {
+    "id": "A42",
+    "stem_tex": "If $x=2\\sin u$ and $y=\\cos2u$, a single equation in $x,y$ is",
+    "choices_tex": [
+      "$x^2+4y^2=4$",
+      "$x^2+2y=2$",
+      "$x^2+y^2=4$",
+      "$x^2-2y=2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$y=1-2\\sin^2u=1-x^2/2$, giving $x^2+2y=2$ (with the parametric restriction $|x|\\le2$)."
+  },
+  {
+    "id": "A43",
+    "stem_tex": "Find the total area enclosed by the lemniscate $r^2=2\\cos2\\theta$.",
+    "choices_tex": [
+      "$4$",
+      "$1$",
+      "$1/4$",
+      "$2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "One loop has area $\\frac12\\int_{-\\pi/4}^{\\pi/4}2\\cos2\\theta\\,d\\theta=1$. There are two congruent loops, so the total is 2."
+  },
+  {
+    "id": "A44",
+    "stem_tex": "$\\int_{-\\infty}^{\\infty}\\dfrac{dx}{x^2+1}=$",
+    "choices_tex": [
+      "$0$",
+      "$\\pi/2$",
+      "$\\pi$",
+      "$2\\pi$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The antiderivative is $\\arctan x$, whose limits at $\\pm\\infty$ are $\\pm\\pi/2$. The improper integral therefore equals $\\pi$."
+  },
+  {
+    "id": "A45",
+    "stem_tex": "The first four nonzero terms of the Maclaurin series for $f(x)=1/(1-2x)$ are",
+    "choices_tex": [
+      "$1+2x+4x^2+8x^3$",
+      "$1-2x+4x^2-8x^3$",
+      "$-1-2x-4x^2-8x^3$",
+      "$1-x+x^2-x^3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The geometric series is $\\sum_{n=0}^{\\infty}(2x)^n$, valid for $|x|<1/2$. Taking $n=0,1,2,3$ gives the stated terms."
+  },
+  {
+    "id": "A46",
+    "stem_tex": "$\\int x^2e^{-x}\\,dx=$",
+    "choices_tex": [
+      "$-x^3e^{-x}/3+C$",
+      "$-x^2e^{-x}+2xe^{-x}+C$",
+      "$-x^2e^{-x}-2xe^{-x}-2e^{-x}+C$",
+      "$-x^2e^{-x}+2xe^{-x}-2e^{-x}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Twice integrating by parts gives $-x^2e^{-x}+2\\int xe^{-x}dx=-x^2e^{-x}-2xe^{-x}-2e^{-x}+C$."
+  },
+  {
+    "id": "A47",
+    "stem_tex": "$\\int_0^{\\pi/2}\\sin^2x\\,dx=$",
+    "choices_tex": [
+      "$1/3$",
+      "$\\pi/4-1/4$",
+      "$\\pi/2$",
+      "$\\pi/4$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Use $\\sin^2x=(1-\\cos2x)/2$. The antiderivative $x/2-\\sin2x/4$ gives $\\pi/4$."
+  },
+  {
+    "id": "A48",
+    "stem_tex": "If $x=a\\cot\\theta$ and $y=a\\sin^2\\theta$, find $dy/dx$ at $\\theta=\\pi/4$.",
+    "choices_tex": [
+      "$1/2$",
+      "$-2$",
+      "$2$",
+      "$-1/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$dy/dx=(2a\\sin\\theta\\cos\\theta)/(-a\\csc^2\\theta)$. At $\\pi/4$ this is $a/(-2a)=-1/2$ (for the intended nonzero parameter $a$)."
+  },
+  {
+    "id": "A49",
+    "stem_tex": "Which improper integral diverges?",
+    "choices_tex": [
+      "$\\int_{-\\infty}^0e^x\\,dx$",
+      "$\\int_0^1dx/x$",
+      "$\\int_0^\\infty e^{-x}\\,dx$",
+      "$\\int_0^1dx/\\sqrt x$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$\\int_\\epsilon^1dx/x=-\\ln\\epsilon\\to\\infty$. The other three integrals converge to 1, 1, and 2, respectively."
+  },
+  {
+    "id": "A50",
+    "stem_tex": "$\\int_2^4\\dfrac{du}{\\sqrt{16-u^2}}=$",
+    "choices_tex": [
+      "$\\pi/12$",
+      "$\\pi/6$",
+      "$\\pi/3$",
+      "$2\\pi/3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The antiderivative is $\\arcsin(u/4)$. Taking the endpoint limit at 4 yields $\\pi/2-\\pi/6=\\pi/3$."
+  },
+  {
+    "id": "A51",
+    "stem_tex": "$\\lim_{x\\to0^+}(1/x)^x=$",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$\\infty$",
+      "nonexistent"
+    ],
+    "correct": "B",
+    "explanation_tex": "The logarithm is $-x\\ln x$, which tends to zero (for example by l’Hôpital on $\\ln x/(1/x)$). Exponentiating gives $e^0=1$."
+  },
+  {
+    "id": "A52",
+    "stem_tex": "A particle moves on $x=3y-y^2$ with $dy/dt=3$. Find its speed at $(2,1)$.",
+    "choices_tex": [
+      "$0$",
+      "$3$",
+      "$3\\sqrt2$",
+      "$\\sqrt{13}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$dx/dt=(3-2y)dy/dt=3$ at $y=1$. Thus speed is $\\sqrt{3^2+3^2}=3\\sqrt2$."
+  },
+  {
+    "id": "A53",
+    "stem_tex": "$\\lim_{x\\to0^+}\\dfrac{\\cot x}{\\ln x}=$",
+    "choices_tex": [
+      "$-\\infty$",
+      "$-1$",
+      "$0$",
+      "$1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Since $x\\cot x\\to1$ and $x\\ln x\\to0^-$, the quotient $(x\\cot x)/(x\\ln x)$ tends to $-\\infty$."
+  },
+  {
+    "id": "A54",
+    "stem_tex": "Which terms occur in the partial fraction decomposition of $(3x+2)/(x^2-x-12)$? I. $1/(x+3)$; II. $1/(x-4)$; III. $2/(x-4)$.",
+    "choices_tex": [
+      "none",
+      "I only",
+      "II only",
+      "I and III only"
+    ],
+    "correct": "D",
+    "explanation_tex": "Factoring the denominator gives $(x+3)(x-4)$. Solving $3x+2=A(x-4)+B(x+3)$ gives $A=1$, $B=2$, so I and III occur."
+  },
+  {
+    "id": "A55",
+    "stem_tex": "Using three terms of an appropriate Maclaurin series, estimate $\\int_0^1(1-\\cos x)/x\\,dx$.",
+    "choices_tex": [
+      "$1/96$",
+      "$23/96$",
+      "$25/96$",
+      "undefined; the integral is improper"
+    ],
+    "correct": "B",
+    "explanation_tex": "Use the three terms $\\cos x\\approx1-x^2/2+x^4/24$. Then $(1-\\cos x)/x\\approx x/2-x^3/24$, whose integral is $1/4-1/96=23/96$. The apparent singularity at 0 is removable."
+  },
+  {
+    "id": "A56",
+    "stem_tex": "Find the slope of the spiral $r=\\theta$ at $\\theta=\\pi/4$.",
+    "choices_tex": [
+      "$-\\sqrt2$",
+      "$-1$",
+      "$1$",
+      "$(4+\\pi)/(4-\\pi)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "For a polar curve, $dy/dx=(r^{\\prime}\\sin\\theta+r\\cos\\theta)/(r^{\\prime}\\cos\\theta-r\\sin\\theta)$. With $r=\\theta$, this becomes $(1+\\pi/4)/(1-\\pi/4)$."
+  },
+  {
+    "id": "A57",
+    "stem_tex": "$\\int_0^{\\pi/3}\\sec^2x\\tan^2x\\,dx=$",
+    "choices_tex": [
+      "$\\sqrt3/27$",
+      "$\\sqrt3/3$",
+      "$\\sqrt3$",
+      "$3\\sqrt3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "With $u=\\tan x$, the bounds become 0 and $\\sqrt3$, so the integral is $[u^3/3]_0^{\\sqrt3}=\\sqrt3$."
+  },
+  {
+    "id": "A58",
+    "stem_tex": "A particle has acceleration $a=6t$ and $v(0)=1$. Find the total distance traveled from $t=0$ to $t=3$.",
+    "choices_tex": [
+      "$30$",
+      "$28$",
+      "$27$",
+      "$26$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Integrating gives $v=3t^2+1>0$. Thus total distance is $\\int_0^3(3t^2+1)dt=[t^3+t]_0^3=30$."
+  },
+  {
+    "id": "A59",
+    "stem_tex": "Air escapes from a balloon at $R(t)=60/(1+t^2)$ cubic feet per minute. How many cubic feet escape during the first minute?",
+    "choices_tex": [
+      "$15\\pi$",
+      "$30$",
+      "$45$",
+      "$30\\ln2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The amount is $\\int_0^1R(t)dt=60[\\arctan t]_0^1=15\\pi$ cubic feet."
+  },
+  {
+    "id": "B1",
+    "stem_tex": "The graph of $h$ is shown. Which statements are true? I. $h^{\\prime}$ is never negative. II. $h^{\\prime\\prime}$ is constant. III. $h^{\\prime}$ and $h^{\\prime\\prime}$ equal zero at the same point.",
+    "choices_tex": [
+      "I only",
+      "III only",
+      "I and II only",
+      "I and III only"
+    ],
+    "correct": "D",
+    "explanation_tex": "The graph increases throughout, flattening at $x=2$, so $h^{\\prime}\\ge0$. Its concavity changes from down to up at that horizontal tangent, giving $h^{\\prime}(2)=h^{\\prime\\prime}(2)=0$. The change in concavity rules out a constant second derivative.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b1.png",
+      "alt": "Increasing S-shaped graph h with horizontal inflection at x=2."
+    }
+  },
+  {
+    "id": "B2",
+    "stem_tex": "For the shown graphs, which statements are true? I. $g=f^{\\prime}$. II. $f=g^{\\prime}$. III. $h=g^{\\prime\\prime}$.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "II and III only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "The zeros and signs of $f$ match the stationary points and increasing/decreasing intervals of $g$. The zeros and signs of $h$ match the stationary points and increasing/decreasing intervals of $f$, so $h=f^{\\prime}=g^{\\prime\\prime}$. I fails: for example $f$ decreases near zero while $g$ is positive.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b2.png",
+      "alt": "Graphs of f, g, and h for derivative comparisons."
+    }
+  },
+  {
+    "id": "B3",
+    "stem_tex": "If $y=\\int_3^x(3+2t)^{-1/2}\\,dt$, find $d^2y/dx^2$.",
+    "choices_tex": [
+      "$-1/(3+2x)^{3/2}$",
+      "$3/(3+2x)^{5/2}$",
+      "$\\sqrt{3+2x}/2$",
+      "$(3+2x)^{3/2}/3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The FTC gives $y^{\\prime}=(3+2x)^{-1/2}$. Differentiating gives $y^{\\prime\\prime}=-\\frac12(3+2x)^{-3/2}(2)$."
+  },
+  {
+    "id": "B4",
+    "stem_tex": "If $\\int_{-3}^4 f(x)\\,dx=6$, find $\\int_{-4}^3 f(x+1)\\,dx$.",
+    "choices_tex": [
+      "$-6$",
+      "$-5$",
+      "$5$",
+      "$6$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Use $u=x+1$; the transformed bounds are $-3$ and 4, giving exactly the known integral 6."
+  },
+  {
+    "id": "B5",
+    "stem_tex": "At what point of $[1,1.5]$ does the instantaneous rate of change of $f(x)=\\sin x$ equal its average rate on this interval?",
+    "choices_tex": [
+      "$1.058$",
+      "$1.239$",
+      "$1.253$",
+      "$1.399$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Solve $\\cos c=(\\sin1.5-\\sin1)/0.5$. Thus $c=\\arccos(2(\\sin1.5-\\sin1))\\approx1.253$."
+  },
+  {
+    "id": "B6",
+    "stem_tex": "Let $f^{\\prime}(x)=x^2(x-1)$, so $f^{\\prime\\prime}(x)=x(3x-2)$. On which intervals is $f$ increasing and concave up? I. $x<0$; II. $0<x<2/3$; III. $2/3<x<1$; IV. $x>1$.",
+    "choices_tex": [
+      "I only",
+      "II and IV only",
+      "I and III only",
+      "IV only"
+    ],
+    "correct": "D",
+    "explanation_tex": "$f^{\\prime}>0$ only for $x>1$. On that interval both factors of $f^{\\prime\\prime}=x(3x-2)$ are positive, so IV is the only interval satisfying both conditions."
+  },
+  {
+    "id": "B7",
+    "stem_tex": "Let $f^{\\prime}(x)=x^2(x-1)$ and $f^{\\prime\\prime}(x)=x(3x-2)$. Which statement is true?",
+    "choices_tex": [
+      "One relative extremum and one inflection point.",
+      "One relative extremum and two inflection points.",
+      "Two relative extrema and one inflection point.",
+      "Two relative extrema and two inflection points."
+    ],
+    "correct": "B",
+    "explanation_tex": "$f^{\\prime}$ changes sign only at 1 (not at its double root 0), so there is one relative extremum. $f^{\\prime\\prime}$ changes sign at both 0 and $2/3$, giving two inflection points."
+  },
+  {
+    "id": "B8",
+    "stem_tex": "The $n$th derivative of $\\ln(x+1)$ at $x=2$, for $n\\ge1$, equals",
+    "choices_tex": [
+      "$(-1)^n n!/3^{n+1}$",
+      "$(-1)^{n-1}(n-1)!/3^n$",
+      "$(-1)^{n+1}n!/3^{n+1}$",
+      "$(-1)^{n+1}/3^{n+1}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Repeated differentiation gives $f^{(n)}(x)=(-1)^{n-1}(n-1)!/(x+1)^n$. Substitute $x=2$."
+  },
+  {
+    "id": "B9",
+    "stem_tex": "If $f$ is continuous at $x=a$, which statement may be false?",
+    "choices_tex": [
+      "$\\lim_{x\\to a}f(x)=f(a)$",
+      "$f^{\\prime}(a)$ exists",
+      "$f(a)$ is defined",
+      "$\\lim_{x\\to a^-}f(x)=\\lim_{x\\to a^+}f(x)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Continuity guarantees the function value and matching limits but does not guarantee differentiability. For example $f(x)=|x-a|$ is continuous at $a$ and has a corner there."
+  },
+  {
+    "id": "B10",
+    "stem_tex": "If $\\int_0^3 f(x+k)\\,dx=4$ for constant $k$, find $\\int_k^{3+k}f(x)\\,dx$.",
+    "choices_tex": [
+      "$3$",
+      "$4-k$",
+      "$4$",
+      "$4+k$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Substitution $u=x+k$ transforms the given integral into $\\int_k^{3+k}f(u)du$, so its value remains 4."
+  },
+  {
+    "id": "B11",
+    "stem_tex": "Find the volume in cubic feet of an inner tube with inner diameter 4 feet and outer diameter 8 feet.",
+    "choices_tex": [
+      "$6\\pi^2$",
+      "$12\\pi^2$",
+      "$24\\pi^2$",
+      "$48\\pi^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The torus has major radius $R=(4+2)/2=3$ and tube radius $r=(4-2)/2=1$. Its volume is cross-sectional area times centroid travel distance: $(\\pi r^2)(2\\pi R)=6\\pi^2$."
+  },
+  {
+    "id": "B12",
+    "stem_tex": "If $f(u)=\\arctan(u^2)$ and $g(u)=e^u$, find the derivative of $f(g(u))$.",
+    "choices_tex": [
+      "$2ue^u/(1+u^4)$",
+      "$2ue^{u^2}/(1+u^4)$",
+      "$2e^u/(1+4e^{2u})$",
+      "$2e^{2u}/(1+e^{4u})$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The composition is $\\arctan(e^{2u})$. Its derivative is $2e^{2u}/(1+(e^{2u})^2)=2e^{2u}/(1+e^{4u})$."
+  },
+  {
+    "id": "B13",
+    "stem_tex": "If $\\sin(xy)=y$, find $dy/dx$.",
+    "choices_tex": [
+      "$y\\cos(xy)-1$",
+      "$(1-y\\cos(xy))/(x\\cos(xy))$",
+      "$y\\cos(xy)/(1-x\\cos(xy))$",
+      "$\\cos(xy)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Differentiate: $\\cos(xy)(y+xy^{\\prime})=y^{\\prime}$. Isolating $y^{\\prime}$ yields $y\\cos(xy)/(1-x\\cos(xy))$ where the denominator is nonzero."
+  },
+  {
+    "id": "B14",
+    "stem_tex": "For $x>0$, suppose $f^{\\prime}(x)=g(x)$ and $g^{\\prime}(x)=f(\\sqrt x)$. Find $\\dfrac{d^2}{dx^2}f(x^2)$.",
+    "choices_tex": [
+      "$f(x^2)$",
+      "$2xg(x^2)$",
+      "$f(x)/(2x)$",
+      "$2g(x^2)+4x^2f(x)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The first derivative is $2xg(x^2)$. Its derivative is $2g(x^2)+4x^2g^{\\prime}(x^2)=2g(x^2)+4x^2f(x)$ since $x>0$."
+  },
+  {
+    "id": "B15",
+    "stem_tex": "The region bounded by $y=e^x$, $y=1$, and $x=2$ is rotated about the $x$-axis. Which integral gives its volume?",
+    "choices_tex": [
+      "$\\pi\\int_0^2e^{2x}dx$",
+      "$2\\pi\\int_1^{e^2}(2-\\ln y)(y-1)dy$",
+      "$\\pi\\int_0^2(e^{2x}-1)dx$",
+      "$\\pi\\int_0^2(e^x-1)^2dx$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The curves meet at $x=0$. Washers have outer radius $e^x$ and inner radius 1, giving $V=\\pi\\int_0^2[(e^x)^2-1^2]dx$."
+  },
+  {
+    "id": "B16",
+    "stem_tex": "Suppose $f$ is continuous on $[1,2]$, differentiable on $(1,2)$, $f(1)=3$, and $f(2)=0$. Which is not necessarily true?",
+    "choices_tex": [
+      "$\\int_1^2f(x)dx$ exists.",
+      "Some $c\\in(1,2)$ has $f^{\\prime}(c)=0$.",
+      "Every value between 0 and 3 is attained between 1 and 2.",
+      "$\\lim_{x\\to c}f(x)$ exists for every $1<c<2$."
+    ],
+    "correct": "B",
+    "explanation_tex": "The mean value theorem guarantees derivative $-3$, not zero. The function $f(x)=6-3x$ satisfies every hypothesis and has derivative $-3$ everywhere. Continuity guarantees A, C, and D."
+  },
+  {
+    "id": "B17",
+    "stem_tex": "The region $S$ bounded by $y=\\sec x$, the $y$-axis, and $y=4$ is rotated about the $y$-axis. Find the volume.",
+    "choices_tex": [
+      "$2.279$",
+      "$5.692$",
+      "$11.385$",
+      "$17.217$"
+    ],
+    "correct": "C",
+    "explanation_tex": "A horizontal disk at height $y$ has radius $x=\\arccos(1/y)$. Hence $V=\\pi\\int_1^4[\\arccos(1/y)]^2dy\\approx11.385$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b17.png",
+      "alt": "Region between secant curve and y=4, with y-axis shown."
+    }
+  },
+  {
+    "id": "B18",
+    "stem_tex": "A radioactive substance decreases from 40 grams to 20 grams in two years. To the nearest gram, how much remains after three years?",
+    "choices_tex": [
+      "$10$",
+      "$12$",
+      "$14$",
+      "$16$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The half-life is two years, so $M(t)=40(1/2)^{t/2}$. Thus $M(3)=10\\sqrt2\\approx14.142$ grams, rounding to 14."
+  },
+  {
+    "id": "B19",
+    "stem_tex": "An object moving on a line has $a(t)=\\pi t+2/(1+t^2)$ and is at rest at $t=1$. Find its average velocity from $t=0$ to $t=2$.",
+    "choices_tex": [
+      "$0.362$",
+      "$0.274$",
+      "$3.504$",
+      "$4.249$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Integrating gives $v(t)=\\pi t^2/2+2\\arctan t+C$. Since $v(1)=0$, $C=-\\pi$. The average is $\\frac12\\int_0^2v(t)dt=-\\pi/3+2\\arctan2-\\frac12\\ln5\\approx0.362381$."
+  },
+  {
+    "id": "B20",
+    "stem_tex": "Find the area bounded by $y=\\tan x$, $x+y=2$, and the $x$-axis on $[0,2]$.",
+    "choices_tex": [
+      "$0.919$",
+      "$1.013$",
+      "$1.077$",
+      "$1.494$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The relevant intersection solves $\\tan c=2-c$, giving $c\\approx0.853530$. The area is $\\int_0^c\\tan x\\,dx+\\int_c^2(2-x)dx=-\\ln(\\cos c)+(2-c)^2/2\\approx1.076770$."
+  },
+  {
+    "id": "B21",
+    "stem_tex": "An ellipse has major axis 20 and minor axis 10. Find the maximum area of an inscribed rectangle, rounded to the nearest integer.",
+    "choices_tex": [
+      "$50$",
+      "$79$",
+      "$82$",
+      "$100$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The semiaxes are $a=10$, $b=5$. Write a vertex as $(10\\cos\\theta,5\\sin\\theta)$; the rectangle area is $4xy=100\\sin2\\theta\\le100$, with equality at $\\theta=\\pi/4$."
+  },
+  {
+    "id": "B22",
+    "stem_tex": "Find the average value of $y=x\\ln x$ on $[1,e]$.",
+    "choices_tex": [
+      "$0.772$",
+      "$1.221$",
+      "$1.359$",
+      "$2.097$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integration by parts gives $\\int x\\ln x\\,dx=x^2\\ln x/2-x^2/4$. Thus the average is $(e^2+1)/(4(e-1))\\approx1.220559$."
+  },
+  {
+    "id": "B23",
+    "stem_tex": "Let $f(x)=\\int_0^x(1-2\\cos^3t)dt$ for $0\\le x\\le2\\pi$. On which interval is $f$ increasing?",
+    "choices_tex": [
+      "$0<x<\\pi$",
+      "$0.654<x<5.629$",
+      "$0.654<x<2\\pi$",
+      "$\\pi<x<2\\pi$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$f^{\\prime}(x)=1-2\\cos^3x>0$ when $\\cos x<2^{-1/3}$. The endpoints are $\\arccos(2^{-1/3})\\approx0.654$ and $2\\pi-\\arccos(2^{-1/3})\\approx5.629$."
+  },
+  {
+    "id": "B24",
+    "stem_tex": "The table gives speed in ft/sec: $\\begin{array}{c|rrrr}t\\ (\\mathrm{sec})&0&1&3&6\\\\ \\text{speed}&30&22&12&6\\end{array}$. Estimate acceleration at $t=2$ in ft/sec$^2$.",
+    "choices_tex": [
+      "$-10$",
+      "$-6$",
+      "$-5$",
+      "$-10/3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Using the surrounding observations, the estimated rate of change is $(12-22)/(3-1)=-5$ ft/sec$^2$. This is the intended acceleration estimate when the positive direction is the direction of motion; speed data alone do not determine a signed velocity direction."
+  },
+  {
+    "id": "B25",
+    "stem_tex": "A 16-foot-high syrup tank has back $y=x^2$ and square horizontal cross sections. Syrup enters at $12$ ft$^3$/hr. How fast is its depth rising when it is 9 feet deep?",
+    "choices_tex": [
+      "$2/27$",
+      "$1/3$",
+      "$4/3$",
+      "$36$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At height $h$, the square side is $2\\sqrt h$, so its area is $4h$. Hence $dV/dt=4h\\,dh/dt$, and at $h=9$, $dh/dt=12/36=1/3$ ft/hr.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b25.png",
+      "alt": "Parabolic-backed tank with square horizontal cross sections."
+    }
+  },
+  {
+    "id": "B26",
+    "stem_tex": "A deer population satisfies $dP/dt=k(1000-P)$. Initially $P(0)=300$, and $P(5)=500$. How many deer will there be after 10 years?",
+    "choices_tex": [
+      "$608$",
+      "$643$",
+      "$700$",
+      "$833$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Separation yields $1000-P=700e^{-kt}$. At 5 years, $e^{-5k}=5/7$. Therefore $P(10)=1000-700(5/7)^2=4500/7\\approx642.857$, or 643 deer."
+  },
+  {
+    "id": "B27",
+    "stem_tex": "The graph shows $f(x)=4/(x^2+1)$. Let $H(x)=\\int_0^xf(t)dt$. Find the local linearization of $H$ at $x=1$.",
+    "choices_tex": [
+      "$y=2x$",
+      "$y=-2x-4$",
+      "$y=2x+\\pi-2$",
+      "$y=-2x+\\pi+2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$H(1)=4\\arctan1=\\pi$ and $H^{\\prime}(1)=f(1)=2$. Thus $L(x)=\\pi+2(x-1)$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b27.png",
+      "alt": "Graph of f(x)=4/(x squared+1)."
+    }
+  },
+  {
+    "id": "B28",
+    "stem_tex": "A 100-foot smokestack has diameters (feet) at these heights (feet): $\\begin{array}{c|rrrrr}h&0&10&50&70&100\\\\d&17&15&9&7&5\\end{array}$. Use a left Riemann sum on the four indicated intervals to estimate volume to the nearest cubic foot.",
+    "choices_tex": [
+      "$1160$",
+      "$5671$",
+      "$8718$",
+      "$11765$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The circular cross-sectional area is $\\pi d^2/4$. The left sum is $\\frac\\pi4[10(17)^2+40(15)^2+20(9)^2+30(7)^2]=3745\\pi\\approx11765.264$, rounding to 11765."
+  },
+  {
+    "id": "B29",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f^{\\prime}(x)&g(x)&g^{\\prime}(x)\\\\1&2&1/2&-3&5\\\\2&3&1&0&4\\\\3&4&2&2&3\\\\4&6&4&3&1/2\\end{array}$. If $P(x)=f(x)/g(x)$, find $P^{\\prime}(3)$.",
+    "choices_tex": [
+      "$-2$",
+      "$-8/9$",
+      "$2/3$",
+      "$2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "By the quotient rule, $P^{\\prime}(3)=[f^{\\prime}(3)g(3)-f(3)g^{\\prime}(3)]/g(3)^2=(2\\cdot2-4\\cdot3)/4=-2$."
+  },
+  {
+    "id": "B30",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f^{\\prime}(x)&g(x)&g^{\\prime}(x)\\\\1&2&1/2&-3&5\\\\2&3&1&0&4\\\\3&4&2&2&3\\\\4&6&4&3&1/2\\end{array}$. If $H(x)=f(g(x))$, find $H^{\\prime}(3)$.",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "$6$"
+    ],
+    "correct": "C",
+    "explanation_tex": "By the chain rule, $H^{\\prime}(3)=f^{\\prime}(g(3))g^{\\prime}(3)=f^{\\prime}(2)\\cdot3=1\\cdot3=3$."
+  },
+  {
+    "id": "B31",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f^{\\prime}(x)&g(x)&g^{\\prime}(x)\\\\1&2&1/2&-3&5\\\\2&3&1&0&4\\\\3&4&2&2&3\\\\4&6&4&3&1/2\\end{array}$. If $M(x)=f(x)g(x)$, find $M^{\\prime}(3)$.",
+    "choices_tex": [
+      "$2$",
+      "$6$",
+      "$8$",
+      "$16$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The product rule gives $M^{\\prime}(3)=f^{\\prime}(3)g(3)+f(3)g^{\\prime}(3)=2\\cdot2+4\\cdot3=16$."
+  },
+  {
+    "id": "B32",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f^{\\prime}(x)&g(x)&g^{\\prime}(x)\\\\1&2&1/2&-3&5\\\\2&3&1&0&4\\\\3&4&2&2&3\\\\4&6&4&3&1/2\\end{array}$. If $K(x)=g^{-1}(x)$, find $K^{\\prime}(3)$.",
+    "choices_tex": [
+      "$-1/3$",
+      "$1/3$",
+      "$1/2$",
+      "$2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $g(4)=3$, $g^{-1}(3)=4$. The inverse derivative rule yields $K^{\\prime}(3)=1/g^{\\prime}(4)=1/(1/2)=2$."
+  },
+  {
+    "id": "B33",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f^{\\prime}(x)&g(x)&g^{\\prime}(x)\\\\1&2&1/2&-3&5\\\\2&3&1&0&4\\\\3&4&2&2&3\\\\4&6&4&3&1/2\\end{array}$. If $R(x)=\\sqrt{f(x)}$, find $R^{\\prime}(3)$.",
+    "choices_tex": [
+      "$1/4$",
+      "$1/(2\\sqrt2)$",
+      "$1/2$",
+      "$\\sqrt2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The chain rule gives $R^{\\prime}(3)=f^{\\prime}(3)/(2\\sqrt{f(3)})=2/(2\\sqrt4)=1/2$."
+  },
+  {
+    "id": "B34",
+    "stem_tex": "Water enters a spherical tank at a constant rate. If $W(t)$ is the rate of increase of water depth, then $W$ is",
+    "choices_tex": [
+      "linear and increasing",
+      "linear and decreasing",
+      "concave up",
+      "concave down"
+    ],
+    "correct": "C",
+    "explanation_tex": "For sphere radius $R$ and depth $h$, the horizontal area is $\\pi q$ where $q=h(2R-h)$. If inflow is $Q>0$, set $c=Q/\\pi$; then $W=h^{\\prime}=c/q$. Differentiating twice in time gives $W^{\\prime\\prime}=c^3[3(q^{\\prime})^2-q q^{\\prime\\prime}]/q^5=c^3[12(R-h)^2+2q]/q^5>0$ for $0<h<2R$."
+  },
+  {
+    "id": "B35",
+    "stem_tex": "The graph of $f^{\\prime}$ is shown. If $f(7)=3$, find $f(1)$.",
+    "choices_tex": [
+      "$-10$",
+      "$-4$",
+      "$10$",
+      "$16$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The signed area from 1 to 7 is $(-2)(1)+\\frac{-2+4}{2}(3)+\\frac{4+2}{2}(2)=-2+3+6=7$. Thus $f(7)-f(1)=7$, giving $f(1)=3-7=-4$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b35.png",
+      "alt": "Piecewise linear derivative graph through (2,-2), (5,4), and (7,2)."
+    }
+  },
+  {
+    "id": "B36",
+    "stem_tex": "A concert crowd fills a semicircular disk of radius 100 yards centered at the stage. Its density $x$ yards from the stage is $D(x)=20/(2\\sqrt x+1)$ people per square yard. About how many people attend?",
+    "choices_tex": [
+      "$200$",
+      "$19500$",
+      "$21000$",
+      "$165000$"
+    ],
+    "correct": "B",
+    "explanation_tex": "A thin semicircular annulus of radius $x$ has area approximately $\\pi x\\,dx$. Thus $N=\\int_0^{100}\\pi x\\,20/(2\\sqrt x+1)\\,dx\\approx19506.323$, closest to 19500.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b36.png",
+      "alt": "Semicircular crowd area with radius 100 yards and stage at center."
+    }
+  },
+  {
+    "id": "B37",
+    "stem_tex": "More AIDS cases were reported this year, but the rate of increase is slowing. As a function of time, the number of cases is currently",
+    "choices_tex": [
+      "increasing and concave down",
+      "increasing and concave up",
+      "decreasing and concave down",
+      "decreasing and concave up"
+    ],
+    "correct": "A",
+    "explanation_tex": "More cases means the first derivative is positive. A decreasing rate of increase means the second derivative is negative, so the graph is increasing and concave down."
+  },
+  {
+    "id": "B38",
+    "stem_tex": "The graph shows velocity in ft/sec over $0\\le t\\le8$ for an object moving along a line. Find its average speed on this interval.",
+    "choices_tex": [
+      "$3/8$",
+      "$1$",
+      "$8/3$",
+      "$8$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Total distance is the unsigned area: $2+3/2+2+1/2+2=8$ feet. Divide by 8 seconds to obtain average speed 1 ft/sec.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b38-40.png",
+      "alt": "Velocity graph through (0,1),(2,1),(3,2),(6,-1),(8,-1)."
+    }
+  },
+  {
+    "id": "B39",
+    "stem_tex": "The graph shows velocity in ft/sec over $0\\le t\\le8$ for an object moving along a line. When did the object return to its position at $t=2$?",
+    "choices_tex": [
+      "$t=6$",
+      "$t=7$",
+      "$t=8$",
+      "never"
+    ],
+    "correct": "D",
+    "explanation_tex": "From 2 to 5 the positive displacement is $3/2+2=7/2$. From 5 to 8 the negative displacement is $-1/2-2=-5/2$. The net displacement remains positive through $t=8$, so it never returns during the displayed interval. Behavior after 8 is unspecified.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b38-40.png",
+      "alt": "Velocity graph through (0,1),(2,1),(3,2),(6,-1),(8,-1)."
+    }
+  },
+  {
+    "id": "B40",
+    "stem_tex": "The graph shows velocity in ft/sec over $0\\le t\\le8$ for an object moving along a line. Find its average acceleration in ft/sec$^2$.",
+    "choices_tex": [
+      "$-2$",
+      "$-1/4$",
+      "$1/4$",
+      "$1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Average acceleration is $[v(8)-v(0)]/(8-0)=(-1-1)/8=-1/4$ ft/sec$^2$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b38-40.png",
+      "alt": "Velocity graph through (0,1),(2,1),(3,2),(6,-1),(8,-1)."
+    }
+  },
+  {
+    "id": "B41",
+    "stem_tex": "Ice melts at $M(t)=72/(2t+3)$ cm$^3$/min. Approximately how much melts in the first three minutes?",
+    "choices_tex": [
+      "$8$ cm$^3$",
+      "$16$ cm$^3$",
+      "$21$ cm$^3$",
+      "$40$ cm$^3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The volume melted is $\\int_0^3 72/(2t+3)dt=36[\\ln(2t+3)]_0^3=36\\ln3\\approx39.550$ cm$^3$, closest to 40."
+  },
+  {
+    "id": "B42",
+    "stem_tex": "A particle moves counterclockwise on $x^2+y^2=25$ with speed 2 ft/sec. Find its velocity vector at $(3,4)$.",
+    "choices_tex": [
+      "$\\langle-8/5,6/5\\rangle$",
+      "$\\langle8/5,-6/5\\rangle$",
+      "$\\langle-2\\sqrt3,2\\rangle$",
+      "$\\langle2,-2\\sqrt3\\rangle$"
+    ],
+    "correct": "A",
+    "explanation_tex": "A counterclockwise tangent to radius $(3,4)$ is $(-4,3)$, whose length is 5. Multiplying its unit vector by speed 2 gives $\\langle-8/5,6/5\\rangle$."
+  },
+  {
+    "id": "B43",
+    "stem_tex": "Let $\\mathbf R(t)=\\langle a\\cos kt,a\\sin kt\\rangle$ with $a,k>0$. Find the acceleration vector.",
+    "choices_tex": [
+      "$-k^2\\mathbf R$",
+      "$a^2k^2\\mathbf R$",
+      "$-a\\mathbf R$",
+      "$-ak^2\\langle a\\cos kt,a\\sin kt\\rangle$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Twice differentiating gives $\\mathbf R^{\\prime\\prime}=\\langle-ak^2\\cos kt,-ak^2\\sin kt\\rangle=-k^2\\mathbf R$."
+  },
+  {
+    "id": "B44",
+    "stem_tex": "Find the length of $y=2^x$ between $(0,1)$ and $(2,4)$.",
+    "choices_tex": [
+      "$3.141$",
+      "$3.664$",
+      "$4.823$",
+      "$7.199$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $y^{\\prime}=2^x\\ln2$, the arc length is $\\int_0^2\\sqrt{1+(2^x\\ln2)^2}dx\\approx3.664367$."
+  },
+  {
+    "id": "B45",
+    "stem_tex": "A moving object has position $P(t)=(3t,e^t)$. Its acceleration is",
+    "choices_tex": [
+      "constant in both magnitude and direction",
+      "constant in magnitude only",
+      "constant in direction only",
+      "constant in neither magnitude nor direction"
+    ],
+    "correct": "C",
+    "explanation_tex": "Twice differentiating gives $P^{\\prime\\prime}(t)=(0,e^t)$. It always points upward, but its magnitude $e^t$ changes with time."
+  },
+  {
+    "id": "B46",
+    "stem_tex": "Apply one Euler step of size $\\Delta x=0.1$ to $dy/dx=4y$ starting at $(0,1)$. Approximately how large is the error?",
+    "choices_tex": [
+      "$0.09$",
+      "$1.09$",
+      "$1.49$",
+      "$1.90$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Euler gives $y_1=1+0.1(4)=1.4$. The exact solution is $y=e^{4x}$, so the error at 0.1 is $e^{0.4}-1.4\\approx0.091825$."
+  },
+  {
+    "id": "B47",
+    "stem_tex": "Use the first three terms to estimate $\\sum_{n=0}^{\\infty}(-1)^n/(n^2+1)$. Which statements are true? I. The estimate is 0.7. II. It is too low. III. The error is less than 0.1.",
+    "choices_tex": [
+      "I only",
+      "III only",
+      "I and III only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "The partial sum is $1-1/2+1/5=0.7$. The next term is $-1/10$, so the estimate is above the sum. The alternating-series remainder has magnitude strictly less than $1/10$, proving I and III."
+  },
+  {
+    "id": "B48",
+    "stem_tex": "Which series diverges?",
+    "choices_tex": [
+      "$\\sum_{n=1}^{\\infty}2/3^n$",
+      "$\\sum_{n=1}^{\\infty}2/(3n)$",
+      "$\\sum_{n=1}^{\\infty}2/n^3$",
+      "$\\sum_{n=1}^{\\infty}2n/3^n$"
+    ],
+    "correct": "B",
+    "explanation_tex": "B is $2/3$ times the divergent harmonic series. A is geometric with ratio $1/3$; C is a $p$-series with $p=3$; D converges by the ratio test with limiting ratio $1/3$."
+  },
+  {
+    "id": "B49",
+    "stem_tex": "Find the radius of convergence of $\\sum_{n=1}^{\\infty}(n!/n^n)x^n$.",
+    "choices_tex": [
+      "$0$",
+      "$1/e$",
+      "$1$",
+      "$e$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The absolute ratio of consecutive terms is $|x|(n/(n+1))^n\\to|x|/e$. Convergence occurs for $|x|<e$, so the radius is $e$."
+  },
+  {
+    "id": "B50",
+    "stem_tex": "Using $e^x\\approx1+x+x^2/2$ to estimate $\\sqrt e$, apply the Lagrange remainder bound with $M=\\max_{0\\le t\\le1/2}e^t$. Which is the smallest listed upper bound supplied by this estimate?",
+    "choices_tex": [
+      "$0.021$",
+      "$0.035$",
+      "$0.057$",
+      "$0.063$"
+    ],
+    "correct": "B",
+    "explanation_tex": "For degree2 at $x=1/2$, the Lagrange estimate is $|R_2|\\le e^{1/2}(1/2)^3/3!=\\sqrt e/48\\approx0.034348$. The smallest listed number at least this large is0.035, choice B.",
+    "source_correction": "Asked for the smallest listed uniform Lagrange upper bound.",
+    "source_original": {
+      "stem_tex": "Using $e^x\\approx1+x+x^2/2$ to estimate $\\sqrt e$, the Lagrange remainder is no greater than",
+      "choices_tex": [
+        "$0.021$",
+        "$0.035$",
+        "$0.057$",
+        "$0.063$"
+      ],
+      "correct": null,
+      "explanation_tex": "At $x=1/2$, $|R_2|\\le M(1/2)^3/3!$ with $M=e^{1/2}$ on $[0,1/2]$. Thus $|R_2|\\le\\sqrt e/48\\approx0.034348<0.035$. B is the smallest listed valid upper bound; C and D are also looser upper bounds.",
+      "source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound."
+    },
+    "resolved_source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound."
+  },
+  {
+    "id": "B51",
+    "stem_tex": "An object has position $P(t)=(\\tan t,\\cos2t)$ for $0\\le t\\le1$. How far does it travel?",
+    "choices_tex": [
+      "$0.952$",
+      "$1.726$",
+      "$1.910$",
+      "$2.140$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The velocity is $(\\sec^2t,-2\\sin2t)$, so distance is $\\int_0^1\\sqrt{\\sec^4t+4\\sin^22t}\\,dt\\approx2.140068$."
+  },
+  {
+    "id": "B52",
+    "stem_tex": "The region $S$ shown is bounded by $y=\\sec x$ and $y=4$. Find the volume when it is rotated about the $x$-axis.",
+    "choices_tex": [
+      "$11.385$",
+      "$23.781$",
+      "$53.126$",
+      "$108.177$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The symmetric intersection bounds are $\\pm a$ where $a=\\arccos(1/4)$. Washers give $V=\\pi\\int_{-a}^a(16-\\sec^2x)dx=2\\pi(16a-\\tan a)=2\\pi(16\\arccos(1/4)-\\sqrt{15})\\approx108.176808$.",
+    "figure": {
+      "src": "data/calculus-figures/c11-b52.png",
+      "alt": "Region enclosed between y=sec x and y=4 on both sides of y-axis."
+    }
+  }
+]

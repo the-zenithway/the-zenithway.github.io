@@ -1,0 +1,482 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "If $f(x) = x^3 - 3x - 1$, then $f(-2) =$",
+    "choices_tex": [
+      "$-13$",
+      "$-3$",
+      "$-1$",
+      "$7$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Substitute $-2$: $f(-2)=-8+6-1=-3$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "The domain of $f(x) = \\dfrac{x+2}{x^2+4}$ is",
+    "choices_tex": [
+      "all $x \\neq 2$",
+      "all $x \\neq 2, -2$",
+      "all $x \\neq -2$",
+      "all reals"
+    ],
+    "correct": "D",
+    "explanation_tex": "The denominator $x^2+4$ is strictly positive for every real $x$. There are no excluded real inputs."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "The domain of $g(x) = \\dfrac{\\sqrt{x-5}}{x^2-9}$ is",
+    "choices_tex": [
+      "all $x \\neq 3, -3$",
+      "$x \\leq 5, x \\neq 3, -3$",
+      "$x \\geq 5$",
+      "$x > 5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The square root requires $x\\ge5$. The denominator vanishes only at $\\pm3$, which are outside that interval. The domain is $[5,\\infty)$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "If $f(x) = x^3 - 2x^2 - 3x + 4$ and $g(x) = 5$, then $g(f(x)) =$",
+    "choices_tex": [
+      "$5x^3 - 10x^2 - 15x + 20$",
+      "$5x^2 - 10x - 1$",
+      "$64$",
+      "$5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The constant function $g$ returns $5$ for every input, so $g(f(x))=5$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "If $f(x) = x^3 - 2x^2 - 3x + 4$ and $g(x) = 5$, then $f(g(x)) =$",
+    "choices_tex": [
+      "$5x^3 - 10x^2 - 15x + 20$",
+      "$5x^2 - 10x - 1$",
+      "$64$",
+      "$5$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$f(g(x))=f(5)=125-50-15+4=64$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "If $f(x) = x^3 + Ax^2 + Bx + 2$ and if $f(1) = 6$ and $f(-1) = -2$, what is the value of $2A + B$?",
+    "choices_tex": [
+      "$12$",
+      "$3$",
+      "$0$",
+      "$-2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Substitution gives $A+B=3$ and $A-B=-3$. Therefore $A=0$, $B=3$, and $2A+B=3$."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "Which of the following equations has a graph that is symmetric with respect to the origin?",
+    "choices_tex": [
+      "$y = \\dfrac{x+1}{x}$",
+      "$y = 3x^4 - 2$",
+      "$y = x^3 + 3x$",
+      "$y = x^3 - 4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $f(x)=x^3+3x$, $f(-x)=-x^3-3x=-f(x)$, the criterion for origin symmetry. The other expressions fail this identity."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "Let $g$ be a function defined for all reals. Which of the following conditions is \\emph{not} sufficient to guarantee that $g$ has an inverse function?",
+    "choices_tex": [
+      "$g(x) = mx + k,\\ m \\neq 0$",
+      "$g$ is strictly increasing",
+      "$g$ is an odd function",
+      "$g$ is one-to-one"
+    ],
+    "correct": "C",
+    "explanation_tex": "Oddness does not imply injectivity: $g(x)=x^3-x$ is odd but has three distinct zeros. The other conditions guarantee a one-to-one function."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "Let $y = f(x) = \\cos(\\arctan x)$. Then the range of $f$ is",
+    "choices_tex": [
+      "$\\{y \\mid 0 < y < 1\\}$",
+      "$\\{y \\mid 0 < y \\leq 1\\}$",
+      "$\\{y \\mid -\\tfrac{\\pi}{2} < y < \\tfrac{\\pi}{2}\\}$",
+      "$\\{y \\mid -\\tfrac{\\pi}{2} \\leq y \\leq \\tfrac{\\pi}{2}\\}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$\\cos(\\arctan x)=1/\\sqrt{1+x^2}$. It equals $1$ at zero, is always positive, and approaches zero as $|x|\\to\\infty$. Thus its range is $(0,1]$."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "Let $g(x) = |\\sin x - 1|$. The maximum value attained by $g$ on the closed interval $[0, 2\\pi]$ is for $x$ equal to",
+    "choices_tex": [
+      "$0$",
+      "$\\dfrac{\\pi}{2}$",
+      "$\\pi$",
+      "$\\dfrac{3\\pi}{2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $\\sin x\\le1$, $|\\sin x-1|=1-\\sin x$. The maximum is $2$, attained when $\\sin x=-1$, at $x=3\\pi/2$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "Which of the following functions is not odd?",
+    "choices_tex": [
+      "$f(x) = \\sin 3x$",
+      "$f(x) = \\tan x$",
+      "$f(x) = x^3 - 2$",
+      "$f(x) = \\dfrac{x}{x^2+4}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$x^3-2$ has $f(0)=-2$, whereas an odd function defined at zero must vanish there. The other three functions are odd on their symmetric domains."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "If the solutions to the equation $f(x) = 0$ are $x = 3, -4$, then $f(3x) = 0$ at $x =$",
+    "choices_tex": [
+      "$1$ and $-\\dfrac{4}{3}$",
+      "$-1$ and $\\dfrac{4}{3}$",
+      "$9$ and $-12$",
+      "$-9$ and $12$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set the input $3x$ equal to each zero: $3x=3$ or $3x=-4$. Thus $x=1$ or $x=-4/3$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "The set of zeros of $f(x) = x^3 - 6x^2 + 9x$ is",
+    "choices_tex": [
+      "$\\{3\\}$",
+      "$\\{0,3\\}$",
+      "$\\{0,-3\\}$",
+      "$\\{-3\\}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Factor $x^3-6x^2+9x=x(x-3)^2$. The distinct zeros are $0$ and $3$."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "The values of $x$ for which the graphs of $y = x + 3$ and $y^2 = 4x$ intersect are",
+    "choices_tex": [
+      "$-3$ and $3$",
+      "$-3$",
+      "$3$",
+      "no intersection"
+    ],
+    "correct": "D",
+    "explanation_tex": "Substitution gives $(x+3)^2=4x$, or $x^2+2x+9=0$. The discriminant is $4-36=-32<0$, so there is no real intersection."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "The function whose graph is a reflection in the $y$-axis of the graph of $f(x) = 2 - 5^x$ is",
+    "choices_tex": [
+      "$g(x) = 2 - 5^{-x}$",
+      "$g(x) = 5^x - 2$",
+      "$g(x) = \\log_5(x-2)$",
+      "$g(x) = \\log_5(2-x)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "A reflection in the $y$-axis replaces $x$ with $-x$: $g(x)=f(-x)=2-5^{-x}$."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "Let $g(x)$ be the inverse function of $f(x)$. Then $g(f(x)) =$",
+    "choices_tex": [
+      "$1$",
+      "$x$",
+      "$\\dfrac{1}{x}$",
+      "$f(x) \\cdot g(x)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The defining inverse identity is $g(f(x))=x$ on the domain of $f$."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "The function $f(x) = 3x^3 - 2x - 6$ has exactly one real zero. It is between",
+    "choices_tex": [
+      "$-1$ and $0$",
+      "$0$ and $1$",
+      "$1$ and $2$",
+      "$2$ and $3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$f(1)=-5$ and $f(2)=14$. By continuity, a zero lies between $1$ and $2$; the question states it is the unique real zero."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "The period of $f(x) = \\sin\\!\\left(\\dfrac{3\\pi}{4}x\\right)$ is",
+    "choices_tex": [
+      "$\\dfrac{3}{8}$",
+      "$\\dfrac{4}{3}$",
+      "$\\dfrac{8}{3}$",
+      "$\\dfrac{16}{3}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The period is $2\\pi/(3\\pi/4)=8/3$."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "The range of $y = f(x) = \\ln(\\sin x)$, for $0 < x < \\pi$, is",
+    "choices_tex": [
+      "$\\{y \\mid -\\infty < y \\leq 0\\}$",
+      "$\\{y \\mid 0 < y \\leq 1\\}$",
+      "$\\{y \\mid -1 < y < 1\\}$",
+      "$\\{y \\mid 0 \\leq y \\leq 1\\}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "On $(0,\\pi)$, $\\sin x$ ranges over $(0,1]$. Applying $\\ln$ gives $(-\\infty,0]$, with zero attained at $x=\\pi/2$."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "If $\\log_b(4^b) = \\dfrac{b}{2}$, then $b =$",
+    "choices_tex": [
+      "$\\dfrac{1}{16}$",
+      "$\\dfrac{1}{4}$",
+      "$4$",
+      "$16$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Using the change-of-base formula, $b\\ln4/\\ln b=b/2$. Since $b>0$, divide by $b$ to obtain $\\ln b=2\\ln4=\\ln16$, so $b=16$."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "Let $f^{-1}$ be the inverse function of $f(x) = x^3 - 5$. Then $f^{-1}(x) =$",
+    "choices_tex": [
+      "$\\dfrac{1}{x^3+5}$",
+      "$(x+5)^3$",
+      "$\\sqrt[3]{x-5}$",
+      "$\\sqrt[3]{x+5}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Solve $y=x^3-5$ for $x$: $x=\\sqrt[3]{y+5}$. Thus $f^{-1}(x)=\\sqrt[3]{x+5}$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "The set of $x$-intercepts of the graph of $f(x) = x^3 - 3x^2 - x + 3$ is",
+    "choices_tex": [
+      "$\\{-1,1\\}$",
+      "$\\{1,3\\}$",
+      "$\\{-1,1,3\\}$",
+      "$\\{-1,-3,3\\}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Factor by grouping: $x^3-3x^2-x+3=(x-3)(x^2-1)=(x-3)(x-1)(x+1)$. The zeros are $-1,1,3$."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "If the domain of $f$ is restricted to the open interval $\\left(-\\tfrac{\\pi}{2}, \\tfrac{\\pi}{2}\\right)$, then the range of $f(x) = 5^{\\tan x}$ is",
+    "choices_tex": [
+      "the set of all reals",
+      "the set of positive reals",
+      "the set of nonnegative reals",
+      "$\\{y \\mid 0 < y \\leq 1\\}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "On $(-\\pi/2,\\pi/2)$, $\\tan x$ ranges over all reals. Exponentiation therefore produces exactly the positive reals."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "Which of the following is a reflection of the graph of $y = f(x)$ in the $y$-axis?",
+    "choices_tex": [
+      "$y = -f(x)$",
+      "$y = f(-x)$",
+      "$y = f(|x|)$",
+      "$y = -f(-x)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Reflection in the $y$-axis negates the input, yielding $y=f(-x)$."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "The smallest positive $x$ for which the function $f(x) = \\sin\\!\\left(\\dfrac{x}{4}\\right) - 2$ is a maximum is",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{2}$",
+      "$\\pi$",
+      "$2\\pi$",
+      "$4\\pi$"
+    ],
+    "correct": "C",
+    "explanation_tex": "A maximum requires $\\sin(x/4)=1$. Thus $x/4=\\pi/2+2k\\pi$, and the smallest positive solution is $2\\pi$."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "$\\tan\\!\\left(\\arccos\\!\\left(-\\dfrac{\\sqrt{3}}{2}\\right)\\right) =$",
+    "choices_tex": [
+      "$-1$",
+      "$-\\dfrac{\\sqrt{3}}{3}$",
+      "$\\dfrac{\\sqrt{3}}{3}$",
+      "$1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The principal angle with cosine $-\\sqrt3/2$ is $5\\pi/6$. Its tangent is $-1/\\sqrt3=-\\sqrt3/3$."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "If $f^{-1}(x)$ is the inverse of $f(x) = 3e^{-x}$, then $f^{-1}(x) =$",
+    "choices_tex": [
+      "$\\ln\\!\\left(\\dfrac{3}{x}\\right)$",
+      "$\\ln\\!\\left(\\dfrac{x}{3}\\right)$",
+      "$\\dfrac{1}{3}\\ln x$",
+      "$\\sqrt{\\ln x}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "From $y=3e^{-x}$, obtain $x=-\\ln(y/3)=\\ln(3/y)$. Hence $f^{-1}(x)=\\ln(3/x)$ for $x>0$."
+  },
+  {
+    "id": "T28",
+    "stem_tex": "Which of the following functions does not have an inverse function?",
+    "choices_tex": [
+      "$y = \\cos x \\ (0 \\leq x \\leq \\pi)$",
+      "$y = x^3 - 4$",
+      "$y = \\dfrac{x}{x^2+4}$",
+      "$y = \\ln(x+3)\\ (\\text{where } x > -3)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $h(x)=x/(x^2+4)$, $h(1)=h(4)=1/5$, so it is not injective. The other three functions are strictly monotonic on their stated domains."
+  },
+  {
+    "id": "T29",
+    "stem_tex": "Suppose that $f(x) = \\ln x$ for all positive $x$ and $g(x) = 16 - x^2$ for all real $x$. The domain of $f(g(x))$ is",
+    "choices_tex": [
+      "$\\{x \\mid x \\leq 4\\}$",
+      "$\\{x \\mid |x| > 4\\}$",
+      "$\\{x \\mid |x| < 4\\}$",
+      "$\\{x \\mid 0 < x < 4\\}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The logarithm requires $16-x^2>0$, equivalent to $|x|<4$."
+  },
+  {
+    "id": "T30",
+    "stem_tex": "Suppose that $f(x) = \\ln x$ for all positive $x$ and $g(x) = 16 - x^2$ for all real $x$. The range of $y = f(g(x))$ is",
+    "choices_tex": [
+      "$\\{y \\mid y > 0\\}$",
+      "$\\{y \\mid 0 < y \\leq \\ln 16\\}$",
+      "$\\{y \\mid y \\leq \\ln 16\\}$",
+      "$\\{y \\mid y < 0\\}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "On $(-4,4)$, $16-x^2$ ranges over $(0,16]$. Its logarithm ranges over $(-\\infty,\\ln16]$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "The curve defined parametrically by $x(t) = t^2 + 1$ and $y(t) = t^2 + 5$ is part of a(n)",
+    "choices_tex": [
+      "line",
+      "circle",
+      "parabola",
+      "ellipse"
+    ],
+    "correct": "A",
+    "explanation_tex": "Subtract the parametric equations to obtain $y-x=4$. This is part of the line $y=x+4$, with $x\\ge1$."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "Which equation includes the curve defined parametrically by $x(t) = \\cos^2(t)$ and $y(t) = 3\\sin(t)$?",
+    "choices_tex": [
+      "$x^2 + y^2 = 9$",
+      "$9x^2 + y^2 = 9$",
+      "$9x + y^2 = 9$",
+      "$x + 9y^2 = 1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $\\sin t=y/3$, $x=\\cos^2t=1-y^2/9$. Rearranging gives $9x+y^2=9$."
+  },
+  {
+    "id": "T33",
+    "stem_tex": "Find the smallest value of $\\theta$ in the interval $[0, 2\\pi]$ for which the rose $r = 3\\cos(4\\theta)$ passes through the origin.",
+    "choices_tex": [
+      "$0$",
+      "$\\dfrac{\\pi}{16}$",
+      "$\\dfrac{\\pi}{8}$",
+      "$\\dfrac{\\pi}{4}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The origin requires $r=0$, hence $\\cos(4\\theta)=0$. The smallest nonnegative solution is $4\\theta=\\pi/2$, or $\\theta=\\pi/8$."
+  },
+  {
+    "id": "T34",
+    "stem_tex": "For what value of $\\theta$ in the interval $[0,\\pi]$ do the polar curves $r = 4$ and $r = 2 + 2\\sqrt{2}\\cos\\theta$ intersect?",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{6}$",
+      "$\\dfrac{\\pi}{4}$",
+      "$\\dfrac{\\pi}{3}$",
+      "$\\dfrac{2\\pi}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Equate radii: $4=2+2\\sqrt2\\cos\\theta$. Then $\\cos\\theta=1/\\sqrt2$, giving $\\theta=\\pi/4$ in $[0,\\pi]$."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "The graph of the function $f(x) = 3e^{\\sin(x)} - 4$ crosses the $x$-axis once in the interval $[0,1]$. What is the $x$-coordinate of this $x$-intercept?",
+    "choices_tex": [
+      "$0.209$",
+      "$0.292$",
+      "$0.417$",
+      "$0.552$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solve $3e^{\\sin x}=4$: $x=\\arcsin(\\ln(4/3))\\approx0.292$ on $[0,1]$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "Find the $x$-intercept of the graph of\n\\[ f(x) = \\sqrt{\\cos(x) + 1} + x^3 - 4e^{\\sin(x)} + 7 \\]\non the portion of the graph where $f(x)$ is decreasing.",
+    "choices_tex": [
+      "$-1.849$",
+      "$-0.801$",
+      "$0.984$",
+      "$1.367$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The numerical zeros are approximately $-1.849100,0.984392,1.366797$. From $f'(x)=-\\sin x/(2\\sqrt{1+\\cos x})+3x^2-4e^{\\sin x}\\cos x$, the corresponding slopes are $11.242,-2.518,3.000$. Only the zero $x\\approx0.984$ occurs on a decreasing portion."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "You are given the function $f(x) = e^{x^5 - 3x^3 + 1} - 5$ on the closed interval $[-2,2]$. Find all intervals where $f(x) < 0$.",
+    "choices_tex": [
+      "$[-2,-1.696)$ and $(-0.615,1.764)$",
+      "$(-1.696,-0.615)$ only",
+      "$[-2,-1.696)$ only",
+      "$(-0.615,1.764)$ only"
+    ],
+    "correct": "A",
+    "explanation_tex": "Solve $x^5-3x^3+1<\\ln5$. Its boundary roots are approximately $-1.695577,-0.614848,1.763820$. A sign chart gives $[-2,-1.695577)$ and $(-0.614848,1.763820)$. The endpoint $-2$ is included because $f(-2)=e^{-7}-5<0$; the original printed choice incorrectly excluded it."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "You are given the function $f(x) = (6 - 2x - 2x^2)\\cos(3x-2)$ on the closed interval $[-3,2]$. How many times does $f(x)$ cross the $x$-axis in the interval?",
+    "choices_tex": [
+      "four",
+      "five",
+      "six",
+      "seven"
+    ],
+    "correct": "D",
+    "explanation_tex": "The polynomial factor has zeros $(-1\\pm\\sqrt{13})/2$, both in $[-3,2]$. The cosine zeros are $(2+\\pi/2+k\\pi)/3$; five lie in the interval, for $k=-4,-3,-2,-1,0$. All seven zeros are distinct and simple, so the graph crosses seven times."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "On the interval $[0,2\\pi]$ there is one point on the curve $r = \\theta - 3\\cos\\theta$ whose $x$-coordinate is $3$. Find the $y$-coordinate there.",
+    "choices_tex": [
+      "$-3.764$",
+      "$-0.858$",
+      "$1.979$",
+      "$5.201$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solve $(\\theta-3\\cos\\theta)\\cos\\theta=3$ numerically on $[0,2\\pi]$, giving $\\theta\\approx6.004636$. Then $y=(\\theta-3\\cos\\theta)\\sin\\theta\\approx-0.857954$, or $-0.858$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "If $f(x) = 2 + e^x$ then the domain of $f^{-1}(x)$ is",
+    "choices_tex": [
+      "$(-\\infty,\\infty)$",
+      "$(0,\\infty)$",
+      "$(1,\\infty)$",
+      "$(2,\\infty)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The range of $2+e^x$ is $(2,\\infty)$ because $e^x$ ranges over all positive reals. This is the domain of the inverse $\\ln(x-2)$."
+  }
+]

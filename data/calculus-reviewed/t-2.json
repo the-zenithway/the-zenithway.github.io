@@ -1,0 +1,506 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 3}\\dfrac{x^2-9}{x^2+9}$ is",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$-\\dfrac{1}{3}$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The denominator at $3$ is $18\\ne0$, so direct substitution gives $0/18=0$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{9-x^2}{x^2-4}$ is",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$-1$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The degrees are equal; the ratio of leading coefficients is $-1/1=-1$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 4}\\dfrac{x-4}{x^2-3x-4}$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$\\dfrac{1}{5}$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Factor $x^2-3x-4=(x-4)(x+1)$. Cancel $x-4$ away from $4$ to get $1/(x+1)\\to1/5$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{5x}{x}$ is",
+    "choices_tex": [
+      "$5$",
+      "$0$",
+      "$-5$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "For every nonzero $x$, $5x/x=5$, so the limit is $5$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 4}\\dfrac{x^3-64}{x^2-16}$ is",
+    "choices_tex": [
+      "$2$",
+      "$4$",
+      "$6$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Cancel $x-4$ to obtain $(x^2+4x+16)/(x+4)$. At $x=4$ this is $48/8=6$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{9-x^2}{9x^2-2x-4}$ is",
+    "choices_tex": [
+      "$-3$",
+      "$-\\dfrac{1}{9}$",
+      "$1$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Divide numerator and denominator by $x^2$ to obtain the limit $-1/9$."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to-\\infty}\\dfrac{3x^3+40}{9x^2+6x+5}$ is",
+    "choices_tex": [
+      "$-\\infty$",
+      "$-1$",
+      "$\\dfrac{1}{3}$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The quotient behaves like $3x^3/(9x^2)=x/3$, which tends to $-\\infty$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{5x^2+50}{x^3-125}$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$5$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The denominator has higher degree, so the rational function tends to zero."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{3^{-x}}{3^x}$ is",
+    "choices_tex": [
+      "$-1$",
+      "$1$",
+      "$0$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$3^{-x}/3^x=3^{-2x}\\to0$ as $x\\to\\infty$."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to-\\infty}\\dfrac{3^{-x}}{3^x}$ is",
+    "choices_tex": [
+      "$-1$",
+      "$1$",
+      "$0$",
+      "$\\infty$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$3^{-x}/3^x=3^{-2x}\\to\\infty$ as $x\\to-\\infty$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin 7x}{x}$",
+    "choices_tex": [
+      "$=\\dfrac{1}{7}$",
+      "$=1$",
+      "$=7$",
+      "does not exist"
+    ],
+    "correct": "C",
+    "explanation_tex": "$\\sin(7x)/x=7\\sin(7x)/(7x)\\to7$ by the standard sine limit."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin 3x}{4x}$",
+    "choices_tex": [
+      "$=\\dfrac{3}{4}$",
+      "$=1$",
+      "$=\\dfrac{4}{3}$",
+      "does not exist"
+    ],
+    "correct": "A",
+    "explanation_tex": "$\\sin(3x)/(4x)=(3/4)\\sin(3x)/(3x)\\to3/4$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "The graph of $y = 2\\arctan x$ has",
+    "choices_tex": [
+      "vertical asymptotes at $x = 0$ and $x = \\pi$",
+      "horizontal asymptotes at $y = \\pm\\pi$",
+      "horizontal asymptotes at $y = 0$ and $y = \\pi$",
+      "vertical asymptotes at $x = \\pm\\dfrac{\\pi}{2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $\\arctan x\\to\\pm\\pi/2$ as $x\\to\\pm\\infty$, multiplication by $2$ gives horizontal asymptotes $y=\\pm\\pi$."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "The graph of $y = \\dfrac{x^2-16}{4x-16}$ has",
+    "choices_tex": [
+      "a vertical asymptote at $x = 4$",
+      "a horizontal asymptote at $y = \\dfrac{1}{4}$",
+      "a removable discontinuity at $x = 4$",
+      "an infinite discontinuity at $x = 4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne4$, the quotient equals $(x+4)/4$, with finite limit $2$ at $4$. The undefined original value creates a removable discontinuity."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin x}{x^2+5x}$ is",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{1}{5}$",
+      "$5$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Rewrite as $(\\sin x/x)/(x+5)\\to1/5$."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\cos\\dfrac{1}{x}$ is",
+    "choices_tex": [
+      "$\\infty$",
+      "$1$",
+      "$-1$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "Along $x_n=1/(2\\pi n)$, the cosine equals $1$; along $y_n=1/((2n+1)\\pi)$, it equals $-1$. Both approach zero, so no common limit exists."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "Which statement is true about the curve $y = \\dfrac{4x^2+16}{3+11x-4x^2}$?",
+    "choices_tex": [
+      "The line $x = -\\dfrac{1}{4}$ is a vertical asymptote.",
+      "The line $x = 1$ is a vertical asymptote.",
+      "The line $y = -\\dfrac{1}{4}$ is a horizontal asymptote.",
+      "The line $y = 4$ is a horizontal asymptote."
+    ],
+    "correct": "A",
+    "explanation_tex": "Factor $3+11x-4x^2=(3-x)(4x+1)$. The numerator is always positive, so $x=-1/4$ and $x=3$ are vertical asymptotes. The horizontal asymptote is $y=-1$. Only A matches."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\dfrac{3x^2+1}{(3-x)(3+x)}$ is",
+    "choices_tex": [
+      "$-3$",
+      "$1$",
+      "$3$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "The denominator is $9-x^2$. Comparing leading terms gives $3/(-1)=-3$."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0}\\dfrac{|3x|}{x}$ is",
+    "choices_tex": [
+      "$0$",
+      "$3$",
+      "$-3$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "For positive $x$, $|3x|/x=3$; for negative $x$ it is $-3$. Thus the one-sided limits disagree."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty} x\\sin\\dfrac{4}{x}$ is",
+    "choices_tex": [
+      "$0$",
+      "$-4$",
+      "$4$",
+      "nonexistent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=4/x$. Then $x\\sin(4/x)=4\\sin u/u\\to4$."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 3\\pi}\\dfrac{\\sin(3\\pi-x)}{3\\pi-x}$ is",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$3\\pi$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=3\\pi-x\\to0$. The expression becomes $\\sin u/u\\to1$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "Let $f(x) = \\begin{cases} \\dfrac{x^2-4}{x-2} & \\text{if } x \\neq 2 \\\\ 7 & \\text{if } x = 2 \\end{cases}$\n\nWhich of the following statements is (are) true?\n\nI. $\\displaystyle\\lim_{x\\to 2} f(x)$ exists\nII. $f(2)$ exists\nIII. $f$ is continuous at $x = 2$",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne2$, $f(x)=x+2$, so the limit is $4$. The assigned value is $f(2)=7$. Both exist but differ: I and II only."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "If $\\begin{cases} f(x) = \\dfrac{x^2+3x}{6x} & \\text{for } x \\neq 0 \\\\ f(0) = k \\end{cases}$\n\nand if $f$ is continuous at $x = 0$, then $k =$",
+    "choices_tex": [
+      "$-\\dfrac{1}{2}$",
+      "$\\dfrac{1}{6}$",
+      "$\\dfrac{1}{2}$",
+      "$1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne0$, $f(x)=(x+3)/6$. Its limit at zero is $1/2$, so continuity requires $k=1/2$."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "Suppose $\\begin{cases} f(x) = \\dfrac{4x(x-1)}{x^2-4x+3} & \\text{for } x \\neq 1, 3 \\\\ f(1) = -2 \\\\ f(3) = 5 \\end{cases}$\n\nThen $f(x)$ is continuous",
+    "choices_tex": [
+      "except at $x = 1$",
+      "except at $x = 3$",
+      "except at $x = 1$ or $3$",
+      "at each real number"
+    ],
+    "correct": "B",
+    "explanation_tex": "Cancel $x-1$ to get $4x/(x-3)$ away from the excluded inputs. The limit at $1$ is $-2=f(1)$, ensuring continuity there. At $3$ a vertical asymptote remains despite assigning a value. Thus only $3$ is a discontinuity."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "The graph of $f(x) = \\dfrac{9}{x^2-4}$ has",
+    "choices_tex": [
+      "one vertical asymptote, at $x = 2$",
+      "the $y$-axis as its vertical asymptote",
+      "the $x$-axis as its horizontal asymptote and $x = \\pm 2$ as its vertical asymptotes",
+      "two vertical asymptotes, at $x = \\pm 2$, but no horizontal asymptote"
+    ],
+    "correct": "C",
+    "explanation_tex": "The denominator has simple zeros at $\\pm2$ and no cancellation, giving two vertical asymptotes. The higher denominator degree gives horizontal asymptote $y=0$."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "The graph of $y = \\dfrac{3x^2+3x+5}{6x^2-6x}$ has",
+    "choices_tex": [
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ but no vertical asymptote",
+      "no horizontal asymptote but two vertical asymptotes, at $x = 0$ and $x = 1$",
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ and two vertical asymptotes, at $x = 0$ and $x = 1$",
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ and two vertical asymptotes, at $x = \\pm 1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The leading-coefficient ratio is $3/6=1/2$. The denominator $6x(x-1)$ vanishes at $0$ and $1$, while the numerator is nonzero there, giving both vertical asymptotes."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "Let $f(x) = \\begin{cases} \\dfrac{2x^2}{x} & (x \\neq 0) \\\\ 0 & (x = 0) \\end{cases}$\n\nWhich of the following statements is (are) true?\n\nI. $f(0)$ exists\nII. $\\displaystyle\\lim_{x\\to 0} f(x)$ exists\nIII. $f$ is continuous at $x = 0$",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "The definition is exactly $f(x)=2x$, including at zero. Therefore $f(0)$ exists, the limit is zero, and $f$ is continuous: all three statements."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "If $[x]$ denotes the greatest integer not greater than $x$, then $\\displaystyle\\lim_{x\\to 3/2} [x]$ is",
+    "choices_tex": [
+      "$\\dfrac{3}{2}$",
+      "$1$",
+      "$0$",
+      "nonexistent"
+    ],
+    "correct": "B",
+    "explanation_tex": "Near $3/2$, every $x$ lies strictly between $1$ and $2$, so $\\lfloor x\\rfloor=1$ and the limit is $1$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "If $[x]$ denotes the greatest integer not greater than $x$, then $\\displaystyle\\lim_{x\\to -4} [x]$ is",
+    "choices_tex": [
+      "$-5$",
+      "$-4$",
+      "$-3$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "The left-hand floor value near $-4$ is $-5$, while the right-hand value is $-4$. No two-sided limit exists."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty} \\cos x$",
+    "choices_tex": [
+      "is $-1$",
+      "is infinity",
+      "is zero",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "Cosine takes $1$ along $2\\pi n$ and $-1$ along $(2n+1)\\pi$, both tending to infinity. It has no limit."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "The function $f(x) = \\begin{cases} \\dfrac{3x^2}{x} & (x \\neq 0) \\\\ 0 & (x = 0) \\end{cases}$",
+    "choices_tex": [
+      "is continuous everywhere",
+      "is continuous except at $x = 0$",
+      "has a removable discontinuity at $x = 0$",
+      "has an infinite discontinuity at $x = 0$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For every $x$, including zero, this definition equals $f(x)=3x$, a continuous polynomial."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "\\[\ng(x) = \\begin{cases}\n2-x & (-1 \\leq x < 0) \\\\\n3x^2-3 & (0 \\leq x \\leq 1) \\\\\n-x+5 & (1 < x < 2) \\\\\n5 & (x = 2) \\\\\n3x-3 & (2 < x \\leq 3)\n\\end{cases}\n\\]\n$\\displaystyle\\lim_{x\\to 2} g(x)$",
+    "choices_tex": [
+      "equals $5$",
+      "equals $4$",
+      "equals $3$",
+      "does not exist"
+    ],
+    "correct": "C",
+    "explanation_tex": "The left-hand limit at $2$ is $-2+5=3$, and the right-hand limit is $3(2)-3=3$. The limit is $3$, although $g(2)=5$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "\\[\ng(x) = \\begin{cases}\n2-x & (-1 \\leq x < 0) \\\\\n3x^2-3 & (0 \\leq x \\leq 1) \\\\\n-x+5 & (1 < x < 2) \\\\\n5 & (x = 2) \\\\\n3x-3 & (2 < x \\leq 3)\n\\end{cases}\n\\]\nThe function $g$ is defined on $[-1,3]$",
+    "choices_tex": [
+      "if $x \\neq 0$",
+      "if $x \\neq 1$",
+      "if $x \\neq 2$",
+      "at each $x$ in $[-1,3]$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The branch intervals together with the special value at $2$ cover every point of $[-1,3]$. Thus $g$ is defined throughout that interval."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "\\[\ng(x) = \\begin{cases}\n2-x & (-1 \\leq x < 0) \\\\\n3x^2-3 & (0 \\leq x \\leq 1) \\\\\n-x+5 & (1 < x < 2) \\\\\n5 & (x = 2) \\\\\n3x-3 & (2 < x \\leq 3)\n\\end{cases}\n\\]\nThe function $g$ has a removable discontinuity at",
+    "choices_tex": [
+      "$x = 0$",
+      "$x = 1$",
+      "$x = 2$",
+      "$x = 3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Both one-sided limits at $2$ equal $3$, but $g(2)=5$. Changing that single value to $3$ would remove the discontinuity."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "\\[\ng(x) = \\begin{cases}\n2-x & (-1 \\leq x < 0) \\\\\n3x^2-3 & (0 \\leq x \\leq 1) \\\\\n-x+5 & (1 < x < 2) \\\\\n5 & (x = 2) \\\\\n3x-3 & (2 < x \\leq 3)\n\\end{cases}\n\\]\nOn which of the following intervals is $g$ continuous?",
+    "choices_tex": [
+      "$-1 \\leq x \\leq 0$",
+      "$0 < x < 1$",
+      "$1 \\leq x \\leq 2$",
+      "$2 \\leq x \\leq 3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "On $(0,1)$, $g(x)=3x^2-3$ is a polynomial, so it is continuous. Each other interval includes an endpoint where its one-sided limit disagrees with its value."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "\\[\ng(x) = \\begin{cases}\n2-x & (-1 \\leq x < 0) \\\\\n3x^2-3 & (0 \\leq x \\leq 1) \\\\\n-x+5 & (1 < x < 2) \\\\\n5 & (x = 2) \\\\\n3x-3 & (2 < x \\leq 3)\n\\end{cases}\n\\]\nThe function $g$ has a jump discontinuity at",
+    "choices_tex": [
+      "$x = -1$",
+      "$x = 1$",
+      "$x = 2$",
+      "$x = 3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At $1$, the left limit is $0$ and the right limit is $4$, producing a jump. There is another jump at $0$, which is not among the listed choices."
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to 0} \\sqrt{5+\\arctan\\dfrac{1}{x}}$",
+    "choices_tex": [
+      "$=\\sqrt{5-\\dfrac{\\pi}{2}}$",
+      "$=\\sqrt{5+\\dfrac{\\pi}{2}}$",
+      "$=\\infty$",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "The one-sided limits are $\\sqrt{5-\\pi/2}$ from the left and $\\sqrt{5+\\pi/2}$ from the right. Since they differ, no two-sided limit exists."
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "Suppose $\\displaystyle\\lim_{x\\to 5^-} f(x) = 4$, $\\displaystyle\\lim_{x\\to 5^+} f(x) = 4$, and $f(5)$ is not defined. Which of the following statements is (are) true?\n\nI. $\\displaystyle\\lim_{x\\to 5} f(x) = 4$\nII. $f$ is continuous everywhere except at $x = 5$\nIII. $f$ has a removable discontinuity at $x = 5$",
+    "choices_tex": [
+      "I only",
+      "III only",
+      "I and III only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "Both one-sided limits equal $4$, so the two-sided limit is $4$. Defining $f(5)=4$ removes the discontinuity. The information says nothing about other inputs, so II is not implied: I and III only."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "If $y = \\dfrac{1}{4+10^{1/x}}$, then $\\displaystyle\\lim_{x\\to 0} y$",
+    "choices_tex": [
+      "$=0$",
+      "$=\\dfrac{1}{14}$",
+      "$=\\dfrac{1}{4}$",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "As $x\\to0^+$ the exponential tends to infinity and $y\\to0$. As $x\\to0^-$ it tends to zero and $y\\to1/4$. The unequal one-sided limits imply nonexistence."
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "\\[\nh(x) = \\begin{cases}\n-x-2 & (-3 \\leq x < -1) \\\\\n2 & (x = -1) \\\\\nx & (-1 < x < 1) \\\\\n-x+4 & (1 \\leq x < 2) \\\\\n-x+5 & (2 \\leq x \\leq 3)\n\\end{cases}\n\\]\nFor what value(s) of $a$ is it true that $\\displaystyle\\lim_{x\\to a} h(x)$ exists and $h(a)$ exists, but $\\displaystyle\\lim_{x\\to a} h(x) \\neq h(a)$? It is possible that $a =$",
+    "choices_tex": [
+      "$-1$ only",
+      "$2$ only",
+      "$-1$ or $1$ only",
+      "$-1$ or $2$ only"
+    ],
+    "correct": "A",
+    "explanation_tex": "At $-1$, the left branch and the branch $h(x)=x$ both approach $-1$, whereas $h(-1)=2$. At $1$ and $2$ there are jumps, so only $-1$ qualifies."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "\\[\nh(x) = \\begin{cases}\n-x-2 & (-3 \\leq x < -1) \\\\\n2 & (x = -1) \\\\\nx & (-1 < x < 1) \\\\\n-x+4 & (1 \\leq x < 2) \\\\\n-x+5 & (2 \\leq x \\leq 3)\n\\end{cases}\n\\]\n$\\displaystyle\\lim_{x\\to a} h(x)$ does not exist for $a =$",
+    "choices_tex": [
+      "$-1$ only",
+      "$1$ only",
+      "$2$ only",
+      "$1$ and $2$ only"
+    ],
+    "correct": "D",
+    "explanation_tex": "At $1$, the one-sided limits are $1$ and $3$; at $2$ they are $2$ and $3$. Both are jumps. At $-1$ both limits equal $-1$. Thus only $1$ and $2$ have no two-sided limit."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "\\[\nh(x) = \\begin{cases}\n-x-2 & (-3 \\leq x < -1) \\\\\n2 & (x = -1) \\\\\nx & (-1 < x < 1) \\\\\n-x+4 & (1 \\leq x < 2) \\\\\n-x+5 & (2 \\leq x \\leq 3)\n\\end{cases}\n\\]\nWhich of the following statements about limits at $x = 2$ is (are) true?\n\nI. $\\displaystyle\\lim_{x\\to 2^-} h(x)$ exists\nII. $\\displaystyle\\lim_{x\\to 2^+} h(x)$ exists\nIII. $\\displaystyle\\lim_{x\\to 2} h(x)$ exists",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $2$, the left-hand limit is $2$ and the right-hand limit is $3$. Both exist, but the unequal values mean the two-sided limit does not. Thus I and II only."
+  }
+]

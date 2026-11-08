@@ -1,0 +1,950 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "$\\displaystyle\\int 3x^2-2x+3\\,dx=$",
+    "choices_tex": [
+      "$x^3-x^2+C$",
+      "$3x^3-x^2+3x+C$",
+      "$x^3-x^2+3x+C$",
+      "$\\frac12(3x^2-2x+3)^2+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrate each power to get $x^3-x^2+3x+C$."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "$\\displaystyle\\int (x-\\frac1{2x})^2\\,dx=$",
+    "choices_tex": [
+      "$\\frac13(x-\\frac1{2x})^3+C$",
+      "$\\frac{x^3}3-2x-\\frac1{4x}+C$",
+      "$\\frac{x^3}3-x-\\frac4x+C$",
+      "$\\frac{x^3}3-x-\\frac1{4x}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Expand as $x^2-1+1/(4x^2)$; integrate each power."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "$\\displaystyle\\int \\sqrt{4-2t}\\,dt=$",
+    "choices_tex": [
+      "$-\\frac13(4-2t)^{3/2}+C$",
+      "$\\frac23(4-2t)^{3/2}+C$",
+      "$-\\frac16(4-2t)^3+C$",
+      "$\\frac43(4-2t)^{3/2}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=4-2t$, $dt=-du/2$. Then $-\\frac12\\int u^{1/2}du=-u^{3/2}/3+C$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "$\\displaystyle\\int (2-3x)^5\\,dx=$",
+    "choices_tex": [
+      "$\\frac16(2-3x)^6+C$",
+      "$-\\frac12(2-3x)^6+C$",
+      "$\\frac12(2-3x)^6+C$",
+      "$-\\frac1{18}(2-3x)^6+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=2-3x$, $dx=-du/3$, giving $-u^6/18+C$."
+  },
+  {
+    "id": "A5",
+    "stem_tex": "$\\displaystyle\\int \\frac{1-3y}{\\sqrt{2y-3y^2}}\\,dy=$",
+    "choices_tex": [
+      "$4\\sqrt{2y-3y^2}+C$",
+      "$\\frac12\\ln\\sqrt{2y-3y^2}+C$",
+      "$\\frac14(2y-3y^2)^{1/2}+C$",
+      "$\\sqrt{2y-3y^2}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=2y-3y^2$, so $du=2(1-3y)dy$. Integrate $u^{-1/2}/2$ to obtain $\\sqrt u+C$."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "$\\displaystyle\\int \\frac1{3(2x-1)^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac{-3}{2x-1}+C$",
+      "$\\frac1{6-12x}+C$",
+      "$\\frac6{2x-1}+C$",
+      "$\\frac13\\ln\\lvert2x-1\\rvert+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "With $u=2x-1$, the integral is $\\frac16\\int u^{-2}du=-1/(6u)+C=1/(6-12x)+C$."
+  },
+  {
+    "id": "A7",
+    "stem_tex": "$\\displaystyle\\int \\frac2{1+3u}\\,du=$",
+    "choices_tex": [
+      "$\\frac23\\ln\\lvert1+3u\\rvert+C$",
+      "$-\\frac1{3(1+3u)^2}+C$",
+      "$2\\ln\\lvert1+3u\\rvert+C$",
+      "$\\frac3{(1+3u)^2}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $v=1+3u$ to obtain $\\frac23\\int dv/v=\\frac23\\ln|v|+C$."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "$\\displaystyle\\int \\frac{t}{\\sqrt{2t^2-1}}\\,dt=$",
+    "choices_tex": [
+      "$\\frac12\\ln\\sqrt{2t^2-1}+C$",
+      "$8\\sqrt{2t^2-1}+C$",
+      "$-\\frac1{4(2t^2-1)}+C$",
+      "$\\frac12\\sqrt{2t^2-1}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=2t^2-1$, $du=4t\\,dt$. Integrating $u^{-1/2}/4$ gives $\\sqrt u/2+C$."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "$\\displaystyle\\int \\cos3x\\,dx=$",
+    "choices_tex": [
+      "$3\\sin3x+C$",
+      "$-\\sin3x+C$",
+      "$-\\frac13\\sin3x+C$",
+      "$\\frac13\\sin3x+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The derivative of $\\sin3x$ is $3\\cos3x$, so divide by $3$."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "$\\displaystyle\\int \\frac{x}{1+4x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac18\\ln(1+4x^2)+C$",
+      "$\\frac14\\sqrt{1+4x^2}+C$",
+      "$\\frac12\\ln\\lvert1+4x^2\\rvert+C$",
+      "$\\frac12\\tan^{-1}2x+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=1+4x^2$, $du=8x\\,dx$, giving $\\ln u/8+C$."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "$\\displaystyle\\int \\frac1{1+4x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\tan^{-1}(2x)+C$",
+      "$\\frac18\\ln(1+4x^2)+C$",
+      "$\\frac12\\tan^{-1}(2x)+C$",
+      "$\\frac1{8x}\\ln\\lvert1+4x^2\\rvert+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=2x$, giving $\\frac12\\int du/(1+u^2)=\\arctan u/2+C$."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "$\\displaystyle\\int \\frac{x}{(1+4x^2)^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac18\\ln(1+4x^2)^2+C$",
+      "$-\\frac1{8(1+4x^2)}+C$",
+      "$-\\frac1{3(1+4x^2)^3}+C$",
+      "$-\\frac1{1+4x^2}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=1+4x^2$, $du=8x\\,dx$, giving $\\frac18\\int u^{-2}du=-1/(8u)+C$."
+  },
+  {
+    "id": "A13",
+    "stem_tex": "$\\displaystyle\\int \\frac{x}{\\sqrt{1+4x^2}}\\,dx=$",
+    "choices_tex": [
+      "$\\frac18\\sqrt{1+4x^2}+C$",
+      "$\\frac{\\sqrt{1+4x^2}}4+C$",
+      "$\\frac12\\sin^{-1}2x+C$",
+      "$\\frac18\\ln\\sqrt{1+4x^2}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "With $u=1+4x^2$, integrate $u^{-1/2}/8$ to obtain $\\sqrt u/4+C$."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "$\\displaystyle\\int \\frac1{\\sqrt{4-y^2}}\\,dy=$",
+    "choices_tex": [
+      "$\\frac12\\sin^{-1}\\frac y2+C$",
+      "$-\\sqrt{4-y^2}+C$",
+      "$\\sin^{-1}\\frac y2+C$",
+      "$-\\frac12\\ln\\sqrt{4-y^2}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use $\\int dy/\\sqrt{a^2-y^2}=\\arcsin(y/a)+C$ with $a=2$."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "$\\displaystyle\\int \\frac{y}{\\sqrt{4-y^2}}\\,dy=$",
+    "choices_tex": [
+      "$\\frac12\\sin^{-1}\\frac y2+C$",
+      "$-\\sqrt{4-y^2}+C$",
+      "$\\sin^{-1}\\frac y2+C$",
+      "$2\\sqrt{4-y^2}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=4-y^2$, $du=-2y\\,dy$, giving $-\\sqrt u+C$."
+  },
+  {
+    "id": "A16",
+    "stem_tex": "$\\displaystyle\\int \\frac{2x+1}{2x}\\,dx=$",
+    "choices_tex": [
+      "$x+\\frac12\\ln\\lvert x\\rvert+C$",
+      "$x+2\\ln\\lvert x\\rvert+C$",
+      "$x+\\ln\\lvert2x\\rvert+C$",
+      "$\\frac12(2x-\\frac1{x^2})+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The integrand equals $1+1/(2x)$, with integral $x+\\ln|x|/2+C$."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "$\\displaystyle\\int \\frac{(x-2)^3}{x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac{(x-2)^4}{4x^2}+C$",
+      "$\\frac{x^2}2-6x+6\\ln\\lvert x\\rvert-\\frac8x+C$",
+      "$\\frac{x^2}2-3x+6\\ln\\lvert x\\rvert+\\frac4x+C$",
+      "$\\frac{x^2}2-6x+12\\ln\\lvert x\\rvert+\\frac8x+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Expand and divide to obtain $x-6+12/x-8/x^2$. Integrate each term to get option D."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "$\\displaystyle\\int (\\sqrt t-\\frac1{\\sqrt t})^2\\,dt=$",
+    "choices_tex": [
+      "$\\frac{t^3}3-2t-\\frac1t+C$",
+      "$\\frac{t^2}2+\\ln\\lvert t\\rvert+C$",
+      "$\\frac{t^2}2-2t+\\ln\\lvert t\\rvert+C$",
+      "$\\frac{t^2}2-t-\\frac1{t^2}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Expand as $t-2+1/t$; the integral is $t^2/2-2t+\\ln|t|+C$."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "$\\displaystyle\\int 4x^{1/3}-5x^{3/2}-x^{-1/2}\\,dx=$",
+    "choices_tex": [
+      "$3x^{4/3}-2x^{5/2}-2x^{1/2}+C$",
+      "$3x^{4/3}-2x^{5/2}+2x^{1/2}+C$",
+      "$6x^{2/3}-2x^{5/2}-\\frac12x^2+C$",
+      "$\\frac{16}9x^{4/3}-\\frac{25}2x^{5/2}-\\frac12x^{1/2}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Apply the power rule: coefficients become $4/(4/3)=3$, $-5/(5/2)=-2$, and $-1/(1/2)=-2$."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "$\\displaystyle\\int \\frac{x^3-x-1}{x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac{\\frac14x^4-\\frac12x^2-x}{\\frac13x^3}+C$",
+      "$1+\\frac1{x^2}+\\frac2{x^3}+C$",
+      "$\\frac{x^2}2-\\ln\\lvert x\\rvert-\\frac1x+C$",
+      "$\\frac{x^2}2-\\ln\\lvert x\\rvert+\\frac1x+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Divide first to get $x-1/x-1/x^2$, then integrate to obtain $x^2/2-\\ln|x|+1/x+C$."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "$\\displaystyle\\int \\frac1{\\sqrt y(1-\\sqrt y)}\\,dy=$",
+    "choices_tex": [
+      "$4\\sqrt{1-\\sqrt y}+C$",
+      "$\\frac12\\ln\\lvert1-\\sqrt y\\rvert+C$",
+      "$2\\ln(1-\\sqrt y)+C$",
+      "$-2\\ln\\lvert1-\\sqrt y\\rvert+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Let $u=1-\\sqrt y$, so $du=-dy/(2\\sqrt y)$. The integral is $-2\\int du/u$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "$\\displaystyle\\int \\frac{u}{\\sqrt{4-9u^2}}\\,du=$",
+    "choices_tex": [
+      "$\\frac13\\sin^{-1}\\frac{3u}2+C$",
+      "$-\\frac1{18}\\ln\\sqrt{4-9u^2}+C$",
+      "$2\\sqrt{4-9u^2}+C$",
+      "$-\\frac19\\sqrt{4-9u^2}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $v=4-9u^2$, $dv=-18u\\,du$. Integrating $-v^{-1/2}/18$ gives $-\\sqrt v/9+C$."
+  },
+  {
+    "id": "A23",
+    "stem_tex": "$\\displaystyle\\int \\sin^2\\theta\\cos\\theta\\,d\\theta=$",
+    "choices_tex": [
+      "$\\frac{\\sin^2\\theta}2+C$",
+      "$\\frac{\\sin^3\\theta}3+C$",
+      "$-\\frac{\\sin^3\\theta}3+C$",
+      "$-\\frac{\\sin^2\\theta}2+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=\\sin\\theta$, $du=\\cos\\theta\\,d\\theta$. Integrate $u^2$ to get $u^3/3+C$."
+  },
+  {
+    "id": "A24",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\sin\\sqrt x}{\\sqrt x}\\,dx=$",
+    "choices_tex": [
+      "$-2\\cos^{1/2}x+C$",
+      "$-\\cos\\sqrt x+C$",
+      "$-2\\cos\\sqrt x+C$",
+      "$\\frac12\\cos\\sqrt x+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=\\sqrt x$, $dx/\\sqrt x=2du$, giving $2\\int\\sin u\\,du=-2\\cos u+C$."
+  },
+  {
+    "id": "A25",
+    "stem_tex": "$\\displaystyle\\int t\\cos(4t^2)\\,dt=$",
+    "choices_tex": [
+      "$\\frac18\\sin(4t^2)+C$",
+      "$\\frac12\\cos^2(2t)+C$",
+      "$-\\frac18\\sin(4t^2)+C$",
+      "$\\frac14\\sin(4t^2)+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=4t^2$, $du=8t\\,dt$, giving $\\sin u/8+C$."
+  },
+  {
+    "id": "A26",
+    "stem_tex": "$\\displaystyle\\int \\cos^22x\\,dx=$",
+    "choices_tex": [
+      "$\\frac x2+\\frac{\\sin4x}8+C$",
+      "$\\frac x2-\\frac{\\sin4x}8+C$",
+      "$\\frac x4+\\frac{\\sin4x}4+C$",
+      "$\\frac x4+\\frac{\\sin4x}{16}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Use $\\cos^22x=(1+\\cos4x)/2$ and integrate each term."
+  },
+  {
+    "id": "A27",
+    "stem_tex": "$\\displaystyle\\int \\sin2\\theta\\,d\\theta=$",
+    "choices_tex": [
+      "$\\frac12\\cos2\\theta+C$",
+      "$-2\\cos2\\theta+C$",
+      "$\\cos^2\\theta+C$",
+      "$-\\frac12\\cos2\\theta+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $(\\cos2\\theta)'=-2\\sin2\\theta$, multiply by $-1/2$."
+  },
+  {
+    "id": "A28",
+    "stem_tex": "$\\displaystyle\\int x\\cos x\\,dx=$",
+    "choices_tex": [
+      "$x\\sin x+C$",
+      "$x\\sin x+\\cos x+C$",
+      "$x\\sin x-\\cos x+C$",
+      "$\\cos x-x\\sin x+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "By parts with $u=x$, $dv=\\cos x\\,dx$, get $x\\sin x-\\int\\sin x\\,dx=x\\sin x+\\cos x+C$."
+  },
+  {
+    "id": "A29",
+    "stem_tex": "$\\displaystyle\\int \\frac1{\\cos^23u}\\,du=$",
+    "choices_tex": [
+      "$-\\frac{\\sec3u}3+C$",
+      "$\\tan3u+C$",
+      "$u+\\frac{\\sec3u}3+C$",
+      "$\\frac13\\tan3u+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Rewrite as $\\sec^23u$; $(\\tan3u)'=3\\sec^23u$, so divide by $3$."
+  },
+  {
+    "id": "A30",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\cos x}{\\sqrt{1+\\sin x}}\\,dx=$",
+    "choices_tex": [
+      "$-\\frac12(1+\\sin x)^{1/2}+C$",
+      "$\\ln\\sqrt{1+\\sin x}+C$",
+      "$2\\sqrt{1+\\sin x}+C$",
+      "$\\ln\\lvert1+\\sin x\\rvert+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=1+\\sin x$, $du=\\cos x\\,dx$; integrate $u^{-1/2}$ to get $2\\sqrt u+C$."
+  },
+  {
+    "id": "A31",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\cos(\\theta-1)}{\\sin^2(\\theta-1)}\\,d\\theta=$",
+    "choices_tex": [
+      "$2\\ln\\sin\\lvert\\theta-1\\rvert+C$",
+      "$-\\csc(\\theta-1)+C$",
+      "$-\\cot(\\theta-1)+C$",
+      "$\\csc(\\theta-1)+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=\\sin(\\theta-1)$ to obtain $\\int u^{-2}du=-1/u+C$."
+  },
+  {
+    "id": "A32",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\sin2x}{\\sqrt{1+\\cos^2x}}\\,dx=$",
+    "choices_tex": [
+      "$-2\\sqrt{1+\\cos^2x}+C$",
+      "$\\frac12\\ln(1+\\cos^2x)+C$",
+      "$\\sqrt{1+\\cos^2x}+C$",
+      "$-\\ln\\sqrt{1+\\cos^2x}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=1+\\cos^2x$, $du=-\\sin2x\\,dx$. The result is $-2\\sqrt u+C$."
+  },
+  {
+    "id": "A33",
+    "stem_tex": "$\\displaystyle\\int \\sec^{3/2}x\\tan x\\,dx=$",
+    "choices_tex": [
+      "$\\frac25\\sec^{5/2}x+C$",
+      "$-\\frac23\\cos^{-3/2}x+C$",
+      "$\\sec^{3/2}x+C$",
+      "$\\frac23\\sec^{3/2}x+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=\\sec x$; the remaining integrand is $u^{1/2}$, giving $2u^{3/2}/3+C$."
+  },
+  {
+    "id": "A34",
+    "stem_tex": "$\\displaystyle\\int \\tan\\theta\\,d\\theta=$",
+    "choices_tex": [
+      "$-\\ln\\lvert\\cos\\theta\\rvert+C$",
+      "$\\sec^2\\theta+C$",
+      "$\\ln\\lvert\\sin\\theta\\rvert+C$",
+      "$-\\ln\\lvert\\sec\\theta\\rvert+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Write $\\tan\\theta=\\sin\\theta/\\cos\\theta$ and substitute $u=\\cos\\theta$, giving $-\\ln|u|+C$."
+  },
+  {
+    "id": "A35",
+    "stem_tex": "$\\displaystyle\\int \\frac1{\\sin^22x}\\,dx=$",
+    "choices_tex": [
+      "$\\frac12\\csc2x\\cot2x+C$",
+      "$-\\frac12\\cot2x+C$",
+      "$-\\cot x+C$",
+      "$-\\csc2x+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $(\\cot2x)'=-2\\csc^22x$, the integral is $-\\cot2x/2+C$."
+  },
+  {
+    "id": "A36",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\tan^{-1}y}{1+y^2}\\,dy=$",
+    "choices_tex": [
+      "$(\\tan^{-1}y)^2+C$",
+      "$\\ln(1+y^2)+C$",
+      "$\\ln(\\tan^{-1}y)+C$",
+      "$\\frac12(\\tan^{-1}y)^2+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=\\arctan y$, $du=dy/(1+y^2)$. Integrating $u$ yields $u^2/2+C$."
+  },
+  {
+    "id": "A37",
+    "stem_tex": "$\\displaystyle\\int 2\\sin\\theta\\cos^2\\theta\\,d\\theta=$",
+    "choices_tex": [
+      "$-\\frac23\\cos^3\\theta+C$",
+      "$\\frac23\\cos^3\\theta+C$",
+      "$\\sin^2\\theta\\cos\\theta+C$",
+      "$\\cos^3\\theta+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=\\cos\\theta$, $du=-\\sin\\theta\\,d\\theta$, giving $-2\\int u^2du=-2u^3/3+C$."
+  },
+  {
+    "id": "A38",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\sin2t}{1-\\cos2t}\\,dt=$",
+    "choices_tex": [
+      "$\\frac2{(1-\\cos2t)^2}+C$",
+      "$-\\ln\\lvert1-\\cos2t\\rvert+C$",
+      "$\\frac12\\ln\\lvert1-\\cos2t\\rvert+C$",
+      "$2\\ln\\lvert1-\\cos2t\\rvert+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The denominator derivative is $2\\sin2t$, so the logarithmic derivative rule gives $\\ln|1-\\cos2t|/2+C$."
+  },
+  {
+    "id": "A39",
+    "stem_tex": "$\\displaystyle\\int \\cot2u\\,du=$",
+    "choices_tex": [
+      "$\\ln\\lvert\\sin u\\rvert+C$",
+      "$\\frac12\\ln\\lvert\\sin2u\\rvert+C$",
+      "$-\\frac12\\csc^22u+C$",
+      "$2\\ln\\lvert\\sin2u\\rvert+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write $\\cot2u=\\cos2u/\\sin2u$, then substitute $v=\\sin2u$ to obtain $\\ln|v|/2+C$."
+  },
+  {
+    "id": "A40",
+    "stem_tex": "$\\displaystyle\\int \\frac{e^x}{e^x-1}\\,dx=$",
+    "choices_tex": [
+      "$x+\\ln\\lvert e^x-1\\rvert+C$",
+      "$x-e^x+C$",
+      "$x-\\frac1{(e^x-1)^2}+C$",
+      "$\\ln\\lvert e^x-1\\rvert+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The numerator is the derivative of the denominator; use $\\int f'/f=\\ln|f|+C$."
+  },
+  {
+    "id": "A41",
+    "stem_tex": "$\\displaystyle\\int \\frac{x-1}{x(x-2)}\\,dx=$",
+    "choices_tex": [
+      "$\\frac12\\ln\\lvert x\\rvert+\\ln\\lvert x-2\\rvert+C$",
+      "$\\frac12\\ln\\left\\lvert\\frac{x-2}x\\right\\rvert+C$",
+      "$\\frac12\\ln\\lvert x(x-2)\\rvert+C$",
+      "$\\ln\\left\\lvert\\frac x{x-2}\\right\\rvert+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Partial fractions give $\\frac{x-1}{x(x-2)}=\\frac1{2x}+\\frac1{2(x-2)}$. Integration and the product rule for logarithms give $\\frac12\\ln|x(x-2)|+C$."
+  },
+  {
+    "id": "A42",
+    "stem_tex": "$\\displaystyle\\int xe^{x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\frac12e^{x^2}+C$",
+      "$2e^{x^2}+C$",
+      "$e^{x^2}+C$",
+      "$\\frac12e^{x^2+1}+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=x^2$, $du=2x\\,dx$, giving $e^u/2+C$."
+  },
+  {
+    "id": "A43",
+    "stem_tex": "$\\displaystyle\\int \\cos\\theta\\,e^{\\sin\\theta}\\,d\\theta=$",
+    "choices_tex": [
+      "$e^{\\sin\\theta+1}+C$",
+      "$e^{\\sin\\theta}+C$",
+      "$-e^{\\sin\\theta}+C$",
+      "$e^{\\cos\\theta}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=\\sin\\theta$, $du=\\cos\\theta\\,d\\theta$. The integral is $e^u+C$."
+  },
+  {
+    "id": "A44",
+    "stem_tex": "$\\displaystyle\\int e^{2\\theta}\\sin(e^{2\\theta})\\,d\\theta=$",
+    "choices_tex": [
+      "$\\cos(e^{2\\theta})+C$",
+      "$2e^{4\\theta}(\\cos(e^{2\\theta})+\\sin(e^{2\\theta}))+C$",
+      "$-\\frac12\\cos(e^{2\\theta})+C$",
+      "$-2\\cos(e^{2\\theta})+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Let $u=e^{2\\theta}$, $du=2e^{2\\theta}d\\theta$. Integrating $\\sin u/2$ gives $-\\cos u/2+C$."
+  },
+  {
+    "id": "A45",
+    "stem_tex": "$\\displaystyle\\int \\frac{e^{\\sqrt x}}{\\sqrt x}\\,dx=$",
+    "choices_tex": [
+      "$2\\sqrt x(e^{\\sqrt x}-1)+C$",
+      "$2e^{\\sqrt x}+C$",
+      "$\\frac12e^{\\sqrt x}+C$",
+      "$\\frac{\\sqrt x}2e^{\\sqrt x}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=\\sqrt x$, so $dx/\\sqrt x=2du$. The result is $2e^u+C$."
+  },
+  {
+    "id": "A46",
+    "stem_tex": "$\\displaystyle\\int xe^{-x}\\,dx=$",
+    "choices_tex": [
+      "$e^{-x}(1-x)+C$",
+      "$\\frac{e^{1-x}}{1-x}+C$",
+      "$-e^{-x}(x+1)+C$",
+      "$e^{-x}(x+1)+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "By parts, $\\int xe^{-x}dx=-xe^{-x}+\\int e^{-x}dx=-e^{-x}(x+1)+C$."
+  },
+  {
+    "id": "A47",
+    "stem_tex": "$\\displaystyle\\int x^2e^x\\,dx=$",
+    "choices_tex": [
+      "$e^x(x^2+2x)+C$",
+      "$e^x(x^2-2x-2)+C$",
+      "$e^x(x^2-2x+2)+C$",
+      "$e^x(x-1)^2+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integration by parts twice gives $x^2e^x-2\\int xe^x dx=e^x(x^2-2x+2)+C$."
+  },
+  {
+    "id": "A48",
+    "stem_tex": "$\\displaystyle\\int \\frac{e^x+e^{-x}}{e^x-e^{-x}}\\,dx=$",
+    "choices_tex": [
+      "$x-\\ln\\lvert e^x-e^{-x}\\rvert+C$",
+      "$x+2\\ln\\lvert e^x-e^{-x}\\rvert+C$",
+      "$\\ln\\lvert e^x-e^{-x}\\rvert+C$",
+      "$\\ln(e^x+e^{-x})+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The numerator is the denominator's derivative, so the integral is $\\ln|e^x-e^{-x}|+C$."
+  },
+  {
+    "id": "A49",
+    "stem_tex": "$\\displaystyle\\int \\frac{e^x}{1+e^{2x}}\\,dx=$",
+    "choices_tex": [
+      "$\\tan^{-1}e^x+C$",
+      "$\\frac12\\ln(1+e^{2x})+C$",
+      "$\\ln(1+e^{2x})+C$",
+      "$\\frac12\\tan^{-1}e^x+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=e^x$, $du=e^xdx$, giving $\\int du/(1+u^2)=\\arctan u+C$."
+  },
+  {
+    "id": "A50",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\ln v}v\\,dv=$",
+    "choices_tex": [
+      "$\\ln\\lvert\\ln v\\rvert+C$",
+      "$\\ln\\frac{v^2}2+C$",
+      "$\\frac12(\\ln v)^2+C$",
+      "$\\frac12\\ln v^2+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=\\ln v$, $du=dv/v$. The integral is $u^2/2+C$; the square in option D is inside the logarithm."
+  },
+  {
+    "id": "A51",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\ln\\sqrt x}x\\,dx=$",
+    "choices_tex": [
+      "$\\frac{(\\ln\\sqrt x)^2}{\\sqrt x}+C$",
+      "$\\frac12\\ln\\lvert\\ln x\\rvert+C$",
+      "$\\frac{(\\ln\\sqrt x)^2}2+C$",
+      "$\\frac14(\\ln x)^2+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $\\ln\\sqrt x=\\frac12\\ln x$, set $u=\\ln x$ to obtain $\\frac12\\int u\\,du=u^2/4+C$."
+  },
+  {
+    "id": "A52",
+    "stem_tex": "$\\displaystyle\\int x^3\\ln x\\,dx=$",
+    "choices_tex": [
+      "$x^2(3\\ln x+1)+C$",
+      "$\\frac{x^4}{16}(4\\ln x-1)+C$",
+      "$\\frac{x^4}4(\\ln x-1)+C$",
+      "$3x^2(\\ln x-\\frac12)+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "By parts with $u=\\ln x$ and $dv=x^3dx$, obtain $x^4\\ln x/4-x^4/16+C$."
+  },
+  {
+    "id": "A53",
+    "stem_tex": "$\\displaystyle\\int \\ln\\eta\\,d\\eta=$",
+    "choices_tex": [
+      "$\\frac12\\ln^2\\eta+C$",
+      "$\\eta(\\ln\\eta-1)+C$",
+      "$\\frac12\\ln\\eta^2+C$",
+      "$\\eta\\ln\\eta+\\eta+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "By parts, $\\int\\ln\\eta\\,d\\eta=\\eta\\ln\\eta-\\int1\\,d\\eta=\\eta(\\ln\\eta-1)+C$."
+  },
+  {
+    "id": "A54",
+    "stem_tex": "$\\displaystyle\\int \\ln x^3\\,dx=$",
+    "choices_tex": [
+      "$\\frac32(\\ln x)^2+C$",
+      "$3x(\\ln x-1)+C$",
+      "$3\\ln x(x-1)+C$",
+      "$\\frac{3x(\\ln x)^2}2+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "For the real domain $x>0$, $\\ln x^3=3\\ln x$. Integration by parts gives $3x\\ln x-3x+C$."
+  },
+  {
+    "id": "A55",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\ln y}{y^2}\\,dy=$",
+    "choices_tex": [
+      "$\\frac1y(1-\\ln y)+C$",
+      "$\\frac1{2y}(\\ln y)^2+C$",
+      "$-\\frac1y(\\ln y+1)+C$",
+      "$\\frac{\\ln y}y-\\frac1y+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "By parts with $u=\\ln y$ and $dv=y^{-2}dy$, obtain $-\\ln y/y+\\int y^{-2}dy=-(\\ln y+1)/y+C$."
+  },
+  {
+    "id": "A56",
+    "stem_tex": "$\\displaystyle\\int \\frac1{v\\ln v}\\,dv=$",
+    "choices_tex": [
+      "$\\frac1{\\ln v^2}+C$",
+      "$-\\frac1{(\\ln v)^2}+C$",
+      "$-\\ln\\lvert\\ln v\\rvert+C$",
+      "$\\ln\\lvert\\ln v\\rvert+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=\\ln v$, $du=dv/v$, giving $\\int du/u=\\ln|u|+C$."
+  },
+  {
+    "id": "A57",
+    "stem_tex": "$\\displaystyle\\int \\frac{y-1}{y+1}\\,dy=$",
+    "choices_tex": [
+      "$y-2\\ln\\lvert y+1\\rvert+C$",
+      "$1-\\frac2{y+1}+C$",
+      "$\\ln\\frac{\\lvert y\\rvert}{(y+1)^2}+C$",
+      "$1-2\\ln\\lvert y+1\\rvert+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Divide: $(y-1)/(y+1)=1-2/(y+1)$. Integrate to get $y-2\\ln|y+1|+C$."
+  },
+  {
+    "id": "A58",
+    "stem_tex": "$\\displaystyle\\int \\frac1{x^2+2x+2}\\,dx=$",
+    "choices_tex": [
+      "$\\ln(x^2+2x+2)+C$",
+      "$\\ln\\lvert x+1\\rvert+C$",
+      "$\\arctan(x+1)+C$",
+      "$\\frac1{\\frac13x^3+x^2+2x}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Complete the square: $x^2+2x+2=(x+1)^2+1$. Use the inverse-tangent integral."
+  },
+  {
+    "id": "A59",
+    "stem_tex": "$\\displaystyle\\int \\sqrt x(\\sqrt x-1)\\,dx=$",
+    "choices_tex": [
+      "$2(x^{3/2}-x)+C$",
+      "$\\frac{x^2}2-x+C$",
+      "$\\frac12(\\sqrt x-1)^2+C$",
+      "$\\frac12x^2-\\frac23x^{3/2}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Expand as $x-x^{1/2}$ and apply the power rule to each term."
+  },
+  {
+    "id": "A60",
+    "stem_tex": "$\\displaystyle\\int e^\\theta\\cos\\theta\\,d\\theta=$",
+    "choices_tex": [
+      "$e^\\theta(\\cos\\theta-\\sin\\theta)+C$",
+      "$\\frac12e^\\theta(\\sin\\theta+\\cos\\theta)+C$",
+      "$2e^\\theta(\\sin\\theta+\\cos\\theta)+C$",
+      "$\\frac12e^\\theta(\\sin\\theta-\\cos\\theta)+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Twice integrating by parts gives $I=e^\\theta\\cos\\theta+e^\\theta\\sin\\theta-I$, hence $I=e^\\theta(\\sin\\theta+\\cos\\theta)/2+C$."
+  },
+  {
+    "id": "A61",
+    "stem_tex": "$\\displaystyle\\int \\frac{(1-\\ln t)^2}t\\,dt=$",
+    "choices_tex": [
+      "$\\frac13(1-\\ln t)^3+C$",
+      "$\\ln t-2\\ln^2t+\\ln^3t+C$",
+      "$\\ln t-\\ln^2t+\\frac{\\ln(t^3)}3+C$",
+      "$-\\frac{(1-\\ln t)^3}3+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=1-\\ln t$, $du=-dt/t$. Then the integral is $-u^3/3+C$. Option C in the source has $\\ln(t^3)$, which is $3\\ln t$, rather than $(\\ln t)^3$."
+  },
+  {
+    "id": "A62",
+    "stem_tex": "$\\displaystyle\\int u\\sec^2u\\,du=$",
+    "choices_tex": [
+      "$u\\tan u+\\ln\\lvert\\cos u\\rvert+C$",
+      "$\\frac{u^2}2\\tan u+C$",
+      "$\\frac12\\sec u\\tan u+C$",
+      "$u\\tan u-\\ln\\lvert\\sin u\\rvert+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "By parts, the integral is $u\\tan u-\\int\\tan u\\,du=u\\tan u+\\ln|\\cos u|+C$."
+  },
+  {
+    "id": "A63",
+    "stem_tex": "$\\displaystyle\\int \\frac{2x+1}{4+x^2}\\,dx=$",
+    "choices_tex": [
+      "$\\ln(x^2+4)+C$",
+      "$\\ln(x^2+4)+\\tan^{-1}\\frac x2+C$",
+      "$\\ln(x^2+4)+\\frac12\\tan^{-1}\\frac x2+C$",
+      "$\\ln(x^2+4)+\\frac14\\tan^{-1}x+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Split into $2x/(x^2+4)$ and $1/(x^2+4)$. Their integrals are $\\ln(x^2+4)$ and $\\frac12\\arctan(x/2)$."
+  },
+  {
+    "id": "A64",
+    "stem_tex": "$\\displaystyle\\int \\frac{1-x}{\\sqrt{1-x^2}}\\,dx=$",
+    "choices_tex": [
+      "$\\sqrt{1-x^2}+C$",
+      "$\\sin^{-1}x+C$",
+      "$\\sin^{-1}x+\\sqrt{1-x^2}+C$",
+      "$\\sin^{-1}x+\\frac12\\ln\\sqrt{1-x^2}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The first numerator term integrates to $\\arcsin x$; substitution $u=1-x^2$ makes the second integrate to $\\sqrt{1-x^2}$."
+  },
+  {
+    "id": "A65",
+    "stem_tex": "$\\displaystyle\\int \\frac{2x-1}{\\sqrt{4x-4x^2}}\\,dx=$",
+    "choices_tex": [
+      "$4\\ln\\sqrt{4x-4x^2}+C$",
+      "$\\sin^{-1}(1-2x)+C$",
+      "$\\frac12\\sqrt{4x-4x^2}+C$",
+      "$-\\frac12\\sqrt{4x-4x^2}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Set $u=4x-4x^2$, $du=-4(2x-1)dx$, giving $-\\frac14\\int u^{-1/2}du=-\\sqrt u/2+C$."
+  },
+  {
+    "id": "A66",
+    "stem_tex": "$\\displaystyle\\int \\frac{e^{2x}}{1+e^x}\\,dx=$",
+    "choices_tex": [
+      "$\\tan^{-1}e^x+C$",
+      "$e^x-\\ln(1+e^x)+C$",
+      "$e^x-x+\\ln\\lvert1+e^x\\rvert+C$",
+      "$e^x+\\frac1{(e^x+1)^2}+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Set $u=e^x$, so the integral becomes $\\int u/(1+u)du=\\int(1-1/(1+u))du=u-\\ln(1+u)+C$."
+  },
+  {
+    "id": "A67",
+    "stem_tex": "$\\displaystyle\\int \\frac{\\cos\\theta}{1+\\sin^2\\theta}\\,d\\theta=$",
+    "choices_tex": [
+      "$\\sec\\theta\\tan\\theta+C$",
+      "$\\ln(1+\\sin^2\\theta)+C$",
+      "$\\tan^{-1}(\\sin\\theta)+C$",
+      "$\\frac1{(1+\\sin^2\\theta)^2}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $u=\\sin\\theta$, $du=\\cos\\theta\\,d\\theta$. The integral is $\\arctan u+C$."
+  },
+  {
+    "id": "A68",
+    "stem_tex": "$\\displaystyle\\int \\arctan x\\,dx=$",
+    "choices_tex": [
+      "$x\\arctan x-\\ln(1+x^2)+C$",
+      "$x\\arctan x+\\ln(1+x^2)+C$",
+      "$x\\arctan x+\\frac12\\ln(1+x^2)+C$",
+      "$x\\arctan x-\\frac12\\ln(1+x^2)+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "By parts with $u=\\arctan x$, $dv=dx$, obtain $x\\arctan x-\\int x/(1+x^2)dx=x\\arctan x-\\frac12\\ln(1+x^2)+C$."
+  },
+  {
+    "id": "A69",
+    "stem_tex": "$\\displaystyle\\int \\frac1{1-e^x}\\,dx=$",
+    "choices_tex": [
+      "$-\\ln\\lvert1-e^x\\rvert+C$",
+      "$x-\\ln\\lvert1-e^x\\rvert+C$",
+      "$\\frac1{(1-e^x)^2}+C$",
+      "$e^{-x}\\ln\\lvert1+e^x\\rvert+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write $1/(1-e^x)=1+e^x/(1-e^x)$ and integrate the second term by $u=1-e^x$."
+  },
+  {
+    "id": "A70",
+    "stem_tex": "$\\displaystyle\\int \\frac{(2-y)^2}{4\\sqrt y}\\,dy=$",
+    "choices_tex": [
+      "$\\frac16(2-y)^3\\sqrt y+C$",
+      "$2\\sqrt y-\\frac23y^{3/2}+\\frac85y^{5/2}+C$",
+      "$\\ln\\lvert y\\rvert-y+2y^2+C$",
+      "$2y^{1/2}-\\frac23y^{3/2}+\\frac1{10}y^{5/2}+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Expand as $y^{-1/2}-y^{1/2}+y^{3/2}/4$. Integrating gives $2y^{1/2}-2y^{3/2}/3+y^{5/2}/10+C$."
+  },
+  {
+    "id": "A71",
+    "stem_tex": "$\\displaystyle\\int e^{2\\ln u}\\,du=$",
+    "choices_tex": [
+      "$\\frac13e^{u^3}+C$",
+      "$e^{u^3/3}+C$",
+      "$\\frac13u^3+C$",
+      "$\\frac2u e^{2\\ln u}+C$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $u>0$, $e^{2\\ln u}=u^2$, whose integral is $u^3/3+C$."
+  },
+  {
+    "id": "A72",
+    "stem_tex": "$\\displaystyle\\int \\frac1{y(1+\\ln y^2)}\\,dy=$",
+    "choices_tex": [
+      "$\\frac12\\ln\\lvert1+\\ln y^2\\rvert+C$",
+      "$-\\frac1{(1+\\ln y^2)^2}+C$",
+      "$\\ln\\lvert y\\rvert+\\frac12\\ln\\lvert\\ln y\\rvert+C$",
+      "$\\tan^{-1}(\\ln\\lvert y\\rvert)+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Set $u=1+\\ln(y^2)$; for $y\\ne0$, $du=2dy/y$, giving $\\ln|u|/2+C$."
+  },
+  {
+    "id": "A73",
+    "stem_tex": "$\\displaystyle\\int (\\tan\\theta-1)^2\\,d\\theta=$",
+    "choices_tex": [
+      "$\\sec\\theta+\\theta+2\\ln\\lvert\\cos\\theta\\rvert+C$",
+      "$\\tan\\theta+2\\ln\\lvert\\cos\\theta\\rvert+C$",
+      "$\\tan\\theta-2\\sec^2\\theta+C$",
+      "$\\tan\\theta-2\\ln\\lvert\\cos\\theta\\rvert+C$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Expand and use $\\tan^2\\theta+1=\\sec^2\\theta$. The integrand becomes $\\sec^2\\theta-2\\tan\\theta$, with integral $\\tan\\theta+2\\ln|\\cos\\theta|+C$."
+  },
+  {
+    "id": "A74",
+    "stem_tex": "$\\displaystyle\\int \\frac1{1+\\sin\\theta}\\,d\\theta=$",
+    "choices_tex": [
+      "$\\sec\\theta-\\tan\\theta+C$",
+      "$\\ln(1+\\sin\\theta)+C$",
+      "$\\ln\\lvert\\sec\\theta+\\tan\\theta\\rvert+C$",
+      "$\\tan\\theta-\\sec\\theta+C$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Rationalize to obtain $(1-\\sin\\theta)/\\cos^2\\theta=\\sec^2\\theta-\\sec\\theta\\tan\\theta$. Integrate to get $\\tan\\theta-\\sec\\theta+C$, with continuous extension where needed."
+  },
+  {
+    "id": "A75",
+    "stem_tex": "A particle starting at rest at $t=0$ moves along a line so that its acceleration at time $t$ is $12t$ ft/sec$^2$. How much distance does the particle cover during the first 3 seconds?",
+    "choices_tex": [
+      "32 feet",
+      "48 feet",
+      "54 feet",
+      "108 feet"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrate $a(t)=12t$ and use $v(0)=0$ to get $v(t)=6t^2\\ge0$. Distance is $\\int_0^3 6t^2dt=[2t^3]_0^3=54$ feet."
+  },
+  {
+    "id": "A76",
+    "stem_tex": "The equation of the curve whose slope at point $(x,y)$ is $x^2-2$ and which contains the point $(1,-3)$ is",
+    "choices_tex": [
+      "$y=\\frac13x^3-2x$",
+      "$y=2x-1$",
+      "$y=\\frac13x^3-\\frac{10}3$",
+      "$y=\\frac13x^3-2x-\\frac43$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Integrating $y\\prime=x^2-2$ gives $y=x^3/3-2x+C$. Substituting $(1,-3)$ yields $C=-4/3$."
+  },
+  {
+    "id": "A77",
+    "stem_tex": "A particle moves along a line with acceleration $2+6t$ at time $t$. When $t=0$, its velocity equals $3$ and it is at position $s=2$. When $t=1$, it is at position $s=$",
+    "choices_tex": [
+      "$5$",
+      "$6$",
+      "$7$",
+      "$8$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrating twice with the initial values gives $v(t)=2t+3t^2+3$ and $s(t)=t^2+t^3+3t+2$. Thus $s(1)=7$."
+  },
+  {
+    "id": "A78",
+    "stem_tex": "Find the acceleration (in ft/sec$^2$) needed to bring a particle moving with a velocity of 75 ft/sec to a stop in 5 seconds.",
+    "choices_tex": [
+      "$-3$",
+      "$-6$",
+      "$-15$",
+      "$-25$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For constant acceleration, $a=(0-75)/5=-15$ ft/sec$^2$. This is also the average acceleration if acceleration varies."
+  },
+  {
+    "id": "A79",
+    "stem_tex": "$\\displaystyle\\int\\frac{x^2}{x^2-1}\\,dx=$",
+    "choices_tex": [
+      "$x+\\frac12\\ln\\left|\\frac{x-1}{x+1}\\right|+C$",
+      "$\\ln|x^2-1|+C$",
+      "$x+\\frac12\\ln\\left|\\frac{x+1}{x-1}\\right|+C$",
+      "$1+\\frac12\\ln\\left|\\frac{x+1}{x-1}\\right|+C$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Divide and use partial fractions: $x^2/(x^2-1)=1+\\frac1{2(x-1)}-\\frac1{2(x+1)}$. Integration gives $x+\\frac12\\ln|(x-1)/(x+1)|+C$."
+  }
+]

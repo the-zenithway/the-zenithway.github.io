@@ -1,0 +1,1350 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "The slope of the curve $y^3 - xy^2 = 16$ at the point where $y=2$ is",
+    "choices_tex": [
+      "$-\\dfrac{1}{5}$",
+      "$\\dfrac{1}{5}$",
+      "$-5$",
+      "$5$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At $y=2$, $8-4x=16$ gives $x=-2$. Implicit differentiation gives $(3y^2-2xy)y'=y^2$, so $y'=4/(12+8)=1/5$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "The slope of the curve $y^2 - xy - 5x = 1$ at the point $(0,-1)$ is",
+    "choices_tex": [
+      "$-1$",
+      "$-2$",
+      "$1$",
+      "$2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Implicit differentiation gives $(2y-x)y'=y+5$. At $(0,-1)$, $y'=4/(-2)=-2$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "Find an equation of the tangent to $y=x\\cos2x$ at $(\\pi/4,0)$.",
+    "choices_tex": [
+      "$y=-\\frac\\pi2(x-\\frac\\pi4)$",
+      "$y = \\dfrac{\\pi}{4}$",
+      "$y = \\dfrac{\\pi}{4} - x$",
+      "$y = x$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$y\\prime=\\cos2x-2x\\sin2x$. At $x=\\pi/4$, $y=0$ and $y\\prime=-\\pi/2$. The tangent is $y=-\\frac\\pi2(x-\\frac\\pi4)$.",
+    "source_original": {
+      "stem_tex": "An equation of the tangent to the curve $y = x\\cos 2x$ at the point $\\left(\\frac{\\pi}{4},\\frac{\\pi}{4}\\right)$ is",
+      "choices_tex": [
+        "$y = x - \\dfrac{\\pi}{4}$",
+        "$y = \\dfrac{\\pi}{4}$",
+        "$y = \\dfrac{\\pi}{4} - x$",
+        "$y = x$"
+      ],
+      "correct": null,
+      "explanation_tex": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
+      "source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it."
+    },
+    "resolved_source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
+    "source_correction": "Corrected the point to (pi/4,0) and supplied the corresponding tangent as option A."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "The tangent to the curve of $y = xe^{-2x}$ is horizontal when $x$ is equal to",
+    "choices_tex": [
+      "$0$",
+      "$\\dfrac{1}{2}$",
+      "$-\\dfrac{1}{2}$",
+      "$\\dfrac{1}{2e}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate: $y'=e^{-2x}(1-2x)$. Since the exponential never vanishes, the horizontal tangent occurs at $x=1/2$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "The minimum value of the slope of the curve $y = x^5 + 2x^3 - 3x$ is",
+    "choices_tex": [
+      "$3$",
+      "$9$",
+      "$-3$",
+      "$-9$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The slope is $5x^4+6x^2-3\\ge-3$, with equality at $x=0$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "An equation of the tangent to the hyperbola $x^2-y^2=20$ at the point $(6,4)$ on the curve is",
+    "choices_tex": [
+      "$3x-2y+10=0$",
+      "$y = \\dfrac{3}{2}x$",
+      "$y = \\dfrac{3}{2}x - 5$",
+      "$y = \\dfrac{2}{3}x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Implicit differentiation gives $2x-2y\\,y\\prime=0$, so the slope at $(6,4)$ is $3/2$. Thus $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$, choice C.",
+    "source_original": {
+      "stem_tex": "An equation of the tangent to the hyperbola $x^2-y^2=20$ at the point $(6,4)$ on the curve is",
+      "choices_tex": [
+        "$3x-2y-10=0$",
+        "$y = \\dfrac{3}{2}x$",
+        "$y = \\dfrac{3}{2}x - 5$",
+        "$y = \\dfrac{2}{3}x$"
+      ],
+      "correct": null,
+      "explanation_tex": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
+      "source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices."
+    },
+    "resolved_source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
+    "source_correction": "Changed duplicate option A to a different line; retained the correct tangent in C."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "A tangent to the curve $y^2-xy+16=0$ is vertical when",
+    "choices_tex": [
+      "$y=0$",
+      "$y = \\pm 2$",
+      "$y = \\dfrac{1}{2}$",
+      "$y = \\pm 4$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Differentiate to get $(2y-x)y'=y$. A vertical tangent has $x=2y$ with $y\\ne0$. Substitution into the curve yields $16-y^2=0$, so $y=\\pm4$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "The volume of a sphere is given by $V = \\frac{4}{3}\\pi r^3$. Use a tangent line to approximate the increase in volume, in cubic inches, when the radius of a sphere is increased from 4 to 4.1 inches.",
+    "choices_tex": [
+      "$0.04\\pi$",
+      "$0.16\\pi$",
+      "$1.6\\pi$",
+      "$6.4\\pi$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The differential is $dV=4\\pi r^2dr$. At $r=4$ and $dr=0.1$, $dV=4\\pi(16)(0.1)=6.4\\pi$ cubic inches."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "When $x=4$, the equation $2x^2-y^3=24$ has the solution $y=2$. Using a tangent line to the graph of the curve, approximate $y$ when $x=4.03$.",
+    "choices_tex": [
+      "$1.6$",
+      "$1.96$",
+      "$2.04$",
+      "$2.4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Implicit differentiation gives $y'=4x/(3y^2)=4/3$ at $(4,2)$. Thus $y\\approx2+(4/3)(0.03)=2.04$."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "If the side $e$ of a square is increased by 2%, then the area is increased approximately",
+    "choices_tex": [
+      "$0.04e$",
+      "$0.04e^2$",
+      "$0.02e^2$",
+      "$0.02e$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $A=e^2$, $dA=2e\\,de$. A 2% side increase gives $de=0.02e$, so $dA=0.04e^2$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "The edge of a cube has length 20 in., with a possible error of 2%. The possible error, in cubic inches, in the volume of the cube is",
+    "choices_tex": [
+      "$4$",
+      "$40$",
+      "$240$",
+      "$480$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Using differentials, $dV=3e^2de=3(20)^2(0.02\\cdot20)=480$ cubic inches. This is the approximate propagated error; the exact upper error is $20.4^3-20^3=489.664$."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "The function $f(x) = x^4 - 8x^2$ has",
+    "choices_tex": [
+      "one local minimum and two local maxima",
+      "one local minimum and no local maximum",
+      "no local minimum and one local maximum",
+      "two local minima and one local maximum"
+    ],
+    "correct": "D",
+    "explanation_tex": "Factor $f'=4x(x-2)(x+2)$. Its signs on the four intervals are $-,+,-,+$, giving minima at $x=\\pm2$ and a maximum at $0$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "The number of inflection points on the graph of $f(x) = x^4 - 8x^2$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The second derivative is $f''=12x^2-16$, which changes sign at $x=\\pm2/\\sqrt3$. There are two inflection points."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "The maximum value of the function $y = -6\\sqrt{3-x}$ is",
+    "choices_tex": [
+      "$0$",
+      "$-6$",
+      "$-3$",
+      "$3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The real domain is $x\\le3$. Since $\\sqrt{3-x}\\ge0$, $y\\le0$, and $y=0$ at $x=3$."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "The total number of local maximum and minimum points of the function whose derivative, for all $x$, is given by $f'(x) = x(x-4)^2(x+2)^4$ is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The even-power factors do not change sign at $-2$ or $4$. The sign of $f'$ changes only at $x=0$, from negative to positive, so there is one local extremum."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "For which curve shown below are both $f'$ and $f''$ negative?",
+    "choices_tex": [
+      "Curve (A)",
+      "Curve (B)",
+      "Curve (C)",
+      "Curve (D)"
+    ],
+    "correct": "A",
+    "explanation_tex": "A negative first derivative means the graph decreases; a negative second derivative means its slopes become more negative. Curve A is decreasing and concave down.",
+    "figure": {
+      "src": "data/calculus-figures/t4-curves.png",
+      "alt": "Four curves labeled A through D."
+    }
+  },
+  {
+    "id": "T17",
+    "stem_tex": "For which curve shown below is $f\\prime\\prime$ positive but $f\\prime$ negative?",
+    "choices_tex": [
+      "Curve (A)",
+      "Curve (B)",
+      "Curve (C)",
+      "Curve (D)"
+    ],
+    "correct": "B",
+    "explanation_tex": "Curve B decreases while its slopes become less negative as $x$ increases. Hence $f'<0$ and $f''>0$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-curves.png",
+      "alt": "Four curves labeled A through D."
+    }
+  },
+  {
+    "id": "T18",
+    "stem_tex": "The position of a particle moving along a horizontal line is $s=t^3-9t^2+27t-5$. The object is moving to the right for",
+    "choices_tex": [
+      "$t < 3$",
+      "all $t$ except $t=3$",
+      "all $t$",
+      "$t>3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate $s$: $v=3t^2-18t+27=3(t-3)^2$. This is positive except at $t=3$, so the particle moves right at all other times."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "The position of a particle moving along a horizontal line is $s=t^3-9t^2+27t-5$. The minimum value of the speed is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Speed is $|v|=3(t-3)^2\\ge0$, attaining its minimum $0$ at $t=3$."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "The position of a particle moving along a horizontal line is $s=t^3-9t^2+27t-5$. The acceleration is positive",
+    "choices_tex": [
+      "when $t>3$",
+      "for all $t$, $t \\neq 3$",
+      "when $t<3$",
+      "for $1<t<3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Acceleration is $a=v'=6t-18=6(t-3)$, which is positive exactly when $t>3$."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "The position of a particle moving along a horizontal line is $s=t^3-9t^2+27t-5$. The speed of the particle is decreasing for",
+    "choices_tex": [
+      "$t<3$",
+      "all $t$",
+      "$t<1$ or $t>3$",
+      "$t>3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Away from $t=3$, $v>0$, so speed decreases when $a=6(t-3)<0$, namely $t<3$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "A particle moves along a horizontal line with position $s=t^4-10t^3+36t^2+3$ at time $t$. The particle is at rest when $t$ is equal to",
+    "choices_tex": [
+      "$2$ or $3$",
+      "$0$",
+      "$\\dfrac{5}{2}$",
+      "$0$, $2$, or $3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Velocity is $v=4t^3-30t^2+72t=2t(2t^2-15t+36)$. The quadratic has discriminant $225-288<0$ and is always positive. Thus only $t=0$ gives rest.",
+    "source_correction": "The stated polynomial has only one zero of velocity, t=0."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "A particle moves along a horizontal line with position $s=t^4-10t^3+36t^2+3$ at time $t$. The velocity, $v$, is increasing when",
+    "choices_tex": [
+      "$t>2$",
+      "$2<t<3$",
+      "$t<3$",
+      "$t<2$ or $t>3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Acceleration is $a=12t^2-60t+72=12(t-2)(t-3)$. Velocity increases where $a>0$: $t<2$ or $t>3$."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "A particle moves along a horizontal line with position $s=t^4-10t^3+36t^2+3$ at time $t$. The speed of the particle is increasing for",
+    "choices_tex": [
+      "$0<t<2$ or $t>3$",
+      "$2<t<3$",
+      "$t<3$",
+      "$t<0$ or $t>3$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The quadratic factor in $v=2t(2t^2-15t+36)$ is positive, so $v$ has the sign of $t$. Combining this with $a=12(t-2)(t-3)$, velocity and acceleration share a sign on $(0,2)$ and $(3,\\infty)$."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "The displacement from the origin of a particle moving on a line is given by $s = 2t^4-8t^3$. The maximum displacement during the time interval $-2 \\leq t \\leq 4$ is",
+    "choices_tex": [
+      "$54$",
+      "$6$",
+      "$96$",
+      "$32$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Critical times satisfy $s'=8t^2(t-3)=0$, so check $-2,0,3,4$. The positions are $96,0,-54,0$, respectively. The maximum is $96$."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "If a particle moves along a line according to the law $s = t^5+10t^4$, then the number of times it reverses direction is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Velocity is $v=5t^3(t+8)$. Its sign changes at both $t=-8$ and $t=0$, so over all real times there are two reversals. If time were restricted to $t\\ge0$, there would be none; no such restriction is stated."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "The position vector of a moving point is $\\mathbf R(t)=\\langle4\\cos(\\pi t/4),3\\sin(\\pi t/4)\\rangle$. A single equation in $x$ and $y$ for the path of the point is",
+    "choices_tex": [
+      "$x^2+y^2=25$",
+      "$16x^2+9y^2=144$",
+      "$3x^2+4y^2=25$",
+      "$9x^2+16y^2=144$"
+    ],
+    "correct": "D",
+    "explanation_tex": "From $x=4\\cos(\\pi t/4)$ and $y=3\\sin(\\pi t/4)$, $x^2/16+y^2/9=1$, equivalently $9x^2+16y^2=144$."
+  },
+  {
+    "id": "T28",
+    "stem_tex": "The position vector of a moving point is $\\mathbf R(t)=\\langle4\\cos(\\pi t/4),3\\sin(\\pi t/4)\\rangle$. When $t=4$, the speed of the particle is",
+    "choices_tex": [
+      "$\\dfrac{3\\pi}{4}$",
+      "$3$",
+      "$4$",
+      "$\\dfrac{\\sqrt{7}}{4}\\pi$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Velocity is $\\langle-\\pi\\sin(\\pi t/4),(3\\pi/4)\\cos(\\pi t/4)\\rangle$. At $t=4$ it is $\\langle0,-3\\pi/4\\rangle$, with speed $3\\pi/4$."
+  },
+  {
+    "id": "T29",
+    "stem_tex": "The position vector of a moving point is $\\mathbf R(t)=\\langle4\\cos(\\pi t/4),3\\sin(\\pi t/4)\\rangle$. The magnitude of the acceleration when $t=4$ is",
+    "choices_tex": [
+      "$3$",
+      "$\\dfrac{\\pi^2}{4}$",
+      "$4$",
+      "$\\dfrac{3\\pi^2}{16}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Acceleration is $\\langle-(\\pi^2/4)\\cos(\\pi t/4),-(3\\pi^2/16)\\sin(\\pi t/4)\\rangle$. At $t=4$ its magnitude is $\\pi^2/4$."
+  },
+  {
+    "id": "T30",
+    "stem_tex": "The position vector of a moving point is $\\mathbf R(t)=\\langle4\\cos(\\pi t/4),3\\sin(\\pi t/4)\\rangle$. At the point where $t=1$, the slope of the curve along which the particle moves is",
+    "choices_tex": [
+      "$-\\dfrac{2\\sqrt{2}}{3}$",
+      "$-\\dfrac{3}{4}$",
+      "$\\dfrac{3}{4}$",
+      "$-\\dfrac{4}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The slope is $(dy/dt)/(dx/dt)=-(3/4)\\cot(\\pi t/4)$. At $t=1$, it equals $-3/4$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "A balloon is being filled with helium at the rate of 8 ft$^3$/min. The rate, in square feet per minute, at which the surface area is increasing when the volume is $\\dfrac{32\\pi}{3}$ ft$^3$ is",
+    "choices_tex": [
+      "$8\\pi$",
+      "$2$",
+      "$8$",
+      "$1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For a spherical balloon, $V=4\\pi r^3/3=32\\pi/3$ gives $r=2$. Since $A=4\\pi r^2$, $dA/dV=2/r=1$, so $dA/dt=8$ square feet per minute."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "A circular conical reservoir, vertex down, has depth 30 ft and radius at the top 15 ft. Water is leaking out so that the surface is falling at the rate of $\\dfrac{1}{3}$ ft/hr. The rate, in cubic feet per hour, at which the water is leaving the reservoir when the water is 6 ft deep is",
+    "choices_tex": [
+      "$3\\pi$",
+      "$6\\pi$",
+      "$\\dfrac{1}{3\\pi}$",
+      "$\\dfrac{1}{6\\pi}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Similar triangles give $r=h/2$, so $V=\\pi h^3/12$ and $V'=\\pi h^2h'/4$. With $h=6$, $h'=-1/3$, $V'=-3\\pi$; the outflow magnitude is $3\\pi$."
+  },
+  {
+    "id": "T33",
+    "stem_tex": "A local minimum value of the function $y = \\dfrac{e^x}{3x}$ is",
+    "choices_tex": [
+      "$\\dfrac{1}{e}$",
+      "$1$",
+      "$-1$",
+      "$\\dfrac{e}{3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Differentiate to get $y'=e^x(x-1)/(3x^2)$. It changes from negative to positive at $x=1$, so the local minimum value is $e/3$."
+  },
+  {
+    "id": "T34",
+    "stem_tex": "The area of the largest rectangle that can be drawn with one side along the $x$-axis and two vertices on the curve of $y = e^{-2x^2}$ is",
+    "choices_tex": [
+      "$\\sqrt{\\dfrac{2}{e}}$",
+      "$\\sqrt{\\dfrac{1}{e}}$",
+      "$\\dfrac{2}{e}$",
+      "$\\dfrac{1}{\\sqrt{2e}}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The rectangle has width $2x$ and height $e^{-2x^2}$, so $A=2xe^{-2x^2}$ for $x>0$. Its derivative is $2e^{-2x^2}(1-4x^2)$, changing from positive to negative at $x=1/2$. The maximum area is $e^{-1/2}=\\sqrt{1/e}$."
+  },
+  {
+    "id": "T35",
+    "stem_tex": "A line with a negative slope is drawn through the point $(2,3)$ forming a right triangle with the positive $x$- and $y$-axes. The slope of the line forming the triangle of least area is",
+    "choices_tex": [
+      "$-1$",
+      "$-\\dfrac{3}{2}$",
+      "$-2$",
+      "$-3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write the slope as $-k$, $k>0$. The intercepts are $2+3/k$ and $3+2k$, giving area $6+2k+9/(2k)$. Its derivative vanishes at $k=3/2$ and changes from negative to positive. Thus the slope is $-3/2$."
+  },
+  {
+    "id": "T36",
+    "stem_tex": "The point(s) on the curve $x^2-y^2=9$ closest to the point $(10,0)$ is (are)",
+    "choices_tex": [
+      "$(3,0)$",
+      "$\\left(\\sqrt{13},\\pm 2\\right)$",
+      "$(5,\\pm 4)$",
+      "$\\left(\\sqrt{109},\\pm 10\\right)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Using $y^2=x^2-9$, the squared distance is $(x-10)^2+y^2=2(x-5)^2+41$. Its minimum occurs at $x=5$, where $y=\\pm4$."
+  },
+  {
+    "id": "T37",
+    "stem_tex": "The sum of the squares of two positive numbers is 300; their minimum product is",
+    "choices_tex": [
+      "$150$",
+      "$30$",
+      "$0$",
+      "there is no minimum"
+    ],
+    "correct": "D",
+    "explanation_tex": "Both numbers must be positive, so their product is positive. Taking one arbitrarily close to $0$ makes the product approach $0$, but never attain it. The infimum is $0$ and there is no minimum."
+  },
+  {
+    "id": "T38",
+    "stem_tex": "The first-quadrant point on the curve $y^2x = 64$ that is closest to the point $(2,0)$ is",
+    "choices_tex": [
+      "$(4,4)$",
+      "$\\left(2,\\sqrt{32}\\right)$",
+      "$\\left(6,\\sqrt{32/3}\\right)$",
+      "$(1,8)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "With $y^2=64/x$, minimize $D^2=(x-2)^2+64/x$ on $x>0$. Its derivative is $2(x-2)-64/x^2$, zero at $x=4$. Since the second derivative is $2+128/x^3>0$, this is the unique minimum, giving $y=4$."
+  },
+  {
+    "id": "T39",
+    "stem_tex": "If $h$ is a small negative number, then the local linear approximation for $\\sqrt[3]{64+h}$ is",
+    "choices_tex": [
+      "$4 + \\dfrac{h}{48}$",
+      "$4 - \\dfrac{h}{48}$",
+      "$\\dfrac{h}{48}$",
+      "$-\\dfrac{h}{48}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $f(x)=x^{1/3}$, $f(64)=4$ and $f'(64)=1/(3\\cdot16)=1/48$. Thus $f(64+h)\\approx4+h/48$."
+  },
+  {
+    "id": "T40",
+    "stem_tex": "If $f(x) = xe^{-2x}$, then at $x=0$",
+    "choices_tex": [
+      "$f$ is increasing",
+      "$f$ is decreasing",
+      "$f$ has a relative maximum",
+      "$f$ has a relative minimum"
+    ],
+    "correct": "A",
+    "explanation_tex": "The derivative is $f'(x)=e^{-2x}(1-2x)$, so $f'(0)=1>0$ and $f$ is increasing near $0$."
+  },
+  {
+    "id": "T41",
+    "stem_tex": "A function $f$ has a derivative for each $x$ such that $|x|<3$ and has a local minimum at $(3,-7)$. Which statement below must be true?",
+    "choices_tex": [
+      "$f'(3) = 0$",
+      "$f'$ exists at $x=3$",
+      "$f'(x)<0$ if $x<3$, $f'(x)>0$ if $x>3$",
+      "none of the preceding is necessarily true"
+    ],
+    "correct": "D",
+    "explanation_tex": "Differentiability is guaranteed only for $|x|<3$, not at $3$. For example, $f(x)=|x-3|-7$ has the required minimum but no derivative there. A local minimum alone also does not impose the global derivative signs in C."
+  },
+  {
+    "id": "T42",
+    "stem_tex": "The height of a rectangular box is 10 in. Its length increases at the rate of 3 in./sec; its width decreases at the rate of 5 in./sec. When the length is 6 in. and the width is 9 in., the rate, in cubic inches per second, at which the volume of the box is changing is",
+    "choices_tex": [
+      "$30$",
+      "$-30$",
+      "$300$",
+      "$-300$"
+    ],
+    "correct": "B",
+    "explanation_tex": "With fixed height $10$, $V=10lw$, so $V'=10(l'w+lw')=10(3\\cdot9+6(-5))=-30$ cubic inches per second."
+  },
+  {
+    "id": "T43",
+    "stem_tex": "The tangent to the curve $x^3+x^2y+5y=17$ at the point $(2,1)$ has slope",
+    "choices_tex": [
+      "$-2$",
+      "$-\\dfrac{16}{9}$",
+      "$-\\dfrac{9}{16}$",
+      "$\\dfrac{16}{9}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate implicitly: $3x^2+2xy+(x^2+5)y'=0$. At $(2,1)$, $y'=-(12+4)/(4+5)=-16/9$."
+  },
+  {
+    "id": "T44",
+    "stem_tex": "If $f(x) = ax^6+bx^2$ and $ab>0$, then",
+    "choices_tex": [
+      "the curve has no horizontal tangents",
+      "the curve is concave up for all $x$",
+      "the curve has no inflection point",
+      "none of the preceding is necessarily true"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $ab>0$, $a$ and $b$ have the same nonzero sign. Then $f''=30ax^4+2b$ always has that sign and never changes concavity, so there is no inflection point."
+  },
+  {
+    "id": "T45",
+    "stem_tex": "A function $f$ is continuous and differentiable on the interval $[0,4]$, where $f'$ is positive but $f''$ is negative. Which table could represent points on $f$?",
+    "choices_tex": [
+      "$\\begin{array}{c|rrrrr}x&0&1&2&3&4\\\\y&5&7&9&11&13\\end{array}$",
+      "$\\begin{array}{c|rrrrr}x&0&1&2&3&4\\\\y&5&7&10&14&19\\end{array}$",
+      "$\\begin{array}{c|rrrrr}x&0&1&2&3&4\\\\y&5&13&19&23&25\\end{array}$",
+      "$\\begin{array}{c|rrrrr}x&0&1&2&3&4\\\\y&5&9&16&19&21\\end{array}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For equal $x$ steps, increasing and strictly concave-down values have positive, decreasing secant slopes. Only C has successive increases $8,6,4,2$."
+  },
+  {
+    "id": "T46",
+    "stem_tex": "An equation of the tangent to the curve with parametric equations $x = 3t+1$, $y = 4-t^3$ at the point where $t=1$ is",
+    "choices_tex": [
+      "$x+y=7$",
+      "$3x+2y=18$",
+      "$2x+3y=17$",
+      "$x-2y=-2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "At $t=1$, $(x,y)=(4,3)$ and $dy/dx=(-3t^2)/3=-1$. The tangent is $y-3=-(x-4)$, or $x+y=7$."
+  },
+  {
+    "id": "T47",
+    "stem_tex": "Given the function $f(x) = \\sqrt[3]{x}$, it is known that $f(125) = 5$. Using the tangent line to the graph of $f(x)$, approximately how much less than 5 is $\\sqrt[3]{124}$?",
+    "choices_tex": [
+      "$\\dfrac{1}{75}$",
+      "$\\dfrac{1}{25}$",
+      "$\\dfrac{1}{5}$",
+      "$\\dfrac{3}{5}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "At $x=125$, $f'(125)=1/(3\\cdot25)=1/75$. Decreasing $x$ by $1$ decreases the tangent-line estimate by $1/75$."
+  },
+  {
+    "id": "T48",
+    "stem_tex": "The best linear approximation for $f(x) = \\cot x$ near $x = \\dfrac{\\pi}{4}$ is $y=$",
+    "choices_tex": [
+      "$1 + \\dfrac{1}{2}\\left(x-\\dfrac{\\pi}{4}\\right)$",
+      "$1 + \\left(x-\\dfrac{\\pi}{4}\\right)$",
+      "$1 - 2\\left(x-\\dfrac{\\pi}{4}\\right)$",
+      "$1 + 2\\left(x-\\dfrac{\\pi}{4}\\right)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $a=\\pi/4$, $f(a)=1$ and $f'(a)=-\\csc^2a=-2$. Thus $L(x)=1-2(x-\\pi/4)$."
+  },
+  {
+    "id": "T49",
+    "stem_tex": "Given $f(x) = e^{kx}$, approximate $f(h)$, where $h$ is near zero, using a tangent-line approximation. $f(h) \\approx$",
+    "choices_tex": [
+      "$k$",
+      "$kh$",
+      "$1+k$",
+      "$1+kh$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $f(0)=1$ and $f'(0)=k$, the tangent approximation is $f(h)\\approx1+kh$."
+  },
+  {
+    "id": "T50",
+    "stem_tex": "If $f(x) = cx^2+dx+e$ for the function shown in the graph, then",
+    "choices_tex": [
+      "$c$, $d$, and $e$ are all positive",
+      "$c>0$, $d<0$, $e>0$",
+      "$c<0$, $d>0$, $e>0$",
+      "$c<0$, $d<0$, $e>0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The graph is concave down, so $f''=2c<0$. Its slope at $0$ is negative, so $d=f'(0)<0$, and the positive vertical intercept gives $e=f(0)>0$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-quadratic.png",
+      "alt": "Decreasing concave-down quadratic with positive vertical intercept."
+    }
+  },
+  {
+    "id": "T51",
+    "stem_tex": "Given $f(x) = \\log_{10}x$ and $\\log_{10}(104) \\approx 2.0170$, which is closest to $f'(100)$?",
+    "choices_tex": [
+      "$0.0043$",
+      "$0.0085$",
+      "$0.01$",
+      "$1.0043$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Use the nearby secant: $f'(100)\\approx(2.0170-2)/4=0.00425$, closest to $0.0043$. The exact derivative is $1/(100\\ln10)\\approx0.004343$."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "The point on the curve $y = \\sqrt{3x-2}$ at which the tangent is parallel to the line $3x-8y=10$ is",
+    "choices_tex": [
+      "$(6,4)$",
+      "$(2,2)$",
+      "$(3,\\sqrt{7})$",
+      "$(1,1)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The line has slope $3/8$. Setting $3/(2\\sqrt{3x-2})=3/8$ gives $\\sqrt{3x-2}=4$, hence $x=6$ and $y=4$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "An equation of the tangent to the curve $x^2 = 6y$ at the point on the curve where $x=-3$ is",
+    "choices_tex": [
+      "$2x+2y+3=0$",
+      "$2x-2y+3=0$",
+      "$x+y-3=0$",
+      "$x-y+3=0$"
+    ],
+    "correct": "A",
+    "explanation_tex": "At $x=-3$, $y=x^2/6=3/2$ and $y'=x/3=-1$. The tangent is $y-3/2=-(x+3)$, equivalent to $2x+2y+3=0$."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "The table shows the velocity at time $t$ of an object moving along a line. Estimate the acceleration (in ft/sec$^2$) at $t=6$ sec. $\\begin{array}{c|rrrr}t\\ (\\mathrm{sec})&0&4&8&10\\\\v\\ (\\mathrm{ft/sec})&24&20&12&0\\end{array}$",
+    "choices_tex": [
+      "$-8$",
+      "$-2$",
+      "$2$",
+      "$8$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Estimate acceleration by the centered secant through $t=4,8$: $(12-20)/(8-4)=-2$ ft/sec$^2$."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. From the graph it follows that",
+    "choices_tex": [
+      "$f$ is discontinuous at $x=3$",
+      "$f$ is decreasing for $3<x<8$",
+      "$f(5) < f(0)$",
+      "$f(1) < f(2)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The graph is of $f'$, which is positive between $1$ and $2$. Therefore $f$ increases there and $f(1)<f(2)$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-linear.png",
+      "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
+    }
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. Which statement best describes $f$ at $x=5$?",
+    "choices_tex": [
+      "$f$ has a root.",
+      "$f$ has a maximum.",
+      "$f$ has a minimum.",
+      "$f$ is increasing and concave down near $x=5$."
+    ],
+    "correct": "D",
+    "explanation_tex": "Near $x=5$, $f\\prime>0$ and $f\\prime$ is decreasing. Therefore $f$ is increasing and concave down. The derivative does not vanish or change sign there, and its slope does not change sign, so there is no extremum or inflection point.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-linear.png",
+      "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
+    },
+    "source_original": {
+      "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. Which statement best describes $f$ at $x=5$?",
+      "choices_tex": [
+        "$f$ has a root.",
+        "$f$ has a maximum.",
+        "$f$ has a minimum.",
+        "The graph of $f$ has a point of inflection."
+      ],
+      "correct": null,
+      "explanation_tex": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
+      "source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
+      "figure": {
+        "src": "data/calculus-figures/t4-fprime-linear.png",
+        "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
+      }
+    },
+    "resolved_source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
+    "source_correction": "Replaced the unsupported inflection-point option with the behavior shown by the derivative graph."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. For which interval is the graph of $f$ concave downward?",
+    "choices_tex": [
+      "$(0,3)$",
+      "$(3,5)$",
+      "$(5,8)$",
+      "$(3,8)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The derivative graph is strictly decreasing throughout $(3,8)$, so $f''<0$ and $f$ is concave down on that full interval. B and C are also subintervals of concavity; D is the maximal interval among the choices.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-linear.png",
+      "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
+    },
+    "source_correction": "D gives the maximal interval; B and C also lie within the same concave-down interval."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object attains its maximum speed when $t=$",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Speed is $|v|$. The largest magnitude shown is $3$ ft/sec, attained at $t=3$ where $v=-3$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    }
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The speed of the object is increasing during the time interval",
+    "choices_tex": [
+      "$(1,2)$",
+      "$(0,2)$",
+      "$(2,3)$",
+      "$(3,6)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "On $(2,3)$ the velocity is negative and becomes more negative. Hence its magnitude, the speed, increases.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    }
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The acceleration of the object is positive during the time interval",
+    "choices_tex": [
+      "$(1,2)$",
+      "$(0,2)$",
+      "$(2,3)$",
+      "$(3,6)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Acceleration is the slope of the velocity graph. The only segment with positive slope is $(3,6)$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    }
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. How many times on $0<t<6$ is the object's acceleration undefined?",
+    "choices_tex": [
+      "none",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The velocity graph has corners at $t=1,2,3$, where the one-sided slopes differ. Acceleration is undefined at these three times.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    }
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. During $2<t<3$, the object's acceleration (in ft/sec$^2$) is",
+    "choices_tex": [
+      "$-12$",
+      "$-3$",
+      "$6$",
+      "$12$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Acceleration is the slope of velocity. On this segment, $a=[v(3)-v(2)]/(3-2)=(-3-0)/1=-3$ ft/sec$^2$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    },
+    "source_original": {
+      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. During $2<t<3$, the object's acceleration (in ft/sec$^2$) is",
+      "choices_tex": [
+        "$-12$",
+        "$-6$",
+        "$6$",
+        "$12$"
+      ],
+      "correct": null,
+      "explanation_tex": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
+      "source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
+      "figure": {
+        "src": "data/calculus-figures/t4-velocity.png",
+        "alt": "Velocity on [0,6], with corners at t=1,2,3."
+      }
+    },
+    "resolved_source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
+    "source_correction": "Replaced option B with the acceleration determined by the graph."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object is farthest to the right when $t=$",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$6$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Velocity is positive before $t=2$ and negative after it. Position therefore increases to $t=2$ and then decreases, so the object is farthest right at $t=2$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    }
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object's average acceleration (in ft/sec$^2$) for the interval $0 \\leq t \\leq 3$ is",
+    "choices_tex": [
+      "$-18$",
+      "$-6$",
+      "$-4$",
+      "$-1.5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $[v(3)-v(0)]/3=(-3-1.5)/3=-1.5$ ft/sec$^2$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity.png",
+      "alt": "Velocity on [0,6], with corners at t=1,2,3."
+    },
+    "source_original": {
+      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object's average acceleration (in ft/sec$^2$) for the interval $0 \\leq t \\leq 3$ is",
+      "choices_tex": [
+        "$-18$",
+        "$-6$",
+        "$-4$",
+        "$-2$"
+      ],
+      "correct": null,
+      "explanation_tex": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
+      "source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
+      "figure": {
+        "src": "data/calculus-figures/t4-velocity.png",
+        "alt": "Velocity on [0,6], with corners at t=1,2,3."
+      }
+    },
+    "resolved_source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
+    "source_correction": "Replaced option D with the average acceleration determined by the graph."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "The line $y=12x+k$ is tangent to the curve $y=x^3$ when $k$ is equal to",
+    "choices_tex": [
+      "$1$ or $-1$",
+      "$2$ or $-2$",
+      "$8$ or $-8$",
+      "$16$ or $-16$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Tangency requires $3x^2=12$, so $x=\\pm2$. Then $k=x^3-12x$ equals $-16$ or $16$."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "The two tangents that can be drawn from the point $(4,7)$ to the parabola $y=x^2$ have slopes",
+    "choices_tex": [
+      "$1$ and $7$",
+      "$2$ and $14$",
+      "$4$ and $28$",
+      "$2$ and $7$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The tangent at $x=a$ is $y=2ax-a^2$. Passing through $(4,7)$ requires $a^2-8a+7=0$, so $a=1,7$. The slopes are $2a=2,14$."
+  },
+  {
+    "id": "TB16",
+    "stem_tex": "The table shows the velocity at various times of an object moving along a line. An estimate of its acceleration (in ft/sec$^2$) at $t=1$ is $\\begin{array}{c|rrrr}t\\ (\\mathrm{sec})&1.0&1.5&2.1&2.5\\\\v\\ (\\mathrm{ft/sec})&10.0&10.8&11.28&11.5\\end{array}$",
+    "choices_tex": [
+      "$0.8$",
+      "$1.0$",
+      "$1.2$",
+      "$1.6$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Use the nearest forward secant: $(10.8-10.0)/(1.5-1.0)=1.6$ ft/sec$^2$."
+  },
+  {
+    "id": "TB17",
+    "stem_tex": "For $0<x<5$, $f\\prime(x)=x\\sin x-2\\cos x$. $f$ has a local maximum when $x$ is approximately",
+    "choices_tex": [
+      "$1.077$",
+      "$2.456$",
+      "$3.644$",
+      "$4.100$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Solve $x\\sin x-2\\cos x=0$ numerically on $(0,5)$: roots are about $1.076874$ and $3.643597$. The derivative changes from positive to negative at the second root, so the local maximum is near $3.644$."
+  },
+  {
+    "id": "TB18",
+    "stem_tex": "For $0<x<5$, $f\\prime(x)=x\\sin x-2\\cos x$. The graph of $f$ has a point of inflection when $x$ is approximately",
+    "choices_tex": [
+      "$1.077$",
+      "$2.456$",
+      "$3.644$",
+      "$4.100$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate to get $f''=3\\sin x+x\\cos x$. Its zero on $(0,5)$ is approximately $2.455644$, and it changes sign there. Thus the inflection point is near $2.456$."
+  },
+  {
+    "id": "TB19",
+    "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The particle moves along",
+    "choices_tex": [
+      "an ellipse",
+      "a hyperbola",
+      "a line",
+      "a parabola"
+    ],
+    "correct": "D",
+    "explanation_tex": "Eliminate $t=x/3$ to obtain $y=2x-x^2/9$, the equation of a parabola."
+  },
+  {
+    "id": "TB20",
+    "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The speed of the particle at any time $t$ is",
+    "choices_tex": [
+      "$\\sqrt{10-2t}$",
+      "$\\sqrt{4t^2-24t+45}$",
+      "$2\\sqrt{t^2-3t+10}$",
+      "$2(|5-t|)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The velocity components are $x\\prime(t)=3$ and $y\\prime(t)=6-2t$. Speed is their Euclidean norm: $\\sqrt{3^2+(6-2t)^2}=\\sqrt{4t^2-24t+45}$.",
+    "source_original": {
+      "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The speed of the particle at any time $t$ is",
+      "choices_tex": [
+        "$\\sqrt{10-2t}$",
+        "$2\\sqrt{t^2-6t+10}$",
+        "$2\\sqrt{t^2-3t+10}$",
+        "$2(|5-t|)$"
+      ],
+      "correct": null,
+      "explanation_tex": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
+      "source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression."
+    },
+    "resolved_source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
+    "source_correction": "Replaced option B with the correct speed formula."
+  },
+  {
+    "id": "TB21",
+    "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The minimum speed of the particle is",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$3$",
+      "$4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Speed is $\\sqrt{9+(6-2t)^2}\\ge3$, with equality at $t=3$. The minimum is3.",
+    "source_original": {
+      "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The minimum speed of the particle is",
+      "choices_tex": [
+        "$0$",
+        "$1$",
+        "$2$",
+        "$4$"
+      ],
+      "correct": null,
+      "explanation_tex": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
+      "source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$."
+    },
+    "resolved_source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
+    "source_correction": "Replaced option C with the correct minimum speed."
+  },
+  {
+    "id": "TB22",
+    "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The acceleration of the particle",
+    "choices_tex": [
+      "depends on $t$",
+      "is always directed upward",
+      "is constant both in magnitude and in direction",
+      "never exceeds 1 in magnitude"
+    ],
+    "correct": "C",
+    "explanation_tex": "Differentiating position twice gives acceleration $\\langle0,-2\\rangle$, constant in both magnitude and direction."
+  },
+  {
+    "id": "TB23",
+    "stem_tex": "If a particle moves along a curve with constant speed, then",
+    "choices_tex": [
+      "the magnitude of its acceleration must equal zero",
+      "the direction of acceleration must be constant",
+      "the curve along which the particle moves must be a straight line",
+      "its velocity and acceleration vectors must be perpendicular"
+    ],
+    "correct": "D",
+    "explanation_tex": "Constant speed implies $\\mathbf v\\cdot\\mathbf v$ is constant. Differentiating gives $2\\mathbf v\\cdot\\mathbf a=0$, so the velocity and acceleration vectors are orthogonal."
+  },
+  {
+    "id": "TB24",
+    "stem_tex": "A particle is moving on the curve of $y = 3x - \\ln x$ so that $\\dfrac{dx}{dt} = -3$ at all times $t$. At the point $(1,3)$, $\\dfrac{dy}{dt}$ is",
+    "choices_tex": [
+      "$-6$",
+      "$-3$",
+      "$3$",
+      "$6$"
+    ],
+    "correct": "A",
+    "explanation_tex": "By the chain rule, $dy/dt=(3-1/x)\\,dx/dt$. At $x=1$, this is $(3-1)(-3)=-6$."
+  },
+  {
+    "id": "TB25",
+    "stem_tex": "A particle moves on $r=8\\cos2\\theta$, with $d\\theta/dt=1/4$ radian/sec when $\\theta=\\pi/6$. At $\\theta = \\dfrac{\\pi}{6}$, find the rate of change (in units per second) of the particle's distance from the origin.",
+    "choices_tex": [
+      "$-8\\sqrt{3}$",
+      "$-2\\sqrt{3}$",
+      "$2\\sqrt{3}$",
+      "$8\\sqrt{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At $\\theta=\\pi/6$, $r=4>0$, so distance from the origin is $r$. Then $dr/dt=(-16\\sin2\\theta)(1/4)=-2\\sqrt3$."
+  },
+  {
+    "id": "TB26",
+    "stem_tex": "A particle moves on $r=8\\cos2\\theta$, with $d\\theta/dt=1/4$ radian/sec when $\\theta=\\pi/6$. At $\\theta = \\dfrac{\\pi}{6}$, what is the horizontal component of the particle's velocity?",
+    "choices_tex": [
+      "$-\\dfrac{21}{2}$",
+      "$-\\dfrac{7}{2}$",
+      "$-2$",
+      "$\\dfrac{1}{2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Since $x=r\\cos\\theta$, $x'=r'\\cos\\theta-r\\sin\\theta\\,\\theta'$. Substitute $r=4$, $r'=-2\\sqrt3$, $\\theta=\\pi/6$, $\\theta'=1/4$ to get $-3-1/2=-7/2$."
+  },
+  {
+    "id": "TB27",
+    "stem_tex": "The figure shows $f\\prime$ on $[0,5]$. $f$ has a local minimum at $x=$",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At $x=1$, $f'$ changes from negative to positive, giving a local minimum of $f$. At $x=3$ it touches zero without changing sign.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-cubic.png",
+      "alt": "Graph of f prime on [0,5], crossing zero at 1 and touching zero at 3."
+    }
+  },
+  {
+    "id": "TB28",
+    "stem_tex": "The figure shows $f\\prime$ on $[0,5]$. The graph of $f$ has a point of inflection at $x=$",
+    "choices_tex": [
+      "$1$ only",
+      "$\\dfrac{5}{3}$ only",
+      "$3$ only",
+      "$\\dfrac{5}{3}$ and $3$ only"
+    ],
+    "correct": "D",
+    "explanation_tex": "Inflection points of $f$ occur at changes in the monotonicity of $f'$. The graphed derivative has a local maximum at $5/3$ and local minimum at $3$, so concavity changes at both.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-cubic.png",
+      "alt": "Graph of f prime on [0,5], crossing zero at 1 and touching zero at 3."
+    }
+  },
+  {
+    "id": "TB29",
+    "stem_tex": "It follows from the graph of $f'$, shown above, that",
+    "choices_tex": [
+      "$f$ is not continuous at $x=a$",
+      "$f$ is continuous but not differentiable at $x=a$",
+      "$f$ has a relative maximum at $x=a$",
+      "The graph of $f$ has a point of inflection at $x=a$"
+    ],
+    "correct": "D",
+    "explanation_tex": "At $a$, $f'$ changes from increasing to decreasing while remaining positive. Thus $f$ changes from concave up to concave down and has an inflection point there.",
+    "figure": {
+      "src": "data/calculus-figures/t4-fprime-corner.png",
+      "alt": "Positive f prime graph, increasing before a and decreasing after a."
+    }
+  },
+  {
+    "id": "TB30",
+    "stem_tex": "A vertical circular cylinder has radius $r$ ft and height $h$ ft. If the height and radius both increase at the constant rate of 3 ft/sec, then the rate, in square feet per second, at which the lateral surface area increases is",
+    "choices_tex": [
+      "$6\\pi r$",
+      "$3\\pi(r+h)$",
+      "$6\\pi(r+h)$",
+      "$6\\pi h$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Lateral area is $A=2\\pi rh$. Product differentiation gives $A'=2\\pi(r'h+rh')=6\\pi(r+h)$."
+  },
+  {
+    "id": "TB31",
+    "stem_tex": "A tangent drawn to the parabola $y=9-x^2$ at the point $(2,5)$ forms a right triangle with the coordinate axes. The area of the triangle is",
+    "choices_tex": [
+      "$\\dfrac{169}{16}$",
+      "$\\dfrac{169}{8}$",
+      "$\\dfrac{13}{4}$",
+      "$\\dfrac{13}{2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The tangent slope is $-2(2)=-4$, giving $y=-4x+13$. Its intercepts are $13$ and $13/4$, so the triangle area is $\\frac12(13)(13/4)=169/8$."
+  },
+  {
+    "id": "TB32",
+    "stem_tex": "Two cars are traveling along perpendicular roads, car $A$ at 30 mph and car $B$ at 90 mph. At noon, when car $A$ reaches the intersection, car $B$ is 130 miles away, and moving toward the intersection. At 1 P.M. the rate, in miles per hour, at which the distance between the cars is changing is",
+    "choices_tex": [
+      "$-90$",
+      "$-54$",
+      "$54$",
+      "$90$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At 1 P.M., distances from the intersection are $x=30$, $y=40$, and separation $d=50$. Differentiating $d^2=x^2+y^2$ gives $d'=(30\\cdot30+40(-90))/50=-54$ mph."
+  },
+  {
+    "id": "TB33",
+    "stem_tex": "Two cars are traveling along perpendicular roads, car $A$ at 30 mph and car $B$ at 90 mph. At noon, when car $A$ reaches the intersection, car $B$ is 130 miles away and moving toward the intersection. If $t$ represents the time, in hours, traveled after noon, then the cars are closest together when $t$ is",
+    "choices_tex": [
+      "$1.038$",
+      "$1.077$",
+      "$1.3$",
+      "$1.8$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Minimize $d^2=(30t)^2+(130-90t)^2$. Setting its derivative $1800t-180(130-90t)$ to zero yields $18000t=23400$, so $t=1.3$ hours."
+  },
+  {
+    "id": "TB34",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le12$. For what $t$ does this object attain its maximum acceleration?",
+    "choices_tex": [
+      "$0<t<3$",
+      "$3<t<6$",
+      "$t=4.5$",
+      "$t=6$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Acceleration is the slope of the velocity graph: zero on $(0,3)$, positive on $(3,6)$, and negative on $(6,12)$. Its maximum value occurs throughout $(3,6)$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity-long.png",
+      "alt": "Velocity graph on [0,12]."
+    }
+  },
+  {
+    "id": "TB35",
+    "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le12$. The object reverses direction at $t=$",
+    "choices_tex": [
+      "$3$ only",
+      "$4.2$ only",
+      "$6$ only",
+      "$4.5$ and $6$ only"
+    ],
+    "correct": "B",
+    "explanation_tex": "The rising velocity segment joins $(3,-2)$ to $(6,3)$, so $v(t)=-2+\\frac53(t-3)$. It crosses zero at $t=3+6/5=4.2$. Velocity changes from negative to positive there; at $t=6$ it remains positive.",
+    "figure": {
+      "src": "data/calculus-figures/t4-velocity-long.png",
+      "alt": "Velocity graph on [0,12]."
+    },
+    "source_original": {
+      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le12$. The object reverses direction at $t=$",
+      "choices_tex": [
+        "$3$ only",
+        "$4.5$ only",
+        "$6$ only",
+        "$4.5$ and $6$ only"
+      ],
+      "correct": null,
+      "explanation_tex": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
+      "source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
+      "figure": {
+        "src": "data/calculus-figures/t4-velocity-long.png",
+        "alt": "Velocity graph on [0,12]."
+      }
+    },
+    "resolved_source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
+    "source_correction": "Corrected the zero-crossing time in option B to match the plotted line."
+  },
+  {
+    "id": "TB36",
+    "stem_tex": "Given that $f'$ is continuous and differentiable on $(0,4)$, with $f'(1)=0$ (where $f'$ changes from positive to negative) and $f'(3)=0$ (where $f'$ changes from negative to positive), which must be true of the graph of $f$?",
+    "choices_tex": [
+      "$f$ has a sharp corner at $x=1$",
+      "$f$ has a local maximum at $x=1$ and a local minimum at $x=3$",
+      "$f$ has a local minimum at $x=1$ and a local maximum at $x=3$",
+      "$f$ is not differentiable at $x=1$ or $x=3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The first-derivative test gives a local maximum when $f'$ changes from positive to negative at $1$, and a local minimum when it changes from negative to positive at $3$."
+  },
+  {
+    "id": "TB37",
+    "stem_tex": "Given $f(3)=15$ and $f\\prime(3)=6$, find the local linearization of $f$ at $x=3$.",
+    "choices_tex": [
+      "$\\dfrac{x}{3}+14$",
+      "$\\dfrac{x}{3}+13$",
+      "$6x-3$",
+      "$6x+9$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The linearization is $L(x)=f(3)+f\\prime(3)(x-3)=15+6(x-3)=6x-3$, choice C.",
+    "source_original": {
+      "stem_tex": "The graph of $f'$ is shown above. If we know that $f(3) = 15$, then the local linearization of $f$ at $x=3$ is $f(x) \\approx$",
+      "choices_tex": [
+        "$\\dfrac{x}{3}+14$",
+        "$\\dfrac{x}{3}+13$",
+        "$6x-3$",
+        "$6x+9$"
+      ],
+      "correct": null,
+      "explanation_tex": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
+      "source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
+      "figure": {
+        "src": "data/calculus-figures/t4-linearization.png",
+        "alt": "Source derivative graph with a point labeled (6,9)."
+      }
+    },
+    "resolved_source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
+    "source_correction": "Supplied f prime at 3 explicitly because the source graph does not establish its numerical value."
+  },
+  {
+    "id": "TB38",
+    "stem_tex": "Use the labeled curve in the figure. At which labeled point do both $\\dfrac{dy}{dx}$ and $\\dfrac{d^2y}{dx^2}$ equal zero?",
+    "choices_tex": [
+      "$P$",
+      "$Q$",
+      "$R$",
+      "$S$"
+    ],
+    "correct": "D",
+    "explanation_tex": "At S the curve has a horizontal tangent and changes concavity. Thus $y'=0$ and $y''=0$ there. In the source construction $y'=0.15x(x-3)^2$, confirming both vanish at $x=3$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-labeled-curve.png",
+      "alt": "Curve with labeled points P,Q,R,S."
+    }
+  },
+  {
+    "id": "TB39",
+    "stem_tex": "Use the labeled curve in the figure. At which labeled point is $\\dfrac{dy}{dx}$ positive and $\\dfrac{d^2y}{dx^2}$ equal to zero?",
+    "choices_tex": [
+      "$P$",
+      "$Q$",
+      "$R$",
+      "$S$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At R the curve is increasing and changes from concave up to concave down. Hence $y'>0$ and $y''=0$. The plotted polynomial has $y''=0.45(x-1)(x-3)$, so this occurs at $x=1$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-labeled-curve.png",
+      "alt": "Curve with labeled points P,Q,R,S."
+    }
+  },
+  {
+    "id": "TB40",
+    "stem_tex": "Use the labeled curve in the figure. At which labeled point is $\\dfrac{dy}{dx}$ equal to zero and $\\dfrac{d^2y}{dx^2}$ positive?",
+    "choices_tex": [
+      "$P$",
+      "$Q$",
+      "$R$",
+      "$S$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At Q the curve has a smooth local minimum with a horizontal tangent and is concave up. Thus $y'=0$ and $y''>0$.",
+    "figure": {
+      "src": "data/calculus-figures/t4-labeled-curve.png",
+      "alt": "Curve with labeled points P,Q,R,S."
+    }
+  },
+  {
+    "id": "TB41",
+    "stem_tex": "If $f(5) = 20$ and $f'(x) = \\dfrac{x^2}{x+5}$, estimate $f(5.04)$ using the line tangent to $f$ at $x=5$.",
+    "choices_tex": [
+      "$19.9$",
+      "$20.02$",
+      "$20.08$",
+      "$20.1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The tangent slope is $f'(5)=25/10=2.5$. Thus $f(5.04)\\approx20+2.5(0.04)=20.1$."
+  },
+  {
+    "id": "TB42",
+    "stem_tex": "A local linear approximation for $f(x) = \\sqrt{x^2+9}$ near $x=-4$ is",
+    "choices_tex": [
+      "$y = 5 - \\dfrac{4}{5}(x-4)$",
+      "$y = 5 + \\dfrac{4}{5}(x-4)$",
+      "$y = 5 - \\dfrac{4}{5}(x+4)$",
+      "$y = 4 - \\dfrac{5}{4}(x+4)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $x=-4$, $f=5$ and $f'=x/\\sqrt{x^2+9}=-4/5$. Therefore $L(x)=5-\\frac45(x+4)$."
+  }
+]

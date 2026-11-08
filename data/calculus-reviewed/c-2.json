@@ -1,0 +1,519 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 2}\\dfrac{x^2-4}{x^2+4}$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$-1/2$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Direct substitution is valid because the denominator at $2$ is $8\\ne0$. The numerator is zero, so the limit is $0$."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to \\infty}\\dfrac{4-x^2}{x^2-1}$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$-1$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Divide by $x^2$: $(4/x^2-1)/(1-1/x^2)\\to-1$."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 3}\\dfrac{x-3}{x^2-2x-3}$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$1/4$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Factor the denominator as $(x-3)(x+1)$. For $x\\ne3$ the quotient is $1/(x+1)$, whose limit at $3$ is $1/4$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 0}\\dfrac{x}{x}$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$-1$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "For every $x\\ne0$, $x/x=1$, so the limit is $1$ even though the displayed quotient is undefined at zero."
+  },
+  {
+    "id": "A5",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 2}\\dfrac{x^3-8}{x^2-4}$.",
+    "choices_tex": [
+      "$1$",
+      "$3$",
+      "$6$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Cancel $x-2$ to obtain $(x^2+2x+4)/(x+2)$. Substitution gives $12/4=3$."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to \\infty}\\dfrac{4-x^2}{4x^2-x-2}$.",
+    "choices_tex": [
+      "$-2$",
+      "$-1/4$",
+      "$1$",
+      "$2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The numerator and denominator have equal degree. The limit is the ratio of their leading coefficients, $-1/4$."
+  },
+  {
+    "id": "A7",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to -\\infty}\\dfrac{5x^3+27}{20x^2+10x+9}$.",
+    "choices_tex": [
+      "$-\\infty$",
+      "$-1$",
+      "$3$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The quotient behaves like $5x^3/(20x^2)=x/4$, which tends to $-\\infty$."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to \\infty}\\dfrac{3x^2+27}{x^3-27}$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$3$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The denominator has higher degree than the numerator; after division by $x^3$, the numerator tends to zero and the denominator to one."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to \\infty}\\dfrac{2^{-x}}{2^x}$.",
+    "choices_tex": [
+      "$-1$",
+      "$1$",
+      "$0$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$2^{-x}/2^x=2^{-2x}\\to0$ as $x\\to\\infty$."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to -\\infty}\\dfrac{2^{-x}}{2^x}$.",
+    "choices_tex": [
+      "$-1$",
+      "$1$",
+      "$0$",
+      "$\\infty$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$2^{-x}/2^x=2^{-2x}\\to\\infty$ as $x\\to-\\infty$."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin5x}{x}$.",
+    "choices_tex": [
+      "$1/5$",
+      "$1$",
+      "$5$",
+      "does not exist"
+    ],
+    "correct": "C",
+    "explanation_tex": "Write $\\sin(5x)/x=5\\sin(5x)/(5x)$. The standard sine limit gives $5$."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin2x}{3x}$.",
+    "choices_tex": [
+      "$2/3$",
+      "$1$",
+      "$3/2$",
+      "does not exist"
+    ],
+    "correct": "A",
+    "explanation_tex": "Write $\\sin(2x)/(3x)=(2/3)\\sin(2x)/(2x)\\to2/3$."
+  },
+  {
+    "id": "A13",
+    "stem_tex": "The graph of $y=\\arctan x$ has",
+    "choices_tex": [
+      "vertical asymptotes at $x=0$ and $x=\\pi$",
+      "horizontal asymptotes at $y=\\pm\\pi/2$",
+      "horizontal asymptotes at $y=0$ and $y=\\pi$",
+      "vertical asymptotes at $x=\\pm\\pi/2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$\\arctan x\\to\\pi/2$ as $x\\to\\infty$ and $-\\pi/2$ as $x\\to-\\infty$. These give the two horizontal asymptotes."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "The graph of $y=\\dfrac{x^2-9}{3x-9}$ has",
+    "choices_tex": [
+      "a vertical asymptote at $x=3$",
+      "a horizontal asymptote at $y=1/3$",
+      "a removable discontinuity at $x=3$",
+      "an infinite discontinuity at $x=3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne3$, $(x^2-9)/(3x-9)=(x+3)/3$. The limit at $3$ is $2$, but the original quotient is undefined there: a removable discontinuity."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to0}\\dfrac{\\sin x}{x^2+3x}$.",
+    "choices_tex": [
+      "$1$",
+      "$1/3$",
+      "$3$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Factor the denominator: $\\sin x/[x(x+3)]=(\\sin x/x)/(x+3)\\to1/3$."
+  },
+  {
+    "id": "A16",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to0}\\sin\\dfrac1x$.",
+    "choices_tex": [
+      "$\\infty$",
+      "$1$",
+      "$-1$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "The values oscillate: along $x_n=1/(\\pi/2+2\\pi n)$ the sine is $1$, and along $y_n=1/(3\\pi/2+2\\pi n)$ it is $-1$. Both sequences approach zero, so no limit exists."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "Which statement is true about $y=\\dfrac{2x^2+4}{2+7x-4x^2}$?",
+    "choices_tex": [
+      "$x=-1/4$ is a vertical asymptote",
+      "$x=1$ is a vertical asymptote",
+      "$y=-1/4$ is a horizontal asymptote",
+      "$y=2$ is a horizontal asymptote"
+    ],
+    "correct": "A",
+    "explanation_tex": "$2+7x-4x^2=(2-x)(4x+1)$. The numerator is positive everywhere, so $x=-1/4$ and $x=2$ are vertical asymptotes. The horizontal asymptote is $y=2/(-4)=-1/2$. Only choice A is true."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to\\infty}\\dfrac{2x^2+1}{(2-x)(2+x)}$.",
+    "choices_tex": [
+      "$-2$",
+      "$1$",
+      "$2$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "$(2-x)(2+x)=4-x^2$. The ratio of leading coefficients is $2/(-1)=-2$."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to0}\\dfrac{|x|}{x}$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$-1$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "$|x|/x=1$ for $x>0$ and $-1$ for $x<0$. The one-sided limits differ, so the two-sided limit does not exist."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to\\infty}x\\sin\\dfrac1x$.",
+    "choices_tex": [
+      "$0$",
+      "$-1$",
+      "$1$",
+      "nonexistent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Put $u=1/x$. Then $x\\sin(1/x)=\\sin u/u\\to1$ as $u\\to0^+$."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "Evaluate $\\displaystyle\\lim_{x\\to\\pi}\\dfrac{\\sin(\\pi-x)}{\\pi-x}$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$\\pi$",
+      "nonexistent"
+    ],
+    "correct": "A",
+    "explanation_tex": "Put $u=\\pi-x\\to0$. The expression becomes $\\sin u/u\\to1$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "Let $f(x)=\\begin{cases}(x^2-1)/(x-1)&x\\ne1\\\\4&x=1\\end{cases}$. Which statements are true? I. $\\lim_{x\\to1}f(x)$ exists. II. $f(1)$ exists. III. $f$ is continuous at $x=1$.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $x\\ne1$, $f(x)=x+1$, so the limit is $2$. The defined value is $f(1)=4$. Thus I and II are true, but III is false."
+  },
+  {
+    "id": "A23",
+    "stem_tex": "Let $f(x)=(x^2-x)/(2x)$ for $x\\ne0$ and $f(0)=k$. If $f$ is continuous at zero, then $k=$",
+    "choices_tex": [
+      "$-1$",
+      "$-1/2$",
+      "$1/2$",
+      "$1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "For $x\\ne0$, $f(x)=(x-1)/2$, whose limit at zero is $-1/2$. Continuity requires $k=-1/2$."
+  },
+  {
+    "id": "A24",
+    "stem_tex": "Let $f(x)=3x(x-1)/(x^2-3x+2)$ for $x\\ne1,2$, with $f(1)=-3$ and $f(2)=4$. Then $f$ is continuous",
+    "choices_tex": [
+      "except at $x=1$",
+      "except at $x=2$",
+      "except at $x=1$ or $2$",
+      "at each real number"
+    ],
+    "correct": "B",
+    "source_correction": "The PDF prints f(2) twice with different values. The first is corrected to f(1)=-3, consistent with the removable limit and the source solution.",
+    "explanation_tex": "For $x\\ne1,2$, cancel $x-1$ to get $3x/(x-2)$. Its limit at $1$ is $-3=f(1)$, so it is continuous there. At $2$ there is a vertical asymptote, unaffected by assigning $f(2)=4$. Thus only $x=2$ is a discontinuity. The PDF's duplicated f(2) line is corrected to f(1)=-3."
+  },
+  {
+    "id": "A25",
+    "stem_tex": "The graph of $f(x)=4/(x^2-1)$ has",
+    "choices_tex": [
+      "one vertical asymptote, at $x=1$",
+      "the $y$-axis as its vertical asymptote",
+      "the $x$-axis as its horizontal asymptote and $x=\\pm1$ as vertical asymptotes",
+      "two vertical asymptotes at $x=\\pm1$, but no horizontal asymptote"
+    ],
+    "correct": "C",
+    "explanation_tex": "The denominator vanishes at $\\pm1$ while the numerator is nonzero, giving two vertical asymptotes. Since the denominator has higher degree, the horizontal asymptote is $y=0$."
+  },
+  {
+    "id": "A26",
+    "stem_tex": "The graph of $y=(2x^2+2x+3)/(4x^2-4x)$ has",
+    "choices_tex": [
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ but no vertical asymptote",
+      "no horizontal asymptote but two vertical asymptotes, at $x = 0$ and $x = 1$",
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ and two vertical asymptotes, at $x = 0$ and $x = 1$",
+      "a horizontal asymptote at $y = \\dfrac{1}{2}$ and two vertical asymptotes, at $x = \\pm 1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The leading-coefficient ratio is $2/4=1/2$. The denominator is $4x(x-1)$; the numerator is nonzero at both $0$ and $1$, so both are vertical asymptotes."
+  },
+  {
+    "id": "A27",
+    "stem_tex": "Let $f(x)=\\begin{cases}x^2/x&x\\ne0\\\\0&x=0\\end{cases}$. Which statements are true? I. $f(0)$ exists. II. $\\lim_{x\\to0}f(x)$ exists. III. $f$ is continuous at zero.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $x\\ne0$, $f(x)=x$, and the assigned value $f(0)=0$ agrees. This is the identity function, continuous everywhere. All three statements hold."
+  },
+  {
+    "id": "B1",
+    "stem_tex": "If $[x]=\\lfloor x\\rfloor$, evaluate $\\lim_{x\\to1/2}[x]$.",
+    "choices_tex": [
+      "$1/2$",
+      "$1$",
+      "$0$",
+      "nonexistent"
+    ],
+    "correct": "C",
+    "explanation_tex": "For all $x$ sufficiently near $1/2$, $0<x<1$ and $\\lfloor x\\rfloor=0$. The limit is $0$."
+  },
+  {
+    "id": "B2",
+    "stem_tex": "If $[x]=\\lfloor x\\rfloor$, evaluate $\\lim_{x\\to-2}[x]$.",
+    "choices_tex": [
+      "$-3$",
+      "$-2$",
+      "$-1$",
+      "nonexistent"
+    ],
+    "correct": "D",
+    "explanation_tex": "Immediately to the left of $-2$, the floor is $-3$; immediately to the right it is $-2$. The one-sided limits disagree."
+  },
+  {
+    "id": "B3",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to\\infty}\\sin x$",
+    "choices_tex": [
+      "is $-1$",
+      "is infinity",
+      "is zero",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "Along $x_n=\\pi/2+2\\pi n$, sine is $1$; along $y_n=3\\pi/2+2\\pi n$, it is $-1$. Both tend to infinity, so no limit exists."
+  },
+  {
+    "id": "B4",
+    "stem_tex": "The function $f(x)=\\begin{cases}x^2/x&x\\ne0\\\\0&x=0\\end{cases}$",
+    "choices_tex": [
+      "is continuous everywhere",
+      "is continuous except at $x = 0$",
+      "has a removable discontinuity at $x = 0$",
+      "has an infinite discontinuity at $x = 0$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The definition equals $f(x)=x$ for all real $x$, including zero, hence is continuous everywhere."
+  },
+  {
+    "id": "B5",
+    "stem_tex": "Let $f(x)=\\begin{cases}1-x&-1\\le x<0\\\\2x^2-2&0\\le x\\le1\\\\-x+2&1<x<2\\\\1&x=2\\\\2x-4&2<x\\le3\\end{cases}$. $\\displaystyle\\lim_{x\\to2}f(x)$",
+    "choices_tex": [
+      "equals $0$",
+      "equals $1$",
+      "equals $2$",
+      "does not exist"
+    ],
+    "correct": "A",
+    "explanation_tex": "The left-hand limit is $-2+2=0$ and the right-hand limit is $2(2)-4=0$. Thus the limit is $0$, regardless of the assigned value $f(2)=1$."
+  },
+  {
+    "id": "B6",
+    "stem_tex": "Let $f(x)=\\begin{cases}1-x&-1\\le x<0\\\\2x^2-2&0\\le x\\le1\\\\-x+2&1<x<2\\\\1&x=2\\\\2x-4&2<x\\le3\\end{cases}$. The function $f$ is defined on $[-1,3]$",
+    "choices_tex": [
+      "if $x \\neq 0$",
+      "if $x \\neq 1$",
+      "if $x \\neq 2$",
+      "at each $x$ in $[-1,3]$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The piecewise intervals and the special value at $2$ cover every input in $[-1,3]$. A discontinuity does not imply an undefined value."
+  },
+  {
+    "id": "B7",
+    "stem_tex": "Let $f(x)=\\begin{cases}1-x&-1\\le x<0\\\\2x^2-2&0\\le x\\le1\\\\-x+2&1<x<2\\\\1&x=2\\\\2x-4&2<x\\le3\\end{cases}$. The function $f$ has a removable discontinuity at",
+    "choices_tex": [
+      "$x = 0$",
+      "$x = 1$",
+      "$x = 2$",
+      "$x = 3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $2$, both one-sided limits equal $0$, but $f(2)=1$. Redefining that one value to zero removes the discontinuity. At $0$ and $1$ the one-sided limits disagree."
+  },
+  {
+    "id": "B8",
+    "stem_tex": "Let $f(x)=\\begin{cases}1-x&-1\\le x<0\\\\2x^2-2&0\\le x\\le1\\\\-x+2&1<x<2\\\\1&x=2\\\\2x-4&2<x\\le3\\end{cases}$. On which of the following intervals is $f$ continuous?",
+    "choices_tex": [
+      "$-1 \\leq x \\leq 0$",
+      "$0 < x < 1$",
+      "$1 \\leq x \\leq 2$",
+      "$2 \\leq x \\leq 3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "On $(0,1)$, $f(x)=2x^2-2$ is a polynomial, hence continuous. Each other listed closed interval contains an endpoint where the required one-sided limit disagrees with the function value."
+  },
+  {
+    "id": "B9",
+    "stem_tex": "Let $f(x)=\\begin{cases}1-x&-1\\le x<0\\\\2x^2-2&0\\le x\\le1\\\\-x+2&1<x<2\\\\1&x=2\\\\2x-4&2<x\\le3\\end{cases}$. The function $f$ has a jump discontinuity at",
+    "choices_tex": [
+      "$x = -1$",
+      "$x = 1$",
+      "$x = 2$",
+      "$x = 3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At $1$, the left-hand limit is $0$ and the right-hand limit is $1$, a jump. There is also a jump at zero, but zero is not among the choices."
+  },
+  {
+    "id": "B10",
+    "stem_tex": "$\\displaystyle\\lim_{x\\to0}\\sqrt{3+\\arctan(1/x)}$",
+    "choices_tex": [
+      "$\\sqrt{3-\\pi/2}$",
+      "$\\sqrt{3+\\pi/2}$",
+      "$\\infty$",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "As $x\\to0^-$, $\\arctan(1/x)\\to-\\pi/2$; as $x\\to0^+$ it tends to $\\pi/2$. The square-root limits $\\sqrt{3-\\pi/2}$ and $\\sqrt{3+\\pi/2}$ differ."
+  },
+  {
+    "id": "B11",
+    "stem_tex": "Suppose $\\lim_{x\\to-3^-}f(x)=\\lim_{x\\to-3^+}f(x)=-1$ and $f(-3)$ is undefined. Which statements are true? I. $\\lim_{x\\to-3}f(x)=-1$. II. $f$ is continuous everywhere except at $-3$. III. $f$ has a removable discontinuity at $-3$.",
+    "choices_tex": [
+      "I only",
+      "III only",
+      "I and III only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "explanation_tex": "Equal finite one-sided limits give the two-sided limit $-1$. Defining $f(-3)=-1$ would remove the discontinuity. Nothing given establishes continuity at other inputs, so only I and III follow."
+  },
+  {
+    "id": "B12",
+    "stem_tex": "If $y=1/(2+10^{1/x})$, evaluate $\\lim_{x\\to0}y$.",
+    "choices_tex": [
+      "$0$",
+      "$1/12$",
+      "$1/2$",
+      "does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "As $x\\to0^+$, $10^{1/x}\\to\\infty$, so $y\\to0$. As $x\\to0^-$, $10^{1/x}\\to0$, so $y\\to1/2$. The two-sided limit does not exist."
+  },
+  {
+    "id": "B13",
+    "stem_tex": "Use the graph of $f$ below. For which listed $a$ do $\\lim_{x\\to a}f(x)$ and $f(a)$ both exist but differ?",
+    "choices_tex": [
+      "$-1$ only",
+      "$2$ only",
+      "$-1$ or $1$ only",
+      "$-1$ or $2$ only"
+    ],
+    "correct": "A",
+    "figure": {
+      "src": "data/calculus-figures/c2-b13-b15.png",
+      "alt": "Graph: lower semicircle from (-3,1) to (-1,1), both endpoints open; filled point (-1,2); line y=-x from open (-1,1) to filled (1,-1); upper semicircle from open (1,1) to filled (3,1), with a hole at (2,2)."
+    },
+    "explanation_tex": "At $a=-1$, the graph approaches $1$ from both sides but the filled point gives $f(-1)=2$. At $1$ the one-sided limits disagree, and at $2$ the function is undefined. Thus only $-1$ meets both conditions."
+  },
+  {
+    "id": "B14",
+    "stem_tex": "Use the graph of $f$ below. For which listed $a$ does $\\lim_{x\\to a}f(x)$ not exist?",
+    "choices_tex": [
+      "$-1$ only",
+      "$1$ only",
+      "$2$ only",
+      "$1$ and $2$ only"
+    ],
+    "correct": "B",
+    "figure": {
+      "src": "data/calculus-figures/c2-b13-b15.png",
+      "alt": "Graph: lower semicircle from (-3,1) to (-1,1), both endpoints open; filled point (-1,2); line y=-x from open (-1,1) to filled (1,-1); upper semicircle from open (1,1) to filled (3,1), with a hole at (2,2)."
+    },
+    "explanation_tex": "At $1$, the left-hand limit is $-1$ and the right-hand limit is $1$, so no two-sided limit exists. At $-1$ the limit is $1$; at $2$ the limit is $2$ despite the hole. Thus only $1$ qualifies."
+  },
+  {
+    "id": "B15",
+    "stem_tex": "Use the graph of $f$ below. Which statements are true? I. $\\lim_{x\\to1^-}f(x)$ exists. II. $\\lim_{x\\to1^+}f(x)$ exists. III. $\\lim_{x\\to1}f(x)$ exists.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "C",
+    "figure": {
+      "src": "data/calculus-figures/c2-b13-b15.png",
+      "alt": "Graph: lower semicircle from (-3,1) to (-1,1), both endpoints open; filled point (-1,2); line y=-x from open (-1,1) to filled (1,-1); upper semicircle from open (1,1) to filled (3,1), with a hole at (2,2)."
+    },
+    "explanation_tex": "The graph gives $\\lim_{x\\to1^-}f(x)=-1$ and $\\lim_{x\\to1^+}f(x)=1$. Both one-sided limits exist, but the unequal values prevent a two-sided limit. Thus I and II only."
+  }
+]

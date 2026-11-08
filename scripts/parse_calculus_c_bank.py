@@ -231,6 +231,9 @@ for num, title, folder, cfile, sfile, ctype in CHAPTERS:
 
     bank[str(num)] = chapter_entry
 
+from apply_calculus_reviewed import apply_reviewed
+bank = apply_reviewed(bank, "c")
+
 with open("/Users/kyj/Documents/zenith-website/data/calculus-c-bank.json", "w", encoding="utf-8") as f:
     json.dump(bank, f, ensure_ascii=False, indent=2)
 

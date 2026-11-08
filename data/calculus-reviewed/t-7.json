@@ -1,0 +1,719 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $y=x^2$, $y=0$, $x=-2$, and $x=3$.",
+    "choices_tex": [
+      "$\\dfrac{11}{3}$",
+      "$\\dfrac{35}{3}$",
+      "$5$",
+      "$7$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integrate the nonnegative height: $A=\\int_{-2}^3x^2\\,dx=[x^3/3]_{-2}^3=35/3$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "Find the area of the region with the following boundaries: The parabola $y=x^2-5$ and the line $y=4$.",
+    "choices_tex": [
+      "$9$",
+      "$18$",
+      "$36$",
+      "$72$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Intersections satisfy $x^2=9$. Thus $A=\\int_{-3}^3(9-x^2)\\,dx=36$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $x=y^2-4$ and the $y$-axis.",
+    "choices_tex": [
+      "$\\dfrac{32}{3}$",
+      "$\\dfrac{16}{3}$",
+      "$8$",
+      "$4$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The intersections have $y=\\pm2$. Horizontal strips give $A=\\int_{-2}^2(4-y^2)\\,dy=32/3$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "Find the area of the region with the following boundaries: The parabola $y^2=x$ and the line $x+y=6$.",
+    "choices_tex": [
+      "$\\dfrac{45}{4}$",
+      "$\\dfrac{125}{6}$",
+      "$\\dfrac{25}{2}$",
+      "$\\dfrac{45}{2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solve $y^2=6-y$ to obtain $y=-3,2$. Hence $A=\\int_{-3}^2(6-y-y^2)\\,dy=125/6$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $y=\\dfrac{6}{x^2+9}$, the $x$-axis, and the vertical lines $x=-3\\sqrt{3}$ and $x=3\\sqrt{3}$.",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{3}$",
+      "$\\dfrac{2\\pi}{3}$",
+      "$\\dfrac{4\\pi}{3}$",
+      "$\\dfrac{8\\pi}{3}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$A=[2\\arctan(x/3)]_{-3\\sqrt3}^{3\\sqrt3}=4\\pi/3$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "Find the area of the region with the following boundaries: The parabolas $x=y^2-6y$ and $x=4y-y^2$.",
+    "choices_tex": [
+      "$\\dfrac{25}{3}$",
+      "$\\dfrac{125}{6}$",
+      "$\\dfrac{125}{3}$",
+      "$\\dfrac{250}{3}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Intersections have $y=0,5$. Right minus left gives $A=\\int_0^5(10y-2y^2)\\,dy=125/3$."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $y=\\dfrac{3}{x}$ and $x+y=4$.",
+    "choices_tex": [
+      "$1-2\\ln 3$",
+      "$3$",
+      "$1-\\ln 27$",
+      "$4-\\ln 27$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The intersections have $x=1,3$. Thus $A=\\int_1^3(4-x-3/x)\\,dx=4-3\\ln3=4-\\ln27$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "Find the area of the region with the following boundaries: In the first quadrant, bounded below by the $x$-axis and above by the curves of $y=2\\sin x$ and $y=2\\cos x$.",
+    "choices_tex": [
+      "$2(2-\\sqrt{2})$",
+      "$2(2+\\sqrt{2})$",
+      "$4$",
+      "$2\\sqrt{2}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The upper boundary is the smaller of the two curves on $[0,\\pi/2]$, switching at $\\pi/4$. Thus $A=\\int_0^{\\pi/4}2\\sin x\\,dx+\\int_{\\pi/4}^{\\pi/2}2\\cos x\\,dx=4-2\\sqrt2$.",
+    "source_correction": "Corrected key: the area is 4-2sqrt(2), not 2sqrt(2)."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "Find the area of the region with the following boundaries: Bounded above by the curve $y=2\\sin x$ and below by $y=2\\cos x$ from $x=\\dfrac{\\pi}{4}$ to $x=\\dfrac{5\\pi}{4}$.",
+    "choices_tex": [
+      "$4\\sqrt{2}$",
+      "$\\dfrac{4}{\\sqrt{2}}$",
+      "$4(\\sqrt{2}-1)$",
+      "$4(\\sqrt{2}+1)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$A=\\int_{\\pi/4}^{5\\pi/4}2(\\sin x-\\cos x)\\,dx=[-2\\cos x-2\\sin x]_{\\pi/4}^{5\\pi/4}=4\\sqrt2$."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $y=\\cot x$, the line $x=\\dfrac{\\pi}{3}$, and the $x$-axis.",
+    "choices_tex": [
+      "$\\ln 2$",
+      "$\\dfrac{1}{2}\\ln 3$",
+      "$\\ln 2-\\dfrac{1}{2}\\ln 3$",
+      "$\\dfrac{1}{2}\\ln 2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The intercept is $\\pi/2$, so $A=[\\ln(\\sin x)]_{\\pi/3}^{\\pi/2}=\\ln2-\\tfrac12\\ln3$."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "Find the area of the region with the following boundaries: The curve $y=x^3-3x^2-4x$ and the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{121}{4}$",
+      "$\\dfrac{131}{4}$",
+      "$\\dfrac{141}{4}$",
+      "$\\dfrac{151}{4}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Factor $f(x)=x(x-4)(x+1)$. It is positive on $(-1,0)$ and negative on $(0,4)$, so $A=\\int_{-1}^0f(x)\\,dx-\\int_0^4f(x)\\,dx=131/4$."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "The total area bounded by the cubic $x=y^3-4y$ and the line $x=2y$ is equal to",
+    "choices_tex": [
+      "$9$",
+      "$18$",
+      "$6$",
+      "$36$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The intersections have $y=0,\\pm\\sqrt6$. Symmetry gives $A=2\\int_0^{\\sqrt6}(6y-y^3)\\,dy=18$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "The area bounded by $y=e^x$, $y=3$, and the $y$-axis is equal to",
+    "choices_tex": [
+      "$3-e$",
+      "$e^2+1$",
+      "$3\\ln 3-2$",
+      "$3\\ln 3-4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The intersection is $x=\\ln3$. Thus $A=\\int_0^{\\ln3}(3-e^x)\\,dx=3\\ln3-2$."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "The area enclosed by the curve $y^2=x(4-x)$ is given by",
+    "choices_tex": [
+      "$\\displaystyle 2\\int_0^4 x\\sqrt{4-x}\\,dx$",
+      "$\\displaystyle 2\\int_0^4 \\sqrt{4x-x^2}\\,dx$",
+      "$\\displaystyle 4\\int_0^4 \\sqrt{4x-x^2}\\,dx$",
+      "$\\pi$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The upper and lower branches are $y=\\pm\\sqrt{4x-x^2}$ for $0\\le x\\le4$. Their difference gives $A=2\\int_0^4\\sqrt{4x-x^2}\\,dx$."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "A rectangle has vertices $(0,0)$, $(c,0)$, $(c,c^2)$, and $(0,c^2)$, with $c>0$. The portion above the curve $y=x^2$ is shaded. What is the ratio of the area of the rectangle to its shaded area?",
+    "choices_tex": [
+      "$3:4$",
+      "$5:4$",
+      "$3:2$",
+      "$3:1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Using the stated parabola, the rectangle has area $c\\cdot c^2=c^3$. The shaded area above the curve is $c^3-\\int_0^c x^2\\,dx=2c^3/3$, so the ratio is $3:2$. The source diagram is schematic and its plotted curve does not match the stated parabola exactly.",
+    "source_correction": "Made the geometry explicit from the source statement; the source TikZ curve is drawn cubically although the statement specifies a parabola."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=x^2$, $x=3$, and $y=0$; about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{243\\pi}{5}$",
+      "$27\\pi$",
+      "$\\dfrac{81\\pi}{5}$",
+      "$\\dfrac{162\\pi}{7}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Disks have radius $x^2$, so $V=\\pi\\int_0^3x^4\\,dx=243\\pi/5$."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=x^2$, $x=3$, and $y=0$; about the $y$-axis.",
+    "choices_tex": [
+      "$\\dfrac{81\\pi}{4}$",
+      "$\\dfrac{81\\pi}{2}$",
+      "$27\\pi$",
+      "$\\dfrac{243\\pi}{5}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Cylindrical shells give $V=2\\pi\\int_0^3x(x^2)\\,dx=81\\pi/2$."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: The first-quadrant region bounded by $y=x^2$, the $y$-axis, and $y=9$; about the $y$-axis.",
+    "choices_tex": [
+      "$9\\pi$",
+      "$\\dfrac{81\\pi}{2}$",
+      "$\\dfrac{243\\pi}{2}$",
+      "$27\\pi$"
+    ],
+    "correct": "B",
+    "explanation_tex": "At height $y$, the disk radius is $\\sqrt y$, so $V=\\pi\\int_0^9y\\,dy=81\\pi/2$."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=x^2$ and $y=9$; about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{972\\pi}{5}$",
+      "$\\dfrac{1944\\pi}{5}$",
+      "$\\dfrac{486\\pi}{5}$",
+      "$\\dfrac{243\\pi}{10}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Washers have outer radius $9$ and inner radius $x^2$, over $[-3,3]$. Thus $V=\\pi\\int_{-3}^3(81-x^4)\\,dx=1944\\pi/5$."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=x^2$ and $y=9$; about the line $y=9$.",
+    "choices_tex": [
+      "$\\dfrac{648\\pi}{5}$",
+      "$\\dfrac{2592\\pi}{5}$",
+      "$\\dfrac{1296\\pi}{5}$",
+      "$\\dfrac{324\\pi}{5}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The disk radius is $9-x^2$, so $V=\\pi\\int_{-3}^3(9-x^2)^2\\,dx=1296\\pi/5$."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: An arch of $y=\\sin 2x$ and the $x$-axis; about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{4}\\left(\\pi-\\dfrac{1}{4}\\right)$",
+      "$\\dfrac{\\pi^2}{2}$",
+      "$\\dfrac{\\pi^2}{4}$",
+      "$\\dfrac{\\pi^2}{8}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "One arch spans $0\\le x\\le\\pi/2$. Therefore $V=\\pi\\int_0^{\\pi/2}\\sin^2(2x)\\,dx=\\pi^2/4$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: A trapezoid with vertices at $(3,0)$, $(3,3)$, $(6,0)$, and $(6,6)$; about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{56\\pi}{3}$",
+      "$63\\pi$",
+      "$189\\pi$",
+      "$126\\pi$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The top edge is $y=x$ for $3\\le x\\le6$. Thus $V=\\pi\\int_3^6x^2\\,dx=63\\pi$."
+  },
+  {
+    "id": "T23",
+    "stem_tex": "The base of a solid is a circle of radius $b$ and is centered at the origin. Each cross section perpendicular to the $x$-axis is a square. The solid has volume",
+    "choices_tex": [
+      "$\\dfrac{8}{3}b^3$",
+      "$2\\pi b^3$",
+      "$4\\pi b^3$",
+      "$\\dfrac{16}{3}b^3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A square has side $2\\sqrt{b^2-x^2}$, hence area $4(b^2-x^2)$. Therefore $V=\\int_{-b}^b4(b^2-x^2)\\,dx=16b^3/3$."
+  },
+  {
+    "id": "T24",
+    "stem_tex": "The base of a solid is the region bounded by the parabola $x^2=12y$ and the line $y=6$, and each plane section perpendicular to the $y$-axis is an equilateral triangle. The volume of the solid is",
+    "choices_tex": [
+      "$72\\sqrt{3}$",
+      "$216\\sqrt{3}$",
+      "$108\\sqrt{3}$",
+      "$432\\sqrt{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The triangle side is $2\\sqrt{12y}$, so its area is $(\\sqrt3/4)(48y)=12\\sqrt3y$. Integrating from $0$ to $6$ gives $216\\sqrt3$."
+  },
+  {
+    "id": "T25",
+    "stem_tex": "The base of a solid is the region bounded by $y=e^{-2x}$, the $x$-axis, the $y$-axis, and the line $x=1$. Each cross section perpendicular to the $x$-axis is a square. The volume of the solid is",
+    "choices_tex": [
+      "$e^4-1$",
+      "$1-\\dfrac{1}{e^4}$",
+      "$\\dfrac{e^4-1}{4}$",
+      "$\\dfrac{1}{4}\\left(1-\\dfrac{1}{e^4}\\right)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The square area is $(e^{-2x})^2=e^{-4x}$. Hence $V=\\int_0^1e^{-4x}\\,dx=(1-e^{-4})/4$."
+  },
+  {
+    "id": "T26",
+    "stem_tex": "The length of the curve $y^2=x^3$ cut off by the line $x=9$ is",
+    "choices_tex": [
+      "$\\dfrac{85\\sqrt{85}-8}{27}$",
+      "$\\dfrac{85\\sqrt{85}-1}{27}$",
+      "$\\dfrac{2}{27}(85\\sqrt{85}-8)$",
+      "$\\dfrac{85\\sqrt{85}}{27}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Both branches $y=\\pm x^{3/2}$ are included. Thus $L=2\\int_0^9\\sqrt{1+9x/4}\\,dx=(85\\sqrt{85}-8)/27$."
+  },
+  {
+    "id": "T27",
+    "stem_tex": "The length of the curve $y=\\ln(\\sin x)$ from $x=\\dfrac{\\pi}{6}$ to $x=\\dfrac{\\pi}{4}$ equals",
+    "choices_tex": [
+      "$\\displaystyle\\int_{\\pi/6}^{\\pi/4} \\sqrt{1+\\tan^2 x}\\,dx$",
+      "$\\displaystyle\\int_{\\pi/6}^{\\pi/4} \\sqrt{1+(\\ln\\sin x)^2}\\,dx$",
+      "$\\displaystyle\\int_{\\pi/6}^{\\pi/4} \\sqrt{1+\\dfrac{1}{\\sin^2 x}}\\,dx$",
+      "$\\displaystyle\\int_{\\pi/6}^{\\pi/4} \\sqrt{1+\\cot^2 x}\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $y'=\\cot x$, the arc-length formula gives $L=\\int_{\\pi/6}^{\\pi/4}\\sqrt{1+\\cot^2x}\\,dx$."
+  },
+  {
+    "id": "T28",
+    "stem_tex": "$\\displaystyle\\int_0^\\infty e^{-2x}\\,dx =$",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{1}{2}$",
+      "$-1$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "$\\lim_{b\\to\\infty}[-e^{-2x}/2]_0^b=1/2$."
+  },
+  {
+    "id": "T29",
+    "stem_tex": "$\\displaystyle\\int_0^{e^2} \\dfrac{du}{u} =$",
+    "choices_tex": [
+      "$2$",
+      "$\\dfrac{1}{e^2}$",
+      "$-\\dfrac{1}{e}$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "$\\lim_{a\\to0^+}[\\ln u]_a^{e^2}=\\lim_{a\\to0^+}(2-\\ln a)=+\\infty$, so the integral diverges."
+  },
+  {
+    "id": "T30",
+    "stem_tex": "$\\displaystyle\\int_1^9 \\dfrac{dt}{\\sqrt[3]{t-1}} =$",
+    "choices_tex": [
+      "$\\dfrac{2}{3}$",
+      "$\\dfrac{3}{2}$",
+      "$6$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "The endpoint singularity is integrable: $\\lim_{a\\to1^+}[\\tfrac32(t-1)^{2/3}]_a^9=6$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "$\\displaystyle\\int_{-4}^{12} \\dfrac{dx}{(x-4)^{2/3}} =$",
+    "choices_tex": [
+      "$6$",
+      "$0$",
+      "$12$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Split at $x=4$. Each side contributes $\\int_0^8u^{-2/3}\\,du=6$, giving $12$ in total."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "$\\displaystyle\\int_2^5 \\dfrac{dx}{(x-4)^2} =$",
+    "choices_tex": [
+      "$2$",
+      "$-2$",
+      "$0$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "The interior singularity at $x=4$ has exponent $2>1$. Either one-sided integral of $(x-4)^{-2}$ diverges to $+\\infty$."
+  },
+  {
+    "id": "T33",
+    "stem_tex": "$\\displaystyle\\int_0^{\\pi/2} \\dfrac{2\\sin x}{\\sqrt{1-\\cos x}}\\,dx =$",
+    "choices_tex": [
+      "$-4$",
+      "$1$",
+      "$4$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Let $u=1-\\cos x$. The improper integral is $2\\int_0^1u^{-1/2}\\,du=4$."
+  },
+  {
+    "id": "T34",
+    "stem_tex": "Find the area in the first quadrant under the curve $y=e^{-2x}$.",
+    "choices_tex": [
+      "$1$",
+      "$\\dfrac{1}{2}$",
+      "$2$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "The area is $\\int_0^\\infty e^{-2x}\\,dx=[-e^{-2x}/2]_0^\\infty=1/2$."
+  },
+  {
+    "id": "T35",
+    "stem_tex": "Find the area in the first quadrant under the curve $y=xe^{-x^2/2}$.",
+    "choices_tex": [
+      "$2$",
+      "$\\dfrac{2}{e}$",
+      "$1$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "Let $u=x^2/2$, $du=x\\,dx$. The area becomes $\\int_0^\\infty e^{-u}\\,du=1$."
+  },
+  {
+    "id": "T36",
+    "stem_tex": "Find the area in the first quadrant above $y=2$, between the $y$-axis and the curve $y=\\dfrac{3}{x}$.",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$\\dfrac{1}{2}$",
+      "divergent"
+    ],
+    "correct": "D",
+    "explanation_tex": "Horizontal strips give $A=\\int_2^\\infty(3/y)\\,dy$. Its logarithmic antiderivative is unbounded, so the area diverges."
+  },
+  {
+    "id": "T37",
+    "stem_tex": "Find the area between the curve $y=\\dfrac{9}{1+x^2}$ and the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{9\\pi}{4}$",
+      "$\\dfrac{9\\pi}{2}$",
+      "$9\\pi$",
+      "divergent"
+    ],
+    "correct": "C",
+    "explanation_tex": "$A=9[\\arctan x]_{-\\infty}^{\\infty}=9\\pi$."
+  },
+  {
+    "id": "T38",
+    "stem_tex": "Find the area above the $x$-axis, between the curve $y=\\dfrac{6}{\\sqrt{1-x^2}}$ and its asymptotes.",
+    "choices_tex": [
+      "$3\\pi$",
+      "$6\\pi$",
+      "$9\\pi$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "The asymptotes are $x=\\pm1$. The convergent improper integral is $6[\\arcsin x]_{-1}^{1}=6\\pi$."
+  },
+  {
+    "id": "T39",
+    "stem_tex": "Find the volume of the solid generated when the region bounded above by $y=\\dfrac{1}{x}$, at the left by $x=2$, and below by $y=0$ is rotated about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{4}$",
+      "$\\dfrac{\\pi}{2}$",
+      "$\\pi$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "Disks give $V=\\pi\\int_2^\\infty x^{-2}\\,dx=\\pi[-x^{-1}]_2^\\infty=\\pi/2$."
+  },
+  {
+    "id": "T40",
+    "stem_tex": "Find the volume of the solid generated when the first-quadrant region under $y=e^{-2x}$ is rotated about the $x$-axis.",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{8}$",
+      "$\\dfrac{\\pi}{4}$",
+      "$\\dfrac{\\pi}{2}$",
+      "divergent"
+    ],
+    "correct": "B",
+    "explanation_tex": "Disks give $V=\\pi\\int_0^\\infty e^{-4x}\\,dx=\\pi/4$."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "The area bounded by the parabola $y=3-x^2$ and the line $y=x-3$ is given by",
+    "choices_tex": [
+      "$\\displaystyle\\int_{-3}^{2} (6-x-x^2)\\,dx$",
+      "$\\displaystyle\\int_{-2}^{1} (3+x+x^2)\\,dx$",
+      "$\\displaystyle\\int_{-2}^{2} (6-x-x^2)\\,dx$",
+      "$\\displaystyle 2\\int_0^{\\sqrt{3}} (3-x^2)\\,dx + \\int_{-3}^{2} (3-x)\\,dx$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Intersections solve $3-x^2=x-3$, yielding $x=-3,2$. Subtracting lower from upper gives $\\int_{-3}^2(6-x-x^2)\\,dx$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "For a continuous function $f$ on $[1,9]$, the table is $\\begin{array}{c|ccccc}x&1&3&4&7&9\\\\\\hline f(x)&2.0&5.2&8.6&10.4&13.5\\end{array}$. Use a trapezoidal sum with four subintervals to approximate the area under the curve from $x=1$ to $x=9$, to two decimal places.",
+    "choices_tex": [
+      "$55.20$",
+      "$61.30$",
+      "$66.50$",
+      "$70.80$"
+    ],
+    "correct": "C",
+    "explanation_tex": "With unequal widths, the trapezoidal sum is $2(2+5.2)/2+(5.2+8.6)/2+3(8.6+10.4)/2+2(10.4+13.5)/2=66.50$."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "The area $A$ enclosed by the three-leaved rose $r=2\\cos 3\\theta$ equals, to three decimal places,",
+    "choices_tex": [
+      "$0.785$",
+      "$1.571$",
+      "$3.142$",
+      "$6.283$"
+    ],
+    "correct": "C",
+    "explanation_tex": "One petal has area $\\tfrac12\\int_{-\\pi/6}^{\\pi/6}4\\cos^2(3\\theta)\\,d\\theta=\\pi/3$. Three petals have area $\\pi\\approx3.142$."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "The area bounded by the small loop of the lima\\c{c}on $r=1-2\\cos\\theta$ is given by the definite integral",
+    "choices_tex": [
+      "$\\displaystyle\\frac12\\int_{-\\pi/3}^{\\pi/3}(1-2\\cos\\theta)^2\\,d\\theta$",
+      "$\\displaystyle\\int_{\\pi/3}^{5\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
+      "$\\displaystyle\\int_{2\\pi/3}^{4\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
+      "$\\displaystyle\\int_{-2\\pi/3}^{2\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The inner loop begins and ends where $1-2\\cos\\theta=0$, at $\\theta=\\pm\\pi/3$. Polar area is $\\frac12\\int r^2\\,d\\theta$, so its area is $\\frac12\\int_{-\\pi/3}^{\\pi/3}(1-2\\cos\\theta)^2\\,d\\theta=\\pi-3\\sqrt3/2$.",
+    "source_original": {
+      "stem_tex": "The area bounded by the small loop of the lima\\c{c}on $r=1-2\\cos\\theta$ is given by the definite integral",
+      "choices_tex": [
+        "$\\displaystyle\\int_{-\\pi/3}^{\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
+        "$\\displaystyle\\int_{\\pi/3}^{5\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
+        "$\\displaystyle\\int_{2\\pi/3}^{4\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
+        "$\\displaystyle\\int_{-2\\pi/3}^{2\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$"
+      ],
+      "correct": null,
+      "explanation_tex": "The inner loop is traced for $-\\pi/3\\le\\theta\\le\\pi/3$. Its area is $\\tfrac12\\int_{-\\pi/3}^{\\pi/3}(1-2\\cos\\theta)^2\\,d\\theta=\\pi-3\\sqrt3/2$. Choice A has the correct limits but incorrectly squares the factor $1/2$, giving half the area; none of the listed choices is correct.",
+      "source_issue": "All choices use an incorrect polar-area factor; no correct option."
+    },
+    "resolved_source_issue": "All choices use an incorrect polar-area factor; no correct option.",
+    "source_correction": "Moved the factor 1/2 outside the square in option A."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=x^2$ and $y=9$; about the line $y=-2$.",
+    "choices_tex": [
+      "$\\displaystyle 4\\pi\\int_{-2}^{9} (y+2)\\sqrt{y}\\,dy$",
+      "$\\displaystyle 2\\pi\\int_0^3 (9-x^2)^2\\,dx$",
+      "$\\displaystyle \\pi\\int_{-3}^{3} (121-x^4)\\,dx$",
+      "$\\displaystyle 2\\pi\\int_0^3 (117-4x^2-x^4)\\,dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Outer radius $11$ and inner radius $x^2+2$ give $V=\\pi\\int_{-3}^3[121-(x^2+2)^2]\\,dx=2\\pi\\int_0^3(117-4x^2-x^4)\\,dx$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The region bounded by $y=4x-x^2$ and $y=0$ is rotated about the $x$-axis. Which integral sets up its volume using the disk method with integration in $x$?",
+    "choices_tex": [
+      "$\\displaystyle \\pi\\int_0^4 (16x^2+x^4)\\,dx$",
+      "$\\displaystyle \\pi\\int_0^4 (4x-x^2)^2\\,dx$",
+      "$\\displaystyle \\pi\\int_0^2 (4x-x^2)\\,dx$",
+      "$\\displaystyle 2\\pi\\int_0^4 y\\sqrt{16-4y}\\,dy$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The intercepts are0 and4. A cross section perpendicular to the $x$-axis is a disk with radius $4x-x^2$, giving $V=\\pi\\int_0^4(4x-x^2)^2\\,dx$, choice B. D is a valid shell formula in $y$, but is not the requested disk-method setup.",
+    "source_original": {
+      "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=4x-x^2$ and $y=0$; about the $x$-axis.",
+      "choices_tex": [
+        "$\\displaystyle \\pi\\int_0^4 (16x^2+x^4)\\,dx$",
+        "$\\displaystyle \\pi\\int_0^4 (4x-x^2)^2\\,dx$",
+        "$\\displaystyle \\pi\\int_0^2 (4x-x^2)\\,dx$",
+        "$\\displaystyle 2\\pi\\int_0^4 y\\sqrt{16-4y}\\,dy$"
+      ],
+      "correct": null,
+      "explanation_tex": "The intercepts are $0,4$, and disks have radius $4x-x^2$. Thus $V=\\pi\\int_0^4(4x-x^2)^2\\,dx$. Choice D also equals this volume: horizontal shells have radius $y$ and width $\\sqrt{16-4y}$ for $0\\le y\\le4$.",
+      "source_issue": "Both B (disks) and D (shells) give the volume."
+    },
+    "resolved_source_issue": "Both B (disks) and D (shells) give the volume.",
+    "source_correction": "Specified the disk method with integration in x to distinguish it from the also-valid shell formula."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=4x-x^2$ and $y=x$; about the $x$-axis.",
+    "choices_tex": [
+      "$\\displaystyle \\pi\\int_0^2 \\left[(4x-x^2)^2-x^2\\right] dx$",
+      "$\\displaystyle \\pi\\int_0^3 (16x^2-8x^3)\\,dx$",
+      "$\\displaystyle \\pi\\int_0^3 \\left[(4x-x^2)^2-x^2\\right] dx$",
+      "$\\displaystyle \\pi\\int_0^4 (3x-x^2)^2\\,dx$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The intersections are $0,3$. Washers have radii $4x-x^2$ and $x$, giving $\\pi\\int_0^3[(4x-x^2)^2-x^2]\\,dx$."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=\\ln x$, $y=0$, $x=e^2$; about the line $x=e^2$.",
+    "choices_tex": [
+      "$\\displaystyle \\pi\\int_1^{e^2} (e^2-x)\\ln x\\,dx$",
+      "$\\displaystyle \\pi\\int_0^2 (e^2-e^y)^2\\,dy$",
+      "$\\displaystyle 2\\pi\\int_1^{e^2} (e^2-\\ln x)\\,dx$",
+      "$\\displaystyle \\pi\\int_0^2 (e^4-2e^{y+1}+e^{2y})\\,dy$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Horizontal disks extend from $x=e^y$ to the axis $x=e^2$, with $0\\le y\\le2$. Their radius is $e^2-e^y$, giving $\\pi\\int_0^2(e^2-e^y)^2\\,dy$."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "A sphere of radius $r$ is divided into two parts by a plane at distance $h$ ($0<h<r$) from the center. The volume of the smaller part equals",
+    "choices_tex": [
+      "$\\dfrac{\\pi}{3}(2r^3+h^3-3r^2h)$",
+      "$\\dfrac{\\pi h}{3}(3r^2-h^2)$",
+      "$\\dfrac{4}{3}\\pi r^3+\\dfrac{h^3}{3}-r^2h$",
+      "$\\dfrac{\\pi}{3}(2r^3+3r^2h-h^3)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Place the sphere at the origin with cutting plane $x=h$. The smaller cap has volume $\\pi\\int_h^r(r^2-x^2)\\,dx=\\frac\\pi3(2r^3+h^3-3r^2h)$.",
+    "source_correction": "Corrected key: h is measured from the center; the smaller cap is integrated from h to r."
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "If the curves of $f(x)$ and $g(x)$ intersect for $x=a$ and $x=b$ and if $f(x)>g(x)>0$ for all $x$ on $(a,b)$, then the volume obtained when the region bounded by the curves is rotated about the $x$-axis is equal to",
+    "choices_tex": [
+      "$\\displaystyle \\pi\\int_a^b (f(x))^2\\,dx - \\int_a^b (g(x))^2\\,dx$",
+      "$\\displaystyle \\pi\\int_a^b [f(x)-g(x)]^2\\,dx$",
+      "$\\displaystyle 2\\pi\\int_a^b x[f(x)-g(x)]\\,dx$",
+      "$\\displaystyle \\pi\\int_a^b \\left[(f(x))^2-(g(x))^2\\right] dx$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A washer has area $\\pi(f(x)^2-g(x)^2)$. Integrating from $a$ to $b$ gives choice D."
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "The length of one arch of the cycloid $x=2(t-\\sin t)$, $y=2(1-\\cos t)$ equals",
+    "choices_tex": [
+      "$\\displaystyle\\int_0^{\\pi} 2\\sqrt{1-\\cos t}\\,dt$",
+      "$\\displaystyle\\int_0^{2\\pi} 2\\sqrt{\\dfrac{1-\\cos t}{2}}\\,dt$",
+      "$\\displaystyle\\int_0^{\\pi} 2\\sqrt{2-2\\cos t}\\,dt$",
+      "$\\displaystyle\\int_0^{2\\pi} 2\\sqrt{2-2\\cos t}\\,dt$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The speed is $\\sqrt{[2(1-\\cos t)]^2+(2\\sin t)^2}=2\\sqrt{2-2\\cos t}$. One arch spans $0\\le t\\le2\\pi$, so choice D is the arc-length integral."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "The length of the curve of the parabola $6x=y^2$ cut off by the line $x=3$ is given by the integral",
+    "choices_tex": [
+      "$\\displaystyle\\int_{-1}^{1} \\sqrt{x^2+1}\\,dx$",
+      "$\\displaystyle\\dfrac{1}{3}\\int_0^3 \\sqrt{9+y^2}\\,dy$",
+      "$\\displaystyle\\int_{-1}^{1} \\sqrt{1+x}\\,dx$",
+      "$\\displaystyle\\dfrac{2}{3}\\int_0^{3\\sqrt{2}} \\sqrt{9+y^2}\\,dy$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Write $x=y^2/6$, so $dx/dy=y/3$. The line $x=3$ cuts the parabola at $y=\\pm3\\sqrt2$. Symmetry gives $L=(2/3)\\int_0^{3\\sqrt2}\\sqrt{9+y^2}\\,dy$."
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "The length of $x=e^t\\cos t$, $y=e^t\\sin t$ from $t=1$ to $t=2$ is equal to",
+    "choices_tex": [
+      "$6.605$",
+      "$9.502$",
+      "$11.318$",
+      "$17.956$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The squared speed is $e^{2t}[(\\cos t-\\sin t)^2+(\\sin t+\\cos t)^2]=2e^{2t}$. Hence $L=\\sqrt2(e^2-e)\\approx6.605$."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "Which one of the following is an improper integral?",
+    "choices_tex": [
+      "$\\displaystyle\\int_0^3 \\dfrac{dx}{\\sqrt{x+2}}$",
+      "$\\displaystyle\\int_{-1}^2 \\dfrac{dx}{1+x^2}$",
+      "$\\displaystyle\\int_0^3 \\dfrac{x\\,dx}{4-x^2}$",
+      "$\\displaystyle\\int_0^{\\pi/4} \\dfrac{\\sin x\\,dx}{\\cos^2 x}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Choice C has a pole at the interior point $x=2$, because $4-x^2=0$ there. The other integrands are continuous on their closed intervals."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "Which one of the following improper integrals diverges?",
+    "choices_tex": [
+      "$\\displaystyle\\int_1^\\infty \\dfrac{dx}{x^3}$",
+      "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{e^{2x}}$",
+      "$\\displaystyle\\int_{-1}^1\\frac{dx}{\\sqrt[4]{|x|}}$",
+      "$\\displaystyle\\int_{-1}^1 \\dfrac{dx}{x^3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A converges to $1/2$, and B converges to $1/2$. C equals $2\\int_0^1x^{-1/4}\\,dx=8/3$, so it also converges. In D, the integral on $(0,1]$ diverges to $+\\infty$ and that on $[-1,0)$ to $-\\infty$; cancellation as a principal value does not make the improper integral converge.",
+    "source_original": {
+      "stem_tex": "Which one of the following improper integrals diverges?",
+      "choices_tex": [
+        "$\\displaystyle\\int_1^\\infty \\dfrac{dx}{x^3}$",
+        "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{e^{2x}}$",
+        "$\\displaystyle\\int_{-1}^1 \\dfrac{dx}{\\sqrt[4]{x}}$",
+        "$\\displaystyle\\int_{-1}^1 \\dfrac{dx}{x^3}$"
+      ],
+      "correct": null,
+      "explanation_tex": "Choice D diverges because the two one-sided integrals at $0$ do not converge; cancellation in a principal value does not establish convergence. However choice C is not real-valued on $(-1,0)$, since $\\sqrt[4]{x}$ is undefined there over the reals. Thus the source does not supply a valid single-answer comparison of real improper integrals.",
+      "source_issue": "Option C is undefined over the reals on part of its integration interval."
+    },
+    "resolved_source_issue": "Option C is undefined over the reals on part of its integration interval.",
+    "source_correction": "Changed option C to a real-valued fourth root of the absolute value."
+  },
+  {
+    "id": "TB16",
+    "stem_tex": "Which one of the following improper integrals diverges?",
+    "choices_tex": [
+      "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{1+x^2}$",
+      "$\\displaystyle\\int_0^1 \\dfrac{dx}{x^{1/4}}$",
+      "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{e^x+3}$",
+      "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{x^{1/4}}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Choice D diverges at infinity by the $p$-test with $p=1/4\\le1$. A converges to $\\pi/2$, B converges because $1/4<1$ at zero, and C converges by comparison with $e^{-x}$."
+  }
+]

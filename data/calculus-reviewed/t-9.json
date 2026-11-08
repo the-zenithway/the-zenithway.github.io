@@ -1,0 +1,734 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "Here $a$ is acceleration, $v$ velocity, and $s$ position. If $a(t)=6t-1$ and $v(2)=5$, then $v(t)$ equals",
+    "choices_tex": [
+      "$3t^2-t$",
+      "$3t^2-t-5$",
+      "$3t^2-t+5$",
+      "$3t^2+5$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integrating acceleration gives $v=3t^2-t+C$. The condition $v(2)=5$ gives $10+C=5$, so $C=-5$."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "Here $a$ is acceleration, $v$ velocity, and $s$ position. If $a(t)=6t^2-2$, $s(-1)=1$, and $s(1)=5$, then $v(t)$ equals",
+    "choices_tex": [
+      "$2t^3-2t+2$",
+      "$2t^3-2t+1$",
+      "$\\dfrac{t^4}{2}-t^2+2t+3.5$",
+      "$\\dfrac{t^4}{2}-t^2+1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Integrate twice: $v=2t^3-2t+C$ and $s=t^4/2-t^2+Ct+D$. The two position values imply $2C=4$, so $v=2t^3-2t+2$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "Here $a$ is acceleration, $v$ velocity, and $s$ position. If $a(t)=6t^2-2$, $s(-1)=1$, and $s(1)=5$, then $s(0)$ equals",
+    "choices_tex": [
+      "$2$",
+      "$3$",
+      "$3.5$",
+      "$4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The position is $s=t^4/2-t^2+Ct+D$. From $s(-1)=1$ and $s(1)=5$, $C=2$ and $D=3.5$. Hence $s(0)=3.5$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "A stone is thrown straight up from the top of a building with initial velocity 48 ft/sec and hits the ground 5 seconds later. The height of the building, in feet, is Use gravitational acceleration $-32$ ft/sec$^2$.",
+    "choices_tex": [
+      "$120$",
+      "$140$",
+      "$160$",
+      "$180$"
+    ],
+    "correct": "C",
+    "explanation_tex": "With gravity $-32$ ft/sec$^2$, $s(t)=H+48t-16t^2$. Setting $s(5)=0$ yields $H=400-240=160$ feet."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "A stone is thrown straight up from the top of a building with initial velocity 48 ft/sec and hits the ground 5 seconds later. The maximum height is reached by the stone after Use gravitational acceleration $-32$ ft/sec$^2$.",
+    "choices_tex": [
+      "$1$ second",
+      "$3/2$ seconds",
+      "$2$ seconds",
+      "$5/2$ seconds"
+    ],
+    "correct": "B",
+    "explanation_tex": "$v(t)=48-32t$ vanishes at $t=48/32=3/2$ seconds; acceleration is negative, so this is the maximum height."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "If a car accelerates from 0 to 45 mph in 10 seconds, what distance does it travel in those 10 seconds? (Assume the acceleration is constant and note that 45 mph = 66 ft/sec.)",
+    "choices_tex": [
+      "$66$ feet",
+      "$165$ feet",
+      "$330$ feet",
+      "$660$ feet"
+    ],
+    "correct": "C",
+    "explanation_tex": "Constant acceleration makes average speed $(0+66)/2=33$ ft/sec. Multiply by 10 seconds to obtain $330$ feet."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "A stone is thrown at a target so that its velocity is $v(t)=120-20t$ ft/sec, where $t$ is measured in seconds. If the stone hits the target in 1 second, then the distance from the sling to the target is",
+    "choices_tex": [
+      "$90$ feet",
+      "$100$ feet",
+      "$110$ feet",
+      "$120$ feet"
+    ],
+    "correct": "C",
+    "explanation_tex": "Velocity stays positive, so distance is $\\int_0^1(120-20t)\\,dt=110$ feet."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "A stone is thrown straight up from the ground. What should the initial velocity be if you want the stone to reach a height of 144 feet? Use gravitational acceleration $-32$ ft/sec$^2$.",
+    "choices_tex": [
+      "$80$ ft/sec",
+      "$88$ ft/sec",
+      "$96$ ft/sec",
+      "$104$ ft/sec"
+    ],
+    "correct": "C",
+    "explanation_tex": "At the peak, $v=0$. The relation $v^2=v_0^2+2a\\Delta s$ gives $v_0^2=64(144)$, hence $v_0=96$ ft/sec."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "If the velocity of a car traveling in a straight line at time $t$ is $v(t)$, then the difference in its odometer readings between times $t=a$ and $t=b$ is",
+    "choices_tex": [
+      "$\\displaystyle\\int_a^b |v(t)|\\,dt$",
+      "$\\displaystyle\\int_a^b v(t)\\,dt$",
+      "the net displacement of the car's position from $t=a$ to $t=b$",
+      "the change in the car's position from $t=a$ to $t=b$"
+    ],
+    "correct": "A",
+    "explanation_tex": "An odometer accumulates distance irrespective of direction, so its change is $\\int_a^b|v(t)|\\,dt$, not the signed velocity integral."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "If an object is moving up and down along the $y$-axis with velocity $v(t)$ and $s'(t)=v(t)$, then it is false that $\\displaystyle\\int_a^b v(t)\\,dt$ gives",
+    "choices_tex": [
+      "$s(b)-s(a)$",
+      "the total change in $s(t)$ between $t=a$ and $t=b$",
+      "the shift in the object's position from $t=a$ to $t=b$",
+      "the total distance covered by the object from $t=a$ to $t=b$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The Fundamental Theorem gives $\\int_a^bv(t)\\,dt=s(b)-s(a)$, the signed position change. Total distance instead integrates $|v|$, so D is false in general."
+  },
+  {
+    "id": "T11",
+    "stem_tex": "Solutions of the differential equation $\\dfrac{dy}{dx}=\\dfrac{x}{4y}$ are of the form",
+    "choices_tex": [
+      "$x^2-4y^2=C$",
+      "$x^2+4y^2=C$",
+      "$x^2-Cy^2=0$",
+      "$x^2=C-4y^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Separate variables: $4y\\,dy=x\\,dx$, giving $2y^2=x^2/2+C$, or $x^2-4y^2=C$ after renaming the constant."
+  },
+  {
+    "id": "T12",
+    "stem_tex": "Find the domain of the particular solution to the differential equation $\\dfrac{dy}{dx}=\\dfrac{x}{4y}$ that passes through the point $(-3,1)$.",
+    "choices_tex": [
+      "$x<0$",
+      "$-3\\leq x<-\\sqrt{5}$",
+      "$x<-\\sqrt{5}$",
+      "$|x|>\\sqrt{5}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The initial point gives $x^2-4y^2=5$, so $y=\\tfrac12\\sqrt{x^2-5}$. The maximal connected interval containing $-3$, with $y\\ne0$, is $x<-\\sqrt5$."
+  },
+  {
+    "id": "T13",
+    "stem_tex": "If $\\dfrac{dy}{dx}=\\dfrac{y}{3\\sqrt{x}}$ and $y=1$ when $x=9$, then",
+    "choices_tex": [
+      "$\\ln y = \\dfrac{2}{3}\\sqrt{x}-6$",
+      "$\\ln y = \\dfrac{2}{3}\\sqrt{x}-2$",
+      "$y=e^{(2/3)\\sqrt{x}}$",
+      "$y=e^{(2/3)(\\sqrt{x}-2)}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Separate and integrate: $\\ln y=\\frac23\\sqrt x+C$. The condition $y(9)=1$ gives $C=-2$, so B is correct."
+  },
+  {
+    "id": "T14",
+    "stem_tex": "If $\\dfrac{dy}{dx}=e^y$ and $y=0$ when $x=2$, then",
+    "choices_tex": [
+      "$y=\\ln(x)$",
+      "$y=\\ln(3-x)$",
+      "$y=-\\ln(3-x)$",
+      "$y=-\\ln(x)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$e^{-y}dy=dx$ gives $-e^{-y}=x+C$. Using $(2,0)$ gives $e^{-y}=3-x$, hence $y=-\\ln(3-x)$ on $x<3$."
+  },
+  {
+    "id": "T15",
+    "stem_tex": "If $\\dfrac{dy}{dx}=\\dfrac{x}{\\sqrt{16+x^2}}$ and $y=5$ when $x=3$, then $y$ equals",
+    "choices_tex": [
+      "$\\sqrt{16+x^2}-5$",
+      "$\\sqrt{16+x^2}$",
+      "$\\dfrac{\\sqrt{16+x^2}+5}{2}$",
+      "$\\dfrac{\\sqrt{16+x^2}}{2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The antiderivative is $y=\\sqrt{16+x^2}+C$. Substitution of $(3,5)$ gives $C=0$."
+  },
+  {
+    "id": "T16",
+    "stem_tex": "The general solution of the differential equation $2x\\,dy=3y\\,dx$ is a family of",
+    "choices_tex": [
+      "circles",
+      "hyperbolas",
+      "parabolas",
+      "none of these"
+    ],
+    "correct": "D",
+    "explanation_tex": "Separating gives $dy/y=(3/2)dx/x$, so on $x>0$ the family is $y=Cx^{3/2}$ (with analogous branches on $x<0$). These are not circles, hyperbolas, or parabolas."
+  },
+  {
+    "id": "T17",
+    "stem_tex": "The general solution of the differential equation $\\dfrac{dy}{dx}=2y$ is a family of",
+    "choices_tex": [
+      "parabolas",
+      "lines",
+      "ellipses",
+      "exponential curves"
+    ],
+    "correct": "D",
+    "explanation_tex": "Separating $dy/y=2dx$ gives $y=Ce^{2x}$, a family of exponential curves, including the zero equilibrium."
+  },
+  {
+    "id": "T18",
+    "stem_tex": "A function $f(x)$ that satisfies the equations $f(x)f'(x)=x$ and $f(0)=2$ is",
+    "choices_tex": [
+      "$f(x)=\\sqrt{x^2+4}$",
+      "$f(x)=\\sqrt{4-x^2}$",
+      "$f(x)=x+2$",
+      "$f(x)=e^x+1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Since $(f^2)'=2ff'=2x$, integration gives $f^2=x^2+C$. The initial value gives $C=4$ and selects the positive branch $f=\\sqrt{x^2+4}$."
+  },
+  {
+    "id": "T19",
+    "stem_tex": "The curve that passes through the point $(1,1)$ and whose slope at any point $(x,y)$ is given by $\\dfrac{dy}{dx}=\\dfrac{4y}{x}$ has the equation",
+    "choices_tex": [
+      "$4x-3=y$",
+      "$y^4=x$",
+      "$y=x^4$",
+      "$4y^3=x^3+3$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Separate $dy/y=4dx/x$ to obtain $y=Cx^4$ on $x>0$. The point $(1,1)$ gives $C=1$."
+  },
+  {
+    "id": "T20",
+    "stem_tex": "Find the domain of the particular solution to the differential equation $\\dfrac{dy}{dx}=\\dfrac{4y}{x}$ that passes through the point $(1,1)$.",
+    "choices_tex": [
+      "all real numbers",
+      "$|x|\\leq 1$",
+      "$x\\neq 0$",
+      "$x>0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Although the formula $y=x^4$ extends across zero, the differential equation $y'=4y/x$ is undefined there. The maximal solution interval containing $1$ is $(0,\\infty)$.",
+    "source_correction": "Corrected the source answer key by direct calculation."
+  },
+  {
+    "id": "T21",
+    "stem_tex": "If $\\dfrac{dy}{dx}=\\dfrac{k}{x}$, where $k$ is a constant, and if $y=3$ when $x=1$ and $y=6$ when $x=e$, then, when $x=2$, $y$ equals",
+    "choices_tex": [
+      "$6$",
+      "$3+3\\ln 2$",
+      "$3\\ln 2$",
+      "$6\\ln 2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integration gives $y=k\\ln x+C$ on $x>0$. From $y(1)=3$, $C=3$; from $y(e)=6$, $k=3$. Thus $y(2)=3+3\\ln2$."
+  },
+  {
+    "id": "T22",
+    "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-6}{6}{-1.5}{1.5}{1}{0.5}{cos(deg(\\X))}{0.55}",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=\\sin x$",
+      "$\\dfrac{dy}{dx}=-\\sin x$",
+      "$\\dfrac{dy}{dx}=\\cos x$",
+      "$\\dfrac{dy}{dx}=-\\cos x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The field is constant down each vertical column and has positive slope $1$ at $x=0$. The slopes oscillate with $x$, matching $\\cos x$, not either sine or negative cosine.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t22.png",
+      "alt": "Source slope field or graph for T22"
+    }
+  },
+  {
+    "id": "T23",
+    "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-5}{5}{-3}{3}{1}{1}{3*\\X-6}{0.55}",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=3x$",
+      "$\\dfrac{dy}{dx}=3x-6$",
+      "$\\dfrac{dy}{dx}=6-3x$",
+      "$\\dfrac{dy}{dx}=y$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Slopes depend only on $x$, are horizontal at $x=2$, negative to its left, and positive to its right. This matches $y'=3x-6$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t23.png",
+      "alt": "Source slope field or graph for T23"
+    }
+  },
+  {
+    "id": "T24",
+    "stem_tex": "A solution curve has been superimposed on the slope field shown above. The solution is for the differential equation and initial condition",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=\\tan x$; $y(0)=0$",
+      "$\\dfrac{dy}{dx}=1+x^2$; $y(0)=0$",
+      "$\\dfrac{dy}{dx}=\\dfrac{1}{1+x^2}$; $y\\left(\\dfrac{\\pi}{4}\\right)=1$",
+      "$\\dfrac{dy}{dx}=1+y^2$; $y(0)=0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Slopes depend on $y$, are always positive, and grow with $|y|$. Thus $y'=1+y^2$; the superimposed curve passes through $(0,0)$ and is $y=\\tan x$ locally.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t24.png",
+      "alt": "Source slope field or graph for T24"
+    }
+  },
+  {
+    "id": "T25",
+    "stem_tex": "Which slope field is for the differential equation $\\dfrac{dy}{dx}=2y$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "B",
+    "explanation_tex": "For $y'=2y$, slopes are identical along horizontal rows, vanish at $y=0$, and have the sign of $y$. These features identify field II.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t25.png",
+      "alt": "Source slope field or graph for T25"
+    }
+  },
+  {
+    "id": "T26",
+    "stem_tex": "Which slope field is for the differential equation $\\dfrac{dy}{dx}=-\\dfrac{x}{2y}$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $y'=-x/(2y)$, slopes vanish on the $y$-axis and have signs opposite to $x/y$. The elliptical tangent pattern is field I; its integral curves satisfy $x^2+2y^2=C$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t25.png",
+      "alt": "Source slope field or graph for T25"
+    }
+  },
+  {
+    "id": "T27",
+    "stem_tex": "Which slope field is for the differential equation $\\dfrac{dy}{dx}=\\cos 2x$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "C",
+    "explanation_tex": "The slopes depend only on $x$ and oscillate, with positive slope at $x=0$. This is field III, matching $\\cos2x$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t25.png",
+      "alt": "Source slope field or graph for T25"
+    }
+  },
+  {
+    "id": "T28",
+    "stem_tex": "Which slope field is for the differential equation $\\dfrac{dy}{dx}=4x$?",
+    "choices_tex": [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $y'=4x$, all slopes in a vertical column agree; they are negative to the left and positive to the right, with zero at $x=0$. This is field IV.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t25.png",
+      "alt": "Source slope field or graph for T25"
+    }
+  },
+  {
+    "id": "T29",
+    "stem_tex": "A particular solution curve of a differential equation whose slope field is shown in II passes through the point $(0,-2)$. The equation is",
+    "choices_tex": [
+      "$y=-2e^{2x}$",
+      "$y=-2e^{-2x}$",
+      "$y=2x^2-2$",
+      "$y=-2\\cos(2x)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Field II represents $y'=2y$, so $y=Ce^{2x}$. The value $y(0)=-2$ gives $C=-2$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t25.png",
+      "alt": "Source slope field or graph for T25"
+    }
+  },
+  {
+    "id": "T30",
+    "stem_tex": "If you use Euler's method with $\\Delta x = 0.15$ for the d.e.\\ $\\dfrac{dy}{dx}=x$, with initial value $y(1)=6$, then, when $x=1.3$, $y$ is approximately",
+    "choices_tex": [
+      "$6.10$",
+      "$6.32$",
+      "$6.35$",
+      "$7.20$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Euler updates give $y_1=6+0.15(1)=6.15$ and $y_2=6.15+0.15(1.15)=6.3225$, approximately $6.32$."
+  },
+  {
+    "id": "T31",
+    "stem_tex": "For $y'=x$, $y(1)=6$, Euler's method with step $0.15$ estimates $y(1.3)$. What is the absolute error of the unrounded Euler estimate?",
+    "choices_tex": [
+      "$0.0025$",
+      "$0.0125$",
+      "$0.0225$",
+      "$0.225$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The exact value is $6+\\int_1^{1.3}x\\,dx=6.345$. Euler's unrounded value is $6.3225$, so its absolute error is $0.0225$."
+  },
+  {
+    "id": "T32",
+    "stem_tex": "Which differential equation has the slope field shown?",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=y(y+3)$",
+      "$\\dfrac{dy}{dx}=xy+3$",
+      "$\\dfrac{dy}{dx}=\\dfrac{x}{y+3}$",
+      "$\\dfrac{dy}{dx}=\\dfrac{y}{y+3}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The field is constant along horizontal rows, with equilibria $y=0,-3$. Slopes are positive above $0$ and negative between $-3$ and $0$, agreeing with $y(y+3)$.",
+    "source_correction": "Corrected the source answer key by direct calculation.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t32.png",
+      "alt": "Source slope field or graph for T32"
+    }
+  },
+  {
+    "id": "T33",
+    "stem_tex": "Which function is a possible solution of the slope field shown?",
+    "choices_tex": [
+      "$y=2-\\ln x$",
+      "$y=2+\\ln x$",
+      "$y=2+e^x$",
+      "$y=2+\\tan x$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Slopes depend only on $x$, are positive for $x>0$, and decrease as positive $x$ grows, matching $y'=1/x$. Therefore $y=2+\\ln x$ is a solution on $x>0$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t33.png",
+      "alt": "Source slope field or graph for T33"
+    }
+  },
+  {
+    "id": "T34",
+    "stem_tex": "Which differential equation has the slope field shown? Domain: $[-10,10]\\times[-7,7]$.",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=x^2+3y^2+1$",
+      "$\\dfrac{dy}{dx}=3y-1$",
+      "$\\dfrac{dy}{dx}=x-3y-1$",
+      "$\\dfrac{dy}{dx}=x+3y-1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Slopes vary with both coordinates, increasing with $x$ and $y$. Horizontal segments lie along $x+3y-1=0$, which identifies D.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t34.png",
+      "alt": "Source slope field or graph for T34"
+    }
+  },
+  {
+    "id": "T35",
+    "stem_tex": "Which differential equation has the slope field shown? Domain: $[-10,10]\\times[-7,7]$.",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=x(x+y)$",
+      "$\\dfrac{dy}{dx}=y(x+3)$",
+      "$\\dfrac{dy}{dx}=x(x+1)$",
+      "$\\dfrac{dy}{dx}=x(x^2+y)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Slopes vanish along $y=0$ and change sign on crossing the vertical line $x=-3$. This matches $y'=y(x+3)$.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t35.png",
+      "alt": "Source slope field or graph for T35"
+    }
+  },
+  {
+    "id": "T36",
+    "stem_tex": "Which differential equation has the slope field shown? Domain: $[-10,10]\\times[-4,4]$.",
+    "choices_tex": [
+      "$\\dfrac{dy}{dx}=\\dfrac{3x}{3+y^2}$",
+      "$\\dfrac{dy}{dx}=\\dfrac{3}{3+x^2}$",
+      "$\\dfrac{dy}{dx}=\\dfrac{3y}{3+y^2}$",
+      "$\\dfrac{dy}{dx}=\\dfrac{3}{3+y^2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The slopes are positive, independent of $x$, symmetric in $y$, and smaller for larger $|y|$. Only $3/(3+y^2)$ has all these properties.",
+    "figure": {
+      "src": "data/calculus-figures/t9-t36.png",
+      "alt": "Source slope field or graph for T36"
+    }
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "If $\\dfrac{ds}{dt}=\\sin^2\\left(\\dfrac{\\pi}{3}s\\right)$ and if $s=1$ when $t=0$, then, when $s=2$, $t$ is equal to",
+    "choices_tex": [
+      "$\\dfrac{1}{2}$",
+      "$\\dfrac{\\sqrt{3}}{2}$",
+      "$\\dfrac{2\\sqrt{3}}{\\pi}$",
+      "$-\\dfrac{2\\sqrt{3}}{\\pi}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Separate $dt=\\csc^2(\\pi s/3)\\,ds$. Thus $t=\\int_1^2\\csc^2(\\pi s/3)\\,ds=[-3\\cot(\\pi s/3)/\\pi]_1^2=2\\sqrt3/\\pi$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "If radium decomposes at a rate proportional to the amount present, then the amount $R$ left after $t$ years, if $R_0$ is present initially and $k$ is the negative constant of proportionality, is given by",
+    "choices_tex": [
+      "$R=R_0 kt$",
+      "$R=R_0 e^{kt}$",
+      "$R=e^{R_0 kt}$",
+      "$R=e^{R_0+kt}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The model is $R'=kR$. Its solution with $R(0)=R_0$ is $R=R_0e^{kt}$; $k<0$ gives decay."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "The population of a city increases continuously at a rate proportional, at any time, to the population at that time. The population doubles in 30 years. After 75 years the ratio of the population $P$ to the initial population $P_0$ is",
+    "choices_tex": [
+      "$\\dfrac{9}{4}$",
+      "$\\dfrac{5}{2}$",
+      "$4\\sqrt{2}$",
+      "$\\dfrac{4}{1}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Doubling every 30 years gives $P/P_0=2^{t/30}$. At 75 years this is $2^{5/2}=4\\sqrt2$."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "If a substance decomposes at a rate proportional to the amount of the substance present, and if the amount decreases from 80 g to 20 g in 4 hours, then the constant of proportionality is",
+    "choices_tex": [
+      "$-\\ln 2$",
+      "$-\\dfrac{\\ln 2}{2}$",
+      "$-\\dfrac{1}{4}$",
+      "$\\ln\\dfrac{1}{4}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$20=80e^{4k}$ gives $e^{4k}=1/4$, so $k=\\ln(1/4)/4=-\\ln2/2$."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "If $(g'(x))^2=g(x)$ for all real $x$ and $g(0)=0$, $g(6)=9$, then $g(2)$ equals",
+    "choices_tex": [
+      "$\\dfrac{1}{4}$",
+      "$\\dfrac{1}{2}$",
+      "$1$",
+      "$4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Where $g>0$, $h=\\sqrt g$ satisfies $|h'|=1/2$. Since $h(0)=0$ and $h(6)=3$, it attains the largest possible rise over six units; there can be no waiting or decreasing segment. Hence $h(x)=x/2$ on $[0,6]$, so $g(2)=1$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The solution curve of $\\dfrac{dy}{dx}=2y$ that passes through point $(1,5)$ is",
+    "choices_tex": [
+      "$y=e^{2x}+5$",
+      "$y=0.677e^{2x}$",
+      "$y=e^{2x}-(e^2+5)$",
+      "$y=e^{2x}/0.677$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The exact solution is $y=5e^{2(x-1)}=(5e^{-2})e^{2x}$. Since $5e^{-2}\\approx0.677$, B is the rounded-coefficient choice."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "At any point of intersection of a solution curve of the d.e.\\ $\\dfrac{dy}{dx}=x+2y$ and the line $x+2y=0$, the function $y$ at that point",
+    "choices_tex": [
+      "is equal to $0$",
+      "is a local maximum",
+      "is a local minimum",
+      "has a point of inflection"
+    ],
+    "correct": "C",
+    "explanation_tex": "At the intersection, $y'=x+2y=0$. Differentiating the equation gives $y''=1+2y'=1>0$, so the point is a strict local minimum."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "If $F\\prime(x)=2e^{-2x^2}$ and $F(0)=0$, find $\\lim_{x\\to\\infty}F(x)$ to three decimal places.",
+    "choices_tex": [
+      "$1.253$",
+      "$1.772$",
+      "$2.000$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "By the initial condition, $F(x)=\\int_0^x2e^{-2u^2}\\,du$. The Gaussian integral yields $\\int_0^\\infty2e^{-2u^2}\\,du=\\sqrt{\\pi/2}\\approx1.253$.",
+    "source_original": {
+      "stem_tex": "The slope field for $F'(x)=2e^{-2x^2}$ is shown above with the particular solution $F(0)=0$ superimposed. With a graphing calculator, $\\displaystyle\\lim_{x\\to\\infty} F(x)$ to three decimal places is",
+      "choices_tex": [
+        "$0.886$",
+        "$1.772$",
+        "$2.000$",
+        "$\\infty$"
+      ],
+      "correct": null,
+      "explanation_tex": "The initial value gives $F(x)=\\int_0^x2e^{-2u^2}\\,du$. Therefore $\\lim_{x\\to\\infty}F(x)=\\sqrt{\\pi/2}\\approx1.253$, which is absent from the options. The drawn overlay is only schematic and cannot change this integral.",
+      "source_issue": "Correct limit 1.253 is absent from the choices.",
+      "figure": {
+        "src": "data/calculus-figures/t9-tb8.png",
+        "alt": "Source slope field or graph for TB8"
+      }
+    },
+    "resolved_source_issue": "Correct limit 1.253 is absent from the choices.",
+    "source_correction": "Supplied the correct limit in A; removed the schematic overlay so the explicit initial-value problem determines the answer."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "The graph displays logistic growth for a frog population $F$, with limiting value 1500. Which differential equation could be the appropriate model?",
+    "choices_tex": [
+      "$\\dfrac{dF}{dt}=3F-0.002F^2$",
+      "$\\dfrac{dF}{dt}=4F^2-0.002F$",
+      "$\\dfrac{dF}{dt}=4F-0.002F^2$",
+      "$\\dfrac{dF}{dt}=0.002F^2-4F$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $F\\prime=aF-bF^2=aF(1-F/K)$, the carrying capacity is $K=a/b$. In A, $K=3/0.002=1500$ and the positive equilibrium is stable. C has capacity2000, while B and D have the wrong sign pattern for stable logistic growth.",
+    "figure": {
+      "src": "data/calculus-figures/t9-tb9.png",
+      "alt": "Source slope field or graph for TB9"
+    },
+    "source_original": {
+      "stem_tex": "The graph displays logistic growth for a frog population $F$, with limiting value 1500. Which differential equation could be the appropriate model?",
+      "choices_tex": [
+        "$\\dfrac{dF}{dt}=2F-0.002F^2$",
+        "$\\dfrac{dF}{dt}=4F^2-0.002F$",
+        "$\\dfrac{dF}{dt}=4F-0.002F^2$",
+        "$\\dfrac{dF}{dt}=0.002F^2-4F$"
+      ],
+      "correct": null,
+      "explanation_tex": "A logistic law $F'=aF-bF^2$ has carrying capacity $a/b$. A has capacity $1000$ and C has capacity $2000$; B and D do not model the stated stable logistic growth to $1500$. None is correct. For example $F'=3F-0.002F^2$ would have the required limit.",
+      "source_issue": "No offered logistic equation has carrying capacity 1500.",
+      "figure": {
+        "src": "data/calculus-figures/t9-tb9.png",
+        "alt": "Source slope field or graph for TB9"
+      }
+    },
+    "resolved_source_issue": "No offered logistic equation has carrying capacity 1500.",
+    "source_correction": "Changed the linear coefficient in option A from 2 to 3 to give carrying capacity1500."
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "The derivative table is $\\begin{array}{c|rrrrrr}x&3&5&7&9&11&13\\\\\\hline f\\prime(x)&2.5&3&1.5&-1&-2&1\\end{array}$. Given $f(3)=120$, use Euler\\'s method with step size $2$ to estimate $f(9)$.",
+    "choices_tex": [
+      "$130$",
+      "$132$",
+      "$134$",
+      "$136$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Three Euler steps use derivatives at $3,5,7$: $f(9)\\approx120+2(2.5)+2(3)+2(1.5)=134$."
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "A cup of coffee at temperature $200^\\circ$F is placed on a table in a room at $60^\\circ$F. The d.e.\\ for its temperature at time $t$ (in minutes) is $\\dfrac{dy}{dt}=-0.12(y-60)$; $y(0)=200$. After 12 minutes, the temperature (in $^\\circ$F) of the coffee is approximately",
+    "choices_tex": [
+      "$88$",
+      "$93$",
+      "$98$",
+      "$105$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solving the cooling equation gives $y(t)=60+140e^{-0.12t}$. Thus $y(12)=60+140e^{-1.44}\\approx93.17^\\circ$F, nearest $93$."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "A cup of coffee at temperature $200^\\circ$F is placed on a table in a room at $60^\\circ$F. The d.e.\\ for its temperature at time $t$ (in minutes) is $\\dfrac{dy}{dt}=-0.12(y-60)$; $y(0)=200$. Approximately how long does it take the temperature of the coffee to drop to $70^\\circ$F?",
+    "choices_tex": [
+      "$18$ minutes",
+      "$20$ minutes",
+      "$22$ minutes",
+      "$25$ minutes"
+    ],
+    "correct": "C",
+    "explanation_tex": "Set $70=60+140e^{-0.12t}$. Then $t=\\ln14/0.12\\approx21.992$ minutes, approximately $22$."
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "A medication concentration satisfies $C\\prime(t)=-0.25C(t)$, with $t$ in hours and $C(0)>0$. Approximately how many hours are required for it to reach one-tenth of its initial concentration?",
+    "choices_tex": [
+      "$3$",
+      "$5\\dfrac{1}{3}$",
+      "$8$",
+      "$9.210$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Solving $C\\prime=-0.25C$ gives $C(t)=C_0e^{-0.25t}$. Setting $C(t)/C_0=1/10$ gives $t=\\ln10/0.25=4\\ln10\\approx9.210$ hours.",
+    "source_original": {
+      "stem_tex": "The concentration of a medication injected into the bloodstream drops at a rate proportional to the existing concentration. If the factor of proportionality is 25\\% per hour, in approximately how many hours will the concentration be one-tenth of the initial concentration?",
+      "choices_tex": [
+        "$3$",
+        "$5\\dfrac{1}{3}$",
+        "$8$",
+        "$10\\dfrac{1}{3}$"
+      ],
+      "correct": null,
+      "explanation_tex": "The model is $C'= -0.25C$, so $C/C_0=e^{-0.25t}$. Reaching one-tenth requires $t=\\ln10/0.25\\approx9.210$ hours. None of the listed times approximates this to the displayed precision.",
+      "source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees."
+    },
+    "resolved_source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees.",
+    "source_correction": "Made the continuous decay model explicit and replaced D with the correct time."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "Which of the following statements characterize(s) the logistic growth of a population whose limiting value is $L$ and whose initial value is less than $\\dfrac{L}{2}$?\n\n I. The growth rate initially increases. II. The growth rate is maximal at population $L/2$. III. The growth rate tends to zero as population tends to $L$.",
+    "choices_tex": [
+      "I only",
+      "I and II only",
+      "II and III only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "For $P'=kP(1-P/L)$, the growth rate is a downward-opening quadratic in $P$, maximized at $L/2$. Starting below $L/2$, it first increases, then decreases to zero as $P\\to L$. All three statements hold."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "Which of the following differential equations is not logistic?",
+    "choices_tex": [
+      "$P'=P-P^2$",
+      "$\\dfrac{dy}{dt}=0.02y(80-y)$",
+      "$\\dfrac{dx}{dt}=0.6x-0.003x^2$",
+      "$\\dfrac{dR}{dt}=0.2(500-R)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Logistic growth contains both a positive linear population term and a negative quadratic term. D is $R'=100-0.2R$, a linear approach-to-equilibrium equation, so it is not logistic."
+  },
+  {
+    "id": "TB16",
+    "stem_tex": "Suppose $P(t)$ denotes the size of an animal population at time $t$ and its growth is described by the d.e.\\ $\\dfrac{dP}{dt}=0.003P(1500-P)$. If the initial population is 300, then the population is growing fastest",
+    "choices_tex": [
+      "initially",
+      "when $P=750$",
+      "when $P=1500$",
+      "when $\\dfrac{d^2P}{dt^2}>0$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$P'=0.003P(1500-P)$ is maximized at the vertex $P=1500/2=750$. Starting from $300$, the population reaches this value before approaching capacity."
+  }
+]

@@ -1,0 +1,1316 @@
+[
+  {
+    "id": "A1",
+    "stem_tex": "Find $dy/dx$ for $y=x^5\\tan x$.",
+    "choices_tex": [
+      "$5x^4\\tan x$",
+      "$5x^4\\sec^2x$",
+      "$5x^4+\\sec^2x$",
+      "$5x^4\\tan x+x^5\\sec^2x$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The product rule gives $y'=5x^4\\tan x+x^5\\sec^2x$."
+  },
+  {
+    "id": "A2",
+    "stem_tex": "Find $dy/dx$ for $y=(2-x)/(3x+1)$.",
+    "choices_tex": [
+      "$-7/(3x+1)^2$",
+      "$(5-6x)/(3x+1)^2$",
+      "$-9/(3x+1)^2$",
+      "$7/(3x+1)^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The quotient rule gives $y'=[-(3x+1)-3(2-x)]/(3x+1)^2=-7/(3x+1)^2$."
+  },
+  {
+    "id": "A3",
+    "stem_tex": "Find $dy/dx$ for $y=\\sqrt{3-2x}$.",
+    "choices_tex": [
+      "$1/(2\\sqrt{3-2x})$",
+      "$-1/\\sqrt{3-2x}$",
+      "$-\\frac43(3-2x)^{3/2}$",
+      "$\\frac23(3-2x)^{3/2}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Chain rule: $y'=\\frac12(3-2x)^{-1/2}(-2)=-1/\\sqrt{3-2x}$ for $x<3/2$."
+  },
+  {
+    "id": "A4",
+    "stem_tex": "Find $dy/dx$ for $y=2/(5x+1)^3$.",
+    "choices_tex": [
+      "$-30/(5x+1)^2$",
+      "$-30/(5x+1)^4$",
+      "$-6/(5x+1)^4$",
+      "$6/(5x+1)^2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write $y=2(5x+1)^{-3}$. Differentiation gives $2(-3)(5x+1)^{-4}(5)=-30/(5x+1)^4$."
+  },
+  {
+    "id": "A5",
+    "stem_tex": "Find $dy/dx$ for $y=3x^{2/3}-4x^{1/2}-2$.",
+    "choices_tex": [
+      "$2x^{1/3}-2x^{-1/2}$",
+      "$3x^{-1/3}-2x^{-1/2}$",
+      "$\\frac95x^{5/3}-\\frac83x^{3/2}$",
+      "$2x^{-1/3}-2x^{-1/2}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Apply the power rule termwise: $3(2/3)x^{-1/3}-4(1/2)x^{-1/2}=2x^{-1/3}-2x^{-1/2}$ for $x>0$."
+  },
+  {
+    "id": "A6",
+    "stem_tex": "Find $dy/dx$ for $y=2\\sqrt{x}-1/(2\\sqrt{x})$.",
+    "choices_tex": [
+      "$x+1/(x\\sqrt{x})$",
+      "$(4x-1)/(4x\\sqrt{x})$",
+      "$1/\\sqrt{x}+1/(4x\\sqrt{x})$",
+      "$4/\\sqrt{x}+1/(x\\sqrt{x})$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Rewrite as $2x^{1/2}-\\frac12x^{-1/2}$. The derivative is $x^{-1/2}+\\frac14x^{-3/2}$, which is choice C."
+  },
+  {
+    "id": "A7",
+    "stem_tex": "Find $dy/dx$ for $y=\\sqrt{x^2+2x-1}$.",
+    "choices_tex": [
+      "$(x+1)/y$",
+      "$4y(x+1)$",
+      "$1/(2\\sqrt{x^2+2x-1})$",
+      "$-(x+1)/(x^2+2x-1)^{3/2}$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Chain rule gives $y'=(2x+2)/(2\\sqrt{x^2+2x-1})=(x+1)/y$, where the radicand is positive."
+  },
+  {
+    "id": "A8",
+    "stem_tex": "Find $dy/dx$ for $y=x^2/\\cos x$.",
+    "choices_tex": [
+      "$-2x/\\sin x$",
+      "$(2x\\cos x-x^2\\sin x)/\\cos^2x$",
+      "$(2x\\cos x+x^2\\sin x)/\\cos^2x$",
+      "$(2x\\cos x-x^2\\sin x)/\\sin^2x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Quotient rule: $y'=[2x\\cos x-x^2(-\\sin x)]/\\cos^2x$. The minus signs combine to give the plus sign in C."
+  },
+  {
+    "id": "A9",
+    "stem_tex": "Find $dy/dx$ for $y=\\ln(e^x/(e^x-1))$.",
+    "choices_tex": [
+      "$x-e^x/(e^x-1)$",
+      "$1/(e^x-1)$",
+      "$-1/(e^x-1)$",
+      "$(e^x-2)/(e^x-1)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "On its real domain $x>0$, $y=x-\\ln(e^x-1)$. Thus $y'=1-e^x/(e^x-1)=-1/(e^x-1)$."
+  },
+  {
+    "id": "A10",
+    "stem_tex": "Find $dy/dx$ for $y=\\arctan(x/2)$.",
+    "choices_tex": [
+      "$4/(4+x^2)$",
+      "$1/(2\\sqrt{4-x^2})$",
+      "$2/\\sqrt{4-x^2}$",
+      "$2/(x^2+4)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The arctangent chain rule gives $y'=(1/2)/(1+x^2/4)=2/(x^2+4)$."
+  },
+  {
+    "id": "A11",
+    "stem_tex": "Find $dy/dx$ for $y=\\ln(\\sec x+\\tan x)$.",
+    "choices_tex": [
+      "$\\sec x$",
+      "$1/\\sec x$",
+      "$1/(\\sec x+\\tan x)$",
+      "$-1/(\\sec x+\\tan x)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Differentiate the logarithm: $y'=(\\sec x\\tan x+\\sec^2x)/(\\sec x+\\tan x)=\\sec x$ on the logarithm's domain."
+  },
+  {
+    "id": "A12",
+    "stem_tex": "Find $dy/dx$ for $y=(e^x-e^{-x})/(e^x+e^{-x})$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$4/(e^x+e^{-x})^2$",
+      "$1/(e^{2x}+e^{-2x})$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Put $a=e^x,b=e^{-x}$. The quotient rule gives $[(a+b)^2-(a-b)^2]/(a+b)^2=4ab/(a+b)^2=4/(a+b)^2$."
+  },
+  {
+    "id": "A13",
+    "stem_tex": "Find $dy/dx$ for $y=\\ln\\sqrt{x^2+1}$.",
+    "choices_tex": [
+      "$1/\\sqrt{x^2+1}$",
+      "$2x/\\sqrt{x^2+1}$",
+      "$1/(2(x^2+1))$",
+      "$x/(x^2+1)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Rewrite as $y=\\frac12\\ln(x^2+1)$. Then $y'=\\frac12(2x)/(x^2+1)=x/(x^2+1)$."
+  },
+  {
+    "id": "A14",
+    "stem_tex": "Find $dy/dx$ for $y=\\sin(1/x)$.",
+    "choices_tex": [
+      "$\\cos(1/x)$",
+      "$\\cos(-1/x^2)$",
+      "$-x^{-2}\\cos(1/x)$",
+      "$-x^{-2}\\sin(1/x)+x^{-1}\\cos(1/x)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Differentiate the outer sine and multiply by the derivative of $1/x$: $y'=\\cos(1/x)(-1/x^2)$."
+  },
+  {
+    "id": "A15",
+    "stem_tex": "Find $dy/dx$ for $y=1/(2\\sin2x)$.",
+    "choices_tex": [
+      "$-\\csc2x\\cot2x$",
+      "$1/(4\\cos2x)$",
+      "$-4\\csc2x\\cot2x$",
+      "$-\\csc^2 2x$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$y=\\frac12\\csc2x$, so $y'=\\frac12(-\\csc2x\\cot2x)(2)=-\\csc2x\\cot2x$."
+  },
+  {
+    "id": "A16",
+    "stem_tex": "Find $dy/dx$ for $y=e^{-x}\\cos2x$.",
+    "choices_tex": [
+      "$-e^{-x}(\\cos2x+2\\sin2x)$",
+      "$e^{-x}(\\sin2x-\\cos2x)$",
+      "$2e^{-x}\\sin2x$",
+      "$-e^{-x}(\\cos2x+\\sin2x)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Product and chain rules give $y'=-e^{-x}\\cos2x-2e^{-x}\\sin2x=-e^{-x}(\\cos2x+2\\sin2x)$."
+  },
+  {
+    "id": "A17",
+    "stem_tex": "Find $dy/dx$ for $y=\\sec^2x$.",
+    "choices_tex": [
+      "$2\\sec x$",
+      "$2\\sec x\\tan x$",
+      "$2\\sec^2x\\tan x$",
+      "$\\tan x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Chain rule gives $2\\sec x(\\sec x\\tan x)=2\\sec^2x\\tan x$."
+  },
+  {
+    "id": "A18",
+    "stem_tex": "Find $dy/dx$ for $y=x(\\ln x)^3$.",
+    "choices_tex": [
+      "$3(\\ln x)^2/x$",
+      "$3(\\ln x)^2$",
+      "$-3x(\\ln x)^2+(\\ln x)^3$",
+      "$(\\ln x)^3+3(\\ln x)^2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Product rule: $y'=(\\ln x)^3+x\\cdot3(\\ln x)^2/x=(\\ln x)^3+3(\\ln x)^2$."
+  },
+  {
+    "id": "A19",
+    "stem_tex": "Find $dy/dx$ for $y=(1+x^2)/(1-x^2)$.",
+    "choices_tex": [
+      "$-4x/(1-x^2)^2$",
+      "$4x/(1-x^2)^2$",
+      "$-4x^3/(1-x^2)^2$",
+      "$2x/(1-x^2)$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Quotient rule gives $[2x(1-x^2)+2x(1+x^2)]/(1-x^2)^2=4x/(1-x^2)^2$."
+  },
+  {
+    "id": "A20",
+    "stem_tex": "Find $dy/dx$ for $y=\\arcsin x-\\sqrt{1-x^2}$.",
+    "choices_tex": [
+      "$1/(2\\sqrt{1-x^2})$",
+      "$2/\\sqrt{1-x^2}$",
+      "$(1+x)/\\sqrt{1-x^2}$",
+      "$x^2/\\sqrt{1-x^2}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For $|x|<1$, differentiate each term: $y'=1/\\sqrt{1-x^2}+x/\\sqrt{1-x^2}=(1+x)/\\sqrt{1-x^2}$."
+  },
+  {
+    "id": "A21",
+    "stem_tex": "Find $dy/dx$ implicitly for $x^3-y^3=1$.",
+    "choices_tex": [
+      "$x$",
+      "$3x^2$",
+      "$x^2/y^2$",
+      "$(3x^2-1)/y^2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Differentiating gives $3x^2-3y^2y'=0$. Thus $y'=x^2/y^2$ wherever $y\\ne0$."
+  },
+  {
+    "id": "A22",
+    "stem_tex": "Find $dy/dx$ implicitly for $x+\\cos(x+y)=0$.",
+    "choices_tex": [
+      "$\\csc(x+y)-1$",
+      "$\\csc(x+y)$",
+      "$x/\\sin(x+y)$",
+      "$(1-\\sin x)/\\sin y$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Differentiating yields $1-\\sin(x+y)(1+y')=0$. Solve for $y'$ to get $\\csc(x+y)-1$ wherever the denominator is nonzero."
+  },
+  {
+    "id": "A23",
+    "stem_tex": "Find $dy/dx$ for $\\sin x-\\cos y-1=0$ at a point where $\\sin y\\ne0$.",
+    "choices_tex": [
+      "$-\\cot x$",
+      "$\\cos x/\\sin y$",
+      "$-\\csc y\\cos x$",
+      "$(2-\\cos x)/\\sin y$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Differentiate $\\sin x-\\cos y-1=0$: $\\cos x+\\sin y\\,y\\prime=0$. Since $\\sin y\\ne0$, $y\\prime=-\\cos x/\\sin y=-\\csc y\\cos x$, choice C.",
+    "source_original": {
+      "stem_tex": "Find $dy/dx$ for the asserted differentiable relation $\\sin x-\\cos y-2=0$.",
+      "choices_tex": [
+        "$-\\cot x$",
+        "$\\cos x/\\sin y$",
+        "$-\\csc y\\cos x$",
+        "$(2-\\cos x)/\\sin y$"
+      ],
+      "correct": null,
+      "explanation_tex": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated.",
+      "source_issue": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated."
+    },
+    "resolved_source_issue": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated.",
+    "source_correction": "Changed the relation constant from 2 to 1 and specified a regular point with nonzero sine of y."
+  },
+  {
+    "id": "A24",
+    "stem_tex": "Find $dy/dx$ implicitly for $3x^2-2xy+5y^2=1$.",
+    "choices_tex": [
+      "$(3x+y)/(x-5y)$",
+      "$(y-3x)/(5y-x)$",
+      "$3x+5y$",
+      "$(3x+4y)/x$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate to get $6x-2y-2xy'+10yy'=0$. Hence $(10y-2x)y'=2y-6x$, yielding $(y-3x)/(5y-x)$ where defined."
+  },
+  {
+    "id": "A25",
+    "stem_tex": "If $x=t^2+1$ and $y=2t^3$, find $dy/dx$.",
+    "choices_tex": [
+      "$3t$",
+      "$6t^2$",
+      "$6t^2/(t^2+1)^2$",
+      "$(2t^4+6t^2)/(t^2+1)^2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $t\\ne0$, $dy/dx=(dy/dt)/(dx/dt)=6t^2/(2t)=3t$."
+  },
+  {
+    "id": "A26",
+    "stem_tex": "If $f(x)=x^4-4x^3+4x^2-1$, where does $f'(x)=0$?",
+    "choices_tex": [
+      "$\\{1,2\\}$",
+      "$\\{0,-1,-2\\}$",
+      "$\\{-1,2\\}$",
+      "$\\{0,1,2\\}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$f'(x)=4x^3-12x^2+8x=4x(x-1)(x-2)$. Its zeros are $0,1,2$."
+  },
+  {
+    "id": "A27",
+    "stem_tex": "If $f(x)=16\\sqrt{x}$, find $f''(4)$.",
+    "choices_tex": [
+      "$-16$",
+      "$-4$",
+      "$-2$",
+      "$-1/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$f'(x)=8x^{-1/2}$ and $f''(x)=-4x^{-3/2}$. Thus $f''(4)=-4/8=-1/2$.",
+    "source_correction": "Restored missing f(x)= in source statement."
+  },
+  {
+    "id": "A28",
+    "stem_tex": "If $f(x)=\\ln(x^3)$, find $f''(3)$.",
+    "choices_tex": [
+      "$-1/3$",
+      "$-1$",
+      "$-3$",
+      "$1$"
+    ],
+    "correct": "A",
+    "explanation_tex": "For $x>0$, $f(x)=3\\ln x$. Hence $f''(x)=-3/x^2$ and $f''(3)=-1/3$."
+  },
+  {
+    "id": "A29",
+    "stem_tex": "For $x^2+y^2=25$, find $d^2y/dx^2$ at $(0,5)$.",
+    "choices_tex": [
+      "$0$",
+      "$1/5$",
+      "$-5$",
+      "$-1/5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Differentiating twice gives $x+yy'=0$ and $1+(y')^2+yy''=0$. At $(0,5)$, $y'=0$ and $y''=-1/5$."
+  },
+  {
+    "id": "A30",
+    "stem_tex": "If $x=t^2-1$ and $y=t^4-2t^3$, find $d^2y/dx^2$ at $t=1$.",
+    "choices_tex": [
+      "$1$",
+      "$-1$",
+      "$3$",
+      "$1/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "First $dy/dx=(4t^3-6t^2)/(2t)=2t^2-3t$. Then $d^2y/dx^2=(4t-3)/(2t)$, equal to $1/2$ at $t=1$."
+  },
+  {
+    "id": "A31",
+    "stem_tex": "If $f(x)=5^x$ and $5^{1.002}\\approx5.016$, which is closest to $f'(1)$?",
+    "choices_tex": [
+      "$0.016$",
+      "$5.0$",
+      "$8.0$",
+      "$32.0$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The forward difference quotient is $(5.016-5)/0.002=8$. This approximates $f'(1)=5\\ln5$."
+  },
+  {
+    "id": "A32",
+    "stem_tex": "If $y=e^x(x-1)$, find $y''(0)$.",
+    "choices_tex": [
+      "$-2$",
+      "$-1$",
+      "$1$",
+      "$e$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Product rule gives $y'=xe^x$ and $y''=(x+1)e^x$. Thus $y''(0)=1$."
+  },
+  {
+    "id": "A33",
+    "stem_tex": "If $x=e^\\theta\\cos\\theta$ and $y=e^\\theta\\sin\\theta$, find $dy/dx$ at $\\theta=\\pi/2$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$e^{\\pi/2}$",
+      "$-1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Divide parameter derivatives: $dy/dx=(\\sin\\theta+\\cos\\theta)/(\\cos\\theta-\\sin\\theta)$. At $\\pi/2$ this equals $-1$."
+  },
+  {
+    "id": "A34",
+    "stem_tex": "Given $x=\\cos t$, $y=\\cos2t$, and $\\sin t\\ne0$, find $d^2y/dx^2$.",
+    "choices_tex": [
+      "$4\\cos t$",
+      "$4$",
+      "$-4$",
+      "$-4\\cot t$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Eliminate the parameter: $y=2\\cos^2t-1=2x^2-1$. Thus $y'=4x$ and $y''=4$."
+  },
+  {
+    "id": "A35",
+    "stem_tex": "Evaluate $\\lim_{h\\to0}((1+h)^6-1)/h$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$6$",
+      "nonexistent"
+    ],
+    "correct": "C",
+    "explanation_tex": "This is the derivative of $x^6$ at $x=1$: $6(1)^5=6$."
+  },
+  {
+    "id": "A36",
+    "stem_tex": "Evaluate $\\lim_{h\\to0}(\\sqrt[3]{8+h}-2)/h$.",
+    "choices_tex": [
+      "$0$",
+      "$1/12$",
+      "$1$",
+      "$192$"
+    ],
+    "correct": "B",
+    "explanation_tex": "This is the derivative of $x^{1/3}$ at $8$: $\\frac13(8)^{-2/3}=1/12$."
+  },
+  {
+    "id": "A37",
+    "stem_tex": "Evaluate $\\lim_{h\\to0}(\\ln(e+h)-1)/h$.",
+    "choices_tex": [
+      "$0$",
+      "$1/e$",
+      "$1$",
+      "$e$"
+    ],
+    "correct": "B",
+    "explanation_tex": "It is the derivative of $\\ln x$ at $x=e$. Since $(\\ln x)'=1/x$, the limit is $1/e$."
+  },
+  {
+    "id": "A38",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}(\\cos x-1)/x$.",
+    "choices_tex": [
+      "$-1$",
+      "$0$",
+      "$1$",
+      "$\\infty$"
+    ],
+    "correct": "B",
+    "explanation_tex": "This is the derivative of $\\cos x$ at zero: $-\\sin0=0$."
+  },
+  {
+    "id": "A39",
+    "stem_tex": "Let $f(x)=\\begin{cases}(4x^2-4)/(x-1)&x\\ne1\\\\4&x=1\\end{cases}$. Which statements are true? I. $\\lim_{x\\to1}f(x)$ exists. II. $f$ is continuous at $1$. III. $f$ is differentiable at $1$.",
+    "choices_tex": [
+      "none",
+      "I only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "B",
+    "explanation_tex": "Away from $1$, $f(x)=4(x+1)$, whose limit is $8$. Since $f(1)=4$, the function is discontinuous and therefore not differentiable there. Only I holds."
+  },
+  {
+    "id": "A40",
+    "stem_tex": "Let $g(x)=\\begin{cases}x^2&x\\le3\\\\6x-9&x>3\\end{cases}$. Which statements are true? I. $\\lim_{x\\to3}g(x)$ exists. II. $g$ is continuous at $3$. III. $g$ is differentiable at $3$.",
+    "choices_tex": [
+      "I only",
+      "II only",
+      "I and II only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "Both branches approach $9=g(3)$, proving continuity. The left derivative is $2(3)=6$, matching the right derivative $6$. All three statements hold."
+  },
+  {
+    "id": "A41",
+    "stem_tex": "Why does $f(x)=x^{2/3}$ on $[-8,8]$ fail the hypotheses of the Mean Value Theorem?",
+    "choices_tex": [
+      "$f(0)$ is undefined",
+      "$f$ is not continuous on $[-8,8]$",
+      "$f$ is undefined for $x<0$",
+      "$f'(0)$ does not exist"
+    ],
+    "correct": "D",
+    "explanation_tex": "The real cube root makes $f$ defined and continuous everywhere, but $f'(x)=\\frac23x^{-1/3}$ for $x\\ne0$. At zero the difference quotient has no finite limit, so differentiability on the open interval fails."
+  },
+  {
+    "id": "A42",
+    "stem_tex": "For $f(x)=2x^3-6x$ on $[0,\\sqrt3]$, where is the tangent parallel to the secant joining the endpoints?",
+    "choices_tex": [
+      "$1$",
+      "$\\sqrt2$",
+      "$0$",
+      "nowhere"
+    ],
+    "correct": "A",
+    "explanation_tex": "Both endpoint values are zero, so the secant slope is zero. Solve $f'(x)=6x^2-6=0$ inside $(0,\\sqrt3)$ to obtain $x=1$."
+  },
+  {
+    "id": "A43",
+    "stem_tex": "If $h$ is the inverse of $f(x)=1/x$, find $h'(3)$.",
+    "choices_tex": [
+      "$-9$",
+      "$-1/9$",
+      "$1/9$",
+      "$9$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The reciprocal function is its own inverse, so $h(x)=1/x$. Therefore $h'(3)=-1/3^2=-1/9$."
+  },
+  {
+    "id": "A44",
+    "stem_tex": "Evaluate $\\lim_{x\\to\\infty}e^x/x^{50}$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$1/50!$",
+      "$\\infty$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Repeated l'Hopital differentiation, 50 times, gives $\\lim e^x/50!=\\infty$. Exponential growth dominates any fixed power."
+  },
+  {
+    "id": "A45",
+    "stem_tex": "If $\\sin(xy)=x$, find $dy/dx$ where the implicit derivative exists.",
+    "choices_tex": [
+      "$\\sec(xy)/x$",
+      "$(\\sec(xy)-y)/x$",
+      "$(1+\\sec(xy))/x$",
+      "$\\sec(xy)-1$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Differentiate: $\\cos(xy)(y+xy')=1$. Solving gives $y'=(\\sec(xy)-y)/x$ where the displayed denominator factors are nonzero."
+  },
+  {
+    "id": "A46",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}\\sin(2x)/x$.",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$1/2$",
+      "$0$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Write as $2\\sin(2x)/(2x)$ and use the sine limit to get $2$."
+  },
+  {
+    "id": "A47",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}\\sin(3x)/\\sin(4x)$.",
+    "choices_tex": [
+      "$1$",
+      "$4/3$",
+      "$3/4$",
+      "$0$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Factor into $(3/4)[\\sin(3x)/(3x)]/[\\sin(4x)/(4x)]\\to3/4$."
+  },
+  {
+    "id": "A48",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}(1-\\cos x)/x$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$2$",
+      "$\\infty$"
+    ],
+    "correct": "A",
+    "explanation_tex": "By l'Hopital's rule this limit equals $\\lim_{x\\to0}\\sin x=0$."
+  },
+  {
+    "id": "A49",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}\\tan(\\pi x)/x$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$\\pi$",
+      "$\\infty$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Write as $\\pi[\\sin(\\pi x)/(\\pi x)]/\\cos(\\pi x)\\to\\pi$."
+  },
+  {
+    "id": "A50",
+    "stem_tex": "Evaluate $\\lim_{x\\to\\infty}x^2\\sin(1/x)$.",
+    "choices_tex": [
+      "$1$",
+      "$0$",
+      "$\\infty$",
+      "oscillates between $-1$ and $1$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Rewrite as $x[\\sin(1/x)/(1/x)]$. The bracket tends to $1$, while $x\\to\\infty$, so the product tends to $\\infty$."
+  },
+  {
+    "id": "A51",
+    "stem_tex": "For $-\\pi\\le t\\le\\pi$, the curve $x=3+2\\sin t$, $y=2\\cos t-1$ is",
+    "choices_tex": [
+      "a semicircle",
+      "a circle",
+      "an ellipse",
+      "half of an ellipse"
+    ],
+    "correct": "B",
+    "explanation_tex": "$(x-3)^2+(y+1)^2=4(\\sin^2t+\\cos^2t)=4$. A full period traces the entire circle of radius $2$ centered at $(3,-1)$; choose the most specific classification."
+  },
+  {
+    "id": "A52",
+    "stem_tex": "Evaluate $\\lim_{x\\to0}(\\sec x-\\cos x)/x^2$.",
+    "choices_tex": [
+      "$0$",
+      "$1/2$",
+      "$1$",
+      "$2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$\\sec x-\\cos x=\\sin^2x/\\cos x$. The quotient is $(\\sin x/x)^2/\\cos x\\to1$."
+  },
+  {
+    "id": "A53",
+    "stem_tex": "For $x=t-\\sin t$ and $y=1-\\cos t$, find $dy/dx$.",
+    "choices_tex": [
+      "$\\sin t/(1-\\cos t)$",
+      "$(1-\\cos t)/\\sin t$",
+      "$\\sin t/(\\cos t-1)$",
+      "$(1-x)/y$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Divide the parameter derivatives: $dy/dx=(\\sin t)/(1-\\cos t)$ wherever $dx/dt\\ne0$."
+  },
+  {
+    "id": "A54",
+    "stem_tex": "For $x=\\cos^3\\theta$ and $y=\\sin^3\\theta$, find $dy/dx$.",
+    "choices_tex": [
+      "$-\\cot\\theta$",
+      "$\\cot\\theta$",
+      "$-\\tan\\theta$",
+      "$-\\tan^2\\theta$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$dy/dx=[3\\sin^2\\theta\\cos\\theta]/[-3\\cos^2\\theta\\sin\\theta]=-\\tan\\theta$ wherever the quotient is defined."
+  },
+  {
+    "id": "A55",
+    "stem_tex": "For $x=1-e^{-t}$ and $y=t+e^{-t}$, find $dy/dx$.",
+    "choices_tex": [
+      "$e^{-1}/(1-e^{-t})$",
+      "$e^t+1$",
+      "$e^t-e^{-2t}$",
+      "$e^t-1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$dx/dt=e^{-t}$ and $dy/dt=1-e^{-t}$. Their quotient is $e^t-1$."
+  },
+  {
+    "id": "A56",
+    "stem_tex": "For $x=1/(1-t)$ and $y=1-\\ln(1-t)$, $t<1$, find $dy/dx$.",
+    "choices_tex": [
+      "$1/(1-t)$",
+      "$t-1$",
+      "$1/x$",
+      "$(1-t)^2/t$"
+    ],
+    "correct": "C",
+    "explanation_tex": "$dx/dt=(1-t)^{-2}$ and $dy/dt=(1-t)^{-1}$, so $dy/dx=1-t=1/x$."
+  },
+  {
+    "id": "A57",
+    "stem_tex": "Restrict $f(x)=x^2-8x+10$ to $x\\le4$, and let $g=f^{-1}$. Find $g'(3)$.",
+    "choices_tex": [
+      "$-1/2$",
+      "$-1/6$",
+      "$1/6$",
+      "$1/2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solve $(x-4)^2-6=3$ with $x\\le4$, giving $x=1$. Thus $g'(3)=1/f'(1)=1/(2-8)=-1/6$."
+  },
+  {
+    "id": "A58",
+    "stem_tex": "If $f(u)=\\sin u$ and $g(x)=x^2-9$, find $(f\\circ g)'(3)$.",
+    "choices_tex": [
+      "$0$",
+      "$1$",
+      "$3$",
+      "$6$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Chain rule gives $(f\\circ g)'(x)=2x\\cos(x^2-9)$. At $3$ this is $6\\cos0=6$."
+  },
+  {
+    "id": "A59",
+    "stem_tex": "For $f(x)=x/(x-1)^2$, where does $f'(x)$ exist?",
+    "choices_tex": [
+      "all reals",
+      "all reals except $1,-1$",
+      "all reals except $-1$",
+      "all reals except $1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A rational function is differentiable wherever its denominator is nonzero. Here $f'(x)=-(x+1)/(x-1)^3$, defined for every real $x\\ne1$."
+  },
+  {
+    "id": "A60",
+    "stem_tex": "If $f(x)=1/(x^2+1)$ and $g(x)=\\sqrt{x}$, find the derivative of $f(g(x))$.",
+    "choices_tex": [
+      "$-(x+1)^{-2}$",
+      "$-2x/(x^2+1)^2$",
+      "$1/(x+1)^2$",
+      "$1/(2\\sqrt{x}(x+1))$"
+    ],
+    "correct": "A",
+    "explanation_tex": "First simplify the composition: $f(g(x))=1/(x+1)$ for $x\\ge0$. Its derivative on the interior $x>0$ is $-(x+1)^{-2}$; the same formula gives its right derivative at zero."
+  },
+  {
+    "id": "A61",
+    "stem_tex": "Let $f(x)=2x^3-3x$ restricted to $x>1/\\sqrt2$, and let $h$ be its inverse. Find $h\\prime(-1)$.",
+    "choices_tex": [
+      "$-1$",
+      "$1/3$",
+      "$1$",
+      "$3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "On $x>1/\\sqrt2$, $f\\prime(x)=6x^2-3>0$, so an inverse exists. Since $f(1)=-1$, $h(-1)=1$ and $h\\prime(-1)=1/f\\prime(1)=1/3$.",
+    "source_original": {
+      "stem_tex": "Suppose $f(x)=2x^3-3x$. If $h$ is the inverse function of $f$, find $h'(-1)$.",
+      "choices_tex": [
+        "$-1$",
+        "$1/3$",
+        "$1$",
+        "$3$"
+      ],
+      "correct": null,
+      "explanation_tex": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified.",
+      "source_issue": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified."
+    },
+    "resolved_source_issue": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified.",
+    "source_correction": "Restricted the cubic to its increasing branch containing x=1."
+  },
+  {
+    "id": "A62",
+    "stem_tex": "If $f(x)=x^3-3x^2+8x+5$ and $g=f^{-1}$, find $g'(5)$.",
+    "choices_tex": [
+      "$8$",
+      "$1/8$",
+      "$1/53$",
+      "$53$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$f(0)=5$ and $f'(0)=8$, so $g'(5)=1/8$. Uniqueness is assured because $f'(x)=3(x-1)^2+5>0$ everywhere."
+  },
+  {
+    "id": "B1",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $A(x)=f(x)+2g(x)$, find $A'(3)$ using the table.",
+    "choices_tex": [
+      "$-2$",
+      "$2$",
+      "$7$",
+      "$8$"
+    ],
+    "correct": "B",
+    "explanation_tex": "By linearity, $A'(3)=f'(3)+2g'(3)=4+2(-1)=2$."
+  },
+  {
+    "id": "B2",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $B(x)=f(x)g(x)$, find $B'(2)$ using the table.",
+    "choices_tex": [
+      "$-20$",
+      "$-7$",
+      "$-6$",
+      "$13$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Product rule: $B'(2)=f'(2)g(2)+f(2)g'(2)=3(1)+5(-2)=-7$."
+  },
+  {
+    "id": "B3",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $D(x)=1/g(x)$, find $D'(1)$ using the table.",
+    "choices_tex": [
+      "$-1/3$",
+      "$-1/9$",
+      "$1/9$",
+      "$1/3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "$D'(x)=-g'(x)/g(x)^2$, so $D'(1)=-(-3)/3^2=1/3$."
+  },
+  {
+    "id": "B4",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $H(x)=\\sqrt{f(x)}$, find $H'(3)$ using the table.",
+    "choices_tex": [
+      "$1/4$",
+      "$1/(2\\sqrt{10})$",
+      "$2/\\sqrt{10}$",
+      "$4\\sqrt{10}$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Chain rule gives $H'(3)=f'(3)/(2\\sqrt{f(3)})=4/(2\\sqrt{10})=2/\\sqrt{10}$."
+  },
+  {
+    "id": "B5",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $K(x)=f(x)/g(x)$, find $K'(0)$ using the table.",
+    "choices_tex": [
+      "$-13/25$",
+      "$-3/25$",
+      "$13/25$",
+      "$13/16$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Quotient rule gives $K'(0)=[1(5)-2(-4)]/5^2=13/25$."
+  },
+  {
+    "id": "B6",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $M(x)=f(g(x))$, find $M'(1)$ using the table.",
+    "choices_tex": [
+      "$-12$",
+      "$-6$",
+      "$6$",
+      "$12$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$M'(1)=f'(g(1))g'(1)=f'(3)(-3)=4(-3)=-12$."
+  },
+  {
+    "id": "B7",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $P(x)=f(x^3)$, find $P'(1)$ using the table.",
+    "choices_tex": [
+      "$2$",
+      "$6$",
+      "$8$",
+      "$12$"
+    ],
+    "correct": "B",
+    "explanation_tex": "$P'(x)=3x^2f'(x^3)$, so $P'(1)=3f'(1)=3(2)=6$."
+  },
+  {
+    "id": "B8",
+    "stem_tex": "Differentiable functions $f,g$ have values $\\begin{array}{c|rrrr}x&f(x)&f\\prime(x)&g(x)&g\\prime(x)\\\\0&2&1&5&-4\\\\1&3&2&3&-3\\\\2&5&3&1&-2\\\\3&10&4&0&-1\\end{array}$. If $S=f^{-1}$, find $S'(3)$ using the table.",
+    "choices_tex": [
+      "$-2$",
+      "$1/4$",
+      "$1/2$",
+      "$2$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Since $f(1)=3$, the inverse derivative is $S'(3)=1/f'(1)=1/2$."
+  },
+  {
+    "id": "B9",
+    "stem_tex": "The figure shows $g'$. Which statements about $g$ are true? I. $g$ is continuous at $a$. II. $g$ is differentiable at $a$. III. $g$ is increasing on an interval containing $a$.",
+    "choices_tex": [
+      "I only",
+      "III only",
+      "I and III only",
+      "I, II, and III"
+    ],
+    "correct": "D",
+    "explanation_tex": "The plotted derivative exists and is positive at $a$ and throughout a neighborhood. Thus $g$ is differentiable (hence continuous) at $a$, and increasing nearby. A corner in $g'$ does not prevent differentiability of $g$.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b9.png",
+      "alt": "Graph of g prime, with a positive value at a and on an open interval around a."
+    }
+  },
+  {
+    "id": "B10",
+    "stem_tex": "A function $f$ has the derivative shown. Which statement must be false?",
+    "choices_tex": [
+      "$f$ is continuous at $a$",
+      "$f$ has a vertical asymptote at $a$",
+      "$f$ has a jump discontinuity at $a$",
+      "$f$ has a removable discontinuity at $a$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The derivative is bounded on each side of $a$. The Mean Value Theorem then bounds changes in $f$ on each side by a constant times distance, so $f$ has finite one-sided limits: no vertical asymptote is possible. Separate integration constants and the assigned value at $a$ can produce continuity, a jump, or a removable discontinuity.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b10.png",
+      "alt": "Derivative graph: positive constant to the left of a; an increasing line to the right with negative right limit at a; both endpoints at a open."
+    }
+  },
+  {
+    "id": "B11",
+    "stem_tex": "For the graphed function $f$, at which listed $x$ is $f'(x)=0$?",
+    "choices_tex": [
+      "$2$ only",
+      "$2$ and $5$",
+      "$4$ and $7$",
+      "$2,4,7$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The only horizontal tangent among the listed points is at the smooth maximum $x=2$. The point $x=5$ is a corner, while the slopes at $4$ and $7$ are nonzero.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b11.png",
+      "alt": "Function graph with a smooth maximum at x=2, crossing at x=4, a sharp corner minimum at x=5, and rising to x=7."
+    }
+  },
+  {
+    "id": "B12",
+    "stem_tex": "A differentiable function has $f(1.0)=8$, $f(1.3)=10$, $f(1.4)=14$, $f(1.6)=22$. Estimate $f'(1.5)$.",
+    "choices_tex": [
+      "$8$",
+      "$18$",
+      "$40$",
+      "$80$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Use the closest points straddling $1.5$: $(22-14)/(1.6-1.4)=8/0.2=40$. This is an estimate, not a value forced by finite table data."
+  },
+  {
+    "id": "B13",
+    "stem_tex": "Water enters a conical reservoir at a constant volume rate. The cone has its vertex at the bottom. If $h(t)$ is the rate of change of water depth, then $h$ is",
+    "choices_tex": [
+      "linear and increasing",
+      "linear and decreasing",
+      "nonlinear and increasing",
+      "nonlinear and decreasing"
+    ],
+    "correct": "D",
+    "explanation_tex": "If depth is $d$, similarity gives $V=kd^3$ for a positive constant $k$. With $V'=q>0$, $d'=q/(3kd^2)$. As the cone fills, $d$ increases and this rate decreases nonlinearly; in time it is proportional to $(V_0+qt)^{-2/3}$."
+  },
+  {
+    "id": "B14",
+    "stem_tex": "For the figure consisting of two line segments and a lower semicircle of radius $2$, $f'(x)=0$ at",
+    "choices_tex": [
+      "$1$ only",
+      "$2$ only",
+      "$4$ only",
+      "$1$ and $4$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Only the bottom of the semicircle, at $x=4$, has a horizontal tangent. The point $x=1$ is a corner and $x=2$ joins a line to a vertical tangent.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b14-b16.png",
+      "alt": "Line segments from (0,0) to (1,1) to (2,0), followed by the lower semicircle centered at (4,0) with radius 2."
+    }
+  },
+  {
+    "id": "B15",
+    "stem_tex": "For the same graph, on $0<x<6$, $f'(x)$ does not exist at",
+    "choices_tex": [
+      "$1$ only",
+      "$2$ only",
+      "$1$ and $2$",
+      "$2$ and $6$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At $1$ the two segments have unequal slopes. At $2$ the circle has an unbounded one-sided slope, incompatible with a finite derivative. The endpoint $6$ is not in the specified open interval.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b14-b16.png",
+      "alt": "Line segments from (0,0) to (1,1) to (2,0), followed by the lower semicircle centered at (4,0) with radius 2."
+    }
+  },
+  {
+    "id": "B16",
+    "stem_tex": "For the same graph, find $f'(5)$.",
+    "choices_tex": [
+      "$1/2$",
+      "$1/\\sqrt3$",
+      "$2$",
+      "$\\sqrt3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "On the semicircle $f(x)=-\\sqrt{4-(x-4)^2}$, so $f'(x)=(x-4)/\\sqrt{4-(x-4)^2}$. At $5$ this is $1/\\sqrt3$.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b14-b16.png",
+      "alt": "Line segments from (0,0) to (1,1) to (2,0), followed by the lower semicircle centered at (4,0) with radius 2."
+    }
+  },
+  {
+    "id": "B17",
+    "stem_tex": "At how many points of $[-5,5]$ is the tangent to $y=x+\\cos x$ parallel to the secant joining the endpoints?",
+    "choices_tex": [
+      "none",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since cosine is even, the secant slope is $1$. Set $y'=1-\\sin x=1$, giving $x=k\\pi$. The points in $[-5,5]$ are $-\\pi,0,\\pi$, three points."
+  },
+  {
+    "id": "B18",
+    "stem_tex": "From $f(1.92)=6.00$, $f(1.93)=5.00$, $f(1.95)=4.40$, $f(1.98)=4.10$, $f(2.00)=4.00$, estimate $f'(2)$.",
+    "choices_tex": [
+      "$-0.10$",
+      "$-0.20$",
+      "$-5$",
+      "$-10$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The nearest available secant slope is $(4.00-4.10)/(2.00-1.98)=-0.10/0.02=-5$."
+  },
+  {
+    "id": "B19",
+    "stem_tex": "Using $f(1.98)=4.10$ and $f(2.00)=4.00$, estimate $(f^{-1})'(4)$.",
+    "choices_tex": [
+      "$-0.2$",
+      "$-0.1$",
+      "$-5$",
+      "$-10$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The preceding secant estimate gives $f'(2)\\approx-5$. Since $f(2)=4$, the inverse derivative is approximately $1/(-5)=-0.2$."
+  },
+  {
+    "id": "B20",
+    "stem_tex": "A function is continuous on $[2,10]$ and differentiable on $(2,10)$, with values $f(2)=30$, $f(4)=25$, $f(6)=20$, $f(8)=25$, $f(10)=30$. Which must hold?",
+    "choices_tex": [
+      "$f'(6)=0$",
+      "$f'(8)>0$",
+      "The maximum on $[2,10]$ is $30$",
+      "There exists $x\\in(2,10)$ with $f'(x)=0$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The endpoint values agree, so Rolle's theorem guarantees at least one zero derivative in $(2,10)$. The sampled values alone do not fix the derivative at $6$ or $8$, nor exclude a larger maximum between samples."
+  },
+  {
+    "id": "B21",
+    "stem_tex": "Let $f$ be twice continuously differentiable on $\\mathbb R$. Suppose $[f(a+h)-f(a)]/h\\ge f\\prime(a)$ for every real $a$ and every $h>0$. Which statement must hold?",
+    "choices_tex": [
+      "$f\\prime(x)\\ge0$ for all real $x$",
+      "$f\\prime(x)\\le0$ for all real $x$",
+      "$f\\prime\\prime(x)\\ge0$ for all real $x$",
+      "$f\\prime\\prime(x)\\le0$ for all real $x$"
+    ],
+    "correct": "C",
+    "explanation_tex": "For fixed $a$, Taylor expansion gives $[f(a+h)-f(a)]/h=f\\prime(a)+\\frac12 f\\prime\\prime(a)h+o(h)$. The assumed inequality, divided by positive $h$ and followed by $h\\to0^+$, gives $f\\prime\\prime(a)\\ge0$. Since $a$ is arbitrary, this holds everywhere. Convex functions may have positive or negative first derivatives, so A and B need not hold; $f(x)=x^2$ rules out D.",
+    "source_original": {
+      "stem_tex": "If $f$ is differentiable and difference quotients overestimate the slope at $x=a$ for all $h>0$, which must be true?",
+      "choices_tex": [
+        "$f'(x)\\ge0$ on $[a,h]$",
+        "$f'(x)\\le0$ on $[a,h]$",
+        "$f''(x)\\ge0$ on $[a,h]$",
+        "$f''(x)\\le0$ on $[a,h]$"
+      ],
+      "correct": null,
+      "explanation_tex": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity.",
+      "source_issue": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity."
+    },
+    "resolved_source_issue": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity.",
+    "source_correction": "Required twice continuous differentiability and the secant inequality at every base point; replaced the malformed interval notation."
+  },
+  {
+    "id": "B22",
+    "stem_tex": "If $f(a)=f(b)=0$ and $f$ is continuous on $[a,b]$, then",
+    "choices_tex": [
+      "$f$ must be identically zero",
+      "$f$ may be different from zero for all $x\\in[a,b]$",
+      "Some $c\\in(a,b)$ satisfies $f'(c)=0$",
+      "$f(x)$ must exist for every $x\\in(a,b)$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Continuity on the interval implies the function is defined at every interior point. B contradicts the zero endpoints; A is unnecessary. C requires differentiability, absent here: a triangular tent with zero endpoints has no zero derivative where its derivative exists."
+  },
+  {
+    "id": "B23",
+    "stem_tex": "Suppose $f(1)=2$, $f'(1)=3$, and $f'(2)=4$. Assuming an inverse exists near this point, find $(f^{-1})'(2)$.",
+    "choices_tex": [
+      "$-1/3$",
+      "$-1/4$",
+      "$1/4$",
+      "$1/3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Since $f(1)=2$, $(f^{-1})'(2)=1/f'(1)=1/3$. The value $f'(2)$ is irrelevant. The source's first $f'(1)=2$ is corrected to $f(1)=2$; otherwise it contradicts $f'(1)=3$.",
+    "source_correction": "Corrected first f′(1)=2 to f(1)=2; original repeats f′(1) with contradictory values."
+  },
+  {
+    "id": "B24",
+    "stem_tex": "Suppose $\\lim_{x\\to0}(g(x)-g(0))/x=1$. What follows necessarily?",
+    "choices_tex": [
+      "$g$ is undefined at $0$",
+      "$g$ is not continuous at $0$",
+      "$\\lim_{x\\to0}g(x)=1$",
+      "$g'(0)=1$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The given limit is exactly the definition of $g'(0)$. It also implies continuity at zero, but the function value need not equal the derivative."
+  },
+  {
+    "id": "B25",
+    "stem_tex": "From the graph and its tangent line, estimate $f'(3)$.",
+    "choices_tex": [
+      "$0.3$",
+      "$0.8$",
+      "$1.5$",
+      "$1.8$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The tangent rises approximately $2.5$ units over a run of $3$ units, giving slope about $0.83$. The closest listed value is $0.8$. Use the labeled units rather than the visual angle.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b25-b26.png",
+      "alt": "Cubic-like graph on a unit grid, with a maximum near -1.3, an inflection near 0.7, a minimum near 2.7, and a tangent at x=3 of slope about 0.8."
+    }
+  },
+  {
+    "id": "B26",
+    "stem_tex": "From the graph, the rate of change of $f$ is least near",
+    "choices_tex": [
+      "$-3$",
+      "$-1.3$",
+      "$0.7$",
+      "$2.7$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The least derivative is the most negative tangent slope. The steepest descending part lies near the inflection point $x\\approx0.7$, between the local maximum and minimum.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b25-b26.png",
+      "alt": "Cubic-like graph on a unit grid, with a maximum near -1.3, an inflection near 0.7, a minimum near 2.7, and a tangent at x=3 of slope about 0.8."
+    }
+  },
+  {
+    "id": "B27",
+    "stem_tex": "For $f(x)=5^x$, estimate $f'(2)$ by the symmetric quotient $[f(2+h)-f(2-h)]/(2h)$ with $h=0.03$.",
+    "choices_tex": [
+      "$40.25$",
+      "$40.252$",
+      "$41.818$",
+      "$80.503$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The quotient is $(5^{2.03}-5^{1.97})/0.06\\approx40.251583$, which rounds to $40.252$ to three decimal places (B is the more precise listed value)."
+  },
+  {
+    "id": "B28",
+    "stem_tex": "For $f(x)=4^x$ and $h=0.08$, to how many decimal places does the symmetric quotient for $f'(0)$ agree with the actual derivative?",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "more than $3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The quotient $(4^{0.08}-4^{-0.08})/0.16\\approx1.389137920$; the exact derivative is $\\ln4\\approx1.386294361$. Both round to $1.39$ at two decimal places, but disagree at three."
+  },
+  {
+    "id": "B29",
+    "stem_tex": "For $f(x)=4^x$ and $h=0.001$, to how many decimal places does the symmetric quotient for $f'(0)$ agree with the actual derivative?",
+    "choices_tex": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "more than $3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The quotient is approximately $1.386294805$, versus $\\ln4\\approx1.386294361$. They agree to at least four decimal places, so more than three."
+  },
+  {
+    "id": "B30",
+    "stem_tex": "What numerical value does the symmetric quotient for $f(x)=|x|$ at zero return with $h=0.001$?",
+    "choices_tex": [
+      "$-1$",
+      "$0$",
+      "$1$",
+      "indeterminate"
+    ],
+    "correct": "B",
+    "explanation_tex": "The numerator is $|h|-|-h|=0$, so the quotient is zero. This is not an actual derivative: the left derivative is $-1$ and the right derivative is $1$.",
+    "source_correction": "Clarified that the quotient produces an estimate, not an existing derivative."
+  },
+  {
+    "id": "B31",
+    "stem_tex": "If $f'(x)=g(x)$ and $h(x)=\\sin x$, find $\\dfrac{d}{dx}f(h(x))$.",
+    "choices_tex": [
+      "$g(\\sin x)$",
+      "$\\cos x\\,g(x)$",
+      "$\\cos x\\,g(\\sin x)$",
+      "$\\sin x\\,g(\\sin x)$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Chain rule gives $f'(h(x))h'(x)=g(\\sin x)\\cos x$."
+  },
+  {
+    "id": "B32",
+    "stem_tex": "For $f(x)=3^x-x^3$ on $[0,3]$, where in $(0,3)$ is the tangent parallel to the secant through $(0,1)$ and $(3,0)$?",
+    "choices_tex": [
+      "$1.244$ only",
+      "$2.727$ only",
+      "$1.244$ and $2.727$ only",
+      "no such value"
+    ],
+    "correct": "C",
+    "explanation_tex": "The secant slope is $-1/3$. Numerically solve $(\\ln3)3^x-3x^2=-1/3$ on $(0,3)$ to obtain $x\\approx1.244$ and $2.727$. The interval makes explicit the Mean Value Theorem setting; without it, another negative solution would need consideration.",
+    "source_correction": "Made the MVT interval (0,3) explicit; the unrestricted equation has an additional negative root."
+  },
+  {
+    "id": "B33",
+    "stem_tex": "For the piecewise linear graph, on $1<x<2$, $f(x)=$",
+    "choices_tex": [
+      "$-x-2$",
+      "$-x-3$",
+      "$-x-4$",
+      "$-x+2$"
+    ],
+    "correct": "A",
+    "explanation_tex": "The segment joins $(1,-3)$ to $(2,-4)$, so its slope is $-1$ and its equation is $y=-x-2$.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b33-b37.png",
+      "alt": "Piecewise line through (-6,-1.5), (-3,3), (-1,3), (1,-3), (2,-4), (5,-4), (7,0)."
+    }
+  },
+  {
+    "id": "B34",
+    "stem_tex": "For the piecewise linear graph, on which intervals is $f'=0$? I. $(-6,-3)$. II. $(-3,-1)$. III. $(2,5)$.",
+    "choices_tex": [
+      "II only",
+      "I and II only",
+      "I and III only",
+      "II and III only"
+    ],
+    "correct": "D",
+    "explanation_tex": "A linear segment has zero derivative exactly when it is horizontal. The graph is horizontal on $(-3,-1)$ and $(2,5)$, but increasing on $(-6,-3)$.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b33-b37.png",
+      "alt": "Piecewise line through (-6,-1.5), (-3,3), (-1,3), (1,-3), (2,-4), (5,-4), (7,0)."
+    }
+  },
+  {
+    "id": "B35",
+    "stem_tex": "How many discontinuities does $f'$ have on $(-6,7)$ for the piecewise linear graph?",
+    "choices_tex": [
+      "$2$",
+      "$3$",
+      "$4$",
+      "$5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The slope changes at each of the five corners $-3,-1,1,2,5$. Adjacent slopes are unequal at every corner, producing five jump discontinuities in the derivative.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b33-b37.png",
+      "alt": "Piecewise line through (-6,-1.5), (-3,3), (-1,3), (1,-3), (2,-4), (5,-4), (7,0)."
+    }
+  },
+  {
+    "id": "B36",
+    "stem_tex": "For the piecewise linear graph, on $-6<x<-3$, $f'(x)=$",
+    "choices_tex": [
+      "$-3/2$",
+      "$-1$",
+      "$1$",
+      "$3/2$"
+    ],
+    "correct": "D",
+    "explanation_tex": "This segment rises from $(-5,0)$ to $(-3,3)$, so its slope is $(3-0)/(-3+5)=3/2$.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b33-b37.png",
+      "alt": "Piecewise line through (-6,-1.5), (-3,3), (-1,3), (1,-3), (2,-4), (5,-4), (7,0)."
+    }
+  },
+  {
+    "id": "B37",
+    "stem_tex": "Which statement about the derivative of the piecewise linear graph is false?",
+    "choices_tex": [
+      "$f'$ consists of six horizontal segments",
+      "$f'$ has four jump discontinuities",
+      "$f'$ is discontinuous at each of $-3,-1,1,2,5$",
+      "On $(-1,1)$, $f'=-3$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The six segment slopes are $3/2,0,-3,-1,0,2$. Each adjoining pair differs, giving five jumps, not four. The other statements match those slopes and breakpoints.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b33-b37.png",
+      "alt": "Piecewise line through (-6,-1.5), (-3,3), (-1,3), (1,-3), (2,-4), (5,-4), (7,0)."
+    }
+  },
+  {
+    "id": "B38",
+    "stem_tex": "A differentiable function has values $f(0.10)=0.171$, $f(0.20)=0.288$, $f(0.26)=0.357$, $f(0.40)=0.384$, $f(0.52)=0.375$, $f(0.60)=0.336$. Estimate $f'(0.10)$.",
+    "choices_tex": [
+      "$0.12$",
+      "$1.08$",
+      "$1.17$",
+      "$1.77$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The closest available secant uses $0.10$ and $0.20$: $(0.288-0.171)/(0.20-0.10)=0.117/0.10=1.17$."
+  },
+  {
+    "id": "B39",
+    "stem_tex": "On the graphed interval $[a,b]$, how many interior points have tangent slope equal to the secant slope from $a$ to $b$?",
+    "choices_tex": [
+      "none",
+      "$1$",
+      "$2$",
+      "$3$"
+    ],
+    "correct": "D",
+    "explanation_tex": "The secant has positive slope. Following the curve from $a$ to $b$, the tangent passes through that slope three times: as the first rising portion flattens, as the next rising portion steepens, and as it flattens before the local maximum. The descending portion has negative slope and adds no such point.",
+    "figure": {
+      "src": "data/calculus-figures/c3-b39.png",
+      "alt": "Smooth curve from a to b rising with decreasing slope, then increasing slope, then decreasing slope to a maximum before descending to b."
+    }
+  }
+]

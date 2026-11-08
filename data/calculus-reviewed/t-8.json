@@ -1,0 +1,407 @@
+[
+  {
+    "id": "T1",
+    "stem_tex": "A particle moves along a line in such a way that its position at time $t$ is given by $s=t^3-9t^2+24t+5$. Its direction of motion changes when",
+    "choices_tex": [
+      "$t=2$ only",
+      "$t=4$ only",
+      "$t=6$ only",
+      "$t=2$ and $t=4$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Differentiate: $v=s'=3t^2-18t+24=3(t-2)(t-4)$. Its sign changes at both $2$ and $4$, so the particle reverses at both times."
+  },
+  {
+    "id": "T2",
+    "stem_tex": "A body moves along a straight line so that its velocity $v$ at time $t$ is given by $v=6t^3+4t^2+7$. The distance the body covers from $t=0$ to $t=3$ equals",
+    "choices_tex": [
+      "$178.5$",
+      "$157$",
+      "$134$",
+      "$196$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Velocity is positive on $[0,3]$. The distance is $\\int_0^3(6t^3+4t^2+7)\\,dt=[\\tfrac32t^4+\\tfrac43t^3+7t]_0^3=178.5$."
+  },
+  {
+    "id": "T3",
+    "stem_tex": "A particle moves along a line with velocity $v=4t^2-8t$. The total distance traveled from $t=0$ to $t=4$ equals",
+    "choices_tex": [
+      "$0$",
+      "$16$",
+      "$32$",
+      "$48$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Velocity is negative on $(0,2)$ and positive on $(2,4)$. Thus distance is $-\\int_0^2(4t^2-8t)\\,dt+\\int_2^4(4t^2-8t)\\,dt=32$."
+  },
+  {
+    "id": "T4",
+    "stem_tex": "A particle moves along a line with velocity $v(t)=4t^2-8t$. The net change in position of the particle from $t=0$ to $t=4$ is",
+    "choices_tex": [
+      "$0$",
+      "$\\dfrac{16}{3}$",
+      "$\\dfrac{32}{3}$",
+      "$\\dfrac{64}{3}$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Net displacement is the signed integral $[\\tfrac43t^3-4t^2]_0^4=64/3$."
+  },
+  {
+    "id": "T5",
+    "stem_tex": "The acceleration of a particle moving on a straight line is given by $a=2\\cos t$, and when $t=0$ the particle is at rest. The distance it covers from $t=0$ to $t=2$ is",
+    "choices_tex": [
+      "$2\\sin 2$",
+      "$2(1-\\cos 2)$",
+      "$2-2\\sin 2$",
+      "$-2\\cos 2$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Integrating acceleration and using $v(0)=0$ gives $v=2\\sin t$. This is nonnegative on $[0,2]$, so distance is $\\int_0^2 2\\sin t\\,dt=2(1-\\cos2)$."
+  },
+  {
+    "id": "T6",
+    "stem_tex": "During the worst 5-hour period of a hurricane the wind velocity, in miles per hour, is given by $v(t)=6t-t^2+120$, $0\\leq t \\leq 5$. The average wind velocity during this period (in mph) is",
+    "choices_tex": [
+      "$120$",
+      "$126\\dfrac{2}{3}$",
+      "$130\\dfrac{1}{3}$",
+      "$133\\dfrac{1}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Average velocity is $\\frac15\\int_0^5(6t-t^2+120)\\,dt=120+15-25/3=126\\tfrac23$ mph."
+  },
+  {
+    "id": "T7",
+    "stem_tex": "The acceleration of an object in motion is given by the vector $\\vec{a}(t)=\\langle 3t, e^{2t}\\rangle$. If the object's initial velocity was $\\vec{v}(0)=\\langle 3,0\\rangle$, which is the velocity vector at any time $t$?",
+    "choices_tex": [
+      "$\\vec{v}(t)=\\left\\langle \\dfrac{3}{2}t^2, \\dfrac{1}{2}e^{2t}+1\\right\\rangle$",
+      "$\\vec{v}(t)=\\left\\langle \\dfrac{3}{2}t^2+3, \\dfrac{1}{2}e^{2t}\\right\\rangle$",
+      "$\\vec{v}(t)=\\left\\langle \\dfrac{3}{2}t^2+3, \\dfrac{1}{2}(e^{2t}-1)\\right\\rangle$",
+      "$\\vec{v}(t)=\\langle 3, e^{2t}-1\\rangle$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrate each acceleration component and apply the initial velocity: $v_x=3+3t^2/2$, $v_y=(e^{2t}-1)/2$."
+  },
+  {
+    "id": "T8",
+    "stem_tex": "A stone is thrown upward from the ground with an initial velocity of 120 ft/sec. Its average velocity (given that $a(t)=-32$ ft/sec$^2$) during the first 3 seconds is",
+    "choices_tex": [
+      "$24$ ft/sec",
+      "$48$ ft/sec",
+      "$72$ ft/sec",
+      "$96$ ft/sec"
+    ],
+    "correct": "C",
+    "explanation_tex": "$v(t)=120-32t$, so its average is $\\frac13\\int_0^3(120-32t)\\,dt=72$ ft/sec."
+  },
+  {
+    "id": "T9",
+    "stem_tex": "Assume that the density of vehicles (number of cars per mile) during morning rush hour, for the 30-mile stretch along a state highway southbound from a bridge, is given by $f(x)$, where $x$ is the distance, in miles, south of the bridge. Which of the following gives the number of vehicles (on this 30-mile stretch) from the bridge to a point $x$ miles south of the bridge?",
+    "choices_tex": [
+      "$\\displaystyle\\int_0^x f(t)\\,dt$",
+      "$\\displaystyle\\int_x^{30} f(t)\\,dt$",
+      "$\\displaystyle\\int_0^{30} f(x)\\,dx$",
+      "$\\displaystyle\\sum_{k=1}^n f(x_k)\\,\\Delta x$ (where the 30-mile stretch has been partitioned into $n$ equal subintervals)"
+    ],
+    "correct": "A",
+    "explanation_tex": "Integrating density (cars per mile) over the road interval $[0,x]$ gives $\\int_0^xf(t)\\,dt$ cars."
+  },
+  {
+    "id": "T10",
+    "stem_tex": "The center of a city, that we will assume is circular, is on a straight highway (along the diameter of the circle). The radius of the city is 5 miles. The density of the population, in thousands of people per square mile, is given by $f(x)=15-3x$ at a distance $x$ miles from the highway. The population of the city (in thousands of people) is given by the integral",
+    "choices_tex": [
+      "$\\displaystyle\\int_0^5 (15-3x)\\,dx$",
+      "$\\displaystyle 2\\int_0^5 (15-3x)\\sqrt{25-x^2}\\,dx$",
+      "$\\displaystyle 4\\int_0^5 (15-3x)\\sqrt{25-x^2}\\,dx$",
+      "$\\displaystyle\\int_0^5 2\\pi x(15-3x)\\,dx$"
+    ],
+    "correct": "C",
+    "explanation_tex": "At distance $x$ from the highway, each strip has length $2\\sqrt{25-x^2}$. There are matching strips on both sides, so population is $4\\int_0^5(15-3x)\\sqrt{25-x^2}\\,dx$ thousand.",
+    "source_correction": "Corrected answer key to include strips on both sides of the highway."
+  },
+  {
+    "id": "TB1",
+    "stem_tex": "A car accelerates from 0 to 90 mph in 12 seconds, with constant acceleration. (Note that 60 mph = 88 ft/sec, so 90 mph = 132 ft/sec.) The acceleration (in ft/sec$^2$) is",
+    "choices_tex": [
+      "$2.2$",
+      "$6.6$",
+      "$8.8$",
+      "$11$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Acceleration equals change in velocity divided by elapsed time: $a=132/12=11$ ft/sec$^2$."
+  },
+  {
+    "id": "TB2",
+    "stem_tex": "A particle has velocity $\\mathbf v(t)=\\langle2t,t-2\\rangle$ and initial position $(0,2)$. At time $t$ the position vector $\\mathbf{R}$ is",
+    "choices_tex": [
+      "$\\left\\langle t^2, -\\dfrac{4-t^2}{2}\\right\\rangle$",
+      "$\\left\\langle t^2, \\dfrac{4-t^2}{2}\\right\\rangle$",
+      "$\\left\\langle t^2, \\dfrac{t^2-4t}{2}\\right\\rangle$",
+      "$\\left\\langle t^2, \\dfrac{t^2-4t+4}{2}\\right\\rangle$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Integrate velocity from zero and add the initial position: $\\mathbf R(t)=\\langle t^2,t^2/2-2t+2\\rangle$."
+  },
+  {
+    "id": "TB3",
+    "stem_tex": "A particle has velocity $\\mathbf v(t)=\\langle2t,t-2\\rangle$ and initial position $(0,2)$. The acceleration vector at time $t=3$ is",
+    "choices_tex": [
+      "$\\langle 2,1\\rangle$",
+      "$\\langle 1,-1\\rangle$",
+      "$\\langle 1,2\\rangle$",
+      "$\\langle 2,-1\\rangle$"
+    ],
+    "correct": "A",
+    "explanation_tex": "Differentiate $\\mathbf v(t)=\\langle2t,t-2\\rangle$: $\\mathbf a(t)=\\langle2,1\\rangle$ for every $t$."
+  },
+  {
+    "id": "TB4",
+    "stem_tex": "A particle has velocity $\\mathbf v(t)=\\langle2t,t-2\\rangle$ and initial position $(0,2)$. The speed of the particle is at a minimum when $t$ equals",
+    "choices_tex": [
+      "$0$",
+      "$\\dfrac{2}{5}$",
+      "$1$",
+      "$\\dfrac{8}{5}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Minimize squared speed $4t^2+(t-2)^2=5t^2-4t+4$. Its derivative is $10t-4$, so the minimum occurs at $t=2/5$."
+  },
+  {
+    "id": "TB5",
+    "stem_tex": "A particle moves along a curve in such a way that its position vector and velocity vector are perpendicular at all times. If the particle passes through the point $(6,4)$, then the equation of the curve is",
+    "choices_tex": [
+      "$x^2+y^2=10$",
+      "$x^2+y^2=52$",
+      "$x^2+2y^2=68$",
+      "$x^2-y^2=20$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Orthogonality gives $\\mathbf R\\cdot\\mathbf R'=0$, hence $d(x^2+y^2)/dt=0$. The constant is $6^2+4^2=52$."
+  },
+  {
+    "id": "TB6",
+    "stem_tex": "The velocity of an object is given by $\\vec{v}(t)=\\langle 4\\sqrt{t}, 6\\rangle$. If this object is at the origin when $t=1$, where was it at $t=0$?",
+    "choices_tex": [
+      "$\\left(-\\dfrac{8}{3},-6\\right)$",
+      "$\\left(\\dfrac{8}{3},6\\right)$",
+      "$\\left(\\dfrac{4}{3},0\\right)$",
+      "$\\left(-\\dfrac{4}{3},0\\right)$"
+    ],
+    "correct": "A",
+    "explanation_tex": "$\\mathbf R(1)-\\mathbf R(0)=\\int_0^1\\langle4\\sqrt t,6\\rangle\\,dt=\\langle8/3,6\\rangle$. Since $\\mathbf R(1)=0$, the initial position is $(-8/3,-6)$."
+  },
+  {
+    "id": "TB7",
+    "stem_tex": "Suppose the current world population is 10 billion and the population $t$ years from now is estimated to be $P(t)=10e^{0.008t}$ billion people. On the basis of this supposition, the average population of the world, in billions, over the next 30 years will be approximately",
+    "choices_tex": [
+      "$9.5$",
+      "$10.8$",
+      "$11.302$",
+      "$12.6$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The average is $\\frac1{30}\\int_0^{30}10e^{0.008t}\\,dt=\\frac{10}{0.24}(e^{0.24}-1)\\approx11.302$ billion."
+  },
+  {
+    "id": "TB8",
+    "stem_tex": "A beach opens at 8 A.M.\\ and people arrive at a rate of $R(t)=15+50t$ people per hour, where $t$ represents the number of hours the beach has been open. Assuming no one leaves before noon, at what time will there be 130 people there?",
+    "choices_tex": [
+      "$9{:}45$",
+      "$10{:}00$",
+      "$10{:}15$",
+      "$10{:}30$"
+    ],
+    "correct": "B",
+    "explanation_tex": "The accumulated arrivals are $\\int_0^t(15+50u)\\,du=15t+25t^2$. Setting this equal to $130$ gives $t=2$, or 10 A.M."
+  },
+  {
+    "id": "TB9",
+    "stem_tex": "Suppose the amount of a drug in a patient's bloodstream $t$ hours after intravenous administration is $A(t)=\\dfrac{45}{(t+1)^2}$ mg. The average amount in the bloodstream during the first 5 hours is",
+    "choices_tex": [
+      "$6.0$ mg",
+      "$7.5$ mg",
+      "$11.0$ mg",
+      "$16.6$ mg"
+    ],
+    "correct": "B",
+    "explanation_tex": "The average amount is $\\frac15\\int_0^5\\frac{45}{(t+1)^2}\\,dt=9[-1/(t+1)]_0^5=7.5$ mg."
+  },
+  {
+    "id": "TB10",
+    "stem_tex": "A rumor spreads through a town at the rate of $R(t)=t^2+15t$ new people per day $t$ days after it was first heard. Approximately how many people hear the rumor during the third week (from the 14th to the 21st days) after it was first heard?",
+    "choices_tex": [
+      "$2219$",
+      "$3161$",
+      "$4010$",
+      "$4750$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Integrate the rate over the third week: $[t^3/3+15t^2/2]_{14}^{21}=4009.833\\ldots$, approximately $4010$ people."
+  },
+  {
+    "id": "TB11",
+    "stem_tex": "Oil is leaking from a tanker at the rate of $L(t)=1500e^{-0.4t}$ gal/hr, where $t$ is given in hours. The total number of gallons of oil that will leak out during the first 6 hours is approximately",
+    "choices_tex": [
+      "$1271$",
+      "$3031$",
+      "$3410$",
+      "$4323$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The total is $\\int_0^6 1500e^{-0.4t}\\,dt=3750(1-e^{-2.4})\\approx3409.808$ gallons, or $3410$."
+  },
+  {
+    "id": "TB12",
+    "stem_tex": "Population density depends on distance $x$ from the city center according to $\\begin{array}{c|rrrrrr}x\\text{ (miles)}&0&3&6&9&12&15\\\\\\hline f(x)\\text{ (hundreds per square mile)}&60&50&42&30&18&8\\end{array}$. Using the five width3 intervals in the table, apply a left Riemann sum to $100\\int_0^{15}2\\pi x f(x)\\,dx$ to estimate the population, rounded to the nearest person.",
+    "choices_tex": [
+      "$60{,}000$",
+      "$376{,}000$",
+      "$691{,}200$",
+      "$1{,}673{,}841$"
+    ],
+    "correct": "D",
+    "explanation_tex": "A thin annulus has area $2\\pi x\\,dx$, so population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. With width3 and left endpoints0,3,6,9,12, the estimate is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people.",
+    "source_original": {
+      "stem_tex": "Population density depends on distance $x$ from the city center according to $\\begin{array}{c|rrrrrr}x\\text{ (miles)}&0&3&6&9&12&15\\\\\\hline f(x)\\text{ (hundreds per square mile)}&60&50&42&30&18&8\\end{array}$. Use a left Riemann sum to approximate the population within a 15-mile radius.",
+      "choices_tex": [
+        "$60{,}000$",
+        "$376{,}000$",
+        "$691{,}200$",
+        "$754{,}000$"
+      ],
+      "correct": null,
+      "explanation_tex": "Population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. A left sum of this radial integrand is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people. No listed choice agrees. Applying density to exact annular areas instead would also give an unlisted value.",
+      "source_issue": "No choice matches the required radial population integral."
+    },
+    "resolved_source_issue": "No choice matches the required radial population integral.",
+    "source_correction": "Specified a left sum of the radial population integrand and supplied its rounded value in D."
+  },
+  {
+    "id": "TB13",
+    "stem_tex": "If a factory continuously dumps pollutants into a river at the rate of $p(t)=\\dfrac{\\sqrt{t}}{240}$ tons per day, then the amount dumped after 9 weeks is approximately",
+    "choices_tex": [
+      "$0.07$ ton",
+      "$0.90$ ton",
+      "$1.39$ tons",
+      "$1.55$ tons"
+    ],
+    "correct": "C",
+    "explanation_tex": "Nine weeks is $63$ days. The amount is $\\int_0^{63}\\sqrt t/240\\,dt=63^{3/2}/360\\approx1.389$ tons."
+  },
+  {
+    "id": "TB14",
+    "stem_tex": "A roast at $180^\\circ$F is put into a refrigerator whose temperature is $45^\\circ$F. The temperature of the roast is cooling at time $t$ at the rate of $R(t)=-10e^{-0.1t}\\,{}^\\circ$F per minute. The temperature, to the nearest degree F, of the roast 25 minutes after it is put into the refrigerator is",
+    "choices_tex": [
+      "$45^\\circ$",
+      "$70^\\circ$",
+      "$81^\\circ$",
+      "$88^\\circ$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Initial temperature plus accumulated cooling gives $T(25)=180+\\int_0^{25}-10e^{-0.1t}\\,dt=80+100e^{-2.5}\\approx88.208^\\circ$F, rounding to $88^\\circ$F."
+  },
+  {
+    "id": "TB15",
+    "stem_tex": "How long will it take to release 9 tons of pollutant if the rate at which the pollutant is being released is $P(t)=te^{-0.25t}$ tons per week?",
+    "choices_tex": [
+      "$6.8$ weeks",
+      "$7.5$ weeks",
+      "$8.9$ weeks",
+      "$10.2$ weeks"
+    ],
+    "correct": "B",
+    "explanation_tex": "Solve $\\int_0^Tte^{-t/4}\\,dt=16[1-(1+T/4)e^{-T/4}]=9$. Numerical solution gives $T\\approx7.547$ weeks, closest to $7.5$."
+  },
+  {
+    "id": "TB16",
+    "stem_tex": "What is the total area bounded by the curve $f(x)=x^3-5x^2+4x$ and the $x$-axis on the interval $0\\leq x \\leq 4$?",
+    "choices_tex": [
+      "$-\\dfrac{71}{6}$",
+      "$\\dfrac{71}{6}$",
+      "$12$",
+      "$\\dfrac{71}{3}$"
+    ],
+    "correct": "B",
+    "explanation_tex": "Factor $f=x(x-1)(x-4)$, positive on $(0,1)$ and negative on $(1,4)$. Thus area is $\\int_0^1f(x)\\,dx-\\int_1^4f(x)\\,dx=71/6$."
+  },
+  {
+    "id": "TB17",
+    "stem_tex": "A tank has signed outward flow rate $W(t)=-0.15t^2-0.4t+3$ gal/hr, where negative values represent inflow. What is the net water loss, in gallons, over $0\\le t\\le4$?",
+    "choices_tex": [
+      "$4.9$",
+      "$5.2$",
+      "$5.6$",
+      "$5.9$"
+    ],
+    "correct": "C",
+    "explanation_tex": "Net loss is the signed integral $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons. The rate becomes negative after $t=10/3$, representing inflow during that part of the interval, which reduces the net loss.",
+    "source_original": {
+      "stem_tex": "Water is leaking from a tank at the rate of $W(t)=-0.15t^2-0.4t+3$ gal/hr. The total amount, in gallons, that will leak out in the next 4 hours is approximately",
+      "choices_tex": [
+        "$4.9$",
+        "$5.2$",
+        "$5.6$",
+        "$5.9$"
+      ],
+      "correct": null,
+      "explanation_tex": "The signed integral is $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons, the intended choice C. However the stated outward leakage rate becomes negative after $t=(-4+\\sqrt{196})/3=10/3$ hours, so this is net flow, not a physically valid total amount leaking out over all four hours.",
+      "source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage."
+    },
+    "resolved_source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage.",
+    "source_correction": "Defined the rate as signed outward flow and asked for net water loss."
+  },
+  {
+    "id": "TB18",
+    "stem_tex": "A bacterial culture is growing at the rate of $B(t)=1500e^{0.04t}$ bacteria in $t$ hours. The total increase in bacterial population during the second hour is approximately",
+    "choices_tex": [
+      "$1015$",
+      "$1046$",
+      "$1593$",
+      "$1650$"
+    ],
+    "correct": "C",
+    "explanation_tex": "The second hour is $1\\le t\\le2$. The increase is $\\int_1^2 1500e^{0.04t}\\,dt=37500(e^{0.08}-e^{0.04})\\approx1592.861$, about $1593$ bacteria."
+  },
+  {
+    "id": "TB19",
+    "stem_tex": "A website opens at noon. Its rate $R(t)$ in visitors/hour increases as shown in the graph, where $t$ is hours after noon. Each vertical grid interval represents one hour, from $t=0$ to $t=8$. Use a midpoint or trapezoidal sum to approximate when the 400th visitor arrives.",
+    "choices_tex": [
+      "between 1 and 2 P.M.",
+      "between 3 and 4 P.M.",
+      "between 4 and 5 P.M.",
+      "after 6 P.M."
+    ],
+    "correct": "C",
+    "explanation_tex": "From the graph, hourly rates through 5 P.M. are approximately $0,15,59,123,200,277$. Trapezoids give about $297$ visitors by 4 P.M. and $535.5$ by 5 P.M.; therefore the 400th visitor arrives between 4 and 5 P.M.",
+    "figure": {
+      "src": "data/calculus-figures/t8-tb19.png",
+      "alt": "Source rate graph; vertical grid lines are hours 0 through 8."
+    }
+  },
+  {
+    "id": "TB20",
+    "stem_tex": "The velocity table is $\\begin{array}{c|rrrrrr}t\\text{ (sec)}&0&2&4&6&8&10\\\\\\hline v(t)\\text{ (units/sec)}&4&5&2&-2&-4&0\\end{array}$. Use the five indicated trapezoids to estimate how far from its starting point the object is when it comes to rest at $t=10$.",
+    "choices_tex": [
+      "$0$ units",
+      "$3$ units",
+      "$6$ units",
+      "$9$ units"
+    ],
+    "correct": "C",
+    "explanation_tex": "Each interval has width $2$. The trapezoidal displacement is $(4+5)+(5+2)+(2-2)+(-2-4)+(-4+0)=6$. The object is about $6$ units from its starting point."
+  },
+  {
+    "id": "TB21",
+    "stem_tex": "An 18-wheeler is traveling at a speed given by $v(t)=\\dfrac{100(t+1)}{t+2}$ mph at time $t$ hours. The fuel economy for the diesel fuel in the truck is given by $f(v)=5+0.008v$ miles per gallon. The amount, in gallons, of diesel fuel used during the first 3 hours is approximately",
+    "choices_tex": [
+      "$20.5$",
+      "$28.7$",
+      "$33.2$",
+      "$37.5$"
+    ],
+    "correct": "D",
+    "explanation_tex": "Fuel use per hour is speed divided by fuel economy. Thus $G=\\int_0^3\\frac{100(t+1)/(t+2)}{5+0.008[100(t+1)/(t+2)]}\\,dt\\approx37.459$ gallons, closest to $37.5$."
+  }
+]
