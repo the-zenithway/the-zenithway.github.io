@@ -12,6 +12,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/platform.css">
+<link rel="stylesheet" href="css/mentor.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="js/layout.js"></script>
 </head>
 <body class="portal-body">
@@ -19,7 +24,9 @@
 <div id="header-mount"></div>
 <script>renderPortalHeader({ active: "now", actions: ["logout"] });</script>
 
-<main class="rightnow-wrap">
+<main class="zp-page" id="zp-main" hidden></main>
+
+<main class="rightnow-wrap" id="legacy-now" hidden>
   <div class="rightnow-col">
     <p class="rightnow-greeting" id="rightnow-greeting"></p>
     <div class="rightnow-card" id="rightnow-card">
@@ -50,13 +57,30 @@
 <script src="js/data.js"></script>
 <script src="js/social-links.js"></script>
 <script src="js/app.js"></script>
+<script src="js/practice-core.js"></script>
+<script src="js/zp-config.js"></script>
+<script src="js/zp-store.js"></script>
+<script src="js/zp-banks.js"></script>
+<script src="js/zp-ui.js"></script>
+<script src="js/zp-tex.js"></script>
+<script src="js/zp-plan.js"></script>
+<script src="js/zp-mentor.js"></script>
+<script src="js/zp-now.js"></script>
 <script>
   requireLogin();
   var student = getCurrentStudent();
   var course = requireSelectedCourse(student);
-  if (course) renderRightNow(student);
-
   document.getElementById('logout-btn').addEventListener('click', logout);
+  if (course) {
+    if (ZP_CONFIG.COURSES[course.id]) {
+      // Courses on the platform: tasks, reviews, calendar and the chapter flow, ranked (js/zp-now.js).
+      var main = document.getElementById('zp-main'); main.hidden = false; ZPUI.guard(main);
+      ZPNow.mount(main, { student: student, course: course });
+    } else {
+      // Courses that are not on the platform are just their roadmap: there is no Right Now for them.
+      location.replace('roadmap.html?course=' + encodeURIComponent(course.id));
+    }
+  }
 </script>
 </body>
 </html>

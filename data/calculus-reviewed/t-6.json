@@ -443,18 +443,6 @@
     ],
     "correct": "D",
     "explanation_tex": "For $n$ equal subintervals of $[0,2\\pi]$, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$. Thus $f(x_k)\\Delta x=\\sin(8\\pi k/n)(2\\pi/n)$, exactly D. B also has limit zero, but it is not this right-endpoint construction.",
-    "source_original": {
-      "stem_tex": "Choose the Riemann Sum whose limit is the integral $\\displaystyle\\int_{0}^{2\\pi} \\sin(4x)\\,dx$.",
-      "choices_tex": [
-        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
-        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
-        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$",
-        "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$"
-      ],
-      "correct": null,
-      "explanation_tex": "For the stated interval, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$, giving D. However, the integral is zero and option B also has limit zero, so the original wording does not yield a unique answer. Only D is the standard right-endpoint construction on the stated interval.",
-      "source_issue": "Both B and D have limit zero, so the original question has two correct options."
-    },
     "resolved_source_issue": "Both B and D have limit zero, so the original question has two correct options.",
     "source_correction": "Specified the right-endpoint construction on the stated interval, rather than equality of limits alone."
   },

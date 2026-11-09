@@ -1,39 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>This Week — Zenith</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/layout.js"></script>
-</head>
-<body class="portal-body">
-
-<div id="header-mount"></div>
-<script>renderPortalHeader({ nav: "label", label: "This Week", actions: ["allCourses", "logout"] });</script>
-
-<main class="week-wrap">
-  <div class="week-col">
-    <p class="week-greeting" id="week-greeting"></p>
-    <div class="week-list" id="week-list"></div>
-  </div>
-</main>
-
-<script src="js/data.js"></script>
-<script src="js/app.js"></script>
-<script>
-  requireLogin();
-  var student = getCurrentStudent();
-  renderWeekView(student);
-
-  document.getElementById('logout-btn').addEventListener('click', logout);
-</script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url=portal.html"><title>Moved — Zenith</title>
+<script>location.replace("portal.html");</script></head>
+<body><p>This page is gone. <a href="portal.html">Choose a course</a>.</p></body></html>

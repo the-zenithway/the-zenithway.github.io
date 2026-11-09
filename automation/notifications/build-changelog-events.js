@@ -26,9 +26,9 @@ const MAX_EVENTS_PER_STUDENT = 30;
 
 const COURSE_PAGE = {
   deadline: "right-now.html",
-  feedback: "feedback.html",
+  feedback: "mentor.html",
   roadmap: "roadmap.html",
-  cheatSheet: "cheatsheet.html"
+  cheatSheet: "notebook.html"
 };
 
 const ROADMAP_STATUS_LABELS = {

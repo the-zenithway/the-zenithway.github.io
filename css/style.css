@@ -930,11 +930,6 @@ body.portal-body {
   font-size: 0.9rem;
 }
 
-.course-folder-week-link { margin: 10px 0 0; font-size: 0.85rem; }
-.course-folder-week-link a { color: var(--accent); text-decoration: none; }
-.course-folder-week-link a:hover { text-decoration: underline; }
-.course-folder-week-link[hidden] { display: none; }
-
 .course-folder-empty { padding: 20px 0 4px; }
 .course-folder-empty[hidden], .course-app-grid[hidden] { display: none; }
 
@@ -1915,16 +1910,17 @@ body.portal-body {
 }
 
 /* -------- Right Now page -------- */
+/* The page fills the space under the header. The column is centered with margin:auto
+   (not align-items:center) so a tall card, or the "Up next" card, can never push its top
+   edge off-screen; the side padding keeps it off the window edge at any width. */
 .rightnow-wrap {
   flex: 1;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  padding: 40px max(24px, env(safe-area-inset-left)) 64px max(24px, env(safe-area-inset-right));
 }
 
-.rightnow-col { width: 100%; max-width: 520px; }
+.rightnow-col { width: 100%; max-width: 520px; margin: auto; }
 
 .rightnow-greeting {
   color: var(--text-muted);
@@ -2058,58 +2054,6 @@ body.portal-body {
 }
 
 .rightnow-contact-item:hover { background: var(--bg); }
-
-/* -------- This Week (cross-course) -------- */
-.week-wrap {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 24px;
-  overflow: auto;
-}
-
-.week-col { width: 100%; max-width: 560px; }
-
-.week-greeting {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin: 0 0 20px;
-}
-
-.week-list { display: flex; flex-direction: column; gap: 20px; }
-
-.week-card-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 0 0 18px;
-}
-
-.week-card-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-
-.week-card-icon svg { width: 26px; height: 26px; }
-
-.week-card-course {
-  font-family: var(--font-logo);
-  font-size: 1rem;
-  margin: 0;
-}
-
-.week-card-open {
-  color: var(--accent);
-  font-size: 0.85rem;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.week-card-open:hover { text-decoration: underline; }
 
 /* -------- Parent dashboard -------- */
 .parent-wrap {
@@ -3277,43 +3221,8 @@ body.portal-body {
 
 .teacher-submission-detail { padding: 0 24px 20px; }
 
-.cheatsheet-banner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
-  padding: 14px 20px;
-  margin-bottom: 20px;
-  flex-shrink: 0;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.cheatsheet-banner:hover { background: var(--bg); }
-
-.cheatsheet-banner[hidden] { display: none; }
-
-.cheatsheet-banner-tag {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--accent);
-}
-
-.cheatsheet-banner-count {
-  flex: 1;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  text-align: right;
-}
-
-.cheatsheet-banner-arrow { color: var(--accent); font-weight: 600; }
-
 /* -------- resources.html: "request a resource" banner -------- */
-/* Same shape as .cheatsheet-banner above, just its own class since it
-   lives on a public site page (no [hidden]-by-default JS toggle, and
-   it's a two-part tag+text label instead of tag+count). */
+/* A banner on a public site page, two-part tag+text label. */
 .resource-request-banner {
   display: flex;
   align-items: center;
@@ -3330,29 +3239,6 @@ body.portal-body {
 .resource-request-banner-tag { font-size: 0.85rem; color: var(--text-muted); }
 .resource-request-banner-text { font-weight: 600; font-size: 0.95rem; color: var(--text); margin-left: auto; }
 .resource-request-banner-arrow { color: var(--accent); font-weight: 600; }
-
-.cheatsheet-topic {
-  font-weight: 600;
-  font-size: 1rem;
-  margin: 0;
-}
-
-.cheatsheet-source {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  background: var(--bg);
-  padding: 3px 8px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-.cheatsheet-pattern {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin: 8px 0 0;
-}
 
 .feedback-empty {
   background: var(--bg-elevated);
@@ -3822,3 +3708,33 @@ footer {
   gap: 8px;
   padding-top: 4px;
 }
+
+/* The yellow count circles on the header's Announcements / Updates buttons are hidden (the menus still work). */
+.announce-badge-count, .whatsnew-badge { display: none !important; }
+
+/* teacher / admin "view as student" banner */
+.viewas-banner { position: sticky; top: 0; z-index: 2000; display: flex; justify-content: center; align-items: center; gap: 14px; padding: 8px 14px; background: #7a2f2f; color: #fff; font: 600 14px var(--font-sans); }
+.viewas-banner button { background: #fff; color: #7a2f2f; border: 0; border-radius: 6px; padding: 4px 12px; font: 700 13px var(--font-sans); cursor: pointer; }
+
+/* Six portal links no longer fit on a phone in one row: let them wrap. */
+@media (max-width: 640px) { .portal-nav { flex-wrap: wrap; } .portal-bar-left { flex-wrap: wrap; } }
+.roadmap-view-btn[hidden] { display: none; }
+
+/* -------- Theme variants (Profile > Settings). data-theme is set on <html> by js/layout.js and js/zp-settings.js; no attribute = dark. -------- */
+:root { color-scheme: dark; }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F6F4EF; --bg-elevated: #FFFFFF; --border: #DEDAD0; --text: #1F1E1B; --text-muted: #6A675F;
+  --accent: #A9780F; --accent-ink: #FFFFFF; --error: #B3443E; --success: #1E8A4A;
+}
+:root[data-theme="midnight"] {
+  --bg: #000000; --bg-elevated: #0B0B0C; --border: #202022; --text: #ECECEA; --text-muted: #8A8A8A;
+  --accent: #E0B550; --accent-ink: #000000;
+}
+:root[data-theme="paper"] {
+  color-scheme: light;
+  --bg: #F1E7D3; --bg-elevated: #F8F1E1; --border: #D9CBAE; --text: #3A2F1F; --text-muted: #7A6A50;
+  --accent: #9A5B12; --accent-ink: #FBF3E2; --error: #A33B2C; --success: #3F7D3A;
+}
+:root[data-theme="light"] .zp-texkey.wide, :root[data-theme="paper"] .zp-texkey.wide { color: var(--accent); }
+:root[data-theme="light"] .zp-btn:hover:not(:disabled), :root[data-theme="paper"] .zp-btn:hover:not(:disabled) { border-color: var(--text-muted); }

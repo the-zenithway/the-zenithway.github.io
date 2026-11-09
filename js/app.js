@@ -28,6 +28,13 @@
 const SESSION_KEY = "loggedInUsername";
 const ROLE_KEY = "loggedInRole"; // "student", "teacher", "parent", or "admin"
 const ACTIVE_COURSE_KEY = "activeCourseId";
+// Views that are built but switched off for courses on the platform (Calc BC, Chemistry): they offer Chapters and Curve only. Every other
+// course keeps its roadmap exactly as it was, all views included. To bring one back for the platform courses, delete its name from this
+// list: nothing else changes (the markup in roadmap.html and the renderers below are all still there).
+const ROADMAP_HIDDEN_VIEWS = ["table", "cards", "orbit", "periodic", "cell", "code"];
+function roadmapViewHidden_(view, course) { return !!course && isPlatformCourse_(course.id) && !usesLegacyRoadmap_(course.id) && ROADMAP_HIDDEN_VIEWS.indexOf(view) !== -1; }
+// A platform course whose Roadmap page is still the original hand-kept roadmap (ZP_CONFIG.LEGACY_ROADMAP): all views, percent complete, old statuses.
+function usesLegacyRoadmap_(courseId) { return typeof ZP_CONFIG !== "undefined" && (ZP_CONFIG.LEGACY_ROADMAP || []).indexOf(courseId) !== -1; }
 const ROADMAP_VIEW_KEY_PREFIX = "roadmapView:"; // + course.id -> last view picked for that course
 // Curve is Calculus BC's signature view, Periodic is Chemistry's,
 // Cell is Biology's — each opens by default on its own course (both
@@ -48,7 +55,7 @@ const ROADMAP_DEFAULT_VIEWS = {
 // Pages login.html is allowed to send someone back to after they log
 // in. Keeps a crafted "?redirect=" link from sending someone to an
 // external site or a javascript: URL.
-const REDIRECTABLE_PAGES = ["index.html", "portal.html", "catalog.html", "roadmap.html", "calendar.html", "right-now.html", "submit.html", "feedback.html", "cheatsheet.html", "teacher.html", "teacher-student.html", "teacher-overview.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "week.html", "requests.html", "admin.html"];
+const REDIRECTABLE_PAGES = ["practice.html", "chapter.html", "notebook.html", "index.html", "portal.html", "catalog.html", "roadmap.html", "calendar.html", "right-now.html", "teacher.html", "teacher-student.html", "parent.html", "resources.html", "philosophy.html", "faq.html", "blog.html", "requests.html", "admin.html", "mentor.html", "profile.html"];
 
 // SHA-256 hex digest via the browser's built-in Web Crypto. Used by
 // signup.html to hash a password before it ever leaves the browser
@@ -234,7 +241,55 @@ function setUpSignupForm_() {
 
 // Returns the currently logged-in student object, or null if
 // nobody is logged in on this browser (or they're a teacher/parent).
+// "View as student": a teacher or admin can look at any page exactly as a student sees it. Entered with ?viewas=<username> on any
+// student page (the teacher pages link to it), remembered for this tab only, and strictly read-only: the banner says so,
+// nothing is saved to the student's log, and every network write is blocked (see installViewAsGuard_).
+const VIEWAS_KEY = "zenith:viewas";
+function viewAsUsername_() {
+  try {
+    const role = localStorage.getItem(ROLE_KEY);
+    if (role !== "teacher" && role !== "admin") return "";
+    const q = new URLSearchParams(window.location.search).get("viewas");
+    if (q) {
+      sessionStorage.setItem(VIEWAS_KEY, q);
+      const u = new URL(window.location.href); u.searchParams.delete("viewas");
+      window.history.replaceState(null, "", u.pathname + u.search + u.hash);
+    }
+    return sessionStorage.getItem(VIEWAS_KEY) || "";
+  } catch (e) { return ""; }
+}
+function exitViewAs_() {
+  try { sessionStorage.removeItem(VIEWAS_KEY); } catch (e) { /* ignore */ }
+  window.location.href = localStorage.getItem(ROLE_KEY) === "admin" ? "admin.html" : "teacher.html";
+}
+function installViewAsGuard_() {
+  if (window.__zpViewAsGuard) return;
+  window.__zpViewAsGuard = true;
+  const realFetch = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    const method = ((init && init.method) || (input && input.method) || "GET").toUpperCase();
+    if (method !== "GET" && method !== "HEAD") {
+      return Promise.resolve(new Response(JSON.stringify({ ok: false, error: "Read-only: you are viewing as a student." }), { status: 403, headers: { "Content-Type": "application/json" } }));
+    }
+    return realFetch(input, init);
+  };
+}
+function setUpViewAsBanner_(student) {
+  if (!viewAsUsername_() || document.getElementById("viewas-banner")) return;
+  const bar = document.createElement("div");
+  bar.id = "viewas-banner"; bar.className = "viewas-banner";
+  bar.innerHTML = "<span>Viewing as <b></b> · read-only, nothing you do here is saved</span><button type=\"button\">Exit</button>";
+  bar.querySelector("b").textContent = student.name;
+  bar.querySelector("button").addEventListener("click", exitViewAs_);
+  document.body.insertBefore(bar, document.body.firstChild);
+}
+
 function getCurrentStudent() {
+  const viewAs = viewAsUsername_();
+  if (viewAs) {
+    const target = STUDENTS.find(function (s) { return s.username === viewAs; });
+    if (target) return target;
+  }
   const username = localStorage.getItem(SESSION_KEY);
   if (!username) return null;
   return STUDENTS.find(function (s) { return s.username === username; }) || null;
@@ -286,7 +341,7 @@ function getCurrentPerson() {
 // two of the three roles to their own dashboard instead.
 function requireAnyLogin() {
   if (!getCurrentPerson()) {
-    const here = window.location.pathname.split("/").pop() + window.location.search;
+    const here = window.location.pathname.split("/").pop() + window.location.search + window.location.hash;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
     return null;
   }
@@ -313,13 +368,48 @@ function requireLogin() {
     if (role === "teacher") { window.location.href = "teacher.html"; return; }
     if (role === "parent") { window.location.href = "parent.html"; return; }
     if (role === "admin") { window.location.href = "admin.html"; return; }
-    const here = window.location.pathname.split("/").pop() + window.location.search;
+    const here = window.location.pathname.split("/").pop() + window.location.search + window.location.hash;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
     return;
   }
   setUpCourseNavigation(student);
-  setUpWhatsNew(student);
-  setUpStudentAnnouncements_(student);
+  applySelfStudyTrack_(student);
+  // No header badges for students: what is waiting for them (mentor replies, tasks, reviews) lives on Right Now.
+  setUpViewAsBanner_(student);
+}
+
+// ---- Self-study track ----
+// A student is on the self-study track when data/student-tracks.json lists them under "selfStudy", or when they are on no class roster
+// at all (CLASSES). They use the platform on their own: no Now page, no Mentor, no Calendar (the Today strip on the course page is their
+// "now"). Those links are removed from the header and the pages send them to their course. The last answer is remembered per student
+// so the links never flash on the next page load.
+const SELF_STUDY_ONLY_BLOCKED_ = ["right-now.html", "mentor.html", "calendar.html", "feedback.html", "submit.html"];
+let studentTracksP_ = null;
+function isSelfStudy_(student) {
+  if (!student) return Promise.resolve(false);
+  if (!studentTracksP_) studentTracksP_ = fetch("data/student-tracks.json").then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; });
+  return studentTracksP_.then(function (t) {
+    return (t.selfStudy || []).indexOf(student.username) !== -1 || ((t.gone || []).indexOf(student.username) === -1 && classesForStudent_(student).length === 0);
+  });
+}
+function applySelfStudyTrack_(student) {
+  const cacheKey = "zenith:selfstudy:" + student.username;
+  function apply(self) {
+    try { localStorage.setItem(cacheKey, self ? "1" : "0"); } catch (e) { /* storage blocked */ }
+    if (!self) return;
+    document.querySelectorAll(".portal-nav-link").forEach(function (a) {
+      if (SELF_STUDY_ONLY_BLOCKED_.indexOf((a.getAttribute("href") || "").split("?")[0]) !== -1) a.remove();
+    });
+    const here = window.location.pathname.split("/").pop();
+    if (SELF_STUDY_ONLY_BLOCKED_.indexOf(here) !== -1) {
+      const course = getSelectedCourse(student);
+      window.location.replace(course ? "roadmap.html?course=" + encodeURIComponent(course.id) : "portal.html");
+    }
+  }
+  let cached = null;
+  try { cached = localStorage.getItem(cacheKey); } catch (e) { cached = null; }
+  if (cached === "1") apply(true);
+  isSelfStudy_(student).then(apply);
 }
 
 // Same as requireLogin(), but for teacher.html — checks the TEACHERS
@@ -332,7 +422,7 @@ function requireTeacherLogin() {
     if (role === "student") { window.location.href = "portal.html"; return; }
     if (role === "parent") { window.location.href = "parent.html"; return; }
     if (role === "admin") { window.location.href = "admin.html"; return; }
-    const here = window.location.pathname.split("/").pop() + window.location.search;
+    const here = window.location.pathname.split("/").pop() + window.location.search + window.location.hash;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
@@ -345,7 +435,7 @@ function requireParentLogin() {
     if (role === "student") { window.location.href = "portal.html"; return; }
     if (role === "teacher") { window.location.href = "teacher.html"; return; }
     if (role === "admin") { window.location.href = "admin.html"; return; }
-    const here = window.location.pathname.split("/").pop() + window.location.search;
+    const here = window.location.pathname.split("/").pop() + window.location.search + window.location.hash;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
@@ -358,7 +448,7 @@ function requireAdminLogin() {
     if (role === "student") { window.location.href = "portal.html"; return; }
     if (role === "teacher") { window.location.href = "teacher.html"; return; }
     if (role === "parent") { window.location.href = "parent.html"; return; }
-    const here = window.location.pathname.split("/").pop() + window.location.search;
+    const here = window.location.pathname.split("/").pop() + window.location.search + window.location.hash;
     window.location.href = "login.html?redirect=" + encodeURIComponent(here);
   }
 }
@@ -369,7 +459,7 @@ function requireAdminLogin() {
 // dashboard, students -> home). Call this after a successful login.
 function getLoginRedirect() {
   const requested = new URLSearchParams(window.location.search).get("redirect");
-  const requestedPage = requested ? requested.split("?")[0] : "";
+  const requestedPage = requested ? requested.split(/[?#]/)[0] : "";
   if (REDIRECTABLE_PAGES.includes(requestedPage)) return requested;
   const role = localStorage.getItem(ROLE_KEY);
   if (role === "teacher") return "teacher.html";
@@ -588,67 +678,10 @@ function setUpContactMenu() {
   });
 }
 
-// Fills in the small "Your Cheat Sheet" banner on feedback.html from
-// the logged-in student's "cheatSheet" array in js/data.js — just a
-// count and a link to cheatsheet.html, since the full thing can get
-// long. Hidden entirely if the field is missing or empty (most
-// students won't have one yet — filled in by hand as patterns get
-// noticed, same as feedback and rightNow).
-function renderCheatSheetBanner(student) {
-  if (!student) return;
-  const course = getSelectedCourse(student);
-
-  const banner = document.getElementById("cheatsheet-banner");
-  const count = document.getElementById("cheatsheet-banner-count");
-  const entries = course ? (course.cheatSheet || []) : [];
-
-  if (entries.length === 0) {
-    banner.hidden = true;
-    return;
-  }
-
-  banner.hidden = false;
-  count.textContent = entries.length + (entries.length === 1 ? " pattern" : " patterns");
-}
-
-// Fills in the full cheat sheet list on cheatsheet.html — each entry
-// is { topic, source, pattern }, where "source" is the 발상노트
-// problem reference (e.g. "5B-22") and "pattern" can contain LaTeX
-// ($...$ or $$...$$); call renderMath() after this to typeset it.
-// Shows an empty state if the field is missing or empty.
-function renderCheatSheetPage(student) {
-  if (!student) return;
-  const course = getSelectedCourse(student);
-
-  document.getElementById("cheatsheet-greeting").textContent =
-    "Hey " + student.name.split(" ")[0] + ",";
-
-  const list = document.getElementById("cheatsheet-list");
-  const entries = course ? (course.cheatSheet || []) : [];
-
-  if (entries.length === 0) {
-    list.innerHTML = '<div class="feedback-empty">' +
-      '<h1>Nothing here yet</h1>' +
-      '<p>Patterns show up here as they get noticed across your feedback.</p>' +
-      '</div>';
-    return;
-  }
-
-  list.innerHTML = entries.map(function (entry) {
-    return '<div class="feedback-item">' +
-      '<div class="feedback-meta">' +
-        '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
-        '<span class="cheatsheet-source">' + entry.source + '</span>' +
-      '</div>' +
-      '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
-    '</div>';
-  }).join("");
-}
-
 // Runs KaTeX's auto-render over a container, turning any $...$ /
 // $$...$$ LaTeX in its text into typeset math in place. Call this
 // once, after any innerHTML that might contain LaTeX has already
-// been set. Only cheatsheet.html loads KaTeX; on any other page this
+// been set. Only pages that load KaTeX typeset anything; on any other page this
 // quietly does nothing.
 function renderMath(container) {
   if (typeof renderMathInElement === "undefined") return;
@@ -991,7 +1024,71 @@ function renderSubmissionLog(student, course) {
 // so there's no per-course roadmap data this dropdown could actually
 // be built from. Photos (up to MAX_SUBMIT_PHOTOS_) are collected via a
 // multi-file input and sent as `photos`.
-const MAX_SUBMIT_PHOTOS_ = 10;
+const MAX_SUBMIT_PHOTOS_ = 20;
+
+// The photo tray on submit.html. The native file input forgets its previous
+// selection every time it is used, so picks are collected here instead: students
+// can add photos in several goes, see exactly what is attached, and remove any
+// one of them before sending.
+let submitPhotoFiles_ = [];
+let submitPhotoUrls_ = [];
+
+function submitPhotoKey_(f) { return f.name + "|" + f.size + "|" + f.lastModified; }
+
+function renderSubmitPhotoTray_() {
+  const tray = document.getElementById("submit-photo-tray");
+  if (!tray) return;
+  submitPhotoUrls_.forEach(function (u) { URL.revokeObjectURL(u); });
+  submitPhotoUrls_ = submitPhotoFiles_.map(function (f) { return URL.createObjectURL(f); });
+  const totalMb = submitPhotoFiles_.reduce(function (n, f) { return n + f.size; }, 0) / (1024 * 1024);
+  const count = submitPhotoFiles_.length;
+  const near = count >= MAX_SUBMIT_PHOTOS_ - 2;
+  let html = '<div class="photo-tray-head"><span class="photo-tray-count' + (near ? " photo-tray-near" : "") + '">' +
+    count + " / " + MAX_SUBMIT_PHOTOS_ + " photos</span>" +
+    (count ? '<span class="photo-tray-size">' + totalMb.toFixed(1) + " MB before resizing</span>" +
+      '<button type="button" class="photo-tray-clear" id="submit-photo-clear">Remove all</button>' : "") + "</div>";
+  if (count) {
+    html += '<ul class="photo-grid">' + submitPhotoFiles_.map(function (f, i) {
+      const safe = String(f.name).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
+      return '<li class="photo-item"><a href="' + submitPhotoUrls_[i] + '" target="_blank" rel="noopener" title="Open full size">' +
+        '<img src="' + submitPhotoUrls_[i] + '" alt="Photo ' + (i + 1) + ": " + safe + '"></a>' +
+        '<span class="photo-num">' + (i + 1) + "</span>" +
+        '<button type="button" class="photo-remove" data-i="' + i + '" aria-label="Remove photo ' + (i + 1) + '">×</button>' +
+        '<span class="photo-name">' + safe + "</span></li>";
+    }).join("") + "</ul>";
+  }
+  tray.innerHTML = html;
+}
+
+function initSubmitPhotoTray_() {
+  const input = document.getElementById("submit-photo");
+  const tray = document.getElementById("submit-photo-tray");
+  if (!input || !tray) return;
+  input.addEventListener("change", function () {
+    const have = {};
+    submitPhotoFiles_.forEach(function (f) { have[submitPhotoKey_(f)] = true; });
+    let skippedDup = 0, skippedFull = 0;
+    Array.prototype.slice.call(input.files).forEach(function (f) {
+      if (have[submitPhotoKey_(f)]) { skippedDup++; return; }
+      if (submitPhotoFiles_.length >= MAX_SUBMIT_PHOTOS_) { skippedFull++; return; }
+      have[submitPhotoKey_(f)] = true;
+      submitPhotoFiles_.push(f);
+    });
+    input.value = "";
+    renderSubmitPhotoTray_();
+    const note = document.getElementById("submit-photo-note");
+    if (note) {
+      note.textContent = skippedFull ? skippedFull + " photo" + (skippedFull > 1 ? "s were" : " was") + " not added. The limit is " + MAX_SUBMIT_PHOTOS_ + "." :
+        skippedDup ? skippedDup + " duplicate" + (skippedDup > 1 ? "s" : "") + " skipped." : "";
+    }
+  });
+  tray.addEventListener("click", function (e) {
+    const rm = e.target.closest(".photo-remove");
+    if (rm) { submitPhotoFiles_.splice(+rm.dataset.i, 1); renderSubmitPhotoTray_(); return; }
+    if (e.target.closest("#submit-photo-clear")) { submitPhotoFiles_ = []; renderSubmitPhotoTray_(); }
+  });
+  renderSubmitPhotoTray_();
+}
 
 // Reads an <input type="file"> photo (from submit.html or requests.html),
 // downsizes it via <canvas> to a max 1600px edge — a phone photo can be
@@ -1004,7 +1101,7 @@ const MAX_SUBMIT_PHOTOS_ = 10;
 // so a screenshot's text doesn't pick up JPEG compression artifacts;
 // anything else is normalized to JPEG) — only pixel dimensions shrink,
 // canvas.toDataURL's quality argument is simply ignored for PNG.
-function readImageAsCompressedBase64_(file) {
+function readImageAsCompressedBase64_(file, maxEdgeArg, quality) {
   if (!file) return Promise.resolve(null);
   if (file.size > 20 * 1024 * 1024) {
     return Promise.reject(new Error("That photo is too large (over 20MB) — try a smaller one."));
@@ -1016,14 +1113,14 @@ function readImageAsCompressedBase64_(file) {
       const img = new Image();
       img.onerror = function () { reject(new Error("Could not read the selected photo — try a JPEG or PNG.")); };
       img.onload = function () {
-        const maxEdge = 1600;
+        const maxEdge = typeof maxEdgeArg === "number" ? maxEdgeArg : 1600;
         const scale = Math.min(1, maxEdge / Math.max(img.width, img.height));
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * scale) || 1;
         canvas.height = Math.round(img.height * scale) || 1;
         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
         const mimeType = file.type === "image/png" ? "image/png" : "image/jpeg";
-        const dataUrl = canvas.toDataURL(mimeType, 0.85);
+        const dataUrl = canvas.toDataURL(mimeType, typeof quality === "number" ? quality : 0.85);
         resolve({ dataBase64: dataUrl.split(",")[1], mimeType: mimeType, filename: file.name });
       };
       img.src = reader.result;
@@ -1061,7 +1158,7 @@ function submitWorkForm_(student, course, buttonEl) {
     return;
   }
 
-  const files = photoEl ? Array.prototype.slice.call(photoEl.files) : [];
+  const files = submitPhotoFiles_.slice();
   if (files.length > MAX_SUBMIT_PHOTOS_) {
     alert("Please attach at most " + MAX_SUBMIT_PHOTOS_ + " photos at a time.");
     return;
@@ -1071,7 +1168,9 @@ function submitWorkForm_(student, course, buttonEl) {
   buttonEl.disabled = true;
   buttonEl.textContent = files.length > 1 ? "Reading photos..." : "Reading photo...";
 
-  Promise.all(files.map(readImageAsCompressedBase64_)).then(function (photos) {
+  // Many photos go up in one request, so shrink harder past 10 to keep it comfortably small.
+  const edge = files.length > 10 ? 1300 : 1600, q = files.length > 10 ? 0.8 : 0.85;
+  Promise.all(files.map(function (f) { return readImageAsCompressedBase64_(f, edge, q); })).then(function (photos) {
     buttonEl.disabled = false;
     buttonEl.textContent = originalText;
     postTeacherAction_("submitWork", {
@@ -1089,7 +1188,8 @@ function submitWorkForm_(student, course, buttonEl) {
     }, buttonEl, function () {
       answerEl.value = "";
       remarksEl.value = "";
-      if (photoEl) photoEl.value = "";
+      submitPhotoFiles_ = [];
+      renderSubmitPhotoTray_();
       renderSubmissionLog(student, course);
     });
   }, function (err) {
@@ -3634,526 +3734,9 @@ function renderTeacherPendingPanel_() {
   teacherPendingRefreshCallbacks_.forEach(function (fn) { fn(); });
 }
 
-// Factored out of renderTeacherStudentPage so both the initial render
-// and a post-save refresh can call it without duplicating markup.
-function renderTeacherStudentNow_(course) {
-  const data = course.rightNow;
-  const nowWrap = document.getElementById("teacher-student-now");
-  if (!data) {
-    nowWrap.className = "parent-now";
-    nowWrap.innerHTML = '<p class="parent-now-empty">Nothing set right now.</p>';
-    return;
-  }
-  const isWaiting = data.state === "waiting";
-  nowWrap.className = "parent-now" + (isWaiting ? " is-waiting" : "");
-  nowWrap.innerHTML =
-    '<p class="parent-now-tag">' + (isWaiting ? "With us" : "Their move") + '</p>' +
-    '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
-}
-
-function renderTeacherStudentFeedbackList_(course) {
-  const feedbackList = document.getElementById("teacher-student-feedback");
-  const feedback = course.feedback || [];
-  feedbackList.innerHTML = feedback.length === 0
-    ? '<p class="feedback-empty">No feedback written yet.</p>'
-    : feedback.map(function (entry) {
-        return '<div class="feedback-item">' +
-          '<div class="feedback-meta">' +
-            '<span class="feedback-date">' + entry.date + '</span>' +
-            '<span class="feedback-chapter">' + entry.chapter + ' · ' + entry.unit + '</span>' +
-          '</div>' +
-          '<p class="feedback-content">' + entry.content + '</p>' +
-        '</div>';
-      }).join("");
-}
-
-function renderTeacherStudentCheatSheetList_(course) {
-  const cheatList = document.getElementById("teacher-student-cheatsheet");
-  const cheatSheet = course.cheatSheet || [];
-  cheatList.innerHTML = cheatSheet.length === 0
-    ? '<p class="feedback-empty">No cheat sheet entries yet.</p>'
-    : cheatSheet.map(function (entry) {
-        return '<div class="feedback-item">' +
-          '<div class="feedback-meta">' +
-            '<p class="cheatsheet-topic">' + entry.topic + '</p>' +
-            '<span class="cheatsheet-source">' + entry.source + '</span>' +
-          '</div>' +
-          '<p class="cheatsheet-pattern">' + entry.pattern + '</p>' +
-        '</div>';
-      }).join("");
-}
-
-// Injects a status control into each row of teacher-student.html's
-// roadmap table, after the shared renderRoadmap(course) call — added
-// here rather than inside renderRoadmap() itself so that function
-// stays exactly what the student-facing roadmap.html also uses.
-// Relies on tbody rows being in the same order as course.roadmap,
-// which renderRoadmap() guarantees (it maps 1:1, no filtering/sorting).
-// Idempotent — safe to call repeatedly without a fresh renderRoadmap()
-// rebuild in between (removes any action cell it previously added to
-// a row before appending a new one), since renderTeacherPendingPanel_
-// calls this after every queue change to refresh "Queued" indicators.
-function renderTeacherRoadmapActions_(student, course) {
-  const tbody = document.getElementById("roadmap-tbody");
-  if (!tbody) return;
-  const items = course.roadmap || [];
-  const statuses = Object.keys(ROADMAP_STATUS_COLORS);
-
-  Array.prototype.forEach.call(tbody.children, function (row, i) {
-    const item = items[i];
-    if (!item) return;
-
-    const existing = row.querySelector(".teacher-roadmap-action-cell");
-    if (existing) existing.remove();
-
-    const pendingKey = "updateRoadmapStatus:" + item.chapter + ":" + item.name;
-    const isPending = teacherPendingChanges.some(function (c) { return c.key === pendingKey; });
-
-    const cell = document.createElement("td");
-    cell.className = "teacher-roadmap-action-cell";
-
-    const select = document.createElement("select");
-    select.className = "teacher-roadmap-status-select";
-    select.disabled = isPending;
-    statuses.forEach(function (status) {
-      const opt = document.createElement("option");
-      opt.value = status;
-      opt.textContent = status.replace(/-/g, " ");
-      if (status === item.status) opt.selected = true;
-      select.appendChild(opt);
-    });
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "teacher-roadmap-action-btn";
-    btn.textContent = isPending ? "Queued" : "Set";
-    btn.disabled = isPending;
-    btn.addEventListener("click", function () {
-      const status = select.value;
-      queueTeacherChange_(
-        pendingKey,
-        "updateRoadmapStatus",
-        { username: student.username, courseId: course.id, chapter: item.chapter, name: item.name, status: status },
-        "Roadmap: " + item.chapter + " · " + item.name + " → " + status.replace(/-/g, " "),
-        function () {
-          item.status = status;
-          renderRoadmap(course);
-          renderTeacherRoadmapActions_(student, course);
-        }
-      );
-    });
-
-    cell.appendChild(select);
-    cell.appendChild(btn);
-    row.appendChild(cell);
-  });
-}
-
-function renderTeacherFeedbackForm_(student, course) {
-  const wrap = document.getElementById("teacher-student-feedback-form");
-  if (!wrap) return;
-
-  wrap.innerHTML =
-    '<div class="teacher-add-form">' +
-      '<p class="teacher-add-form-title">Add feedback</p>' +
-      '<div class="teacher-add-form-row">' +
-        '<input type="text" class="teacher-add-input" id="teacher-feedback-chapter" placeholder="Chapter (e.g. Chapter 1)">' +
-        '<input type="text" class="teacher-add-input" id="teacher-feedback-unit" placeholder="Unit (e.g. T1)">' +
-      '</div>' +
-      '<textarea class="teacher-add-textarea" id="teacher-feedback-content" placeholder="Feedback content — HTML/LaTeX allowed, same as elsewhere"></textarea>' +
-      '<button type="button" class="teacher-add-btn" id="teacher-feedback-submit">Add feedback</button>' +
-    '</div>';
-
-  document.getElementById("teacher-feedback-submit").addEventListener("click", function () {
-    const btn = this;
-    const chapter = document.getElementById("teacher-feedback-chapter").value.trim();
-    const unit = document.getElementById("teacher-feedback-unit").value.trim();
-    const content = document.getElementById("teacher-feedback-content").value.trim();
-    if (!chapter || !unit || !content) { alert("Chapter, unit, and content are all required."); return; }
-
-    const date = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" });
-    queueTeacherChange_(
-      uniqueTeacherKey_("addFeedback"),
-      "addFeedback",
-      { username: student.username, courseId: course.id, date: date, chapter: chapter, unit: unit, content: content },
-      "Feedback: " + chapter + " · " + unit,
-      function () {
-        course.feedback = course.feedback || [];
-        course.feedback.unshift({ date: date, chapter: chapter, unit: unit, content: content });
-        renderTeacherStudentFeedbackList_(course);
-        renderMath(document.getElementById("teacher-student-content"));
-      }
-    );
-    renderTeacherFeedbackForm_(student, course); // reset the fields — queued, not yet saved
-  });
-}
-
-function renderTeacherCheatSheetForm_(student, course) {
-  const wrap = document.getElementById("teacher-student-cheatsheet-form");
-  if (!wrap) return;
-
-  wrap.innerHTML =
-    '<div class="teacher-add-form">' +
-      '<p class="teacher-add-form-title">Add cheat sheet entry</p>' +
-      '<div class="teacher-add-form-row">' +
-        '<input type="text" class="teacher-add-input" id="teacher-cheat-topic" placeholder="Topic">' +
-        '<input type="text" class="teacher-add-input" id="teacher-cheat-source" placeholder="Source (e.g. 발상노트, Jul 28)">' +
-      '</div>' +
-      '<textarea class="teacher-add-textarea" id="teacher-cheat-pattern" placeholder="Pattern — HTML/LaTeX allowed"></textarea>' +
-      '<button type="button" class="teacher-add-btn" id="teacher-cheat-submit">Add cheat sheet entry</button>' +
-    '</div>';
-
-  document.getElementById("teacher-cheat-submit").addEventListener("click", function () {
-    const btn = this;
-    const topic = document.getElementById("teacher-cheat-topic").value.trim();
-    const source = document.getElementById("teacher-cheat-source").value.trim();
-    const pattern = document.getElementById("teacher-cheat-pattern").value.trim();
-    if (!topic || !source || !pattern) { alert("Topic, source, and pattern are all required."); return; }
-
-    queueTeacherChange_(
-      uniqueTeacherKey_("addCheatSheetEntry"),
-      "addCheatSheetEntry",
-      { username: student.username, courseId: course.id, topic: topic, source: source, pattern: pattern },
-      "Cheat sheet: " + topic,
-      function () {
-        course.cheatSheet = course.cheatSheet || [];
-        course.cheatSheet.push({ topic: topic, source: source, pattern: pattern });
-        renderTeacherStudentCheatSheetList_(course);
-        renderMath(document.getElementById("teacher-student-content"));
-      }
-    );
-    renderTeacherCheatSheetForm_(student, course); // reset the fields — queued, not yet saved
-  });
-}
-
-function renderTeacherRightNowForm_(student, course) {
-  const wrap = document.getElementById("teacher-student-now-form");
-  if (!wrap) return;
-  const data = course.rightNow || {};
-
-  wrap.innerHTML =
-    '<div class="teacher-add-form">' +
-      '<p class="teacher-add-form-title">Update Right Now</p>' +
-      '<div class="teacher-add-form-row">' +
-        '<select class="teacher-add-input" id="teacher-now-state">' +
-          '<option value="your-move"' + (data.state !== "waiting" ? " selected" : "") + '>Your move</option>' +
-          '<option value="waiting"' + (data.state === "waiting" ? " selected" : "") + '>Waiting (with us)</option>' +
-        '</select>' +
-        '<input type="text" class="teacher-add-input" id="teacher-now-chapter" placeholder="Chapter" value="' + (data.chapter || "") + '">' +
-        '<input type="text" class="teacher-add-input" id="teacher-now-unit" placeholder="Unit" value="' + (data.unit || "") + '">' +
-      '</div>' +
-      '<textarea class="teacher-add-textarea" id="teacher-now-text" placeholder="Instruction (your move) or note (waiting)">' + (data.instruction || data.note || "") + '</textarea>' +
-      '<input type="text" class="teacher-add-input" id="teacher-now-due" placeholder="Due (optional, your-move only)" value="' + (data.due || "") + '">' +
-      '<button type="button" class="teacher-add-btn" id="teacher-now-submit">Update Right Now</button>' +
-    '</div>';
-
-  document.getElementById("teacher-now-submit").addEventListener("click", function () {
-    const btn = this;
-    const state = document.getElementById("teacher-now-state").value;
-    const chapter = document.getElementById("teacher-now-chapter").value.trim();
-    const unit = document.getElementById("teacher-now-unit").value.trim();
-    const text = document.getElementById("teacher-now-text").value.trim();
-    const due = document.getElementById("teacher-now-due").value.trim();
-    if (!chapter || !unit || !text) { alert("Chapter, unit, and instruction/note are all required."); return; }
-
-    const rightNow = state === "waiting"
-      ? { state: "waiting", chapter: chapter, unit: unit, note: text }
-      : { state: "your-move", chapter: chapter, unit: unit, instruction: text };
-    if (state === "your-move" && due) rightNow.due = due;
-
-    queueTeacherChange_(
-      "updateRightNow", // only one Right Now per course — re-editing before Apply replaces the pending change, not stacks a second
-      "updateRightNow",
-      { username: student.username, courseId: course.id, rightNow: rightNow },
-      "Right Now: " + rightNow.chapter + " · " + rightNow.unit,
-      function () {
-        course.rightNow = rightNow;
-        delete course.rightNowNext;
-        renderTeacherStudentNow_(course);
-        renderTeacherRightNowForm_(student, course);
-      }
-    );
-  });
-}
-
-// One compact form covering all metrics sub-shapes via a type
-// selector, rather than one static form per type — each submit still
-// posts exactly one action/payload (addMetricEntry or setApScore),
-// same narrow-write philosophy as everything else here.
-const TEACHER_METRIC_TYPE_LABELS_ = {
-  topicMastery: "Topic mastery",
-  chapterScores: "Chapter scores (C/T)",
-  motivation: "Motivation check-in",
-  mockScores: "Mock score",
-  timeToCompletion: "Time to completion",
-  apPredictedScore: "AP predicted score",
-  apFinalScore: "AP final score",
-  responsiveness: "Responsiveness",
-  personality: "Personality tag"
-};
-
-function teacherMetricFieldsHtml_(type) {
-  const num = ' type="number"';
-  const txt = ' type="text"';
-  switch (type) {
-    case "topicMastery":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Topic">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="Score (0-100)">';
-    case "chapterScores":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="C-score (0-100)">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="T-score (0-100)">';
-    case "motivation":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Date (e.g. Aug 5)">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Score (0-100)">';
-    case "mockScores":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Name">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Date">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="MCQ score">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f4" placeholder="MCQ max">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f5" placeholder="FRQ score">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f6" placeholder="FRQ max">';
-    case "timeToCompletion":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Chapter">' +
-             '<input' + num + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Days">';
-    case "apPredictedScore":
-      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (1-5)">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="As of (date)">';
-    case "apFinalScore":
-      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (1-5)">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Exam date">';
-    case "responsiveness":
-      return '<input' + num + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Score (0-100)">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f2" placeholder="Note (optional)">' +
-             '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f3" placeholder="As of (date)">';
-    case "personality":
-      return '<input' + txt + ' class="teacher-add-input" id="teacher-metric-f1" placeholder="Tag (e.g. Night owl, Meticulous, Comeback kid)">';
-    default:
-      return "";
-  }
-}
-
-function renderTeacherMetricsForm_(student, course) {
-  const wrap = document.getElementById("teacher-student-metrics-form");
-  if (!wrap) return;
-
-  function draw(selectedType) {
-    const type = selectedType || "motivation";
-    wrap.innerHTML =
-      '<div class="teacher-add-form">' +
-        '<p class="teacher-add-form-title">Add metric entry</p>' +
-        '<select class="teacher-add-input" id="teacher-metric-type">' +
-          Object.keys(TEACHER_METRIC_TYPE_LABELS_).map(function (t) {
-            return '<option value="' + t + '"' + (t === type ? " selected" : "") + '>' + TEACHER_METRIC_TYPE_LABELS_[t] + '</option>';
-          }).join("") +
-        '</select>' +
-        '<div class="teacher-add-form-row" id="teacher-metric-fields">' + teacherMetricFieldsHtml_(type) + '</div>' +
-        '<button type="button" class="teacher-add-btn" id="teacher-metric-submit">Add</button>' +
-      '</div>';
-
-    document.getElementById("teacher-metric-type").addEventListener("change", function () { draw(this.value); });
-    document.getElementById("teacher-metric-submit").addEventListener("click", function () { submit_(type, this); });
-  }
-
-  function val_(id) { const el = document.getElementById(id); return el ? el.value.trim() : ""; }
-  function num_(id) { const v = val_(id); return v === "" ? null : Number(v); }
-
-  function submit_(type, btn) {
-    let action, payload;
-
-    if (type === "apPredictedScore" || type === "apFinalScore") {
-      const score = num_("teacher-metric-f1");
-      const dateVal = val_("teacher-metric-f2");
-      if (score === null || !dateVal) { alert("Score and date are both required."); return; }
-      const value = type === "apPredictedScore"
-        ? { score: score, maxScore: 5, asOf: dateVal }
-        : { score: score, maxScore: 5, examDate: dateVal };
-      action = "setApScore";
-      payload = { username: student.username, courseId: course.id, field: type, value: value };
-    } else if (type === "responsiveness") {
-      const score = num_("teacher-metric-f1");
-      if (score === null) { alert("Score is required."); return; }
-      const value = { score: score, note: val_("teacher-metric-f2"), asOf: val_("teacher-metric-f3") };
-      action = "setApScore"; // generic single-value handler, see automation/zenith-data-writer.gs
-      payload = { username: student.username, courseId: course.id, field: type, value: value };
-    } else {
-      let entry = null;
-      if (type === "topicMastery") entry = { chapter: val_("teacher-metric-f1"), topic: val_("teacher-metric-f2"), score: num_("teacher-metric-f3") };
-      else if (type === "chapterScores") entry = { chapter: val_("teacher-metric-f1"), cScore: num_("teacher-metric-f2"), tScore: num_("teacher-metric-f3") };
-      else if (type === "motivation") entry = { date: val_("teacher-metric-f1"), score: num_("teacher-metric-f2") };
-      else if (type === "mockScores") entry = { name: val_("teacher-metric-f1"), date: val_("teacher-metric-f2"), mcq: { score: num_("teacher-metric-f3"), maxScore: num_("teacher-metric-f4") }, frq: { score: num_("teacher-metric-f5"), maxScore: num_("teacher-metric-f6") } };
-      else if (type === "timeToCompletion") entry = { chapter: val_("teacher-metric-f1"), days: num_("teacher-metric-f2") };
-      else if (type === "personality") entry = val_("teacher-metric-f1");
-
-      if (type === "personality" && !entry) { alert("Tag can't be empty."); return; }
-
-      action = "addMetricEntry";
-      payload = { username: student.username, courseId: course.id, metricType: type, entry: entry };
-    }
-
-    const label = "Metrics: " + TEACHER_METRIC_TYPE_LABELS_[type];
-    queueTeacherChange_(uniqueTeacherKey_(action), action, payload, label, function () {
-      course.metrics = course.metrics || {};
-      if (action === "setApScore") {
-        course.metrics[payload.field] = payload.value;
-      } else {
-        course.metrics[payload.metricType] = course.metrics[payload.metricType] || [];
-        course.metrics[payload.metricType].push(payload.entry);
-      }
-      renderTeacherMetrics(course.metrics);
-    });
-    draw(type); // reset the fields — queued, not yet saved
-  }
-
-  draw();
-}
-
-// Read-only — no status <select>/button here, unlike
-// teacherRequestQueueItemHtml_ on teacher.html. This is a historical
-// log ("logged in their respective teacher shown portal"), not another
-// place to triage from; status changes happen on the "Needs to review"
-// queue on teacher.html only, so there's exactly one place a status
-// can drift out of sync with what's shown, not two.
-function teacherStudentRequestItemHtml_(entry) {
-  return '<div class="requests-log-item">' +
-    '<div class="requests-log-meta">' +
-      '<span class="requests-log-date">' + submissionDateLabel(entry.receivedAt) + '</span>' +
-      '<span class="requests-log-status ' + scheduledNotificationStatusClass_(entry.status) + '">' + escapeHtml_(entry.status) + '</span>' +
-    '</div>' +
-    '<p class="requests-log-title">' + escapeHtml_(entry.title) + '</p>' +
-    '<p class="requests-log-details">' + escapeHtml_(entry.details) + '</p>' +
-    requestPhotoHtml_(entry) +
-  '</div>';
-}
-
-function renderTeacherStudentRequestsList_(student, course) {
-  const list = document.getElementById("teacher-student-requests");
-  if (!list) return;
-
-  list.innerHTML = '<p class="requests-log-empty">Loading requests...</p>';
-
-  fetch("data/requests-log.json")
-    .then(function (res) { return res.json(); })
-    .then(function (all) {
-      const mine = all.filter(function (entry) {
-        return entry.category === "Ask My Teacher" && entry.username === student.username && entry.courseId === course.id;
-      }).sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
-
-      list.innerHTML = mine.length === 0
-        ? '<p class="requests-log-empty">Nothing asked for this course yet.</p>'
-        : mine.map(teacherStudentRequestItemHtml_).join("");
-    })
-    .catch(function () {
-      list.innerHTML = '<p class="requests-log-empty">Could not load requests right now.</p>';
-    });
-}
-
-function renderTeacherStudentPage() {
-  const params = new URLSearchParams(window.location.search);
-  const username = params.get("username");
-  const courseId = params.get("course");
-  const student = STUDENTS.find(function (s) { return s.username === username; });
-  const course = student ? getStudentCourse(student, courseId) : null;
-
-  const notFound = document.getElementById("teacher-student-not-found");
-  const content = document.getElementById("teacher-student-content");
-
-  if (!student || !course) {
-    notFound.hidden = false;
-    content.hidden = true;
-    return;
-  }
-
-  notFound.hidden = true;
-  content.hidden = false;
-
-  document.getElementById("teacher-student-name").textContent = student.name;
-  const courseLabelEl = document.getElementById("teacher-student-course");
-  courseLabelEl.textContent = course.name;
-  const leftClass = CLASSES.find(function (c) {
-    return c.courseId === course.id && (c.formerStudentUsernames || []).indexOf(student.username) !== -1;
-  });
-  if (leftClass) {
-    const badge = document.createElement("span");
-    badge.className = "teacher-class-former-badge";
-    badge.textContent = "No longer in " + leftClass.name + " · self-study";
-    courseLabelEl.appendChild(document.createTextNode(" "));
-    courseLabelEl.appendChild(badge);
-  }
-  document.title = student.name + " · " + course.name + " — Zenith";
-
-  teacherPendingChanges = [];
-  teacherPendingRefreshCallbacks_ = [];
-  registerTeacherPendingRefresh_(function () { renderTeacherRoadmapActions_(student, course); });
-  renderTeacherPendingPanel_();
-
-  renderTeacherStudentNow_(course);
-  renderTeacherRightNowForm_(student, course);
-
-  renderTeacherMetrics(course.metrics);
-  renderTeacherMetricsForm_(student, course);
-
-  renderRoadmap(course);
-  renderTeacherRoadmapActions_(student, course);
-
-  renderTeacherStudentFeedbackList_(course);
-  renderTeacherFeedbackForm_(student, course);
-
-  renderTeacherStudentCheatSheetList_(course);
-  renderTeacherCheatSheetForm_(student, course);
-
-  renderTeacherStudentRequestsList_(student, course);
-
-  renderMath(document.getElementById("teacher-student-content"));
-
-  const subList = document.getElementById("teacher-student-submissions");
-  const subPatterns = document.getElementById("teacher-student-submission-patterns");
-  subList.innerHTML = '<p class="submit-log-empty">Loading submissions...</p>';
-  fetch("data/submissions-log.json")
-    .then(function (res) { return res.json(); })
-    .then(function (all) {
-      teacherStudentSubmissionsCache_ = all
-        .filter(function (entry) { return entry.username === student.username && submissionCourseId(entry) === course.id; })
-        .sort(function (a, b) { return new Date(b.receivedAt) - new Date(a.receivedAt); });
-      renderTeacherStudentSubmissionsList_();
-      registerTeacherPendingRefresh_(renderTeacherStudentSubmissionsList_);
-      if (subPatterns) {
-        const patternsHtml = teacherSubmissionPatternsHtml_(teacherStudentSubmissionsCache_);
-        subPatterns.innerHTML = patternsHtml;
-        subPatterns.hidden = patternsHtml === "";
-      }
-    })
-    .catch(function () {
-      subList.innerHTML = '<p class="submit-log-empty">Could not load submissions right now.</p>';
-      if (subPatterns) subPatterns.hidden = true;
-    });
-}
-
-// Cache of this student+course's own submissions, populated once by
-// renderTeacherStudentPage() — lets renderTeacherStudentSubmissionsList_
-// re-render (to refresh "Queued" mark-complete states) without
-// refetching, same pattern teacherSubmissionsCache uses for the queue.
-let teacherStudentSubmissionsCache_ = [];
-
-function renderTeacherStudentSubmissionsList_() {
-  const subList = document.getElementById("teacher-student-submissions");
-  if (!subList) return;
-  const mine = teacherStudentSubmissionsCache_;
-  subList.innerHTML = mine.length === 0
-    ? '<p class="submit-log-empty">Nothing submitted yet for this course.</p>'
-    : mine.map(teacherSubmissionCardHtml).join("");
-  subList.querySelectorAll("[data-mark-complete]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      const id = btn.getAttribute("data-mark-complete");
-      const entry = mine.find(function (e) { return e.id === id; });
-      if (!entry) return;
-      const entryStudent = STUDENTS.find(function (s) { return s.username === entry.username; });
-      const chapterUnit = [entry.chapter, entry.unit].filter(Boolean).join(" · ") || "Chapter/unit not recorded";
-      markSubmissionComplete_(entry, "Mark complete: " + chapterUnit, entryStudent);
-    });
-  });
-}
+// (The old per-student teacher page lived here: right-now / roadmap unlock / feedback / cheat sheet / metrics forms and the
+// submissions list. It is replaced by js/zp-tstudent.js, which reads the student's event log instead.)
+let teacherStudentSubmissionsCache_ = []; // still read by markSubmissionComplete_ (old grading queue)
 
 // ---- Calendar (calendar.html) ----
 // A single role-aware page: student/teacher/parent/admin all land here
@@ -4646,7 +4229,7 @@ function renderCalendarPage(person) {
     getCurrentStudent();
 
   const greeting = document.getElementById("calendar-greeting");
-  if (greeting) greeting.textContent = "Hey " + person.name.split(" ")[0] + ",";
+  if (greeting) greeting.textContent = "Hey " + person.name.split(" ")[0] + ", here's what's coming up.";
 
   const now = new Date();
   calendarViewYear_ = now.getFullYear();
@@ -4952,17 +4535,25 @@ function setUpCourseNavigation(student) {
   document.querySelectorAll(".portal-nav-link").forEach(function(link) {
     const url = new URL(link.getAttribute("href"), window.location.href);
     const page = url.pathname.split("/").pop();
-    if (page === "portal.html") return;
+    if (page === "portal.html") {
+      // "Courses" in the nav means "my course": it opens the selected course's roadmap, not the course chooser
+      // (the roadmap has its own "All courses" link for switching). Other portal links, like the logo, stay put.
+      if (link.textContent.trim() === "Roadmap" || link.textContent.trim() === "Courses") link.setAttribute("href", "roadmap.html?course=" + encodeURIComponent(course.id));
+      return;
+    }
     url.searchParams.set("course", course.id);
     link.setAttribute("href", page + url.search);
   });
 
-  const cheatSheetLink = document.querySelector("#cheatsheet-banner a");
-  if (cheatSheetLink) {
-    cheatSheetLink.href = "cheatsheet.html?course=" + encodeURIComponent(course.id);
-  }
-
   renderRightNowBreadcrumb(course);
+
+  // A course that is not on the platform is just its roadmap: the platform pages (Now, Trainer, Notebook, Calendar, Mentor, Profile)
+  // have nothing to show for it, so only Roadmap stays in the header.
+  if (!isPlatformCourse_(course.id)) {
+    document.querySelectorAll(".portal-nav-link").forEach(function (link) {
+      if ((link.getAttribute("href") || "").split("?")[0] !== "roadmap.html") link.remove();
+    });
+  }
 
   return course;
 }
@@ -4975,12 +4566,19 @@ function setUpCourseNavigation(student) {
 // on right-now.html (the full task is already right there) and on
 // portal.html (no single course is selected yet — getSelectedCourse
 // already returns null there, so this function is never reached).
+function isPlatformCourse_(courseId) {
+  if (typeof ZP_CONFIG !== "undefined" && ZP_CONFIG.COURSES) return !!ZP_CONFIG.COURSES[courseId];
+  return courseId === "ap-calculus-bc" || courseId === "ap-chemistry";
+}
+
 function renderRightNowBreadcrumb(course) {
   const existing = document.getElementById("rightnow-breadcrumb");
   if (existing) existing.remove();
 
   const page = window.location.pathname.split("/").pop();
-  if (page === "right-now.html" || page === "week.html") return;
+  if (page === "right-now.html") return;
+  // Platform courses have their own Right Now. Every other course is the roadmap and nothing else: no "Next up" strip, no Right Now page.
+  return;
 
   const data = course.rightNow;
   if (!data) return;
@@ -5136,17 +4734,15 @@ function renderCoursePortal(student) {
   grid.hidden = false;
   empty.hidden = true;
   grid.innerHTML = courses.map(function (course) {
-    const pct = roadmapPercentComplete(course.roadmap || []);
     return '<a class="course-app" href="roadmap.html?course=' + encodeURIComponent(course.id) + '">' +
       '<span class="course-app-icon course-app-icon--' + course.icon + '">' + courseIconHtml(course.icon) + '</span>' +
       '<span class="course-app-name">' + course.name + '</span>' +
-      '<span class="course-app-progress"><span class="course-app-progress-bar" style="width:' + pct + '%;"></span></span>' +
-      '<span class="course-app-progress-label">' + pct + '% complete</span>' +
+      // Courses on the platform show their progress on the chapter path and Curve; every other course keeps its percent-complete bar.
+      (isPlatformCourse_(course.id) && !usesLegacyRoadmap_(course.id) ? '' : '<span class="course-app-progress"><span class="course-app-progress-bar" style="width:' + roadmapPercentComplete(course.roadmap || []) + '%;"></span></span>' +
+        '<span class="course-app-progress-label">' + roadmapPercentComplete(course.roadmap || []) + '% complete</span>') +
     '</a>';
   }).join("");
 
-  const weekLink = document.getElementById("course-folder-week-link");
-  if (weekLink) weekLink.hidden = courses.length < 2;
 }
 
 // Every distinct courseId that exists anywhere in STUDENTS[].courses,
@@ -5217,64 +4813,6 @@ function renderCatalog(student) {
       '</div>' +
     '</div>';
   }).join("");
-}
-
-// ---- This Week (week.html) ----
-// A combined, cross-course view for students enrolled in more than one
-// subject — one compact card per enrolled course, each showing exactly
-// that course's single "rightNow" item (same field renderRightNow()
-// reads), so the total list is always capped at one task per course
-// rather than a preview of every course's full roadmap. Linked from
-// portal.html only when a student has 2+ courses (see renderCoursePortal
-// above); a single-course student has no real use for it, but the page
-// itself works fine for any student count, including zero.
-function renderWeekView(student) {
-  if (!student) return;
-  localStorage.removeItem(ACTIVE_COURSE_KEY);
-
-  document.getElementById("week-greeting").textContent =
-    "Hey " + student.name.split(" ")[0] + ", here's what's next across every course.";
-
-  const courses = student.courses || [];
-  const list = document.getElementById("week-list");
-
-  if (courses.length === 0) {
-    list.innerHTML = '<p class="course-folder-empty">You are not enrolled in a course yet.</p>';
-    return;
-  }
-
-  list.innerHTML = courses.map(weekCourseCardHtml).join("");
-}
-
-function weekCourseCardHtml(course) {
-  const data = course.rightNow;
-  const isWaiting = !!data && data.state === "waiting";
-
-  let cardClass = "rightnow-card";
-  cardClass += !data ? " rightnow-empty" : isWaiting ? " rightnow-waiting" : " rightnow-active";
-
-  const tag = !data ? "" : isWaiting ? "With us" : "Your move";
-  const title = data ? data.chapter + " · " + data.unit : "Nothing set yet";
-  const body = !data
-    ? "Check back soon, or open this course for the full picture."
-    : (isWaiting ? data.note : data.instruction);
-  const due = (data && !isWaiting && data.due)
-    ? '<span class="rightnow-due">Due ' + data.due + '</span>'
-    : "";
-
-  return '<div class="' + cardClass + '">' +
-    '<div class="week-card-head">' +
-      '<span class="course-app-icon course-app-icon--' + course.icon + ' week-card-icon">' + courseIconHtml(course.icon) + '</span>' +
-      '<p class="week-card-course">' + course.name + '</p>' +
-    '</div>' +
-    (tag ? '<p class="rightnow-tag">' + tag + '</p>' : "") +
-    '<h2 class="rightnow-title">' + title + '</h2>' +
-    '<p class="rightnow-instruction">' + body + '</p>' +
-    '<div class="rightnow-footer">' +
-      due +
-      '<a class="week-card-open" href="right-now.html?course=' + encodeURIComponent(course.id) + '">Open ' + course.name + ' →</a>' +
-    '</div>' +
-  '</div>';
 }
 
 // Resolves roadmap.html's course query only against the logged-in student's
@@ -5409,6 +4947,26 @@ function roadmapPercentComplete(items) {
 // Fills in roadmap.html's table from one selected enrolled course
 // (the caller has already verified the course belongs to the
 // logged-in student). Shows an empty state if it has no roadmap yet.
+// ---- Chapter platform hooks ----
+// Courses with problem banks (ZP_CONFIG.COURSES in js/zp-config.js) have a hub page per chapter
+// (chapter.html). Every roadmap view stays a way of *looking at* the chapters; clicking a chapter
+// in any of them leads to that hub instead of being a dead end.
+function roadmapHubHref_(chapterLabel) {
+  if (typeof ZP_CONFIG === "undefined") return "";
+  const courseId = localStorage.getItem(ACTIVE_COURSE_KEY);
+  const m = /^Chapter ([1-9]\d*)$/.exec(String(chapterLabel || ""));
+  if (!courseId || !ZP_CONFIG.COURSES[courseId] || usesLegacyRoadmap_(courseId) || !m) return "";
+  // Banks that are not chapters (calc 11 and 12) live in Practice as fixed sets.
+  const sets = (ZP_CONFIG.SETS || {})[courseId] || [];
+  if (sets.some(function (st) { return st.chapter === m[1]; })) return "practice.html?course=" + encodeURIComponent(courseId) + "&ret=" + encodeURIComponent("roadmap.html?course=" + courseId) + "#practice";
+  return "chapter.html?course=" + encodeURIComponent(courseId) + "&ch=" + m[1];
+}
+
+function roadmapHubLinkHtml_(chapterLabel) {
+  const href = roadmapHubHref_(chapterLabel);
+  return href ? '<div class="curve-popover-item-link roadmap-hub-link"><a href="' + href + '" class="roadmap-link">Open chapter →</a></div>' : "";
+}
+
 function renderRoadmap(course) {
 
   const table = document.getElementById("roadmap-table");
@@ -5417,7 +4975,8 @@ function renderRoadmap(course) {
   const items = course ? (course.roadmap || []) : [];
 
   const progressEl = document.getElementById("roadmap-course-progress");
-  if (progressEl) progressEl.textContent = items.length > 0 ? roadmapPercentComplete(items) + "% complete" : "";
+  // The hand-set percentage is stale for courses on the platform (their progress is derived from real work); other courses keep it.
+  if (progressEl) progressEl.textContent = items.length > 0 && !(course && isPlatformCourse_(course.id) && !usesLegacyRoadmap_(course.id)) ? roadmapPercentComplete(items) + "% complete" : "";
 
   if (items.length === 0) {
     table.hidden = true;
@@ -5453,7 +5012,7 @@ function renderRoadmap(course) {
     }
 
     return '<tr class="' + rowClass + '">' +
-      '<td class="roadmap-chapter" data-label="Chapter" style="color:' + roadmapChapterColor(item.chapter) + ';">' + item.chapter + '</td>' +
+      '<td class="roadmap-chapter" data-label="Chapter" style="color:' + roadmapChapterColor(item.chapter) + ';">' + (roadmapHubHref_(item.chapter) ? '<a href="' + roadmapHubHref_(item.chapter) + '" class="roadmap-hub-anchor">' + item.chapter + '</a>' : item.chapter) + '</td>' +
       '<td class="roadmap-name" data-label="Name">' + namePrefix + item.name + '</td>' +
       '<td data-label="Category">' + roadmapPillHtml(item.category, ROADMAP_CATEGORY_COLORS, roadmapCategoryLabel(item.category)) + '</td>' +
       '<td data-label="Status">' + roadmapPillHtml(item.status, ROADMAP_STATUS_COLORS, item.status.replace(/-/g, " ")) + '</td>' +
@@ -5636,21 +5195,25 @@ function roadmapGemGradId(status) {
 // Builds the curve, gems, and legend for one selected course and
 // wires up gem clicks. Called once up front (from
 // setUpRoadmapViewSwitch) so switching views is instant either way.
-function renderRoadmapCurve(course) {
+// `platform` (optional) is how a course on the platform draws it: { groups: [{label, status, title, href}], legend: [[status, label]] }.
+// zp-today.js builds that from the derived chapter progress and calls this again; until then the platform course draws nothing, so the
+// old hand-set roadmap statuses never flash on screen.
+function renderRoadmapCurve(course, platform) {
   const svg = document.getElementById("roadmap-curve-svg");
   const legend = document.getElementById("roadmap-curve-legend");
   if (!svg || !legend || !course) return;
+  if (!platform && isPlatformCourse_(course.id) && !usesLegacyRoadmap_(course.id)) return;
 
-  const groups = roadmapGroupByChapter(course.roadmap || []);
+  const groups = platform ? platform.groups : roadmapGroupByChapter(course.roadmap || []);
   if (groups.length === 0) {
     svg.innerHTML = "";
     legend.innerHTML = '<p class="roadmap-empty">Nothing here yet.</p>';
     return;
   }
 
-  legend.innerHTML = ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (status) {
-    const c = ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR;
-    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + status.replace(/-/g, " ") + '</span>';
+  legend.innerHTML = (platform ? platform.legend : ["Complete", "Unlocked", "Review", "Optional-Reading", "Locked"].map(function (st) { return [st, st.replace(/-/g, " ")]; })).map(function (pair) {
+    const c = ROADMAP_STATUS_COLORS[pair[0]] || ROADMAP_FALLBACK_COLOR;
+    return '<span class="curve-legend-item"><span class="curve-legend-dot" style="background:' + c.text + ';"></span>' + pair[1] + '</span>';
   }).join("");
 
   const width = 1000, height = 340;
@@ -5678,10 +5241,11 @@ function renderRoadmapCurve(course) {
     '</defs>';
 
   const gemsHtml = points.map(function (p, i) {
-    const status = roadmapChapterOverallStatus(p.group.items);
+    const status = p.group.status || roadmapChapterOverallStatus(p.group.items);
     const glowColor = (ROADMAP_STATUS_COLORS[status] || ROADMAP_FALLBACK_COLOR).text;
     const starPts = roadmapStarPoints(p.x, p.y, 14, 6);
-    return '<g class="roadmap-gem" data-gem-index="' + i + '">' +
+    return '<g class="roadmap-gem" data-gem-index="' + i + '"' + (p.group.href ? ' style="cursor:pointer" role="link" tabindex="0"' : '') + '>' +
+      (p.group.title ? '<title>' + p.group.title.replace(/&/g, "&amp;").replace(/</g, "&lt;") + '</title>' : '') +
       '<circle class="roadmap-gem-glow" cx="' + p.x + '" cy="' + p.y + '" r="21" fill="' + glowColor + '"></circle>' +
       '<circle class="roadmap-gem-hit" cx="' + p.x + '" cy="' + p.y + '" r="22" fill="transparent"></circle>' +
       '<g class="roadmap-gem-body" filter="url(#roadmap-glow-filter)">' +
@@ -5704,7 +5268,13 @@ function renderRoadmapCurve(course) {
     gemEl.addEventListener("click", function (e) {
       e.stopPropagation();
       const i = parseInt(gemEl.getAttribute("data-gem-index"), 10);
+      // On the platform a click goes straight to that chapter; the tangent-and-popover show is for the old roadmap.
+      if (points[i].group.href) { window.location.href = points[i].group.href; return; }
       roadmapActivateGem(svg, points, i, gemEl, width, height);
+    });
+    gemEl.addEventListener("keydown", function (e) {
+      const i = parseInt(gemEl.getAttribute("data-gem-index"), 10);
+      if ((e.key === "Enter" || e.key === " ") && points[i].group.href) { e.preventDefault(); window.location.href = points[i].group.href; }
     });
   });
 
@@ -5846,7 +5416,7 @@ function showCurvePopover(group, gemEl, svg) {
   const canvas = document.getElementById("roadmap-curve-canvas");
 
   title.textContent = "Chapter " + group.label + " · " + roadmapPercentComplete(group.items) + "%";
-  list.innerHTML = group.items.map(function (item) {
+  list.innerHTML = roadmapHubLinkHtml_(group.items[0] && group.items[0].chapter) + group.items.map(function (item) {
     const link = (item.url && item.status !== "Locked")
       ? '<div class="curve-popover-item-link"><a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a></div>'
       : "";
@@ -5891,7 +5461,7 @@ function hideCurvePopover() {
 // left alone to avoid touching a view that's already dialed in) —
 // the item-by-item breakdown shown inside a chapter's popover.
 function roadmapChapterPopoverListHtml(group) {
-  return group.items.map(function (item) {
+  return roadmapHubLinkHtml_(group.items[0] && group.items[0].chapter) + group.items.map(function (item) {
     const link = (item.url && item.status !== "Locked")
       ? '<div class="curve-popover-item-link"><a href="' + item.url + '" target="_blank" rel="noopener" class="roadmap-link">Open ↗</a></div>'
       : "";
@@ -6827,6 +6397,7 @@ function roadmapCardHtml(group) {
     '<h3 class="roadmap-card-title">' + roadmapCardTopicName(group) + '</h3>' +
     '<div class="roadmap-card-progress"><span class="roadmap-card-progress-bar" style="width:' + pct + '%;"></span></div>' +
     '<div class="roadmap-card-items">' + itemsHtml + '</div>' +
+    (roadmapHubHref_(group.items[0] && group.items[0].chapter) ? '<a class="roadmap-card-hub" href="' + roadmapHubHref_(group.items[0].chapter) + '">Open chapter →</a>' : '') +
   '</div>';
 }
 
@@ -6918,15 +6489,17 @@ function setUpRoadmapViewSwitch(course) {
   if (!switchEl || !course) return;
 
   renderRoadmapCurve(course);
-  renderRoadmapCards(course);
-  renderRoadmapOrbit(course);
-  renderRoadmapPeriodic(course);
-  renderRoadmapCell(course);
-  renderRoadmapCode(course);
-  roadmapSetUpScrollTrack("roadmap-cards-track", "roadmap-cards-prev", "roadmap-cards-next", false);
-  roadmapSetUpScrollTrack("roadmap-orbit-track", "roadmap-orbit-prev", "roadmap-orbit-next", true);
+  if (!roadmapViewHidden_("cards", course)) renderRoadmapCards(course);
+  if (!roadmapViewHidden_("orbit", course)) renderRoadmapOrbit(course);
+  if (!roadmapViewHidden_("periodic", course)) renderRoadmapPeriodic(course);
+  if (!roadmapViewHidden_("cell", course)) renderRoadmapCell(course);
+  if (!roadmapViewHidden_("code", course)) renderRoadmapCode(course);
+  if (!roadmapViewHidden_("cards", course)) roadmapSetUpScrollTrack("roadmap-cards-track", "roadmap-cards-prev", "roadmap-cards-next", false);
+  if (!roadmapViewHidden_("orbit", course)) roadmapSetUpScrollTrack("roadmap-orbit-track", "roadmap-orbit-prev", "roadmap-orbit-next", true);
+  switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (b) { if (roadmapViewHidden_(b.getAttribute("data-view"), course)) b.hidden = true; });
 
   const views = {
+    chapters: document.getElementById("roadmap-view-chapters"),
     table: document.getElementById("roadmap-view-table"),
     curve: document.getElementById("roadmap-view-curve"),
     cards: document.getElementById("roadmap-view-cards"),
@@ -6940,7 +6513,7 @@ function setUpRoadmapViewSwitch(course) {
     switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (b) {
       b.classList.toggle("active", b.getAttribute("data-view") === view);
     });
-    Object.keys(views).forEach(function (key) { views[key].hidden = key !== view; });
+    Object.keys(views).forEach(function (key) { if (views[key]) views[key].hidden = key !== view; });
     if (view !== "curve") hideCurvePopover();
     if (view !== "periodic") hidePeriodicPopover();
     if (view !== "cell") hideCellPopover();
@@ -6956,8 +6529,17 @@ function setUpRoadmapViewSwitch(course) {
   }
 
   const storedView = roadmapStoredView(course.id);
-  const initialView = storedView && views[storedView] ? storedView : (ROADMAP_DEFAULT_VIEWS[course.id] || "table");
-  if (initialView !== "table") activateView(initialView);
+  const onPlatform = typeof ZP_CONFIG !== "undefined" && !!ZP_CONFIG.COURSES[course.id] && !usesLegacyRoadmap_(course.id) && !!views.chapters;
+  // Platform courses open on Chapters (Curve is the only other view). Every other course opens as it always did: the view the student
+  // last picked, else that subject's own default (Curve, Periodic, Cell, Code), else Table.
+  let initialView;
+  if (onPlatform) {
+    initialView = storedView && views[storedView] && !roadmapViewHidden_(storedView, course) ? storedView : "chapters";
+  } else {
+    initialView = storedView && views[storedView] ? storedView : (ROADMAP_DEFAULT_VIEWS[course.id] || "table");
+    const b = switchEl.querySelector('[data-view="chapters"]'); if (b) b.hidden = true;
+  }
+  if (initialView !== "table" || onPlatform) activateView(initialView);
 
   switchEl.querySelectorAll(".roadmap-view-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -6971,6 +6553,9 @@ function setUpRoadmapViewSwitch(course) {
   // student resizes the window (or rotates a tablet) while it's the
   // view currently showing.
   window.addEventListener("resize", function () {
-    if (!views.periodic.hidden) roadmapFitPeriodicGrid();
+    if (views.periodic && !views.periodic.hidden) roadmapFitPeriodicGrid();
   });
 }
+
+// Install the read-only guard as early as possible when a teacher/admin is viewing as a student.
+if (viewAsUsername_()) installViewAsGuard_();

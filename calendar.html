@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/platform.css">
+<link rel="stylesheet" href="css/mentor.css">
 <script src="js/layout.js"></script>
 </head>
 <body class="portal-body">
@@ -90,14 +92,30 @@
         <button type="button" class="teacher-add-btn" id="calendar-event-submit">Create event</button>
       </div>
     </div>
+
+    <div id="zp-agenda-host"></div>
+    <div id="zp-plan-host"></div>
   </div>
 </main>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/practice-core.js"></script>
+<script src="js/zp-config.js"></script>
+<script src="js/zp-store.js"></script>
+<script src="js/zp-banks.js"></script>
+<script src="js/zp-ui.js"></script>
+<script src="js/zp-plan.js"></script>
+<script src="js/zp-agenda.js"></script>
 <script>
   var person = requireAnyLogin();
-  if (person) renderCalendarPage(person);
+  if (person && person.role === 'student') { applySelfStudyTrack_(getCurrentStudent()); } // self-study students have no calendar page
+  if (person) {
+    renderCalendarPage(person);
+    ZPPlan.mountCalendar(document.getElementById('zp-plan-host'), person);
+    var agendaCtx = ZPUI.resolveContext();   // students only: teachers and parents have no personal agenda
+    if (agendaCtx && agendaCtx.course) ZPAgenda.mount(document.getElementById('zp-agenda-host'), agendaCtx);
+  }
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>

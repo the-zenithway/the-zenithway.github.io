@@ -1,0 +1,5 @@
+{
+  "_readme": "Per-chapter content for the B workspace. Everything is optional: with no entries a student writes their own example reflections and concept cards. Shape: { \"<courseId>\": { \"<chapter>\": { \"examples\": [ { \"key\": \"1E1\", \"label\": \"Example 1\", \"prompt\": \"problem statement (plain text or $TeX$)\" } ], \"concepts\": [ { \"key\": \"1K1\", \"name\": \"Domain and range\", \"prompt\": \"Explain in your own words, and say when you would use it.\" } ] } } }. Keys must be unique within a chapter and must never be reused for a different item (student answers are saved against them).",
+  "ap-calculus-bc": {},
+  "ap-chemistry": {}
+}

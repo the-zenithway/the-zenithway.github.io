@@ -263,18 +263,6 @@
     ],
     "correct": "D",
     "explanation_tex": "A thin annulus has area $2\\pi x\\,dx$, so population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. With width3 and left endpoints0,3,6,9,12, the estimate is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people.",
-    "source_original": {
-      "stem_tex": "Population density depends on distance $x$ from the city center according to $\\begin{array}{c|rrrrrr}x\\text{ (miles)}&0&3&6&9&12&15\\\\\\hline f(x)\\text{ (hundreds per square mile)}&60&50&42&30&18&8\\end{array}$. Use a left Riemann sum to approximate the population within a 15-mile radius.",
-      "choices_tex": [
-        "$60{,}000$",
-        "$376{,}000$",
-        "$691{,}200$",
-        "$754{,}000$"
-      ],
-      "correct": null,
-      "explanation_tex": "Population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. A left sum of this radial integrand is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people. No listed choice agrees. Applying density to exact annular areas instead would also give an unlisted value.",
-      "source_issue": "No choice matches the required radial population integral."
-    },
     "resolved_source_issue": "No choice matches the required radial population integral.",
     "source_correction": "Specified a left sum of the radial population integrand and supplied its rounded value in D."
   },
@@ -337,18 +325,6 @@
     ],
     "correct": "C",
     "explanation_tex": "Net loss is the signed integral $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons. The rate becomes negative after $t=10/3$, representing inflow during that part of the interval, which reduces the net loss.",
-    "source_original": {
-      "stem_tex": "Water is leaking from a tank at the rate of $W(t)=-0.15t^2-0.4t+3$ gal/hr. The total amount, in gallons, that will leak out in the next 4 hours is approximately",
-      "choices_tex": [
-        "$4.9$",
-        "$5.2$",
-        "$5.6$",
-        "$5.9$"
-      ],
-      "correct": null,
-      "explanation_tex": "The signed integral is $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons, the intended choice C. However the stated outward leakage rate becomes negative after $t=(-4+\\sqrt{196})/3=10/3$ hours, so this is net flow, not a physically valid total amount leaking out over all four hours.",
-      "source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage."
-    },
     "resolved_source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage.",
     "source_correction": "Defined the rate as signed outward flow and asked for net water loss."
   },

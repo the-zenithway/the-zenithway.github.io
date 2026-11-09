@@ -1461,18 +1461,6 @@
         ],
         "correct": "B",
         "explanation_tex": "Differentiating gives $-\\sin x-\\cos y\\,y\\prime=0$. Hence $y\\prime=-\\sin x/\\cos y=-\\sin x\\sec y$, choice B.",
-        "source_original": {
-          "stem_tex": "Find $dy/dx$ for $\\cos x - \\sin y - 3 = 0$.",
-          "choices_tex": [
-            "$-\\cot x$",
-            "$-\\sin x \\sec y$",
-            "$-\\tan x$",
-            "$\\dfrac{\\sin x}{\\cos y}$"
-          ],
-          "correct": null,
-          "explanation_tex": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement.",
-          "source_issue": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement."
-        },
         "resolved_source_issue": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement.",
         "source_correction": "Changed the impossible constant from 3 to 1 and specified a regular point with nonzero cosine of y.",
         "review_status": "source-reviewed"
@@ -1970,18 +1958,6 @@
         ],
         "correct": "B",
         "explanation_tex": "On $x<-2/3$, $f\\prime(x)=9x^2-4>0$. Since $f(-1)=1$, the inverse has $h(1)=-1$, and $h\\prime(1)=1/f\\prime(-1)=1/5$.",
-        "source_original": {
-          "stem_tex": "Suppose $y = f(x) = 3x^3-4x$. If $h(x)$ is the inverse function of $f$, then $h'(1) =$",
-          "choices_tex": [
-            "$-1$",
-            "$\\dfrac{1}{5}$",
-            "$1$",
-            "$5$"
-          ],
-          "correct": null,
-          "explanation_tex": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer.",
-          "source_issue": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer."
-        },
         "resolved_source_issue": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer.",
         "source_correction": "Restricted the cubic to its increasing branch containing x=-1.",
         "review_status": "source-reviewed"
@@ -2134,22 +2110,6 @@
         "figure": {
           "src": "data/calculus-figures/t3-b10.png",
           "alt": "Derivative graph has a positive constant left limit and a negative right limit at a, with both endpoints open."
-        },
-        "source_original": {
-          "stem_tex": "A function $f$ has the derivative shown. Which of the following statements must be TRUE?",
-          "choices_tex": [
-            "$f$ is continuous at $x = a$",
-            "$f$ has a vertical asymptote at $x=a$",
-            "$f$ has a jump discontinuity at $x=a$",
-            "$f$ has a removable discontinuity at $x=a$"
-          ],
-          "correct": null,
-          "explanation_tex": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
-          "source_issue": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
-          "figure": {
-            "src": "data/calculus-figures/t3-b10.png",
-            "alt": "Derivative graph has a positive constant left limit and a negative right limit at a, with both endpoints open."
-          }
         },
         "resolved_source_issue": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
         "source_correction": "Replaced the unsupported continuity assertion with the conclusion that continuity is undetermined.",
@@ -2312,18 +2272,6 @@
         ],
         "correct": "C",
         "explanation_tex": "For fixed $a$, Taylor expansion gives $[f(a+h)-f(a)]/h=f\\prime(a)+\\frac12 f\\prime\\prime(a)h+o(h)$. The assumed inequality, divided by positive $h$ and followed by $h\\to0^+$, gives $f\\prime\\prime(a)\\ge0$. Since $a$ is arbitrary, this holds everywhere. Convex functions may have positive or negative first derivatives, so A and B need not hold; $f(x)=x^2$ rules out D.",
-        "source_original": {
-          "stem_tex": "If $f$ is differentiable and difference quotients overestimate the slope of $f$ at $x=a$ for all $h>0$, which must be true?",
-          "choices_tex": [
-            "$f'(x) \\geq 0$ on $[a,h]$",
-            "$f'(x) \\leq 0$ on $[a,h]$",
-            "$f''(x) \\geq 0$ on $[a,h]$",
-            "$f''(x) \\leq 0$ on $[a,h]$"
-          ],
-          "correct": null,
-          "explanation_tex": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective.",
-          "source_issue": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective."
-        },
         "resolved_source_issue": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective.",
         "source_correction": "Required twice continuous differentiability and the secant inequality at every base point; replaced the malformed interval notation.",
         "review_status": "source-reviewed"
@@ -2737,18 +2685,6 @@
         ],
         "correct": "A",
         "explanation_tex": "$y\\prime=\\cos2x-2x\\sin2x$. At $x=\\pi/4$, $y=0$ and $y\\prime=-\\pi/2$. The tangent is $y=-\\frac\\pi2(x-\\frac\\pi4)$.",
-        "source_original": {
-          "stem_tex": "An equation of the tangent to the curve $y = x\\cos 2x$ at the point $\\left(\\frac{\\pi}{4},\\frac{\\pi}{4}\\right)$ is",
-          "choices_tex": [
-            "$y = x - \\dfrac{\\pi}{4}$",
-            "$y = \\dfrac{\\pi}{4}$",
-            "$y = \\dfrac{\\pi}{4} - x$",
-            "$y = x$"
-          ],
-          "correct": null,
-          "explanation_tex": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
-          "source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it."
-        },
         "resolved_source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
         "source_correction": "Corrected the point to (pi/4,0) and supplied the corresponding tangent as option A.",
         "review_status": "source-reviewed"
@@ -2790,18 +2726,6 @@
         ],
         "correct": "C",
         "explanation_tex": "Implicit differentiation gives $2x-2y\\,y\\prime=0$, so the slope at $(6,4)$ is $3/2$. Thus $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$, choice C.",
-        "source_original": {
-          "stem_tex": "An equation of the tangent to the hyperbola $x^2-y^2=20$ at the point $(6,4)$ on the curve is",
-          "choices_tex": [
-            "$3x-2y-10=0$",
-            "$y = \\dfrac{3}{2}x$",
-            "$y = \\dfrac{3}{2}x - 5$",
-            "$y = \\dfrac{2}{3}x$"
-          ],
-          "correct": null,
-          "explanation_tex": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
-          "source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices."
-        },
         "resolved_source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
         "source_correction": "Changed duplicate option A to a different line; retained the correct tangent in C.",
         "review_status": "source-reviewed"
@@ -3475,22 +3399,6 @@
           "src": "data/calculus-figures/t4-fprime-linear.png",
           "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
         },
-        "source_original": {
-          "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. Which statement best describes $f$ at $x=5$?",
-          "choices_tex": [
-            "$f$ has a root.",
-            "$f$ has a maximum.",
-            "$f$ has a minimum.",
-            "The graph of $f$ has a point of inflection."
-          ],
-          "correct": null,
-          "explanation_tex": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
-          "source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
-          "figure": {
-            "src": "data/calculus-figures/t4-fprime-linear.png",
-            "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
-          }
-        },
         "resolved_source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
         "source_correction": "Replaced the unsupported inflection-point option with the behavior shown by the derivative graph.",
         "review_status": "source-reviewed"
@@ -3596,22 +3504,6 @@
           "src": "data/calculus-figures/t4-velocity.png",
           "alt": "Velocity on [0,6], with corners at t=1,2,3."
         },
-        "source_original": {
-          "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. During $2<t<3$, the object's acceleration (in ft/sec$^2$) is",
-          "choices_tex": [
-            "$-12$",
-            "$-6$",
-            "$6$",
-            "$12$"
-          ],
-          "correct": null,
-          "explanation_tex": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
-          "source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
-          "figure": {
-            "src": "data/calculus-figures/t4-velocity.png",
-            "alt": "Velocity on [0,6], with corners at t=1,2,3."
-          }
-        },
         "resolved_source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
         "source_correction": "Replaced option B with the acceleration determined by the graph.",
         "review_status": "source-reviewed"
@@ -3647,22 +3539,6 @@
         "figure": {
           "src": "data/calculus-figures/t4-velocity.png",
           "alt": "Velocity on [0,6], with corners at t=1,2,3."
-        },
-        "source_original": {
-          "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object's average acceleration (in ft/sec$^2$) for the interval $0 \\leq t \\leq 3$ is",
-          "choices_tex": [
-            "$-18$",
-            "$-6$",
-            "$-4$",
-            "$-2$"
-          ],
-          "correct": null,
-          "explanation_tex": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
-          "source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
-          "figure": {
-            "src": "data/calculus-figures/t4-velocity.png",
-            "alt": "Velocity on [0,6], with corners at t=1,2,3."
-          }
         },
         "resolved_source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
         "source_correction": "Replaced option D with the average acceleration determined by the graph.",
@@ -3757,18 +3633,6 @@
         ],
         "correct": "B",
         "explanation_tex": "The velocity components are $x\\prime(t)=3$ and $y\\prime(t)=6-2t$. Speed is their Euclidean norm: $\\sqrt{3^2+(6-2t)^2}=\\sqrt{4t^2-24t+45}$.",
-        "source_original": {
-          "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The speed of the particle at any time $t$ is",
-          "choices_tex": [
-            "$\\sqrt{10-2t}$",
-            "$2\\sqrt{t^2-6t+10}$",
-            "$2\\sqrt{t^2-3t+10}$",
-            "$2(|5-t|)$"
-          ],
-          "correct": null,
-          "explanation_tex": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
-          "source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression."
-        },
         "resolved_source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
         "source_correction": "Replaced option B with the correct speed formula.",
         "review_status": "source-reviewed"
@@ -3784,18 +3648,6 @@
         ],
         "correct": "C",
         "explanation_tex": "Speed is $\\sqrt{9+(6-2t)^2}\\ge3$, with equality at $t=3$. The minimum is3.",
-        "source_original": {
-          "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The minimum speed of the particle is",
-          "choices_tex": [
-            "$0$",
-            "$1$",
-            "$2$",
-            "$4$"
-          ],
-          "correct": null,
-          "explanation_tex": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
-          "source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$."
-        },
         "resolved_source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
         "source_correction": "Replaced option C with the correct minimum speed.",
         "review_status": "source-reviewed"
@@ -4000,22 +3852,6 @@
           "src": "data/calculus-figures/t4-velocity-long.png",
           "alt": "Velocity graph on [0,12]."
         },
-        "source_original": {
-          "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le12$. The object reverses direction at $t=$",
-          "choices_tex": [
-            "$3$ only",
-            "$4.5$ only",
-            "$6$ only",
-            "$4.5$ and $6$ only"
-          ],
-          "correct": null,
-          "explanation_tex": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
-          "source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
-          "figure": {
-            "src": "data/calculus-figures/t4-velocity-long.png",
-            "alt": "Velocity graph on [0,12]."
-          }
-        },
         "resolved_source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
         "source_correction": "Corrected the zero-crossing time in option B to match the plotted line.",
         "review_status": "source-reviewed"
@@ -4044,22 +3880,6 @@
         ],
         "correct": "C",
         "explanation_tex": "The linearization is $L(x)=f(3)+f\\prime(3)(x-3)=15+6(x-3)=6x-3$, choice C.",
-        "source_original": {
-          "stem_tex": "The graph of $f'$ is shown above. If we know that $f(3) = 15$, then the local linearization of $f$ at $x=3$ is $f(x) \\approx$",
-          "choices_tex": [
-            "$\\dfrac{x}{3}+14$",
-            "$\\dfrac{x}{3}+13$",
-            "$6x-3$",
-            "$6x+9$"
-          ],
-          "correct": null,
-          "explanation_tex": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
-          "source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
-          "figure": {
-            "src": "data/calculus-figures/t4-linearization.png",
-            "alt": "Source derivative graph with a point labeled (6,9)."
-          }
-        },
         "resolved_source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
         "source_correction": "Supplied f prime at 3 explicitly because the source graph does not establish its numerical value.",
         "review_status": "source-reviewed"
@@ -5836,18 +5656,6 @@
         ],
         "correct": "D",
         "explanation_tex": "For $n$ equal subintervals of $[0,2\\pi]$, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$. Thus $f(x_k)\\Delta x=\\sin(8\\pi k/n)(2\\pi/n)$, exactly D. B also has limit zero, but it is not this right-endpoint construction.",
-        "source_original": {
-          "stem_tex": "Choose the Riemann Sum whose limit is the integral $\\displaystyle\\int_{0}^{2\\pi} \\sin(4x)\\,dx$.",
-          "choices_tex": [
-            "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
-            "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{1}{n}\\right)\\right)$",
-            "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{4k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$",
-            "$\\displaystyle\\lim_{n\\to\\infty}\\sum_{k=1}^n \\left(\\sin\\left(\\dfrac{8\\pi k}{n}\\right)\\cdot\\left(\\dfrac{2\\pi}{n}\\right)\\right)$"
-          ],
-          "correct": null,
-          "explanation_tex": "For the stated interval, $\\Delta x=2\\pi/n$ and $x_k=2\\pi k/n$, giving D. However, the integral is zero and option B also has limit zero, so the original wording does not yield a unique answer. Only D is the standard right-endpoint construction on the stated interval.",
-          "source_issue": "Both B and D have limit zero, so the original question has two correct options."
-        },
         "resolved_source_issue": "Both B and D have limit zero, so the original question has two correct options.",
         "source_correction": "Specified the right-endpoint construction on the stated interval, rather than equality of limits alone.",
         "review_status": "source-reviewed"
@@ -6707,18 +6515,6 @@
         ],
         "correct": "A",
         "explanation_tex": "The inner loop begins and ends where $1-2\\cos\\theta=0$, at $\\theta=\\pm\\pi/3$. Polar area is $\\frac12\\int r^2\\,d\\theta$, so its area is $\\frac12\\int_{-\\pi/3}^{\\pi/3}(1-2\\cos\\theta)^2\\,d\\theta=\\pi-3\\sqrt3/2$.",
-        "source_original": {
-          "stem_tex": "The area bounded by the small loop of the lima\\c{c}on $r=1-2\\cos\\theta$ is given by the definite integral",
-          "choices_tex": [
-            "$\\displaystyle\\int_{-\\pi/3}^{\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
-            "$\\displaystyle\\int_{\\pi/3}^{5\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
-            "$\\displaystyle\\int_{2\\pi/3}^{4\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$",
-            "$\\displaystyle\\int_{-2\\pi/3}^{2\\pi/3} \\left[\\dfrac{1}{2}(1-2\\cos\\theta)\\right]^2 d\\theta$"
-          ],
-          "correct": null,
-          "explanation_tex": "The inner loop is traced for $-\\pi/3\\le\\theta\\le\\pi/3$. Its area is $\\tfrac12\\int_{-\\pi/3}^{\\pi/3}(1-2\\cos\\theta)^2\\,d\\theta=\\pi-3\\sqrt3/2$. Choice A has the correct limits but incorrectly squares the factor $1/2$, giving half the area; none of the listed choices is correct.",
-          "source_issue": "All choices use an incorrect polar-area factor; no correct option."
-        },
         "resolved_source_issue": "All choices use an incorrect polar-area factor; no correct option.",
         "source_correction": "Moved the factor 1/2 outside the square in option A.",
         "review_status": "source-reviewed"
@@ -6747,18 +6543,6 @@
         ],
         "correct": "B",
         "explanation_tex": "The intercepts are0 and4. A cross section perpendicular to the $x$-axis is a disk with radius $4x-x^2$, giving $V=\\pi\\int_0^4(4x-x^2)^2\\,dx$, choice B. D is a valid shell formula in $y$, but is not the requested disk-method setup.",
-        "source_original": {
-          "stem_tex": "Find the volume generated by rotating the indicated region about the stated line: $y=4x-x^2$ and $y=0$; about the $x$-axis.",
-          "choices_tex": [
-            "$\\displaystyle \\pi\\int_0^4 (16x^2+x^4)\\,dx$",
-            "$\\displaystyle \\pi\\int_0^4 (4x-x^2)^2\\,dx$",
-            "$\\displaystyle \\pi\\int_0^2 (4x-x^2)\\,dx$",
-            "$\\displaystyle 2\\pi\\int_0^4 y\\sqrt{16-4y}\\,dy$"
-          ],
-          "correct": null,
-          "explanation_tex": "The intercepts are $0,4$, and disks have radius $4x-x^2$. Thus $V=\\pi\\int_0^4(4x-x^2)^2\\,dx$. Choice D also equals this volume: horizontal shells have radius $y$ and width $\\sqrt{16-4y}$ for $0\\le y\\le4$.",
-          "source_issue": "Both B (disks) and D (shells) give the volume."
-        },
         "resolved_source_issue": "Both B (disks) and D (shells) give the volume.",
         "source_correction": "Specified the disk method with integration in x to distinguish it from the also-valid shell formula.",
         "review_status": "source-reviewed"
@@ -6879,18 +6663,6 @@
         ],
         "correct": "D",
         "explanation_tex": "A converges to $1/2$, and B converges to $1/2$. C equals $2\\int_0^1x^{-1/4}\\,dx=8/3$, so it also converges. In D, the integral on $(0,1]$ diverges to $+\\infty$ and that on $[-1,0)$ to $-\\infty$; cancellation as a principal value does not make the improper integral converge.",
-        "source_original": {
-          "stem_tex": "Which one of the following improper integrals diverges?",
-          "choices_tex": [
-            "$\\displaystyle\\int_1^\\infty \\dfrac{dx}{x^3}$",
-            "$\\displaystyle\\int_0^\\infty \\dfrac{dx}{e^{2x}}$",
-            "$\\displaystyle\\int_{-1}^1 \\dfrac{dx}{\\sqrt[4]{x}}$",
-            "$\\displaystyle\\int_{-1}^1 \\dfrac{dx}{x^3}$"
-          ],
-          "correct": null,
-          "explanation_tex": "Choice D diverges because the two one-sided integrals at $0$ do not converge; cancellation in a principal value does not establish convergence. However choice C is not real-valued on $(-1,0)$, since $\\sqrt[4]{x}$ is undefined there over the reals. Thus the source does not supply a valid single-answer comparison of real improper integrals.",
-          "source_issue": "Option C is undefined over the reals on part of its integration interval."
-        },
         "resolved_source_issue": "Option C is undefined over the reals on part of its integration interval.",
         "source_correction": "Changed option C to a real-valued fourth root of the absolute value.",
         "review_status": "source-reviewed"
@@ -7256,18 +7028,6 @@
         ],
         "correct": "D",
         "explanation_tex": "A thin annulus has area $2\\pi x\\,dx$, so population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. With width3 and left endpoints0,3,6,9,12, the estimate is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people.",
-        "source_original": {
-          "stem_tex": "Population density depends on distance $x$ from the city center according to $\\begin{array}{c|rrrrrr}x\\text{ (miles)}&0&3&6&9&12&15\\\\\\hline f(x)\\text{ (hundreds per square mile)}&60&50&42&30&18&8\\end{array}$. Use a left Riemann sum to approximate the population within a 15-mile radius.",
-          "choices_tex": [
-            "$60{,}000$",
-            "$376{,}000$",
-            "$691{,}200$",
-            "$754{,}000$"
-          ],
-          "correct": null,
-          "explanation_tex": "Population is $100\\int_0^{15}2\\pi x f(x)\\,dx$. A left sum of this radial integrand is $600\\pi[0(60)+3(50)+6(42)+9(30)+12(18)]=532800\\pi\\approx1{,}673{,}841$ people. No listed choice agrees. Applying density to exact annular areas instead would also give an unlisted value.",
-          "source_issue": "No choice matches the required radial population integral."
-        },
         "resolved_source_issue": "No choice matches the required radial population integral.",
         "source_correction": "Specified a left sum of the radial population integrand and supplied its rounded value in D.",
         "review_status": "source-reviewed"
@@ -7335,18 +7095,6 @@
         ],
         "correct": "C",
         "explanation_tex": "Net loss is the signed integral $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons. The rate becomes negative after $t=10/3$, representing inflow during that part of the interval, which reduces the net loss.",
-        "source_original": {
-          "stem_tex": "Water is leaking from a tank at the rate of $W(t)=-0.15t^2-0.4t+3$ gal/hr. The total amount, in gallons, that will leak out in the next 4 hours is approximately",
-          "choices_tex": [
-            "$4.9$",
-            "$5.2$",
-            "$5.6$",
-            "$5.9$"
-          ],
-          "correct": null,
-          "explanation_tex": "The signed integral is $\\int_0^4(-0.15t^2-0.4t+3)\\,dt=[-0.05t^3-0.2t^2+3t]_0^4=5.6$ gallons, the intended choice C. However the stated outward leakage rate becomes negative after $t=(-4+\\sqrt{196})/3=10/3$ hours, so this is net flow, not a physically valid total amount leaking out over all four hours.",
-          "source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage."
-        },
         "resolved_source_issue": "The stated leakage rate becomes negative during the interval; the intended choice C gives signed net flow, not total outward leakage.",
         "source_correction": "Defined the rate as signed outward flow and asked for net water loss.",
         "review_status": "source-reviewed"
@@ -7721,7 +7469,7 @@
       },
       {
         "id": "T22",
-        "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-6}{6}{-1.5}{1.5}{1}{0.5}{cos(deg(\\X))}{0.55}",
+        "stem_tex": "The slope field shown below is for the differential equation",
         "choices_tex": [
           "$\\dfrac{dy}{dx}=\\sin x$",
           "$\\dfrac{dy}{dx}=-\\sin x$",
@@ -7738,7 +7486,7 @@
       },
       {
         "id": "T23",
-        "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-5}{5}{-3}{3}{1}{1}{3*\\X-6}{0.55}",
+        "stem_tex": "The slope field shown below is for the differential equation",
         "choices_tex": [
           "$\\dfrac{dy}{dx}=3x$",
           "$\\dfrac{dy}{dx}=3x-6$",
@@ -8069,22 +7817,6 @@
         ],
         "correct": "A",
         "explanation_tex": "By the initial condition, $F(x)=\\int_0^x2e^{-2u^2}\\,du$. The Gaussian integral yields $\\int_0^\\infty2e^{-2u^2}\\,du=\\sqrt{\\pi/2}\\approx1.253$.",
-        "source_original": {
-          "stem_tex": "The slope field for $F'(x)=2e^{-2x^2}$ is shown above with the particular solution $F(0)=0$ superimposed. With a graphing calculator, $\\displaystyle\\lim_{x\\to\\infty} F(x)$ to three decimal places is",
-          "choices_tex": [
-            "$0.886$",
-            "$1.772$",
-            "$2.000$",
-            "$\\infty$"
-          ],
-          "correct": null,
-          "explanation_tex": "The initial value gives $F(x)=\\int_0^x2e^{-2u^2}\\,du$. Therefore $\\lim_{x\\to\\infty}F(x)=\\sqrt{\\pi/2}\\approx1.253$, which is absent from the options. The drawn overlay is only schematic and cannot change this integral.",
-          "source_issue": "Correct limit 1.253 is absent from the choices.",
-          "figure": {
-            "src": "data/calculus-figures/t9-tb8.png",
-            "alt": "Source slope field or graph for TB8"
-          }
-        },
         "resolved_source_issue": "Correct limit 1.253 is absent from the choices.",
         "source_correction": "Supplied the correct limit in A; removed the schematic overlay so the explicit initial-value problem determines the answer.",
         "review_status": "source-reviewed"
@@ -8103,22 +7835,6 @@
         "figure": {
           "src": "data/calculus-figures/t9-tb9.png",
           "alt": "Source slope field or graph for TB9"
-        },
-        "source_original": {
-          "stem_tex": "The graph displays logistic growth for a frog population $F$, with limiting value 1500. Which differential equation could be the appropriate model?",
-          "choices_tex": [
-            "$\\dfrac{dF}{dt}=2F-0.002F^2$",
-            "$\\dfrac{dF}{dt}=4F^2-0.002F$",
-            "$\\dfrac{dF}{dt}=4F-0.002F^2$",
-            "$\\dfrac{dF}{dt}=0.002F^2-4F$"
-          ],
-          "correct": null,
-          "explanation_tex": "A logistic law $F'=aF-bF^2$ has carrying capacity $a/b$. A has capacity $1000$ and C has capacity $2000$; B and D do not model the stated stable logistic growth to $1500$. None is correct. For example $F'=3F-0.002F^2$ would have the required limit.",
-          "source_issue": "No offered logistic equation has carrying capacity 1500.",
-          "figure": {
-            "src": "data/calculus-figures/t9-tb9.png",
-            "alt": "Source slope field or graph for TB9"
-          }
         },
         "resolved_source_issue": "No offered logistic equation has carrying capacity 1500.",
         "source_correction": "Changed the linear coefficient in option A from 2 to 3 to give carrying capacity1500.",
@@ -8174,18 +7890,6 @@
         ],
         "correct": "D",
         "explanation_tex": "Solving $C\\prime=-0.25C$ gives $C(t)=C_0e^{-0.25t}$. Setting $C(t)/C_0=1/10$ gives $t=\\ln10/0.25=4\\ln10\\approx9.210$ hours.",
-        "source_original": {
-          "stem_tex": "The concentration of a medication injected into the bloodstream drops at a rate proportional to the existing concentration. If the factor of proportionality is 25\\% per hour, in approximately how many hours will the concentration be one-tenth of the initial concentration?",
-          "choices_tex": [
-            "$3$",
-            "$5\\dfrac{1}{3}$",
-            "$8$",
-            "$10\\dfrac{1}{3}$"
-          ],
-          "correct": null,
-          "explanation_tex": "The model is $C'= -0.25C$, so $C/C_0=e^{-0.25t}$. Reaching one-tenth requires $t=\\ln10/0.25\\approx9.210$ hours. None of the listed times approximates this to the displayed precision.",
-          "source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees."
-        },
         "resolved_source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees.",
         "source_correction": "Made the continuous decay model explicit and replaced D with the correct time.",
         "review_status": "source-reviewed"
@@ -8846,18 +8550,6 @@
         ],
         "correct": "B",
         "explanation_tex": "For $x\\ge0$, $E(x)=\\sin x-x+x^3/6$ increases because $E\\prime(x)=\\cos x-1+x^2/2\\ge0$. Odd symmetry gives the same absolute error at $-x$. The supremum for $|x|<1.5$ is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. Thus0.05 is too small and0.063 is the smallest listed uniform upper bound. The first-omitted-term estimate0.06328125 alone would not establish0.063.",
-        "source_original": {
-          "stem_tex": "If the approximate formula $\\sin x = x-\\dfrac{x^3}{3!}$ is used and $|x|<1.5$ (radian), then the error is numerically less than",
-          "choices_tex": [
-            "$0.05$",
-            "$0.063$",
-            "$0.08$",
-            "$0.1$"
-          ],
-          "correct": null,
-          "explanation_tex": "For $0\\leq x<1.5$, the error $E(x)=\\sin x-x+x^3/6$ increases: $E'(x)=\\cos x-1+x^2/2\\geq0$. Its supremum is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. The error is therefore less than0.063,0.08,and0.1, so B,C,andD are all valid. The first-omitted-term bound is $1.5^5/120=0.06328125$, which alone does not establish0.063.",
-          "source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer."
-        },
         "resolved_source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer.",
         "source_correction": "Asked for the smallest listed uniform upper bound for the actual error.",
         "review_status": "source-reviewed"

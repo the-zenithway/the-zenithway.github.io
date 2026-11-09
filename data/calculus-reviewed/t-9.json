@@ -254,7 +254,7 @@
   },
   {
     "id": "T22",
-    "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-6}{6}{-1.5}{1.5}{1}{0.5}{cos(deg(\\X))}{0.55}",
+    "stem_tex": "The slope field shown below is for the differential equation",
     "choices_tex": [
       "$\\dfrac{dy}{dx}=\\sin x$",
       "$\\dfrac{dy}{dx}=-\\sin x$",
@@ -270,7 +270,7 @@
   },
   {
     "id": "T23",
-    "stem_tex": "The slope field shown below is for the differential equation\n\n\\slopefield{-5}{5}{-3}{3}{1}{1}{3*\\X-6}{0.55}",
+    "stem_tex": "The slope field shown below is for the differential equation",
     "choices_tex": [
       "$\\dfrac{dy}{dx}=3x$",
       "$\\dfrac{dy}{dx}=3x-6$",
@@ -580,22 +580,6 @@
     ],
     "correct": "A",
     "explanation_tex": "By the initial condition, $F(x)=\\int_0^x2e^{-2u^2}\\,du$. The Gaussian integral yields $\\int_0^\\infty2e^{-2u^2}\\,du=\\sqrt{\\pi/2}\\approx1.253$.",
-    "source_original": {
-      "stem_tex": "The slope field for $F'(x)=2e^{-2x^2}$ is shown above with the particular solution $F(0)=0$ superimposed. With a graphing calculator, $\\displaystyle\\lim_{x\\to\\infty} F(x)$ to three decimal places is",
-      "choices_tex": [
-        "$0.886$",
-        "$1.772$",
-        "$2.000$",
-        "$\\infty$"
-      ],
-      "correct": null,
-      "explanation_tex": "The initial value gives $F(x)=\\int_0^x2e^{-2u^2}\\,du$. Therefore $\\lim_{x\\to\\infty}F(x)=\\sqrt{\\pi/2}\\approx1.253$, which is absent from the options. The drawn overlay is only schematic and cannot change this integral.",
-      "source_issue": "Correct limit 1.253 is absent from the choices.",
-      "figure": {
-        "src": "data/calculus-figures/t9-tb8.png",
-        "alt": "Source slope field or graph for TB8"
-      }
-    },
     "resolved_source_issue": "Correct limit 1.253 is absent from the choices.",
     "source_correction": "Supplied the correct limit in A; removed the schematic overlay so the explicit initial-value problem determines the answer."
   },
@@ -613,22 +597,6 @@
     "figure": {
       "src": "data/calculus-figures/t9-tb9.png",
       "alt": "Source slope field or graph for TB9"
-    },
-    "source_original": {
-      "stem_tex": "The graph displays logistic growth for a frog population $F$, with limiting value 1500. Which differential equation could be the appropriate model?",
-      "choices_tex": [
-        "$\\dfrac{dF}{dt}=2F-0.002F^2$",
-        "$\\dfrac{dF}{dt}=4F^2-0.002F$",
-        "$\\dfrac{dF}{dt}=4F-0.002F^2$",
-        "$\\dfrac{dF}{dt}=0.002F^2-4F$"
-      ],
-      "correct": null,
-      "explanation_tex": "A logistic law $F'=aF-bF^2$ has carrying capacity $a/b$. A has capacity $1000$ and C has capacity $2000$; B and D do not model the stated stable logistic growth to $1500$. None is correct. For example $F'=3F-0.002F^2$ would have the required limit.",
-      "source_issue": "No offered logistic equation has carrying capacity 1500.",
-      "figure": {
-        "src": "data/calculus-figures/t9-tb9.png",
-        "alt": "Source slope field or graph for TB9"
-      }
     },
     "resolved_source_issue": "No offered logistic equation has carrying capacity 1500.",
     "source_correction": "Changed the linear coefficient in option A from 2 to 3 to give carrying capacity1500."
@@ -680,18 +648,6 @@
     ],
     "correct": "D",
     "explanation_tex": "Solving $C\\prime=-0.25C$ gives $C(t)=C_0e^{-0.25t}$. Setting $C(t)/C_0=1/10$ gives $t=\\ln10/0.25=4\\ln10\\approx9.210$ hours.",
-    "source_original": {
-      "stem_tex": "The concentration of a medication injected into the bloodstream drops at a rate proportional to the existing concentration. If the factor of proportionality is 25\\% per hour, in approximately how many hours will the concentration be one-tenth of the initial concentration?",
-      "choices_tex": [
-        "$3$",
-        "$5\\dfrac{1}{3}$",
-        "$8$",
-        "$10\\dfrac{1}{3}$"
-      ],
-      "correct": null,
-      "explanation_tex": "The model is $C'= -0.25C$, so $C/C_0=e^{-0.25t}$. Reaching one-tenth requires $t=\\ln10/0.25\\approx9.210$ hours. None of the listed times approximates this to the displayed precision.",
-      "source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees."
-    },
     "resolved_source_issue": "Correct decay time is about 9.210 hours; no listed answer agrees.",
     "source_correction": "Made the continuous decay model explicit and replaced D with the correct time."
   },

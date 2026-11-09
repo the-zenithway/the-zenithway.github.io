@@ -13,27 +13,43 @@
   css/style.css).
 */
 
+/* Display settings (Profile > Settings), applied before the page paints so there is no flash: theme and content width. */
+(function () {
+  try {
+    var u = localStorage.getItem("loggedInUsername"), st = u ? JSON.parse(localStorage.getItem("zenith:settings:" + u) || "{}") : {}, root = document.documentElement;
+    var th = st.theme === "auto" ? (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : st.theme;
+    if (th && th !== "dark") root.setAttribute("data-theme", th);
+    var W = { narrow: "880px", wide: "1400px", full: "100%" };
+    if (W[st.width]) root.style.setProperty("--zp-width", W[st.width]);
+  } catch (e) { /* settings are optional */ }
+})();
+
 const SITE_NAV_LINKS = [
   { key: "home", href: "index.html", label: "Home" },
   { key: "philosophy", href: "philosophy.html", label: "Philosophy" },
+  { key: "catalog", href: "catalog.html", label: "Catalog" },
   { key: "resources", href: "resources.html", label: "Resources" },
   { key: "faq", href: "faq.html", label: "FAQ" },
   { key: "blog", href: "blog.html", label: "Blog" },
   { key: "portal", href: "portal.html", label: "Portal" }
 ];
 
+// Main student navigation, left to right. Now is for students with a mentor (self-study students never see Now, Calendar or
+// Mentor: js/app.js removes those links). To rename "Trainer" or "Roadmap", change its label here; nothing else depends on the word.
+var MENTOR_NAME = "Yong Joon Kim"; window.ZENITH_MENTOR = MENTOR_NAME; // shown as "Mentor : Yong Joon Kim" on the Mentor page, in Right Now and on mentor feedback (not in the nav); change it here
 const PORTAL_NAV_LINKS = [
-  { key: "courses", href: "portal.html", label: "Courses" },
-  { key: "catalog", href: "catalog.html", label: "Catalog" },
   { key: "now", href: "right-now.html", label: "Now" },
-  { key: "feedback", href: "feedback.html", label: "Feedback" },
+  { key: "courses", href: "portal.html", label: "Roadmap" },
+  { key: "practice", href: "practice.html", label: "Trainer" },
+  { key: "notebook", href: "notebook.html", label: "Notebook" },
   { key: "calendar", href: "calendar.html", label: "Calendar" },
-  { key: "submit", href: "submit.html", label: "Submit" }
+  { key: "mentor", href: "mentor.html", label: "Mentor" },
+  { key: "profile", href: "profile.html", label: "Profile" }
 ];
 
 const TEACHER_NAV_LINKS = [
-  { key: "dashboard", href: "teacher.html", label: "Teacher Dashboard" },
-  { key: "overview", href: "teacher-overview.html", label: "All Students" },
+  { key: "dashboard", href: "teacher.html", label: "Mentor Desk" },
+  { key: "students", href: "teacher.html#students", label: "Students" },
   { key: "calendar", href: "calendar.html", label: "Calendar" }
 ];
 

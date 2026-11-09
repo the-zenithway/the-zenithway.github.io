@@ -515,18 +515,6 @@
     ],
     "correct": "B",
     "explanation_tex": "For $x\\ge0$, $E(x)=\\sin x-x+x^3/6$ increases because $E\\prime(x)=\\cos x-1+x^2/2\\ge0$. Odd symmetry gives the same absolute error at $-x$. The supremum for $|x|<1.5$ is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. Thus0.05 is too small and0.063 is the smallest listed uniform upper bound. The first-omitted-term estimate0.06328125 alone would not establish0.063.",
-    "source_original": {
-      "stem_tex": "If the approximate formula $\\sin x = x-\\dfrac{x^3}{3!}$ is used and $|x|<1.5$ (radian), then the error is numerically less than",
-      "choices_tex": [
-        "$0.05$",
-        "$0.063$",
-        "$0.08$",
-        "$0.1$"
-      ],
-      "correct": null,
-      "explanation_tex": "For $0\\leq x<1.5$, the error $E(x)=\\sin x-x+x^3/6$ increases: $E'(x)=\\cos x-1+x^2/2\\geq0$. Its supremum is $E(1.5)=\\sin(1.5)-0.9375\\approx0.059995$. The error is therefore less than0.063,0.08,and0.1, so B,C,andD are all valid. The first-omitted-term bound is $1.5^5/120=0.06328125$, which alone does not establish0.063.",
-      "source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer."
-    },
     "resolved_source_issue": "B, C, and D are all upper bounds for the actual error, so the question has no unique answer.",
     "source_correction": "Asked for the smallest listed uniform upper bound for the actual error."
   },

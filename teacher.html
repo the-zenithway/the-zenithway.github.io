@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Dashboard — Zenith</title>
+<title>Mentor Desk — Zenith</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -12,6 +12,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/platform.css">
+<link rel="stylesheet" href="css/mentor.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="js/layout.js"></script>
 </head>
 <body class="portal-body">
@@ -19,68 +24,83 @@
 <div id="header-mount"></div>
 <script>renderPortalHeader({ nav: "teacher", active: "dashboard", actions: ["requests", "logout"] });</script>
 
-<main class="parent-wrap">
-  <div class="parent-col">
-    <p class="parent-greeting" id="teacher-greeting"></p>
-    <p class="parent-subtitle">Grading can be marked complete in bulk below; feedback, cheat sheets, and unlocks are still done from each student's own page.</p>
+<main class="zp-page" id="zp-main"><p role="status">Loading…</p></main>
 
+<!-- The class-wide tools. They live here, out of sight, and the Mentor Desk moves them into the "Class tools" tab (js/zp-tdash.js). -->
+<div id="teacher-tools-holder" style="display:none">
+  <div id="teacher-tools" class="zp-tools">
     <div id="teacher-pending-panel" hidden></div>
 
-    <div class="teacher-filter-row">
-      <label for="teacher-course-filter" class="teacher-filter-label">Subject</label>
-      <select id="teacher-course-filter" class="teacher-filter-select"></select>
-    </div>
+    <section class="zp-panel">
+      <h2>Questions from students <span class="teacher-section-count" id="teacher-requests-queue-count"></span></h2>
+      <p class="zp-muted">Sent through Requests with the "Ask My Teacher" category. Mark one In Progress or Completed and it drops off this list.</p>
+      <div id="teacher-requests-queue-list" class="teacher-queue"></div>
+    </section>
 
-    <h2 class="teacher-section-title">Classes</h2>
-    <div id="teacher-roster"></div>
-
-    <h2 class="teacher-section-title">Needs grading <span class="teacher-section-count" id="teacher-queue-count"></span></h2>
-    <div id="teacher-queue-list" class="teacher-queue"></div>
-
-    <h2 class="teacher-section-title">Needs to review <span class="teacher-section-count" id="teacher-requests-queue-count"></span></h2>
-    <p class="parent-subtitle">Questions your students asked you directly (requests.html's "Ask My Teacher" category). Mark one In Progress or Completed and it drops off this list — the student still sees it (with its status) on their own requests page, and it stays logged on their student page below.</p>
-    <div id="teacher-requests-queue-list" class="teacher-queue"></div>
-
-    <h2 class="teacher-section-title">Schedule a notification</h2>
-    <p class="parent-subtitle">Pick any students across your classes and email them at the time you choose — for session reminders, mostly. Sending happens on its own schedule (checked every 15 minutes or so), not the instant you click Schedule.</p>
-    <div class="teacher-add-form">
-      <p class="teacher-add-form-title">Recipients</p>
-      <div class="teacher-notif-recipients" id="teacher-notif-recipients"></div>
-      <p class="teacher-notif-selected-count" id="teacher-notif-selected-count">0 selected</p>
-      <div class="teacher-add-form-row">
-        <input type="datetime-local" class="teacher-add-input" id="teacher-notif-send-at">
+    <section class="zp-panel">
+      <h2>Email a reminder</h2>
+      <p class="zp-muted">Pick students and a time. Emails go out within about 15 minutes of the time you choose, not the instant you click Schedule. For a session on someone's calendar, the reminder box on their student page does this for you.</p>
+      <div class="teacher-add-form">
+        <p class="teacher-add-form-title">Recipients</p>
+        <div class="teacher-notif-recipients" id="teacher-notif-recipients"></div>
+        <p class="teacher-notif-selected-count" id="teacher-notif-selected-count">0 selected</p>
+        <div class="teacher-add-form-row">
+          <input type="datetime-local" class="teacher-add-input" id="teacher-notif-send-at">
+        </div>
+        <input type="text" class="teacher-add-input" id="teacher-notif-subject" placeholder="Subject (e.g. Session reminder — Thursday 6pm)">
+        <textarea class="teacher-add-textarea" id="teacher-notif-message" placeholder="Message"></textarea>
+        <button type="button" class="teacher-add-btn" id="teacher-notif-submit">Schedule</button>
       </div>
-      <input type="text" class="teacher-add-input" id="teacher-notif-subject" placeholder="Subject (e.g. Session reminder — Thursday 6pm)">
-      <textarea class="teacher-add-textarea" id="teacher-notif-message" placeholder="Message"></textarea>
-      <button type="button" class="teacher-add-btn" id="teacher-notif-submit">Schedule</button>
-    </div>
-    <div class="requests-log-list" id="teacher-notifications-list"></div>
+      <div class="requests-log-list" id="teacher-notifications-list"></div>
+    </section>
 
-    <h2 class="teacher-section-title">Announce to your class</h2>
-    <p class="parent-subtitle">Posts to everyone in the selected class right away — they'll see it (and a badge if it's new) next time they're on the site.</p>
-    <div class="teacher-add-form">
-      <label for="teacher-announce-class" class="teacher-filter-label">Class</label>
-      <select id="teacher-announce-class" class="teacher-filter-select"></select>
-      <input type="text" class="teacher-add-input" id="teacher-announce-title" placeholder="Title (e.g. No session this Thursday)">
-      <textarea class="teacher-add-textarea" id="teacher-announce-message" placeholder="Message"></textarea>
-      <button type="button" class="teacher-add-btn" id="teacher-announce-submit">Post</button>
-    </div>
-    <div class="requests-log-list" id="teacher-own-announcements-list"></div>
+    <section class="zp-panel">
+      <h2>Announce to a class</h2>
+      <p class="zp-muted">Shows on every student's Right Now page for two weeks.</p>
+      <div class="teacher-add-form">
+        <label for="teacher-announce-class" class="teacher-filter-label">Class</label>
+        <select id="teacher-announce-class" class="teacher-filter-select"></select>
+        <input type="text" class="teacher-add-input" id="teacher-announce-title" placeholder="Title (e.g. No session this Thursday)">
+        <textarea class="teacher-add-textarea" id="teacher-announce-message" placeholder="Message"></textarea>
+        <button type="button" class="teacher-add-btn" id="teacher-announce-submit">Post</button>
+      </div>
+      <div class="requests-log-list" id="teacher-own-announcements-list"></div>
+    </section>
 
-    <h2 class="teacher-section-title">From Admin</h2>
-    <p class="parent-subtitle">Announcements from admins, visible to every teacher.</p>
-    <div class="requests-log-list" id="teacher-admin-announcements-list"></div>
+    <section class="zp-panel">
+      <h2>From Admin</h2>
+      <p class="zp-muted">Announcements from admins, visible to every teacher.</p>
+      <div class="requests-log-list" id="teacher-admin-announcements-list"></div>
+    </section>
   </div>
-</main>
+</div>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/practice-core.js"></script>
+<script src="js/zp-config.js"></script>
+<script src="js/zp-store.js"></script>
+<script src="js/zp-banks.js"></script>
+<script src="js/zp-ui.js"></script>
+<script src="js/zp-tex.js"></script>
+<script src="js/zp-plan.js"></script>
+<script src="js/zp-mentor.js"></script>
+<script src="js/zp-tdash.js"></script>
 <script>
   requireTeacherLogin();
   var teacher = getCurrentTeacher();
-  renderTeacherDashboard(teacher);
-
   document.getElementById('logout-btn').addEventListener('click', logout);
+  if (teacher) {
+    var deskMain = document.getElementById('zp-main'); ZPUI.guard(deskMain);
+    ZPTeach.mountDesk(deskMain, teacher);
+    // The class-wide tools from before (requests, email reminders, announcements) still work as they did.
+    teacherPendingChanges = []; teacherPendingRefreshCallbacks_ = [];
+    renderTeacherRequestsQueue_(teacher);
+    renderScheduleNotificationForm_(teacher);
+    renderScheduledNotificationsList_(teacher);
+    renderAnnounceForm_(teacher);
+    initTeacherAnnouncements_(teacher);
+  }
 </script>
 </body>
 </html>

@@ -1363,18 +1363,6 @@
     "correct": "B",
     "explanation_tex": "For degree2 at $x=1/2$, the Lagrange estimate is $|R_2|\\le e^{1/2}(1/2)^3/3!=\\sqrt e/48\\approx0.034348$. The smallest listed number at least this large is0.035, choice B.",
     "source_correction": "Asked for the smallest listed uniform Lagrange upper bound.",
-    "source_original": {
-      "stem_tex": "Using $e^x\\approx1+x+x^2/2$ to estimate $\\sqrt e$, the Lagrange remainder is no greater than",
-      "choices_tex": [
-        "$0.021$",
-        "$0.035$",
-        "$0.057$",
-        "$0.063$"
-      ],
-      "correct": null,
-      "explanation_tex": "At $x=1/2$, $|R_2|\\le M(1/2)^3/3!$ with $M=e^{1/2}$ on $[0,1/2]$. Thus $|R_2|\\le\\sqrt e/48\\approx0.034348<0.035$. B is the smallest listed valid upper bound; C and D are also looser upper bounds.",
-      "source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound."
-    },
     "resolved_source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound."
   },
   {

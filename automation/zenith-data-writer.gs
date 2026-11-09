@@ -556,6 +556,18 @@
 function doPost(e) {
   try {
     var body = JSON.parse(e.postData.contents);
+
+    // Mentor page (mentor.html) and the teacher's Talk tab: photos only. They are committed to the repo like Submit photos used to
+    // be, and the urls come back; the message that carries them is an event in the student's own log (zenith-student-data.gs).
+    if (body.action === "uploadPhotos") {
+      var up = (body.payload && body.payload.photos) || [];
+      if (!up.length || up.length > MAX_PHOTOS_PER_SUBMISSION_) throw new Error("Send between 1 and " + MAX_PHOTOS_PER_SUBMISSION_ + " photos.");
+      var pp = PropertiesService.getScriptProperties();
+      var tk = pp.getProperty("GITHUB_TOKEN"), ow = pp.getProperty("GITHUB_OWNER"), rp = pp.getProperty("GITHUB_REPO"), br = pp.getProperty("GITHUB_BRANCH") || "main";
+      if (!tk || !ow || !rp) throw new Error("Missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO script property.");
+      return jsonResponse_({ ok: true, urls: up.map(function (ph) { return commitUploadedPhoto_(ow, rp, br, tk, ph); }) });
+    }
+
     var operations = body.action === "applyBatch"
       ? ((body.payload && body.payload.operations) || [])
       : [{ action: body.action, payload: body.payload || {} }];
@@ -2380,7 +2392,7 @@ function commitUploadedPhoto_(owner, repo, branch, token, photo) {
   return "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + branch + "/" + path;
 }
 
-var MAX_PHOTOS_PER_SUBMISSION_ = 10;
+var MAX_PHOTOS_PER_SUBMISSION_ = 20;
 var PHOTO_EXTENSIONS_ = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif" };
 // ~8MB decoded (base64 runs about 4/3 the size of the raw bytes) —
 // comfortably under Apps Script's request-size ceiling, and plenty for

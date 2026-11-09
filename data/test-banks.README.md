@@ -17,7 +17,7 @@ The four JSON files are separate databases by subject and set type:
 
 ## Calculus review and LaTeX
 
-`calculus-reviewed/` holds the authoritative source-reviewed chapter records. The review restores formulas, all four multiple-choice options, shared tables/graphs, and worked explanations using the source PDFs and LaTeX files under `/Users/kyj/Documents/zenith-resources/AP Calculus BC/`.
+`calculus-reviewed/` holds the authoritative source-reviewed chapter records. The review restores formulas, all four multiple-choice options, shared tables/graphs, and worked explanations using the source PDFs under `/Users/kyj/Documents/zenith-resources/AP Calculus BC/` (the original PDF-extracted `.tex` files were retired; see the backup zip there).
 
 `calculus-review-status.json` reports exact coverage and any pending IDs. Do not infer completeness from the presence of an ID: the original extracted banks already contained IDs with missing content. `review_status: "source-reviewed"` identifies reviewed records.
 
@@ -42,7 +42,7 @@ Math uses KaTeX-compatible delimiters and commands. Tables use math `array` envi
 
 ## Source defects and grading
 
-The 27 source defects identified during review have now been repaired into single-answer questions. See `calculus-source-repairs.md` for the item-by-item changes. Each repaired record preserves its original content in `source_original`, the original defect in `resolved_source_issue`, and the change in `source_correction`. These repaired questions have valid `correct` values and synchronized chapter keys. Original PDFs remain unchanged.
+The 27 source defects identified during review have now been repaired into single-answer questions. See `calculus-source-repairs.md` for the item-by-item changes. Each repaired record keeps the original defect in `resolved_source_issue` and the change in `source_correction` (the dirty originals were removed from the data; the old extracted `.tex` files are in the backup zip beside `zenith-resources/AP Calculus BC/`). These repaired questions have valid `correct` values and synchronized chapter keys. Original PDFs remain unchanged.
 
 If a future unresolved defect is recorded, use `source_issue` with `correct: null` and omit that ID from `answer_key`; such an item must remain ungraded. Do not confuse the historical `resolved_source_issue` field with an active defect.
 
@@ -56,13 +56,14 @@ Merge reviewed records into both banks and regenerate the coverage report:
 python3 scripts/apply_calculus_reviewed.py
 ```
 
-The legacy C extraction script also applies these reviewed records before writing output:
+The reviewed JSON is the single source of truth. The legacy extraction script (`parse_calculus_c_bank.py`) has been removed. The `C<n>_*Problems.tex` / `T<n>_*Problems.tex` files in `sources/calculus/` are clean, compilable LaTeX *generated from the banks* (stems and choices only; answers and explanations live in the JSON):
 
 ```sh
-python3 scripts/parse_calculus_c_bank.py
+python3 scripts/build_calculus_tex.py            # write sources/calculus/*.tex
+python3 scripts/build_calculus_tex.py --dest DIR # or write a scratch copy to compile
 ```
 
-The original C `.tex` files are lossy PDF text extractions; they are not a replacement for the curated records. If re-parsing T sources, run `apply_calculus_reviewed.py` afterward. Preserve `calculus-reviewed/` and its figure assets.
+Never hand-edit those `.tex` files. Preserve `calculus-reviewed/` and its figure assets.
 
 Validate IDs, coverage, choices, explanations, keys, source-defect handling, and figure references:
 

@@ -30,17 +30,18 @@ zenith-website/
 ├── Student pages (require login)
 │   ├── portal.html             Course chooser — iPhone-folder-style app icons
 │   ├── roadmap.html?course=<id>  Selected course's roadmap (Table/Curve/Cards/Orbit views)
-│   ├── right-now.html          One current priority/action ("Now")
-│   ├── feedback.html           Personalized feedback log
-│   ├── cheatsheet.html         Personalized formulas/patterns (KaTeX)
-│   ├── calendar.html           Embedded Google Calendar
-│   └── submit.html             Embedded Google submission form
+│   ├── right-now.html          Ranked "what to do next, and why" (tasks, reviews, inbox, calendar, plan)
+│   ├── mentor.html             Optional line to the teacher: messages, photos, questions, proposed sessions
+│   ├── practice.html / chapter.html / notebook.html   Practice hub, chapter flow, Notebook
+│   ├── calendar.html           Month calendar + "My agenda" + long-term plan
+│   └── feedback.html, submit.html   Redirect to mentor.html (feedback and Submit now live there)
 │
 ├── Parent page (read-only)
 │   └── parent.html             Summary dashboard, nothing editable
 │
 ├── Teacher page
-│   └── teacher.html            Placeholder dashboard (role-aware login)
+│   ├── teacher.html            Mentor Desk: progress queue, students table, class tools
+│   └── teacher-student.html    One student: Overview / Work / Assign / Plan & calendar / Talk
 │
 ├── css/
 │   └── style.css               All styling — theme colors/fonts are CSS variables at the top
@@ -72,6 +73,16 @@ zenith-website/
 ├── .nojekyll             Tells GitHub Pages to serve files as-is (no Jekyll processing)
 └── README.md             This file
 ```
+
+## Course platform (chapter hub, notebook, mocks)
+
+The chapter-based learning flow (Book, Problems, Review, Test, Close) lives in
+`chapter.html`, `notebook.html`, `practice.html`, `right-now.html`, `mentor.html` and the
+teacher's `teacher.html` (Mentor Desk) and `teacher-student.html`, driven by
+`js/zp-*.js`, `css/platform.css` and `css/mentor.css`. Everything a student does is an append-only event;
+status, the review queue, Today and the teacher view are derived from it. Pure logic is
+in `js/zp-store.js` and tested with `node scripts/test_platform.cjs`. Design and open
+items: [redesign-structure.md](redesign-structure.md).
 
 ## Shared header and footer
 
@@ -146,7 +157,7 @@ whole site updates together.
 
 ## Submission pipeline
 
-`submit.html` embeds a Google Form. A Google Apps Script bound to that
+(Historical: `submit.html` used to embed a Google Form; it now redirects to `mentor.html`.) A Google Apps Script bound to that
 form (`automation/submissions-compiler.gs`) compiles every response
 into `data/submissions-log.json`, OCR'ing any file upload along the
 way. It only compiles a status-tracked log — it does not write
@@ -160,8 +171,7 @@ Several legacy student pages and public resources still link out to
 Notion; the native roadmap system (Table/Curve/Cards/Orbit views driven
 by `js/data.js`) is gradually replacing that dependency course by
 course — see the migration procedure in [PROGRESS.md](PROGRESS.md). The
-Submit page is an intentional, permanent embed (Google Forms), not
-something being migrated away from. The Calendar page (`calendar.html`)
+Submit page (a Google Form embed) has been retired in favour of the Mentor page. The Calendar page (`calendar.html`)
 was previously a Google Calendar embed; it's now a native, role-aware
 in-site calendar backed by `data/calendar-events.json` — see
 `automation/zenith-data-writer.gs`'s `createEvent`/`cancelEvent` actions.

@@ -42,7 +42,15 @@ before trusting a blank choice as ground truth.
 Course id strings match `js/data.js`'s `STUDENTS[].courses[].id`
 (`ap-calculus-bc`, `ap-chemistry`).
 
-Banks are generated from the `.tex` source under
-`/Users/kyj/Documents/zenith-resources/`, not hand-maintained here — if the
-source chapters change, regenerate rather than hand-editing the JSON
-(`scripts/parse_calculus_c_bank.py` for the calc C-bank).
+**Calculus source of truth is now the reviewed JSON**, not the `.tex` files.
+Edit `data/calculus-reviewed/{c,t}-N.json`, then run
+`python3 scripts/apply_calculus_reviewed.py` to merge into both banks. The
+`C<n>_*Problems.tex` / `T<n>_*Problems.tex` files in `sources/calculus/` are
+*generated* from the banks by `python3 scripts/build_calculus_tex.py` — never
+hand-edit them. They hold stems and choices only (no answers or explanations),
+so they cannot replace the JSON. The old PDF-extracted versions are gone from
+zenith-resources (backup zip: `zenith-resources/AP-Calculus-BC-legacy-problem-tex-backup.zip`). The old extractor `parse_calculus_c_bank.py` is gone. The
+chemistry banks are still extraction-derived and not yet reviewed.
+
+Because Calculus is fully reviewed, the "blank choice" caveat above no longer
+applies to `calculus-*-bank.json`.

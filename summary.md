@@ -485,7 +485,7 @@ It returns GRADED, NEEDS_REVIEW, NEEDS_BANK, or NOT_AUTOGRADABLE, including scor
 
 ### Bank regeneration
 
-Banks were parsed from external `.tex` resources under `/Users/kyj/Documents/zenith-resources/`. `scripts/parse_calculus_c_bank.py` regenerates the Calculus C-bank with regex-based A/B problem and A–D choice detection. Generated banks should be regenerated from source, not hand-maintained.
+The Calculus banks are source-reviewed: `data/calculus-reviewed/` is the source of truth, merged into the banks by `scripts/apply_calculus_reviewed.py`. The Calculus `.tex` problem files in `sources/calculus/` are generated back from the banks by `scripts/build_calculus_tex.py`. Chemistry banks remain extraction-derived.
 
 ## 14. Write automation: `automation/zenith-data-writer.gs`
 
@@ -757,7 +757,8 @@ The historical docs were generated from commits through 2026-07-29 and should no
 - `automation/notifications/`: diff, render, SMTP, scheduled sending, links, and docs.
 - `.github/workflows/notify.yml`: push/manual/cron orchestration.
 - `scripts/grade_pending.py`: read-only deterministic grader.
-- `scripts/parse_calculus_c_bank.py`: Calculus C-bank generator.
+- `scripts/apply_calculus_reviewed.py`: merges reviewed Calculus records into the banks.
+- `scripts/build_calculus_tex.py`: renders the banks back to clean LaTeX problem files.
 - `scripts/publish-blog.js`: legacy Markdown-to-`BLOG_POSTS` publisher.
 
 ### Documentation and assets

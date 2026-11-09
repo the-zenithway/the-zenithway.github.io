@@ -1,5 +1,11 @@
 # Submission compiler
 
+> **Also related:** [`zenith-student-data.gs`](zenith-student-data.gs) is the
+> storage backend for the course platform (chapter hub, notebook, mocks, plans).
+> It stores student events in a Google Sheet rather than committing to the repo.
+> Setup steps are in that file's header; until `DATA_URL` in `js/zp-config.js` is
+> set, the platform saves in the browser only. See [`../redesign-structure.md`](../redesign-structure.md).
+
 > **Related:** [`zenith-data-writer.gs`](zenith-data-writer.gs) is a
 > separate, standalone Web App that backs every write control on the
 > teacher dashboard — marking a submission Complete (teacher.html) and
@@ -169,3 +175,49 @@ field extraction and `sendConfirmationEmail_` (the "we got it" email) are
 the newest pieces and haven't each had a dedicated real-submission test
 yet — watch their next real runs. If `onFormSubmit` throws, the script
 emails whoever owns it with the error instead of failing silently.
+
+
+## Mentor layer (2026-11-05)
+
+- `zenith-student-data.gs`: EVENT_TYPES now include `msg`, `msg_read`, `prop_reply`, `task`, `task_done`, `criteria`, `cal_done`, `tnote`,
+  `legacy_done`. **Redeploy** (Deploy > Manage deployments > edit > new version) or student and teacher writes of those types are rejected
+  ("bad event") and stay queued in the browser.
+- `zenith-data-writer.gs`: new action `uploadPhotos` (`{action:"uploadPhotos", payload:{photos:[{dataBase64,mimeType,filename}]}}` ->
+  `{ok, urls}`) used by mentor.html and the teacher's Talk tab. Same GitHub upload as Submit photos. **Redeploy** to enable it.
+- Events are capped at 40,000 characters, so photos are never stored inside an event when DATA_URL is set: they are uploaded and the
+  event holds the URLs. Without DATA_URL (local testing) the compressed photo stays inside the message in that browser only.
+- The old Submit pipeline (`submissions-compiler.gs`, data/submissions-log.json) is no longer fed by the site. Existing entries remain for
+  history; `scripts/migrate_legacy.cjs` carried bogue's and seohu's over.
+
+- Concept cards: new event type `concept_order` (the student's sequence of concept cards) and an optional `images` list on `concept` events. Redeploy zenith-student-data.gs for `concept_order`; photos use the same `uploadPhotos` action as Mentor.
+
+
+## Mentor-layer email notifications (zenith-student-data.gs)
+
+Sent by the student-data script itself, as events are saved (no GitHub Action involved). Recipients come from `js/data.js`
+(read from the public repo; no token): `STUDENTS[].email`, `TEACHERS[].email`, and the `CLASSES` rosters decide who is whose mentor.
+An empty email means no emails. Self-study students (see `data/student-tracks.json`) have no mentor and are never emailed about it.
+
+| Event | Email goes to | Link |
+|---|---|---|
+| Student message (message, photo, question, progress, submission) | the mentor(s) of that student | student page > Talk |
+| FRQ feedback request | mentor | student page > Work |
+| Mock debrief request | mentor | student page > Work |
+| Session proposal | mentor | student page > Plan |
+| Task marked done with no report | mentor | student page > Talk |
+| Mentor message / feedback / nudge | the student | Mentor page |
+| New task (required or suggested) | the student | Right Now |
+| Calendar item added by the mentor | the student | Calendar |
+| Proposed session accepted / declined | the student | Calendar |
+
+The same kind of email about the same thing goes out at most once per 10 minutes (`NOTIFY_WINDOW_SEC`), so a burst of messages is one
+email. Set the Script property `NOTIFY_OFF` to `1` to turn all of it off. After pasting the new version, redeploy the Web app
+(Manage deployments > edit > New version); the first save triggers a one-time authorization prompt for sending mail and reading the repo file.
+
+
+## Student data: commit-based sync (zenith-student-data.gs)
+
+Replaces the old Google Sheet store. The script holds a GitHub token and commits students' event logs to a dedicated branch, like kyj-sat's kyj-cloud.
+Setup is in the comment at the top of the file; the short version: paste the new file into the Apps Script project, set `GITHUB_TOKEN`,
+`GITHUB_OWNER`, `GITHUB_REPO` (same values as `zenith-data-writer.gs`) in Script properties, redeploy as a new version (same /exec URL), and make sure
+`DATA_URL` and `CLOUD_RAW_URL` in `js/zp-config.js` are set. `SHEET_ID` is no longer used. The first push creates the `student-data` branch from `main`.

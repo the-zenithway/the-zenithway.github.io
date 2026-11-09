@@ -274,18 +274,6 @@
     ],
     "correct": "B",
     "explanation_tex": "Differentiating gives $-\\sin x-\\cos y\\,y\\prime=0$. Hence $y\\prime=-\\sin x/\\cos y=-\\sin x\\sec y$, choice B.",
-    "source_original": {
-      "stem_tex": "Find $dy/dx$ for $\\cos x - \\sin y - 3 = 0$.",
-      "choices_tex": [
-        "$-\\cot x$",
-        "$-\\sin x \\sec y$",
-        "$-\\tan x$",
-        "$\\dfrac{\\sin x}{\\cos y}$"
-      ],
-      "correct": null,
-      "explanation_tex": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement.",
-      "source_issue": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement."
-    },
     "resolved_source_issue": "The equation requires $\\cos x-\\sin y=3$, but for real $x,y$ the left side lies in $[-2,2]$. There are no real points and no real implicit derivative. Formal differentiation produces B, but it is not a derivative of any curve satisfying this statement.",
     "source_correction": "Changed the impossible constant from 3 to 1 and specified a regular point with nonzero cosine of y."
   },
@@ -745,18 +733,6 @@
     ],
     "correct": "B",
     "explanation_tex": "On $x<-2/3$, $f\\prime(x)=9x^2-4>0$. Since $f(-1)=1$, the inverse has $h(1)=-1$, and $h\\prime(1)=1/f\\prime(-1)=1/5$.",
-    "source_original": {
-      "stem_tex": "Suppose $y = f(x) = 3x^3-4x$. If $h(x)$ is the inverse function of $f$, then $h'(1) =$",
-      "choices_tex": [
-        "$-1$",
-        "$\\dfrac{1}{5}$",
-        "$1$",
-        "$5$"
-      ],
-      "correct": null,
-      "explanation_tex": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer.",
-      "source_issue": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer."
-    },
     "resolved_source_issue": "The cubic $3x^3-4x$ is not one-to-one on all reals. The value $1$ has three preimages: $-1$ and $(3\\pm\\sqrt{21})/6$. Different local inverse branches give different derivatives. B, $1/5$, is valid only for the unspecified branch with $h(1)=-1$. The source needs a branch restriction for a unique answer.",
     "source_correction": "Restricted the cubic to its increasing branch containing x=-1."
   },
@@ -898,22 +874,6 @@
     "figure": {
       "src": "data/calculus-figures/t3-b10.png",
       "alt": "Derivative graph has a positive constant left limit and a negative right limit at a, with both endpoints open."
-    },
-    "source_original": {
-      "stem_tex": "A function $f$ has the derivative shown. Which of the following statements must be TRUE?",
-      "choices_tex": [
-        "$f$ is continuous at $x = a$",
-        "$f$ has a vertical asymptote at $x=a$",
-        "$f$ has a jump discontinuity at $x=a$",
-        "$f$ has a removable discontinuity at $x=a$"
-      ],
-      "correct": null,
-      "explanation_tex": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
-      "source_issue": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
-      "figure": {
-        "src": "data/calculus-figures/t3-b10.png",
-        "alt": "Derivative graph has a positive constant left limit and a negative right limit at a, with both endpoints open."
-      }
     },
     "resolved_source_issue": "No choice must be true. A bounded derivative on either side rules out a vertical asymptote, but separate integration constants and a freely assigned $f(a)$ allow continuity, a jump, or a removable discontinuity. The derivative graph does not determine how those pieces are joined. The original key A is unsupported.",
     "source_correction": "Replaced the unsupported continuity assertion with the conclusion that continuity is undetermined."
@@ -1065,18 +1025,6 @@
     ],
     "correct": "C",
     "explanation_tex": "For fixed $a$, Taylor expansion gives $[f(a+h)-f(a)]/h=f\\prime(a)+\\frac12 f\\prime\\prime(a)h+o(h)$. The assumed inequality, divided by positive $h$ and followed by $h\\to0^+$, gives $f\\prime\\prime(a)\\ge0$. Since $a$ is arbitrary, this holds everywhere. Convex functions may have positive or negative first derivatives, so A and B need not hold; $f(x)=x^2$ rules out D.",
-    "source_original": {
-      "stem_tex": "If $f$ is differentiable and difference quotients overestimate the slope of $f$ at $x=a$ for all $h>0$, which must be true?",
-      "choices_tex": [
-        "$f'(x) \\geq 0$ on $[a,h]$",
-        "$f'(x) \\leq 0$ on $[a,h]$",
-        "$f''(x) \\geq 0$ on $[a,h]$",
-        "$f''(x) \\leq 0$ on $[a,h]$"
-      ],
-      "correct": null,
-      "explanation_tex": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective.",
-      "source_issue": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective."
-    },
     "resolved_source_issue": "None is necessary. Even for a smooth function, forward secants overestimating the derivative at one base point need not imply a derivative sign or global convexity. For $a=0$, $f(x)=x^2(2+\\sin x)$ gives $[f(h)-f(0)]/h=h(2+\\sin h)>0=f'(0)$ for all $h>0$, while both $f'$ and $f''$ change sign. The source interval notation is also defective.",
     "source_correction": "Required twice continuous differentiability and the secant inequality at every base point; replaced the malformed interval notation."
   },

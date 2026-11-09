@@ -1,0 +1,5 @@
+{
+  "_note": "Which track each student who is NOT in a current class is on. selfStudy = still uses the platform on their own (shown in the Mentor Desk under 'Self-study track', no queue items except their messages). gone = left for good (hidden everywhere on the teacher side; their data is kept). Students on a class roster in js/data.js CLASSES are the normal track and are not listed here.",
+  "selfStudy": ["davidheo", "kyjv9981", "hamin", "onyoo"],
+  "gone": []
+}

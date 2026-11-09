@@ -1477,18 +1477,6 @@
         ],
         "correct": "C",
         "explanation_tex": "Differentiate $\\sin x-\\cos y-1=0$: $\\cos x+\\sin y\\,y\\prime=0$. Since $\\sin y\\ne0$, $y\\prime=-\\cos x/\\sin y=-\\csc y\\cos x$, choice C.",
-        "source_original": {
-          "stem_tex": "Find $dy/dx$ for the asserted differentiable relation $\\sin x-\\cos y-2=0$.",
-          "choices_tex": [
-            "$-\\cot x$",
-            "$\\cos x/\\sin y$",
-            "$-\\csc y\\cos x$",
-            "$(2-\\cos x)/\\sin y$"
-          ],
-          "correct": null,
-          "explanation_tex": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated.",
-          "source_issue": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated."
-        },
         "resolved_source_issue": "The equation requires $\\sin x-\\cos y=2$, attainable only when $\\sin x=1$ and $\\cos y=-1$. These are isolated points, not a differentiable real curve. Formal differentiation suggests C, but its denominator vanishes at every real solution. No valid derivative exists as stated.",
         "source_correction": "Changed the relation constant from 2 to 1 and specified a regular point with nonzero sine of y.",
         "review_status": "source-reviewed"
@@ -1986,18 +1974,6 @@
         ],
         "correct": "B",
         "explanation_tex": "On $x>1/\\sqrt2$, $f\\prime(x)=6x^2-3>0$, so an inverse exists. Since $f(1)=-1$, $h(-1)=1$ and $h\\prime(-1)=1/f\\prime(1)=1/3$.",
-        "source_original": {
-          "stem_tex": "Suppose $f(x)=2x^3-3x$. If $h$ is the inverse function of $f$, find $h'(-1)$.",
-          "choices_tex": [
-            "$-1$",
-            "$1/3$",
-            "$1$",
-            "$3$"
-          ],
-          "correct": null,
-          "explanation_tex": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified.",
-          "source_issue": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified."
-        },
         "resolved_source_issue": "No global inverse exists: the cubic is not one-to-one. Moreover $f(x)=-1$ has three preimages, $1$ and $(-1\\pm\\sqrt3)/2$, with different inverse derivatives. The intended B follows only after selecting the local branch with $h(-1)=1$, since $1/f'(1)=1/3$. No branch is specified.",
         "source_correction": "Restricted the cubic to its increasing branch containing x=1.",
         "review_status": "source-reviewed"
@@ -2310,18 +2286,6 @@
         ],
         "correct": "C",
         "explanation_tex": "For fixed $a$, Taylor expansion gives $[f(a+h)-f(a)]/h=f\\prime(a)+\\frac12 f\\prime\\prime(a)h+o(h)$. The assumed inequality, divided by positive $h$ and followed by $h\\to0^+$, gives $f\\prime\\prime(a)\\ge0$. Since $a$ is arbitrary, this holds everywhere. Convex functions may have positive or negative first derivatives, so A and B need not hold; $f(x)=x^2$ rules out D.",
-        "source_original": {
-          "stem_tex": "If $f$ is differentiable and difference quotients overestimate the slope at $x=a$ for all $h>0$, which must be true?",
-          "choices_tex": [
-            "$f'(x)\\ge0$ on $[a,h]$",
-            "$f'(x)\\le0$ on $[a,h]$",
-            "$f''(x)\\ge0$ on $[a,h]$",
-            "$f''(x)\\le0$ on $[a,h]$"
-          ],
-          "correct": null,
-          "explanation_tex": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity.",
-          "source_issue": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity."
-        },
         "resolved_source_issue": "No listed conclusion follows, and differentiability alone does not ensure $f''$ exists. Even interpreting the interval as $[a,a+h]$, let $a=0$ and $f(x)=x^2(2+\\sin x)$. Every forward quotient is $h(2+\\sin h)>0=f'(0)$, but $f'$ and $f''$ both change sign on the positive axis. Overestimation at a single base point does not imply global convexity.",
         "source_correction": "Required twice continuous differentiability and the secant inequality at every base point; replaced the malformed interval notation.",
         "review_status": "source-reviewed"
@@ -10193,18 +10157,6 @@
         "correct": "B",
         "explanation_tex": "For degree2 at $x=1/2$, the Lagrange estimate is $|R_2|\\le e^{1/2}(1/2)^3/3!=\\sqrt e/48\\approx0.034348$. The smallest listed number at least this large is0.035, choice B.",
         "source_correction": "Asked for the smallest listed uniform Lagrange upper bound.",
-        "source_original": {
-          "stem_tex": "Using $e^x\\approx1+x+x^2/2$ to estimate $\\sqrt e$, the Lagrange remainder is no greater than",
-          "choices_tex": [
-            "$0.021$",
-            "$0.035$",
-            "$0.057$",
-            "$0.063$"
-          ],
-          "correct": null,
-          "explanation_tex": "At $x=1/2$, $|R_2|\\le M(1/2)^3/3!$ with $M=e^{1/2}$ on $[0,1/2]$. Thus $|R_2|\\le\\sqrt e/48\\approx0.034348<0.035$. B is the smallest listed valid upper bound; C and D are also looser upper bounds.",
-          "source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound."
-        },
         "resolved_source_issue": "The wording has multiple valid answers: B, C, and D are all upper bounds. B is the intended smallest listed Lagrange bound.",
         "review_status": "source-reviewed"
       },

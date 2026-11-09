@@ -14,10 +14,10 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="js/layout.js"></script>
 </head>
-<body class="portal-body">
+<body>
 
 <div id="header-mount"></div>
-<script>renderPortalHeader({ active: "catalog", actions: ["logout"] });</script>
+<script>renderSiteHeader({ active: "catalog" });</script>
 
 <main class="catalog-wrap">
   <section class="catalog-panel" aria-labelledby="catalog-title">
@@ -30,13 +30,18 @@
   </section>
 </main>
 
+<div id="footer-mount"></div>
+<script>renderFooter();</script>
+
 <script src="js/data.js"></script>
+<script src="js/social-links.js"></script>
 <script src="js/app.js"></script>
 <script>
-  requireLogin();
+  // Public page: anyone can browse the catalog. The enrolled / pending badges
+  // only show up when a student is logged in on this browser.
+  renderSocialLinks();
+  renderNavAuth();
   renderCatalog(getCurrentStudent());
-
-  document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
 </body>
 </html>

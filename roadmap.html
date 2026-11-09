@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/platform.css">
 <script src="js/layout.js"></script>
 </head>
 <body class="portal-body">
@@ -23,11 +24,15 @@
   <div class="roadmap-course-heading">
     <a href="portal.html" class="roadmap-back">← All courses</a>
     <h1 id="roadmap-course-name">Course roadmap</h1>
+    <a href="practice.html" class="roadmap-back" id="practice-lab-link">Trainer →</a>
     <span class="roadmap-course-progress" id="roadmap-course-progress"></span>
   </div>
 
+  <div id="zp-today" hidden></div>
+
   <div class="roadmap-toolbar">
     <div class="roadmap-view-switch" id="roadmap-view-switch">
+      <button type="button" class="roadmap-view-btn" data-view="chapters">Chapters</button>
       <button type="button" class="roadmap-view-btn active" data-view="table">Table</button>
       <button type="button" class="roadmap-view-btn" data-view="curve">Curve</button>
       <button type="button" class="roadmap-view-btn" data-view="cards">Cards</button>
@@ -36,6 +41,10 @@
       <button type="button" class="roadmap-view-btn" data-view="cell">Cell</button>
       <button type="button" class="roadmap-view-btn" data-view="code">Code</button>
     </div>
+  </div>
+
+  <div class="roadmap-wrap" id="roadmap-view-chapters" hidden>
+    <div id="zp-chapter-path" class="zp-path"></div>
   </div>
 
   <div class="roadmap-wrap" id="roadmap-view-table">
@@ -121,14 +130,26 @@
 </main>
 
 <script src="js/data.js"></script>
-<script src="js/app.js"></script>
+<script src="js/zp-config.js?v=20261108b"></script>
+<script src="js/app.js?v=20261108b"></script>
 <script>
   requireLogin();
   var student = getCurrentStudent();
   var course = renderCourseRoadmap(student);
-  if (course) setUpRoadmapViewSwitch(course);
+  if (course) {
+    setUpRoadmapViewSwitch(course);
+    var practiceLink = document.getElementById("practice-lab-link");
+    practiceLink.hidden = !["ap-calculus-bc", "ap-chemistry"].includes(course.id);
+    practiceLink.href = "practice.html?course=" + encodeURIComponent(course.id);
+  }
 
   document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
+<script src="js/practice-core.js"></script>
+<script src="js/zp-store.js?v=20261108b"></script>
+<script src="js/zp-banks.js"></script>
+<script src="js/zp-ui.js"></script>
+<script src="js/zp-plan.js"></script>
+<script src="js/zp-today.js?v=20261108b"></script>
 </body>
 </html>

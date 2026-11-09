@@ -34,18 +34,6 @@
     ],
     "correct": "A",
     "explanation_tex": "$y\\prime=\\cos2x-2x\\sin2x$. At $x=\\pi/4$, $y=0$ and $y\\prime=-\\pi/2$. The tangent is $y=-\\frac\\pi2(x-\\frac\\pi4)$.",
-    "source_original": {
-      "stem_tex": "An equation of the tangent to the curve $y = x\\cos 2x$ at the point $\\left(\\frac{\\pi}{4},\\frac{\\pi}{4}\\right)$ is",
-      "choices_tex": [
-        "$y = x - \\dfrac{\\pi}{4}$",
-        "$y = \\dfrac{\\pi}{4}$",
-        "$y = \\dfrac{\\pi}{4} - x$",
-        "$y = x$"
-      ],
-      "correct": null,
-      "explanation_tex": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
-      "source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it."
-    },
     "resolved_source_issue": "The stated point is not on the curve: at $x=\\pi/4$, $x\\cos2x=0$, not $\\pi/4$. The actual tangent there is $y=-\\frac\\pi2(x-\\frac\\pi4)$, and none of the choices gives it.",
     "source_correction": "Corrected the point to (pi/4,0) and supplied the corresponding tangent as option A."
   },
@@ -84,18 +72,6 @@
     ],
     "correct": "C",
     "explanation_tex": "Implicit differentiation gives $2x-2y\\,y\\prime=0$, so the slope at $(6,4)$ is $3/2$. Thus $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$, choice C.",
-    "source_original": {
-      "stem_tex": "An equation of the tangent to the hyperbola $x^2-y^2=20$ at the point $(6,4)$ on the curve is",
-      "choices_tex": [
-        "$3x-2y-10=0$",
-        "$y = \\dfrac{3}{2}x$",
-        "$y = \\dfrac{3}{2}x - 5$",
-        "$y = \\dfrac{2}{3}x$"
-      ],
-      "correct": null,
-      "explanation_tex": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
-      "source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices."
-    },
     "resolved_source_issue": "Implicit differentiation gives $y'=x/y=3/2$. The tangent is $y-4=\\frac32(x-6)$, or $y=\\frac32x-5$. Options A and C are the same line, so the item has two correct choices.",
     "source_correction": "Changed duplicate option A to a different line; retained the correct tangent in C."
   },
@@ -719,22 +695,6 @@
       "src": "data/calculus-figures/t4-fprime-linear.png",
       "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
     },
-    "source_original": {
-      "stem_tex": "The figure shows $f\\prime$ on $[0,8]$. Which statement best describes $f$ at $x=5$?",
-      "choices_tex": [
-        "$f$ has a root.",
-        "$f$ has a maximum.",
-        "$f$ has a minimum.",
-        "The graph of $f$ has a point of inflection."
-      ],
-      "correct": null,
-      "explanation_tex": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
-      "source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
-      "figure": {
-        "src": "data/calculus-figures/t4-fprime-linear.png",
-        "alt": "Graph of f prime on [0,8], constant to x=3 then decreasing."
-      }
-    },
     "resolved_source_issue": "At $x=5$ the displayed derivative is positive and decreasing. Thus $f$ is increasing and concave down there, with neither an extremum nor a change of concavity. Its value is unknown, so a root is not implied. None of the listed statements follows.",
     "source_correction": "Replaced the unsupported inflection-point option with the behavior shown by the derivative graph."
   },
@@ -834,22 +794,6 @@
       "src": "data/calculus-figures/t4-velocity.png",
       "alt": "Velocity on [0,6], with corners at t=1,2,3."
     },
-    "source_original": {
-      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. During $2<t<3$, the object's acceleration (in ft/sec$^2$) is",
-      "choices_tex": [
-        "$-12$",
-        "$-6$",
-        "$6$",
-        "$12$"
-      ],
-      "correct": null,
-      "explanation_tex": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
-      "source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
-      "figure": {
-        "src": "data/calculus-figures/t4-velocity.png",
-        "alt": "Velocity on [0,6], with corners at t=1,2,3."
-      }
-    },
     "resolved_source_issue": "From the graph, $v(2)=0$ and $v(3)=-3$. The slope on $(2,3)$ is $(-3-0)/(3-2)=-3$ ft/sec$^2$, which is absent from the choices.",
     "source_correction": "Replaced option B with the acceleration determined by the graph."
   },
@@ -883,22 +827,6 @@
     "figure": {
       "src": "data/calculus-figures/t4-velocity.png",
       "alt": "Velocity on [0,6], with corners at t=1,2,3."
-    },
-    "source_original": {
-      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le6$. The object's average acceleration (in ft/sec$^2$) for the interval $0 \\leq t \\leq 3$ is",
-      "choices_tex": [
-        "$-18$",
-        "$-6$",
-        "$-4$",
-        "$-2$"
-      ],
-      "correct": null,
-      "explanation_tex": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
-      "source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
-      "figure": {
-        "src": "data/calculus-figures/t4-velocity.png",
-        "alt": "Velocity on [0,6], with corners at t=1,2,3."
-      }
     },
     "resolved_source_issue": "The graph gives $v(0)=1.5$ and $v(3)=-3$. Average acceleration is $(-3-1.5)/3=-1.5$ ft/sec$^2$, which is absent from the choices.",
     "source_correction": "Replaced option D with the average acceleration determined by the graph."
@@ -986,18 +914,6 @@
     ],
     "correct": "B",
     "explanation_tex": "The velocity components are $x\\prime(t)=3$ and $y\\prime(t)=6-2t$. Speed is their Euclidean norm: $\\sqrt{3^2+(6-2t)^2}=\\sqrt{4t^2-24t+45}$.",
-    "source_original": {
-      "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The speed of the particle at any time $t$ is",
-      "choices_tex": [
-        "$\\sqrt{10-2t}$",
-        "$2\\sqrt{t^2-6t+10}$",
-        "$2\\sqrt{t^2-3t+10}$",
-        "$2(|5-t|)$"
-      ],
-      "correct": null,
-      "explanation_tex": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
-      "source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression."
-    },
     "resolved_source_issue": "Velocity is $\\langle3,6-2t\\rangle$, so speed is $\\sqrt{9+(6-2t)^2}=\\sqrt{4t^2-24t+45}$. None of the choices equals this expression.",
     "source_correction": "Replaced option B with the correct speed formula."
   },
@@ -1012,18 +928,6 @@
     ],
     "correct": "C",
     "explanation_tex": "Speed is $\\sqrt{9+(6-2t)^2}\\ge3$, with equality at $t=3$. The minimum is3.",
-    "source_original": {
-      "stem_tex": "A particle has position $x=3t$, $y=6t-t^2$. The minimum speed of the particle is",
-      "choices_tex": [
-        "$0$",
-        "$1$",
-        "$2$",
-        "$4$"
-      ],
-      "correct": null,
-      "explanation_tex": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
-      "source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$."
-    },
     "resolved_source_issue": "The speed $\\sqrt{9+(6-2t)^2}$ is minimized at $t=3$ and equals $3$. No choice gives $3$.",
     "source_correction": "Replaced option C with the correct minimum speed."
   },
@@ -1214,22 +1118,6 @@
       "src": "data/calculus-figures/t4-velocity-long.png",
       "alt": "Velocity graph on [0,12]."
     },
-    "source_original": {
-      "stem_tex": "The figure shows velocity in ft/sec on $0\\le t\\le12$. The object reverses direction at $t=$",
-      "choices_tex": [
-        "$3$ only",
-        "$4.5$ only",
-        "$6$ only",
-        "$4.5$ and $6$ only"
-      ],
-      "correct": null,
-      "explanation_tex": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
-      "source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
-      "figure": {
-        "src": "data/calculus-figures/t4-velocity-long.png",
-        "alt": "Velocity graph on [0,12]."
-      }
-    },
     "resolved_source_issue": "In the source graph the rising segment runs from $(3,-2)$ to $(6,3)$, crossing zero at $t=3+2/(5/3)=4.2$. Thus the velocity changes sign at $4.2$, not $4.5$. None of the listed times matches the plotted curve.",
     "source_correction": "Corrected the zero-crossing time in option B to match the plotted line."
   },
@@ -1256,22 +1144,6 @@
     ],
     "correct": "C",
     "explanation_tex": "The linearization is $L(x)=f(3)+f\\prime(3)(x-3)=15+6(x-3)=6x-3$, choice C.",
-    "source_original": {
-      "stem_tex": "The graph of $f'$ is shown above. If we know that $f(3) = 15$, then the local linearization of $f$ at $x=3$ is $f(x) \\approx$",
-      "choices_tex": [
-        "$\\dfrac{x}{3}+14$",
-        "$\\dfrac{x}{3}+13$",
-        "$6x-3$",
-        "$6x+9$"
-      ],
-      "correct": null,
-      "explanation_tex": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
-      "source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
-      "figure": {
-        "src": "data/calculus-figures/t4-linearization.png",
-        "alt": "Source derivative graph with a point labeled (6,9)."
-      }
-    },
     "resolved_source_issue": "Linearization requires $f(x)\\approx15+f'(3)(x-3)$. The graph labels $(6,9)$ but gives no vertical-intercept value or vertical scale, so $f'(3)$ cannot be read uniquely. If the intended slope value is $6$, option C results; the source does not supply enough numerical information to establish it.",
     "source_correction": "Supplied f prime at 3 explicitly because the source graph does not establish its numerical value."
   },

@@ -1,6 +1,6 @@
 # Calculus source repairs
 
-All 27 previously ungraded source defects are repaired. Original records are preserved in `source_original`; `resolved_source_issue` records the defect and `source_correction` explains the revision. The original source PDFs were not changed.
+All 27 previously ungraded source defects are repaired. `resolved_source_issue` records the defect and `source_correction` explains the revision. The original source PDFs were not changed.
 
 | Set | Source ID | Answer | Repair |
 |---|---|---|---|
