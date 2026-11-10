@@ -1,0 +1,12 @@
+{"v":1,"username":"seohu","course":"ap-chemistry","events":[
+{"id":"leg:seohu:chem:done1","t":1793792460000,"type":"legacy_done","ch":"1","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done2","t":1793792520000,"type":"legacy_done","ch":"2","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done3","t":1793792580000,"type":"legacy_done","ch":"3","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done4","t":1793792640000,"type":"legacy_done","ch":"4","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done5","t":1793792700000,"type":"legacy_done","ch":"5","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done6","t":1793792760000,"type":"legacy_done","ch":"6","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done7","t":1793792820000,"type":"legacy_done","ch":"7","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done8","t":1793792880000,"type":"legacy_done","ch":"8","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done9","t":1793792940000,"type":"legacy_done","ch":"9","stages":["B","C","T","X"],"legacy":true},
+{"id":"leg:seohu:chem:done10","t":1793793000000,"type":"legacy_done","ch":"10","stages":["B","C","T","X"],"legacy":true}
+]}
