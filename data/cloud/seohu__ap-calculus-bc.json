@@ -35,5 +35,12 @@
 {"id":"mwc5zot1u8vujo","t":1794404302165,"type":"c_answer","ch":"1","pid":"1CA2","answer":"D","correct":true,"conf":"","ms":2754,"ctx":"practice","sess":"mwc5zmoize94vv"},
 {"id":"mwc601frxs1dec","t":1794404318535,"type":"c_answer","ch":"1","pid":"1CA3","answer":"C","correct":true,"conf":"","ms":1304,"ctx":"practice","sess":"mwc600fj5u7yaa"},
 {"id":"mwc603jlx9l5ra","t":1794404321265,"type":"c_answer","ch":"1","pid":"1CA4","answer":"D","correct":true,"conf":"","ms":1151,"ctx":"practice","sess":"mwc602nms26tzl"},
-{"id":"mwc605iohj6o26","t":1794404323824,"type":"c_answer","ch":"1","pid":"1CA5","answer":"D","correct":false,"conf":"","ms":1074,"ctx":"practice","sess":"mwc604ouhbwfex"}
+{"id":"mwc605iohj6o26","t":1794404323824,"type":"c_answer","ch":"1","pid":"1CA5","answer":"D","correct":false,"conf":"","ms":1074,"ctx":"practice","sess":"mwc604ouhbwfex"},
+{"id":"mwc60y41tzevwm","t":1794404360881,"type":"note","pid":"1CA5","src":"P","track":"actual","miss":"","approach":"","nkind":"other","text":"다음부터는 -1 곱하는거 곱하는거 까먹지 않기\nㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ","stuck":"","idea":"","signal":"","ch":"1"},
+{"id":"mwc60y42j2t9gh","t":1794404360882,"type":"card_flag","kind":"idea","ch":"1","key":"n-1CA5","on":true},
+{"id":"mwc624rl3b6gpy","t":1794404416161,"type":"task_done","key":"legacy-now"},
+{"id":"mwc631kl7kqe4v","t":1794404458677,"type":"cal_item","key":"cmwc631kl","date":"2026-11-11","title":"ㅋㅌㅊㅇㅍㅋㅌㅊㅍ","kind":"todo","done":false},
+{"id":"mwc63ca0m4hqtl","t":1794404472552,"type":"cal_item","key":"cmwc63ca0","date":"2026-11-11","title":"기출을 좀더 보자","kind":"todo","done":false},
+{"id":"mwc66h92ypwjpp","t":1794404618966,"type":"ex","ch":"1","key":"umwc66h92","label":"Example 4","tap":"","line":""},
+{"id":"mwc66kq9bakots","t":1794404623473,"type":"ex","ch":"1","key":"umwc66h92","label":"Example 4","tap":"","line":"","deleted":true}
 ]}
