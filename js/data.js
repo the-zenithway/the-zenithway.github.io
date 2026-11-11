@@ -2574,6 +2574,15 @@ const STUDENTS = [
         "feedback": [],
         "cheatSheet": [],
         "roadmap": []
+      },
+      {
+        "id": "ap-chemistry",
+        "name": "AP Chemistry",
+        "icon": "chemistry",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
       }
     ]
   }
