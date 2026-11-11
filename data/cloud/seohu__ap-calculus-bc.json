@@ -29,5 +29,11 @@
 {"id":"mwc5p4yw3w0f3m","t":1794403809896,"type":"concept","ch":"1","key":"umwc5o8pc","name":"최소 -> 미분","text":"최소일때 미분에서 0 되는점 찾기","deleted":true},
 {"id":"mwc5pm08d685ly","t":1794403831976,"type":"c_answer","ch":"1","pid":"1CA1","answer":"D","correct":false,"conf":"","ms":13760,"ctx":"chapter","sess":"mwc5pbe0b72qmg"},
 {"id":"mwc5prupdavy4v","t":1794403839553,"type":"flag","ch":"1","pid":"1CA1","on":false},
-{"id":"mwc5pspj3ntqf3","t":1794403840663,"type":"flag","ch":"1","pid":"1CA1","on":true}
+{"id":"mwc5pspj3ntqf3","t":1794403840663,"type":"flag","ch":"1","pid":"1CA1","on":true},
+{"id":"mwc5wc7lqn8cy7","t":1794404145873,"type":"frq_ans","aid":"","pid":"apF24FRQ3","ch":"ap","text":"$$","images":[],"ask":false},
+{"id":"mwc5y9ayx2u5kh","t":1794404235418,"type":"note","pid":"1CA1","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"asdfasdfsadqfasdfasdfasdf","stuck":"","idea":"","signal":"","ch":"1"},
+{"id":"mwc5zot1u8vujo","t":1794404302165,"type":"c_answer","ch":"1","pid":"1CA2","answer":"D","correct":true,"conf":"","ms":2754,"ctx":"practice","sess":"mwc5zmoize94vv"},
+{"id":"mwc601frxs1dec","t":1794404318535,"type":"c_answer","ch":"1","pid":"1CA3","answer":"C","correct":true,"conf":"","ms":1304,"ctx":"practice","sess":"mwc600fj5u7yaa"},
+{"id":"mwc603jlx9l5ra","t":1794404321265,"type":"c_answer","ch":"1","pid":"1CA4","answer":"D","correct":true,"conf":"","ms":1151,"ctx":"practice","sess":"mwc602nms26tzl"},
+{"id":"mwc605iohj6o26","t":1794404323824,"type":"c_answer","ch":"1","pid":"1CA5","answer":"D","correct":false,"conf":"","ms":1074,"ctx":"practice","sess":"mwc604ouhbwfex"}
 ]}
