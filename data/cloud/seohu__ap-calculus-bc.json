@@ -20,5 +20,14 @@
 {"id":"leg:seohu:rn","t":1793793600000,"type":"task","key":"legacy-now","by":"kyjteach","legacy":true,"forced":true,"kind":"free","title":"Chapter 4 · R","instr":"Resolve the mistakes in chapter 4C!\n\nDue: Wednesday"},
 {"id":"leg:seohu:sub9","t":1793889813925,"type":"msg","from":"student","kind":"submission","legacy":true,"text":"4오답","files":[{"url":"https://raw.githubusercontent.com/the-zenithway/the-zenithway.github.io/main/data/uploads/1793889806807_6bah9a.jpg"},{"url":"https://raw.githubusercontent.com/the-zenithway/the-zenithway.github.io/main/data/uploads/1793889809142_jhc6uh.jpg"},{"url":"https://raw.githubusercontent.com/the-zenithway/the-zenithway.github.io/main/data/uploads/1793889811181_c4odxa.jpg"}],"sub":{"chapter":"Chapter 4","unit":"R","status":"pending"}},
 {"id":"mwbqlsy2v6cbrm","t":1794378460106,"type":"b_submit","ch":"5"},
-{"id":"mwc5naqazni5av","t":1794403724050,"type":"ex","ch":"1","key":"umwc5naqa","label":"dfasdf","tap":"","line":""}
+{"id":"mwc5naqazni5av","t":1794403724050,"type":"ex","ch":"1","key":"umwc5naqa","label":"dfasdf","tap":"","line":""},
+{"id":"mwc5nkhrkiyzuu","t":1794403736703,"type":"ex","ch":"1","key":"umwc5naqa","label":"dfasdf","tap":"","line":"5/6 $\\frac{}{}$"},
+{"id":"mwc5npi1d2u8kd","t":1794403743193,"type":"ex","ch":"1","key":"umwc5naqa","label":"dfasdf","tap":"","line":"5/6 $\\frac{5}{6}$"},
+{"id":"mwc5nv9158dmzc","t":1794403750645,"type":"ex","ch":"1","key":"umwc5naqa","label":"dfasdf","tap":"","line":"5/6 $\\frac{5}{6}$","deleted":true},
+{"id":"mwc5o8pcejjb32","t":1794403768080,"type":"concept","ch":"1","key":"umwc5o8pc","name":"최소 -> 미분","text":""},
+{"id":"mwc5ofiku3pr3c","t":1794403776908,"type":"concept","ch":"1","key":"umwc5o8pc","name":"최소 -> 미분","text":"최소일때 미분에서 0 되는점 찾기"},
+{"id":"mwc5p4yw3w0f3m","t":1794403809896,"type":"concept","ch":"1","key":"umwc5o8pc","name":"최소 -> 미분","text":"최소일때 미분에서 0 되는점 찾기","deleted":true},
+{"id":"mwc5pm08d685ly","t":1794403831976,"type":"c_answer","ch":"1","pid":"1CA1","answer":"D","correct":false,"conf":"","ms":13760,"ctx":"chapter","sess":"mwc5pbe0b72qmg"},
+{"id":"mwc5prupdavy4v","t":1794403839553,"type":"flag","ch":"1","pid":"1CA1","on":false},
+{"id":"mwc5pspj3ntqf3","t":1794403840663,"type":"flag","ch":"1","pid":"1CA1","on":true}
 ]}
