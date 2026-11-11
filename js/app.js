@@ -72,6 +72,63 @@ function sha256Hex_(text) {
   });
 }
 
+// New accounts store a salted, deliberately slow hash instead of a bare SHA-256: "pbkdf2$<iterations>$<salt hex>$<hash hex>"
+// (PBKDF2 with SHA-256 through Web Crypto, a fresh random salt per account). js/data.js and data/signup-requests.json are public, so
+// anyone can read the stored hashes and try guesses offline; the salt rules out precomputed tables and the iterations make every guess
+// expensive. It is still only as strong as the password, which is why signup.html insists on a long one. Older accounts keep the bare
+// SHA-256 (or a plain `password`) and still log in: passwordMatches_ below understands all three.
+const PBKDF2_ITERATIONS_ = 210000;
+function hexOf_(bytes) { return Array.from(new Uint8Array(bytes)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join(""); }
+function pbkdf2Hex_(password, saltBytes, iterations) {
+  return crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]).then(function (key) {
+    return crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: saltBytes, iterations: iterations }, key, 256);
+  }).then(hexOf_);
+}
+function hashPassword_(password) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  return pbkdf2Hex_(password, salt, PBKDF2_ITERATIONS_).then(function (h) { return "pbkdf2$" + PBKDF2_ITERATIONS_ + "$" + hexOf_(salt) + "$" + h; });
+}
+// Resolves true when `password` is the password of this account entry (new salted hash, old bare SHA-256, or an old plain password).
+function passwordMatches_(entry, password) {
+  const stored = entry.passwordHash;
+  if (stored && stored.indexOf("pbkdf2$") === 0) {
+    const parts = stored.split("$"), iterations = parseInt(parts[1], 10), saltHex = parts[2] || "", want = parts[3] || "";
+    if (!iterations || iterations > 5000000 || saltHex.length % 2 || !/^[0-9a-f]*$/.test(saltHex)) return Promise.resolve(false);
+    const salt = new Uint8Array((saltHex.match(/../g) || []).map(function (h) { return parseInt(h, 16); }));
+    return pbkdf2Hex_(password, salt, iterations).then(function (h) { return h === want; });
+  }
+  if (stored) return sha256Hex_(password).then(function (h) { return h === stored; });
+  return Promise.resolve(entry.password === password);
+}
+
+// What a new password has to be. Returns a message when it is not good enough, "" when it is. The rules are strict on purpose: the stored
+// hash is public (see hashPassword_), so a guessable password is a password anyone can break from their own computer.
+const COMMON_PASSWORDS_ = ["password", "passw0rd", "123456", "1234567", "12345678", "123456789", "1234567890", "qwerty", "qwertyuiop", "abc123", "iloveyou", "letmein", "welcome", "admin", "monkey", "dragon", "football", "baseball", "sunshine", "princess", "zenith", "calculus", "chemistry", "biology", "student", "teacher", "school", "apcalculus", "kyj", "asdfgh", "zxcvbn"];
+function passwordProblem_(password, username, name) {
+  const p = String(password || ""), lower = p.toLowerCase();
+  if (p.length < 12) return "Use at least 12 characters. Longer is safer: four or more random words work well.";
+  if (new Set(p.split("")).size < 6) return "That password repeats too much. Mix it up, or use several random words.";
+  const u = String(username || "").toLowerCase();
+  if (u.length >= 3 && lower.indexOf(u) !== -1) return "Your password must not contain your username.";
+  const parts = String(name || "").toLowerCase().split(/\s+/).filter(function (w) { return w.length >= 4; });
+  if (parts.some(function (w) { return lower.indexOf(w) !== -1; })) return "Your password must not contain your name.";
+  const flat = lower.replace(/[^a-z0-9]/g, "");
+  // A common word with only a little added to it ("ilovezenith!!", "password1234") is the first thing anyone tries.
+  if (COMMON_PASSWORDS_.some(function (c) { return flat.indexOf(c) !== -1 && flat.length <= c.length + 8; }) || /^(0123456789|1234567890|abcdefghij|qwertyuiop)/.test(flat))
+    return "That password is too common. Pick something nobody could guess.";
+  if (/^[0-9]+$/.test(p)) return "Numbers alone are easy to guess. Use words and symbols too.";
+  return "";
+}
+// 0 to 4, for the strength bar on signup.html: length first, then variety. Only a hint: passwordProblem_ is the actual rule.
+function passwordStrength_(password) {
+  const p = String(password || ""); if (!p) return 0;
+  let score = p.length >= 12 ? 1 : 0;
+  if (p.length >= 16) score++;
+  if (p.length >= 20 || (/[a-z]/.test(p) && /[A-Z]/.test(p) && /[0-9]/.test(p) && /[^a-zA-Z0-9]/.test(p) && p.length >= 14)) score++;
+  if (p.length >= 24 || (p.length >= 16 && /[^a-zA-Z0-9]/.test(p) && /[0-9]/.test(p))) score++;
+  return Math.min(4, score);
+}
+
 // Checks a username/password against STUDENTS first, then TEACHERS,
 // then PARENTS, then ADMINS (from data.js). On success, remembers
 // who's logged in and which role they are (in this browser) and
@@ -88,43 +145,22 @@ function sha256Hex_(text) {
 // account happily coexist in the same STUDENTS/TEACHERS/PARENTS/
 // ADMINS array.
 function login(username, password) {
-  return sha256Hex_(password).then(function (hash) {
-    function matches(entry) {
-      return entry.username === username &&
-        (entry.passwordHash ? entry.passwordHash === hash : entry.password === password);
-    }
+  // Every account with this username, in the order the lists are checked (students, teachers, parents, admins).
+  const lists = [[STUDENTS, "student"], [TEACHERS, "teacher"], [PARENTS, "parent"], [ADMINS, "admin"]];
+  const candidates = [];
+  lists.forEach(function (l) { l[0].forEach(function (entry) { if (entry.username === username) candidates.push({ entry: entry, role: l[1] }); }); });
 
-    const student = STUDENTS.find(matches);
-    if (student) {
-      localStorage.setItem(SESSION_KEY, student.username);
-      localStorage.setItem(ROLE_KEY, "student");
-      localStorage.removeItem(ACTIVE_COURSE_KEY);
+  function tryNext(i) {
+    if (i >= candidates.length) return Promise.resolve(false);
+    return passwordMatches_(candidates[i].entry, password).then(function (ok) {
+      if (!ok) return tryNext(i + 1);
+      localStorage.setItem(SESSION_KEY, candidates[i].entry.username);
+      localStorage.setItem(ROLE_KEY, candidates[i].role);
+      if (candidates[i].role === "student") localStorage.removeItem(ACTIVE_COURSE_KEY);
       return true;
-    }
-
-    const teacher = TEACHERS.find(matches);
-    if (teacher) {
-      localStorage.setItem(SESSION_KEY, teacher.username);
-      localStorage.setItem(ROLE_KEY, "teacher");
-      return true;
-    }
-
-    const parent = PARENTS.find(matches);
-    if (parent) {
-      localStorage.setItem(SESSION_KEY, parent.username);
-      localStorage.setItem(ROLE_KEY, "parent");
-      return true;
-    }
-
-    const admin = ADMINS.find(matches);
-    if (admin) {
-      localStorage.setItem(SESSION_KEY, admin.username);
-      localStorage.setItem(ROLE_KEY, "admin");
-      return true;
-    }
-
-    return false;
-  });
+    });
+  }
+  return tryNext(0);
 }
 
 // ---- Accounts created on this device (instant student signup) ----
@@ -264,8 +300,9 @@ function setUpSignupForm_() {
       showError("Username must be 3–30 characters: letters, numbers, underscore, period, or hyphen only.");
       return;
     }
-    if (password.length < 8) {
-      showError("Password must be at least 8 characters.");
+    const weak = passwordProblem_(password, username, name);
+    if (weak) {
+      showError(weak);
       return;
     }
     if (password !== confirm) {
@@ -296,7 +333,7 @@ function setUpSignupForm_() {
       // Students get their account on the spot; teacher accounts still wait for an admin.
       if (role === "student") {
         buttonEl.textContent = "Creating your account...";
-        sha256Hex_(password).then(function (passwordHash) {
+        hashPassword_(password).then(function (passwordHash) {
           return createStudentAccountNow_({ username: username, name: name, email: email, passwordHash: passwordHash, adminEmails: adminEmails_() });
         }).then(function () {
           return login(username, password);
@@ -311,7 +348,7 @@ function setUpSignupForm_() {
         return;
       }
 
-      sha256Hex_(password).then(function (passwordHash) {
+      hashPassword_(password).then(function (passwordHash) {
         buttonEl.disabled = false;
         buttonEl.textContent = originalText;
         postTeacherAction_("submitSignup", {

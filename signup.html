@@ -48,11 +48,23 @@
           <input type="text" id="signup-website" tabindex="-1" autocomplete="off">
         </div>
 
+        <div class="signup-password-warning" role="note">
+          <strong>Make your password completely safe.</strong>
+          The scrambled form of your password is saved in a public GitHub repository, so anyone can download it and try guesses on their own computer, as many as they like. Only a long, random password holds up.
+          <ul>
+            <li>At least <b>12 characters</b>. Four or more random words in a row is ideal, like <code>plum-harbor-ladder-quartz-83</code>.</li>
+            <li>One you have <b>never used anywhere else</b> (not email, not school, not another site).</li>
+            <li>Nothing about you: no name, username, birthday, phone number or favourite team.</li>
+          </ul>
+        </div>
+
         <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" autocomplete="new-password" minlength="8" required>
+        <input type="password" id="signup-password" autocomplete="new-password" minlength="12" required>
+        <div class="signup-strength" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <p class="requests-field-note" id="signup-password-hint" role="status">Use a password manager if you can. Your browser can suggest and remember a strong one.</p>
 
         <label for="signup-confirm">Confirm password</label>
-        <input type="password" id="signup-confirm" autocomplete="new-password" minlength="8" required>
+        <input type="password" id="signup-confirm" autocomplete="new-password" minlength="12" required>
 
         <p id="signup-error" class="error-message" hidden></p>
 
@@ -75,6 +87,18 @@
 <script>
   renderSocialLinks();
   setUpSignupForm_();
+  // Live strength bar and the same rule the form enforces on submit.
+  (function () {
+    var pw = document.getElementById('signup-password'), bars = document.querySelectorAll('.signup-strength span'), hint = document.getElementById('signup-password-hint');
+    var labels = ['', 'Too weak', 'Okay', 'Strong', 'Very strong'], idle = hint.textContent;
+    function update() {
+      var problem = pw.value ? passwordProblem_(pw.value, document.getElementById('signup-username').value, document.getElementById('signup-name').value) : '';
+      var score = problem ? Math.min(1, passwordStrength_(pw.value)) : passwordStrength_(pw.value);
+      bars.forEach(function (b, i) { b.className = i < score ? 'on s' + score : ''; });
+      hint.textContent = !pw.value ? idle : problem ? problem : 'Strength: ' + labels[score] + (score < 3 ? '. Longer is safer.' : '.');
+    }
+    ['input', 'change'].forEach(function (ev) { pw.addEventListener(ev, update); document.getElementById('signup-username').addEventListener(ev, update); document.getElementById('signup-name').addEventListener(ev, update); });
+  })();
   // Students are created on the spot; teachers wait for an admin, so the wording follows the choice.
   (function () {
     var role = document.getElementById('signup-role'), btn = document.getElementById('signup-submit-btn'), intro = document.getElementById('signup-intro');

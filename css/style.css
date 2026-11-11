@@ -3751,3 +3751,14 @@ footer {
 }
 :root[data-theme="light"] .zp-texkey.wide, :root[data-theme="paper"] .zp-texkey.wide { color: var(--accent); }
 :root[data-theme="light"] .zp-btn:hover:not(:disabled), :root[data-theme="paper"] .zp-btn:hover:not(:disabled) { border-color: var(--text-muted); }
+
+/* Signup: the "make your password completely safe" notice and the live strength bar */
+.signup-password-warning { margin: 4px 0 14px; padding: 12px 14px; border: 1px solid rgba(214, 169, 74, 0.55); border-radius: 12px; background: rgba(214, 169, 74, 0.1); font-size: 0.85rem; line-height: 1.5; }
+.signup-password-warning strong { display: block; margin-bottom: 4px; color: var(--accent); font-size: 0.95rem; }
+.signup-password-warning ul { margin: 8px 0 0; padding-left: 18px; }
+.signup-password-warning code { padding: 1px 5px; border-radius: 5px; background: rgba(255, 255, 255, 0.08); font-size: 0.8rem; }
+.signup-strength { display: flex; gap: 4px; margin: 8px 0 4px; }
+.signup-strength span { flex: 1; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.12); }
+.signup-strength span.on.s1 { background: #e5534b; }
+.signup-strength span.on.s2 { background: #d6a94a; }
+.signup-strength span.on.s3, .signup-strength span.on.s4 { background: #4caf7a; }

@@ -862,4 +862,27 @@ test('self-study roadmap: a self-study course gets the original roadmap with eve
   d.L.filter(c => c.open).forEach(c => assert.ok(d.S.some(s => s.courses.some(x => x.id === c.id && !x.selfStudy && x.roadmap.length > 0)), c.id + ' has an original roadmap to copy'));
 });
 
+test('passwords: new accounts get a salted slow hash, old SHA-256 and plain passwords still log in, weak passwords are refused', async () => {
+  const vm = require('vm'), fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const a = src.indexOf('function sha256Hex_'), b = src.indexOf('// Checks a username/password against STUDENTS first'); assert.ok(a > 0 && b > a);
+  const l = src.indexOf('function login(username, password) {'), l2 = src.indexOf('// ---- Accounts created on this device');
+  const store = {}, ctx = { crypto: globalThis.crypto, TextEncoder, Uint8Array, Array, Promise, Set, Object, parseInt, String, Number, JSON, Math,
+    STUDENTS: [{ username: 'old', passwordHash: require('crypto').createHash('sha256').update('hunter2').digest('hex') }, { username: 'plain', password: 'letmein' }],
+    TEACHERS: [{ username: 'tea', passwordHash: 'pbkdf2$not$valid' }], PARENTS: [], ADMINS: [], SESSION_KEY: 'u', ROLE_KEY: 'r', ACTIVE_COURSE_KEY: 'c',
+    localStorage: { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; } } };
+  vm.createContext(ctx); vm.runInContext(src.slice(a, b) + src.slice(l, l2) + ';this.api={hash:hashPassword_,match:passwordMatches_,login:login,problem:passwordProblem_,strength:passwordStrength_};', ctx);
+  const h1 = await ctx.api.hash('correct horse battery staple 83'), h2 = await ctx.api.hash('correct horse battery staple 83');
+  assert.ok(/^pbkdf2\$210000\$[0-9a-f]{32}\$[0-9a-f]{64}$/.test(h1), h1); assert.notStrictEqual(h1, h2, 'a fresh salt every time');
+  assert.strictEqual(await ctx.api.match({ passwordHash: h1 }, 'correct horse battery staple 83'), true); assert.strictEqual(await ctx.api.match({ passwordHash: h1 }, 'correct horse battery staple 84'), false);
+  const nodeCheck = require('crypto').pbkdf2Sync('correct horse battery staple 83', Buffer.from(h1.split('$')[2], 'hex'), 210000, 32, 'sha256').toString('hex'); assert.strictEqual(nodeCheck, h1.split('$')[3], 'a standard PBKDF2-SHA256 hash');
+  ctx.STUDENTS.push({ username: 'new', passwordHash: h1 });
+  assert.strictEqual(await ctx.api.login('new', 'correct horse battery staple 83'), true); assert.strictEqual(store.u, 'new'); assert.strictEqual(store.r, 'student');
+  assert.strictEqual(await ctx.api.login('old', 'hunter2'), true, 'an old SHA-256 account still logs in'); assert.strictEqual(await ctx.api.login('plain', 'letmein'), true, 'an old plain-password account still logs in');
+  assert.strictEqual(await ctx.api.login('old', 'wrong'), false); assert.strictEqual(await ctx.api.login('nobody', 'x'), false); assert.strictEqual(await ctx.api.login('tea', 'x'), false, 'a malformed hash never matches');
+  const P = (pw, u, n) => ctx.api.problem(pw, u || 'zed', n || 'Zed Smith');
+  ['short1!', 'password1234', '123456789012', 'aaaaaaaaaaaaaa', 'zedrocks12345', 'ilovezenith!!', 'qwertyuiop12', 'smith-is-great-1'].forEach(pw => assert.ok(P(pw), pw + ' should be refused'));
+  ['plum-harbor-ladder-quartz-83', 'Tr0ub4dor&3-xylophone', 'blue pencil rides seven clouds'].forEach(pw => assert.strictEqual(P(pw), '', pw + ' should pass'));
+  assert.ok(ctx.api.strength('plum-harbor-ladder-quartz-83') >= 3 && ctx.api.strength('abc') === 0);
+});
+
 console.log('\n' + n + ' tests passed');
