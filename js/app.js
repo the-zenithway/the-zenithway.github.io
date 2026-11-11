@@ -127,6 +127,39 @@ function login(username, password) {
   });
 }
 
+// ---- Accounts created on this device (instant student signup) ----
+// A new student account is committed to js/data.js by the data-writer script, but GitHub Pages takes about a minute to publish
+// that commit. So the signup page also keeps the account here, and every page adds it to STUDENTS on load: the student can log in
+// and keep working at once. Once the published js/data.js has the account, the published copy wins and this one is dropped.
+// Entries also expire after a day, so a removed account does not linger in this browser.
+const LOCAL_ACCOUNTS_KEY_ = "zenith:newAccounts:v1";
+const LOCAL_ACCOUNT_TTL_MS_ = 24 * 60 * 60 * 1000;
+function localAccounts_() {
+  try { const v = JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS_KEY_) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+}
+function rememberLocalAccount_(entry) {
+  try {
+    const keep = localAccounts_().filter(function (a) { return a.username !== entry.username; });
+    keep.push(Object.assign({ createdAt: Date.now() }, entry));
+    localStorage.setItem(LOCAL_ACCOUNTS_KEY_, JSON.stringify(keep));
+  } catch (e) { /* storage unavailable: the account still works once the site has published it */ }
+}
+function addLocalAccountsToStudents_() {
+  const all = localAccounts_();
+  if (!all.length) return;
+  const live = [];
+  all.forEach(function (a) {
+    const published = [STUDENTS, TEACHERS, PARENTS, ADMINS].some(function (list) {
+      return list.some(function (x) { return x !== a && x.username === a.username; });
+    });
+    if (published || Date.now() - (a.createdAt || 0) > LOCAL_ACCOUNT_TTL_MS_) return;
+    live.push(a);
+    STUDENTS.push({ username: a.username, name: a.name, passwordHash: a.passwordHash, email: a.email || "", courses: [] });
+  });
+  if (live.length !== all.length) { try { localStorage.setItem(LOCAL_ACCOUNTS_KEY_, JSON.stringify(live)); } catch (e) { /* ignore */ } }
+}
+addLocalAccountsToStudents_();
+
 // ---- Sign up (signup.html) ----
 // Lets anyone request a student or teacher account with no login —
 // name/username/email/password. The password is hashed client-side
@@ -150,21 +183,53 @@ const SIGNUP_USERNAME_PATTERN_ = /^[a-zA-Z0-9_.-]{3,30}$/;
 // data/signup-requests.json currently holds), which can go stale the
 // instant another signup gets approved or declined.
 function signupUsernameTaken_(username) {
+  const wanted = username.toLowerCase();
   const inExisting = [STUDENTS, TEACHERS, PARENTS, ADMINS].some(function (list) {
-    return list.some(function (entry) { return entry.username === username; });
+    return list.some(function (entry) { return String(entry.username).toLowerCase() === wanted; });
   });
   if (inExisting) return Promise.resolve(true);
 
   return fetch("data/signup-requests.json")
     .then(function (res) { return res.json(); })
     .then(function (all) {
-      return all.some(function (s) { return s.username === username && s.status !== "Declined"; });
+      return all.some(function (s) { return String(s.username).toLowerCase() === wanted && s.status !== "Declined"; });
     })
     // Can't check right now (offline, endpoint not deployed yet,
     // whatever) — don't block the signup over it, the server-side
     // gate in createStudentAccount/createTeacherAccount still catches
     // a real collision at approval time.
     .catch(function () { return false; });
+}
+
+const SIGNUP_EMAIL_PATTERN_ = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// Creates a student account right now: one batch to the data-writer script holding the account itself (committed to js/data.js) and
+// the signup record (listed as already approved by "auto"). Resolves once the script confirms; the account is also kept on this
+// device so it works before GitHub Pages publishes js/data.js (see addLocalAccountsToStudents_). Rejects with a readable message.
+function createStudentAccountNow_(a) {
+  if (!TEACHER_DATA_WRITE_URL) return Promise.reject(new Error("Sign-up is not set up yet."));
+  const base = { username: a.username, name: a.name, email: a.email, passwordHash: a.passwordHash };
+  const ctl = typeof AbortController === "function" ? new AbortController() : null;
+  const timer = setTimeout(function () { if (ctl) ctl.abort(); }, 45000);
+  return fetch(TEACHER_DATA_WRITE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    signal: ctl ? ctl.signal : undefined,
+    body: JSON.stringify({ action: "applyBatch", payload: { operations: [
+      { action: "createStudentAccount", payload: Object.assign({ instant: true }, base) },
+      { action: "submitSignup", payload: Object.assign({ auto: true, role: "student", adminEmails: a.adminEmails || [] }, base) }
+    ] } })
+  }).then(function (res) {
+    return res.json().catch(function () { return {}; }).then(function (body) { return { ok: res.ok, body: body }; });
+  }).then(function (r) {
+    clearTimeout(timer);
+    if (!r.ok || !r.body.ok) throw new Error((r.body && r.body.error) || "Could not create the account. Try again in a minute.");
+    rememberLocalAccount_(base);
+    if (!STUDENTS.some(function (x) { return x.username === base.username; })) STUDENTS.push({ username: base.username, name: base.name, passwordHash: base.passwordHash, email: base.email, courses: [] });
+  }, function (err) {
+    clearTimeout(timer);
+    throw new Error(err && err.name === "AbortError" ? "That took too long. Check your connection and try again." : "Could not reach the server. Check your connection and try again.");
+  });
 }
 
 function setUpSignupForm_() {
@@ -208,6 +273,14 @@ function setUpSignupForm_() {
       return;
     }
 
+    if (!SIGNUP_EMAIL_PATTERN_.test(email)) {
+      showError("Enter a valid email address.");
+      return;
+    }
+    // A hidden field real people never see: bots fill it, so a filled one is dropped without a word.
+    const trap = document.getElementById("signup-website");
+    if (trap && trap.value) { form.hidden = true; successEl.hidden = false; return; }
+
     const originalText = buttonEl.textContent;
     buttonEl.disabled = true;
     buttonEl.textContent = "Checking...";
@@ -216,7 +289,25 @@ function setUpSignupForm_() {
       if (taken) {
         buttonEl.disabled = false;
         buttonEl.textContent = originalText;
-        showError("That username is already taken or already pending review — pick another.");
+        showError("That username is already taken — pick another.");
+        return;
+      }
+
+      // Students get their account on the spot; teacher accounts still wait for an admin.
+      if (role === "student") {
+        buttonEl.textContent = "Creating your account...";
+        sha256Hex_(password).then(function (passwordHash) {
+          return createStudentAccountNow_({ username: username, name: name, email: email, passwordHash: passwordHash, adminEmails: adminEmails_() });
+        }).then(function () {
+          return login(username, password);
+        }).then(function () {
+          // A brand new student has no courses yet: send them to the catalog, where the self-study courses are open.
+          window.location.href = new URLSearchParams(window.location.search).get("redirect") ? getLoginRedirect() : "catalog.html";
+        }).catch(function (err) {
+          buttonEl.disabled = false;
+          buttonEl.textContent = originalText;
+          showError(err && err.message ? err.message : "Could not create the account. Try again in a minute.");
+        });
         return;
       }
 
@@ -4795,6 +4886,7 @@ function catalogBadgeHtml_(cls, student) {
 function renderCatalog(student) {
   const grid = document.getElementById("catalog-grid");
   if (!grid) return;
+  renderSelfStudyCatalog_(student);
 
   grid.innerHTML = CLASSES.map(function (cls) {
     const course = courseDisplayInfo_(cls.courseId);
@@ -6559,3 +6651,117 @@ function setUpRoadmapViewSwitch(course) {
 
 // Install the read-only guard as early as possible when a teacher/admin is viewing as a student.
 if (viewAsUsername_()) installViewAsGuard_();
+
+
+// ---- Self-study courses (catalog.html, portal.html) ----
+// A signed-in student adds a self-study course (SELF_STUDY_COURSES in js/data.js) with one click, no approval. It is saved on this
+// device at once, so the course shows in their portal right away, and sent to the data-writer script, which commits it to js/data.js
+// (published about a minute later; the device copy is dropped once the published one has it). If the send fails the change stays
+// marked "pending" and is retried the next time any page loads. Mentorship classes (CLASSES) stay admin-picked and locked.
+const SELF_STUDY_KEY_ = "zenith:selfStudy:v1"; // { username: [{ id, on, pending, at }] }
+const SELF_STUDY_TTL_MS_ = 24 * 60 * 60 * 1000;
+function selfStudyStore_() {
+  try { const v = JSON.parse(localStorage.getItem(SELF_STUDY_KEY_) || "{}"); return v && typeof v === "object" && !Array.isArray(v) ? v : {}; } catch (e) { return {}; }
+}
+function saveSelfStudyStore_(all) { try { localStorage.setItem(SELF_STUDY_KEY_, JSON.stringify(all)); } catch (e) { /* storage unavailable: the course still arrives once the site publishes it */ } }
+function selfStudyStudent_() {
+  try {
+    if (localStorage.getItem(ROLE_KEY) !== "student") return null;
+    const u = localStorage.getItem(SESSION_KEY);
+    return u ? STUDENTS.find(function (s) { return s.username === u; }) || null : null;
+  } catch (e) { return null; }
+}
+function selfStudyInfo_(id) { return SELF_STUDY_COURSES.find(function (c) { return c.id === id; }) || null; }
+
+// Adds this device's pending/recent changes to the logged-in student's courses, drops the ones the published js/data.js already shows.
+function applySelfStudyChoices_() {
+  const student = selfStudyStudent_(); if (!student) return;
+  const all = selfStudyStore_(), mine = all[student.username] || [];
+  if (!mine.length) return;
+  student.courses = student.courses || [];
+  const keep = [];
+  mine.forEach(function (e) {
+    const info = selfStudyInfo_(e.id), has = student.courses.some(function (c) { return c.id === e.id; });
+    if (!e.pending) {
+      if (Date.now() - (e.at || 0) > SELF_STUDY_TTL_MS_) return; // old enough that the published copy has surely caught up
+      if (e.on ? has : !has) return; // the published copy already agrees: nothing to remember
+    }
+    keep.push(e);
+    if (e.on && !has && info) student.courses.push({ id: info.id, name: info.name, icon: info.icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] });
+    if (!e.on) student.courses = student.courses.filter(function (c) { return !(c.id === e.id && c.selfStudy === true); });
+  });
+  all[student.username] = keep; saveSelfStudyStore_(all);
+}
+
+function postSelfStudy_(username, entry) {
+  if (!TEACHER_DATA_WRITE_URL || (typeof viewAsUsername_ === "function" && viewAsUsername_())) return Promise.resolve(false);
+  return fetch(TEACHER_DATA_WRITE_URL, { method: "POST", headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ action: entry.on ? "enrollSelfStudy" : "leaveSelfStudy", payload: { username: username, courseId: entry.id } }) })
+    .then(function (res) { return res.json().catch(function () { return {}; }).then(function (b) { return res.ok && b.ok; }); })
+    .then(function (ok) {
+      if (!ok) return false;
+      const all = selfStudyStore_(), list = all[username] || [], cur = list.find(function (x) { return x.id === entry.id; });
+      if (cur && cur.at === entry.at) { cur.pending = false; saveSelfStudyStore_(all); }
+      return true;
+    }, function () { return false; });
+}
+
+// Add (on = true) or drop (on = false) a self-study course for the logged-in student. Resolves true once the server has it.
+function setSelfStudy_(courseId, on) {
+  const student = selfStudyStudent_(); if (!student || !selfStudyInfo_(courseId)) return Promise.resolve(false);
+  const all = selfStudyStore_(), entry = { id: courseId, on: !!on, pending: true, at: Date.now() };
+  all[student.username] = (all[student.username] || []).filter(function (x) { return x.id !== courseId; }).concat([entry]);
+  saveSelfStudyStore_(all);
+  const info = selfStudyInfo_(courseId);
+  if (on && !student.courses.some(function (c) { return c.id === courseId; })) student.courses.push({ id: info.id, name: info.name, icon: info.icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] });
+  if (!on) student.courses = student.courses.filter(function (c) { return !(c.id === courseId && c.selfStudy === true); });
+  return postSelfStudy_(student.username, entry);
+}
+
+// Anything that did not reach the server last time goes again (a repeat is harmless: adding twice or leaving twice changes nothing).
+function retryPendingSelfStudy_() {
+  const student = selfStudyStudent_(); if (!student) return;
+  (selfStudyStore_()[student.username] || []).filter(function (e) { return e.pending; }).forEach(function (e) { postSelfStudy_(student.username, e); });
+}
+
+function selfStudyCardHtml_(c, student, isStudent) {
+  const mine = isStudent && student.courses.some(function (x) { return x.id === c.id; });
+  const ownsViaClass = mine && student.courses.some(function (x) { return x.id === c.id && x.selfStudy !== true; });
+  let action;
+  if (!c.open) action = '<span class="catalog-lock-badge">Coming soon</span>';
+  else if (!isStudent) action = '<a class="catalog-enroll-btn" href="login.html?redirect=catalog.html">Log in or sign up to start</a>';
+  else if (ownsViaClass) action = '<span class="catalog-lock-badge catalog-badge-enrolled">✓ In your portal (your class)</span>';
+  else if (mine) action = '<span class="catalog-lock-badge catalog-badge-enrolled">✓ In your portal</span> <a class="catalog-enroll-btn" href="roadmap.html?course=' + encodeURIComponent(c.id) + '">Open</a> <button type="button" class="catalog-enroll-link" data-ss-leave="' + c.id + '">Remove</button>';
+  else action = '<button type="button" class="catalog-enroll-btn" data-ss-add="' + c.id + '">Start this course</button>';
+  return '<div class="catalog-card">' +
+    '<span class="catalog-card-icon course-app-icon course-app-icon--' + c.icon + '">' + courseIconHtml(c.icon) + '</span>' +
+    '<div class="catalog-card-body">' +
+      '<p class="catalog-card-subject">Self-study</p>' +
+      '<h3 class="catalog-card-name">' + c.name + '</h3>' +
+      '<p class="catalog-card-teacher">' + c.blurb + '</p>' +
+      '<div class="catalog-card-actions">' + action + '</div>' +
+    '</div></div>';
+}
+
+function renderSelfStudyCatalog_(student) {
+  const host = document.getElementById("catalog-selfstudy");
+  if (!host) return;
+  const isStudent = !!selfStudyStudent_();
+  student = isStudent ? selfStudyStudent_() : null;
+  host.innerHTML = SELF_STUDY_COURSES.map(function (c) { return selfStudyCardHtml_(c, student, isStudent); }).join("");
+  if (host.__ssBound) return;
+  host.__ssBound = true;
+  host.addEventListener("click", function (e) {
+    const add = e.target.closest("[data-ss-add]"), leave = e.target.closest("[data-ss-leave]");
+    const btn = add || leave; if (!btn) return;
+    const id = btn.getAttribute(add ? "data-ss-add" : "data-ss-leave"), note = document.getElementById("catalog-selfstudy-note");
+    btn.disabled = true;
+    setSelfStudy_(id, !!add).then(function (ok) {
+      renderSelfStudyCatalog_();
+      if (note) note.textContent = add ? (ok ? "Added. It is in your portal now." : "Added on this device. It will finish saving the next time you are online.") : (ok ? "Removed from your portal. Your progress is kept." : "Removed on this device. It will finish saving the next time you are online.");
+    });
+  });
+}
+
+applySelfStudyChoices_();
+retryPendingSelfStudy_();

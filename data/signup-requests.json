@@ -2,14 +2,14 @@
   {
     "id": "signup_1794143734840_f4ysi5",
     "receivedAt": "2026-11-08T13:15:34.840Z",
-    "status": "Pending",
+    "status": "Approved",
     "role": "student",
     "username": "zpqls",
     "name": "Eunchan Kim",
     "email": "kimeunchan624@gmail.com",
     "passwordHash": "299cfd8fd8c867b1498de4b8d6e371af26f6d1fe5702eec89e0a82d86772ae09",
-    "decidedAt": null,
-    "decidedBy": null
+    "decidedAt": "2026-11-11T14:17:02.000Z",
+    "decidedBy": "kyjadmin"
   },
   {
     "id": "signup_1793359310333_4atl1b",

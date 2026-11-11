@@ -156,7 +156,7 @@ Requests is deliberately accessible without login. Guests may submit only Resour
 
 ### Sign up (`signup.html`)
 
-Anyone can request a student or teacher account. The form collects role, full name, username, email, password, and confirmation. Usernames must be 3–30 characters using letters, numbers, underscore, period, or hyphen; passwords must be at least eight characters. Passwords are hashed before transmission. Requests enter a Pending state and are reviewed manually, with the UI promising a typical 15-minute-to-one-day window.
+Anyone can request a student or teacher account. The form collects role, full name, username, email, password, and confirmation. Usernames must be 3–30 characters using letters, numbers, underscore, period, or hyphen; passwords must be at least eight characters. Passwords are hashed before transmission. Student accounts are created instantly (since 2026-11-11): the account is committed to `js/data.js`, the signup is logged as Approved by `auto`, the student is logged in right away (the browser keeps the account locally until GitHub Pages publishes it), and an email is required. Teacher requests still enter a Pending state and are reviewed manually, with the UI promising a typical 15-minute-to-one-day window.
 
 ### Self-study pages
 
@@ -172,7 +172,7 @@ The portal also consumes `data/changelog-events.json` to show “What's new” e
 
 ### 7.2 Catalog (`catalog.html`)
 
-The catalog lists every `CLASSES` entry with subject and assigned teachers. For the current student, each class displays Enrolled, Pending approval, or Registration locked. There is intentionally no student self-service Register button yet: admins choose candidate rosters and approve registrations.
+The catalog lists every `CLASSES` entry with subject and assigned teachers. For the current student, each class displays Enrolled, Pending approval, or Registration locked. Mentorship classes stay locked: admins choose candidate rosters and approve registrations. Above them sits a **Self-study courses** section (`SELF_STUDY_COURSES` in `js/data.js`) where any signed-in student adds an open course with one click and no approval (since 2026-11-11): it appears in the portal immediately (kept on the device, then committed to `js/data.js` by the `enrollSelfStudy` / `leaveSelfStudy` actions). Only AP Calculus BC is open; the other subjects show "Coming soon".
 
 ### 7.3 Course selection and navigation
 

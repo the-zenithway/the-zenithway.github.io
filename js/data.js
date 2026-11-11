@@ -44,6 +44,17 @@ const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
 // sheet/metrics entry, replace one course's rightNow) — never an
 // arbitrary field write, never touching logins or TEACHERS/PARENTS.
 const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbwcAO2H2NKVErrYs0_z7MaUWh1U54tETGslsnMTCBUrSQTZl0kCiVM-c8PvTOS4weZh3w/exec";
+
+// Self-study courses any signed-in student can add from catalog.html, with no approval: it lands in their portal at once.
+// `open: false` shows the course as "coming soon". Keep the open ids in step with SELF_STUDY_COURSES_ in
+// automation/zenith-data-writer.gs (a test checks they match). A course added this way is stored on the student as
+// { id, name, icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] }; the platform keeps their real progress in their own log.
+const SELF_STUDY_COURSES = [
+  { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "calculus", open: true, blurb: "Chapters 1-12, tests, full mocks and AP free-response practice, with the Trainer and your 발상노트." },
+  { id: "ap-chemistry", name: "AP Chemistry", icon: "chemistry", open: false, blurb: "A self-study track for this subject is on the way." },
+  { id: "ap-biology", name: "AP Biology", icon: "biology", open: false, blurb: "A self-study track for this subject is on the way." },
+  { id: "ap-computer-science-a", name: "AP Computer Science A", icon: "computer-science", open: false, blurb: "A self-study track for this subject is on the way." }
+];
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:
 //   state: "your-move" -> chapter, unit, instruction, due (optional)
@@ -2538,6 +2549,13 @@ const STUDENTS = [
     "name": "kyjtest",
     "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
     "email": "yongjoon9981@gmail.com",
+    "courses": []
+  },
+  {
+    "username": "zpqls",
+    "name": "Eunchan Kim",
+    "passwordHash": "299cfd8fd8c867b1498de4b8d6e371af26f6d1fe5702eec89e0a82d86772ae09",
+    "email": "kimeunchan624@gmail.com",
     "courses": []
   }
 ];

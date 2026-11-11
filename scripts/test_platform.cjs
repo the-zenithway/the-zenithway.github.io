@@ -762,4 +762,92 @@ test('commit-based storage (Apps Script): events are merged into one file per st
   assert.throws(() => ctx.putDoc_({ key: 'bad key', value: {} }), /bad key/);
 });
 
+test('instant student signup (data-writer script): the account is committed to js/data.js at once, listed as approved by auto, emailed, and bad or duplicate signups are refused', () => {
+  const vm = require('vm'), fs = require('fs'), root = require('path').join(__dirname, '..'), ctx = {}; vm.createContext(ctx);
+  const files = { 'js/data.js': { text: fs.readFileSync(root + '/js/data.js', 'utf8'), sha: 's1' }, 'data/signup-requests.json': { text: '[]', sha: 's1' } }; let shaN = 1; const mails = [], cache = {};
+  const resp = (code, body) => ({ getResponseCode: () => code, getContentText: () => typeof body === 'string' ? body : JSON.stringify(body) });
+  const props = { GITHUB_TOKEN: 't', GITHUB_OWNER: 'o', GITHUB_REPO: 'r' };
+  Object.assign(ctx, {
+    UrlFetchApp: { fetch: (url, o) => {
+      const path = decodeURIComponent((/\/contents\/([^?]+)/.exec(url) || [])[1] || '');
+      if (!o || !o.method) { const f = files[path]; return f ? resp(200, { content: Buffer.from(f.text).toString('base64'), sha: f.sha }) : resp(404, {}); }
+      const j = JSON.parse(o.payload); files[path] = { text: Buffer.from(j.content, 'base64').toString(), sha: 's' + (++shaN) }; return resp(200, {});
+    } },
+    PropertiesService: { getScriptProperties: () => ({ getProperty: k => props[k] || null }) },
+    CacheService: { getScriptCache: () => ({ get: k => cache[k] || null, put: (k, v) => { cache[k] = v; } }) },
+    LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
+    MailApp: { sendEmail: (to, subject, body) => mails.push({ to, subject, body }) },
+    ContentService: { createTextOutput: t => ({ text: t, setMimeType() { return this; } }), MimeType: { JSON: 'json' } },
+    Utilities: { newBlob: s => ({ getDataAsString: () => String(s) }), base64Encode: b => Buffer.from(b).toString('base64'), base64Decode: b => Buffer.from(b, 'base64'), sleep() {}, Charset: { UTF_8: 'utf8' } }
+  });
+  vm.runInContext(fs.readFileSync(root + '/automation/zenith-data-writer.gs', 'utf8'), ctx);
+  const send = (ops) => JSON.parse(ctx.doPost({ postData: { contents: JSON.stringify({ action: 'applyBatch', payload: { operations: ops } }) } }).text);
+  const pair = (u, extra) => [{ action: 'createStudentAccount', payload: Object.assign({ instant: true, username: u, name: 'New Kid', email: 'kid@example.com', passwordHash: 'abc123' }, extra) },
+    { action: 'submitSignup', payload: Object.assign({ auto: true, role: 'student', username: u, name: 'New Kid', email: 'kid@example.com', passwordHash: 'abc123', adminEmails: ['admin@example.com'] }, extra) }];
+  let r = send(pair('newkid1')); assert.strictEqual(r.ok, true, JSON.stringify(r));
+  const students = ctx.readConstArray_(files['js/data.js'].text, 'STUDENTS'), me = students.find(x => x.username === 'newkid1');
+  assert.ok(me && me.email === 'kid@example.com' && me.passwordHash === 'abc123' && me.courses.length === 0, 'the account is in js/data.js');
+  assert.ok(students.some(x => x.username === 'seohu') && students.length > 3, 'the existing students are untouched');
+  const rows = JSON.parse(files['data/signup-requests.json'].text); assert.strictEqual(rows[0].status, 'Approved'); assert.strictEqual(rows[0].decidedBy, 'auto');
+  assert.ok(mails.some(m => m.to === 'kid@example.com' && /ready/.test(m.subject)) && mails.some(m => m.to === 'admin@example.com' && /joined/.test(m.subject)), 'the student and the admins are emailed');
+  assert.strictEqual(send(pair('NewKid1')).ok, false, 'a username that differs only by case is taken');
+  assert.strictEqual(send(pair('seohu')).ok, false, 'an existing student name is taken');
+  const teacher = ctx.readConstArray_(files['js/data.js'].text, 'TEACHERS')[0].username; assert.strictEqual(send(pair(teacher)).ok, false, 'a teacher name is taken too');
+  assert.ok(/valid email/.test(send(pair('kid2', { email: 'nope' })).error), 'an email is required');
+  assert.strictEqual(send([pair('kid3')[0]]).ok, false, 'an account without its signup record is refused');
+  assert.strictEqual(send([pair('kid4')[1]]).ok, true, 'a teacher-style pending signup is untouched by this');
+  assert.ok(/student/.test(send([Object.assign({}, pair('kid5')[1], { payload: Object.assign({}, pair('kid5')[1].payload, { role: 'teacher' }) })]).error), 'only students can be instant');
+  props.INSTANT_SIGNUPS_PER_HOUR = '3'; cache.instant_signups_hour = '3'; assert.ok(/try again/.test(send(pair('kid6')).error), 'the hourly allowance is enforced'); cache.instant_signups_hour = '0';
+  assert.strictEqual(send(pair('kid6')).ok, true);
+});
+
+test('instant signup (browser): the new account is kept on this device so login works before GitHub Pages publishes it, then the published copy wins', () => {
+  const vm = require('vm'), fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const a = src.indexOf('// ---- Accounts created on this device'), b = src.indexOf('// ---- Sign up (signup.html) ----'); assert.ok(a > 0 && b > a);
+  const store = {}, ctx = { STUDENTS: [{ username: 'old' }], TEACHERS: [], PARENTS: [], ADMINS: [], Date, JSON, Object, Array,
+    localStorage: { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); } } };
+  vm.createContext(ctx); vm.runInContext(src.slice(a, b) + ';this.api={remember:rememberLocalAccount_,add:addLocalAccountsToStudents_,list:localAccounts_};', ctx);
+  ctx.api.remember({ username: 'kid', name: 'Kid', email: 'k@e.co', passwordHash: 'h' }); ctx.api.add();
+  assert.ok(ctx.STUDENTS.some(x => x.username === 'kid' && x.passwordHash === 'h' && x.courses.length === 0), 'a page load adds the local account');
+  ctx.STUDENTS.length = 1; ctx.STUDENTS.push({ username: 'kid', name: 'Kid' }); const n0 = ctx.STUDENTS.length; ctx.api.add();
+  assert.strictEqual(ctx.STUDENTS.length, n0, 'once js/data.js has the account the local copy is not added again'); assert.strictEqual(ctx.api.list().length, 0, 'and it is forgotten');
+  ctx.api.remember({ username: 'late', name: 'L', passwordHash: 'h' }); const l = JSON.parse(store['zenith:newAccounts:v1']); l[0].createdAt = Date.now() - 2 * 86400000; store['zenith:newAccounts:v1'] = JSON.stringify(l);
+  ctx.STUDENTS.length = 1; ctx.api.add(); assert.ok(!ctx.STUDENTS.some(x => x.username === 'late'), 'an account older than a day is not resurrected');
+});
+
+test('self-study enrollment: the open courses match between the site and the script, adding is idempotent, leaving never touches a class enrollment', () => {
+  const vm = require('vm'), fs = require('fs'), root = require('path').join(__dirname, '..'), w = {}; vm.createContext(w);
+  vm.runInContext(fs.readFileSync(root + '/automation/zenith-data-writer.gs', 'utf8'), w);
+  const d = {}; vm.createContext(d); vm.runInContext(fs.readFileSync(root + '/js/data.js', 'utf8') + ';this.L=SELF_STUDY_COURSES;', d);
+  const open = d.L.filter(c => c.open); assert.ok(open.length >= 1);
+  assert.strictEqual(JSON.stringify(Object.keys(w.SELF_STUDY_COURSES_).sort()), JSON.stringify(open.map(c => c.id).sort()), 'js/data.js and the script agree on which courses are open');
+  open.forEach(c => { assert.strictEqual(w.SELF_STUDY_COURSES_[c.id].name, c.name); assert.strictEqual(w.SELF_STUDY_COURSES_[c.id].icon, c.icon); });
+  const students = [{ username: 'ann', courses: [] }, { username: 'cal', courses: [{ id: 'ap-chemistry', name: 'AP Chemistry', icon: 'chemistry', roadmap: [{ x: 1 }] }] }];
+  w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' }); w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' });
+  assert.strictEqual(students[0].courses.length, 1, 'a repeat changes nothing'); assert.strictEqual(students[0].courses[0].selfStudy, true);
+  assert.throws(() => w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-chemistry' }), /not open/, 'a course that is not open cannot be added');
+  assert.throws(() => w.ACTIONS.enrollSelfStudy.handler(students, { username: 'nobody', courseId: 'ap-calculus-bc' }), /No such student/);
+  w.ACTIONS.leaveSelfStudy.handler(students, { username: 'cal', courseId: 'ap-chemistry' }); assert.strictEqual(students[1].courses.length, 1, 'a class enrollment cannot be dropped this way');
+  w.ACTIONS.leaveSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' }); assert.strictEqual(students[0].courses.length, 0);
+});
+
+test('self-study enrollment (browser): a choice shows in the portal at once, is retried if the send failed, and is dropped once the published data has it', async () => {
+  const vm = require('vm'), fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const code = src.slice(src.indexOf('// ---- Self-study courses (catalog.html, portal.html) ----'));
+  const store = { loggedInRole: 'student', loggedInUsername: 'ann' }, posts = []; let reachable = false;
+  const ctx = { STUDENTS: [{ username: 'ann', courses: [] }], SELF_STUDY_COURSES: [{ id: 'ap-calculus-bc', name: 'AP Calculus BC', icon: 'calculus', open: true }], ROLE_KEY: 'loggedInRole', SESSION_KEY: 'loggedInUsername',
+    TEACHER_DATA_WRITE_URL: 'http://script/exec', JSON, Date, Promise, Object, Array, document: { getElementById: () => null }, courseIconHtml: () => '',
+    localStorage: { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); } },
+    fetch: (u, o) => { posts.push(JSON.parse(o.body)); return reachable ? Promise.resolve({ ok: true, json: () => Promise.resolve({ ok: true }) }) : Promise.reject(new Error('offline')); } };
+  vm.createContext(ctx); vm.runInContext(code + ';this.api={set:setSelfStudy_,apply:applySelfStudyChoices_,retry:retryPendingSelfStudy_,store:selfStudyStore_};', ctx);
+  const ids = () => JSON.stringify(ctx.STUDENTS[0].courses.map(c => c.id + (c.selfStudy ? '*' : '')));
+  assert.strictEqual(await ctx.api.set('ap-calculus-bc', true), false, 'offline: not confirmed'); assert.strictEqual(ids(), '["ap-calculus-bc*"]', 'but it is in the portal already'); assert.strictEqual(ctx.api.store().ann[0].pending, true);
+  ctx.STUDENTS[0].courses = []; ctx.api.apply(); assert.strictEqual(ids(), '["ap-calculus-bc*"]', 'a new page load still shows it');
+  reachable = true; ctx.api.retry(); await new Promise(r => setTimeout(r, 5)); assert.strictEqual(posts[posts.length - 1].action, 'enrollSelfStudy'); assert.strictEqual(ctx.api.store().ann[0].pending, false, 'the retry went through');
+  ctx.STUDENTS[0].courses = []; ctx.api.apply(); assert.strictEqual(ids(), '["ap-calculus-bc*"]', 'sent but not yet published: still shown');
+  ctx.STUDENTS[0].courses = [{ id: 'ap-calculus-bc', selfStudy: true }]; ctx.api.apply(); assert.strictEqual(ctx.api.store().ann.length, 0, 'the published copy has it: the device copy is forgotten');
+  assert.strictEqual(await ctx.api.set('ap-calculus-bc', false), true); assert.strictEqual(ids(), '[]', 'leaving removes it'); assert.strictEqual(posts[posts.length - 1].action, 'leaveSelfStudy');
+  assert.strictEqual(await ctx.api.set('ap-chemistry', true), false, 'a course that is not on the list is ignored');
+});
+
 console.log('\n' + n + ' tests passed');

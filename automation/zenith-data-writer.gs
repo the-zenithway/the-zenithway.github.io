@@ -12,6 +12,18 @@
  * approval flow. It writes to five different files depending on the
  * action — see "TARGET FILES" below.
  *
+ * INSTANT STUDENT SIGNUP (added 2026-11-11): student accounts are NOT reviewed any more. signup.html sends one applyBatch with
+ * `createStudentAccount {instant: true}` + `submitSignup {auto: true}`: the account is committed to js/data.js, the signup row is
+ * written already "Approved" by "auto" (so admin.html keeps the full list), the student gets a welcome email and the admins a
+ * "new student joined" note. The browser also keeps the account on the device so login works before GitHub Pages has published
+ * the commit (js/app.js addLocalAccountsToStudents_). Guards: a valid email is required, the username must be free in STUDENTS,
+ * TEACHERS, PARENTS and ADMINS (any case), the two ops must be a matching pair, and at most INSTANT_SIGNUPS_PER_HOUR (script
+ * property, default 30) accounts are created per hour site-wide. Teacher signups still go through the Pending/approve flow below.
+ *
+ * SELF-STUDY ENROLLMENT (added 2026-11-11): enrollSelfStudy / leaveSelfStudy let a student add or drop an open self-study course from
+ * catalog.html with no approval (see ACTIONS.enrollSelfStudy). The course lands in their portal at once from the browser and is
+ * committed to js/data.js by this script.
+ *
  * SIGNUP (added 2026-08-10) backs signup.html (submitSignup, called by
  * anyone, no login) and admin.html's "Sign-ups" tab
  * (approveSignup/declineSignup/createStudentAccount/
@@ -577,6 +589,17 @@ function doPost(e) {
       if (!ACTIONS[op.action]) throw new Error("Unknown action: " + op.action);
     });
 
+    // Instant student signups: the account op and the signup row must be a matching pair, and only so many per hour.
+    var instantOps = operations.filter(function (op) { return op.action === "createStudentAccount" && op.payload && op.payload.instant === true; });
+    if (instantOps.length > 0) {
+      if (instantOps.length > 1) throw new Error("One account at a time.");
+      var iu = instantOps[0].payload.username;
+      var paired = operations.some(function (op) { return op.action === "submitSignup" && op.payload && op.payload.auto === true && op.payload.username === iu; });
+      if (!paired) throw new Error("An instant account needs its signup record.");
+      if (!EMAIL_PATTERN_.test(String(instantOps[0].payload.email))) throw new Error("Enter a valid email address.");
+      claimInstantSignupSlot_();
+    }
+
     var props = PropertiesService.getScriptProperties();
     var token = props.getProperty("GITHUB_TOKEN");
     var owner = props.getProperty("GITHUB_OWNER");
@@ -746,7 +769,10 @@ function doPost(e) {
       // successfully (see the ordering note above) — the account is
       // real by the time this "you're approved" email goes out.
       signupsOps.forEach(function (op) {
-        if (op.action === "submitSignup") {
+        if (op.action === "submitSignup" && op.payload.auto === true) {
+          try { sendSignupInstantEmail_(op.payload); } catch (e) { /* best-effort only */ }
+          try { notifyAdminsOfSignup_(op.payload); } catch (e) { /* best-effort only */ }
+        } else if (op.action === "submitSignup") {
           try { sendSignupReceivedEmail_(op.payload); } catch (e) { /* best-effort only */ }
           try { notifyAdminsOfSignup_(op.payload); } catch (e) { /* best-effort only */ }
         } else if (op.action === "approveSignup") {
@@ -927,6 +953,17 @@ function sendSignupReceivedEmail_(payload) {
     "account is ready to log into.\n\nThanks for your patience.");
 }
 
+// Welcome email for an instant student signup: the account already exists (the createStudentAccount op in the same batch
+// committed before this runs), so nothing is pending.
+function sendSignupInstantEmail_(payload) {
+  if (!payload.email) return;
+  MailApp.sendEmail(payload.email,
+    "Zenith — your account is ready",
+    "Hey " + payload.name + ",\n\n" +
+    "Your Zenith student account is ready — log in with username \"" + payload.username + "\" and the password you picked. " +
+    "It may take about a minute before you can log in from a different device than the one you signed up on.\n\nSee you inside.");
+}
+
 // "You're in" notice for approveSignup — sent right after BOTH the
 // signup's status flip AND its paired createStudentAccount/
 // createTeacherAccount commit have succeeded (see doPost's op-
@@ -969,9 +1006,10 @@ function sendSignupDeclinedEmail_(payload) {
 function notifyAdminsOfSignup_(payload) {
   var emails = payload.adminEmails || [];
   if (emails.length === 0) return;
-  var subject = "Zenith — new " + (payload.role || "signup") + " signup to review";
-  var body = (payload.name || "Someone") + " (username \"" + payload.username + "\") just signed up as a " +
-    (payload.role || "user") + ". Review it on admin.html's Sign-ups tab.";
+  var auto = payload.auto === true;
+  var subject = auto ? "Zenith — new student joined: " + payload.username : "Zenith — new " + (payload.role || "signup") + " signup to review";
+  var body = (payload.name || "Someone") + " (username \"" + payload.username + "\", " + (payload.email || "no email") + ") just signed up as a " +
+    (payload.role || "user") + "." + (auto ? " Their account was created instantly; nothing to approve. It is listed on admin.html's Sign-ups tab." : " Review it on admin.html's Sign-ups tab.");
   emails.forEach(function (email) { MailApp.sendEmail(email, subject, body); });
 }
 
@@ -1185,6 +1223,12 @@ var SUBMISSION_CHAPTERS_ = (function () {
 // formally enforced anywhere until now since every existing one was
 // hand-typed by us, not submitted by a stranger over the network.
 var USERNAME_PATTERN_ = /^[a-zA-Z0-9_.-]{3,30}$/;
+// Courses a student can add themselves (mirrors the open entries of SELF_STUDY_COURSES in js/data.js).
+var SELF_STUDY_COURSES_ = { "ap-calculus-bc": { name: "AP Calculus BC", icon: "calculus" } };
+var EMAIL_PATTERN_ = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// Instant signups per hour across the whole site (script property INSTANT_SIGNUPS_PER_HOUR overrides). Each one is a commit to js/data.js,
+// so this keeps a script from filling the repo with accounts; a real class signing up together stays well under it.
+var INSTANT_SIGNUPS_PER_HOUR_ = 30;
 
 function findCourse_(students, username, courseId) {
   var student = students.find(function (s) { return s.username === username; });
@@ -1630,8 +1674,14 @@ var ACTIONS = {
       if (!USERNAME_PATTERN_.test(payload.username)) {
         throw new Error("Username must be 3-30 characters: letters, numbers, underscore, period, or hyphen only");
       }
+      // INSTANT SIGNUP (2026-11-11): students are not reviewed. The browser sends this op together with
+      // a createStudentAccount op in one batch (accounts are created first, see doPost), and the row is
+      // recorded already "Approved" by "auto" so admin.html still has a full list of who joined.
+      var auto = payload.auto === true;
+      if (auto && payload.role !== "student") throw new Error("Only student accounts can be created instantly.");
+      if (!EMAIL_PATTERN_.test(String(payload.email))) throw new Error("Enter a valid email address.");
       var alreadyPending = signups.some(function (s) {
-        return s.username === payload.username && s.status !== "Declined";
+        return String(s.username).toLowerCase() === String(payload.username).toLowerCase() && s.status !== "Declined";
       });
       if (alreadyPending) {
         throw new Error("A signup for username \"" + payload.username + "\" is already pending or approved");
@@ -1639,14 +1689,14 @@ var ACTIONS = {
       signups.unshift({
         id: "signup_" + new Date().getTime() + "_" + Math.random().toString(36).slice(2, 8),
         receivedAt: new Date().toISOString(),
-        status: "Pending",
+        status: auto ? "Approved" : "Pending",
         role: payload.role,
         username: payload.username,
         name: payload.name,
         email: payload.email,
         passwordHash: payload.passwordHash,
-        decidedAt: null,
-        decidedBy: null
+        decidedAt: auto ? new Date().toISOString() : null,
+        decidedBy: auto ? "auto" : null
       });
     }
   },
@@ -1707,7 +1757,7 @@ var ACTIONS = {
       if (!USERNAME_PATTERN_.test(payload.username)) {
         throw new Error("Invalid username: " + payload.username);
       }
-      var taken = students.some(function (s) { return s.username === payload.username; });
+      var taken = students.some(function (s) { return String(s.username).toLowerCase() === String(payload.username).toLowerCase(); });
       if (taken) throw new Error("Username already taken: " + payload.username);
       students.push({
         username: payload.username,
@@ -1716,6 +1766,31 @@ var ACTIONS = {
         email: payload.email || "",
         courses: []
       });
+    }
+  },
+
+  // SELF-STUDY ENROLLMENT (2026-11-11), called by catalog.html with no approval: a student adds or drops a self-study course
+  // (SELF_STUDY_COURSES_ below, the open ones in js/data.js's SELF_STUDY_COURSES). Adding is idempotent (a repeat is a no-op) and
+  // stores a bare course; leaving only removes a course that was added this way (selfStudy: true), never a class enrollment, and
+  // the student's progress log is kept so adding it again picks up where they left off.
+  enrollSelfStudy: {
+    target: "students",
+    handler: function (students, payload) {
+      var course = SELF_STUDY_COURSES_[payload.courseId];
+      if (!course) throw new Error("That course is not open for self-study yet: " + payload.courseId);
+      var student = students.find(function (s) { return s.username === payload.username; });
+      if (!student) throw new Error("No such student: " + payload.username);
+      student.courses = student.courses || [];
+      if (student.courses.some(function (c) { return c.id === payload.courseId; })) return;
+      student.courses.push({ id: payload.courseId, name: course.name, icon: course.icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] });
+    }
+  },
+  leaveSelfStudy: {
+    target: "students",
+    handler: function (students, payload) {
+      var student = students.find(function (s) { return s.username === payload.username; });
+      if (!student) throw new Error("No such student: " + payload.username);
+      student.courses = (student.courses || []).filter(function (c) { return !(c.id === payload.courseId && c.selfStudy === true); });
     }
   },
 
@@ -2198,13 +2273,38 @@ function commitMessageForOps_(ops) {
     // submitRequest can come from a student/parent, not just a
     // teacher, so it gets its own prefix instead of the misleading
     // "Teacher dashboard: submitRequest for <username>".
-    var prefix = op.action === "submitRequest" ? "Request submitted" : "Teacher dashboard: " + op.action;
+    var prefix = op.action === "submitRequest" ? "Request submitted" : /^(enroll|leave)SelfStudy$/.test(op.action) ? "Self-study" : "Teacher dashboard: " + op.action;
     return prefix +
       (payload.username ? " for " + payload.username + (payload.courseId ? " / " + payload.courseId : "") : "") +
       (payload.id ? " (" + payload.id + ")" : "");
   }
   return "Teacher dashboard: " + ops.length + " changes (" +
     ops.map(function (op) { return op.action; }).join(", ") + ")";
+}
+
+// Counts this signup against the hourly allowance (CacheService, so it needs no storage of its own). Throws when it is used up.
+function claimInstantSignupSlot_() {
+  var limit = parseInt(PropertiesService.getScriptProperties().getProperty("INSTANT_SIGNUPS_PER_HOUR"), 10) || INSTANT_SIGNUPS_PER_HOUR_;
+  var lock = LockService.getScriptLock(), got = false;
+  try { lock.waitLock(5000); got = true; } catch (e) { /* carry on without the lock rather than block a signup */ }
+  try {
+    var cache = CacheService.getScriptCache(), used = parseInt(cache.get("instant_signups_hour"), 10) || 0;
+    if (used >= limit) throw new Error("Lots of people are signing up right now. Please try again in a few minutes.");
+    cache.put("instant_signups_hour", String(used + 1), 3600);
+  } finally { if (got) lock.releaseLock(); }
+}
+
+// An instant account is live without anyone reviewing it, so its username must also be free in the other three account lists
+// (login checks all of them), which createStudentAccount cannot see: it only gets STUDENTS.
+function assertUsernameFreeElsewhere_(source, ops) {
+  ops.forEach(function (op) {
+    if (!(op.payload && op.payload.instant === true)) return;
+    ["TEACHERS", "PARENTS", "ADMINS"].forEach(function (name) {
+      var list = [];
+      try { list = readConstArray_(source, name); } catch (e) { /* list not in the file */ }
+      if (list.some(function (x) { return String(x.username).toLowerCase() === String(op.payload.username).toLowerCase(); })) throw new Error("Username already taken: " + op.payload.username);
+    });
+  });
 }
 
 function commitStudentsMutation_(owner, repo, branch, path, token, ops, attempt) {
@@ -2220,6 +2320,7 @@ function commitStudentsMutation_(owner, repo, branch, path, token, ops, attempt)
   var source = Utilities.newBlob(Utilities.base64Decode(file.content)).getDataAsString();
 
   var students = readConstArray_(source, "STUDENTS");
+  assertUsernameFreeElsewhere_(source, ops);
   ops.forEach(function (op) { ACTIONS[op.action].handler(students, op.payload); }); // mutates `students` in place; throws on invalid payload
   var newSource = spliceConstArray_(source, "STUDENTS", students);
   var newContent = Utilities.base64Encode(newSource, Utilities.Charset.UTF_8);

@@ -23,7 +23,7 @@
   <section class="login-section container">
     <div class="login-card signup-card">
       <h1>Sign Up</h1>
-      <p class="muted">Create a student or teacher account. An admin reviews every signup by hand — usually 15 minutes to 1 day.</p>
+      <p class="muted" id="signup-intro">Create your student account and start right away. (Teacher accounts are reviewed by an admin first.)</p>
 
       <form id="signup-form">
         <label for="signup-role">I am a</label>
@@ -41,6 +41,12 @@
 
         <label for="signup-email">Email</label>
         <input type="email" id="signup-email" maxlength="120" autocomplete="email" required>
+        <p class="requests-field-note">Required. We send your welcome note and any mentor updates here.</p>
+
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+          <label for="signup-website">Leave this empty</label>
+          <input type="text" id="signup-website" tabindex="-1" autocomplete="off">
+        </div>
 
         <label for="signup-password">Password</label>
         <input type="password" id="signup-password" autocomplete="new-password" minlength="8" required>
@@ -50,10 +56,10 @@
 
         <p id="signup-error" class="error-message" hidden></p>
 
-        <button type="submit" class="btn-primary btn-full" id="signup-submit-btn">Sign Up</button>
+        <button type="submit" class="btn-primary btn-full" id="signup-submit-btn">Create account</button>
       </form>
 
-      <p id="signup-success" class="signup-success-message" hidden>Thanks — we've got your signup. Check your email for confirmation. Approval usually takes anywhere from 15 minutes to 1 day; you'll get a second email the moment you're approved and ready to log in.</p>
+      <p id="signup-success" class="signup-success-message" hidden>Thanks — we've got your teacher signup. Check your email for confirmation. Approval usually takes anywhere from 15 minutes to 1 day; you'll get a second email the moment you're approved and ready to log in.</p>
 
       <p class="hint">Already have an account? <a href="login.html">Log in</a></p>
     </div>
@@ -69,6 +75,17 @@
 <script>
   renderSocialLinks();
   setUpSignupForm_();
+  // Students are created on the spot; teachers wait for an admin, so the wording follows the choice.
+  (function () {
+    var role = document.getElementById('signup-role'), btn = document.getElementById('signup-submit-btn'), intro = document.getElementById('signup-intro');
+    function sync() {
+      var student = role.value === 'student';
+      btn.textContent = student ? 'Create account' : 'Request teacher account';
+      intro.textContent = student ? 'Create your student account and start right away. (Teacher accounts are reviewed by an admin first.)'
+        : 'Teacher accounts are reviewed by an admin by hand, usually within 15 minutes to 1 day. You will get an email when it is approved.';
+    }
+    role.addEventListener('change', sync); sync();
+  })();
 </script>
 </body>
 </html>
