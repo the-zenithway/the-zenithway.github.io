@@ -172,7 +172,7 @@ The portal also consumes `data/changelog-events.json` to show “What's new” e
 
 ### 7.2 Catalog (`catalog.html`)
 
-The catalog lists every `CLASSES` entry with subject and assigned teachers. For the current student, each class displays Enrolled, Pending approval, or Registration locked. Mentorship classes stay locked: admins choose candidate rosters and approve registrations. Above them sits a **Self-study courses** section (`SELF_STUDY_COURSES` in `js/data.js`) where any signed-in student adds an open course with one click and no approval (since 2026-11-11): it appears in the portal immediately (kept on the device, then committed to `js/data.js` by the `enrollSelfStudy` / `leaveSelfStudy` actions). Only AP Calculus BC is open; the other subjects show "Coming soon".
+The catalog lists every `CLASSES` entry with subject and assigned teachers. For the current student, each class displays Enrolled, Pending approval, or Registration locked. Mentorship classes stay locked: admins choose candidate rosters and approve registrations. Above them sits a **Self-study courses** section (`SELF_STUDY_COURSES` in `js/data.js`) where any signed-in student adds an open course with one click and no approval (since 2026-11-11): it appears in the portal immediately (kept on the device, then committed to `js/data.js` by the `enrollSelfStudy` / `leaveSelfStudy` actions). All four subjects (Calculus BC, Chemistry, Biology, CS A) are open; a self-study course shows the original roadmap with every item unlocked, built from the first full copy in `js/data.js` when the page loads (`fillSelfStudyRoadmaps_`).
 
 ### 7.3 Course selection and navigation
 

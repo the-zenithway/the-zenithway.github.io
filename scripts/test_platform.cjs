@@ -825,7 +825,7 @@ test('self-study enrollment: the open courses match between the site and the scr
   const students = [{ username: 'ann', courses: [] }, { username: 'cal', courses: [{ id: 'ap-chemistry', name: 'AP Chemistry', icon: 'chemistry', roadmap: [{ x: 1 }] }] }];
   w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' }); w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' });
   assert.strictEqual(students[0].courses.length, 1, 'a repeat changes nothing'); assert.strictEqual(students[0].courses[0].selfStudy, true);
-  assert.throws(() => w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-chemistry' }), /not open/, 'a course that is not open cannot be added');
+  assert.throws(() => w.ACTIONS.enrollSelfStudy.handler(students, { username: 'ann', courseId: 'ap-physics' }), /not open/, 'a course that is not on the list cannot be added');
   assert.throws(() => w.ACTIONS.enrollSelfStudy.handler(students, { username: 'nobody', courseId: 'ap-calculus-bc' }), /No such student/);
   w.ACTIONS.leaveSelfStudy.handler(students, { username: 'cal', courseId: 'ap-chemistry' }); assert.strictEqual(students[1].courses.length, 1, 'a class enrollment cannot be dropped this way');
   w.ACTIONS.leaveSelfStudy.handler(students, { username: 'ann', courseId: 'ap-calculus-bc' }); assert.strictEqual(students[0].courses.length, 0);
@@ -847,7 +847,19 @@ test('self-study enrollment (browser): a choice shows in the portal at once, is 
   ctx.STUDENTS[0].courses = []; ctx.api.apply(); assert.strictEqual(ids(), '["ap-calculus-bc*"]', 'sent but not yet published: still shown');
   ctx.STUDENTS[0].courses = [{ id: 'ap-calculus-bc', selfStudy: true }]; ctx.api.apply(); assert.strictEqual(ctx.api.store().ann.length, 0, 'the published copy has it: the device copy is forgotten');
   assert.strictEqual(await ctx.api.set('ap-calculus-bc', false), true); assert.strictEqual(ids(), '[]', 'leaving removes it'); assert.strictEqual(posts[posts.length - 1].action, 'leaveSelfStudy');
-  assert.strictEqual(await ctx.api.set('ap-chemistry', true), false, 'a course that is not on the list is ignored');
+  assert.strictEqual(await ctx.api.set('ap-physics', true), false, 'a course that is not on the list is ignored');
+});
+
+test('self-study roadmap: a self-study course gets the original roadmap with every item unlocked, and the original is left alone', () => {
+  const vm = require('vm'), fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const code = src.slice(src.indexOf('function selfStudyRoadmap_'), src.indexOf('function postSelfStudy_'));
+  const orig = [{ name: 'L1', status: 'Complete', url: 'u1' }, { name: 'T1', status: 'Locked' }];
+  const ctx = { STUDENTS: [{ username: 'mentored', courses: [{ id: 'ap-chemistry', roadmap: orig }] }, { username: 'kid', courses: [{ id: 'ap-chemistry', selfStudy: true, roadmap: [] }, { id: 'ap-biology', selfStudy: true, roadmap: [] }] }], Object, Array };
+  vm.createContext(ctx); vm.runInContext(code + ';this.fill=fillSelfStudyRoadmaps_;', ctx); ctx.fill();
+  const kid = ctx.STUDENTS[1].courses; assert.strictEqual(kid[0].roadmap.length, 2); assert.ok(kid[0].roadmap.every(i => i.status === 'Unlocked')); assert.strictEqual(kid[0].roadmap[0].url, 'u1');
+  assert.strictEqual(orig[0].status, 'Complete'); assert.strictEqual(orig[1].status, 'Locked'); assert.strictEqual(kid[1].roadmap.length, 0, 'a course with no original to copy stays empty');
+  const d = {}; vm.createContext(d); vm.runInContext(fs.readFileSync(require('path').join(__dirname, '..', 'js', 'data.js'), 'utf8') + ';this.S=STUDENTS;this.L=SELF_STUDY_COURSES;', d);
+  d.L.filter(c => c.open).forEach(c => assert.ok(d.S.some(s => s.courses.some(x => x.id === c.id && !x.selfStudy && x.roadmap.length > 0)), c.id + ' has an original roadmap to copy'));
 });
 
 console.log('\n' + n + ' tests passed');

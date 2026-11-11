@@ -46,14 +46,16 @@ const SUBMISSION_FORM_URL = "https://forms.gle/HVMuH6YGyx3w69Hy9";
 const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbwcAO2H2NKVErrYs0_z7MaUWh1U54tETGslsnMTCBUrSQTZl0kCiVM-c8PvTOS4weZh3w/exec";
 
 // Self-study courses any signed-in student can add from catalog.html, with no approval: it lands in their portal at once.
-// `open: false` shows the course as "coming soon". Keep the open ids in step with SELF_STUDY_COURSES_ in
+// `open: false` would show a course as "coming soon". Keep the open ids in step with SELF_STUDY_COURSES_ in
 // automation/zenith-data-writer.gs (a test checks they match). A course added this way is stored on the student as
-// { id, name, icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] }; the platform keeps their real progress in their own log.
+// { id, name, icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] } (a few lines in this file); js/app.js
+// fills in the roadmap when a page loads, as a copy of the original roadmap with every item unlocked (fillSelfStudyRoadmaps_).
+// The student's real progress on the platform lives in their own log, not here.
 const SELF_STUDY_COURSES = [
-  { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "calculus", open: true, blurb: "Chapters 1-12, tests, full mocks and AP free-response practice, with the Trainer and your 발상노트." },
-  { id: "ap-chemistry", name: "AP Chemistry", icon: "chemistry", open: false, blurb: "A self-study track for this subject is on the way." },
-  { id: "ap-biology", name: "AP Biology", icon: "biology", open: false, blurb: "A self-study track for this subject is on the way." },
-  { id: "ap-computer-science-a", name: "AP Computer Science A", icon: "computer-science", open: false, blurb: "A self-study track for this subject is on the way." }
+  { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "calculus", open: true, blurb: "Chapters 1-12, tests, full mocks and AP free-response practice, with the Trainer, the book chapters and your 발상노트." },
+  { id: "ap-chemistry", name: "AP Chemistry", icon: "chemistry", open: true, blurb: "The original Zenith roadmap, every step unlocked: lessons, notes, problems, tests and mocks, plus the Trainer." },
+  { id: "ap-biology", name: "AP Biology", icon: "biology", open: true, blurb: "The original Zenith roadmap, every step unlocked: lessons, notes, problems, tests and mocks." },
+  { id: "ap-computer-science-a", name: "AP Computer Science A", icon: "computer-science", open: true, blurb: "The original Zenith roadmap, every step unlocked." }
 ];
 // "Right Now" is each enrolled course's single current to-do, stored on the
 // course object and shown only in that selected subject path. Two shapes:

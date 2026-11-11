@@ -6693,6 +6693,25 @@ function applySelfStudyChoices_() {
   all[student.username] = keep; saveSelfStudyStore_(all);
 }
 
+// The roadmap a self-study course shows: a copy of the original roadmap (the first full one found in js/data.js for that course) with every
+// item unlocked. It is built here, not stored per student, so data.js stays small and a fix to the original reaches everyone.
+function selfStudyRoadmap_(courseId) {
+  let items = null;
+  STUDENTS.some(function (s) {
+    const c = (s.courses || []).find(function (x) { return x.id === courseId && x.selfStudy !== true && (x.roadmap || []).length > 0; });
+    if (c) items = c.roadmap;
+    return !!c;
+  });
+  return (items || []).map(function (it) { return Object.assign({}, it, { status: "Unlocked" }); });
+}
+function fillSelfStudyRoadmaps_() {
+  STUDENTS.forEach(function (s) {
+    (s.courses || []).forEach(function (c) {
+      if (c.selfStudy === true && !(c.roadmap && c.roadmap.length)) c.roadmap = selfStudyRoadmap_(c.id);
+    });
+  });
+}
+
 function postSelfStudy_(username, entry) {
   if (!TEACHER_DATA_WRITE_URL || (typeof viewAsUsername_ === "function" && viewAsUsername_())) return Promise.resolve(false);
   return fetch(TEACHER_DATA_WRITE_URL, { method: "POST", headers: { "Content-Type": "text/plain" },
@@ -6715,6 +6734,7 @@ function setSelfStudy_(courseId, on) {
   const info = selfStudyInfo_(courseId);
   if (on && !student.courses.some(function (c) { return c.id === courseId; })) student.courses.push({ id: info.id, name: info.name, icon: info.icon, selfStudy: true, feedback: [], cheatSheet: [], roadmap: [] });
   if (!on) student.courses = student.courses.filter(function (c) { return !(c.id === courseId && c.selfStudy === true); });
+  fillSelfStudyRoadmaps_();
   return postSelfStudy_(student.username, entry);
 }
 
@@ -6764,4 +6784,5 @@ function renderSelfStudyCatalog_(student) {
 }
 
 applySelfStudyChoices_();
+fillSelfStudyRoadmaps_();
 retryPendingSelfStudy_();

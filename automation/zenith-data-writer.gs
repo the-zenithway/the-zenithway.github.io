@@ -1224,7 +1224,12 @@ var SUBMISSION_CHAPTERS_ = (function () {
 // hand-typed by us, not submitted by a stranger over the network.
 var USERNAME_PATTERN_ = /^[a-zA-Z0-9_.-]{3,30}$/;
 // Courses a student can add themselves (mirrors the open entries of SELF_STUDY_COURSES in js/data.js).
-var SELF_STUDY_COURSES_ = { "ap-calculus-bc": { name: "AP Calculus BC", icon: "calculus" } };
+var SELF_STUDY_COURSES_ = {
+  "ap-calculus-bc": { name: "AP Calculus BC", icon: "calculus" },
+  "ap-chemistry": { name: "AP Chemistry", icon: "chemistry" },
+  "ap-biology": { name: "AP Biology", icon: "biology" },
+  "ap-computer-science-a": { name: "AP Computer Science A", icon: "computer-science" }
+};
 var EMAIL_PATTERN_ = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 // Instant signups per hour across the whole site (script property INSTANT_SIGNUPS_PER_HOUR overrides). Each one is a commit to js/data.js,
 // so this keeps a script from filling the repo with accounts; a real class signing up together stays well under it.
