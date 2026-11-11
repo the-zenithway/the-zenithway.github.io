@@ -2559,6 +2559,13 @@ const STUDENTS = [
     "passwordHash": "299cfd8fd8c867b1498de4b8d6e371af26f6d1fe5702eec89e0a82d86772ae09",
     "email": "kimeunchan624@gmail.com",
     "courses": []
+  },
+  {
+    "username": "kyj-test-acc",
+    "name": "kyj-test-acc",
+    "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "email": "kyjvariable@gmail.com",
+    "courses": []
   }
 ];
 
