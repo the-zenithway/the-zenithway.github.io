@@ -1,5 +1,17 @@
 [
   {
+    "id": "signup_1794483660730_jyaksh",
+    "receivedAt": "2026-11-12T11:41:00.730Z",
+    "status": "Approved",
+    "role": "student",
+    "username": "danielthegreat",
+    "name": "daniel",
+    "email": "simeunseong7711@gmail.com",
+    "passwordHash": "pbkdf2$210000$ddee44f0f96de6ae62f168bd803076c5$f9c8d6fe2dc993cef633f0dae0972ac8fef9572e506f0485cc80604dd6cdab50",
+    "decidedAt": "2026-11-12T11:41:00.730Z",
+    "decidedBy": "auto"
+  },
+  {
     "id": "signup_1794407316228_0nxs1h",
     "receivedAt": "2026-11-11T14:28:36.228Z",
     "status": "Approved",
