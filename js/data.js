@@ -2594,6 +2594,13 @@ const STUDENTS = [
         "roadmap": []
       }
     ]
+  },
+  {
+    "username": "danielthegreat",
+    "name": "daniel",
+    "passwordHash": "pbkdf2$210000$ddee44f0f96de6ae62f168bd803076c5$f9c8d6fe2dc993cef633f0dae0972ac8fef9572e506f0485cc80604dd6cdab50",
+    "email": "simeunseong7711@gmail.com",
+    "courses": []
   }
 ];
 
