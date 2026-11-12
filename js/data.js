@@ -977,6 +977,15 @@ const STUDENTS = [
           { "name": "M16T-FRQ Mock 8", "category": "M-Mock", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/1zoSOFAKYU_dKfjEbKJYCONwqZbSInoNn/view?usp=drivesdk" },
           { "name": "M16S-FRQ Mock 8 Solutions", "category": "S-solution manual", "chapter": "Chapter M", "status": "Complete", "url": "https://drive.google.com/file/d/1ZDQ61bcZYHq6IU4Nfqy5bZQFCJq7dFSx/view?usp=drivesdk" }
         ]
+      },
+      {
+        "id": "ap-biology",
+        "name": "AP Biology",
+        "icon": "biology",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
       }
     ]
   },
