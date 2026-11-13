@@ -1,5 +1,17 @@
 [
   {
+    "id": "signup_1794562695557_kqlrtn",
+    "receivedAt": "2026-11-13T09:38:15.557Z",
+    "status": "Approved",
+    "role": "student",
+    "username": "dltmdals09",
+    "name": "seungminlee",
+    "email": "smirisneo@gmail.com",
+    "passwordHash": "pbkdf2$210000$f49b410e56d0d00e020f4f24e3a4e1b2$7453f86cadd20d5223d11b2526bdaddda0a3b8d4cfce65ffeb0f7ebb4ea8526b",
+    "decidedAt": "2026-11-13T09:38:15.558Z",
+    "decidedBy": "auto"
+  },
+  {
     "id": "signup_1794483660730_jyaksh",
     "receivedAt": "2026-11-12T11:41:00.730Z",
     "status": "Approved",
