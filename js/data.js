@@ -2617,7 +2617,17 @@ const STUDENTS = [
     "name": "seungminlee",
     "passwordHash": "pbkdf2$210000$f49b410e56d0d00e020f4f24e3a4e1b2$7453f86cadd20d5223d11b2526bdaddda0a3b8d4cfce65ffeb0f7ebb4ea8526b",
     "email": "smirisneo@gmail.com",
-    "courses": []
+    "courses": [
+      {
+        "id": "ap-calculus-bc",
+        "name": "AP Calculus BC",
+        "icon": "calculus",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
+      }
+    ]
   }
 ];
 
