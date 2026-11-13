@@ -2560,7 +2560,17 @@ const STUDENTS = [
     "name": "kyjtest",
     "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
     "email": "yongjoon9981@gmail.com",
-    "courses": []
+    "courses": [
+      {
+        "id": "ap-calculus-bc",
+        "name": "AP Calculus BC",
+        "icon": "calculus",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
+      }
+    ]
   },
   {
     "username": "zpqls",
