@@ -490,7 +490,7 @@ test('stats: habits, calibration and hint breakdown exist and add up', () => {
   assert.strictEqual(st.mixByCh && typeof st.mixByCh, 'object');
 });
 
-test('legacy import file: valid events, unique short ids, types the server accepts, and nothing invented (no question-level attempts)', () => {
+test('legacy import file: valid events, unique short ids, types the server accepts, and nothing invented (answers only from the checked tracker)', () => {
   const fs = require('fs'), path = require('path');
   const imp = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'legacy-import.json'), 'utf8'));
   const gs = fs.readFileSync(path.join(__dirname, '..', 'automation', 'zenith-student-data.gs'), 'utf8'), allowed = (gs.match(/EVENT_TYPES = \[([\s\S]*?)\];/)[1].match(/'([a-z_]+)'/g) || []).map(x => x.replace(/'/g, ''));
@@ -499,7 +499,8 @@ test('legacy import file: valid events, unique short ids, types the server accep
     assert.ok(e.id && e.id.length <= 40 && !ids.has(e.id), 'unique id ' + e.id); ids.add(e.id);
     assert.ok(typeof e.t === 'number' && e.legacy === true, 'timestamped and marked legacy');
     assert.ok(allowed.includes(e.type), e.type + ' must be in EVENT_TYPES');
-    assert.ok(!['c_answer', 'redo', 't_submit'].includes(e.type), 'no invented attempts');
+    assert.ok(!['redo', 't_submit'].includes(e.type), 'no invented redos or tests');
+    assert.ok(e.type !== 'c_answer' || /^leg:seohu:a/.test(e.id), 'answers only come from a checked tracker (data/legacy-answers.json)');
     assert.ok(JSON.stringify(e).length < 40000);
   }));
   assert.ok(imp['bogue|ap-calculus-bc'] && imp['seohu|ap-calculus-bc']);
@@ -915,6 +916,24 @@ test('tour: every tour has complete steps and ends on a closing card, the full t
   assert.ok(T.start.some(st => /catalog/.test(String(st.url))), 'a student with no Calculus course is sent to the catalog');
   ['roadmap', 'chapter', 'practice', 'notebook', 'profile', 'mentor', 'portal', 'catalog'].forEach(f => { const h = fs.readFileSync(root + '/' + f + '.html', 'utf8'); assert.ok(/js\/tour\.js/.test(h) && /css\/tour\.css/.test(h), f + '.html loads the tour'); });
   assert.ok(JSON.parse(fs.readFileSync(root + '/data/offline-manifest.json', 'utf8')).urls.some(u => /js\/tour\.js$/.test(u)), 'the offline manifest includes the tour');
+});
+
+test("seohu's old per-problem answers: every answer matches the bank, every miss is reviewed once (an entry with a note starts its Good card), Review is closed through chapter 4", () => {
+  const fs = require('fs'), path = require('path'), root = path.join(__dirname, '..');
+  const imp = JSON.parse(fs.readFileSync(root + '/data/legacy-import.json', 'utf8'))['seohu|ap-calculus-bc'], bank = JSON.parse(fs.readFileSync(root + '/data/calculus-c-bank.json', 'utf8'));
+  const ans = imp.filter(e => e.type === 'c_answer'), notes = imp.filter(e => e.type === 'note');
+  assert.strictEqual(ans.length, 276, 'every C problem of chapters 1-4');
+  ans.forEach(e => { const q = bank[e.ch].problems.find(p => e.pid === e.ch + 'C' + p.id); assert.ok(q, e.pid + ' is in the bank'); assert.strictEqual(e.correct, e.answer === q.correct, e.pid + ' correctness matches the answer key'); assert.strictEqual(e.ctx, 'chapter'); });
+  assert.strictEqual(notes.length, ans.filter(e => !e.correct).length, 'one entry per missed or skipped problem, none for the rest');
+  notes.forEach(n => assert.ok(ans.some(a => a.pid === n.pid && !a.correct) && n.t > ans.find(a => a.pid === n.pid).t, n.pid + ': the review comes after the miss'));
+  ['1', '2', '3', '4'].forEach(ch => assert.ok(imp.some(e => e.type === 'legacy_done' && e.ch === ch && e.stages.includes('R')), 'Review done for chapter ' + ch));
+  assert.ok(imp.some(e => e.type === 'task_done' && e.key === 'legacy-now'), 'the "resolve the mistakes" task is finished');
+  // Through the real derive: every miss is a completed entry with one Good card, nothing left to write.
+  const infoB = { order: ['1', '2', '3', '4'], chapters: {} };
+  ['1', '2', '3', '4'].forEach(ch => { infoB.chapters[ch] = { ch, title: 'Ch ' + ch, hasC: true, hasT: false, cIds: bank[ch].problems.map(p => ch + 'C' + p.id), tIds: [], exKeys: [], conceptKeys: [], examples: [], concepts: [] }; });
+  const D = ZP.derive(imp, infoB, Date.parse('2026-11-13T00:00:00Z')), ent = Object.values(D.entries);
+  assert.strictEqual(ent.length, 52); assert.ok(ent.every(e => e.complete && e.due && e.track === 'actual'), 'completed entries, each with a review card'); assert.strictEqual(ent.filter(e => !e.complete).length, 0, 'nothing to write');
+  assert.strictEqual(D.taskDone['legacy-now'] && 1, 1);
 });
 
 console.log('\n' + n + ' tests passed');

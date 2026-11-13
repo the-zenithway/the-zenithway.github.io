@@ -25,6 +25,12 @@ const TRANSITION = {}; // seohu is carried exactly as in js/data.js (an earlier 
 // as optional review. Bogue: B and C done for 1-6, 9 and 10, so his current chapter is 7, as his Right Now says. His Right Now task stays required.
 const AUTO_TRANSITION = ['bogue'];
 
+// Per-problem answers from the old roadmap's C units (data/legacy-answers.json, made by scripts/import_legacy_tracker.py from a tracker that was
+// checked against today's bank). `reviewedThrough`: the student finished the Review (R) step for chapters up to this one in the old roadmap, so
+// those chapters are closed through R and every problem she missed counts as reviewed once, with good recall (see "answers" below).
+const REVIEWED_THROUGH = { seohu: 4 };
+const ANSWERS = fs.existsSync(path.join(root, 'data', 'legacy-answers.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'data', 'legacy-answers.json'), 'utf8')) : {};
+
 const ctx = {}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(root, 'js', 'data.js'), 'utf8') + ';this.STUDENTS=STUDENTS;', ctx);
 const subs = JSON.parse(fs.readFileSync(path.join(root, 'data', 'submissions-log.json'), 'utf8'));
@@ -84,11 +90,44 @@ for (const username of WHO) for (const COURSE of COURSES_OF[username]) {
     if (opt.length) { e.optional = opt; doneStages[e.ch] = e.stages.concat(['(' + opt.join(', ') + ' optional)']); }
   });
 
+  // Reviewed through chapter N in the old roadmap: the Review (R) stage counts as done for chapters 1..N, even where the old roadmap still showed it open.
+  if (COURSE === CALC && REVIEWED_THROUGH[username]) {
+    for (let n = 1; n <= REVIEWED_THROUGH[username]; n++) {
+      const ch = String(n), ev = evs.find(e => e.type === 'legacy_done' && e.ch === ch);
+      if (ev) { if (ev.stages.indexOf('R') < 0) ev.stages.splice(Math.min(ev.stages.length, 2), 0, 'R'); doneStages[ch] = ev.stages.slice(); }
+      else { evs.push({ id: key('done' + ch), t: base - (20 - n) * 6e4, type: 'legacy_done', ch, stages: ['B', 'C', 'R'], legacy: true }); doneStages[ch] = ['B', 'C', 'R']; }
+    }
+  }
+
   (COURSE === CALC ? TRANSITION[username] || [] : []).forEach(ch => {
     for (let i = evs.length - 1; i >= 0; i--) if (evs[i].type === 'legacy_done' && evs[i].ch === ch) evs.splice(i, 1);
     evs.push({ id: key('done' + ch), t: base - (20 - +ch) * 6e4, type: 'legacy_done', ch, stages: ['B', 'C', 'R'], optional: ['T', 'V', 'X'], legacy: true });
     doneStages[ch] = ['B', 'C', 'R', '(T, V, X optional)'];
   });
+
+  // 1b. what she answered in each C unit, and a reviewed-once entry for every problem she missed. The answers are real (checked against the bank). The
+  //     entries are placeholders: her write-ups were on paper, so the note only says the review happened. An entry with a note starts its review
+  //     card (graded Good at the time of the review), which is what puts the problem in the review queue, as if she had reviewed it once with good recall.
+  const ans = ANSWERS[username + '|' + COURSE];
+  if (ans) {
+    const stats = { answered: 0, toReview: 0 };
+    Object.keys(ans.units).sort((x, y) => x - y).forEach(ch => {
+      const tC = Date.parse(ans.cdates[ch]), tR = Date.parse(ans.rdates[ch]), reviewed = REVIEWED_THROUGH[username] >= +ch;
+      ans.units[ch].forEach((p, i) => {
+        const pid = ch + 'C' + p.id;
+        evs.push({ id: key('a' + pid), t: tC + i * 1000, type: 'c_answer', ch, pid, answer: p.answer, correct: p.result === 'correct', conf: '', ms: 0, ctx: 'chapter', sess: 'leg:' + ch, legacy: true });
+        stats.answered++;
+        if (p.result !== 'correct' && reviewed) {
+          evs.push({ id: key('n' + pid), t: tR + i * 1000, type: 'note', ch, pid, src: 'R', legacy: true, text: 'Reviewed in the old roadmap (R' + ch + '). The written notes were on paper and were not carried over.' });
+          stats.toReview++;
+        }
+      });
+    });
+    report[username + '|' + COURSE + ' answers'] = stats;
+    // The "Resolve the mistakes in chapter 4C" task from the old Right Now is finished once chapter 4's Review is.
+    if (REVIEWED_THROUGH[username] >= 4 && course.rightNow && /^Chapter 4$/.test(course.rightNow.chapter) && course.rightNow.unit === 'R')
+      evs.push({ id: key('rndone'), t: Date.parse(ans.rdates['4']) + 1e5, type: 'task_done', key: 'legacy-now', legacy: true });
+  }
 
   // 2. the teacher's written feedback
   (course.feedback || []).forEach((f, i) => {
