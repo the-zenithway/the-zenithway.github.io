@@ -13,8 +13,21 @@
   function courseName(id) { var s = STUDENTS.filter(function (x) { return (x.courses || []).some(function (c) { return c.id === id; }); })[0]; var c = s && s.courses.filter(function (x) { return x.id === id; })[0]; return c ? c.name : id; }
   // Normal track = on a class roster (js/data.js CLASSES). Self-study track and "gone" come from data/student-tracks.json:
   // gone students are dropped from every teacher view, self-study students are listed apart and get no queue items.
+  // Every student on the self-study track: the ones data/student-tracks.json names, plus everyone who is on no class roster and has not
+  // "left for good" (so a student who signs up and picks a self-study course shows up here with no hand-editing).
+  function selfStudyUsers(tracks) {
+    tracks = tracks || {}; var gone = tracks.gone || [], out = (tracks.selfStudy || []).slice(), inClass = {};
+    CLASSES.forEach(function (c) { (c.studentUsernames || []).forEach(function (u) { inClass[u] = 1; }); });
+    STUDENTS.forEach(function (s) { if (!inClass[s.username] && gone.indexOf(s.username) < 0 && out.indexOf(s.username) < 0) out.push(s.username); });
+    return out;
+  }
+  // Self-study students with nothing the platform can show progress for yet (no course, or only a course without platform tracking).
+  function idleSelfStudy(tracks) {
+    var gone = (tracks || {}).gone || [];
+    return selfStudyUsers(tracks).filter(function (u) { return gone.indexOf(u) < 0; }).map(studentRec).filter(function (st) { return !(st.courses || []).some(function (c) { return CFG.COURSES[c.id]; }); });
+  }
   function roster(teacher, tracks) {
-    tracks = tracks || {}; var gone = tracks.gone || [], self = tracks.selfStudy || [], seen = {}, out = [];
+    tracks = tracks || {}; var gone = tracks.gone || [], self = selfStudyUsers(tracks), seen = {}, out = [];
     function add(u, course, cname, className, isSelf) {
       var k = u + '|' + course; if (seen[k] || gone.indexOf(u) >= 0) return; seen[k] = 1;
       var st = studentRec(u); if (!(st.courses || []).some(function (x) { return x.id === course; })) return;
@@ -29,14 +42,14 @@
   }
   // -> {groups:{key:{...roster entry, events, info, data, D, st}}, loaded}
   function loadGroups(teacher) {
-    var groups = {}, list;
-    return fetch('data/student-tracks.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (tracks) { list = roster(teacher, tracks); return ZP.loadAll(list.map(function (r) { return { username: r.username, course: r.course }; })); }).then(function (loaded) {
+    var groups = {}, list, trk;
+    return fetch('data/student-tracks.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (tracks) { trk = tracks; list = roster(teacher, tracks); return ZP.loadAll(list.map(function (r) { return { username: r.username, course: r.course }; })); }).then(function (loaded) {
       list.forEach(function (r) { groups[r.key] = Object.assign({ events: [] }, r); });
       loaded.rows.forEach(function (e) { var g = groups[e.username + '|' + e.course]; if (g) g.events.push(e); });
       var courses = {}; list.forEach(function (r) { courses[r.course] = 1; });
       return Promise.all(Object.keys(courses).map(function (c) { return root.ZPBanks.load(c).then(function (d) { courses[c] = d; }); })).then(function () {
         Object.keys(groups).forEach(function (k) { var g = groups[k]; g.data = courses[g.course]; refresh(g); });
-        return { groups: groups, loaded: loaded, list: list };
+        return { groups: groups, loaded: loaded, list: list, idle: idleSelfStudy(trk) };
       });
     });
   }
@@ -125,6 +138,12 @@
     return '<div class="zp-tablewrap"><table class="zp-table zp-students"><thead><tr><th>Student</th><th>Where</th><th>Last 14 days</th><th>Accuracy</th><th>Reviews due</th><th>Last active</th><th></th></tr></thead><tbody>' + (rows || '<tr><td colspan="7" class="zp-muted">No students on the platform yet.</td></tr>') + '</tbody></table></div>';
   }
 
+  function idleHTML(idle) {
+    if (!idle || !idle.length) return '';
+    return '<h3 style="margin-top:22px">Self-study students with no tracked course yet</h3><p class="zp-muted">Signed up, but have not started a course the platform tracks (or only added one with the old roadmap).</p><ul class="zp-idle">' +
+      idle.map(function (st) { var cs = (st.courses || []).map(function (c) { return esc(c.name); }).join(', '); return '<li><b>' + esc(st.name || st.username) + '</b> <span class="zp-muted">@' + esc(st.username) + (cs ? ' · ' + cs + ' (old roadmap, not tracked)' : ' · no course yet') + '</span></li>'; }).join('') + '</ul>';
+  }
+
   /* ---------- reported problems ---------- */
   function reportsHTML(groups, fixed) {
     var map = {};
@@ -164,7 +183,7 @@
       var banner = state.loaded.source === 'local' ? '<p class="zp-localnote">Showing work saved in this browser only. Deploy automation/zenith-student-data.gs and set DATA_URL in js/zp-config.js and every student shows up from any device.</p>' : '';
       var tabs = '<nav class="zp-tabs" role="tablist">' + [['queue', 'Progress queue' + (state.items.length ? ' (' + state.items.length + ')' : '')], ['students', 'Students'], ['tools', 'Class tools']].map(function (t) { return '<a href="#' + t[0] + '" role="tab" class="' + (state.tab === t[0] ? 'on' : '') + '" data-tab="' + t[0] + '">' + t[1] + '</a>'; }).join('') + '</nav>';
       var body;
-      if (state.tab === 'students') body = '<h2>Students</h2><p class="zp-muted">Open a student for their full record, assign work, set requirements and talk. "View as student" shows exactly what they see, read-only.</p>' + tableHTML(state.groups, state.plans);
+      if (state.tab === 'students') body = '<h2>Students</h2><p class="zp-muted">Open a student for their full record, assign work, set requirements and talk. "View as student" shows exactly what they see, read-only.</p>' + tableHTML(state.groups, state.plans) + idleHTML(state.idle);
       else if (state.tab === 'tools') body = '<h2>Class tools</h2><p class="zp-muted">Class-wide things: student requests, email reminders and announcements. Everything about one student\'s work is on their own page.</p>';
       else {
         var rep = reportsHTML(state.groups, state.fixed); state.reports = rep.list;
@@ -199,11 +218,11 @@
     host.innerHTML = '<p role="status">Loading students…</p>';
     window.addEventListener('hashchange', function () { var h = (location.hash || '#queue').slice(1); if (['queue', 'students', 'tools'].indexOf(h) >= 0 && state.groups) { state.tab = h; render(); } });
     loadGroups(teacher).then(function (r) {
-      state.groups = r.groups; state.loaded = r.loaded;
+      state.groups = r.groups; state.loaded = r.loaded; state.idle = r.idle || [];
       return Promise.all(Object.keys(r.groups).map(function (k) { var g = r.groups[k]; return root.ZPPlan.load(g.username, g.course).then(function (p) { state.plans[k] = p; }).catch(function () { /* no plan */ }); }));
     }).then(render).catch(function (e) { host.innerHTML = UI.emptyState('Could not read student data', esc(e.message)); });
     if (CFG.DATA_URL) fetch(CFG.DATA_URL + '?action=doc&key=' + encodeURIComponent('reports:fixed')).then(function (r) { return r.json(); }).then(function (res) { if (res.ok && res.value) { state.fixed = res.value; if (state.groups) render(); } }).catch(function () { /* keep local */ });
   }
 
-  root.ZPTeach = { mountDesk: mountDesk, roster: roster, loadGroups: loadGroups, refresh: refresh, push: push, clearViewAs: clearViewAs, stageText: stageText, planState: planState, sparkline: sparkline, studentRec: studentRec, courseName: courseName, who: who };
+  root.ZPTeach = { mountDesk: mountDesk, roster: roster, selfStudyUsers: selfStudyUsers, idleSelfStudy: idleSelfStudy, loadGroups: loadGroups, refresh: refresh, push: push, clearViewAs: clearViewAs, stageText: stageText, planState: planState, sparkline: sparkline, studentRec: studentRec, courseName: courseName, who: who };
 })(window);

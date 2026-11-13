@@ -885,4 +885,17 @@ test('passwords: new accounts get a salted slow hash, old SHA-256 and plain pass
   assert.ok(ctx.api.strength('plum-harbor-ladder-quartz-83') >= 3 && ctx.api.strength('abc') === 0);
 });
 
+test('Mentor Desk: every student who is on no class roster is on the self-study track automatically, minus anyone marked gone; those without a tracked course are listed apart', () => {
+  const vm = require('vm'), fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '..', 'js', 'zp-tdash.js'), 'utf8');
+  const code = src.slice(src.indexOf('  function selfStudyUsers'), src.indexOf('  function roster(teacher, tracks)'));
+  const ctx = { CLASSES: [{ studentUsernames: ['inclass'] }], CFG: { COURSES: { 'ap-calculus-bc': 1 } },
+    STUDENTS: [{ username: 'inclass', courses: [] }, { username: 'listed', courses: [{ id: 'ap-calculus-bc' }] }, { username: 'newkid', courses: [{ id: 'ap-calculus-bc', selfStudy: true }] }, { username: 'nocourse', courses: [] }, { username: 'bioonly', courses: [{ id: 'ap-biology', name: 'AP Biology' }] }, { username: 'left', courses: [{ id: 'ap-calculus-bc' }] }],
+    studentRec: u => ctx.STUDENTS.filter(s => s.username === u)[0], Object, Array };
+  vm.createContext(ctx); vm.runInContext(code + ';this.api={users:selfStudyUsers,idle:idleSelfStudy};', ctx);
+  const tracks = { selfStudy: ['listed'], gone: ['left'] };
+  assert.strictEqual(JSON.stringify(ctx.api.users(tracks)), JSON.stringify(['listed', 'newkid', 'nocourse', 'bioonly']), 'listed first, then everyone on no roster; class students and gone ones are out');
+  assert.strictEqual(JSON.stringify(ctx.api.idle(tracks).map(s => s.username)), JSON.stringify(['nocourse', 'bioonly']), 'no tracked course yet');
+  assert.strictEqual(JSON.stringify(ctx.api.users({})), JSON.stringify(['listed', 'newkid', 'nocourse', 'bioonly', 'left']), 'with no tracks file it still works');
+});
+
 console.log('\n' + n + ' tests passed');
