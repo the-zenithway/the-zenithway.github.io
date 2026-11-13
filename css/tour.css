@@ -1,0 +1,40 @@
+/* Interactive tour (js/tour.js): a dimmed page, a ring around the thing being explained, and a card with the explanation.
+   Colours come from the site's theme variables, so it follows Dark / Light / Midnight / Paper. */
+.zt-root { position: fixed; inset: 0; z-index: 3000; pointer-events: none; }
+.zt-overlay { position: fixed; inset: 0; pointer-events: auto; background: transparent; }
+.zt-ring {
+  position: fixed; border-radius: 12px; pointer-events: none;
+  box-shadow: 0 0 0 3px var(--accent), 0 0 0 9999px rgba(8, 8, 10, 0.62);
+  transition: top .25s ease, left .25s ease, width .25s ease, height .25s ease, opacity .15s ease;
+}
+.zt-ring.zt-hidden { top: 50%; left: 50%; width: 0; height: 0; box-shadow: 0 0 0 9999px rgba(8, 8, 10, 0.62); } /* no target: just dim the page */
+.zt-card {
+  position: fixed; pointer-events: auto; width: min(360px, 92vw); padding: 16px 18px;
+  background: var(--bg-elevated); color: var(--text); border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); transition: top .25s ease, left .25s ease;
+  font-family: var(--font-sans);
+}
+.zt-card.zt-centered { top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(440px, 92vw); }
+.zt-eyebrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.zt-count { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+.zt-skip { appearance: none; border: 0; background: none; padding: 2px 4px; color: var(--text-muted); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.zt-skip:hover { color: var(--text); text-decoration: underline; }
+.zt-bar { display: flex; gap: 3px; margin-bottom: 14px; }
+.zt-bar span { flex: 1; height: 3px; border-radius: 99px; background: var(--border); }
+.zt-bar span.on { background: var(--accent); }
+.zt-title { margin: 0 0 6px; font-size: 15px; font-weight: 700; }
+.zt-body { margin: 0 0 14px; font-size: 13px; line-height: 1.55; color: var(--text-muted); }
+.zt-body b { color: var(--text); }
+.zt-body kbd { padding: 0 5px; border: 1px solid var(--border); border-radius: 5px; font-family: var(--font-mono); font-size: 11px; color: var(--text); }
+.zt-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.zt-btn { appearance: none; padding: 7px 14px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.zt-btn:disabled { opacity: .4; cursor: default; }
+.zt-btn.zt-primary { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+
+/* First-visit invitation at the top of Roadmap / Portal */
+.zt-invite { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; max-width: 1120px; margin: 14px auto 0; padding: 12px 16px; border: 1px solid var(--accent); border-radius: 14px; background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--text); font-size: 14px; }
+.zt-invite b { color: var(--accent); }
+.zt-invite span { flex: 1 1 260px; }
+.zt-invite .zt-btn { padding: 6px 14px; }
+
+@media (max-width: 600px) { .zt-card { width: min(300px, 90vw); padding: 14px 16px; } }

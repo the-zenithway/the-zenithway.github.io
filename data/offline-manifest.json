@@ -1,5 +1,5 @@
 {
- "built": "2026-11-08",
+ "built": "2026-11-13",
  "urls": [
   "index.html",
   "login.html",
@@ -20,6 +20,7 @@
   "js/practice-core.js",
   "js/practice.js",
   "js/social-links.js",
+  "js/tour.js",
   "js/zp-agenda.js",
   "js/zp-banks.js",
   "js/zp-browse.js",
@@ -50,6 +51,7 @@
   "css/platform.css",
   "css/practice.css",
   "css/style.css",
+  "css/tour.css",
   "data/calculus-ap-frq-bank.json",
   "data/calculus-c-bank.json",
   "data/calculus-review-status.json",

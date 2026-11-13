@@ -898,4 +898,23 @@ test('Mentor Desk: every student who is on no class roster is on the self-study 
   assert.strictEqual(JSON.stringify(ctx.api.users({})), JSON.stringify(['listed', 'newkid', 'nocourse', 'bioonly', 'left']), 'with no tracks file it still works');
 });
 
+test('tour: every tour has complete steps and ends on a closing card, the full tour covers the solving loop in order, and it is on every platform page', () => {
+  const vm = require('vm'), fs = require('fs'), root = require('path').join(__dirname, '..');
+  const noop = () => {}, doc = { readyState: 'complete', querySelector: () => null, querySelectorAll: () => [], addEventListener: noop, createElement: () => ({ style: {}, addEventListener: noop }), body: { appendChild: noop } };
+  const win = { document: doc, location: { pathname: '/roadmap.html', search: '', hash: '' }, addEventListener: noop, innerWidth: 1000, innerHeight: 800 }; win.window = win;
+  const store = {}; const ctx = Object.assign(win, { localStorage: { getItem: k => store[k] || null, setItem: (k, v) => { store[k] = v; }, removeItem: k => { delete store[k]; } }, sessionStorage: { getItem: () => null, setItem: noop, removeItem: noop }, setTimeout: noop, Promise, Object, Array, JSON, Date, Math, console });
+  vm.createContext(ctx); vm.runInContext(fs.readFileSync(root + '/js/tour.js', 'utf8'), ctx);
+  const T = ctx.ZTour.TOURS; assert.ok(Object.keys(T).length >= 10);
+  Object.keys(T).forEach(k => { const steps = T[k]; assert.ok(steps.length >= 2, k); steps.forEach((st, i) => { assert.ok(st.title && st.body, k + ' step ' + i + ' has a title and a body'); assert.strictEqual(!!st.finish, i === steps.length - 1, k + ': only the last step finishes'); }); });
+  const order = T.main.map(st => st.title);
+  const at = (t) => order.findIndex(x => x.indexOf(t) === 0);
+  ['Today', 'Every chapter', 'Inside a chapter', '1. Read', '2. Choose', '3. Say', '4. Check', 'Stuck', '5. Write', 'The review queue', 'The Trainer', 'Free-response', 'That is the loop'].forEach(t => assert.ok(at(t) >= 0, 'the full tour has a step "' + t + '"'));
+  assert.ok(at('1. Read') < at('2. Choose') && at('2. Choose') < at('4. Check') && at('4. Check') < at('5. Write') && at('5. Write') < at('The review queue'), 'the steps follow the order you solve in');
+  assert.ok(T.main.filter(st => st.url).every(st => typeof st.url === 'function'), 'steps that change page give a url function');
+  assert.ok(T.runner.every(st => !st.url) && T.roadmap.every(st => !st.url), 'page tours stay on their page');
+  assert.ok(T.start.some(st => /catalog/.test(String(st.url))), 'a student with no Calculus course is sent to the catalog');
+  ['roadmap', 'chapter', 'practice', 'notebook', 'profile', 'mentor', 'portal', 'catalog'].forEach(f => { const h = fs.readFileSync(root + '/' + f + '.html', 'utf8'); assert.ok(/js\/tour\.js/.test(h) && /css\/tour\.css/.test(h), f + '.html loads the tour'); });
+  assert.ok(JSON.parse(fs.readFileSync(root + '/data/offline-manifest.json', 'utf8')).urls.some(u => /js\/tour\.js$/.test(u)), 'the offline manifest includes the tour');
+});
+
 console.log('\n' + n + ' tests passed');
