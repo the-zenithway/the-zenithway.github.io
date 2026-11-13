@@ -2611,6 +2611,13 @@ const STUDENTS = [
     "passwordHash": "pbkdf2$210000$ddee44f0f96de6ae62f168bd803076c5$f9c8d6fe2dc993cef633f0dae0972ac8fef9572e506f0485cc80604dd6cdab50",
     "email": "simeunseong7711@gmail.com",
     "courses": []
+  },
+  {
+    "username": "dltmdals09",
+    "name": "seungminlee",
+    "passwordHash": "pbkdf2$210000$f49b410e56d0d00e020f4f24e3a4e1b2$7453f86cadd20d5223d11b2526bdaddda0a3b8d4cfce65ffeb0f7ebb4ea8526b",
+    "email": "smirisneo@gmail.com",
+    "courses": []
   }
 ];
 
