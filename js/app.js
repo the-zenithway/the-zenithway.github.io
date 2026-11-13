@@ -4393,58 +4393,28 @@ function renderCalendarPage(person) {
 // roadmapGroupByChapter, roadmapChapterOverallStatus, roadmapPillHtml)
 // so a parent's numbers can never drift from what the student sees.
 //
-// `lang` ("en"/"ko", from js/i18n.js's getLang()) only affects this
-// page's own static labels (greeting, "Chapter", pill text, etc) —
-// not student/course names or actual feedback/instruction content,
-// which is tutor-authored English and outside this toggle's scope.
-// Word order differs enough between the two languages (e.g. the
-// greeting) that these are built as whole strings per language
-// rather than word-for-word substitution.
-const PARENT_I18N = {
-  subtitle: {
-    en: "A read-only summary — nothing here can be edited or submitted from this account.",
-    ko: "읽기 전용 요약입니다 — 이 계정에서는 아무것도 수정하거나 제출할 수 없습니다."
-  },
-  noStudent: {
-    en: "No student is linked to this account yet.",
-    ko: "아직 이 계정에 연결된 학생이 없습니다."
-  },
-  noCourses: {
-    en: "No courses set up yet.",
-    ko: "아직 등록된 과목이 없습니다."
-  },
-  chapter: { en: "Chapter ", ko: "챕터 " },
-  complete: { en: "complete", ko: "완료" },
-  yourMove: { en: "Your move", ko: "지금 할 일" },
-  withUs: { en: "With us", ko: "검토 중" },
-  nothingNow: { en: "Nothing set right now.", ko: "현재 설정된 항목이 없습니다." },
-  latestFeedback: { en: "Latest feedback — ", ko: "최근 피드백 — " }
+// The static labels of this page (greeting, "Chapter", pill text, etc). Student and course names and the actual feedback / instruction
+// content are tutor-authored and shown as written.
+const PARENT_TEXT = {
+  subtitle: "A read-only summary — nothing here can be edited or submitted from this account.",
+  noStudent: "No student is linked to this account yet.",
+  noCourses: "No courses set up yet.",
+  chapter: "Chapter ",
+  complete: "complete",
+  yourMove: "Your move",
+  withUs: "With us",
+  nothingNow: "Nothing set right now.",
+  latestFeedback: "Latest feedback — "
 };
 
-function pt(key, lang) {
-  const entry = PARENT_I18N[key];
-  return (entry && entry[lang]) || (entry && entry.en) || key;
-}
+function pt(key) { return PARENT_TEXT[key] || key; }
 
-// Korean labels for the same ROADMAP_STATUS_COLORS keys used by the
-// pills elsewhere — kept separate from that shared map since it's
-// English-only and used on student-facing pages too.
-const PARENT_STATUS_LABELS_KO = {
-  "Complete": "완료",
-  "Review": "검토",
-  "Unlocked": "잠금 해제",
-  "Optional-Reading": "선택 읽기자료",
-  "Locked": "잠김"
-};
-
-function renderParentDashboard(parent, lang) {
-  lang = lang || "en";
+function renderParentDashboard(parent) {
   if (!parent) return;
-  document.getElementById("parent-greeting").textContent =
-    lang === "ko" ? parent.name + "님, 안녕하세요," : "Hey " + parent.name + ",";
+  document.getElementById("parent-greeting").textContent = "Hey " + parent.name + ",";
 
   const subtitle = document.querySelector(".parent-subtitle");
-  if (subtitle) subtitle.textContent = pt("subtitle", lang);
+  if (subtitle) subtitle.textContent = pt("subtitle");
 
   const wrap = document.getElementById("parent-summary");
   const students = (parent.linkedStudents || [])
@@ -4452,15 +4422,15 @@ function renderParentDashboard(parent, lang) {
     .filter(Boolean);
 
   if (students.length === 0) {
-    wrap.innerHTML = '<p class="parent-empty">' + pt("noStudent", lang) + '</p>';
+    wrap.innerHTML = '<p class="parent-empty">' + pt("noStudent") + '</p>';
     return;
   }
 
   wrap.innerHTML = students.map(function (student) {
     const courses = student.courses || [];
     const body = courses.length === 0
-      ? '<p class="parent-empty">' + pt("noCourses", lang) + '</p>'
-      : courses.map(function (course) { return parentCourseCardHtml(course, lang); }).join("");
+      ? '<p class="parent-empty">' + pt("noCourses") + '</p>'
+      : courses.map(function (course) { return parentCourseCardHtml(course); }).join("");
     return '<section class="parent-student">' +
       '<h2 class="parent-student-name">' + student.name + '</h2>' +
       body +
@@ -4468,8 +4438,7 @@ function renderParentDashboard(parent, lang) {
   }).join("");
 }
 
-function parentCourseCardHtml(course, lang) {
-  lang = lang || "en";
+function parentCourseCardHtml(course) {
   const items = course.roadmap || [];
   const pct = roadmapPercentComplete(items);
   const groups = roadmapGroupByChapter(items);
@@ -4478,21 +4447,21 @@ function parentCourseCardHtml(course, lang) {
   const chaptersHtml = groups.map(function (group) {
     const status = roadmapChapterOverallStatus(group.items);
     const chapterPct = roadmapPercentComplete(group.items);
-    const statusLabel = lang === "ko" ? (PARENT_STATUS_LABELS_KO[status] || status) : status.replace(/-/g, " ");
+    const statusLabel = status.replace(/-/g, " ");
     return '<div class="parent-chapter-row">' +
-      '<span class="parent-chapter-label">' + pt("chapter", lang) + group.label + '</span>' +
+      '<span class="parent-chapter-label">' + pt("chapter") + group.label + '</span>' +
       roadmapPillHtml(status, ROADMAP_STATUS_COLORS, statusLabel) +
       '<span class="parent-chapter-pct">' + chapterPct + '%</span>' +
     '</div>';
   }).join("");
 
   let nowClass = "parent-now";
-  let nowHtml = '<p class="parent-now-empty">' + pt("nothingNow", lang) + '</p>';
+  let nowHtml = '<p class="parent-now-empty">' + pt("nothingNow") + '</p>';
   if (data) {
     const isWaiting = data.state === "waiting";
     if (isWaiting) nowClass += " is-waiting";
     nowHtml =
-      '<p class="parent-now-tag">' + (isWaiting ? pt("withUs", lang) : pt("yourMove", lang)) + '</p>' +
+      '<p class="parent-now-tag">' + (isWaiting ? pt("withUs") : pt("yourMove")) + '</p>' +
       '<p class="parent-now-text">' + data.chapter + ' · ' + data.unit + ' — ' + (isWaiting ? data.note : data.instruction) + '</p>';
   }
 
@@ -4500,7 +4469,7 @@ function parentCourseCardHtml(course, lang) {
   const latestFeedback = feedback[0];
   const feedbackHtml = latestFeedback
     ? '<div class="parent-feedback">' +
-        '<p class="parent-feedback-label">' + pt("latestFeedback", lang) + latestFeedback.date + '</p>' +
+        '<p class="parent-feedback-label">' + pt("latestFeedback") + latestFeedback.date + '</p>' +
         '<p class="parent-feedback-content">' + latestFeedback.content + '</p>' +
       '</div>'
     : "";
@@ -4508,7 +4477,7 @@ function parentCourseCardHtml(course, lang) {
   return '<div class="parent-course-card">' +
     '<div class="parent-course-head">' +
       '<h3 class="parent-course-name">' + course.name + '</h3>' +
-      '<span class="parent-course-pct">' + pct + '% ' + pt("complete", lang) + '</span>' +
+      '<span class="parent-course-pct">' + pct + '% ' + pt("complete") + '</span>' +
     '</div>' +
     '<div class="parent-course-progress"><span class="parent-course-progress-bar" style="width:' + pct + '%;"></span></div>' +
     '<div class="' + nowClass + '">' + nowHtml + '</div>' +

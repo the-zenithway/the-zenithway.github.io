@@ -14,11 +14,11 @@
  *   c_answer  {ch,pid,answer,correct,conf,ms,sess}                one attempt per problem per runner session (`sess`); a later event with the same sess replaces the earlier one
  *   c_miss    {ch,pid,miss}      c_note {ch,pid,text}
  *   redo      {ch,pid,answer,correct,src:'R'|'spaced'|'warmup'}
- *   note      {ch,pid,src,miss,approach,stuck,idea,signal,line}   발상노트 entry
+ *   note      {ch,pid,src,miss,approach,stuck,idea,signal,line}   idea note entry
  *   t_submit  {ch,kind:'T'|'MOCK',aid,pids,answers,ms,flags,result,chOf,minutes,score}
  *   rec_del   {ref}  hides a test / mock record (t_submit id) from the student's lists; per-problem progress is untouched
  *   t_review  {ch,aid,rule}
- *   cnote     {ch,summary,sections}      close {ch}               개념노트 / chapter close
+ *   cnote     {ch,summary,sections}      close {ch}               Concepts Notebook / chapter close
  *   fb_sent   {ref}   debrief_req {aid}                           teacher / mock
  *   frq_ans   {aid,pid,ch,text,images,ask}  a free-response answer (typed / LaTeX + photos); ask:true asks the mentor for feedback (aid '' = a practice problem)
  *   frq_score {aid,pid,score,max}  a self-score; with `by` (mentor) it is final and a later self-score is ignored
@@ -53,7 +53,7 @@
     return !!n && (len(n.idea) >= 3 || len(n.stuck) >= 3 || len(n.approach) >= 3 || len(n.signal) >= 3 || len(n.text) >= 3);
   }
 
-  // The whole text of a problem's note, old (several boxes) or new (one 발상노트).
+  // The whole text of a problem's note, old (several boxes) or new (one idea note).
   function noteBody(n) {
     if (!n) return '';
     if (n.nkind) return String(n.text || '').trim();
@@ -88,7 +88,7 @@
   function words(s) { s = typeof s === 'string' ? s.trim() : ''; return s ? s.split(/\s+/).length : 0; }
   function entryComplete(n) {
     if (!n) return false;
-    // One 발상노트 per problem (nkind: rule = 행동양식 "when I see ... I will ...", idea = main idea, other): a single text, Careless needs less than Actual.
+    // One idea note per problem (nkind: rule = habit "when I see ... I will ...", idea = main idea, other): a single text, Careless needs less than Actual.
     if (n.nkind) return len(n.text) >= (n.track === 'actual' ? REQ.actualChars : REQ.carelessChars);
     if (n.track === 'careless') return len(n.stuck) >= REQ.carelessChars;
     if (n.track === 'actual') return len(n.stuck) >= REQ.actualChars && len(n.idea) >= REQ.actualChars;
@@ -419,7 +419,7 @@
           (D.concepts[e.ch] = D.concepts[e.ch] || {})[e.key] = ce; break;
         }
         case 'concept_order': D.conceptOrder[e.ch] = e.keys || []; break;
-        case 'idea': D.ideas[e.key] = e; break; // a stand-alone 발상노트 (latest event per key wins; deleted:true removes it)
+        case 'idea': D.ideas[e.key] = e; break; // a stand-alone idea note (latest event per key wins; deleted:true removes it)
         case 'b_submit': D.bSub[e.ch] = e; break;
         case 'c_hint': { var h = prob(e.pid, e.ch); if (e.level > h.maxHint) h.maxHint = e.level; var hq = qrec(e.pid, e.ch); if (e.level > hq.hintMax) hq.hintMax = e.level; break; }
         case 'c_answer': {
@@ -593,7 +593,7 @@
       });
     });
 
-    /* 발상노트 cards: any idea note can be added to the review queue by itself (card_flag kind 'idea'), separately from the problem redo.
+    /* Idea note cards: any idea note can be added to the review queue by itself (card_flag kind 'idea'), separately from the problem redo.
      * Sources: stand-alone notes (`idea` events) and the note written for a problem (key 'n-<pid>'). Recall: the trigger / idea, then what you wrote. */
     var ideaSrc = [];
     Object.keys(D.ideas).forEach(function (k) { var e = D.ideas[k]; if (e.deleted || len(e.text) < 3) return; ideaSrc.push({ key: k, ch: e.ch || '', text: e.text, nkind: e.nkind || 'other', t: e.t, pid: '' }); });

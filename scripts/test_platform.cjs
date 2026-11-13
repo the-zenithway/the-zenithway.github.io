@@ -207,7 +207,7 @@ test('T is only taking the test; R (test) needs an entry for every miss (misses 
   assert.strictEqual(D.stages['1'].next, 'X');
 });
 
-test('Close needs a 개념노트 summary; finishing moves the current chapter on and offers a warm-up', () => {
+test('Close needs a Concepts Notebook summary; finishing moves the current chapter on and offers a warm-up', () => {
   let D = ZP.derive(evs, info, clock);
   assert.strictEqual(D.stages['1'].next, 'X');
   evs.push(ev('cnote', { ch: '1', summary: 'idea '.repeat(25), sections: [] }));
@@ -649,7 +649,7 @@ test('deleting a test / mock record removes it from the lists but keeps the per-
   assert.strictEqual(D.q['1CA1'].n, 1, 'the attempt on the problem stays'); assert.ok(D.entries['1CA1'], 'the forced entry for the miss stays'); assert.strictEqual(D.q['1CA2'].n, 1);
 });
 
-test('발상노트: one entry per problem (kind + single text), stand-alone idea notes, optional review cards of their own, review ahead', () => {
+test('Idea note: one entry per problem (kind + single text), stand-alone idea notes, optional review cards of their own, review ahead', () => {
   const nt = (extra) => mk('note', Object.assign({ ch: '1', pid: '1CA1', src: 'C', track: 'actual', nkind: 'rule', text: 'When I see 0/0 in a limit, I will factor first.', stuck: '', idea: '', signal: '' }, extra), NOW0 - 20 * DAY);
   let D = ZP.derive([nt()], info, NOW0);
   assert.ok(ZP.entryComplete(D.notes['1CA1']), 'one text is enough for Actual when it is long enough');

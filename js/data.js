@@ -52,7 +52,7 @@ const TEACHER_DATA_WRITE_URL = "https://script.google.com/macros/s/AKfycbwcAO2H2
 // fills in the roadmap when a page loads, as a copy of the original roadmap with every item unlocked (fillSelfStudyRoadmaps_).
 // The student's real progress on the platform lives in their own log, not here.
 const SELF_STUDY_COURSES = [
-  { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "calculus", open: true, blurb: "Chapters 1-12, tests, full mocks and AP free-response practice, with the Trainer, the book chapters and your 발상노트." },
+  { id: "ap-calculus-bc", name: "AP Calculus BC", icon: "calculus", open: true, blurb: "Chapters 1-12, tests, full mocks and AP free-response practice, with the Trainer, the book chapters and your idea notes." },
   { id: "ap-chemistry", name: "AP Chemistry", icon: "chemistry", open: true, blurb: "The original Zenith roadmap, every step unlocked: lessons, notes, problems, tests and mocks, plus the Trainer." },
   { id: "ap-biology", name: "AP Biology", icon: "biology", open: true, blurb: "The original Zenith roadmap, every step unlocked: lessons, notes, problems, tests and mocks." },
   { id: "ap-computer-science-a", name: "AP Computer Science A", icon: "computer-science", open: true, blurb: "The original Zenith roadmap, every step unlocked." }
@@ -147,44 +147,44 @@ const STUDENTS = [
             "date": "Jul 30",
             "chapter": "Chapter 1",
             "unit": "T1",
-            "content": "Marking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.<br><br>On how you write up review notes (발상노트 and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the <em>entire question</em>, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.<br><br>Domain and range: this tripped you up on T1. $\\ln(0)$ isn't just 'undefined' in the vague sense — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. That matters for range questions where $0$ sits on the boundary of the domain: the function's values run off toward $-\\infty$ near that edge rather than stopping at some finite number (added to your cheat sheet).<br><br>Also on max/min questions: the maximum value of a function on an interval does <em>not</em> necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where $f'(x) = 0$ or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).<br><br>Inverse functions: to know if $f^{-1}$ exists, always check that $f$ can be uniquely identified by its $y$-values — every output $y$ must come from only one input $x$. If two different $x$ values give the same $y$, there's no single well-defined inverse (cheat sheet entry added for this one too)."
+            "content": "Marking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.<br><br>On how you write up review notes (idea notes and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the <em>entire question</em>, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.<br><br>Domain and range: this tripped you up on T1. $\\ln(0)$ isn't just 'undefined' in the vague sense — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. That matters for range questions where $0$ sits on the boundary of the domain: the function's values run off toward $-\\infty$ near that edge rather than stopping at some finite number (added to your cheat sheet).<br><br>Also on max/min questions: the maximum value of a function on an interval does <em>not</em> necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where $f'(x) = 0$ or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).<br><br>Inverse functions: to know if $f^{-1}$ exists, always check that $f$ can be uniquely identified by its $y$-values — every output $y$ must come from only one input $x$. If two different $x$ values give the same $y$, there's no single well-defined inverse (cheat sheet entry added for this one too)."
           },
           {
             "date": "Jul 28",
             "chapter": "Cumulative Review",
-            "unit": "발상노트",
+            "unit": "Idea Note",
             "content": "Good spread of review here — quick pass, item by item.<br><br>The motion problem: your setup for both speed ($v = \\sqrt{(dx/dt)^2 + (dy/dt)^2}$) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the $t=5$ position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The $y$-component of your acceleration checks out on my end. The $x$-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and $\\sin(t^3)$-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.<br><br>Symmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).<br><br>On the polynomial: the rational root theorem execution was flawless ($x = 1, -4, -5$ checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.<br><br>Period formula and the log power rule example are both correct."
           }
         ],
         "cheatSheet": [
           {
             "topic": "Root Existence — Use IVT, Not RRT",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the <em>exact</em> value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all."
           },
           {
             "topic": "IVT vs. MVT vs. Rolle's — Keep Them Separate",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT."
           },
           {
             "topic": "Origin Symmetry ↔ Odd Functions",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "Good instinct connecting the two: a graph with $180°$ rotational symmetry about the origin is exactly what $f(-x)=-f(x)$ means algebraically — every point $(x,y)$ has a matching point $(-x,-y)$ on the graph. Worth pairing with the reflection rules right next to it in your notes: reflecting across the $y$-axis gives $y=f(-x)$, across the $x$-axis gives $y=-f(x)$ — odd symmetry is really both reflections applied at once."
           },
           {
             "topic": "Period of $a\\sin(bx+c)$ / $a\\cos(bx+c)$",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "Correctly recorded: period $=\\dfrac{2\\pi}{|b|}$. Remember $a$ only stretches the graph vertically (amplitude) and $c$ only shifts it left/right (phase) — neither touches the period. Only $b$, the coefficient on $x$, controls how fast the wave repeats."
           },
           {
             "topic": "Reflections Across the Axes",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "Two rules, easy to keep straight if you remember which variable flips. Reflect across the $y$-axis (left ↔ right) → flip the input: $y=f(-x)$. Reflect across the $x$-axis (up ↔ down) → flip the output: $y=-f(x)$. Bonus connection: a function that looks unchanged after a $y$-axis reflection ($f(-x)=f(x)$) is even and symmetric about the $y$-axis — the mirror-image partner to the odd/origin-symmetry case in the entry above."
           },
           {
             "topic": "Basic Log Properties",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "The full toolkit, worth having in one place: $\\log_b(xy)=\\log_b(x)+\\log_b(y)$ (product → sum); $\\log_b(x/y)=\\log_b(x)-\\log_b(y)$ (quotient → difference); $\\log_b(x^n)=n\\log_b(x)$ (power rule — the one behind your $\\log_b(3^b)=b/2$ example); $\\log_b(1)=0$ and $\\log_b(b)=1$ always. Change of base, for when your calculator has no $\\log_b$ button: $\\log_b(x)=\\dfrac{\\log(x)}{\\log(b)}$. And log/exponential undo each other: $b^{\\log_b(x)}=x$, $\\log_b(b^x)=x$."
           },
           {
@@ -484,12 +484,12 @@ const STUDENTS = [
         "cheatSheet": [
           {
             "topic": "Root Existence — Use IVT, Not RRT",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the <em>exact</em> value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all."
           },
           {
             "topic": "IVT vs. MVT vs. Rolle's — Keep Them Separate",
-            "source": "발상노트, Jul 28",
+            "source": "Idea Note, Jul 28",
             "pattern": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT."
           }
         ],
@@ -1010,7 +1010,7 @@ const STUDENTS = [
             "date": "Jul 22",
             "chapter": "Chapter 5",
             "unit": "S",
-            "content": "Nice improvement on related rates since last time. Keep working through the 발상노트 for the two problems you missed — both were domain-restriction oversights, same pattern as Chapter 4."
+            "content": "Nice improvement on related rates since last time. Keep working through the idea notes for the two problems you missed — both were domain-restriction oversights, same pattern as Chapter 4."
           },
           {
             "date": "Jul 12",
@@ -1380,13 +1380,13 @@ const STUDENTS = [
         "icon": "chemistry",
         "feedback": [
           {
-            "date": "8월 6일",
+            "date": "Aug 6",
             "chapter": "Chapter 1-4",
             "unit": "C1,C2,C3,C4",
             "content": "Well done on the courseworks! Only 1 mistakes throughout all the courses.\nC3-#22 was the only error. Check our cheat sheet for explanation and tips.\nPlease complete N1-4 by writing notes on the concepts of Chapter 1-4 and review with the Advanced Booklet by making sure you have all the concepts memorized until chapter 4.\nMemorize the VSPER structures too.\nC3-#12 was an error in the answer sheet making your answer, D, correct."
           },
           {
-            "date": "8월 6일",
+            "date": "Aug 6",
             "chapter": "Chapter 1-4",
             "unit": "C3",
             "content": "Well done on the courseworks 1-4! You only got 1 wrong. C3-#12 was an error in the answer sheet which makes your answer, D, correct. Your only mistake was in C3-#22. Please check out the Cheat Sheet and remember the things it says. Please write notes on concpets of chapter 1-4 and review using the Advanced Booklet until our next scheduled session where we will be taking our T-tests."

@@ -8,7 +8,7 @@
    "kind": "feedback",
    "by": "kyjteach",
    "legacy": true,
-   "text": "Cumulative Review · 발상노트\n\nGood spread of review here — quick pass, item by item.\n\nThe motion problem: your setup for both speed ($v = \\sqrt{(dx/dt)^2 + (dy/dt)^2}$) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the $t=5$ position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The $y$-component of your acceleration checks out on my end. The $x$-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and $\\sin(t^3)$-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.\n\nSymmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).\n\nOn the polynomial: the rational root theorem execution was flawless ($x = 1, -4, -5$ checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.\n\nPeriod formula and the log power rule example are both correct."
+   "text": "Cumulative Review · Idea Note\n\nGood spread of review here — quick pass, item by item.\n\nThe motion problem: your setup for both speed ($v = \\sqrt{(dx/dt)^2 + (dy/dt)^2}$) and acceleration (second derivatives, chain rule on both components) is exactly right, and you correctly ignored the $t=5$ position — that's leftover from a different part of the problem (probably a 'find the position' sub-question), not needed for speed or acceleration. The $y$-component of your acceleration checks out on my end. The $x$-component and final speed are worth re-running together next session — my own recompute didn't land on your number, and $\\sin(t^3)$-style chain rule terms are an easy spot for a radian/degree mode mix-up or a dropped factor. Bring your calculator work and we'll walk it through side by side rather than guess over text.\n\nSymmetry, odd functions, and the two reflection rules are all correct and nicely connected — that's exactly the right way to hold these together (added to your cheat sheet).\n\nOn the polynomial: the rational root theorem execution was flawless ($x = 1, -4, -5$ checks out), but that theorem is for pinning down exact rational roots. When a free-response question instead asks you to prove a root exists on an interval, that's an IVT argument, not a factoring one — added a cheat sheet entry on this, plus one keeping IVT, MVT, and Rolle's straight, since those three get mixed up constantly.\n\nPeriod formula and the log power rule example are both correct."
   },
   {
    "id": "leg:bogue:fb0",
@@ -18,7 +18,7 @@
    "kind": "feedback",
    "by": "kyjteach",
    "legacy": true,
-   "text": "Chapter 1 · T1\n\nMarking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.\n\nOn how you write up review notes (발상노트 and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the entire question, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.\n\nDomain and range: this tripped you up on T1. $\\ln(0)$ isn't just 'undefined' in the vague sense — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. That matters for range questions where $0$ sits on the boundary of the domain: the function's values run off toward $-\\infty$ near that edge rather than stopping at some finite number (added to your cheat sheet).\n\nAlso on max/min questions: the maximum value of a function on an interval does not necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where $f'(x) = 0$ or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).\n\nInverse functions: to know if $f^{-1}$ exists, always check that $f$ can be uniquely identified by its $y$-values — every output $y$ must come from only one input $x$. If two different $x$ values give the same $y$, there's no single well-defined inverse (cheat sheet entry added for this one too)."
+   "text": "Chapter 1 · T1\n\nMarking T1 complete — nice work getting through the Functions test. Before we move to Chapter 2, two process notes plus two content notes worth locking in.\n\nOn how you write up review notes (idea notes and otherwise): write the full problem source in detail — e.g. '1T-#29' instead of just '#29' — so a note is traceable back to exactly where it came from, and write out the entire question, not just your work on it. That's what makes a review note actually useful later; right now some entries make you re-derive what the question even was before you can use them. And when you're figuring out what your actual gaps are, don't just eyeball it — asking ChatGPT to look at a mistake and explain what kind of gap it reveals is genuinely useful. Use that more.\n\nDomain and range: this tripped you up on T1. $\\ln(0)$ isn't just 'undefined' in the vague sense — as $x \\to 0^+$, $\\ln(x) \\to -\\infty$. That matters for range questions where $0$ sits on the boundary of the domain: the function's values run off toward $-\\infty$ near that edge rather than stopping at some finite number (added to your cheat sheet).\n\nAlso on max/min questions: the maximum value of a function on an interval does not necessarily come from the edge (boundary) values. Always check critical points too — a max can sit in the interior of the interval, where $f'(x) = 0$ or is undefined, not just at the endpoints. Compare every candidate (critical points + endpoints); whichever gives the largest value wins (also added to your cheat sheet).\n\nInverse functions: to know if $f^{-1}$ exists, always check that $f$ can be uniquely identified by its $y$-values — every output $y$ must come from only one input $x$. If two different $x$ values give the same $y$, there's no single well-defined inverse (cheat sheet entry added for this one too)."
   },
   {
    "id": "leg:bogue:sub1",
@@ -377,7 +377,7 @@
    "ch": "1",
    "key": "old1",
    "name": "Root Existence — Use IVT, Not RRT",
-   "text": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the exact value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all.\n(from 발상노트, Jul 28)",
+   "text": "The synthetic division on $x^3+8x^2+11x-20$ was clean — $x=1,-4,-5$ checks out. But save the Rational Root Theorem for when you need the exact value of a root of a polynomial. When a question instead asks you to show a root or solution exists on some interval $[a,b]$, that's a continuity argument, not a factoring one — reach for the Intermediate Value Theorem: if $f$ is continuous on $[a,b]$ and $f(a)$, $f(b)$ straddle a value $k$ (e.g. opposite signs, for $k=0$), then $f(c)=k$ for some $c$ in $(a,b)$. It works even when there's no nice rational root at all.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {
@@ -387,7 +387,7 @@
    "ch": "1",
    "key": "old2",
    "name": "IVT vs. MVT vs. Rolle's — Keep Them Separate",
-   "text": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT.\n(from 발상노트, Jul 28)",
+   "text": "Three theorems that get blended together, but each answers a different question. IVT — continuity only, proves a value of $f$ (often a root) exists somewhere in $[a,b]$; says nothing about derivatives. Rolle's Theorem — needs $f$ continuous on $[a,b]$, differentiable on $(a,b)$, and $f(a)=f(b)$; guarantees some $c$ in $(a,b)$ with $f'(c)=0$. MVT — same continuity/differentiability setup, but $f(a)$ and $f(b)$ don't have to match; guarantees a $c$ with $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$ (Rolle's is just the special case where that slope is $0$). Quick tell: question mentions a derivative or rate existing → Rolle's/MVT. Question is about a value of $f$ itself existing → IVT.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {
@@ -397,7 +397,7 @@
    "ch": "1",
    "key": "old3",
    "name": "Origin Symmetry ↔ Odd Functions",
-   "text": "Good instinct connecting the two: a graph with $180°$ rotational symmetry about the origin is exactly what $f(-x)=-f(x)$ means algebraically — every point $(x,y)$ has a matching point $(-x,-y)$ on the graph. Worth pairing with the reflection rules right next to it in your notes: reflecting across the $y$-axis gives $y=f(-x)$, across the $x$-axis gives $y=-f(x)$ — odd symmetry is really both reflections applied at once.\n(from 발상노트, Jul 28)",
+   "text": "Good instinct connecting the two: a graph with $180°$ rotational symmetry about the origin is exactly what $f(-x)=-f(x)$ means algebraically — every point $(x,y)$ has a matching point $(-x,-y)$ on the graph. Worth pairing with the reflection rules right next to it in your notes: reflecting across the $y$-axis gives $y=f(-x)$, across the $x$-axis gives $y=-f(x)$ — odd symmetry is really both reflections applied at once.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {
@@ -407,7 +407,7 @@
    "ch": "1",
    "key": "old4",
    "name": "Period of $a\\sin(bx+c)$ / $a\\cos(bx+c)$",
-   "text": "Correctly recorded: period $=\\dfrac{2\\pi}{|b|}$. Remember $a$ only stretches the graph vertically (amplitude) and $c$ only shifts it left/right (phase) — neither touches the period. Only $b$, the coefficient on $x$, controls how fast the wave repeats.\n(from 발상노트, Jul 28)",
+   "text": "Correctly recorded: period $=\\dfrac{2\\pi}{|b|}$. Remember $a$ only stretches the graph vertically (amplitude) and $c$ only shifts it left/right (phase) — neither touches the period. Only $b$, the coefficient on $x$, controls how fast the wave repeats.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {
@@ -417,7 +417,7 @@
    "ch": "1",
    "key": "old5",
    "name": "Reflections Across the Axes",
-   "text": "Two rules, easy to keep straight if you remember which variable flips. Reflect across the $y$-axis (left ↔ right) → flip the input: $y=f(-x)$. Reflect across the $x$-axis (up ↔ down) → flip the output: $y=-f(x)$. Bonus connection: a function that looks unchanged after a $y$-axis reflection ($f(-x)=f(x)$) is even and symmetric about the $y$-axis — the mirror-image partner to the odd/origin-symmetry case in the entry above.\n(from 발상노트, Jul 28)",
+   "text": "Two rules, easy to keep straight if you remember which variable flips. Reflect across the $y$-axis (left ↔ right) → flip the input: $y=f(-x)$. Reflect across the $x$-axis (up ↔ down) → flip the output: $y=-f(x)$. Bonus connection: a function that looks unchanged after a $y$-axis reflection ($f(-x)=f(x)$) is even and symmetric about the $y$-axis — the mirror-image partner to the odd/origin-symmetry case in the entry above.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {
@@ -427,7 +427,7 @@
    "ch": "1",
    "key": "old6",
    "name": "Basic Log Properties",
-   "text": "The full toolkit, worth having in one place: $\\log_b(xy)=\\log_b(x)+\\log_b(y)$ (product → sum); $\\log_b(x/y)=\\log_b(x)-\\log_b(y)$ (quotient → difference); $\\log_b(x^n)=n\\log_b(x)$ (power rule — the one behind your $\\log_b(3^b)=b/2$ example); $\\log_b(1)=0$ and $\\log_b(b)=1$ always. Change of base, for when your calculator has no $\\log_b$ button: $\\log_b(x)=\\dfrac{\\log(x)}{\\log(b)}$. And log/exponential undo each other: $b^{\\log_b(x)}=x$, $\\log_b(b^x)=x$.\n(from 발상노트, Jul 28)",
+   "text": "The full toolkit, worth having in one place: $\\log_b(xy)=\\log_b(x)+\\log_b(y)$ (product → sum); $\\log_b(x/y)=\\log_b(x)-\\log_b(y)$ (quotient → difference); $\\log_b(x^n)=n\\log_b(x)$ (power rule — the one behind your $\\log_b(3^b)=b/2$ example); $\\log_b(1)=0$ and $\\log_b(b)=1$ always. Change of base, for when your calculator has no $\\log_b$ button: $\\log_b(x)=\\dfrac{\\log(x)}{\\log(b)}$. And log/exponential undo each other: $b^{\\log_b(x)}=x$, $\\log_b(b^x)=x$.\n(from Idea Note, Jul 28)",
    "legacy": true
   },
   {

@@ -59,7 +59,6 @@ const PORTAL_ACTION_HTML = {
   back: '<a href="resources.html" class="portal-link">← Back to Resources</a>',
   requests: '<a href="requests.html" class="portal-link">Requests</a>',
   calendar: '<a href="calendar.html" class="portal-link">Calendar</a>',
-  lang: '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>',
   logout: '<button id="logout-btn" class="portal-logout">Log out</button>'
 };
 
@@ -85,9 +84,7 @@ function mount(id, html) {
   el.outerHTML = html;
 }
 
-// opts: { active: 'resources', showAuth: true, langToggle: true }
-// langToggle adds an empty #lang-toggle-mount span to the nav — opt-in
-// since only resources.html currently calls renderLangToggle() on it.
+// opts: { active: 'resources', showAuth: true }
 function renderSiteHeader(opts) {
   opts = opts || {};
   const showAuth = opts.showAuth !== false;
@@ -101,8 +98,6 @@ function renderSiteHeader(opts) {
     ? '<a href="login.html" id="nav-login-btn" class="btn-nav">Log In</a>\n      <span id="nav-user-name" class="nav-user" hidden></span>'
     : "";
 
-  const lang = opts.langToggle ? '<span id="lang-toggle-mount" class="lang-toggle-mount"></span>' : "";
-
   const html =
     '<header class="site-header">\n' +
     '  <div class="container header-inner">\n' +
@@ -112,7 +107,6 @@ function renderSiteHeader(opts) {
     "    </button>\n" +
     '    <nav id="site-nav">\n' +
     "      " + navLinks + "\n" +
-    "      " + lang + "\n" +
     "      " + auth + "\n" +
     "    </nav>\n" +
     "  </div>\n" +
@@ -141,7 +135,7 @@ function renderSiteHeader(opts) {
 //   nav: 'resources' — Home/Resources/Student Portal self-study subnav
 //   nav: 'teacher' — Teacher Dashboard/All Students/Calendar tabs, needs `active` ('dashboard'/'overview'/'calendar')
 //   nav: 'label' — single non-link label, needs `label`
-//   actions: array of 'open' | 'allCourses' | 'requests' | 'calendar' | 'lang' | 'logout' (default ['logout'])
+//   actions: array of 'open' | 'allCourses' | 'requests' | 'calendar' | 'logout' (default ['logout'])
 function renderPortalHeader(opts) {
   opts = opts || {};
   const navType = opts.nav || "full";

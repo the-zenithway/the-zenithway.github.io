@@ -81,11 +81,11 @@
   }
   function shortStem(q, n) { var s = (q.stem || '').replace(/\s+/g, ' ').trim(); return s.length > (n || 90) ? s.slice(0, n || 90) + '…' : s; }
 
-  /* ---- Entry form: Careless or Actual (sets the review schedule), then ONE 발상노트 ---- */
+  /* ---- Entry form: Careless or Actual (sets the review schedule), then ONE idea note ---- */
   var ETYPE = { careless: 'Careless', actual: 'Actual' };
   // What kind of idea note it is. Only changes the hint; all of them are one free-text entry.
-  var NKINDS = [['rule', '행동양식 · When I see … I will …', 'e.g. When I see 0/0 in a limit, I will factor or use L\'Hôpital before anything else.'],
-    ['idea', '핵심 아이디어 · Main idea', 'The one idea or move to remember from this problem.'], ['other', '기타 · Anything else', 'What went wrong, what to do next time, steps, a similar problem, whatever helps.']];
+  var NKINDS = [['rule', 'Habit · When I see … I will …', 'e.g. When I see 0/0 in a limit, I will factor or use L\'Hôpital before anything else.'],
+    ['idea', 'Main idea', 'The one idea or move to remember from this problem.'], ['other', 'Anything else', 'What went wrong, what to do next time, steps, a similar problem, whatever helps.']];
   function minChars(track) { return track === 'actual' ? ZP.req().actualChars : ZP.req().carelessChars; }
   function entryFormHTML(pid, note, own) {
     note = note || {};
@@ -98,7 +98,7 @@
       }).join('') + '</div>' +
       '<p class="zp-muted" data-etype-note></p>' +
       '<div data-fieldwrap' + (track ? '' : ' hidden') + '>' +
-      '<p class="zp-label">발상노트 · Idea note <em class="zp-muted">(one entry: pick what kind it is)</em></p><div class="zp-chips">' + NKINDS.map(function (k) {
+      '<p class="zp-label">Idea note <em class="zp-muted">(one entry: pick what kind it is)</em></p><div class="zp-chips">' + NKINDS.map(function (k) {
         return '<button type="button" class="zp-chip' + (kind === k[0] ? ' on' : '') + '" data-nkind="' + k[0] + '">' + esc(k[1]) + '</button>'; }).join('') + '</div>' +
       '<label class="zp-field"><span data-label="text"></span><textarea data-nf="text" maxlength="1200" rows="4" placeholder="">' + esc(ZP.noteBody(note)) + '</textarea><em class="zp-count" data-count="text"></em></label>' +
       '<label class="zp-chip' + (own ? ' on' : '') + '" title="Adds this note to your review queue as its own card, separate from redoing the problem"><input type="checkbox" data-nf="own" ' + (own ? 'checked' : '') + ' hidden>Also review this note on its own in the review queue</label></div>' +
@@ -127,8 +127,8 @@
   // The sections of a note, for read-only display (Study view, notebook).
   function noteSections(n) {
     n = n || {};
-    if (n.nkind) return [[{ rule: '행동양식 · When I see … I will …', idea: '핵심 아이디어 · Main idea' }[n.nkind] || '발상노트 · Idea note', n.text]].filter(function (x) { return x[1] && String(x[1]).trim(); });
-    return [['핵심 아이디어 · Main idea', n.idea], ['놓친 것 / 다음엔 · Missed / next time', n.stuck], ['More', n.text],
+    if (n.nkind) return [[{ rule: 'Habit · When I see … I will …', idea: 'Main idea' }[n.nkind] || 'Idea note', n.text]].filter(function (x) { return x[1] && String(x[1]).trim(); });
+    return [['Main idea', n.idea], ['Missed / next time', n.stuck], ['More', n.text],
       ['What I tried first', n.approach], ['When I see … I try …', n.signal]].filter(function (x) { return x[1] && String(x[1]).trim(); });
   }
   // The ID chip copies itself when clicked (unless it sits inside a button or link, where the click belongs to that).
@@ -165,7 +165,7 @@
     var data = { pid: form.dataset.pid, src: src, track: track, miss: form.dataset.miss || '', approach: val('approach'), nkind: form.dataset.nkind || 'other', text: val('text'), stuck: '', idea: '', signal: '' };
     var msg = '';
     if (!track) msg = 'Choose Careless or Actual first.';
-    else if (!ZP.entryComplete(data)) msg = 'Write at least ' + minChars(track) + ' characters in your 발상노트.';
+    else if (!ZP.entryComplete(data)) msg = 'Write at least ' + minChars(track) + ' characters in your idea note.';
     err.hidden = !msg; err.textContent = msg;
     return msg ? { ok: false } : { ok: true, data: data, own: own };
   }

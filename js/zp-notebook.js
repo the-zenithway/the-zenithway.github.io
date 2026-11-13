@@ -170,14 +170,14 @@
   /* ---------- Idea Notebook: Actual entries as study cards, printable ---------- */
   var sf = { ch: '', careless: false, q: '', sol: false, order: 'problem' };
   var ied = {}, newKind = 'rule';
-  var KIND_LABEL = { rule: '행동양식', idea: '핵심 아이디어', other: '발상노트' };
-  // Stand-alone 발상노트 (not tied to one problem): a 행동양식 ("when I see ..."), a main idea, anything. Each can join the review queue by itself.
+  var KIND_LABEL = { rule: 'Habit', idea: 'Main idea', other: 'Idea note' };
+  // Stand-alone idea note (not tied to one problem): a habit ("when I see ..."), a main idea, anything. Each can join the review queue by itself.
   function ideaPanelHTML() {
     var q = sf.q.toLowerCase();
     var ideas = Object.keys(D.ideas).map(function (k) { return D.ideas[k]; }).filter(function (x) { return !x.deleted && (!sf.ch || x.ch === sf.ch) && (!q || String(x.text).toLowerCase().indexOf(q) >= 0); }).sort(function (a, b) { return b.t - a.t; });
     var k0 = UI.NKINDS.filter(function (k) { return k[0] === newKind; })[0] || UI.NKINDS[0];
     var chOpts2 = '<option value="">No chapter</option>' + info.order.map(function (c) { return '<option value="' + esc(c) + '">Ch ' + esc(c) + ' · ' + esc(info.chapters[c].title) + '</option>'; }).join('');
-    var form = '<details class="zp-panel zp-noprint"><summary><b>+ New 발상노트</b> <span class="zp-muted">an idea or a 행동양식 that is not tied to one problem</span></summary>' +
+    var form = '<details class="zp-panel zp-noprint"><summary><b>+ New idea note</b> <span class="zp-muted">an idea or a habit ("when I see …") that is not tied to one problem</span></summary>' +
       '<div class="zp-chips" id="zp-ikinds">' + UI.NKINDS.map(function (k) { return '<button type="button" class="zp-chip' + (newKind === k[0] ? ' on' : '') + '" data-act="ikind" data-k="' + k[0] + '">' + esc(k[1]) + '</button>'; }).join('') + '</div>' +
       '<label class="zp-field"><span>Your note</span><textarea id="zp-newidea" rows="3" maxlength="1200" placeholder="' + esc(k0[2]) + '"></textarea></label>' +
       '<div class="zp-filters"><label>Chapter <em>(optional)</em><select id="zp-newidea-ch">' + chOpts2 + '</select></label><label class="zp-fopt"><input type="checkbox" id="zp-newidea-q" checked><span>Add it to my review queue</span></label></div>' +
@@ -185,11 +185,11 @@
     var list = ideas.map(function (x) {
       var id = 'i:' + (x.ch || '') + ':' + x.key, on = !!D.cardOn[id];
       if (ied[x.key]) return '<article class="zp-panel zp-ideanote"><textarea data-iedit="' + esc(x.key) + '" rows="3" maxlength="1200">' + esc(x.text) + '</textarea><div class="zp-row"><button type="button" class="zp-btn primary" data-act="isave" data-key="' + esc(x.key) + '">Save</button><button type="button" class="zp-btn" data-act="icancel" data-key="' + esc(x.key) + '">Cancel</button></div></article>';
-      return '<article class="zp-panel zp-ideanote"><p class="zp-label"><span class="zp-badge">' + esc(KIND_LABEL[x.nkind] || '발상노트') + '</span> ' + (x.ch ? 'Ch ' + esc(x.ch) : '') + '</p><p class="zp-concept">' + esc(x.text) + '</p>' +
+      return '<article class="zp-panel zp-ideanote"><p class="zp-label"><span class="zp-badge">' + esc(KIND_LABEL[x.nkind] || 'Idea note') + '</span> ' + (x.ch ? 'Ch ' + esc(x.ch) : '') + '</p><p class="zp-concept">' + esc(x.text) + '</p>' +
         '<div class="zp-row zp-noprint"><button type="button" class="zp-chip' + (on ? ' on' : '') + '" data-act="iq" data-key="' + esc(x.key) + '" data-ch="' + esc(x.ch || '') + '">' + (on ? '✓ In my review queue' : 'Add to review queue') + '</button>' +
         '<button type="button" class="zp-btn" data-act="iedit" data-key="' + esc(x.key) + '">Edit</button><button type="button" class="zp-btn" data-act="idel" data-key="' + esc(x.key) + '">Delete</button></div></article>';
     }).join('');
-    return { html: form + (list ? '<h2>My 발상노트</h2>' + list : ''), n: ideas.length };
+    return { html: form + (list ? '<h2>My idea notes</h2>' + list : ''), n: ideas.length };
   }
   function studyView() {
     derive();
@@ -241,7 +241,7 @@
       if (a === 'iedit') { ied[key] = true; return studyView(); }
       if (a === 'icancel') { delete ied[key]; return studyView(); }
       if (a === 'isave') { var old = D.ideas[key], el = main.querySelector('[data-iedit="' + key + '"]'), v = (el && el.value || '').trim(); if (old && v.length >= 3) { store.append('idea', { key: key, text: v, nkind: old.nkind, ch: old.ch || '' }); delete ied[key]; } return studyView(); }
-      if (a === 'idel') { var o2 = D.ideas[key]; if (o2 && confirm('Delete this 발상노트? It also leaves your review queue.')) { store.append('idea', { key: key, text: o2.text, nkind: o2.nkind, ch: o2.ch || '', deleted: true }); return studyView(); } }
+      if (a === 'idel') { var o2 = D.ideas[key]; if (o2 && confirm('Delete this idea note? It also leaves your review queue.')) { store.append('idea', { key: key, text: o2.text, nkind: o2.nkind, ch: o2.ch || '', deleted: true }); return studyView(); } }
     };
   }
 
@@ -331,18 +331,18 @@
     // A concept or example card: recall it, reveal what you wrote, and grade yourself.
     function renderCard(e) {
       var u = st[e.pid] || (st[e.pid] = { shown: false, text: '' });
-      var kindLabel = e.kind === 'concept' ? 'Concept' : e.kind === 'idea' ? '발상노트' : 'Example';
+      var kindLabel = e.kind === 'concept' ? 'Concept' : e.kind === 'idea' ? 'Idea note' : 'Example';
       var ask = e.kind === 'idea'
         ? '<p class="zp-label">' + (e.trigger ? 'You see this. What do you do?' : 'Recall this idea note.') + '</p><h2 class="zp-cardtitle">' + esc(e.trigger || e.title) + '</h2>' + (e.from && data.byId[e.from] ? '<p class="zp-muted">From ' + UI.codeBadge(data.byId[e.from]) + '</p>' : '') + '<label class="zp-field"><span>Say it or write it first <em>(optional)</em></span><textarea id="zp-crecall" rows="3"></textarea></label>'
         : e.kind === 'concept'
         ? '<p class="zp-label">Explain it in your own words, and say when you would use it.</p><h2 class="zp-cardtitle">' + esc(e.title) + '</h2>' + (e.prompt ? '<p class="zp-muted">' + esc(e.prompt) + '</p>' : '') + '<label class="zp-field"><span>Say it or write it first <em>(optional)</em></span><textarea id="zp-crecall" rows="3">' + esc(u.text) + '</textarea></label>'
         : '<p class="zp-label">Work this example again from the book, without looking at the solution.</p><h2 class="zp-cardtitle">' + esc(e.title) + '</h2>' + (e.prompt ? '<div class="zp-stem">' + esc(e.prompt) + '</div>' : '');
       var body;
-      if (!u.shown) body = ask + '<div class="zp-row">' + UI.btn(e.kind === 'concept' ? 'Show what I wrote' : e.kind === 'idea' ? 'Show my 발상노트' : 'Show my note', 'cshow', 'primary') + '</div>';
+      if (!u.shown) body = ask + '<div class="zp-row">' + UI.btn(e.kind === 'concept' ? 'Show what I wrote' : e.kind === 'idea' ? 'Show my idea note' : 'Show my note', 'cshow', 'primary') + '</div>';
       else {
         var pv = ZP.FSRS.preview(e.card, Date.now(), e.ret), GN = { 1: 'Again', 2: 'Hard', 3: 'Good', 4: 'Easy' };
         body = '<h2 class="zp-cardtitle">' + esc(e.title) + '</h2>' + (u.text ? '<p class="zp-muted">You said: ' + esc(u.text) + '</p>' : '') +
-          (e.body ? '<div class="zp-panel"><p class="zp-label">' + (e.kind === 'concept' ? 'What you wrote' : e.kind === 'idea' ? 'Your 발상노트' : 'Your note') + '</p><p class="zp-concept">' + esc(e.body) + '</p>' + (e.images && e.images.length ? '<div data-cp="' + esc(e.id) + '">' + ZPPhotos.thumbsHTML(e.images) + '</div>' : '') + '</div>' : '<p class="zp-muted">' + (e.kind === 'concept' ? 'You have not written anything for this concept yet. Say it out loud, then open the book to check.' : 'Check your work against the solution in the book.') + '</p>') +
+          (e.body ? '<div class="zp-panel"><p class="zp-label">' + (e.kind === 'concept' ? 'What you wrote' : e.kind === 'idea' ? 'Your idea note' : 'Your note') + '</p><p class="zp-concept">' + esc(e.body) + '</p>' + (e.images && e.images.length ? '<div data-cp="' + esc(e.id) + '">' + ZPPhotos.thumbsHTML(e.images) + '</div>' : '') + '</div>' : '<p class="zp-muted">' + (e.kind === 'concept' ? 'You have not written anything for this concept yet. Say it out loud, then open the book to check.' : 'Check your work against the solution in the book.') + '</p>') +
           '<p class="zp-label">How well did you remember it? This sets when you see it next.</p><div class="zp-row">' + [1, 2, 3, 4].map(function (g) { return UI.btn(GN[g] + ' · ' + fmtDays(pv[g]), 'cgrade', g === 3 ? 'primary' : '', 'data-g="' + g + '"'); }).join('') + '</div>';
       }
       main.innerHTML = tabs() + '<section class="zp-panel"><p class="zp-eyebrow">' + title + ' · ' + (i + 1) + ' of ' + queue.length + ' · <span class="zp-badge">' + kindLabel + '</span>' + (e.ch ? ' Ch ' + esc(e.ch) : '') + (e.early ? ' <span class="zp-badge">ahead of schedule</span>' : '') + '</p>' + body + '</section>';

@@ -1,7 +1,7 @@
 /* Untimed problem runner: answer, get instant feedback, open the answer and solution when stuck, flag what to review.
  * Used by the chapter C workspace (one chapter's problems) and by the Practice hub (any chosen set).
  * Solving never asks for writing: wrong answers are pre-flagged and the student flags or unflags with one tap.
- * Entries (Careless / Actual + one 발상노트) can be written afterwards in R, R (test) or Notebook › Inbox, or on the spot with "Write my entry now". */
+ * Entries (Careless / Actual + one idea note) can be written afterwards in R, R (test) or Notebook › Inbox, or on the spot with "Write my entry now". */
 (function (root) {
   'use strict';
   var ZP = root.ZP, UI = root.ZPUI, CFG = root.ZP_CONFIG, esc = UI.esc;

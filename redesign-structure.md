@@ -6,7 +6,7 @@ this browser only. Making it multi-device (and visible to teachers) needs the
 student-data script deployed (see "Storage").
 
 The chapter, not the tool, is the unit of learning. Chapters 1-10 run six stages:
-Book (B), Problems (C), Review (R), Test (T), Review of the test (R), then Close (a 개념노트). The warm-up at the start of the next chapter and
+Book (B), Problems (C), Review (R), Test (T), Review of the test (R), then Close (a Concepts Notebook). The warm-up at the start of the next chapter and
 the spaced queue sit alongside.
 
 ## Site map (as built)
@@ -20,14 +20,14 @@ Roadmap page  (roadmap.html, per course)
      └─ Chapter hub      chapter.html?course=&ch=   stepper, done-criteria per stage
           ├─ #b  Book       example cards (tap + line) + concept cards, then Submit B
           ├─ #c  Problems   runner with a "Show the answer" button (shared with Practice)
-          ├─ #r  Review     cold redo -> solution -> 발상노트, per miss
+          ├─ #r  Review     cold redo -> solution -> Idea Note, per miss
           ├─ #t  Test       timed, per-question time, tiered review, one rule
-          └─ #x  Close      개념노트: revise concepts + chapter summary, close chapter
+          └─ #x  Close      Concepts Notebook: revise concepts + chapter summary, close chapter
 Practice hub     practice.html   three strict categories, one page
  ├─ Practice   untimed, instant feedback, the answer one tap away, any problems you choose
  ├─ Test       timed, no feedback until submit, then review; topics/length you choose
  └─ Mock       fixed AP-format exam: sections, own timers, MCQ + free response, composite estimate
-Notebook         notebook.html   발상노트 feed · 개념노트 · Stats · Review queue (FSRS)
+Notebook         notebook.html   Idea Note feed · Concepts Notebook · Stats · Review queue (FSRS)
 Calendar         calendar.html   month view + long-term plan (Gantt)
 Teacher          teacher-attention.html   needs-attention list + copyable digest
 Public header    Catalog (catalog.html is viewable without login)
@@ -39,8 +39,8 @@ Public header    Catalog (catalog.html is viewable without login)
 |---|---|
 | Right Now | Replaced by the derived **Today** strip. `right-now.html` still exists but is out of the nav. |
 | Feedback | By direct chat. The site gives the teacher a per-student **digest** and a one-tap "feedback sent". `feedback.html` is out of the nav. |
-| Cheat sheet | Not a feature. Students write a **개념노트** per chapter; "Compile my study guide" prints them all (plus their "when I see -> I try" lines). `cheatsheet.html` is out of the nav. |
-| 오답노트 / 발상노트 | One entry type. A wrong answer / heavy hints / lucky guess / test miss creates an entry; it moves needs-note -> written -> redone -> resolved. |
+| Cheat sheet | Not a feature. Students write a **Concepts Notebook** per chapter; "Compile my study guide" prints them all (plus their "when I see -> I try" lines). `cheatsheet.html` is out of the nav. |
+| Mistake notebook / Idea Note | One entry type. A wrong answer / heavy hints / lucky guess / test miss creates an entry; it moves needs-note -> written -> redone -> resolved. |
 | T review | Its own stage, R (test): every miss needs a Careless or Actual entry (see "C, R and R (test)"). One optional next-time rule per test. |
 | Submit | Kept for now (paper work photos, courses without the platform). Photo limit raised to 20 with a thumbnail tray. Retire for Calc/Chem once paper work is attached in Review. |
 | Catalog | Public top header only (removed from the portal bar). |
@@ -122,7 +122,7 @@ queue itself is plain FSRS; this section covers what happens before a problem en
 | Choice | Meaning | Entry the student must write | Goes to |
 |---|---|---|---|
 | **Careless** | I knew how; I slipped (arithmetic, misread, time) | short: what went wrong + what I will do next time | Review queue only |
-| **Actual** | I did not see the idea / could not apply it | full: what I missed, the main idea, "when I see ... I try ...", next time | 발상노트 AND review queue |
+| **Actual** | I did not see the idea / could not apply it | full: what I missed, the main idea, "when I see ... I try ...", next time | Idea Note AND review queue |
 
 ### C (solve) - fast, no writing
 - Untimed runner as built (answer, instant feedback, "Show the answer and solution" when stuck). Nothing interrupts the flow.
@@ -153,7 +153,7 @@ queue itself is plain FSRS; this section covers what happens before a problem en
   problems / one test / everything pending).
 
 ### After the entry (the part FSRS owns)
-- Queue card = redo cold, grade (a wrong answer is Again). **Actual** cards show the 발상노트 after you answer;
+- Queue card = redo cold, grade (a wrong answer is Again). **Actual** cards show the Idea Note after you answer;
   **Careless** cards show the one-line entry. Starting parameters: Careless retention 0.8 and resolved after
   one clean redo; Actual retention 0.9 and resolved at a 30-day interval. Daily budget caps the queue (default
   15 minutes; MCQ about 1.5 min, FRQ about 10).
@@ -200,7 +200,7 @@ Review queue · Stats**.
 | **Stats** | numbers only | tab "Stats" |
 
 Old links keep working: `view=notes` opens Browse, `view=write` opens Inbox. A problem with no entry yet shows the badge
-"Needs entry". The Korean names 발상노트 / 개념노트 are no longer used in the UI.
+"Needs entry". The Korean names (Idea Note, Concepts Notebook) are no longer used anywhere on the site: everything is in English.
 
 ## Convenience (ported from kyj-sat)
 
@@ -438,9 +438,9 @@ site (no per-user auth); see the script header.
   ladder falls back to generic scaffolds, and level 4 shows the bank solution.
 - Chemistry C bank (still `{}`) and a way to turn FRQ chapters into a real rubric flow.
 
-## 발상노트 (idea notes) and the review queue
+## Idea Note (idea notes) and the review queue
 
-A miss gets one entry: Careless / Actual (sets the problem's review schedule) plus one 발상노트 (`nkind` rule / idea / other, `text`). A note can also be its own review card (`card_flag` kind `idea`, key `n-<pid>`), and stand-alone notes are `idea` events (kind idea cards, key = the note's key). Cards are graded Again / Hard / Good / Easy like concept cards. The queue shows what fits the daily budget; "Review more" adds 15 minutes at a time (`extra` in the URL) and "Review ahead" (`ahead=1`) adds upcoming reviews soonest-first.
+A miss gets one entry: Careless / Actual (sets the problem's review schedule) plus one Idea Note (`nkind` rule / idea / other, `text`). A note can also be its own review card (`card_flag` kind `idea`, key `n-<pid>`), and stand-alone notes are `idea` events (kind idea cards, key = the note's key). Cards are graded Again / Hard / Good / Easy like concept cards. The queue shows what fits the daily budget; "Review more" adds 15 minutes at a time (`extra` in the URL) and "Review ahead" (`ahead=1`) adds upcoming reviews soonest-first.
 
 ## Core curriculum (Calculus BC)
 

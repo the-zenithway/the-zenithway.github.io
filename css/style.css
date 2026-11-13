@@ -675,19 +675,6 @@ body.portal-body {
 
 .portal-logout:hover { background: var(--bg-elevated); border-color: var(--text-muted); }
 
-.lang-toggle-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 6px 12px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.lang-toggle-btn:hover { color: var(--text); border-color: var(--text-muted); }
-
 .whatsnew-wrap { position: relative; }
 
 .whatsnew-btn {
