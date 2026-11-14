@@ -112,7 +112,7 @@ for (const username of WHO) for (const COURSE of COURSES_OF[username]) {
   if (ans) {
     const stats = { answered: 0, toReview: 0 };
     Object.keys(ans.units).sort((x, y) => x - y).forEach(ch => {
-      const tC = Date.parse(ans.cdates[ch]), tR = Date.parse(ans.rdates[ch]), reviewed = REVIEWED_THROUGH[username] >= +ch;
+      const tC = Date.parse(ans.cdates[ch]), tR = Date.parse((ans.rdates || {})[ch]), reviewed = REVIEWED_THROUGH[username] >= +ch; // no review date = not reviewed in the old roadmap: the misses stay as entries still to write
       ans.units[ch].forEach((p, i) => {
         const pid = ch + 'C' + p.id;
         evs.push({ id: key('a' + pid), t: tC + i * 1000, type: 'c_answer', ch, pid, answer: p.answer, correct: p.result === 'correct', conf: '', ms: 0, ctx: 'chapter', sess: 'leg:' + ch, legacy: true });
@@ -125,7 +125,7 @@ for (const username of WHO) for (const COURSE of COURSES_OF[username]) {
     });
     report[username + '|' + COURSE + ' answers'] = stats;
     // The "Resolve the mistakes in chapter 4C" task from the old Right Now is finished once chapter 4's Review is.
-    if (REVIEWED_THROUGH[username] >= 4 && course.rightNow && /^Chapter 4$/.test(course.rightNow.chapter) && course.rightNow.unit === 'R')
+    if (REVIEWED_THROUGH[username] >= 4 && ans.rdates && ans.rdates['4'] && course.rightNow && /^Chapter 4$/.test(course.rightNow.chapter) && course.rightNow.unit === 'R')
       evs.push({ id: key('rndone'), t: Date.parse(ans.rdates['4']) + 1e5, type: 'task_done', key: 'legacy-now', legacy: true });
   }
 

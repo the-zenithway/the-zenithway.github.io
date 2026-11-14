@@ -500,7 +500,7 @@ test('legacy import file: valid events, unique short ids, types the server accep
     assert.ok(typeof e.t === 'number' && e.legacy === true, 'timestamped and marked legacy');
     assert.ok(allowed.includes(e.type), e.type + ' must be in EVENT_TYPES');
     assert.ok(!['redo', 't_submit'].includes(e.type), 'no invented redos or tests');
-    assert.ok(e.type !== 'c_answer' || /^leg:seohu:a/.test(e.id), 'answers only come from a checked tracker (data/legacy-answers.json)');
+    assert.ok(e.type !== 'c_answer' || /^leg:(seohu|bogue):a/.test(e.id), 'answers only come from a checked tracker (data/legacy-answers.json)');
     assert.ok(JSON.stringify(e).length < 40000);
   }));
   assert.ok(imp['bogue|ap-calculus-bc'] && imp['seohu|ap-calculus-bc']);
@@ -934,6 +934,22 @@ test("seohu's old per-problem answers: every answer matches the bank, every miss
   const D = ZP.derive(imp, infoB, Date.parse('2026-11-13T00:00:00Z')), ent = Object.values(D.entries);
   assert.strictEqual(ent.length, 52); assert.ok(ent.every(e => e.complete && e.due && e.track === 'actual'), 'completed entries, each with a review card'); assert.strictEqual(ent.filter(e => !e.complete).length, 0, 'nothing to write');
   assert.strictEqual(D.taskDone['legacy-now'] && 1, 1);
+});
+
+test("bogue's old answer lists: only the parts that line up with the bank are imported, each matches the key, and his misses stay as entries still to write", () => {
+  const fs = require('fs'), path = require('path'), root = path.join(__dirname, '..');
+  const imp = JSON.parse(fs.readFileSync(root + '/data/legacy-import.json', 'utf8'))['bogue|ap-calculus-bc'], bank = JSON.parse(fs.readFileSync(root + '/data/calculus-c-bank.json', 'utf8'));
+  const ans = imp.filter(e => e.type === 'c_answer'); assert.ok(ans.length > 250);
+  const chs = new Set(ans.map(e => e.ch)); assert.strictEqual([...chs].sort().join(','), '10,4,5,6,9', 'only chapters whose lists could be lined up');
+  assert.ok(!ans.some(e => e.ch === '6' && /^6CA/.test(e.pid)), 'chapter 6 set A (a shorter list than the bank) is not imported');
+  assert.strictEqual(ans.filter(e => e.ch === '5').length, 69, 'chapter 5 stops where its list goes out of step');
+  ans.forEach(e => { const q = bank[e.ch].problems.find(p => e.pid === e.ch + 'C' + p.id); assert.ok(q, e.pid); assert.strictEqual(e.correct, e.answer === q.correct, e.pid); });
+  const hit = ans.filter(e => e.correct).length / ans.filter(e => e.answer).length; assert.ok(hit > 0.8 && hit < 1, 'a plausible score, not all right');
+  assert.ok(!imp.some(e => e.type === 'note' && /^leg:bogue:n/.test(e.id)), 'no review is claimed: he did not do the Review step');
+  const infoB = { order: ['4', '5', '6', '9', '10'], chapters: {} };
+  infoB.order.forEach(ch => { infoB.chapters[ch] = { ch, title: 'Ch ' + ch, hasC: true, hasT: false, cIds: bank[ch].problems.map(p => ch + 'C' + p.id), tIds: [], exKeys: [], conceptKeys: [], examples: [], concepts: [] }; });
+  const D = ZP.derive(imp, infoB, Date.parse('2026-11-14T00:00:00Z')), ent = Object.values(D.entries);
+  assert.strictEqual(ent.length, ans.filter(e => !e.correct).length, 'every miss is an entry'); assert.ok(ent.every(e => !e.complete && !e.due), 'to write: no review card until he writes it');
 });
 
 console.log('\n' + n + ' tests passed');
