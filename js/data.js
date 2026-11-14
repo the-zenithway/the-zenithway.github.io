@@ -2577,7 +2577,17 @@ const STUDENTS = [
     "name": "Eunchan Kim",
     "passwordHash": "299cfd8fd8c867b1498de4b8d6e371af26f6d1fe5702eec89e0a82d86772ae09",
     "email": "kimeunchan624@gmail.com",
-    "courses": []
+    "courses": [
+      {
+        "id": "ap-calculus-bc",
+        "name": "AP Calculus BC",
+        "icon": "calculus",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
+      }
+    ]
   },
   {
     "username": "kyj-test-acc",
