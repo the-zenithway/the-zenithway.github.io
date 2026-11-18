@@ -2569,6 +2569,15 @@ const STUDENTS = [
         "feedback": [],
         "cheatSheet": [],
         "roadmap": []
+      },
+      {
+        "id": "ap-biology",
+        "name": "AP Biology",
+        "icon": "biology",
+        "selfStudy": true,
+        "feedback": [],
+        "cheatSheet": [],
+        "roadmap": []
       }
     ]
   },
