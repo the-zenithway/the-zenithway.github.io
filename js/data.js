@@ -2628,6 +2628,13 @@ const STUDENTS = [
         "roadmap": []
       }
     ]
+  },
+  {
+    "username": "yiseo",
+    "name": "Yiseo Chung",
+    "passwordHash": "pbkdf2$210000$17cce27dd8a5fa01d0b0a506b37758ae$9fa5a6b5510ec2979f8a24c71783abd5572bc922414ddda79844a573eca02aa2",
+    "email": "yiseo620@gmail.com",
+    "courses": []
   }
 ];
 
