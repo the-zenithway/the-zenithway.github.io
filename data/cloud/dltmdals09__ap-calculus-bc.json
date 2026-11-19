@@ -1,0 +1,5 @@
+{"v":1,"username":"dltmdals09","course":"ap-calculus-bc","events":[
+{"id":"mwm1f92kmnufyz","t":1795001291948,"type":"c_answer","ch":"8","pid":"8CA1","answer":"D","correct":true,"conf":"sure","ms":262390,"ctx":"chapter","sess":"mwm19mlx5jfb7v"},
+{"id":"mwm1ipcn5zmiha","t":1795001453015,"type":"c_answer","ch":"8","pid":"8CA2","answer":"A","correct":true,"conf":"sure","ms":412675,"ctx":"chapter","sess":"mwm19mlx5jfb7v"},
+{"id":"mwm1jzd4nyn86j","t":1795001512648,"type":"c_answer","ch":"8","pid":"8CA3","answer":"A","correct":false,"conf":"sure","ms":56595,"ctx":"chapter","sess":"mwm19mlx5jfb7v"}
+]}
