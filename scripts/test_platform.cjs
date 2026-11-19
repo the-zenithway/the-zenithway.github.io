@@ -724,7 +724,7 @@ test('email notifications (Apps Script): who is emailed about what, self-study g
   p = plan('ann', [{ id: 'f', type: 'prop_reply', by: 't1', ref: 'm1', status: 'accepted' }, { id: 'g', type: 'cal_item', by: 't1', key: 'pm1', title: 'Session', date: '2026-11-21', kind: 'event' }]); assert.strictEqual(p.length, 1); assert.ok(/accepted/.test(p[0].subject), 'the accepted session is one email, not two');
   p = plan('ann', [{ id: 'h', type: 'msg', from: 'student', kind: 'progress', ref: 'task:k1', text: 'done' }, { id: 'i', type: 'task_done', key: 'k1' }]); assert.strictEqual(p.length, 1, 'a task report and its done marker are one email');
   p = plan('ann', [{ id: 'j', type: 'msg', from: 'student', kind: 'message', text: 'a' }, { id: 'k', type: 'msg', from: 'student', kind: 'message', text: 'b' }]); assert.strictEqual(p[0].key, p[1].key, 'a burst of messages shares a throttle key');
-  const real = ctx.readConstArray_(fs.readFileSync(require('path').join(__dirname, '..', 'js', 'data.js'), 'utf8'), 'CLASSES'); assert.ok(real.length >= 1 && real[0].teacherUsernames, 'js/data.js can be parsed by the script');
+  const real = ctx.syncReadConstArray_(fs.readFileSync(require('path').join(__dirname, '..', 'js', 'data.js'), 'utf8'), 'CLASSES'); assert.ok(real.length >= 1 && real[0].teacherUsernames, 'js/data.js can be parsed by the script');
 });
 
 test('commit-based storage (Apps Script): events are merged into one file per student and course on a data branch, deduped, sorted, safe against a concurrent commit', () => {
@@ -950,6 +950,45 @@ test("bogue's old answer lists: only the parts that line up with the bank are im
   infoB.order.forEach(ch => { infoB.chapters[ch] = { ch, title: 'Ch ' + ch, hasC: true, hasT: false, cIds: bank[ch].problems.map(p => ch + 'C' + p.id), tIds: [], exKeys: [], conceptKeys: [], examples: [], concepts: [] }; });
   const D = ZP.derive(imp, infoB, Date.parse('2026-11-14T00:00:00Z')), ent = Object.values(D.entries);
   assert.strictEqual(ent.length, ans.filter(e => !e.correct).length, 'every miss is an entry'); assert.ok(ent.every(e => !e.complete && !e.due), 'to write: no review card until he writes it');
+});
+
+test('one Apps Script project, one URL: the writer and the sync script load together without clashing, and the one doGet / doPost reach both halves', () => {
+  const vm = require('vm'), fs = require('fs'), path = require('path'), dir = path.join(__dirname, '..', 'automation');
+  const writer = fs.readFileSync(dir + '/zenith-data-writer.gs', 'utf8'), sync = fs.readFileSync(dir + '/zenith-student-data.gs', 'utf8');
+  // The failure this guards against: pasting one file over the other (or defining a name twice) silently drops half the API.
+  const top = src => ({ fn: new Set(src.match(/^function\s+[A-Za-z0-9_$]+/gm).map(x => x.replace(/^function\s+/, ''))), vr: new Set((src.match(/^(?:var|const|let)\s+[A-Za-z0-9_$]+/gm) || []).map(x => x.replace(/^\w+\s+/, ''))) });
+  const w = top(writer), y = top(sync), clash = [...w.fn, ...w.vr].filter(n => y.fn.has(n) || y.vr.has(n)); assert.deepStrictEqual(clash, [], 'names defined in both files: ' + clash.join(', '));
+  assert.ok(w.fn.has('doGet') && w.fn.has('doPost') && !y.fn.has('doGet') && !y.fn.has('doPost'), 'the writer owns the entry points; the sync file has none of its own');
+  const files = {}, branches = { main: 'sha-main' }; let shaN = 0;
+  const resp = (code, body) => ({ getResponseCode: () => code, getContentText: () => typeof body === 'string' ? body : JSON.stringify(body) });
+  const fetch = (url, o) => {
+    const u = new URL(url), m = ((o && o.method) || 'get').toLowerCase(); let g;
+    if ((g = /\/git\/ref\/heads\/(.+)$/.exec(u.pathname))) { const b = decodeURIComponent(g[1]); return branches[b] ? resp(200, { object: { sha: branches[b] } }) : resp(404, {}); }
+    if (/\/git\/refs$/.test(u.pathname)) { const j = JSON.parse(o.payload); branches[j.ref.replace('refs/heads/', '')] = j.sha; return resp(201, {}); }
+    if ((g = /\/contents\/(.+)$/.exec(u.pathname))) {
+      const p = decodeURIComponent(g[1]);
+      if (m === 'get') { const f = files[p]; return f ? resp(200, { sha: f.sha, content: Buffer.from(f.text).toString('base64') }) : resp(404, {}); }
+      const j = JSON.parse(o.payload); files[p] = { text: Buffer.from(j.content, 'base64').toString(), sha: 'sha' + (++shaN) }; return resp(files[p] ? 200 : 201, {});
+    }
+    return resp(404, {});
+  };
+  const props = { GITHUB_TOKEN: 't', GITHUB_OWNER: 'o', GITHUB_REPO: 'r', NOTIFY_OFF: '1' }, cache = {};
+  const ctx = { UrlFetchApp: { fetch }, PropertiesService: { getScriptProperties: () => ({ getProperty: k => props[k] || null }) }, CacheService: { getScriptCache: () => ({ get: k => cache[k] || null, put: (k, v) => { cache[k] = v; } }) },
+    LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) }, MailApp: { sendEmail() {} },
+    ContentService: { createTextOutput: t => ({ text: t, setMimeType() { return this; } }), MimeType: { JSON: 'json' } },
+    Utilities: { newBlob: x => ({ getBytes: () => Buffer.from(x), getDataAsString: () => String(x) }), base64Encode: b => Buffer.from(b).toString('base64'), base64Decode: x => Buffer.from(x, 'base64'), sleep() {}, Charset: { UTF_8: 'utf8' }, DigestAlgorithm: {}, computeDigest: () => [] } };
+  vm.createContext(ctx); vm.runInContext(writer, ctx); vm.runInContext(sync, ctx); // the same order Apps Script would load two files
+  const post = b => JSON.parse(ctx.doPost({ postData: { contents: JSON.stringify(b) } }).text), get = q => JSON.parse(ctx.doGet({ parameter: q }).text);
+  let r = post({ action: 'append', username: 'ann', course: 'c1', events: [{ id: 'e1', t: 1, type: 'c_answer', pid: '1CA1', correct: true }] });
+  assert.strictEqual(r.ok, true, JSON.stringify(r)); assert.strictEqual(r.added, 1, 'append goes to the sync half');
+  r = get({ action: 'events', username: 'ann', course: 'c1' }); assert.strictEqual(r.ok, true); assert.strictEqual(r.events.length, 1, 'doGet reads the log back');
+  r = post({ action: 'putDoc', key: 'plan:ann:c1', value: { milestones: [] }, by: 'kyjteach' }); assert.strictEqual(r.ok, true, 'putDoc goes to the sync half');
+  r = post({ action: 'definitelyNotAnAction' }); assert.strictEqual(r.ok, false); assert.ok(/Unknown action/.test(r.error), 'every other action still reaches the writer: ' + r.error);
+  // Without the sync file the writer says so plainly instead of failing with a confusing "Unknown action".
+  const half = { UrlFetchApp: ctx.UrlFetchApp, PropertiesService: ctx.PropertiesService, ContentService: ctx.ContentService, MailApp: ctx.MailApp, Utilities: ctx.Utilities, LockService: ctx.LockService, CacheService: ctx.CacheService };
+  vm.createContext(half); vm.runInContext(writer, half);
+  r = JSON.parse(half.doPost({ postData: { contents: JSON.stringify({ action: 'append', username: 'a', course: 'c', events: [] }) } }).text); assert.ok(!r.ok && /zenith-student-data\.gs is not in this Apps Script project/.test(r.error));
+  r = JSON.parse(half.doGet({ parameter: { action: 'events' } }).text); assert.ok(!r.ok && /not in this Apps Script project/.test(r.error));
 });
 
 console.log('\n' + n + ' tests passed');

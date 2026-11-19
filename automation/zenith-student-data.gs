@@ -16,8 +16,12 @@
  *            (CLOUD_RAW_URL in js/zp-config.js), every SYNC_PULL_MINUTES (5) and when a page opens if the last pull was longer ago.
  *   merging  events are only ever added and have unique ids, so merging two devices is a union by id; nothing is ever overwritten.
  *
- * SETUP (script.google.com > a project; this can be the same project as zenith-data-writer.gs only if you also merge the doGet/doPost)
- *   1. Paste this file.
+ * SETUP: ONE Apps Script project, ONE deployment, ONE URL for both scripts (this file and zenith-data-writer.gs)
+ *   A web app has a single doGet and a single doPost, and the site points DATA_URL and TEACHER_DATA_WRITE_URL at the same /exec URL. So this file has
+ *   no doGet/doPost of its own: zenith-data-writer.gs owns them and hands the sync calls to syncGet_ / syncPost_ below. Pasting the writer into the
+ *   project on its own (or this file on its own) breaks the other half: the writer then answers {action:"append"} with "Unknown action" and
+ *   GET ?action=events with a "doGet not found" page, and progress stops syncing. Keep both files in the project.
+ *   1. In the project, add this file as a second file (Files > + > Script, name it zenith-student-data), next to zenith-data-writer.gs.
  *   2. Project Settings > Script properties:
  *        GITHUB_TOKEN   fine-grained token for ONLY this repo, with Contents: read and write  (the same one zenith-data-writer.gs uses)
  *        GITHUB_OWNER   the-zenithway
@@ -25,8 +29,8 @@
  *        GITHUB_BRANCH  main                  (optional; the branch the data branch is created from)
  *        DATA_BRANCH    student-data          (optional)
  *        DATA_DIR       data/cloud            (optional)
- *   3. Deploy > New deployment > Web app > Execute as: Me, Who has access: Anyone. Copy the /exec URL into DATA_URL in js/zp-config.js.
- *      Later changes: Manage deployments > edit > New version (the URL stays the same).
+ *   3. Deploy > Manage deployments > edit the existing deployment > New version (the /exec URL stays the same, so DATA_URL and TEACHER_DATA_WRITE_URL keep working).
+ *      A brand new project would get a new URL: then set DATA_URL and TEACHER_DATA_WRITE_URL in js/zp-config.js / js/data.js to it.
  *   4. CLOUD_RAW_URL in js/zp-config.js = https://raw.githubusercontent.com/<owner>/<repo>/<DATA_BRANCH>/<DATA_DIR>
  *
  * API (text/plain bodies, same CORS trick as zenith-data-writer.gs)
@@ -51,7 +55,8 @@ var EVENT_TYPES = ['ex', 'concept', 'b_submit', 'c_hint', 'c_answer', 'c_miss', 
   // mentor layer (student <-> teacher)
   'msg', 'msg_read', 'prop_reply', 'task', 'task_done', 'criteria', 'tnote', 'legacy_done', 'concept_order', 'rec_del', 'idea', 'frq_ans'];
 
-function doGet(e) {
+// Called by doGet in zenith-data-writer.gs.
+function syncGet_(e) {
   try {
     var p = e.parameter || {}, action = p.action;
     if (action === 'events') {
@@ -64,7 +69,8 @@ function doGet(e) {
   } catch (err) { return json_({ ok: false, error: String(err.message || err) }); }
 }
 
-function doPost(e) {
+// Called by doPost in zenith-data-writer.gs for {action:'append'} and {action:'putDoc'}.
+function syncPost_(e) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(20000);
@@ -261,9 +267,9 @@ function directory_() {
   if (hit) return JSON.parse(hit);
   var src = UrlFetchApp.fetch(DATA_JS_URL, { muteHttpExceptions: true }).getContentText();
   var students = {}, teachers = {}, classes = [], selfStudy = {};
-  readConstArray_(src, 'STUDENTS').forEach(function (s) { students[s.username] = { name: s.name || s.username, email: s.email || '' }; });
-  readConstArray_(src, 'TEACHERS').forEach(function (t) { teachers[t.username] = { name: t.name || t.username, email: t.email || '' }; });
-  readConstArray_(src, 'CLASSES').forEach(function (c) { classes.push({ courseId: c.courseId, teachers: c.teacherUsernames || [], students: c.studentUsernames || [] }); });
+  syncReadConstArray_(src, 'STUDENTS').forEach(function (s) { students[s.username] = { name: s.name || s.username, email: s.email || '' }; });
+  syncReadConstArray_(src, 'TEACHERS').forEach(function (t) { teachers[t.username] = { name: t.name || t.username, email: t.email || '' }; });
+  syncReadConstArray_(src, 'CLASSES').forEach(function (c) { classes.push({ courseId: c.courseId, teachers: c.teacherUsernames || [], students: c.studentUsernames || [] }); });
   try { // students listed as self-study in data/student-tracks.json have no mentor: no mentor emails to them
     var tr = JSON.parse(UrlFetchApp.fetch(DATA_JS_URL.replace('js/data.js', 'data/student-tracks.json'), { muteHttpExceptions: true }).getContentText());
     (tr.selfStudy || []).forEach(function (u) { selfStudy[u] = 1; });
@@ -274,7 +280,7 @@ function directory_() {
 }
 
 // "const NAME = [ ... ];" out of a plain script file: finds the matching bracket (skipping strings and comments) and evaluates the literal.
-function readConstArray_(source, name) {
+function syncReadConstArray_(source, name) {
   var m = new RegExp('(?:const|let|var)\\s+' + name + '\\s*=\\s*\\[').exec(source);
   if (!m) return [];
   var i = m.index + m[0].length - 1, depth = 0, q = '';

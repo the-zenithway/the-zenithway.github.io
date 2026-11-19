@@ -41,7 +41,7 @@
   function saveStatus(store) {
     if (store.status.localOnlyFailed) return '<span class="zp-sync bad">Browser storage is blocked — work will not be saved.</span>';
     if (!store.status.remote) return '<span class="zp-sync">Saved in this browser only</span>';
-    if (store.status.error) return '<span class="zp-sync bad">Offline — ' + store.status.pending + ' change(s) waiting to sync</span>';
+    if (store.status.error) return '<span class="zp-sync bad" title="' + esc(store.status.error) + '">Not syncing' + (store.status.pending ? ' — ' + store.status.pending + ' change(s) waiting' : '') + '. Your work is saved on this device. <button type="button" class="zp-linkbtn" data-sync-now data-u="' + esc(store.username) + '" data-c="' + esc(store.course) + '">Try again</button></span>';
     return '<span class="zp-sync ok">' + (store.status.pending ? 'Saved · syncs within 5 min' : 'Synced') + ' <button type="button" class="zp-linkbtn" data-sync-now data-u="' + esc(store.username) + '" data-c="' + esc(store.course) + '">Sync now</button></span>';
   }
   // If a page script throws, say so on the page instead of leaving it blank.

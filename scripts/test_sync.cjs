@@ -7,10 +7,11 @@ const test = async (name, fn) => { await fn(); n++; console.log('ok  ' + name); 
 // --- fakes: browser storage, fetch, and a manual timer so "5 minutes" can be checked without waiting ---
 const store = {};
 global.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; }, key: i => Object.keys(store)[i], get length() { return Object.keys(store).length; } };
-const calls = []; let rawEvents = [], rawStatus = 200, postOk = true;
+const calls = []; let rawEvents = [], rawStatus = 200, postOk = true, postHtml = false;
 global.fetch = (url, opts) => {
   calls.push({ url: String(url), method: (opts && opts.method) || 'GET', body: opts && opts.body });
   const reply = (code, body) => Promise.resolve({ ok: code >= 200 && code < 300, status: code, json: () => Promise.resolve(body) });
+  if (/^http:\/\/script\//.test(url) && postHtml) return Promise.resolve({ ok: true, status: 200, json: () => Promise.reject(new SyntaxError('Unexpected token <')) }); // Google's "script function not found" page
   if (/^http:\/\/script\//.test(url)) return postOk ? reply(200, { ok: true, added: 1 }) : Promise.reject(new Error('offline'));
   if (/^http:\/\/raw\//.test(url)) return rawStatus === 404 ? reply(404, {}) : reply(200, { events: rawEvents });
   if (/legacy-import/.test(url)) return reply(200, {});
@@ -46,6 +47,13 @@ const rawCalls = () => calls.filter(c => c.url.startsWith('http://raw/')).length
     s.append('c_answer', { pid: '1CA1', correct: true }); await flushTimers();
     assert.strictEqual(s.status.pending, 1); assert.ok(/offline/.test(s.status.error)); assert.ok(timers.length >= 0);
     postOk = true; timers.length = 0; await s.syncNow(); assert.strictEqual(s.status.pending, 0, 'Sync now sends the queue');
+  });
+
+  await test('a server that is not the sync script (HTML instead of JSON) is reported in plain words, keeps everything queued, and recovers when it is fixed', async () => {
+    timers.length = 0; postHtml = true; const s = ZP.open('fay', 'c1'); await s.load(); timers.length = 0;
+    s.append('c_answer', { pid: '1CA1', correct: true }); await flushTimers();
+    assert.strictEqual(s.status.pending, 1); assert.ok(/did not answer properly/.test(s.status.error) && /zenith-student-data/.test(s.status.error), s.status.error);
+    postHtml = false; timers.length = 0; await s.syncNow(); assert.strictEqual(s.status.pending, 0, 'the queued change goes through once the script is right'); assert.strictEqual(s.status.error, '');
   });
 
   await test('Sync now pulls what another device wrote (union by id, no duplicates) and reports how many are new', async () => {

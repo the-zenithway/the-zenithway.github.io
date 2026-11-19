@@ -1,10 +1,11 @@
 # Submission compiler
 
 > **Also related:** [`zenith-student-data.gs`](zenith-student-data.gs) is the
-> storage backend for the course platform (chapter hub, notebook, mocks, plans).
-> It stores student events in a Google Sheet rather than committing to the repo.
-> Setup steps are in that file's header; until `DATA_URL` in `js/zp-config.js` is
-> set, the platform saves in the browser only. See [`../redesign-structure.md`](../redesign-structure.md).
+> storage backend for the course platform (chapter hub, notebook, mocks, plans). It commits student events to the `student-data` branch.
+> **It must live in the SAME Apps Script project as `zenith-data-writer.gs`** (two files, one deployment, one /exec URL): the site's `DATA_URL`
+> and `TEACHER_DATA_WRITE_URL` are the same address and a web app has only one `doGet`/`doPost`, which the writer owns and which hand sync calls to
+> the sync file. Pasting one file over the other silently breaks the other half (that is how progress sync stopped on 2026-11-11). Setup steps are in that
+> file's header; until `DATA_URL` in `js/zp-config.js` is set, the platform saves in the browser only. See [`../redesign-structure.md`](../redesign-structure.md).
 
 > **Related:** [`zenith-data-writer.gs`](zenith-data-writer.gs) is a
 > separate, standalone Web App that backs every write control on the
@@ -218,6 +219,6 @@ email. Set the Script property `NOTIFY_OFF` to `1` to turn all of it off. After 
 ## Student data: commit-based sync (zenith-student-data.gs)
 
 Replaces the old Google Sheet store. The script holds a GitHub token and commits students' event logs to a dedicated branch, like kyj-sat's kyj-cloud.
-Setup is in the comment at the top of the file; the short version: paste the new file into the Apps Script project, set `GITHUB_TOKEN`,
+Setup is in the comment at the top of the file; the short version: add the file to the SAME Apps Script project as `zenith-data-writer.gs` (as a second file; never in place of it), set `GITHUB_TOKEN`,
 `GITHUB_OWNER`, `GITHUB_REPO` (same values as `zenith-data-writer.gs`) in Script properties, redeploy as a new version (same /exec URL), and make sure
 `DATA_URL` and `CLOUD_RAW_URL` in `js/zp-config.js` are set. `SHEET_ID` is no longer used. The first push creates the `student-data` branch from `main`.

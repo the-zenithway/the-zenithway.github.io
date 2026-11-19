@@ -565,9 +565,23 @@
 // data/submissions-log.json ("log"). A batch mixing both kinds still
 // produces two commits — one per file — since GitHub's Contents API
 // can't atomically commit to two different files in one call.
+// Progress sync and the Mentor layer's notification emails live in zenith-student-data.gs, which has to be in this same project: a web app has one
+// doGet and one doPost, and DATA_URL (js/zp-config.js) is this same /exec URL. See SETUP at the top of that file.
+var SYNC_POST_ACTIONS_ = { append: 1, putDoc: 1 };
+function syncMissing_() {
+  return jsonResponse_({ ok: false, error: "zenith-student-data.gs is not in this Apps Script project, so progress cannot sync. Add it as a second file and deploy a new version." });
+}
+function doGet(e) {
+  if (typeof syncGet_ !== "function") return syncMissing_();
+  return syncGet_(e);
+}
+
 function doPost(e) {
   try {
     var body = JSON.parse(e.postData.contents);
+
+    // Progress sync (append events / save a plan): handled by zenith-student-data.gs.
+    if (SYNC_POST_ACTIONS_[body.action]) return typeof syncPost_ === "function" ? syncPost_(e) : syncMissing_();
 
     // Mentor page (mentor.html) and the teacher's Talk tab: photos only. They are committed to the repo like Submit photos used to
     // be, and the urls come back; the message that carries them is an event in the student's own log (zenith-student-data.gs).

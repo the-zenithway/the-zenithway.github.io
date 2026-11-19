@@ -142,6 +142,11 @@
     var PUSH_EVERY = (CFG.SYNC_PUSH_MINUTES || 5) * 60000, PULL_EVERY = (CFG.SYNC_PULL_MINUTES || 5) * 60000;
     var syncOn = !!(CFG.DATA_URL || CFG.CLOUD_RAW_URL);
     var lastPush = +(jget(key + ':push') || 0), lastPull = +(jget(key + ':pull') || 0), pushTimer = null, pulling = null;
+    // The sync server answers JSON. Anything else (Google's "script function not found" page, a login page) means the script behind DATA_URL is not
+    // the sync script, so say that instead of a bare "Unexpected token <".
+    function readJson(r) {
+      return r.json().catch(function () { throw new Error('the sync server did not answer properly (is zenith-student-data.gs deployed in the Apps Script project?)'); });
+    }
     function flush() {
       if (!CFG.DATA_URL || flushing || !queue.length) return Promise.resolve();
       flushing = true; lastPush = Date.now(); jset(key + ':push', lastPush);
@@ -149,7 +154,7 @@
       return fetchT(CFG.DATA_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify({ action: 'append', username: username, course: course, events: batch })
-      }, 30000).then(function (r) { return r.json(); }).then(function (res) {
+      }, 30000).then(readJson).then(function (res) {
         if (!res.ok) throw new Error(res.error || 'write failed');
         var sent = {}; batch.forEach(function (e) { sent[e.id] = 1; });
         queue = queue.filter(function (e) { return !sent[e.id]; });
@@ -178,7 +183,7 @@
       lastPull = Date.now(); jset(key + ':pull', lastPull); status.lastAdded = 0;
       var req = CFG.CLOUD_RAW_URL
         ? fetchT(CFG.CLOUD_RAW_URL.replace(/\/+$/, '') + '/' + encodeURIComponent(username) + '__' + encodeURIComponent(course) + '.json?_=' + Date.now(), null, 15000).then(function (r) { return r.status === 404 ? { events: [] } : r.ok ? r.json() : Promise.reject(new Error('read failed (' + r.status + ')')); })
-        : fetchT(CFG.DATA_URL + '?action=events&username=' + encodeURIComponent(username) + '&course=' + encodeURIComponent(course), null, 20000).then(function (r) { return r.json(); }).then(function (res) { if (!res.ok) throw new Error(res.error || 'read failed'); return res; });
+        : fetchT(CFG.DATA_URL + '?action=events&username=' + encodeURIComponent(username) + '&course=' + encodeURIComponent(course), null, 20000).then(readJson).then(function (res) { if (!res.ok) throw new Error(res.error || 'read failed'); return res; });
       pulling = req.then(function (res) {
         var seen = {}; events.forEach(function (e) { seen[e.id] = 1; });
         (res.events || []).forEach(function (e) { if (!seen[e.id]) { events.push(e); seen[e.id] = 1; status.lastAdded++; } });

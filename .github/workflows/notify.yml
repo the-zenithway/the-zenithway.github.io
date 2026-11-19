@@ -64,8 +64,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/changelog-events.json
-          git diff --staged --quiet || git commit -m "Update portal changelog events feed"
-          git push
+          git diff --staged --quiet && exit 0
+          git commit -m "Update portal changelog events feed"
+          # The Apps Script commits to main too (an account is two commits a second apart), so main usually moved while this job ran:
+          # a bare `git push` was rejected ("fetch first") and failed the run. Rebase onto the newest main and try again.
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            echo "push attempt $attempt did not go through, retrying"; sleep $((attempt * 3))
+          done
+          exit 1
 
   notify-content-updates:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'notify-content-updates')
@@ -165,5 +172,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/scheduled-notifications.json
-          git diff --staged --quiet || git commit -m "Mark sent scheduled notification(s)"
-          git push
+          git diff --staged --quiet && exit 0
+          git commit -m "Mark sent scheduled notification(s)"
+          # Same race as the changelog job above: rebase onto the newest main and retry instead of failing.
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            echo "push attempt $attempt did not go through, retrying"; sleep $((attempt * 3))
+          done
+          exit 1
