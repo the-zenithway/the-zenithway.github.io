@@ -394,5 +394,6 @@
 {"id":"mwt32tfupjtw40","t":1795427334282,"type":"note","pid":"7CB11","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$$$zzzzzzzzzzz$","stuck":"","idea":"","signal":"","ch":"7"},
 {"id":"mwt34m89m1orgx","t":1795427418249,"type":"note","pid":"7CB12","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$xxxxxxxxxxxxx$","stuck":"","idea":"","signal":"","ch":"7"},
 {"id":"mwt3545ltbmu4c","t":1795427441481,"type":"note","pid":"7CB13","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$xxxxxxxxxxxxx$","stuck":"","idea":"","signal":"","ch":"7"},
-{"id":"mwt3602n2ifpse","t":1795427482847,"type":"task_done","key":"legacy-now"}
+{"id":"mwt3602n2ifpse","t":1795427482847,"type":"task_done","key":"legacy-now"},
+{"id":"mwt3a9di3c7e63","t":1795427681526,"type":"msg","from":"student","kind":"progress","text":"dear mentor goonie,\n\nThe journey was smoother than I had initial thought. It was as if every difficult problem was met by the fists of my brain and beat down until it was nothing but mush. I tackled each problem with confidence and a desire to know how i got it right and how i got it wrong.\n\noverall it was a pleasant experience. Although , i did accidentally sleep in acad and woke up somewhat late i am now ready to move on the chapter 8. see you at the finish line Mr.Goonway.","ref":"task:legacy-now","refLabel":"Done: Chapter 7 · C"}
 ]}
