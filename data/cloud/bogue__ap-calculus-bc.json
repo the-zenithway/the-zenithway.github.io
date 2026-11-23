@@ -393,5 +393,6 @@
 {"id":"mwt31bk69z14ai","t":1795427264454,"type":"note","pid":"7CB9","src":"C","track":"actual","miss":"","approach":"","nkind":"other","text":"i didnt know how to approach this question.","stuck":"","idea":"","signal":"","ch":"7"},
 {"id":"mwt32tfupjtw40","t":1795427334282,"type":"note","pid":"7CB11","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$$$zzzzzzzzzzz$","stuck":"","idea":"","signal":"","ch":"7"},
 {"id":"mwt34m89m1orgx","t":1795427418249,"type":"note","pid":"7CB12","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$xxxxxxxxxxxxx$","stuck":"","idea":"","signal":"","ch":"7"},
-{"id":"mwt3545ltbmu4c","t":1795427441481,"type":"note","pid":"7CB13","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$xxxxxxxxxxxxx$","stuck":"","idea":"","signal":"","ch":"7"}
+{"id":"mwt3545ltbmu4c","t":1795427441481,"type":"note","pid":"7CB13","src":"C","track":"careless","miss":"","approach":"","nkind":"other","text":"$xxxxxxxxxxxxx$","stuck":"","idea":"","signal":"","ch":"7"},
+{"id":"mwt3602n2ifpse","t":1795427482847,"type":"task_done","key":"legacy-now"}
 ]}
