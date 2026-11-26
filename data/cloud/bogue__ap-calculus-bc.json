@@ -398,5 +398,6 @@
 {"id":"mwt3a9di3c7e63","t":1795427681526,"type":"msg","from":"student","kind":"progress","text":"dear mentor goonie,\n\nThe journey was smoother than I had initial thought. It was as if every difficult problem was met by the fists of my brain and beat down until it was nothing but mush. I tackled each problem with confidence and a desire to know how i got it right and how i got it wrong.\n\noverall it was a pleasant experience. Although , i did accidentally sleep in acad and woke up somewhat late i am now ready to move on the chapter 8. see you at the finish line Mr.Goonway.","ref":"task:legacy-now","refLabel":"Done: Chapter 7 · C"},
 {"id":"mwvd53g50rzm2j","t":1795565169077,"type":"msg_read","by":"teacher","upTo":1795565169077},
 {"id":"mww1wlx7ujpvax","t":1795606763515,"type":"b_submit","ch":"8"},
-{"id":"mwxb3nnawuz2ps","t":1795682675062,"type":"c_answer","ch":"8","pid":"8CA1","answer":"D","correct":true,"conf":"sure","ms":84206,"ctx":"chapter","sess":"mwxb1uo7gkcudq"}
+{"id":"mwxb3nnawuz2ps","t":1795682675062,"type":"c_answer","ch":"8","pid":"8CA1","answer":"D","correct":true,"conf":"sure","ms":84206,"ctx":"chapter","sess":"mwxb1uo7gkcudq"},
+{"id":"mwxb57b9sy75g5","t":1795682747205,"type":"c_answer","ch":"8","pid":"8CA2","answer":"A","correct":true,"conf":"sure","ms":71017,"ctx":"chapter","sess":"mwxb1uo7gkcudq"}
 ]}
