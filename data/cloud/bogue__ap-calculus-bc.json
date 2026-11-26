@@ -416,5 +416,6 @@
 {"id":"mwxd0yks3xecdi","t":1795685908492,"type":"flag","ch":"8","pid":"8CB5","on":true},
 {"id":"mwxd1zhgr04u3a","t":1795685956324,"type":"c_answer","ch":"8","pid":"8CB6","answer":"A","correct":true,"conf":"sure","ms":46634,"ctx":"chapter","sess":"mwxb1uo7gkcudq"},
 {"id":"mwxd6qxx6xtgp7","t":1795686178533,"type":"c_answer","ch":"8","pid":"8CB7","answer":"D","correct":true,"conf":"sure","ms":221278,"ctx":"chapter","sess":"mwxb1uo7gkcudq"},
-{"id":"mwxd80q0yds316","t":1795686237864,"type":"c_answer","ch":"8","pid":"8CB8","answer":"B","correct":true,"conf":"sure","ms":58541,"ctx":"chapter","sess":"mwxb1uo7gkcudq"}
+{"id":"mwxd80q0yds316","t":1795686237864,"type":"c_answer","ch":"8","pid":"8CB8","answer":"B","correct":true,"conf":"sure","ms":58541,"ctx":"chapter","sess":"mwxb1uo7gkcudq"},
+{"id":"mwxd8yvjxlnium","t":1795686282127,"type":"c_answer","ch":"8","pid":"8CB9","answer":"A","correct":true,"conf":"sure","ms":43121,"ctx":"chapter","sess":"mwxb1uo7gkcudq"}
 ]}
